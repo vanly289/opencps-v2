@@ -7,8 +7,10 @@ import org.opencps.auth.utils.APIDateTimeUtils;
 import org.opencps.dossiermgt.constants.DossierStatusConstants;
 import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.Dossier;
+import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.service.DeliverableLocalService;
+import org.opencps.dossiermgt.service.DossierActionLocalService;
 import org.opencps.dossiermgt.service.DossierFileLocalService;
 import org.opencps.dossiermgt.service.DossierLocalService;
 import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
@@ -62,13 +64,19 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 		_log.info("Request: " + "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload()));
 
 		List<ThirdPartyDossierSync> lstSyncs = _thirdPartyDossierSyncLocalService.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		
 		for (ThirdPartyDossierSync sync : lstSyncs) {
 			Dossier dossier = _dossierLocalService.fetchDossier(sync.getDossierId());
-			DossierFile dossierFile = null;
-			Deliverable deliverable = null;
+			ThirdPartyDossierSync dossierSync = _thirdPartyDossierSyncLocalService.fetchThirdPartyDossierSync(sync.getDossierSyncId());
 			
-			if (dossier.getDossierStatus().equals(DossierStatusConstants.HANDOVER)) {
-				dossierFile = _dossierFileLocalService.getDossierFileByReferenceUid(sync.getDossierId(), sync.getFileReferenceUid());
+			System.out.println("Dossier for sync: " + dossier.getDossierNo());
+			long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
+
+			System.out.println("Action: " + dossierActionId);
+			
+			DossierAction dossierAction = _dossierActionLocalService.fetchDossierAction(dossierActionId);
+			if (dossierAction.getActionCode().equals("1106")) {
+				System.out.println("Send dossier back to nsw");
 			}
 		}
 		
@@ -115,6 +123,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 	
 	@Reference
 	private DeliverableLocalService _deliverableLocalService;
+	
+	@Reference
+	private DossierActionLocalService _dossierActionLocalService;
 	
 	private Log _log = LogFactoryUtil.getLog(OutsideSystemSyncScheduler.class);	
 }
