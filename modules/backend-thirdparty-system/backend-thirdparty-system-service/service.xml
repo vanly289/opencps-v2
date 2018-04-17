@@ -26,6 +26,8 @@
 		<column name="fileReferenceUid" type="String" />
 		<column name="serverNo" type="String" />
 
+		<column name="baseDossierSyncId" type="long" />
+
 		<order>
 			<order-column name="dossierId" order-by="asc" />
 			<order-column name="method" order-by="asc" />

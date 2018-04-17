@@ -8,4 +8,5 @@ Include-Resource:\
 	@httpmime-4.3.1.jar,\
 	@httpcore-4.3.1.jar,\
 	@commons-io-2.0.1.jar,\
-	@commons-codec-1.9.jar	
+	@commons-codec-1.9.jar, \
+	@gson-2.6.2.jar	

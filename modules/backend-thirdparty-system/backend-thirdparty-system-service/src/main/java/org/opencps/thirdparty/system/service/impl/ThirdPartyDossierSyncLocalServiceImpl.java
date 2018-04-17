@@ -48,7 +48,7 @@ public class ThirdPartyDossierSyncLocalServiceImpl
 	 */
 	
 	public ThirdPartyDossierSync updateThirdPartyDossierSync(long groupId, long userId, long dossierId, String dossierReferenceUid,
-			boolean createDossier, int method, long classPK, String fileReferenceUid, String serverNo) {
+			boolean createDossier, int method, long classPK, String fileReferenceUid, String serverNo, long baseDossierSyncId) {
 
 		ThirdPartyDossierSync thirdPartyDossierSync = null;
 
@@ -74,6 +74,7 @@ public class ThirdPartyDossierSyncLocalServiceImpl
 			thirdPartyDossierSync.setClassPK(classPK);
 			thirdPartyDossierSync.setFileReferenceUid(fileReferenceUid);
 			thirdPartyDossierSync.setServerNo(serverNo);
+			thirdPartyDossierSync.setBaseDossierSyncId(baseDossierSyncId);
 
 			thirdPartyDossierSyncPersistence.update(thirdPartyDossierSync);
 

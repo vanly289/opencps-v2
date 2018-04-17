@@ -31,7 +31,7 @@ public class DossierSyncListener extends BaseModelListener<DossierSync> {
 					JSONObject configObj = JSONFactoryUtil.createJSONObject(configs);
 					if (configObj.has(SyncServerTerm.SERVER_TYPE) 
 							&& configObj.getString(SyncServerTerm.SERVER_TYPE).equals(SyncServerTerm.SOAP_SYNC_SERVER_TYPE)) {
-						_thirdPartySyncService.updateThirdPartyDossierSync(model.getGroupId(), model.getUserId(), model.getDossierId(), model.getDossierReferenceUid(), model.getCreateDossier(), model.getMethod(), model.getClassPK(), model.getFileReferenceUid(), sc.getServerNo());
+						_thirdPartySyncService.updateThirdPartyDossierSync(model.getGroupId(), model.getUserId(), model.getDossierId(), model.getDossierReferenceUid(), model.getCreateDossier(), model.getMethod(), model.getClassPK(), model.getFileReferenceUid(), sc.getServerNo(), model.getDossierSyncId());
 					}
 				}
 				catch (Exception e) {
