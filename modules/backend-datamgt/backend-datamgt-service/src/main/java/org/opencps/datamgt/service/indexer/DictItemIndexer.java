@@ -73,7 +73,9 @@ public class DictItemIndexer extends BaseIndexer<DictItem> {
 		document.addTextSortable(DictItemTerm.SIBLING, dictItem.getSibling());
 		document.addTextSortable(DictItemTerm.TREE_INDEX, dictItem.getTreeIndex());
 		document.addNumberSortable(DictItemTerm.LEVEL, dictItem.getLevel());
-		document.addTextSortable(DictItemTerm.META_DATA, dictItem.getMetaData());
+		if (Validator.isNotNull(dictItem.getMetaData())) {
+			document.addTextSortable(DictItemTerm.META_DATA, dictItem.getMetaData());			
+		}
 		
 		long dictCollectionId = dictItem.getDictCollectionId();
 		
