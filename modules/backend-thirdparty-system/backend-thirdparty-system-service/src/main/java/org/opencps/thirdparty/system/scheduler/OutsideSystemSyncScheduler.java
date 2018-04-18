@@ -59,505 +59,609 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 		OpenCPSRestClient client = new OpenCPSRestClient(PrefsProperties.getJaxRsUrl());
 		
 		for (ThirdPartyDossierSync sync : lstSyncs) {
-			Dossier dossier = _dossierLocalService.fetchDossier(sync.getDossierId());
-			ThirdPartyDossierSync dossierSync = _thirdPartyDossierSyncLocalService.fetchThirdPartyDossierSync(sync.getDossierSyncId());
-			
-			long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
-			
-			NSWRequest nswRequest = new NSWRequest();
-			RequestPayload requestPayload = new RequestPayload();
-			
-			nswRequest.setRequestPayload(requestPayload);
-			
-			nswRequest.setOfficeCode("BGTVT");
-			Envelope envelope = new Envelope();
-			Header header = new Header();
-			envelope.setHeader(header);
-			requestPayload.setEnvelope(envelope);
-			From from = new From();
-			from.setCountryCode("VN");
-			from.setIdentity("BGTVT");
-			from.setMinistryCode("BGTVT");
-			header.setFrom(from);
-			To to = new To();
-			to.setName("NSW");
-			to.setIdentity("NSW");
-			to.setMinistryCode("NSW");
-			Subject subject = new Subject();
-			header.setSubject(subject);
-			subject.setReference(dossier.getReferenceUid());
-			subject.setPreReference(dossier.getReferenceUid());
-			subject.setDocumentYear(dossier.getReceiveDate().getYear());
-			Body body = new Body();
-			envelope.setBody(body);
-			Content content = new Content();
-			body.setContent(content);
-			KetQuaXuLy ketqua = new KetQuaXuLy();
-			content.setKetQuaXuLy(ketqua);
-			
-			DossierAction dossierAction = _dossierActionLocalService.fetchDossierAction(dossierActionId);
-			if (dossierAction.getSyncActionCode().equals("1105")) {
-				nswRequest.setDocumentType(dossier.getServiceCode());
+			if (sync.getMethod() == 0) {
+				Dossier dossier = _dossierLocalService.fetchDossier(sync.getDossierId());
+				ThirdPartyDossierSync dossierSync = _thirdPartyDossierSyncLocalService.fetchThirdPartyDossierSync(sync.getDossierSyncId());
 				
-				String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+				long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
 				
-				MessageQueueInputModel model = new MessageQueueInputModel();
-				model.setRawMessage(rawMessage);
-				model.setContent("");
-				model.setSender("BGTVT");
-				model.setReceiver("NSW");
-				model.setPersonSignature("");
-				model.setSystemSignature("");
-				model.setStatus(1);
-				model.setMessageId(PortalUUIDUtil.generate());
-				model.setFromName("BGTVT");
-				model.setFromCountryCode("VN");
-				model.setFromMinistryCode("BGTVT");
-				model.setFromOrganizationCode("TCDBVN");
-				model.setFromUnitCode("");
-				model.setFromIdentity("");
-				model.setToName("NSW");
-				model.setToCountryCode("VN");
-				model.setToIdentity("");
-				model.setToMinistryCode("NSW");
-				model.setToOrganizationCode("NSW");
-				model.setToUnitCode("");
-				model.setDocumentType(dossier.getServiceCode());
-				model.setType("11");
-				model.setFunction("05");
-				model.setReference(dossier.getReferenceUid());
-				model.setDocumentYear(dossier.getCreateDate().getYear());
-				model.setPreReference(dossier.getReferenceUid());
-				model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-				model.setRetryCount(1);
-				model.setDirection(2);
+				NSWRequest nswRequest = new NSWRequest();
+				RequestPayload requestPayload = new RequestPayload();
 				
-				MessageQueueDetailModel result = client.postMessageQueue(model);
-				if (result != null) {
-					long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
-					
-					DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-					
-					if (foundAction != null) {
-						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+				nswRequest.setRequestPayload(requestPayload);
+				
+				nswRequest.setOfficeCode("BGTVT");
+				Envelope envelope = new Envelope();
+				Header header = new Header();
+				envelope.setHeader(header);
+				requestPayload.setEnvelope(envelope);
+				From from = new From();
+				from.setCountryCode("VN");
+				from.setIdentity("BGTVT");
+				from.setMinistryCode("BGTVT");
+				header.setFrom(from);
+				To to = new To();
+				to.setName("NSW");
+				to.setIdentity("NSW");
+				to.setMinistryCode("NSW");
+				Subject subject = new Subject();
+				header.setSubject(subject);
+				subject.setReference(dossier.getReferenceUid());
+				subject.setPreReference(dossier.getReferenceUid());
+				if (dossier.getReceiveDate() != null) {
+					subject.setDocumentYear(dossier.getReceiveDate().getYear());					
+				}
+				else {
+					subject.setDocumentYear(dossier.getCreateDate().getYear());					
+				}
+				Body body = new Body();
+				envelope.setBody(body);
+				Content content = new Content();
+				body.setContent(content);
+				KetQuaXuLy ketqua = new KetQuaXuLy();
+				content.setKetQuaXuLy(ketqua);
+				
+				DossierAction dossierAction = _dossierActionLocalService.fetchDossierAction(dossierActionId);
+				if (dossierAction != null) {
+					if (dossierAction.getSyncActionCode().equals("1105")) {
+						nswRequest.setDocumentType(dossier.getServiceCode());
+						
+						subject.setDocumentType(dossier.getServiceCode());
+						subject.setType(11);
+						subject.setFunction(05);
+						subject.setReference(dossier.getReferenceUid());
+						subject.setPreReference(dossier.getReferenceUid());
+						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+						
+						ketqua.setSoTn("");
+						ketqua.setNoiDung(dossierAction.getActionNote());
+						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+
+						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						
+						MessageQueueInputModel model = new MessageQueueInputModel();
+						model.setRawMessage(rawMessage);
+						model.setContent("");
+						model.setSender("BGTVT");
+						model.setReceiver("NSW");
+						model.setPersonSignature("");
+						model.setSystemSignature("");
+						model.setStatus(1);
+						model.setMessageId(PortalUUIDUtil.generate());
+						model.setFromName("BGTVT");
+						model.setFromCountryCode("VN");
+						model.setFromMinistryCode("BGTVT");
+						model.setFromOrganizationCode("TCDBVN");
+						model.setFromUnitCode("");
+						model.setFromIdentity("");
+						model.setToName("NSW");
+						model.setToCountryCode("VN");
+						model.setToIdentity("");
+						model.setToMinistryCode("NSW");
+						model.setToOrganizationCode("NSW");
+						model.setToUnitCode("");
+						model.setDocumentType(dossier.getServiceCode());
+						model.setType("11");
+						model.setFunction("05");
+						model.setReference(dossier.getReferenceUid());
+						model.setDocumentYear(dossier.getCreateDate().getYear());
+						model.setPreReference(dossier.getReferenceUid());
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setRetryCount(1);
+						model.setDirection(2);
+						
+						MessageQueueDetailModel result = client.postMessageQueue(model);
+						if (result != null) {
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
+							
+							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+							
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+							}
+							
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+							
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						}				
 					}
-					
-					_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-					
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+					else if (dossierAction.getSyncActionCode().equals("1106")) {
+						nswRequest.setDocumentType(dossier.getServiceCode());
+						
+						subject.setDocumentType(dossier.getServiceCode());
+						subject.setType(11);
+						subject.setFunction(05);
+						subject.setReference(dossier.getReferenceUid());
+						subject.setPreReference(dossier.getReferenceUid());
+						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+						
+						ketqua.setSoTn("");
+						ketqua.setNoiDung(dossierAction.getActionNote());
+						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+
+						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+
+						MessageQueueInputModel model = new MessageQueueInputModel();
+						model.setRawMessage(rawMessage);
+						model.setContent("");
+						model.setSender("BGTVT");
+						model.setReceiver("NSW");
+						model.setPersonSignature("");
+						model.setSystemSignature("");
+						model.setStatus(1);
+						model.setMessageId(PortalUUIDUtil.generate());
+						model.setFromName("BGTVT");
+						model.setFromCountryCode("VN");
+						model.setFromMinistryCode("BGTVT");
+						model.setFromOrganizationCode("TCDBVN");
+						model.setFromUnitCode("");
+						model.setFromIdentity("");
+						model.setToName("NSW");
+						model.setToCountryCode("VN");
+						model.setToIdentity("");
+						model.setToMinistryCode("NSW");
+						model.setToOrganizationCode("NSW");
+						model.setToUnitCode("");
+						model.setDocumentType(dossier.getServiceCode());
+						model.setType("11");
+						model.setFunction("06");
+						model.setReference(dossier.getReferenceUid());
+						model.setDocumentYear(dossier.getCreateDate().getYear());
+						model.setPreReference(dossier.getReferenceUid());
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setRetryCount(1);
+						model.setDirection(2);
+						
+						MessageQueueDetailModel result = client.postMessageQueue(model);
+						if (result != null) {
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
+							
+							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+							}
+							
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						}
+					}
+					else if (dossierAction.getSyncActionCode().equals("1114")) {
+						nswRequest.setDocumentType(dossier.getServiceCode());
+						
+						subject.setDocumentType(dossier.getServiceCode());
+						subject.setType(11);
+						subject.setFunction(05);
+						subject.setReference(dossier.getReferenceUid());
+						subject.setPreReference(dossier.getReferenceUid());
+						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+						
+						ketqua.setSoTn("");
+						ketqua.setNoiDung(dossierAction.getActionNote());
+						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+
+						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+
+						MessageQueueInputModel model = new MessageQueueInputModel();
+						model.setRawMessage(rawMessage);
+						model.setContent("");
+						model.setSender("BGTVT");
+						model.setReceiver("NSW");
+						model.setPersonSignature("");
+						model.setSystemSignature("");
+						model.setStatus(1);
+						model.setMessageId(PortalUUIDUtil.generate());
+						model.setFromName("BGTVT");
+						model.setFromCountryCode("VN");
+						model.setFromMinistryCode("BGTVT");
+						model.setFromOrganizationCode("TCDBVN");
+						model.setFromUnitCode("");
+						model.setFromIdentity("");
+						model.setToName("NSW");
+						model.setToCountryCode("VN");
+						model.setToIdentity("");
+						model.setToMinistryCode("NSW");
+						model.setToOrganizationCode("NSW");
+						model.setToUnitCode("");
+						model.setDocumentType(dossier.getServiceCode());
+						model.setType("11");
+						model.setFunction("14");
+						model.setReference(dossier.getReferenceUid());
+						model.setDocumentYear(dossier.getCreateDate().getYear());
+						model.setPreReference(dossier.getReferenceUid());
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setRetryCount(1);
+						model.setDirection(2);
+						
+						MessageQueueDetailModel result = client.postMessageQueue(model);
+						if (result != null) {
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
+							
+							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+							}
+							
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						}
+					}			
+					else if (dossierAction.getSyncActionCode().equals("1117")) {
+						nswRequest.setDocumentType(dossier.getServiceCode());
+						
+						subject.setDocumentType(dossier.getServiceCode());
+						subject.setType(11);
+						subject.setFunction(05);
+						subject.setReference(dossier.getReferenceUid());
+						subject.setPreReference(dossier.getReferenceUid());
+						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+						
+						ketqua.setSoTn("");
+						ketqua.setNoiDung(dossierAction.getActionNote());
+						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+
+						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+
+						MessageQueueInputModel model = new MessageQueueInputModel();
+						model.setRawMessage(rawMessage);
+						model.setContent("");
+						model.setSender("BGTVT");
+						model.setReceiver("NSW");
+						model.setPersonSignature("");
+						model.setSystemSignature("");
+						model.setStatus(1);
+						model.setMessageId(PortalUUIDUtil.generate());
+						model.setFromName("BGTVT");
+						model.setFromCountryCode("VN");
+						model.setFromMinistryCode("BGTVT");
+						model.setFromOrganizationCode("TCDBVN");
+						model.setFromUnitCode("");
+						model.setFromIdentity("");
+						model.setToName("NSW");
+						model.setToCountryCode("VN");
+						model.setToIdentity("");
+						model.setToMinistryCode("NSW");
+						model.setToOrganizationCode("NSW");
+						model.setToUnitCode("");
+						model.setDocumentType(dossier.getServiceCode());
+						model.setType("11");
+						model.setFunction("17");
+						model.setReference(dossier.getReferenceUid());
+						model.setDocumentYear(dossier.getCreateDate().getYear());
+						model.setPreReference(dossier.getReferenceUid());
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setRetryCount(1);
+						model.setDirection(2);
+						
+						MessageQueueDetailModel result = client.postMessageQueue(model);
+						if (result != null) {
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
+							
+							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+							}
+							
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						}
+					}			
+					else if (dossierAction.getSyncActionCode().equals("1409")) {
+						nswRequest.setDocumentType(dossier.getServiceCode());
+						subject.setDocumentType(dossier.getServiceCode());
+						subject.setType(11);
+						subject.setFunction(05);
+						subject.setReference(dossier.getReferenceUid());
+						subject.setPreReference(dossier.getReferenceUid());
+						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+						
+						ketqua.setSoTn("");
+						ketqua.setNoiDung(dossierAction.getActionNote());
+						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						
+						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+
+						MessageQueueInputModel model = new MessageQueueInputModel();
+						model.setRawMessage(rawMessage);
+						model.setContent("");
+						model.setSender("BGTVT");
+						model.setReceiver("NSW");
+						model.setPersonSignature("");
+						model.setSystemSignature("");
+						model.setStatus(1);
+						model.setMessageId(PortalUUIDUtil.generate());
+						model.setFromName("BGTVT");
+						model.setFromCountryCode("VN");
+						model.setFromMinistryCode("BGTVT");
+						model.setFromOrganizationCode("TCDBVN");
+						model.setFromUnitCode("");
+						model.setFromIdentity("");
+						model.setToName("NSW");
+						model.setToCountryCode("VN");
+						model.setToIdentity("");
+						model.setToMinistryCode("NSW");
+						model.setToOrganizationCode("NSW");
+						model.setToUnitCode("");
+						model.setDocumentType(dossier.getServiceCode());
+						model.setType("14");
+						model.setFunction("09");
+						model.setReference(dossier.getReferenceUid());
+						model.setDocumentYear(dossier.getCreateDate().getYear());
+						model.setPreReference(dossier.getReferenceUid());
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setRetryCount(1);
+						model.setDirection(2);
+						
+						MessageQueueDetailModel result = client.postMessageQueue(model);
+						if (result != null) {
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
+							
+							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+							}
+							
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						}
+					}			
+					else if (dossierAction.getSyncActionCode().equals("1410")) {
+						nswRequest.setDocumentType(dossier.getServiceCode());
+						
+						subject.setDocumentType(dossier.getServiceCode());
+						subject.setType(11);
+						subject.setFunction(05);
+						subject.setReference(dossier.getReferenceUid());
+						subject.setPreReference(dossier.getReferenceUid());
+						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+						
+						ketqua.setSoTn("");
+						ketqua.setNoiDung(dossierAction.getActionNote());
+						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+
+						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+
+						MessageQueueInputModel model = new MessageQueueInputModel();
+						model.setRawMessage(rawMessage);
+						model.setContent("");
+						model.setSender("BGTVT");
+						model.setReceiver("NSW");
+						model.setPersonSignature("");
+						model.setSystemSignature("");
+						model.setStatus(1);
+						model.setMessageId(PortalUUIDUtil.generate());
+						model.setFromName("BGTVT");
+						model.setFromCountryCode("VN");
+						model.setFromMinistryCode("BGTVT");
+						model.setFromOrganizationCode("TCDBVN");
+						model.setFromUnitCode("");
+						model.setFromIdentity("");
+						model.setToName("NSW");
+						model.setToCountryCode("VN");
+						model.setToIdentity("");
+						model.setToMinistryCode("NSW");
+						model.setToOrganizationCode("NSW");
+						model.setToUnitCode("");
+						model.setDocumentType(dossier.getServiceCode());
+						model.setType("14");
+						model.setFunction("10");
+						model.setReference(dossier.getReferenceUid());
+						model.setDocumentYear(dossier.getCreateDate().getYear());
+						model.setPreReference(dossier.getReferenceUid());
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setRetryCount(1);
+						model.setDirection(2);
+						
+						MessageQueueDetailModel result = client.postMessageQueue(model);
+						if (result != null) {
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
+							
+							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+							}
+							
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						}
+					}			
+					else if (dossierAction.getSyncActionCode().equals("1815")) {
+						nswRequest.setDocumentType(dossier.getServiceCode());
+						subject.setDocumentType(dossier.getServiceCode());
+						subject.setType(11);
+						subject.setFunction(05);
+						subject.setReference(dossier.getReferenceUid());
+						subject.setPreReference(dossier.getReferenceUid());
+						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+						
+						ketqua.setSoTn("");
+						ketqua.setNoiDung(dossierAction.getActionNote());
+						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						
+						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+
+						MessageQueueInputModel model = new MessageQueueInputModel();
+						model.setRawMessage(rawMessage);
+						model.setContent("");
+						model.setSender("BGTVT");
+						model.setReceiver("NSW");
+						model.setPersonSignature("");
+						model.setSystemSignature("");
+						model.setStatus(1);
+						model.setMessageId(PortalUUIDUtil.generate());
+						model.setFromName("BGTVT");
+						model.setFromCountryCode("VN");
+						model.setFromMinistryCode("BGTVT");
+						model.setFromOrganizationCode("TCDBVN");
+						model.setFromUnitCode("");
+						model.setFromIdentity("");
+						model.setToName("NSW");
+						model.setToCountryCode("VN");
+						model.setToIdentity("");
+						model.setToMinistryCode("NSW");
+						model.setToOrganizationCode("NSW");
+						model.setToUnitCode("");
+						model.setDocumentType(dossier.getServiceCode());
+						model.setType("18");
+						model.setFunction("15");
+						model.setReference(dossier.getReferenceUid());
+						model.setDocumentYear(dossier.getCreateDate().getYear());
+						model.setPreReference(dossier.getReferenceUid());
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setRetryCount(1);
+						model.setDirection(2);
+						
+						MessageQueueDetailModel result = client.postMessageQueue(model);
+						if (result != null) {
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
+							
+							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+							}
+							
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						}
+					}
+					else if (dossierAction.getSyncActionCode().equals("1613")) {
+						nswRequest.setDocumentType(dossier.getServiceCode());
+						subject.setDocumentType(dossier.getServiceCode());
+						subject.setType(11);
+						subject.setFunction(05);
+						subject.setReference(dossier.getReferenceUid());
+						subject.setPreReference(dossier.getReferenceUid());
+						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+						
+						ketqua.setSoTn("");
+						ketqua.setNoiDung(dossierAction.getActionNote());
+						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						
+						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+
+						MessageQueueInputModel model = new MessageQueueInputModel();
+						model.setRawMessage(rawMessage);
+						model.setContent("");
+						model.setSender("BGTVT");
+						model.setReceiver("NSW");
+						model.setPersonSignature("");
+						model.setSystemSignature("");
+						model.setStatus(1);
+						model.setMessageId(PortalUUIDUtil.generate());
+						model.setFromName("BGTVT");
+						model.setFromCountryCode("VN");
+						model.setFromMinistryCode("BGTVT");
+						model.setFromOrganizationCode("TCDBVN");
+						model.setFromUnitCode("");
+						model.setFromIdentity("");
+						model.setToName("NSW");
+						model.setToCountryCode("VN");
+						model.setToIdentity("");
+						model.setToMinistryCode("NSW");
+						model.setToOrganizationCode("NSW");
+						model.setToUnitCode("");
+						model.setDocumentType(dossier.getServiceCode());
+						model.setType("16");
+						model.setFunction("13");
+						model.setReference(dossier.getReferenceUid());
+						model.setDocumentYear(dossier.getCreateDate().getYear());
+						model.setPreReference(dossier.getReferenceUid());
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setRetryCount(1);
+						model.setDirection(2);
+						
+						MessageQueueDetailModel result = client.postMessageQueue(model);
+						if (result != null) {
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
+							
+							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+							}
+							
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						}
+					}			
+					else if (dossierAction.getSyncActionCode().equals("1816")) {
+						nswRequest.setDocumentType(dossier.getServiceCode());
+						subject.setDocumentType(dossier.getServiceCode());
+						subject.setType(11);
+						subject.setFunction(05);
+						subject.setReference(dossier.getReferenceUid());
+						subject.setPreReference(dossier.getReferenceUid());
+						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+						
+						ketqua.setSoTn("");
+						ketqua.setNoiDung(dossierAction.getActionNote());
+						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						
+						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+
+						MessageQueueInputModel model = new MessageQueueInputModel();
+						model.setRawMessage(rawMessage);
+						model.setContent("");
+						model.setSender("BGTVT");
+						model.setReceiver("NSW");
+						model.setPersonSignature("");
+						model.setSystemSignature("");
+						model.setStatus(1);
+						model.setMessageId(PortalUUIDUtil.generate());
+						model.setFromName("BGTVT");
+						model.setFromCountryCode("VN");
+						model.setFromMinistryCode("BGTVT");
+						model.setFromOrganizationCode("TCDBVN");
+						model.setFromUnitCode("");
+						model.setFromIdentity("");
+						model.setToName("NSW");
+						model.setToCountryCode("VN");
+						model.setToIdentity("");
+						model.setToMinistryCode("NSW");
+						model.setToOrganizationCode("NSW");
+						model.setToUnitCode("");
+						model.setDocumentType(dossier.getServiceCode());
+						model.setType("18");
+						model.setFunction("16");
+						model.setReference(dossier.getReferenceUid());
+						model.setDocumentYear(dossier.getCreateDate().getYear());
+						model.setPreReference(dossier.getReferenceUid());
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setRetryCount(1);
+						model.setDirection(2);
+						
+						MessageQueueDetailModel result = client.postMessageQueue(model);
+						if (result != null) {
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
+							
+							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+							}
+							
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						}
+					}
+					else {
+						long clientDossierActionId = (dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : dossierSync.getMethod());
+						
+						DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+						if (foundAction != null) {
+							DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+						}
+						
+						_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+						_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());				
+					}				
 				}				
-			}
-			else if (dossierAction.getSyncActionCode().equals("1106")) {
-				nswRequest.setDocumentType(dossier.getServiceCode());
-				
-				String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
-
-				MessageQueueInputModel model = new MessageQueueInputModel();
-				model.setRawMessage(rawMessage);
-				model.setContent("");
-				model.setSender("BGTVT");
-				model.setReceiver("NSW");
-				model.setPersonSignature("");
-				model.setSystemSignature("");
-				model.setStatus(1);
-				model.setMessageId(PortalUUIDUtil.generate());
-				model.setFromName("BGTVT");
-				model.setFromCountryCode("VN");
-				model.setFromMinistryCode("BGTVT");
-				model.setFromOrganizationCode("TCDBVN");
-				model.setFromUnitCode("");
-				model.setFromIdentity("");
-				model.setToName("NSW");
-				model.setToCountryCode("VN");
-				model.setToIdentity("");
-				model.setToMinistryCode("NSW");
-				model.setToOrganizationCode("NSW");
-				model.setToUnitCode("");
-				model.setDocumentType(dossier.getServiceCode());
-				model.setType("11");
-				model.setFunction("06");
-				model.setReference(dossier.getReferenceUid());
-				model.setDocumentYear(dossier.getCreateDate().getYear());
-				model.setPreReference(dossier.getReferenceUid());
-				model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-				model.setRetryCount(1);
-				model.setDirection(2);
-				
-				MessageQueueDetailModel result = client.postMessageQueue(model);
-				if (result != null) {
-					long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
-					
-					DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-					if (foundAction != null) {
-						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
-					}
-					
-					_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-				}
-			}
-			else if (dossierAction.getSyncActionCode().equals("1114")) {
-				nswRequest.setDocumentType(dossier.getServiceCode());
-				
-				String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
-
-				MessageQueueInputModel model = new MessageQueueInputModel();
-				model.setRawMessage(rawMessage);
-				model.setContent("");
-				model.setSender("BGTVT");
-				model.setReceiver("NSW");
-				model.setPersonSignature("");
-				model.setSystemSignature("");
-				model.setStatus(1);
-				model.setMessageId(PortalUUIDUtil.generate());
-				model.setFromName("BGTVT");
-				model.setFromCountryCode("VN");
-				model.setFromMinistryCode("BGTVT");
-				model.setFromOrganizationCode("TCDBVN");
-				model.setFromUnitCode("");
-				model.setFromIdentity("");
-				model.setToName("NSW");
-				model.setToCountryCode("VN");
-				model.setToIdentity("");
-				model.setToMinistryCode("NSW");
-				model.setToOrganizationCode("NSW");
-				model.setToUnitCode("");
-				model.setDocumentType(dossier.getServiceCode());
-				model.setType("11");
-				model.setFunction("14");
-				model.setReference(dossier.getReferenceUid());
-				model.setDocumentYear(dossier.getCreateDate().getYear());
-				model.setPreReference(dossier.getReferenceUid());
-				model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-				model.setRetryCount(1);
-				model.setDirection(2);
-				
-				MessageQueueDetailModel result = client.postMessageQueue(model);
-				if (result != null) {
-					long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
-					
-					DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-					if (foundAction != null) {
-						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
-					}
-					
-					_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-				}
-			}			
-			else if (dossierAction.getSyncActionCode().equals("1117")) {
-				nswRequest.setDocumentType(dossier.getServiceCode());
-				
-				String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
-
-				MessageQueueInputModel model = new MessageQueueInputModel();
-				model.setRawMessage(rawMessage);
-				model.setContent("");
-				model.setSender("BGTVT");
-				model.setReceiver("NSW");
-				model.setPersonSignature("");
-				model.setSystemSignature("");
-				model.setStatus(1);
-				model.setMessageId(PortalUUIDUtil.generate());
-				model.setFromName("BGTVT");
-				model.setFromCountryCode("VN");
-				model.setFromMinistryCode("BGTVT");
-				model.setFromOrganizationCode("TCDBVN");
-				model.setFromUnitCode("");
-				model.setFromIdentity("");
-				model.setToName("NSW");
-				model.setToCountryCode("VN");
-				model.setToIdentity("");
-				model.setToMinistryCode("NSW");
-				model.setToOrganizationCode("NSW");
-				model.setToUnitCode("");
-				model.setDocumentType(dossier.getServiceCode());
-				model.setType("11");
-				model.setFunction("17");
-				model.setReference(dossier.getReferenceUid());
-				model.setDocumentYear(dossier.getCreateDate().getYear());
-				model.setPreReference(dossier.getReferenceUid());
-				model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-				model.setRetryCount(1);
-				model.setDirection(2);
-				
-				MessageQueueDetailModel result = client.postMessageQueue(model);
-				if (result != null) {
-					long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
-					
-					DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-					if (foundAction != null) {
-						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
-					}
-					
-					_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-				}
-			}			
-			else if (dossierAction.getSyncActionCode().equals("1409")) {
-				nswRequest.setDocumentType(dossier.getServiceCode());
-				
-				String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
-
-				MessageQueueInputModel model = new MessageQueueInputModel();
-				model.setRawMessage(rawMessage);
-				model.setContent("");
-				model.setSender("BGTVT");
-				model.setReceiver("NSW");
-				model.setPersonSignature("");
-				model.setSystemSignature("");
-				model.setStatus(1);
-				model.setMessageId(PortalUUIDUtil.generate());
-				model.setFromName("BGTVT");
-				model.setFromCountryCode("VN");
-				model.setFromMinistryCode("BGTVT");
-				model.setFromOrganizationCode("TCDBVN");
-				model.setFromUnitCode("");
-				model.setFromIdentity("");
-				model.setToName("NSW");
-				model.setToCountryCode("VN");
-				model.setToIdentity("");
-				model.setToMinistryCode("NSW");
-				model.setToOrganizationCode("NSW");
-				model.setToUnitCode("");
-				model.setDocumentType(dossier.getServiceCode());
-				model.setType("14");
-				model.setFunction("09");
-				model.setReference(dossier.getReferenceUid());
-				model.setDocumentYear(dossier.getCreateDate().getYear());
-				model.setPreReference(dossier.getReferenceUid());
-				model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-				model.setRetryCount(1);
-				model.setDirection(2);
-				
-				MessageQueueDetailModel result = client.postMessageQueue(model);
-				if (result != null) {
-					long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
-					
-					DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-					if (foundAction != null) {
-						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
-					}
-					
-					_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-				}
-			}			
-			else if (dossierAction.getSyncActionCode().equals("1410")) {
-				nswRequest.setDocumentType(dossier.getServiceCode());
-				
-				String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
-
-				MessageQueueInputModel model = new MessageQueueInputModel();
-				model.setRawMessage(rawMessage);
-				model.setContent("");
-				model.setSender("BGTVT");
-				model.setReceiver("NSW");
-				model.setPersonSignature("");
-				model.setSystemSignature("");
-				model.setStatus(1);
-				model.setMessageId(PortalUUIDUtil.generate());
-				model.setFromName("BGTVT");
-				model.setFromCountryCode("VN");
-				model.setFromMinistryCode("BGTVT");
-				model.setFromOrganizationCode("TCDBVN");
-				model.setFromUnitCode("");
-				model.setFromIdentity("");
-				model.setToName("NSW");
-				model.setToCountryCode("VN");
-				model.setToIdentity("");
-				model.setToMinistryCode("NSW");
-				model.setToOrganizationCode("NSW");
-				model.setToUnitCode("");
-				model.setDocumentType(dossier.getServiceCode());
-				model.setType("14");
-				model.setFunction("10");
-				model.setReference(dossier.getReferenceUid());
-				model.setDocumentYear(dossier.getCreateDate().getYear());
-				model.setPreReference(dossier.getReferenceUid());
-				model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-				model.setRetryCount(1);
-				model.setDirection(2);
-				
-				MessageQueueDetailModel result = client.postMessageQueue(model);
-				if (result != null) {
-					long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
-					
-					DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-					if (foundAction != null) {
-						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
-					}
-					
-					_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-				}
-			}			
-			else if (dossierAction.getSyncActionCode().equals("1815")) {
-				nswRequest.setDocumentType(dossier.getServiceCode());
-				
-				String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
-
-				MessageQueueInputModel model = new MessageQueueInputModel();
-				model.setRawMessage(rawMessage);
-				model.setContent("");
-				model.setSender("BGTVT");
-				model.setReceiver("NSW");
-				model.setPersonSignature("");
-				model.setSystemSignature("");
-				model.setStatus(1);
-				model.setMessageId(PortalUUIDUtil.generate());
-				model.setFromName("BGTVT");
-				model.setFromCountryCode("VN");
-				model.setFromMinistryCode("BGTVT");
-				model.setFromOrganizationCode("TCDBVN");
-				model.setFromUnitCode("");
-				model.setFromIdentity("");
-				model.setToName("NSW");
-				model.setToCountryCode("VN");
-				model.setToIdentity("");
-				model.setToMinistryCode("NSW");
-				model.setToOrganizationCode("NSW");
-				model.setToUnitCode("");
-				model.setDocumentType(dossier.getServiceCode());
-				model.setType("18");
-				model.setFunction("15");
-				model.setReference(dossier.getReferenceUid());
-				model.setDocumentYear(dossier.getCreateDate().getYear());
-				model.setPreReference(dossier.getReferenceUid());
-				model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-				model.setRetryCount(1);
-				model.setDirection(2);
-				
-				MessageQueueDetailModel result = client.postMessageQueue(model);
-				if (result != null) {
-					long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
-					
-					DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-					if (foundAction != null) {
-						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
-					}
-					
-					_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-				}
-			}
-			else if (dossierAction.getSyncActionCode().equals("1613")) {
-				nswRequest.setDocumentType(dossier.getServiceCode());
-				
-				String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
-
-				MessageQueueInputModel model = new MessageQueueInputModel();
-				model.setRawMessage(rawMessage);
-				model.setContent("");
-				model.setSender("BGTVT");
-				model.setReceiver("NSW");
-				model.setPersonSignature("");
-				model.setSystemSignature("");
-				model.setStatus(1);
-				model.setMessageId(PortalUUIDUtil.generate());
-				model.setFromName("BGTVT");
-				model.setFromCountryCode("VN");
-				model.setFromMinistryCode("BGTVT");
-				model.setFromOrganizationCode("TCDBVN");
-				model.setFromUnitCode("");
-				model.setFromIdentity("");
-				model.setToName("NSW");
-				model.setToCountryCode("VN");
-				model.setToIdentity("");
-				model.setToMinistryCode("NSW");
-				model.setToOrganizationCode("NSW");
-				model.setToUnitCode("");
-				model.setDocumentType(dossier.getServiceCode());
-				model.setType("16");
-				model.setFunction("13");
-				model.setReference(dossier.getReferenceUid());
-				model.setDocumentYear(dossier.getCreateDate().getYear());
-				model.setPreReference(dossier.getReferenceUid());
-				model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-				model.setRetryCount(1);
-				model.setDirection(2);
-				
-				MessageQueueDetailModel result = client.postMessageQueue(model);
-				if (result != null) {
-					long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
-					
-					DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-					if (foundAction != null) {
-						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
-					}
-					
-					_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-				}
-			}			
-			else if (dossierAction.getSyncActionCode().equals("1816")) {
-				nswRequest.setDocumentType(dossier.getServiceCode());
-				
-				String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
-
-				MessageQueueInputModel model = new MessageQueueInputModel();
-				model.setRawMessage(rawMessage);
-				model.setContent("");
-				model.setSender("BGTVT");
-				model.setReceiver("NSW");
-				model.setPersonSignature("");
-				model.setSystemSignature("");
-				model.setStatus(1);
-				model.setMessageId(PortalUUIDUtil.generate());
-				model.setFromName("BGTVT");
-				model.setFromCountryCode("VN");
-				model.setFromMinistryCode("BGTVT");
-				model.setFromOrganizationCode("TCDBVN");
-				model.setFromUnitCode("");
-				model.setFromIdentity("");
-				model.setToName("NSW");
-				model.setToCountryCode("VN");
-				model.setToIdentity("");
-				model.setToMinistryCode("NSW");
-				model.setToOrganizationCode("NSW");
-				model.setToUnitCode("");
-				model.setDocumentType(dossier.getServiceCode());
-				model.setType("18");
-				model.setFunction("16");
-				model.setReference(dossier.getReferenceUid());
-				model.setDocumentYear(dossier.getCreateDate().getYear());
-				model.setPreReference(dossier.getReferenceUid());
-				model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-				model.setRetryCount(1);
-				model.setDirection(2);
-				
-				MessageQueueDetailModel result = client.postMessageQueue(model);
-				if (result != null) {
-					long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
-					
-					DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-					if (foundAction != null) {
-						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
-					}
-					
-					_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-				}
-			}
-			else {
-				long clientDossierActionId = (dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : dossierSync.getMethod());
-				
-				DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-				if (foundAction != null) {
-					DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
-				}
-				
-				_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-				_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());				
 			}
 		}
 		
