@@ -1,20 +1,38 @@
 package org.opencps.thirdparty.system.scheduler;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
+import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
+import org.opencps.dossiermgt.model.DossierFile;
+import org.opencps.dossiermgt.model.DossierPart;
+import org.opencps.dossiermgt.model.ProcessAction;
+import org.opencps.dossiermgt.model.ProcessOption;
+import org.opencps.dossiermgt.model.ServiceConfig;
+import org.opencps.dossiermgt.model.ServiceInfo;
+import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.service.DeliverableLocalService;
+import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionLocalService;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalService;
+import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalService;
+import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierSyncLocalService;
+import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
+import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
+import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
+import org.opencps.dossiermgt.service.ServiceInfoLocalServiceUtil;
+import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueDetailModel;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueInputModel;
 import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
+import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.Body;
 import org.opencps.thirdparty.system.nsw.model.Content;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
@@ -25,6 +43,8 @@ import org.opencps.thirdparty.system.nsw.model.NSWRequest;
 import org.opencps.thirdparty.system.nsw.model.RequestPayload;
 import org.opencps.thirdparty.system.nsw.model.Subject;
 import org.opencps.thirdparty.system.nsw.model.To;
+import org.opencps.thirdparty.system.nsw.model.Transporter;
+import org.opencps.thirdparty.system.nsw.model.VLInterRoadTransportLicence;
 import org.opencps.thirdparty.system.rest.client.OpenCPSRestClient;
 import org.opencps.thirdparty.system.rest.client.PrefsProperties;
 import org.opencps.thirdparty.system.service.ThirdPartyDossierSyncLocalService;
@@ -34,6 +54,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,6 +66,9 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 @Component(immediate = true, service = OutsideSystemSyncScheduler.class)
@@ -170,7 +194,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						
 						subject.setDocumentType(dossier.getServiceCode());
 						subject.setType(11);
-						subject.setFunction(05);
+						subject.setFunction(06);
 						subject.setReference(dossier.getReferenceUid());
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
@@ -179,6 +203,22 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
+						List<DossierFile> dossierFileList = DossierFileLocalServiceUtil.getAllDossierFile(dossier.getDossierId());
+
+						String partNo = StringPool.BLANK;
+						ProcessAction processAction = ProcessActionLocalServiceUtil.fetchProcessAction(dossierActionId);
+						
+						for (DossierFile dossierFile : dossierFileList) {
+							partNo = dossierFile.getDossierPartNo();
+							String returnDossierFiles = processAction.getReturnDossierFiles();
+							String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
+							for (String returnDossierFile : returnDossierFilesArr) {
+								if (partNo.equals(returnDossierFile)) {
+									ketqua.setLinkCongvan("");
+								}
+							}
+						}
+						
 						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
@@ -478,14 +518,23 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						
-						ketqua.setSoTn("");
-						ketqua.setNoiDung(dossierAction.getActionNote());
-						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						VLInterRoadTransportLicence vlInterRoadTransportLicense = new VLInterRoadTransportLicence();
+						vlInterRoadTransportLicense.setLicenceNo("");
+						vlInterRoadTransportLicense.setFirstRegistrationDate("");
+						vlInterRoadTransportLicense.setValidUntil("");
+						vlInterRoadTransportLicense.setTransportOperation("");
+						Transporter transporter = new Transporter();
+						vlInterRoadTransportLicense.setTransporter(transporter);
+						transporter.setNameOfCompany("");
+						transporter.setAddress("");
+						transporter.setTel("");
+						transporter.setFax("");
+						transporter.setEmail("");
+						transporter.setWebsite("");
+						AttachedFile attachedFile = new AttachedFile();
+						List<AttachedFile> lstFiles = new ArrayList<>();
 						
-						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
-
 						MessageQueueInputModel model = new MessageQueueInputModel();
-						model.setRawMessage(rawMessage);
 						model.setContent("");
 						model.setSender("BGTVT");
 						model.setReceiver("NSW");
@@ -515,6 +564,67 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setRetryCount(1);
 						model.setDirection(2);
 						
+						List<DossierFile> dossierFileList = DossierFileLocalServiceUtil.getAllDossierFile(dossier.getDossierId());
+
+						String templateNo = StringPool.BLANK;
+						String partNo = StringPool.BLANK;
+						int partType = 2;
+						boolean eSign = true;
+						String deliverableCode = StringPool.BLANK;
+						
+						ServiceInfo serviceInfo = ServiceInfoLocalServiceUtil.getByCode(dossier.getGroupId(), dossier.getServiceCode());
+						ServiceConfig serviceConfig = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(dossier.getGroupId(), serviceInfo.getServiceCode(), dossier.getGovAgencyCode());
+						
+						ProcessOption processOption = ProcessOptionLocalServiceUtil.getByDTPLNoAndServiceCF(dossier.getGroupId(), dossier.getDossierTemplateNo(), serviceConfig.getServiceConfigId());
+						
+						ServiceProcess serviceProcess = ServiceProcessLocalServiceUtil.fetchServiceProcess(processOption.getServiceProcessId());
+						ProcessAction processAction = ProcessActionLocalServiceUtil.fetchBySPID_AC(serviceProcess.getServiceProcessId(), dossierAction.getActionCode());
+													
+						for (DossierFile dossierFile : dossierFileList) {
+							partNo = dossierFile.getDossierPartNo();
+							templateNo = dossierFile.getFileTemplateNo();
+							
+							String returnDossierFiles = processAction.getReturnDossierFiles();
+							
+							String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
+							for (String returnDossierFile : returnDossierFilesArr) {
+								if (templateNo.equals(returnDossierFile)) {
+									attachedFile = new AttachedFile();
+									attachedFile.setAttachedNote("");
+									attachedFile.setAttachedTypeCode(partNo);
+									attachedFile.setAttachedTypeName(templateNo);
+									attachedFile.setFileURL("");
+									attachedFile.setFullFileName(dossierFile.getDisplayName());
+									
+									lstFiles.add(attachedFile);
+									
+									DossierPart dossierPart = DossierPartLocalServiceUtil.getByPartTypeEsign (templateNo,
+											partNo, partType, eSign);
+									if (dossierPart != null) {
+										List<DossierFile> dossierFileRefList = DossierFileLocalServiceUtil
+												.getByReferenceUid(dossierFile.getReferenceUid());
+										if (dossierFileRefList != null && dossierFileRefList.size() > 0) {
+											for (DossierFile dof : dossierFileRefList) {
+												deliverableCode = dof.getDeliverableCode();
+												if (Validator.isNotNull(deliverableCode)) {
+													Deliverable deli = DeliverableLocalServiceUtil.getByCodeAndState(deliverableCode, "2");
+													if (deli != null) {
+														String formData = StringPool.BLANK;
+														formData = deli.getFormData();
+													}
+												}
+											}
+										}
+									}									
+								}
+							}
+						}
+
+						vlInterRoadTransportLicense.getAttachedFile().addAll(lstFiles);
+						content.setVLInterRoadTransportLicence(vlInterRoadTransportLicense);
+						
+						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						model.setRawMessage(rawMessage);
 						MessageQueueDetailModel result = client.postMessageQueue(model);
 						if (result != null) {
 							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());

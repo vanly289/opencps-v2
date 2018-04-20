@@ -15,47 +15,47 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for KetQuaXuLy complex type.
+ * <p>Java class for AttachedFile complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="KetQuaXuLy">
+ * &lt;complexType name="AttachedFile">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="so_tn">
+ *         &lt;element name="AttachedTypeCode">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="100"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="noi_dung">
+ *         &lt;element name="AttachedTypeName">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="2000"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="ngay_xu_ly">
+ *         &lt;element name="AttachedNote">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="don_vi_xu_ly">
+ *         &lt;element name="FullFileName">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="250"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="link_congvan">
+ *         &lt;element name="FileURL">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="2000"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
@@ -68,144 +68,144 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "KetQuaXuLy", propOrder = {
-    "soTn",
-    "noiDung",
-    "ngayXuLy",
-    "donViXuLy",
-    "linkCongvan"
+@XmlType(name = "AttachedFile", propOrder = {
+    "attachedTypeCode",
+    "attachedTypeName",
+    "attachedNote",
+    "fullFileName",
+    "fileURL"
 })
-public class KetQuaXuLy {
+public class AttachedFile {
 
-    @XmlElement(name = "so_tn", required = true)
-    protected String soTn;
-    @XmlElement(name = "noi_dung", required = true)
-    protected String noiDung;
-    @XmlElement(name = "ngay_xu_ly", required = true)
-    protected String ngayXuLy;
-    @XmlElement(name = "don_vi_xu_ly", required = true)
-    protected String donViXuLy;
-    @XmlElement(name = "link_congvan", required = true)
-    protected String linkCongvan;
+    @XmlElement(name = "AttachedTypeCode", required = true)
+    protected String attachedTypeCode;
+    @XmlElement(name = "AttachedTypeName", required = true)
+    protected String attachedTypeName;
+    @XmlElement(name = "AttachedNote", required = true)
+    protected String attachedNote;
+    @XmlElement(name = "FullFileName", required = true)
+    protected String fullFileName;
+    @XmlElement(name = "FileURL", required = true)
+    protected String fileURL;
 
     /**
-     * Gets the value of the soTn property.
+     * Gets the value of the attachedTypeCode property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSoTn() {
-        return soTn;
+    public String getAttachedTypeCode() {
+        return attachedTypeCode;
     }
 
     /**
-     * Sets the value of the soTn property.
+     * Sets the value of the attachedTypeCode property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSoTn(String value) {
-        this.soTn = value;
+    public void setAttachedTypeCode(String value) {
+        this.attachedTypeCode = value;
     }
 
     /**
-     * Gets the value of the noiDung property.
+     * Gets the value of the attachedTypeName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getNoiDung() {
-        return noiDung;
+    public String getAttachedTypeName() {
+        return attachedTypeName;
     }
 
     /**
-     * Sets the value of the noiDung property.
+     * Sets the value of the attachedTypeName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setNoiDung(String value) {
-        this.noiDung = value;
+    public void setAttachedTypeName(String value) {
+        this.attachedTypeName = value;
     }
 
     /**
-     * Gets the value of the ngayXuLy property.
+     * Gets the value of the attachedNote property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getNgayXuLy() {
-        return ngayXuLy;
+    public String getAttachedNote() {
+        return attachedNote;
     }
 
     /**
-     * Sets the value of the ngayXuLy property.
+     * Sets the value of the attachedNote property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setNgayXuLy(String value) {
-        this.ngayXuLy = value;
+    public void setAttachedNote(String value) {
+        this.attachedNote = value;
     }
 
     /**
-     * Gets the value of the donViXuLy property.
+     * Gets the value of the fullFileName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDonViXuLy() {
-        return donViXuLy;
+    public String getFullFileName() {
+        return fullFileName;
     }
 
     /**
-     * Sets the value of the donViXuLy property.
+     * Sets the value of the fullFileName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDonViXuLy(String value) {
-        this.donViXuLy = value;
+    public void setFullFileName(String value) {
+        this.fullFileName = value;
     }
 
     /**
-     * Gets the value of the linkCongvan property.
+     * Gets the value of the fileURL property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getLinkCongvan() {
-        return linkCongvan;
+    public String getFileURL() {
+        return fileURL;
     }
 
     /**
-     * Sets the value of the linkCongvan property.
+     * Sets the value of the fileURL property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setLinkCongvan(String value) {
-        this.linkCongvan = value;
+    public void setFileURL(String value) {
+        this.fileURL = value;
     }
 
 }

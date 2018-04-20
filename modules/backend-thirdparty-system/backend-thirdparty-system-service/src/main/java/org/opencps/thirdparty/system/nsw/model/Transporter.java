@@ -15,47 +15,54 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for KetQuaXuLy complex type.
+ * <p>Java class for Transporter complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="KetQuaXuLy">
+ * &lt;complexType name="Transporter">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="so_tn">
+ *         &lt;element name="NameOfCompany">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="100"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="noi_dung">
+ *         &lt;element name="Address">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="2000"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="ngay_xu_ly">
+ *         &lt;element name="Tel">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="don_vi_xu_ly">
+ *         &lt;element name="Fax">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="250"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="link_congvan">
+ *         &lt;element name="Email">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="2000"/>
+ *               &lt;maxLength value="255"/>
+ *             &lt;/restriction>
+ *           &lt;/simpleType>
+ *         &lt;/element>
+ *         &lt;element name="Website">
+ *           &lt;simpleType>
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
@@ -68,144 +75,171 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "KetQuaXuLy", propOrder = {
-    "soTn",
-    "noiDung",
-    "ngayXuLy",
-    "donViXuLy",
-    "linkCongvan"
+@XmlType(name = "Transporter", propOrder = {
+    "nameOfCompany",
+    "address",
+    "tel",
+    "fax",
+    "email",
+    "website"
 })
-public class KetQuaXuLy {
+public class Transporter {
 
-    @XmlElement(name = "so_tn", required = true)
-    protected String soTn;
-    @XmlElement(name = "noi_dung", required = true)
-    protected String noiDung;
-    @XmlElement(name = "ngay_xu_ly", required = true)
-    protected String ngayXuLy;
-    @XmlElement(name = "don_vi_xu_ly", required = true)
-    protected String donViXuLy;
-    @XmlElement(name = "link_congvan", required = true)
-    protected String linkCongvan;
+    @XmlElement(name = "NameOfCompany", required = true)
+    protected String nameOfCompany;
+    @XmlElement(name = "Address", required = true)
+    protected String address;
+    @XmlElement(name = "Tel", required = true)
+    protected String tel;
+    @XmlElement(name = "Fax", required = true)
+    protected String fax;
+    @XmlElement(name = "Email", required = true)
+    protected String email;
+    @XmlElement(name = "Website", required = true)
+    protected String website;
 
     /**
-     * Gets the value of the soTn property.
+     * Gets the value of the nameOfCompany property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSoTn() {
-        return soTn;
+    public String getNameOfCompany() {
+        return nameOfCompany;
     }
 
     /**
-     * Sets the value of the soTn property.
+     * Sets the value of the nameOfCompany property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSoTn(String value) {
-        this.soTn = value;
+    public void setNameOfCompany(String value) {
+        this.nameOfCompany = value;
     }
 
     /**
-     * Gets the value of the noiDung property.
+     * Gets the value of the address property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getNoiDung() {
-        return noiDung;
+    public String getAddress() {
+        return address;
     }
 
     /**
-     * Sets the value of the noiDung property.
+     * Sets the value of the address property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setNoiDung(String value) {
-        this.noiDung = value;
+    public void setAddress(String value) {
+        this.address = value;
     }
 
     /**
-     * Gets the value of the ngayXuLy property.
+     * Gets the value of the tel property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getNgayXuLy() {
-        return ngayXuLy;
+    public String getTel() {
+        return tel;
     }
 
     /**
-     * Sets the value of the ngayXuLy property.
+     * Sets the value of the tel property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setNgayXuLy(String value) {
-        this.ngayXuLy = value;
+    public void setTel(String value) {
+        this.tel = value;
     }
 
     /**
-     * Gets the value of the donViXuLy property.
+     * Gets the value of the fax property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDonViXuLy() {
-        return donViXuLy;
+    public String getFax() {
+        return fax;
     }
 
     /**
-     * Sets the value of the donViXuLy property.
+     * Sets the value of the fax property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDonViXuLy(String value) {
-        this.donViXuLy = value;
+    public void setFax(String value) {
+        this.fax = value;
     }
 
     /**
-     * Gets the value of the linkCongvan property.
+     * Gets the value of the email property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getLinkCongvan() {
-        return linkCongvan;
+    public String getEmail() {
+        return email;
     }
 
     /**
-     * Sets the value of the linkCongvan property.
+     * Sets the value of the email property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setLinkCongvan(String value) {
-        this.linkCongvan = value;
+    public void setEmail(String value) {
+        this.email = value;
+    }
+
+    /**
+     * Gets the value of the website property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getWebsite() {
+        return website;
+    }
+
+    /**
+     * Sets the value of the website property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setWebsite(String value) {
+        this.website = value;
     }
 
 }
