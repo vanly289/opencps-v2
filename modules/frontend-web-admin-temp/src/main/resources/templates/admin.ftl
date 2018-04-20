@@ -59,6 +59,14 @@
 						<i class="fa fa-gg" aria-hidden="true"></i>
 					</a>
 				</div>
+				<div class="col-sm-9 PL10 P0">Mẫu cấp giấy phép</div>
+			</li>
+			<li class="clearfix" >
+				<div class="col-sm-2 clearfix ">
+					<a href="javascript:;" >
+						<i class="fa fa-gg" aria-hidden="true"></i>
+					</a>
+				</div>
 				<div class="col-sm-9 PL10 P0">Mẫu hồ sơ</div>
 			</li>
 			<li class="clearfix" >
@@ -148,6 +156,7 @@
 			'${url.adminJobPosPortlet.jobpos_list}',
 			'${url.employeePortlet.employee_index}',
 			'${url.adminNotificationPortlet.notification_template_list}',
+			'${ajax.deliverabletype}',
 			'${ajax.dossiertemplate}',
 			'${ajax.serviceprocess}',
 			'${ajax.serviceconfig}',

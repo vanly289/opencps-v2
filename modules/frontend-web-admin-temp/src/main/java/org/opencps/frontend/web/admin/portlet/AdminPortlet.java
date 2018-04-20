@@ -292,8 +292,16 @@ import backend.utils.ObjectConverterUtil;
 			certNumberURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 			certNumberURL.setParameter(
 				"mvcPath", "/templates/certNumber.ftl");
+						
+			PortletURL deliverableTypeURL = PortletURLFactoryUtil.create(
+					renderRequest, portletId, themeDisplay.getPlid(),
+					PortletRequest.RENDER_PHASE);
+			deliverableTypeURL.setPortletMode(PortletMode.VIEW);
+			deliverableTypeURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+			deliverableTypeURL.setParameter(
+					"mvcPath", "/templates/deliverabletype/deliverabletype_list.ftl");
 			
-			
+			urlObject.put("deliverabletype", deliverableTypeURL.toString());
 			urlObject.put("registrationtemplates", registrationTemplatesURL.toString());
 			urlObject.put("serviceinfo_list", serviceInfoListURL.toString());
 			urlObject.put("serviceinfo_form", serviceInfoFormURL.toString());
