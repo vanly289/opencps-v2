@@ -1,6 +1,7 @@
 package org.opencps.thirdparty.system.scheduler;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +30,7 @@ import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceInfoLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
+import org.opencps.thirdparty.system.constants.SyncServerTerm;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueDetailModel;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueInputModel;
 import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
@@ -48,13 +50,13 @@ import org.opencps.thirdparty.system.nsw.model.VLInterRoadTransportLicence;
 import org.opencps.thirdparty.system.rest.client.OpenCPSRestClient;
 import org.opencps.thirdparty.system.rest.client.PrefsProperties;
 import org.opencps.thirdparty.system.service.ThirdPartyDossierSyncLocalService;
+import org.opencps.thirdparty.system.util.OutsideSystemConverter;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -66,6 +68,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -81,6 +84,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 		List<ThirdPartyDossierSync> lstSyncs = _thirdPartyDossierSyncLocalService.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		
 		OpenCPSRestClient client = new OpenCPSRestClient(PrefsProperties.getJaxRsUrl());
+		String jaxRsUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_URL);
 		
 		for (ThirdPartyDossierSync sync : lstSyncs) {
 			if (sync.getMethod() == 0) {
@@ -103,20 +107,39 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				from.setCountryCode("VN");
 				from.setIdentity("BGTVT");
 				from.setMinistryCode("BGTVT");
+				from.setOrganizationCode("TCDBVN");
+				from.setUnitCode(dossier.getGovAgencyCode());
 				header.setFrom(from);
 				To to = new To();
-				to.setName("NSW");
-				to.setIdentity("NSW");
-				to.setMinistryCode("NSW");
+				to.setName(dossier.getApplicantName());
+				to.setIdentity(dossier.getApplicantIdNo());
+				to.setMinistryCode("BTC");
+				to.setOrganizationCode("BTC");
+				to.setUnitCode("BTC");
+				header.setTo(to);
+				org.opencps.thirdparty.system.nsw.model.Reference reference = 
+						new org.opencps.thirdparty.system.nsw.model.Reference();
+				
+				reference.setVersion("1.0");
+				reference.setMessageId(PortalUUIDUtil.generate());
+				
+				header.setReference(reference);
+				
 				Subject subject = new Subject();
+				subject.setDocumentType(dossier.getServiceCode());
+				
 				header.setSubject(subject);
 				subject.setReference(dossier.getReferenceUid());
 				subject.setPreReference(dossier.getReferenceUid());
+				Calendar cal = Calendar.getInstance();
+				
 				if (dossier.getReceiveDate() != null) {
-					subject.setDocumentYear(dossier.getReceiveDate().getYear());					
+					cal.setTime(dossier.getReceiveDate());
+					subject.setDocumentYear(cal.get(Calendar.YEAR));					
 				}
 				else {
-					subject.setDocumentYear(dossier.getCreateDate().getYear());					
+					cal.setTime(dossier.getCreateDate());
+					subject.setDocumentYear(cal.get(Calendar.YEAR));					
 				}
 				Body body = new Body();
 				envelope.setBody(body);
@@ -131,17 +154,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						
 						subject.setDocumentType(dossier.getServiceCode());
-						subject.setType(11);
-						subject.setFunction(05);
+						subject.setType("11");
+						subject.setFunction("05");
 						subject.setReference(dossier.getReferenceUid());
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						
-						ketqua.setSoTn("");
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 						
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -168,9 +190,10 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setType("11");
 						model.setFunction("05");
 						model.setReference(dossier.getReferenceUid());
-						model.setDocumentYear(dossier.getCreateDate().getYear());
+						cal.setTime(dossier.getCreateDate());
+						model.setDocumentYear(cal.get(Calendar.YEAR));
 						model.setPreReference(dossier.getReferenceUid());
-						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						model.setRetryCount(1);
 						model.setDirection(2);
 						
@@ -193,33 +216,44 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						
 						subject.setDocumentType(dossier.getServiceCode());
-						subject.setType(11);
-						subject.setFunction(06);
+						subject.setType("11");
+						subject.setFunction("06");
 						subject.setReference(dossier.getReferenceUid());
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						
-						ketqua.setSoTn("");
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
 						List<DossierFile> dossierFileList = DossierFileLocalServiceUtil.getAllDossierFile(dossier.getDossierId());
 
-						String partNo = StringPool.BLANK;
-						ProcessAction processAction = ProcessActionLocalServiceUtil.fetchProcessAction(dossierActionId);
+						String templateNo = StringPool.BLANK;
+						
+						ServiceInfo serviceInfo = ServiceInfoLocalServiceUtil.getByCode(dossier.getGroupId(), dossier.getServiceCode());
+						ServiceConfig serviceConfig = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(dossier.getGroupId(), serviceInfo.getServiceCode(), dossier.getGovAgencyCode());
+						
+						ProcessOption processOption = ProcessOptionLocalServiceUtil.getByDTPLNoAndServiceCF(dossier.getGroupId(), dossier.getDossierTemplateNo(), serviceConfig.getServiceConfigId());
+						
+						ServiceProcess serviceProcess = ServiceProcessLocalServiceUtil.fetchServiceProcess(processOption.getServiceProcessId());
+						ProcessAction processAction = ProcessActionLocalServiceUtil.fetchBySPID_AC(serviceProcess.getServiceProcessId(), dossierAction.getActionCode());
 						
 						for (DossierFile dossierFile : dossierFileList) {
-							partNo = dossierFile.getDossierPartNo();
+							templateNo = dossierFile.getFileTemplateNo();
+							
 							String returnDossierFiles = processAction.getReturnDossierFiles();
 							String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
 							for (String returnDossierFile : returnDossierFilesArr) {
-								if (partNo.equals(returnDossierFile)) {
-									ketqua.setLinkCongvan("");
+								if (templateNo.equals(returnDossierFile)) {
+									String linkCongVan = jaxRsUrl + "dossiers/" + dossier.getDossierId() + "/files/" + dossierFile.getReferenceUid();
+									if (dossier.getPassword() != null) {
+										linkCongVan += "/" + dossier.getPassword();
+									}
+									ketqua.setLinkCongvan(linkCongVan);
 								}
 							}
 						}
 						
-						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -246,9 +280,10 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setType("11");
 						model.setFunction("06");
 						model.setReference(dossier.getReferenceUid());
-						model.setDocumentYear(dossier.getCreateDate().getYear());
+						cal.setTime(dossier.getCreateDate());
+						model.setDocumentYear(cal.get(Calendar.YEAR));
 						model.setPreReference(dossier.getReferenceUid());
-						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						model.setRetryCount(1);
 						model.setDirection(2);
 						
@@ -270,17 +305,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						
 						subject.setDocumentType(dossier.getServiceCode());
-						subject.setType(11);
-						subject.setFunction(05);
+						subject.setType("11");
+						subject.setFunction("14");
 						subject.setReference(dossier.getReferenceUid());
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						
-						ketqua.setSoTn("");
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -331,17 +365,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						
 						subject.setDocumentType(dossier.getServiceCode());
-						subject.setType(11);
-						subject.setFunction(05);
+						subject.setType("11");
+						subject.setFunction("17");
 						subject.setReference(dossier.getReferenceUid());
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						
-						ketqua.setSoTn("");
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -391,17 +424,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 					else if (dossierAction.getSyncActionCode().equals("1409")) {
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						subject.setDocumentType(dossier.getServiceCode());
-						subject.setType(11);
-						subject.setFunction(05);
+						subject.setType("14");
+						subject.setFunction("09");
 						subject.setReference(dossier.getReferenceUid());
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						
-						ketqua.setSoTn("");
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						
-						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -452,17 +484,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						
 						subject.setDocumentType(dossier.getServiceCode());
-						subject.setType(11);
-						subject.setFunction(05);
+						subject.setType("14");
+						subject.setFunction("10");
 						subject.setReference(dossier.getReferenceUid());
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						
-						ketqua.setSoTn("");
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -512,8 +543,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 					else if (dossierAction.getSyncActionCode().equals("1815")) {
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						subject.setDocumentType(dossier.getServiceCode());
-						subject.setType(11);
-						subject.setFunction(05);
+						subject.setType("18");
+						subject.setFunction("15");
 						subject.setReference(dossier.getReferenceUid());
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
@@ -623,7 +654,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						vlInterRoadTransportLicense.getAttachedFile().addAll(lstFiles);
 						content.setVLInterRoadTransportLicence(vlInterRoadTransportLicense);
 						
-						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+
 						model.setRawMessage(rawMessage);
 						MessageQueueDetailModel result = client.postMessageQueue(model);
 						if (result != null) {
@@ -642,17 +674,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 					else if (dossierAction.getSyncActionCode().equals("1613")) {
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						subject.setDocumentType(dossier.getServiceCode());
-						subject.setType(11);
-						subject.setFunction(05);
+						subject.setType("16");
+						subject.setFunction("13");
 						subject.setReference(dossier.getReferenceUid());
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						
-						ketqua.setSoTn("");
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						
-						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -702,17 +733,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 					else if (dossierAction.getSyncActionCode().equals("1816")) {
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						subject.setDocumentType(dossier.getServiceCode());
-						subject.setType(11);
-						subject.setFunction(05);
+						subject.setType("18");
+						subject.setFunction("16");
 						subject.setReference(dossier.getReferenceUid());
 						subject.setPreReference(dossier.getReferenceUid());
 						subject.setSendDate(APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 						
-						ketqua.setSoTn("");
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						
-						String rawMessage = "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode><documentType>" + nswRequest.getDocumentType() + "</documentType>" + SOAPConverter.convertNSWRequest(nswRequest.getRequestPayload());
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);

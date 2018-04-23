@@ -252,8 +252,12 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 		BackendAuth auth = new BackendAuthImpl();
 
 		try {
-
-			if (!auth.isAuth(serviceContext)) {
+			Dossier dossier = DossierLocalServiceUtil.fetchDossier(id);
+			boolean isAuthenticated = false;
+			if (dossier.getPassword() != null && dossier.getPassword().equals(password)) {
+				isAuthenticated = true;
+			}
+			if (!auth.isAuth(serviceContext) && !isAuthenticated) {
 				throw new UnauthenticationException();
 			}
 

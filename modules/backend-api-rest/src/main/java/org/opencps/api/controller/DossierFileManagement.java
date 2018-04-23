@@ -188,7 +188,7 @@ public interface DossierFileManagement {
 			@ApiParam(value = "body params for post") @BeanParam DossierFileCopyInputModel input);
 
 	@GET
-	@Path("/{id}/files/{referenceUid}")
+	@Path("/{id}/files/{referenceUid}/{password}")
 	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })
 	@ApiOperation(value = "getDossierFilesByDossierReferenceUid", response = DossierFileResultsModel.class)

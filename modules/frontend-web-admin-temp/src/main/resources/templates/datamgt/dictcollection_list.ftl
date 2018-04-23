@@ -86,7 +86,7 @@
 <input type="hidden" value="0" id="_collection_hidden_new_id"/>
 
 <script type="text/javascript">
-	
+		
 	function _collection_autocompleteSearch() {
 		
 		var _collection_ListView = $("#_collection_listView").data("kendoListView");
