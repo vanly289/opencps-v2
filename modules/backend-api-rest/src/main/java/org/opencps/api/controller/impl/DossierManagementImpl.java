@@ -1041,10 +1041,9 @@ public class DossierManagementImpl implements DossierManagement {
 				}
 
 				_log.info("Call ===========");
-
 				ProcessOption option = getProcessOption(dossier.getServiceCode(), dossier.getGovAgencyCode(),
 						dossier.getDossierTemplateNo(), groupId);
-
+				
 				ProcessAction action = getProcessAction(groupId, dossier.getDossierId(), dossier.getReferenceUid(),
 						input.getActionCode(), option.getServiceProcessId());
 
@@ -1193,13 +1192,11 @@ public class DossierManagementImpl implements DossierManagement {
 			String dossierStatus = dossier.getDossierStatus();
 
 			String dossierSubStatus = dossier.getDossierSubStatus();
-
 			for (ProcessAction act : actions) {
-
 				String preStepCode = act.getPreStepCode();
 
 				ProcessStep step = ProcessStepLocalServiceUtil.fetchBySC_GID(preStepCode, groupId, serviceProcessId);
-
+				
 				if (Validator.isNull(step)) {
 					action = act;
 					break;

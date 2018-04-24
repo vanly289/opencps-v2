@@ -726,4 +726,50 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 		}
 	}
 
+	@Override
+	public Response downloadByPublicUser(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, long id, String referenceUid, String password) {
+		// TODO Auto-generated method stub
+		// TODO: check user is loged or password for access dossier file
+		BackendAuth auth = new BackendAuthImpl();
+
+		try {
+			Dossier dossier = DossierLocalServiceUtil.fetchDossier(id);
+			boolean isAuthenticated = false;
+			if (dossier.getPassword() != null && dossier.getPassword().equals(password)) {
+				isAuthenticated = true;
+			}
+			if (!auth.isAuth(serviceContext) && !isAuthenticated) {
+				throw new UnauthenticationException();
+			}
+
+			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(id, referenceUid);
+			
+			// TODO download file with dossierFileID
+			if (Validator.isNull(dossierFile) && Validator.isNumber(referenceUid)) {
+				dossierFile = DossierFileLocalServiceUtil.fetchDossierFile(Long.valueOf(referenceUid));
+			}
+
+			if (dossierFile.getFileEntryId() > 0) {
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
+
+				File file = DLFileEntryLocalServiceUtil.getFile(fileEntry.getFileEntryId(), fileEntry.getVersion(),
+						true);
+
+				ResponseBuilder responseBuilder = Response.ok((Object) file);
+
+				responseBuilder.header("Content-Disposition",
+						"attachment; filename=\"" + fileEntry.getFileName() + "\"");
+				responseBuilder.header("Content-Type", fileEntry.getMimeType());
+
+				return responseBuilder.build();
+			} else {
+				return Response.status(HttpURLConnection.HTTP_NO_CONTENT).build();
+			}
+
+		} catch (Exception e) {
+			return processException(e);
+		}	
+	}
+
 }

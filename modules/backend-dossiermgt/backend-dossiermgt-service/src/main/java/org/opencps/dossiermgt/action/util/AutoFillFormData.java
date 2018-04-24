@@ -281,6 +281,8 @@ public class AutoFillFormData {
 						
 						if (Validator.isNotNull(dossierFile) && Validator.isNotNull(dossierFile.getFormData()) && dossierFile.getFormData().trim().length() != 0) {
 							JSONObject jsonOtherData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
+							_log.info("JSON Form data: " + jsonOtherData.toJSONString());
+							
 							Map<String, Object> jsonOtherMap = jsonToMap(jsonOtherData);
 							String myCHK = StringPool.BLANK;
 							try {
