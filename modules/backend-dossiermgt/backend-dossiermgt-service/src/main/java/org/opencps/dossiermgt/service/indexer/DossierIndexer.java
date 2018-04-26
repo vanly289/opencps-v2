@@ -298,7 +298,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 		if (dossierActionsUserId > 0) {
 			List<DossierActionUser> dossierActionUsers = DossierActionUserLocalServiceUtil
 					.getListUser(dossierActionsUserId);
-			if (dossierActionUsers != null) {
+			if (dossierActionUsers != null && dossierActionUsers.size() > 0) {
 				int length = dossierActionUsers.size();
 				for (int i = 0; i < length; i ++) {
 					DossierActionUser dau = dossierActionUsers.get(i);
@@ -384,6 +384,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 				document.addTextSortable(DossierTerm.CERT_NO_SEARCH, certNoSearch);
 			}
 		}
+
 		}catch(Exception e) {
 			_log.error(e);
 		}
