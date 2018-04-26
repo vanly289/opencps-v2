@@ -163,12 +163,15 @@ public class AutoFillFormData {
 				sampleData = "{}";
 			}
 
+			_log.info("SAMPLE DATA------SAMPLE DATA-------" + sampleData);
+			_log.info("SAMPLE DATA------RESULT-------" + result);
 			Map<String, Object> jsonMap = jsonToMap(result);
 
 			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
 
 				String value = String.valueOf(entry.getValue());
-
+				_log.info("SAMPLE DATA------" + entry.getKey() + "-----" + value);
+				
 				if (value.startsWith("_") && !value.contains(":")) {
 
 					if (value.equals("_subjectName")) {

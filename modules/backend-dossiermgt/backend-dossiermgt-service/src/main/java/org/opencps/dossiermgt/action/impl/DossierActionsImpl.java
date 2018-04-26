@@ -594,7 +594,8 @@ public class DossierActionsImpl implements DossierActions {
 								for (DossierPart dossierPart : dossierParts) {
 
 									String fileTemplateNo = dossierPart.getFileTemplateNo();
-
+									System.out.println("SAMPLE DATA DOSSIER PART: " + dossierPart.getPartName());
+									
 									if (dossierFileTemplateNos.contains(fileTemplateNo)) {
 										JSONObject createFile = JSONFactoryUtil.createJSONObject();
 										createFile.put("dossierPartId", dossierPart.getDossierPartId());
@@ -639,6 +640,10 @@ public class DossierActionsImpl implements DossierActions {
 										} else {
 											eForm = Validator.isNotNull(dossierPart.getFormScript()) ? true : false;
 
+											System.out.println("ACTION: " + actionCode);
+											System.out.println("SAMPLE DATA IN NEXT ACTION: " + dossierPart.getPartNo());
+											System.out.println("SAMPLE DATA SAMPLE DATA IN NEXT ACTION: " + dossierPart.getSampleData());
+											
 											formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(),
 													dossierId, serviceContext);
 											formScript = dossierPart.getFormScript();

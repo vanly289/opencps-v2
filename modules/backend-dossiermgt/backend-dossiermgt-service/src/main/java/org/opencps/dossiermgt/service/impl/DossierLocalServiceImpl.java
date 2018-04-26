@@ -1187,9 +1187,8 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 		if (Validator.isNotNull(submitting) && Boolean.parseBoolean(submitting)) {
 			MultiMatchQuery query = new MultiMatchQuery(String.valueOf(submitting));
 
-			query.addField(DossierTerm.SUBMITTING);
-
-			booleanQuery.add(query, BooleanClauseOccur.MUST);
+			if (booleanQuery != null)
+				booleanQuery.add(query, BooleanClauseOccur.MUST);
 		}
 
 		if (Validator.isNotNull(status)) {
@@ -1440,7 +1439,8 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			}
 		}
 
-		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);
+		if (booleanQuery != null)
+			booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);
 
 		return IndexSearcherHelperUtil.search(searchContext, booleanQuery);
 	}
