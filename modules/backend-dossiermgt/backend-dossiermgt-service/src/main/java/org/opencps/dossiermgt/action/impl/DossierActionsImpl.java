@@ -145,8 +145,11 @@ public class DossierActionsImpl implements DossierActions {
 				result.put("total", total);
 			}
 			hits = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
-
-			result.put("data", hits.toList());
+			List<Document> docsList = new ArrayList<Document>();
+			if (hits != null && hits.getLength() > 0) {
+				docsList.addAll(hits.toList());
+			}
+			result.put("data", docsList);
 
 			long total = DossierLocalServiceUtil.countLucene(params, searchContext);
 
@@ -545,6 +548,8 @@ public class DossierActionsImpl implements DossierActions {
 							serviceProcessId, stepCode);
 					for (ProcessAction processAction : lstProcessAction) {
 
+						System.out.println("Process action: " + processAction.getActionName());
+						
 						String[] preConditions = StringUtil.split(processAction.getPreCondition());
 
 						String createDossierFiles = processAction.getCreateDossierFiles();
@@ -632,12 +637,11 @@ public class DossierActionsImpl implements DossierActions {
 
 							List<DossierPart> dossierParts = DossierPartLocalServiceUtil.getByTemplateNo(groupId,
 									dossierTemplate.getTemplateNo());
-
+							
 							if (dossierParts != null) {
 								for (DossierPart dossierPart : dossierParts) {
 
 									String fileTemplateNo = dossierPart.getFileTemplateNo();
-									System.out.println("SAMPLE DATA DOSSIER PART: " + dossierPart.getPartName());
 									
 									if (dossierFileTemplateNos.contains(fileTemplateNo)) {
 										JSONObject createFile = JSONFactoryUtil.createJSONObject();
@@ -682,10 +686,6 @@ public class DossierActionsImpl implements DossierActions {
 											}
 										} else {
 											eForm = Validator.isNotNull(dossierPart.getFormScript()) ? true : false;
-
-											System.out.println("ACTION: " + actionCode);
-											System.out.println("SAMPLE DATA IN NEXT ACTION: " + dossierPart.getPartNo());
-											System.out.println("SAMPLE DATA SAMPLE DATA IN NEXT ACTION: " + dossierPart.getSampleData());
 											
 											formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(),
 													dossierId, serviceContext);

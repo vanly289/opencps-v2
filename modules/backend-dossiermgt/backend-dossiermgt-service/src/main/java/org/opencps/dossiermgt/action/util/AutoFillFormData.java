@@ -2,6 +2,7 @@ package org.opencps.dossiermgt.action.util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -163,14 +164,11 @@ public class AutoFillFormData {
 				sampleData = "{}";
 			}
 
-			_log.info("SAMPLE DATA------SAMPLE DATA-------" + sampleData);
-			_log.info("SAMPLE DATA------RESULT-------" + result);
 			Map<String, Object> jsonMap = jsonToMap(result);
 
 			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
 
 				String value = String.valueOf(entry.getValue());
-				_log.info("SAMPLE DATA------" + entry.getKey() + "-----" + value);
 				
 				if (value.startsWith("_") && !value.contains(":")) {
 
@@ -284,9 +282,9 @@ public class AutoFillFormData {
 						
 						if (Validator.isNotNull(dossierFile) && Validator.isNotNull(dossierFile.getFormData()) && dossierFile.getFormData().trim().length() != 0) {
 							JSONObject jsonOtherData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
-							_log.info("JSON Form data: " + jsonOtherData.toJSONString());
 							
 							Map<String, Object> jsonOtherMap = jsonToMap(jsonOtherData);
+							_log.info("JSON other map: " + Arrays.toString(jsonOtherMap.entrySet().toArray()));
 							String myCHK = StringPool.BLANK;
 							try {
 								if (variable.contains(":")) {

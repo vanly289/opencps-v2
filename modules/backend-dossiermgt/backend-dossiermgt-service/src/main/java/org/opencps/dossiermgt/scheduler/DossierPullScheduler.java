@@ -107,7 +107,6 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 		try {
 			String endPointDossier = "dossiers?submitting=true&secetKey=" + serectKey;
-
 			JSONObject resDossierSearch = rest.callAPI(0l, HttpMethods.GET, "application/json",
 					RESTFulConfiguration.SERVER_PATH_BASE, endPointDossier, RESTFulConfiguration.SERVER_USER,
 					RESTFulConfiguration.SERVER_PASS, properties, serviceContext);
