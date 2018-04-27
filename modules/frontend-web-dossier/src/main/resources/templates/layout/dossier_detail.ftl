@@ -429,6 +429,7 @@
 			var dossierId = current.attr("dossierId");
 			console.log('dossierId: '+dossierId);
 			if(referentUid){
+				/*
 				$.ajax({
 					url : "/o/rest/v2/dossiers/"+dossierId+"/files/"+referentUid+"/formdata",
 					dataType : "json",
@@ -463,6 +464,7 @@
 						10000);
 					}
 				});
+				*/
 			}
 		};
 		

@@ -244,46 +244,47 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								var control = $("#alpacajs_form_"+item.partNo).alpaca("get");
 								var formData = control.getValue();
+								console.log("Form data: " + JSON.stringify(formData));
 
-								$.ajax({
-									url : "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/formdata",
-									dataType : "json",
-									type : "PUT",
-									headers: {
-										"groupId": themeDisplay.getScopeGroupId(),
-										Accept : "application/json"
-									},
-									data : {
-										formdata: JSON.stringify(formData)
-									},
-									success : function(result){
-										vm.snackbartextdossierViewJX = "Lưu form thành công!";
-										vm.snackbardossierViewJX = true;
-										vm.loadingAlpacajsForm = false;
-
-										
-
-										try{
-											
-											if(item.hasSubmit){
-
-											}else {
-
-												item.counter ++;
-												item.hasSubmit = true;
-											}
-
-
-										}catch(e){
-
-										}
-									},
-									error : function(result){
-										vm.snackbartextdossierViewJX = "Lưu form thất bại!";
-										vm.snackbarerordossierViewJX = true;
-										vm.loadingAlpacajsForm = false;
-									}
-								});
+//								$.ajax({
+//									url : "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/formdata",
+//									dataType : "json",
+//									type : "PUT",
+//									headers: {
+//										"groupId": themeDisplay.getScopeGroupId(),
+//										Accept : "application/json"
+//									},
+//									data : {
+//										formdata: JSON.stringify(formData)
+//									},
+//									success : function(result){
+//										vm.snackbartextdossierViewJX = "Lưu form thành công!";
+//										vm.snackbardossierViewJX = true;
+//										vm.loadingAlpacajsForm = false;
+//
+//										
+//
+//										try{
+//											
+//											if(item.hasSubmit){
+//
+//											}else {
+//
+//												item.counter ++;
+//												item.hasSubmit = true;
+//											}
+//
+//
+//										}catch(e){
+//
+//										}
+//									},
+//									error : function(result){
+//										vm.snackbartextdossierViewJX = "Lưu form thất bại!";
+//										vm.snackbarerordossierViewJX = true;
+//										vm.loadingAlpacajsForm = false;
+//									}
+//								});
 
 							} else if( $("#alpacajs_form_"+item.partNo + " .formType").val() != null && 
 								$("#alpacajs_form_"+item.partNo + " .formType").val() === 'assign' ) {
@@ -297,42 +298,42 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.subUsers = formData['subUsers'];
 								vm.alpacaAssignUserId = formData['userAction'];
 
-								$.ajax({
-									url : "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/formdata",
-									dataType : "json",
-									type : "PUT",
-									headers: {
-										"groupId": themeDisplay.getScopeGroupId(),
-										Accept : "application/json"
-									},
-									data : {
-										formdata: JSON.stringify(formData)
-									},
-									success : function(result){
-										vm.snackbartextdossierViewJX = "Lưu form thành công!";
-										vm.snackbardossierViewJX = true;
-										vm.loadingAlpacajsForm = false;
-
-										try{
-											if(item.hasSubmit){
-
-											}else {
-
-												item.counter ++;
-												item.hasSubmit = true;
-											}
-
-
-										}catch(e){
-
-										}
-									},
-									error : function(result){
-										vm.snackbartextdossierViewJX = "Lưu form thất bại!";
-										vm.snackbarerordossierViewJX = true;
-										vm.loadingAlpacajsForm = false;
-									}
-								});
+//								$.ajax({
+//									url : "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/formdata",
+//									dataType : "json",
+//									type : "PUT",
+//									headers: {
+//										"groupId": themeDisplay.getScopeGroupId(),
+//										Accept : "application/json"
+//									},
+//									data : {
+//										formdata: JSON.stringify(formData)
+//									},
+//									success : function(result){
+//										vm.snackbartextdossierViewJX = "Lưu form thành công!";
+//										vm.snackbardossierViewJX = true;
+//										vm.loadingAlpacajsForm = false;
+//
+//										try{
+//											if(item.hasSubmit){
+//
+//											}else {
+//
+//												item.counter ++;
+//												item.hasSubmit = true;
+//											}
+//
+//
+//										}catch(e){
+//
+//										}
+//									},
+//									error : function(result){
+//										vm.snackbartextdossierViewJX = "Lưu form thất bại!";
+//										vm.snackbarerordossierViewJX = true;
+//										vm.loadingAlpacajsForm = false;
+//									}
+//								});
 
 
 							} else {
