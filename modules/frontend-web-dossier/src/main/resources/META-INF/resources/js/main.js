@@ -688,7 +688,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								console.log(x);
 								isKyOk = true;
 							}*/
-							
+														
 							if (!isKyOk) {
 								$.ajax({
 									url: url,

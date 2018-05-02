@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.TimeZone;
@@ -16,13 +17,17 @@ import org.opencps.datamgt.service.DictItemLocalServiceUtil;
 import org.opencps.dossiermgt.action.DossierActions;
 import org.opencps.dossiermgt.action.DossierFileActions;
 import org.opencps.dossiermgt.action.util.AutoFillFormData;
+import org.opencps.dossiermgt.action.util.DeliverableNumberGenerator;
 import org.opencps.dossiermgt.action.util.DossierContentGenerator;
 import org.opencps.dossiermgt.action.util.DossierMgtUtils;
 import org.opencps.dossiermgt.action.util.DossierNumberGenerator;
 import org.opencps.dossiermgt.action.util.DossierPaymentUtils;
+import org.opencps.dossiermgt.constants.DeliverableTypesTerm;
 import org.opencps.dossiermgt.constants.DossierActionTerm;
 import org.opencps.dossiermgt.constants.DossierStatusConstants;
 import org.opencps.dossiermgt.constants.DossierTerm;
+import org.opencps.dossiermgt.model.Deliverable;
+import org.opencps.dossiermgt.model.DeliverableType;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierActionUser;
@@ -38,6 +43,8 @@ import org.opencps.dossiermgt.model.ProcessStepRole;
 import org.opencps.dossiermgt.model.ServiceConfig;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.model.ServiceProcessRole;
+import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
+import org.opencps.dossiermgt.service.DeliverableTypeLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionUserLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
@@ -66,6 +73,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -660,6 +669,101 @@ public class DossierActionsImpl implements DossierActions {
 										boolean returned = false;
 										int counter = 0;
 										long dossierFileId = 0;
+
+										//TODO: Add generate deliverable if has deliverable type
+										
+										if (dossierPart != null) {
+											ServiceContext context = new ServiceContext();
+											context.setScopeGroupId(dossierPart.getGroupId());
+											context.setCompanyId(dossierPart.getCompanyId());
+											
+											String deliverableTypeStr = dossierPart.getDeliverableType();
+											String formDataDeliverables = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
+											
+											JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formDataDeliverables);
+											String deliverableFormData = StringPool.BLANK;
+											JSONObject deliverableFormDataObj = JSONFactoryUtil.createJSONObject();
+											
+											if (Validator.isNotNull(deliverableTypeStr)) {
+												DeliverableType deliverableTypeObject = DeliverableTypeLocalServiceUtil.getByCode(groupId, deliverableTypeStr);
+												if (deliverableTypeObject != null) {
+													String mappingData = deliverableTypeObject.getMappingData();
+													JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
+													if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
+														JSONArray deliverablesArr = formDataObj.getJSONArray(mappingDataObj.getString(DeliverableTypesTerm.DELIVERABLES_KEY));
+														
+														for (int i = 0; i < deliverablesArr.length(); i++) {
+															JSONObject deliverableObj  = deliverablesArr.getJSONObject(i);
+															Iterator<?> keys = deliverableObj.keys();
+
+															while( keys.hasNext() ) {
+															    String key = (String)keys.next();
+															    deliverableFormDataObj.put(key, deliverableObj.get(key));
+															    
+																if (formDataObj.has(DeliverableTypesTerm.DELIVERABLE_SUBJECT)) {
+																	deliverableFormDataObj.put(DeliverableTypesTerm.DELIVERABLE_SUBJECT, formDataObj.get(DeliverableTypesTerm.DELIVERABLE_SUBJECT));								
+																}
+																else {
+																	deliverableFormDataObj.put(DeliverableTypesTerm.DELIVERABLE_SUBJECT, "");								
+																}
+																if (formDataObj.has(DeliverableTypesTerm.DELIVERABLE_ISSUEDATE)) {
+																	deliverableFormDataObj.put(DeliverableTypesTerm.DELIVERABLE_ISSUEDATE, formDataObj.get(DeliverableTypesTerm.DELIVERABLE_ISSUEDATE));															
+																}
+																else {
+																	deliverableFormDataObj.put(DeliverableTypesTerm.DELIVERABLE_ISSUEDATE, "");															
+																}
+																if (formDataObj.has(DeliverableTypesTerm.DELIVERABLE_EXPIREDATE)) {
+																	deliverableFormDataObj.put(DeliverableTypesTerm.DELIVERABLE_EXPIREDATE, formDataObj.get(DeliverableTypesTerm.DELIVERABLE_EXPIREDATE));															
+																}
+																else {
+																	deliverableFormDataObj.put(DeliverableTypesTerm.DELIVERABLE_EXPIREDATE, "");															
+																}
+																if (formDataObj.has(DeliverableTypesTerm.DELIVERABLE_REVALIDDATE)) {
+																	deliverableFormDataObj.put(DeliverableTypesTerm.DELIVERABLE_REVALIDDATE, formDataObj.get(DeliverableTypesTerm.DELIVERABLE_REVALIDDATE));															
+																}
+																else {
+																	deliverableFormDataObj.put(DeliverableTypesTerm.DELIVERABLE_REVALIDDATE, "");															
+																}
+																
+																String deliverableType = deliverableTypeObject.getTypeCode();
+//																String deliverableName = deliverableTypeObject.getTypeName();
+																String subject = deliverableFormDataObj.getString(DeliverableTypesTerm.DELIVERABLE_SUBJECT);
+																String issueDate = deliverableFormDataObj.getString(DeliverableTypesTerm.DELIVERABLE_ISSUEDATE);
+																String expireDate = deliverableFormDataObj.getString(DeliverableTypesTerm.DELIVERABLE_EXPIREDATE);
+																String revalidate = deliverableFormDataObj.getString(DeliverableTypesTerm.DELIVERABLE_REVALIDDATE);
+																String deliverableCode = DeliverableNumberGenerator.generateDeliverableNumber(groupId, companyId, deliverableTypeObject.getDeliverableTypeId());
+																
+																deliverableFormDataObj.put(DeliverableTypesTerm.DELIVERABLE_CODE_KEY, deliverableCode);
+
+																deliverableFormData = deliverableFormDataObj.toJSONString();
+																			
+																Deliverable dlv = DeliverableLocalServiceUtil.addDeliverable(groupId, deliverableType,
+																		deliverableCode, dossier.getGovAgencyCode(), dossier.getApplicantIdNo(),
+																		dossier.getApplicantName(), subject, issueDate, expireDate, revalidate, "0",
+																		serviceContext);
+																
+																String jrxmlTemplate = dossierPart.getFormReport();
+																
+																Message message = new Message();
+
+																JSONObject msgData = JSONFactoryUtil.createJSONObject();
+																msgData.put("className", Deliverable.class.getName());
+																msgData.put("classPK", dlv.getDeliverableId());
+																msgData.put("jrxmlTemplate", jrxmlTemplate);
+																msgData.put("formData", deliverableFormData);
+																msgData.put("userId", serviceContext.getUserId());
+
+																message.put("msgToEngine", msgData);
+																MessageBusUtil.sendMessage("jasper/engine/out/destination", message);
+
+															}
+															
+														}
+																												
+													}
+												}
+											}
+										}
 
 										List<DossierFile> dossierFilesResult = DossierFileLocalServiceUtil
 												.getDossierFileByDID_FTNO_DPT(dossierId, fileTemplateNo, 2, false,

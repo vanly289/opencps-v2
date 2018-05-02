@@ -87,11 +87,7 @@ public class DossierNumberGenerator {
 			String month = String.valueOf(DateTimeUtils.getMonthFromDate(now));
 			String year = String.valueOf(DateTimeUtils.getYearFromDate(now));
 
-			System.out.println("Day " + day + ", month " + month + ", year " + year);
-			System.out.println("Dossier pattern: " + seriNumberPattern);
 			for (String pattern : patterns) {
-				System.out.println("Pattern: " + pattern);
-				
 				Pattern r = Pattern.compile(pattern);
 
 				Matcher m = r.matcher(seriNumberPattern);
@@ -100,27 +96,19 @@ public class DossierNumberGenerator {
 					String tmp = m.group(1);
 
 					if (r.toString().equals(codePattern)) {
-						System.out.println("Match code pattern");
-						
 						//String key = "opencps.dossier.number.counter#" + processOtionId + "#" + year;
 						
 						String number = countByInit(serviceProcessCode, dossierId);
 
-						System.out.println("Number before " + number);
 						_log.info("//////////////////////////////////////////////////////////// " + number
 								+ "|processOtionId= " + number);
 
-						System.out.println("temp before " + tmp);
 						tmp = tmp.replaceAll(tmp.charAt(0) + StringPool.BLANK, String.valueOf(0));
 
-						System.out.println("tmp after " + tmp);
 						if (number.length() < tmp.length()) {
 							number = tmp.substring(0, tmp.length() - number.length()).concat(number);
 						}
-						System.out.println("number after " + number);
 						seriNumberPattern = seriNumberPattern.replace(m.group(0), number);
-
-						System.out.println("Seri number after code pattern: " + seriNumberPattern);
 					} else if (r.toString().equals(datetimePattern)) {
 						System.out.println(tmp);
 

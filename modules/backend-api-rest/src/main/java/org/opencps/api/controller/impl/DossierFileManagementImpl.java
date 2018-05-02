@@ -422,7 +422,6 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 
 			DossierFile dossierFile = action.updateDossierFileFormData(groupId, id, referenceUid, formdata,
 					serviceContext);
-
 			DossierFileModel result = DossierFileUtils.mappingToDossierFileModel(dossierFile);
 
 			return Response.status(200).entity(result).build();
