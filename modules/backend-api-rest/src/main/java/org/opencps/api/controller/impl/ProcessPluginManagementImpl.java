@@ -2,6 +2,7 @@ package org.opencps.api.controller.impl;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,11 +21,14 @@ import org.opencps.auth.api.exception.UnauthorizationException;
 import org.opencps.dossiermgt.action.DossierFileActions;
 import org.opencps.dossiermgt.action.impl.DossierFileActionsImpl;
 import org.opencps.dossiermgt.action.util.AutoFillFormData;
+import org.opencps.dossiermgt.constants.DeliverableTypesTerm;
+import org.opencps.dossiermgt.model.DeliverableType;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
 import org.opencps.dossiermgt.model.ProcessPlugin;
+import org.opencps.dossiermgt.service.DeliverableTypeLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
@@ -76,7 +80,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 					DossierAction dossierAction = DossierActionLocalServiceUtil.getDossierAction(dossierActionId);
 
 					String stepCode = dossierAction.getStepCode();
-
+					_log.info("STEP CODE: " + stepCode);
+					_log.info("SERVICE PROCESS ID: " + dossierAction.getServiceProcessId());
 					List<ProcessPlugin> plugins = ProcessPluginLocalServiceUtil
 							.getProcessPlugins(dossierAction.getServiceProcessId(), stepCode);
 
@@ -460,46 +465,109 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 			formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
 
-			_log.info(formData);
+//			_log.info(formData);
+			
+			if (Validator.isNotNull(dossierPart.getDeliverableType())) {
+				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
+				if (dlt != null) {					
+					if (original) {
+						String mappingData = dlt.getMappingData();
+						JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
+						if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
+							String deliverables = mappingDataObj.getString(DeliverableTypesTerm.DELIVERABLES_KEY);
+							_log.info("--------DELIVERABLES----------" + deliverables);
+							if (Validator.isNotNull(dossierFile)) {
+								formData = dossierFile.getFormData();
+							}
 
-			if (original) {
+							JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
+							JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
+														
+							if (Validator.isNull(deliverables)) {
+							}
+							else {
+								if (formDataObj.has(deliverables)) {
+									_log.info("----GENERATE MANY DELIVERABLES----:" + formDataObj.toJSONString());
+									
+									JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
 
-				if (Validator.isNotNull(dossierFile)) {
-					formData = dossierFile.getFormData();
-				}
+									for (int i = 0; i < deliverablesArr.length(); i++) {
+										JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
 
-			} else {
-				DossierFileActions actions = new DossierFileActionsImpl();
+										Iterator<?> keys = formDataObj.keys();
 
-				if (Validator.isNull(dossierFile)) {
+										while( keys.hasNext() ) {
+										    String key = (String)keys.next();
+										    if (!key.equals(deliverables)) {
+										    	newFormDataObj.put(key, formDataObj.get(key));
+										    }
+										}							
 
-					if (autoRun) {
-						// create DossierFile
+										JSONObject deliverableObj = deliverablesArr.getJSONObject(i);
+										
+										keys = deliverableObj.keys();
 
-						dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
-								dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
-								StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
-
-						_log.info("UPDATED DOSSIERFILE");
-
-						actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
-								context);
+										while( keys.hasNext() ) {
+										    String key = (String)keys.next();
+										    newFormDataObj.put(key, deliverableObj.get(key));
+										}																	
+										
+										deliverableListArr.put(newFormDataObj);
+									}
+								}
+							}
+							
+							formData = deliverableListArr.toJSONString();
+						}
+						else {
+							
+						}
 
 					} else {
-						// add temp File
+						String mappingData = dlt.getMappingData();
+						JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
+						if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
+							String deliverables = mappingDataObj.getString(DeliverableTypesTerm.DELIVERABLES_KEY);
+							_log.info("--------DELIVERABLES----------" + deliverables);
+							
+							if (Validator.isNull(deliverables)) {
+							}
+						}
+						
+						DossierFileActions actions = new DossierFileActionsImpl();
 
-					}
+						if (Validator.isNull(dossierFile)) {
 
-				} else {
-					// formData = dossierFile.getFormData();
+							if (autoRun) {
+								// create DossierFile
 
-					actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
-							context);
+								dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
+										dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
+										StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
 
+								_log.info("UPDATED DOSSIERFILE");
+
+								actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
+										context);
+
+							} else {
+								// add temp File
+
+							}
+
+						} else {
+							// formData = dossierFile.getFormData();
+
+							actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
+									context);
+
+						}
+					}									
 				}
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			_log.info("Cant get formdata with fileTemplateNo_" + fileTemplateNo);
 		}
 

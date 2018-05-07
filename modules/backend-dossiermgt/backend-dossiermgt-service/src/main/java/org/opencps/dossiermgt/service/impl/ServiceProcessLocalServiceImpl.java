@@ -101,7 +101,7 @@ public class ServiceProcessLocalServiceImpl extends ServiceProcessLocalServiceBa
 	static final String PROCESS_NO = "DEFAULT_SERVICE_PROCESS";
 	
 	@Indexable(type = IndexableType.REINDEX)
-	public void cloneServiceProcess(long serviceProcessId, long groupId, ServiceContext serviceContext) throws PortalException {
+	public void cloneServiceProcess(long serviceProcessId, long groupId, String processNo, ServiceContext serviceContext) throws PortalException {
 		
 		ServiceProcess originServiceProcess = serviceProcessPersistence.fetchByPrimaryKey(serviceProcessId);
 		
@@ -122,7 +122,8 @@ public class ServiceProcessLocalServiceImpl extends ServiceProcessLocalServiceBa
 		cloneServiceProcess.setUserName(userAction.getFullName());
 		
 		// Add other fields
-		cloneServiceProcess.setProcessNo(originServiceProcess.getProcessNo() + "_CLONE");
+//		cloneServiceProcess.setProcessNo(originServiceProcess.getProcessNo() + "_CLONE");
+		cloneServiceProcess.setProcessNo(processNo);
 		cloneServiceProcess.setProcessName(originServiceProcess.getProcessName());
 		cloneServiceProcess.setDescription(originServiceProcess.getDescription());
 		cloneServiceProcess.setDurationCount(originServiceProcess.getDurationCount());

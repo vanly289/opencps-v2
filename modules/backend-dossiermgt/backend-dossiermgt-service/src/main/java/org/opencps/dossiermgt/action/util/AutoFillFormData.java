@@ -142,13 +142,13 @@ public class AutoFillFormData {
 			try {
 				Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(dossier.getGroupId(), serviceContext.getUserId());
 				
-				_log.info("GET EMPLOYEE ID ____" + serviceContext.getUserId());
+//				_log.info("GET EMPLOYEE ID ____" + serviceContext.getUserId());
 				
 				JSONObject employeeJSON = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(employee));
 				
-				_log.info("GET EMPLOYEE ____");
+//				_log.info("GET EMPLOYEE ____");
 
-				_log.info(employeeJSON);
+//				_log.info(employeeJSON);
 				
 				_employee_employeeNo = employeeJSON.getString("employeeNo");
 				_employee_fullName = employeeJSON.getString("fullName");
@@ -284,7 +284,7 @@ public class AutoFillFormData {
 							JSONObject jsonOtherData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
 							
 							Map<String, Object> jsonOtherMap = jsonToMap(jsonOtherData);
-							_log.info("JSON other map: " + Arrays.toString(jsonOtherMap.entrySet().toArray()));
+//							_log.info("JSON other map: " + Arrays.toString(jsonOtherMap.entrySet().toArray()));
 							String myCHK = StringPool.BLANK;
 							try {
 								if (variable.contains(":")) {

@@ -25,14 +25,17 @@ import java.util.Map;
 
 import org.opencps.dossiermgt.action.FileUploadUtils;
 import org.opencps.dossiermgt.action.util.AutoFillFormData;
+import org.opencps.dossiermgt.action.util.DeliverableNumberGenerator;
 import org.opencps.dossiermgt.constants.DossierFileTerm;
 import org.opencps.dossiermgt.exception.DuplicateDossierFileException;
 import org.opencps.dossiermgt.exception.InvalidDossierStatusException;
 import org.opencps.dossiermgt.exception.NoSuchDossierFileException;
 import org.opencps.dossiermgt.exception.NoSuchDossierPartException;
+import org.opencps.dossiermgt.model.DeliverableType;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
+import org.opencps.dossiermgt.service.DeliverableTypeLocalServiceUtil;
 import org.opencps.dossiermgt.service.base.DossierFileLocalServiceBaseImpl;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 import org.opencps.usermgt.action.ApplicantActions;
@@ -203,9 +206,16 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			object.setIsNew(true);
 		}
 		
-		String deliverableCode = PwdGenerator.getPassword(10);
+//		String deliverableCode = PwdGenerator.getPassword(10);
+//		
+//		if (Validator.isNotNull(dossierPart.getDeliverableType())) {
+//			object.setDeliverableCode(deliverableCode);
+//		}
 		
 		if (Validator.isNotNull(dossierPart.getDeliverableType())) {
+			DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
+			
+			String deliverableCode = DeliverableNumberGenerator.generateDeliverableNumber(groupId, serviceContext.getCompanyId(), deliverableType.getDeliverableTypeId());
 			object.setDeliverableCode(deliverableCode);
 		}
 
