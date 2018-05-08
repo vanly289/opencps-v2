@@ -253,7 +253,7 @@ public class SignatureManagementImpl implements SignatureManagement{
 						results = JSONFactoryUtil.createJSONObject();
 						results.put("msg", "fileEntryId");
 					}
-					break;
+//					break;
 				}
 			}
 
