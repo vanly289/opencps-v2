@@ -875,6 +875,7 @@ public class DossierActionsImpl implements DossierActions {
 												_log.info("------DELIVERABLE TYPE STR-------" + deliverableTypeStr);
 												if (Validator.isNotNull(deliverableTypeStr)) {
 													DeliverableType deliverableTypeObject = DeliverableTypeLocalServiceUtil.getByCode(groupId, deliverableTypeStr);
+													_log.info("Deliverable type: " + deliverableTypeObject);
 													if (deliverableTypeObject != null) {
 														String mappingData = deliverableTypeObject.getMappingData();
 														JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
@@ -1011,8 +1012,34 @@ public class DossierActionsImpl implements DossierActions {
 																			.contains(dossierPart.getFileTemplateNo())) {
 																		returned = true;
 																	}
+																	if (eForm && !dossierPart.getESign()) {
+																		DossierFileActions actions = new DossierFileActionsImpl();
+																		
+																		DossierFile dossierFile = null;
 						
-																	if (Validator.isNotNull(formData)) {
+																		try {
+																			dossierFile = DossierFileLocalServiceUtil
+																					.getDossierFileByDID_FTNO_DPT_First(dossierId,
+																							fileTemplateNo, 2, false, new DossierFileComparator(
+																									false, "createDate", Date.class));
+																		} catch (Exception e) {
+																		}
+																		if (Validator.isNull(dossierFile)) {
+						
+																			dossierFile = actions.addDossierFile(groupId, dossierId,
+																					referenceUid, dossier.getDossierTemplateNo(),
+																					dossierPart.getPartNo(), fileTemplateNo,
+																					dossierPart.getPartName(), StringPool.BLANK, 0L, null,
+																					StringPool.BLANK, String.valueOf(false), serviceContext);
+																			_log.info("dossierFile create:" + dossierFile.getDossierPartNo()
+																					+ "Timer create :" + new Date());
+																		}
+						
+																		docFileReferenceUid = dossierFile.getReferenceUid();
+						
+																		dossierFileId = dossierFile.getDossierFileId();																		
+																	}
+																	else if (Validator.isNotNull(formData)) {
 																		DossierFileActions actions = new DossierFileActionsImpl();
 						
 																		DossierFile dossierFile = null;

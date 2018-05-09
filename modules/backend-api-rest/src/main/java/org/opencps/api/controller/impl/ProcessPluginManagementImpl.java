@@ -368,6 +368,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						formReport = _getFormScript(formCode, dossier.getDossierId());
 					}
 
+					_log.info("Form data to preview: " + formData);
 					Message message = new Message();
 
 					message.put("formReport", formReport);
@@ -484,6 +485,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 							JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
 														
 							if (Validator.isNull(deliverables)) {
+								_log.info("Form data plugin: " + formData);
 							}
 							else {
 								if (formDataObj.has(deliverables)) {
@@ -515,9 +517,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 										deliverableListArr.put(newFormDataObj);
 									}
 								}
-							}
-							
-							formData = deliverableListArr.toJSONString();
+								formData = deliverableListArr.toJSONString();
+							}							
 						}
 						else {
 							

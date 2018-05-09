@@ -85,6 +85,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 		
 		OpenCPSRestClient client = new OpenCPSRestClient(PrefsProperties.getJaxRsUrl());
 		String jaxRsUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_URL);
+		String jaxRsPublicUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_PUBLIC_URL);
 		
 		for (ThirdPartyDossierSync sync : lstSyncs) {
 			if (sync.getMethod() == 0) {
@@ -244,9 +245,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
 							for (String returnDossierFile : returnDossierFilesArr) {
 								if (templateNo.equals(returnDossierFile)) {
-									String linkCongVan = jaxRsUrl + "dossiers/" + dossier.getDossierId() + "/files/" + dossierFile.getReferenceUid();
+									String linkCongVan = jaxRsPublicUrl + "dossiers/" + dossier.getDossierId() + "/files/" + dossierFile.getReferenceUid();
 									if (dossier.getPassword() != null) {
-										linkCongVan += "/" + dossier.getPassword();
+										linkCongVan += "/public/" + dossier.getPassword();
 									}
 									ketqua.setLinkCongvan(linkCongVan);
 								}

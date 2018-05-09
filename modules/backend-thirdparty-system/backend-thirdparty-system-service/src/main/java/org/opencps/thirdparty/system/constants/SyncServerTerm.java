@@ -5,4 +5,5 @@ public class SyncServerTerm {
 	public static final String SOAP_SYNC_SERVER_TYPE = "SOAP_SYNC_SERVER";
 	
 	public static final String JAXRS_URL = "opencps.dossiersync.client.path.base";
+	public static final String JAXRS_PUBLIC_URL = "opencps.jaxrs.public.client.path.base";
 }

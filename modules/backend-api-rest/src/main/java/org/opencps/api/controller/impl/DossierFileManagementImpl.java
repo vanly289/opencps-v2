@@ -246,7 +246,7 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 
 	@Override
 	public Response downloadByDossierId_ReferenceUid(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, long id, String referenceUid, String password) {
+			Locale locale, User user, ServiceContext serviceContext, long id, String referenceUid/*, String password*/) {
 
 		// TODO: check user is loged or password for access dossier file
 		BackendAuth auth = new BackendAuthImpl();
@@ -254,13 +254,14 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 		try {
 			Dossier dossier = DossierLocalServiceUtil.fetchDossier(id);
 			boolean isAuthenticated = false;
-			if (dossier.getPassword() != null && dossier.getPassword().equals(password)) {
-				isAuthenticated = true;
-			}
+//			_log.info("Dossier password: " + dossier.getPassword() + ", " + password);
+//			if (dossier.getPassword() != null && dossier.getPassword().equals(password)) {
+//				isAuthenticated = true;
+//			}
 			if (!auth.isAuth(serviceContext) && !isAuthenticated) {
 				throw new UnauthenticationException();
 			}
-
+			_log.info("After check permission");
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(id, referenceUid);
 			
 			// TODO download file with dossierFileID
@@ -286,6 +287,7 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			return processException(e);
 		}
 	}

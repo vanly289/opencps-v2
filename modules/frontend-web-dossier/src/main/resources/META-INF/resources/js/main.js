@@ -252,7 +252,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									type : "PUT",
 									headers: {
 										"groupId": themeDisplay.getScopeGroupId(),
-										Accept : "application/json"
+										"Accept" : "application/json"
 									},
 									data : {
 										formdata: JSON.stringify(formData)
@@ -304,7 +304,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									type : "PUT",
 									headers: {
 										"groupId": themeDisplay.getScopeGroupId(),
-										Accept : "application/json"
+										"Accept" : "application/json"
 									},
 									data : {
 										formdata: JSON.stringify(formData)
@@ -2649,6 +2649,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							const config_blob = {
 								headers: {
 									'groupId': themeDisplay.getScopeGroupId(),
+									'Content-Type': 'application/json'
 								},
 								responseType: 'blob'
 							};
@@ -2802,6 +2803,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							const config_blob = {
 								headers: {
 									'groupId': themeDisplay.getScopeGroupId(),
+									'Content-Type': 'application/json'
 								},
 								responseType: 'blob'
 							};
@@ -2903,10 +2905,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							// TODO: call API lay file
 							var url ="/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid ;
 							// var url = "/o/rest/v2/dossiers/14203/files/a148ee9b-b1a7-b2e7-ca0e-e6503a65b8eb";
+							console.log("Preview dossier PDF");
 							vm._showFile({
 								config : {
 									headers: {
 										'groupId': themeDisplay.getScopeGroupId(),
+										'Content-Type': 'application/json'
 									},
 									responseType: 'blob'
 								},
@@ -2937,6 +2941,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							const config_blob = {
 								headers: {
 									'groupId': themeDisplay.getScopeGroupId(),
+									'Content-Type': 'application/json'
 								},
 								responseType: 'blob'
 							};
@@ -2977,6 +2982,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							const config_blob = {
 								headers: {
 									'groupId': themeDisplay.getScopeGroupId(),
+									'Content-Type': 'application/json'
 								},
 								responseType: 'blob'
 							};
