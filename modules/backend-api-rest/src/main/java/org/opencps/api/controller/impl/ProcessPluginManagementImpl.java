@@ -466,8 +466,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 			formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
 
-//			_log.info(formData);
-			
+			_log.info(formData);
+			_log.info("ORIGINAL PLUGIN: " + original);
 			if (Validator.isNotNull(dossierPart.getDeliverableType())) {
 				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
 				if (dlt != null) {					

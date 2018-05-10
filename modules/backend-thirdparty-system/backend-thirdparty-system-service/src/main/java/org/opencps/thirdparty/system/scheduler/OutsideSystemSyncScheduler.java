@@ -84,7 +84,6 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 		List<ThirdPartyDossierSync> lstSyncs = _thirdPartyDossierSyncLocalService.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		
 		OpenCPSRestClient client = new OpenCPSRestClient(PrefsProperties.getJaxRsUrl());
-		String jaxRsUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_URL);
 		String jaxRsPublicUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_PUBLIC_URL);
 		
 		for (ThirdPartyDossierSync sync : lstSyncs) {
