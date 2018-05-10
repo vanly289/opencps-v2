@@ -623,6 +623,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		dossierFile.setIsNew(true);
 
 		// Binhth add message bus to processing jasper file
+		_log.info("IN DOSSIER FILE UPDATE FORM DATA");
 		Message message = new Message();
 
 		JSONObject msgData = JSONFactoryUtil.createJSONObject();
