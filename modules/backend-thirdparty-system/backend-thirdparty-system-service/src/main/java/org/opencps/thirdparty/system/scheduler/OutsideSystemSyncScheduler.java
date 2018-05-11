@@ -657,19 +657,20 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
 						model.setRawMessage(rawMessage);
-						MessageQueueDetailModel result = client.postMessageQueue(model);
-						if (result != null) {
-							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
-							
-							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-							if (foundAction != null) {
-								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
-							}
-							
-							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-						}
+						System.out.println("1815 raw message: " + rawMessage);
+//						MessageQueueDetailModel result = client.postMessageQueue(model);
+//						if (result != null) {
+//							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
+//							
+//							DossierAction foundAction = DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
+//							if (foundAction != null) {
+//								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);				
+//							}
+//							
+//							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+//
+//							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+//						}
 					}
 					else if (dossierAction.getSyncActionCode().equals("1613")) {
 						nswRequest.setDocumentType(dossier.getServiceCode());
