@@ -113,7 +113,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				from.setIdentity("BGTVT");
 				from.setMinistryCode("BGTVT");
 				from.setOrganizationCode("TCDBVN");
-				from.setUnitCode(dossier.getGovAgencyCode());
+				if (!dossier.getGovAgencyCode().equals("TCDBVN")) {
+					from.setUnitCode(dossier.getGovAgencyCode());					
+				}
 				header.setFrom(from);
 				To to = new To();
 				to.setName(dossier.getApplicantName());
@@ -167,8 +169,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+//						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
 						model.setContent("");
@@ -270,8 +273,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							}
 						}
 
-						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+//						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
 						model.setContent("");
@@ -336,8 +340,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+//						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
 						model.setContent("");
@@ -406,7 +411,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+//						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -476,7 +482,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+//						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -546,7 +553,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+//						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -817,8 +825,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+//						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
+						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
 						model.setContent("");
@@ -1010,21 +1019,21 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 							model.setRawMessage(rawMessage);
 							System.out.println("1816 raw message: " + rawMessage);
-//							MessageQueueDetailModel result = client.postMessageQueue(model);
-//							if (result != null) {
-//								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
-//										: sync.getMethod());
-//
-//								DossierAction foundAction = DossierActionLocalServiceUtil
-//										.fetchDossierAction(clientDossierActionId);
-//								if (foundAction != null) {
-//									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
-//								}
-//
-//								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-//
-//								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-//							}							
+							MessageQueueDetailModel result = client.postMessageQueue(model);
+							if (result != null) {
+								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+										: sync.getMethod());
+
+								DossierAction foundAction = DossierActionLocalServiceUtil
+										.fetchDossierAction(clientDossierActionId);
+								if (foundAction != null) {
+									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+								}
+
+								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							}							
 						}
 						// MessageQueueDetailModel result =
 						// client.postMessageQueue(model);
