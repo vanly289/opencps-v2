@@ -363,7 +363,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setType("11");
 						model.setFunction("14");
 						model.setReference(dossier.getReferenceUid());
-						model.setDocumentYear(dossier.getCreateDate().getYear());
+						if (dossier.getReceiveDate() != null) {
+							cal.setTime(dossier.getReceiveDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						} else {
+							cal.setTime(dossier.getCreateDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						}
 						model.setPreReference(dossier.getReferenceUid());
 						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 						model.setRetryCount(1);
@@ -427,7 +433,14 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setType("11");
 						model.setFunction("17");
 						model.setReference(dossier.getReferenceUid());
-						model.setDocumentYear(dossier.getCreateDate().getYear());
+
+						if (dossier.getReceiveDate() != null) {
+							cal.setTime(dossier.getReceiveDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						} else {
+							cal.setTime(dossier.getCreateDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						}
 						model.setPreReference(dossier.getReferenceUid());
 						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 						model.setRetryCount(1);
@@ -490,7 +503,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setType("14");
 						model.setFunction("09");
 						model.setReference(dossier.getReferenceUid());
-						model.setDocumentYear(dossier.getCreateDate().getYear());
+						if (dossier.getReceiveDate() != null) {
+							cal.setTime(dossier.getReceiveDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						} else {
+							cal.setTime(dossier.getCreateDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						}
 						model.setPreReference(dossier.getReferenceUid());
 						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 						model.setRetryCount(1);
@@ -554,7 +573,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setType("14");
 						model.setFunction("10");
 						model.setReference(dossier.getReferenceUid());
-						model.setDocumentYear(dossier.getCreateDate().getYear());
+						if (dossier.getReceiveDate() != null) {
+							cal.setTime(dossier.getReceiveDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						} else {
+							cal.setTime(dossier.getCreateDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						}
 						model.setPreReference(dossier.getReferenceUid());
 						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 						model.setRetryCount(1);
@@ -628,7 +653,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							model.setType("18");
 							model.setFunction("15");
 							model.setReference(dossier.getReferenceUid());
-							model.setDocumentYear(dossier.getCreateDate().getYear());
+							if (dossier.getReceiveDate() != null) {
+								cal.setTime(dossier.getReceiveDate());
+								subject.setDocumentYear(cal.get(Calendar.YEAR));
+							} else {
+								cal.setTime(dossier.getCreateDate());
+								subject.setDocumentYear(cal.get(Calendar.YEAR));
+							}
 							model.setPreReference(dossier.getReferenceUid());
 							model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 							model.setRetryCount(1);
@@ -813,7 +844,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setType("16");
 						model.setFunction("13");
 						model.setReference(dossier.getReferenceUid());
-						model.setDocumentYear(dossier.getCreateDate().getYear());
+						if (dossier.getReceiveDate() != null) {
+							cal.setTime(dossier.getReceiveDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						} else {
+							cal.setTime(dossier.getCreateDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						}
 						model.setPreReference(dossier.getReferenceUid());
 						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 						model.setRetryCount(1);
@@ -843,45 +880,152 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						subject.setSendDate(
 								APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 
-						KetQuaXuLy ketqua = new KetQuaXuLy();
-						content.setKetQuaXuLy(ketqua);
+//						KetQuaXuLy ketqua = new KetQuaXuLy();
+//						content.setKetQuaXuLy(ketqua);
+//
+//						ketqua.setNoiDung(dossierAction.getActionNote());
+//						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
-						ketqua.setNoiDung(dossierAction.getActionNote());
-						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						if (dossier.getServiceCode().equals("BGTVT0600001")
+								|| dossier.getServiceCode().equals("BGTVT0600002")
+								|| dossier.getServiceCode().equals("BGTVT0600003")
+								|| dossier.getServiceCode().equals("BGTVT0600004")) {
+							VLInterRoadTransportLicence vlInterRoadTransportLicense = new VLInterRoadTransportLicence();
+							vlInterRoadTransportLicense.setLicenceNo("");
+							vlInterRoadTransportLicense.setFirstRegistrationDate("");
+							vlInterRoadTransportLicense.setValidUntil("");
+							vlInterRoadTransportLicense.setTransportOperation("");
+							Transporter transporter = new Transporter();
+							vlInterRoadTransportLicense.setTransporter(transporter);
+							transporter.setNameOfCompany("");
+							transporter.setAddress("");
+							transporter.setTel("");
+							transporter.setFax("");
+							transporter.setEmail("");
+							transporter.setWebsite("");
+							AttachedFile attachedFile = new AttachedFile();
+							List<AttachedFile> lstFiles = new ArrayList<>();
+								
+							MessageQueueInputModel model = new MessageQueueInputModel();
+							model.setContent("");
+							model.setSender("BGTVT");
+							model.setReceiver("NSW");
+							model.setPersonSignature("");
+							model.setSystemSignature("");
+							model.setStatus(1);
+							model.setMessageId(PortalUUIDUtil.generate());
+							model.setFromName("BGTVT");
+							model.setFromCountryCode("VN");
+							model.setFromMinistryCode("BGTVT");
+							model.setFromOrganizationCode("TCDBVN");
+							model.setFromUnitCode("");
+							model.setFromIdentity("");
+							model.setToName("NSW");
+							model.setToCountryCode("VN");
+							model.setToIdentity("");
+							model.setToMinistryCode("NSW");
+							model.setToOrganizationCode("NSW");
+							model.setToUnitCode("");
+							model.setDocumentType(dossier.getServiceCode());
+							model.setType("18");
+							model.setFunction("16");
+							model.setReference(dossier.getReferenceUid());
+							if (dossier.getReceiveDate() != null) {
+								cal.setTime(dossier.getReceiveDate());
+								subject.setDocumentYear(cal.get(Calendar.YEAR));
+							} else {
+								cal.setTime(dossier.getCreateDate());
+								subject.setDocumentYear(cal.get(Calendar.YEAR));
+							}
+							model.setPreReference(dossier.getReferenceUid());
+							model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+							model.setRetryCount(1);
+							model.setDirection(2);
+							
+							List<DossierFile> dossierFileList = DossierFileLocalServiceUtil
+									.getAllDossierFile(dossier.getDossierId());
 
-						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
+							String templateNo = StringPool.BLANK;
+							String partNo = StringPool.BLANK;
+							int partType = 2;
+							boolean eSign = true;
+							String deliverableCode = StringPool.BLANK;
 
-						MessageQueueInputModel model = new MessageQueueInputModel();
-						model.setRawMessage(rawMessage);
-						model.setContent("");
-						model.setSender("BGTVT");
-						model.setReceiver("NSW");
-						model.setPersonSignature("");
-						model.setSystemSignature("");
-						model.setStatus(1);
-						model.setMessageId(PortalUUIDUtil.generate());
-						model.setFromName("BGTVT");
-						model.setFromCountryCode("VN");
-						model.setFromMinistryCode("BGTVT");
-						model.setFromOrganizationCode("TCDBVN");
-						model.setFromUnitCode("");
-						model.setFromIdentity("");
-						model.setToName("NSW");
-						model.setToCountryCode("VN");
-						model.setToIdentity("");
-						model.setToMinistryCode("NSW");
-						model.setToOrganizationCode("NSW");
-						model.setToUnitCode("");
-						model.setDocumentType(dossier.getServiceCode());
-						model.setType("18");
-						model.setFunction("16");
-						model.setReference(dossier.getReferenceUid());
-						model.setDocumentYear(dossier.getCreateDate().getYear());
-						model.setPreReference(dossier.getReferenceUid());
-						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-						model.setRetryCount(1);
-						model.setDirection(2);
+							ServiceInfo serviceInfo = ServiceInfoLocalServiceUtil.getByCode(dossier.getGroupId(),
+									dossier.getServiceCode());
+							ServiceConfig serviceConfig = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(
+									dossier.getGroupId(), serviceInfo.getServiceCode(), dossier.getGovAgencyCode());
 
+							ProcessOption processOption = ProcessOptionLocalServiceUtil.getByDTPLNoAndServiceCF(
+									dossier.getGroupId(), dossier.getDossierTemplateNo(),
+									serviceConfig.getServiceConfigId());
+
+							ServiceProcess serviceProcess = ServiceProcessLocalServiceUtil
+									.fetchServiceProcess(processOption.getServiceProcessId());
+							ProcessAction processAction = ProcessActionLocalServiceUtil.fetchBySPID_AC(
+									serviceProcess.getServiceProcessId(), dossierAction.getActionCode());
+
+							for (DossierFile dossierFile : dossierFileList) {
+								templateNo = dossierFile.getFileTemplateNo();
+
+								String returnDossierFiles = processAction.getReturnDossierFiles();
+								String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
+								for (String returnDossierFile : returnDossierFilesArr) {
+									if (templateNo.equals(returnDossierFile)) {
+										attachedFile = new AttachedFile();
+										attachedFile.setAttachedNote("");
+										attachedFile.setAttachedTypeCode(partNo);
+										attachedFile.setAttachedTypeName(templateNo);
+										attachedFile.setFullFileName(dossierFile.getDisplayName());
+
+										lstFiles.add(attachedFile);
+
+										String linkCongVan = jaxRsPublicUrl + "dossiers/" + dossier.getDossierId()
+												+ "/files/" + dossierFile.getReferenceUid();
+										if (dossier.getPassword() != null) {
+											linkCongVan += "/public/" + dossier.getPassword();
+										}
+										attachedFile.setFileURL(linkCongVan);
+										JSONObject formDataObj = JSONFactoryUtil
+												.createJSONObject(dossierFile.getFormData());
+										vlInterRoadTransportLicense.setLicenceNo(dossierFile.getDeliverableCode());
+										vlInterRoadTransportLicense.setFirstRegistrationDate(
+												formDataObj.getString("FirstRegistrationDate"));
+										vlInterRoadTransportLicense.setValidUntil(formDataObj.getString("ValidUntil"));
+										transporter.setNameOfCompany(formDataObj.getString("NameOfCompany"));
+										transporter.setAddress(formDataObj.getString("Address"));
+										transporter.setTel(formDataObj.getString("Tel"));
+										transporter.setFax(formDataObj.getString("Fax"));
+										transporter.setEmail(formDataObj.getString("Email"));
+										transporter.setWebsite(formDataObj.getString("Website"));
+										_log.info("Link cong van: " + linkCongVan);
+									}
+								}
+							}
+
+							vlInterRoadTransportLicense.getAttachedFile().addAll(lstFiles);
+							content.setVLInterRoadTransportLicence(vlInterRoadTransportLicense);
+
+							String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
+
+							model.setRawMessage(rawMessage);
+							System.out.println("1816 raw message: " + rawMessage);
+//							MessageQueueDetailModel result = client.postMessageQueue(model);
+//							if (result != null) {
+//								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+//										: sync.getMethod());
+//
+//								DossierAction foundAction = DossierActionLocalServiceUtil
+//										.fetchDossierAction(clientDossierActionId);
+//								if (foundAction != null) {
+//									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+//								}
+//
+//								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+//
+//								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+//							}							
+						}
 						// MessageQueueDetailModel result =
 						// client.postMessageQueue(model);
 						// if (result != null) {
