@@ -30,18 +30,19 @@
 	</xsd:element>
 
 	<!-- Envelope, header and body -->
-	<xsd:element name="Envelope" type="Envelope" />
-	<xsd:complexType name="Envelope">
-		<xsd:sequence>
-			<xsd:element ref="Header" minOccurs="0" />
-			<xsd:element ref="Body" minOccurs="1" />
-			<xsd:element name="systemSignature" type="xsd:string" />
-			<xsd:any namespace="##other" minOccurs="0" maxOccurs="unbounded"
+	<xsd:element name="Envelope">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Header" minOccurs="0" />
+				<xsd:element ref="Body" minOccurs="1" />
+				<xsd:element name="systemSignature" type="xsd:string" />
+				<xsd:any namespace="##other" minOccurs="0" maxOccurs="unbounded"
+					processContents="lax" />
+			</xsd:sequence>
+			<xsd:anyAttribute namespace="##other"
 				processContents="lax" />
-		</xsd:sequence>
-		<xsd:anyAttribute namespace="##other"
-			processContents="lax" />
-	</xsd:complexType>
+		</xsd:complexType>
+	</xsd:element>
 	<xsd:element name="Reference" type="Reference" />
 	<xsd:complexType name="Reference">
 		<xsd:sequence>
@@ -128,7 +129,7 @@
 		<xsd:sequence>
 			<xsd:element ref="DS_Loi" minOccurs="0" />
 			<xsd:element ref="KetQuaXuLy" minOccurs="0" />
-			<xsd:element ref="VLInterRoadTransportLicence"></xsd:element>
+			<xsd:element ref="VLInterRoadTransportLicence" minOccurs="0"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
