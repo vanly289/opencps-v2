@@ -75,16 +75,30 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 									var urlFiles = "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/resetformdata";
 									
-
-									axios.put(urlFiles, config).then(function (response) {
-										item.counter = 0;
-										
-										
-									})
-									.catch(function (error) {
-										console.log(error);
-										
+									$.ajax({
+										url : urlFiles,
+										dataType : "json",
+										type : "PUT",
+										headers : {
+											groupId : themeDisplay.getScopeGroupId()
+										},
+										success :  function(result){
+											item.counter = 0;
+										},
+										error : function(xhr){
+											console.log(error);
+										}
 									});
+									
+//									axios.put(urlFiles, "", config).then(function (response) {
+//										item.counter = 0;
+//										
+//										
+//									})
+//									.catch(function (error) {
+//										console.log(error);
+//										
+//									});
 									
 									dialog.close();
 									return false; 

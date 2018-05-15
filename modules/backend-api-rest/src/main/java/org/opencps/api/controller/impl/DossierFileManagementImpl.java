@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 public class DossierFileManagementImpl implements DossierFileManagement {
@@ -629,6 +630,8 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 
 			DossierFileActions action = new DossierFileActionsImpl();
 
+//			DossierFile dossierFile = action.resetDossierFileFormData(groupId, id, referenceUid, StringPool.BLANK,
+//					serviceContext);
 			DossierFile dossierFile = action.resetDossierFileFormData(groupId, id, referenceUid, formdata,
 					serviceContext);
 
