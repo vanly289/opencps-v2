@@ -58,52 +58,7 @@
 						{{ detailModel.dossierNo }}
 					</span>
 				</div>
-				<div>
-					<a href="javascript:;" @click.prevent.stop="showContactDetail = !showContactDetail">
-						Thông tin liên hệ: <v-icon color="primary" v-if="!showContactDetail">keyboard_arrow_down</v-icon>
-						<v-icon color="primary" v-if="showContactDetail">keyboard_arrow_up</v-icon>
-					</a>
-					
-					<v-slide-y-transition>
-						<div v-if="showContactDetail">
-							<div class="pb-1">
-								<span>
-									Tên doanh nghiệp: 
-								</span> 
-								<span class="text-bold">
-									{{detailModel.contactName}}
-								</span>
-							</div>
-							<div class="pb-1">
-								<span>
-									Địa chỉ email: 
-								</span>
-								<span class="text-bold">
-									{{detailModel.contactEmail}}
-								</span>
-							</div>
-							<div class="pb-1">
-								<span>
-									Số điện thoại: 
-								</span>
-								<span class="text-bold">
-									{{detailModel.contactTelNo}}
-								</span>
-								
-							</div>
-							<div class="pb-1">
-								<span>
-									Địa chỉ: 
-								</span>
-								<span class="text-bold">
-									{{detailModel.wardName}}/{{detailModel.districtName}}/{{detailModel.cityName}}
-								</span>
-							</div>
-							
-						</div>
-					</v-slide-y-transition>
-					
-				</div>
+				
 			</v-flex>
 
 		<v-flex xs12 sm4>
@@ -159,8 +114,52 @@
 			</v-flex>
 
 			<v-flex xs12 sm4>
-				<div class="text-bold primary--text expansion-panel__header pl-0 pt-0">Thông tin sản phẩm</div>
-				<div class="pb-1" v-html="detailModel.briefNote"></div>
+				<div>
+					<a href="javascript:;" @click.prevent.stop="showContactDetail = !showContactDetail">
+						Thông tin liên hệ: <v-icon color="primary" v-if="!showContactDetail">keyboard_arrow_down</v-icon>
+						<v-icon color="primary" v-if="showContactDetail">keyboard_arrow_up</v-icon>
+					</a>
+					
+					<v-slide-y-transition>
+						<div v-if="showContactDetail">
+							<div class="pb-1">
+								<span>
+									Tên doanh nghiệp: 
+								</span> 
+								<span class="text-bold">
+									{{detailModel.contactName}}
+								</span>
+							</div>
+							<div class="pb-1">
+								<span>
+									Địa chỉ email: 
+								</span>
+								<span class="text-bold">
+									{{detailModel.contactEmail}}
+								</span>
+							</div>
+							<div class="pb-1">
+								<span>
+									Số điện thoại: 
+								</span>
+								<span class="text-bold">
+									{{detailModel.contactTelNo}}
+								</span>
+								
+							</div>
+							<div class="pb-1">
+								<span>
+									Địa chỉ: 
+								</span>
+								<span class="text-bold">
+									{{detailModel.wardName}}/{{detailModel.districtName}}/{{detailModel.cityName}}
+								</span>
+							</div>
+							
+						</div>
+					</v-slide-y-transition>
+					
+				</div>
 			</v-flex>
 		</v-layout>
 	
@@ -320,8 +319,6 @@
                             <div :id="'alpacajs_form_'+item.partNo" class="expansion-panel__header"></div>
 							<input type="hidden" :id="'dossierFileId' + item.partNo" :value="item.dossierFileId" />
 
-							
-							
                             </v-expansion-panel-content>
                         </v-expansion-panel>
                         
@@ -353,7 +350,7 @@
                         			<v-flex xs12>
                         				<span v-if="stepModel.configNote.displayNote">{{ stepModel.configNote.titleNote }}</span>
                         					<!-- <div jx-bind="processActionNote" v-if="stepModel.configNote.displayNote">
-                        						
+                        							
                         					</div> -->
 
                         					<v-text-field
