@@ -105,6 +105,7 @@ public class RegistrationFormLocalServiceImpl extends RegistrationFormLocalServi
 
 		long registrationFormId = counterLocalService.increment(RegistrationForm.class.getName());
 
+		_log.info("registrationFormId: "+registrationFormId);
 		RegistrationForm object = registrationFormPersistence.create(registrationFormId);
 
 		/// Add audit fields
@@ -158,17 +159,27 @@ public class RegistrationFormLocalServiceImpl extends RegistrationFormLocalServi
 	}
 	
 	@Indexable(type = IndexableType.REINDEX)
-	public RegistrationForm deleteRegistrationForm(long groupId, long registrationId, String referenceUid)
+	public boolean deleteRegistrationForm(String referenceUid)
 			throws PortalException {
 
-		RegistrationForm object = registrationFormPersistence.findByG_REGID_REFID(groupId, registrationId,
-				referenceUid);
+		boolean flag = false;
 
-		object.setRemoved(true);
-		object.setIsNew(true);
-		object.setModifiedDate(new Date());
+//		RegistrationForm object = registrationFormPersistence.findByG_REGID_REFID(groupId, registrationId,
+//				referenceUid);
+		List<RegistrationForm> regFormList = registrationFormPersistence.findByF_REFID(referenceUid);
+		if (regFormList != null && regFormList.size() > 0) {
+			for (RegistrationForm regForm : regFormList) {
+				regForm.setRemoved(true);
+				regForm.setIsNew(true);
+				regForm.setModifiedDate(new Date());
+				flag = true;
 
-		return registrationFormPersistence.update(object);
+				registrationFormPersistence.update(regForm);
+			}
+		}
+		
+
+		return flag;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1026,6 +1037,11 @@ public class RegistrationFormLocalServiceImpl extends RegistrationFormLocalServi
 			}
 		}
 		return booleanQueries;
+	}
+
+	//Get Registration using output logic DB
+	public RegistrationForm getByRegIdAndFormNo(long registrationId, String formNo) {
+		return registrationFormPersistence.fetchByREGID_FORMNO(registrationId, formNo);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RegistrationFormLocalServiceImpl.class);

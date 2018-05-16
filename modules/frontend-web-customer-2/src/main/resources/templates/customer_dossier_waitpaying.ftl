@@ -21,7 +21,7 @@
 		<div class="dossier-general-info P15 MB30">
 			<div class="col-sm-4">
 				<div class="row MB5">
-					<span class="text-bold">Số hồ sơ</span>: <span data-bind="text:dossierNo"></span>
+					<span class="text-bold">Tình trạng</span>: <i data-bind="text:dossierStatusText" class="red"></i>
 				</div>
 				<#-- <div class="row" id="">
 					<a href="javascript:;" class="text-blue text-underline">
@@ -30,17 +30,19 @@
 				</div> -->
 			</div>
 			<div class="col-sm-4 text-center">
-				<div class="row MB5" id="">
-					<span class="text-bold">Thời gian gửi</span>: <span data-bind="text:confirmDatetime"></span>
-				</div>
+
 				<div class="row" id="">
-					<span class="text-bold">Mã hồ sơ</span>: <span data-bind="text : dossierId"></span>
+					<span>Số hồ sơ (Mã tiếp nhận)</span>: <span data-bind="text:dossierNo" class="text-bold"></span>
+					
+				</div>
+				<div class="row">
+					<span>Mã hồ sơ</span>: <span data-bind="text : dossierIdCTN" class="text-bold"></span>
 				</div>
 			</div>
 			
 			<div class="col-sm-4 text-center">
 				<div class="row MB5" id="">
-					<span class="text-bold">Tình trạng</span>: <span data-bind="text:dossierStatusText"></span>
+					<span>Thời gian gửi</span>: <span data-bind="text:submitDate" class="text-bold"></span>
 				</div>
 				
 			</div>
@@ -220,7 +222,7 @@
 									<div class="col-sm-12">
 										<button class="btn btn-sm btn-border-color MR10 text-light-blue" id="dossier-payment-online" data-bind="attr : {data-pk : referenceUid}">Thanh toán trực tuyến</button> 
 										<button class="btn btn-sm btn-border-color MR10 text-light-blue" data-bind="attr : {data-pk : referenceUid}" id="dossier-payment-confirm">Thông báo đã nộp chuyển khoản</button>
-										<button class="btn btn-sm btn-border-color text-light-blue" onclick="">Xem phiếu thanh toán</button>
+										<button class="btn btn-sm btn-border-color text-light-blue" id="dossier-payment-viewpdf" data-bind="attr : {data-pk : referenceUid}">Xem phiếu thanh toán</button>
 									</div>
 								</div>
 
@@ -233,11 +235,14 @@
 											<div class="col-sm-4 text-center MB10">
 												<i class="fa fa-file-image-o text-center text-light-gray MB10" aria-hidden="true" style="font-size:100px;">
 													
-												</i> <br>
+												</i> 
+												<br>
+												<span id="fileNamePayment" name="fileNamePayment"></span>
+												<br>
 												<span class="text-center" style="font-size: 10px;">Chứng từ thanh toán cho chuyển khoản là giấy yêu cầu nộp tiền vào ngân hàng hoặc hóa đơn chứng nhận giao dịch chuyển khoản được in ra</span>
 											</div>
 											<div class="col-sm-4">
-
+		
 											</div>
 										</div>
 										<input type="file" id="filePayment" name="filePayment" class="hidden" >
@@ -320,6 +325,7 @@
 
 		return resultModel;
 	}
+	
 	var fnBack = function(){
 		window.history.back();
 	};
@@ -348,7 +354,8 @@
 						stepInstruction : result.stepInstruction,
 						dossierStatus : result.dossierStatus,
 						paymentDossier : payment,
-
+						submitDate : result.submitDate,
+						dossierIdCTN : result.dossierIdCTN,
 						contactName: result.contactName,
 						cityName:result.cityName,
 						districtName:result.districtName,
@@ -392,17 +399,21 @@
 						},
 						paymentStatus : function(e){
 							if(this.get('paymentDossier')){
-                if(this.get('paymentDossier').paymentStatus === 0){
-                  return "Chờ nộp";
-                }else if(this.get('paymentDossier').paymentStatus === 1){
-                  return "Báo đã nộp";
-                }else if(this.get('paymentDossier').paymentStatus === 2){
-                  return "Hoàn thành";
-                }else {
-                  return "Không hợp lệ";
-                }
-              }
-              return "";
+								if(this.get('paymentDossier').paymentStatus === 0){
+									$("#dossier-payment-confirm").prop("disabled",false);
+									return "Chờ nộp";
+								}else if(this.get('paymentDossier').paymentStatus === 1){
+									$("#dossier-payment-confirm").prop("disabled",true);
+									return "Báo đã nộp";
+								}else if(this.get('paymentDossier').paymentStatus === 2){
+									$("#dossier-payment-confirm").prop("disabled",false);
+									return "Hoàn thành";
+								}else {
+									$("#dossier-payment-confirm").prop("disabled",false);
+									return "Không hợp lệ";
+								}
+							}
+							return "";
 						},
 						paymentApproveDatetime : function(e){
 							if(this.get('paymentDossier').approveDatetime){
@@ -500,6 +511,7 @@
 					notification.show({
 						message: "Yêu cầu được thực hiện thành công"
 					}, "success");
+					$("#dossier-payment-confirm").prop("disabled",true);
 				},
 				error :  function(result){
 					notification.show({
@@ -509,5 +521,46 @@
 
 			});
 		}
+	});
+
+	$("#dossier-payment-viewpdf").click(function(){
+		var referenceUid = $(this).attr("data-pk");
+		if(referenceUid){
+			$.ajax({
+				url : "${api.server}/dossiers/${dossierId}/payments/"+referenceUid+"/invoicefile",
+				dataType : "json",
+				type : "GET",
+				headers : {"groupId": ${groupId}},
+				responseType: 'blob',
+				data : {
+
+				},
+				success : function(result){
+					var urlblob = window.URL.createObjectURL(response);
+					window.open(urlblob, '_blank');
+				},
+				error :  function(result){
+					
+				}
+
+			});
+		}
+	});
+
+	$("#filePayment").change(function(event){
+		event.preventDefault();
+		try{
+			var fileName = $("#filePayment")[0].files[0].name;
+			if(fileName){
+				$("#fileNamePayment").html(fileName);
+			}else {
+				$("#fileNamePayment").html("");
+			}
+
+
+		}catch(e){
+			$("#fileNamePayment").html("");
+		}
+
 	});
 </script>

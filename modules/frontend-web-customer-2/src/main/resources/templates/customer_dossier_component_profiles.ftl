@@ -12,7 +12,6 @@
 			<div class="row" style="margin-bottom : 3px;">
 				<div class="col-sm-12 PT15 PB15" style="background-color: #ccc;">
 					<span class="text-bold">Thành phần hồ sơ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span>#${(dossier.dossierIdCTN)!}</span>
-					<#-- <i class="fa fa-times pull-right hover-pointer" aria-hidden="true" data-dismiss="modal" style="font-size: 150%;"></i> -->
 				</div>
 			</div>
 			<div class="row">
@@ -46,7 +45,7 @@
 										#
 										<div class="eq-height">
 
-											<div class="col-xs-12 col-sm-9 align-middle">
+											<div class="col-xs-12 col-sm-12 align-middle">
 												<span class="#if('${index}' === '0'){# active #}# hover-pointer item-file-component" data-pk="#:items[i].referenceUid#" data-index="${index}" >
 													#:items[i].displayName#
 												</span>
@@ -73,35 +72,14 @@
 </div>
 
 <div class="col-sm-9" style="height:100vh;background-color: rgba(0,0,0,0.4)">
-				<#-- <div id="fileCarousel" class="carousel slide row" data-ride="carousel" data-interval="false"> 
-					<ul class="carousel-inner" id="listViewCarouselDossierFile">
 
-					</ul>
-					<script type="text/x-kendo-template" id="templateCarouselDossierFile">
-						<li class="item" data-pk="#:id#">
-							
-							<object data="${api.server}/dossiers/${dossierId}/files/#:id#/preview" type="application/pdf" width="100%" height="100%">
-								<embed width="100%" height="100%" name="plugin" src="${api.server}/dossiers/${dossierId}/files/#:id#/preview" />
-							</object>
-						</li>
-					</script>
-					<a class="left carousel-control control-left" href="#fileCarousel" data-slide="prev">
-						<span class="glyphicon glyphicon-chevron-left"></span>
-						<span class="sr-only">Previous</span>
-					</a>
-					<a class="right carousel-control control-right" href="#fileCarousel" data-slide="next">
-						<span class="glyphicon glyphicon-chevron-right"></span>
-						<span class="sr-only">Next</span>
-					</a>
-				</div> -->
+	<object id="objectView2" data="" width="100%" height="100%">
 
-				<object id="objectView2" data="" width="100%" height="100%">
+	</object>
+</div>
 
-				</object>
-			</div>
-
-		</div>
-	</div>
+</div>
+</div>
 
 	<#-- </div> -->
 
@@ -113,61 +91,73 @@
 			$(document).off("click",".btn-delete-component-profile");
 			$(document).on("click",".btn-delete-component-profile",function(event){
 
-				var id=$(this).attr("data-pk");
-				var eForm = $(this).attr("eForm");
-				var cf = confirm("Bạn có muốn xóa tệp tin này!");
-				if(cf){
-					if (eForm == "false") {
-						console.log("eForm false");
-						$.ajax({
-							url : "${api.server}/dossiers/${dossierId}/files/"+id,
-							type : "DELETE",
-							dataType : "json",
-							headers : {"groupId": ${groupId}},
-							data : {
-								
-							},
-							success:function(result){
+				if(navigator.onLine){
+					var id=$(this).attr("data-pk");
+					var eForm = $(this).attr("eForm");
+					var cf = confirm("Bạn có muốn xóa tệp tin này!");
+					if(cf){
+						if (eForm == "false") {
+							console.log("eForm false");
+							if(navigator.onLine){
+								$.ajax({
+									url : "${api.server}/dossiers/${dossierId}/files/"+id,
+									type : "DELETE",
+									dataType : "json",
+									headers : {"groupId": ${groupId}},
+									data : {
 
-								dataSourceDossierFile.pushDestroy(result);
+									},
+									success:function(result){
 
-								notification.show({
-									message: "Xóa thành công!"
-								}, "success");
+										dataSourceDossierFile.read();
 
-							},
-							error:function(result){
-								notification.show({
-									message: "Xẩy ra lỗi, vui lòng thử lại"
-								}, "error");
+										notification.show({
+											message: "Xóa thành công!"
+										}, "success");
+
+									},
+									error:function(result){
+										if(navigator.onLine){
+											notification.show({
+												message: "Xẩy ra lỗi, vui lòng thử lại"
+											}, "error");
+										}
+									}
+
+								});
 							}
+						}else {
+							console.log("eForm true");
+							if(navigator.onLine){
+								$.ajax({
+									url : "${api.server}/dossiers/${dossierId}/files/"+id+"/formdata",
+									type : "PUT",
+									dataType : "json",
+									headers : {"groupId": ${groupId}},
+									data : {
+										formdata: JSON.stringify({})
+									},
+									success:function(result){
 
-						});
-					}else {
-						console.log("eForm true");
-						$.ajax({
-							url : "${api.server}/dossiers/${dossierId}/files/"+id+"/formdata",
-							type : "PUT",
-							dataType : "json",
-							headers : {"groupId": ${groupId}},
-							data : {
-								formdata: JSON.stringify({})
-							},
-							success:function(result){
+										notification.show({
+											message: "Xóa thành công!"
+										}, "success");
 
-								notification.show({
-									message: "Xóa thành công!"
-								}, "success");
+									},
+									error:function(result){
+										if(navigator.onLine){
+											notification.show({
+												message: "Xẩy ra lỗi, vui lòng thử lại"
+											}, "error");
+										}
+									}
 
-							},
-							error:function(result){
-								notification.show({
-									message: "Xẩy ra lỗi, vui lòng thử lại"
-								}, "error");
+								});
 							}
-
-						});
+						}
 					}
+				}else {
+					alert("Không có kết nối internet, vui lòng kiểm tra kết nối của bạn!");
 				}
 
 				console.log(id);
@@ -182,13 +172,17 @@
 							dataType : "json",
 							headers : {"groupId": ${groupId}},
 							success : function (result) {
-								options.success(result);
 								if(!result.data){
 
 									notification.show({
 										message: "Bạn chưa tải file lên, Vui lòng tải lên để xem"
 									}, "error");
 
+								}else {
+									result.data = $.grep(result.data, function( value, index ) {
+										return (value.dossierPartType === 1);
+									});
+									options.success(result);
 								}
 							},
 							error : function (result) {

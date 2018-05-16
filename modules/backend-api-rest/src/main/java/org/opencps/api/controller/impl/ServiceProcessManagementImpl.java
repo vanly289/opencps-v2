@@ -1043,7 +1043,8 @@ public class ServiceProcessManagementImpl implements ServiceProcessManagement {
 					GetterUtil.getLong(input.getAssignUserId()), GetterUtil.getBoolean(input.getRequestPayment()),
 					input.getPaymentFee(), input.getCreateDossierFiles(), input.getReturnDossierFiles(),
 					input.getMakeBriefNote(), input.getSyncActionCode(), GetterUtil.getBoolean(input.getRollbackable()),
-					input.isCreateDossierNo(), input.iseSignature(), serviceContext);
+					input.isCreateDossierNo(), input.iseSignature(), input.getConfigNote(),
+					input.getDossierTemplateNo(), serviceContext);
 
 			results = ServiceProcessUtils.mappingToActionPOST(processAction);
 
@@ -1098,7 +1099,8 @@ public class ServiceProcessManagementImpl implements ServiceProcessManagement {
 					GetterUtil.getLong(input.getAssignUserId()), GetterUtil.getBoolean(input.getRequestPayment()),
 					input.getPaymentFee(), input.getCreateDossierFiles(), input.getReturnDossierFiles(),
 					input.getMakeBriefNote(), input.getSyncActionCode(), GetterUtil.getBoolean(input.getRollbackable()),
-					input.isCreateDossierNo(), input.iseSignature(), serviceContext);
+					input.isCreateDossierNo(), input.iseSignature(), input.getConfigNote(),
+					input.getDossierTemplateNo(), serviceContext);
 
 
 			results = ServiceProcessUtils.mappingToActionPOST(processAction);
@@ -1193,7 +1195,7 @@ public class ServiceProcessManagementImpl implements ServiceProcessManagement {
 
 	@Override
 	public Response cloneServiceProcesses(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, long id) {
+			Locale locale, User user, ServiceContext serviceContext, long id, String processNo) {
 		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
 
 		BackendAuth auth = new BackendAuthImpl();
@@ -1210,7 +1212,7 @@ public class ServiceProcessManagementImpl implements ServiceProcessManagement {
 
 			String results = "Clone done";
 
-			ServiceProcessLocalServiceUtil.cloneServiceProcess(id, groupId, serviceContext);
+			ServiceProcessLocalServiceUtil.cloneServiceProcess(id, groupId, processNo, serviceContext);
 
 			return Response.status(200).entity(results).build();
 

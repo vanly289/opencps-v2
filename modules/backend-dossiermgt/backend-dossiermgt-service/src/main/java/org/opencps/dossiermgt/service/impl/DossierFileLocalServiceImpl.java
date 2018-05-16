@@ -25,14 +25,17 @@ import java.util.Map;
 
 import org.opencps.dossiermgt.action.FileUploadUtils;
 import org.opencps.dossiermgt.action.util.AutoFillFormData;
+import org.opencps.dossiermgt.action.util.DeliverableNumberGenerator;
 import org.opencps.dossiermgt.constants.DossierFileTerm;
 import org.opencps.dossiermgt.exception.DuplicateDossierFileException;
 import org.opencps.dossiermgt.exception.InvalidDossierStatusException;
 import org.opencps.dossiermgt.exception.NoSuchDossierFileException;
 import org.opencps.dossiermgt.exception.NoSuchDossierPartException;
+import org.opencps.dossiermgt.model.DeliverableType;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
+import org.opencps.dossiermgt.service.DeliverableTypeLocalServiceUtil;
 import org.opencps.dossiermgt.service.base.DossierFileLocalServiceBaseImpl;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 import org.opencps.usermgt.action.ApplicantActions;
@@ -44,6 +47,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.User;
@@ -100,7 +105,13 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 	 * org.opencps.dossiermgt.service.DossierFileLocalServiceUtil} to access the
 	 * dossier file local service.
 	 */
-
+	
+	Log _log = LogFactoryUtil.getLog(DossierFileLocalServiceImpl.class);
+	
+	public DossierFile getByRefAndGroupId(long groupId, String referenceUid) throws PortalException {
+		return dossierFilePersistence.fetchByGID_REF(groupId, referenceUid);
+	}
+	
 	/**
 	 * POST /dossiers/{id|referenceUid}/files
 	 */
@@ -111,8 +122,12 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			throws PortalException, SystemException {
 
 		long userId = serviceContext.getUserId();
+		
+		_log.info("****Start add file at:" + new Date());
 
 		validateAddDossierFile(groupId, dossierId, referenceUid, dossierTemplateNo, dossierPartNo, fileTemplateNo);
+		
+		_log.info("****End validator file at:" + new Date());
 
 		DossierPart dossierPart = dossierPartPersistence.findByTP_NO_PART(groupId, dossierTemplateNo, dossierPartNo);
 
@@ -128,6 +143,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		} catch (Exception e) {
 			throw new SystemException(e);
 		}
+		_log.info("****End uploadFile file at:" + new Date());
 
 		Date now = new Date();
 
@@ -175,11 +191,13 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		if (Validator.isNotNull(dossierPart.getFormReport())) {
 			object.setFormReport(dossierPart.getFormReport());
 		}
+		_log.info("****Start autofill file at:" + new Date());
 
 		if (Validator.isNotNull(dossierPart.getSampleData())) {
 			object.setFormData(
 					AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, serviceContext));
 		}
+		_log.info("****End autofill file at:" + new Date());
 
 		object.setDisplayName(displayName);
 		object.setOriginal(true);
@@ -188,9 +206,16 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			object.setIsNew(true);
 		}
 		
-		String deliverableCode = PwdGenerator.getPassword(10);
+//		String deliverableCode = PwdGenerator.getPassword(10);
+//		
+//		if (Validator.isNotNull(dossierPart.getDeliverableType())) {
+//			object.setDeliverableCode(deliverableCode);
+//		}
 		
 		if (Validator.isNotNull(dossierPart.getDeliverableType())) {
+			DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
+			
+			String deliverableCode = DeliverableNumberGenerator.generateDeliverableNumber(groupId, serviceContext.getCompanyId(), deliverableType.getDeliverableTypeId());
 			object.setDeliverableCode(deliverableCode);
 		}
 
@@ -598,6 +623,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		dossierFile.setIsNew(true);
 
 		// Binhth add message bus to processing jasper file
+		_log.info("IN DOSSIER FILE UPDATE FORM DATA");
 		Message message = new Message();
 
 		JSONObject msgData = JSONFactoryUtil.createJSONObject();
@@ -610,6 +636,8 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		message.put("msgToEngine", msgData);
 		MessageBusUtil.sendMessage("jasper/engine/out/destination", message);
 
+		_log.info("SEND TO CREATED FILE MODEL");
+		
 		return dossierFilePersistence.update(dossierFile);
 	}
 
@@ -633,6 +661,9 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		dossierFile.setModifiedDate(now);
 		dossierFile.setRemoved(true);
 		dossierFile.setUserName(user.getFullName());
+		
+		//set submitting = true
+		dossierFile.setIsNew(true);
 
 		return dossierFileLocalService.updateDossierFile(dossierFile);
 	}
@@ -673,7 +704,23 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 	}
 
 	public List<DossierFile> getDossierFilesByDossierId(long dossierId) {
+
 		return dossierFilePersistence.findByDossierId(dossierId, false);
+
+	}
+
+	// Get all dossierFile by dossierId
+	public List<DossierFile> getAllDossierFile(long dossierId) {
+
+		return dossierFilePersistence.findByDID_(dossierId);
+
+	}
+
+	// Get all dossierFile by dossierId
+	public List<DossierFile> getByReferenceUid(String referenceUid) {
+
+		return dossierFilePersistence.findByREF_UID(referenceUid);
+
 	}
 
 	public List<DossierFile> getDossierFilesByD_DP(long dossierId, int dossierPartType) {
@@ -910,11 +957,11 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 
 		// TODO add more logic here
 
-		dossierPersistence.findByPrimaryKey(dossierId);
+		//dossierPersistence.findByPrimaryKey(dossierId);
 
 		if (Validator.isNotNull(referenceUid)) {
-			DossierFile dossierFile = dossierFilePersistence.fetchByD_RUID(dossierId, referenceUid, false);
-
+			//DossierFile dossierFile = dossierFilePersistence.fetchByD_RUID(dossierId, referenceUid, false);
+			DossierFile dossierFile = null;
 			if (dossierFile != null) {
 				throw new DuplicateDossierFileException("dossierId= " + dossierId + "|referenceUid=" + referenceUid);
 			}
@@ -923,6 +970,10 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 
 	public List<DossierFile> getDossierFileByDID_DPNO(long dossierId, String dossierPartNo, boolean removed) {
 		return dossierFilePersistence.findByDID_DPNO(dossierId, dossierPartNo, removed);
+	}
+	
+	public List<DossierFile> getDossierFileByDID_FTN(long dossierId, String fileTemplateNo) {
+		return dossierFilePersistence.findByDID_FTN(dossierId, fileTemplateNo);
 	}
 
 	public DossierFile getDossierFileByDID_FTNO_DPT_First(long dossierId, String fileTemplateNo, int dossierPartType,
@@ -973,6 +1024,11 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	//Get dossierFile follow fileEntryId
+	public DossierFile getByFileEntryId(long fileEntryId) {
+		return dossierFilePersistence.fetchByFILE_ID(fileEntryId);
 	}
 
 	public static final String CLASS_NAME = DossierFile.class.getName();

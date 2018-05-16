@@ -1,0 +1,592 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link type="text/css" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+        <link type="text/css" href="http://code.cloudcms.com/alpaca/1.5.24/bootstrap/alpaca.min.css" rel="stylesheet" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
+        <script type="text/javascript" src="http://code.cloudcms.com/alpaca/1.5.24/bootstrap/alpaca.min.js"></script>
+
+        <script type="text/javascript" src="/lib/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js"></script>
+        <link type="text/css" href="/lib/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css" rel="stylesheet"/>
+
+        <script src="http://alpacajs.org/lib/moment/min/moment-with-locales.min.js"></script>
+        <script src="http://alpacajs.org/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+        <link rel="stylesheet" media="screen" href="http://alpacajs.org/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"/>
+
+
+    </head>
+    <body>
+        <div id="form"></div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+              $("#form").alpaca({
+                "data": {
+
+                },
+                "schema": {
+                    "type": "object",
+                    "required": false,
+                    "properties": {
+            			"TPTable": {
+                            "items": {
+                                "properties": {
+                                    "AttachedTypeCode": {
+                                        "title": "Tên",
+                                        "type": "string"
+                                    },
+                                    "FileURL": {
+                                        "title": "Đường dẫn",
+                                        "type": "string"
+                                    },
+            						"Accepted": {
+                                        "title": "Đánh giá",
+                                        "type": "boolean",
+            							"enum":  [1, 0]
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "required": false,
+                            "type": "array"
+                        },
+            			"STTTable": {
+                            "items": {
+                                "properties": {
+                                    "SequenceNo": {
+                                        "title": "STT",
+                                        "type": "string"
+                                    },
+                                    "RegistrationNumber": {
+                                        "title": "Biển kiểm soát",
+                                        "type": "string"
+                                    },
+            						"LienVanNo": {
+                                        "title": "Số phù hiệu liên vận",
+                                        "type": "string"
+                                    },
+            						"ValidFrom": {
+                                        "title": "Ngày cấp",
+                                        "type": "string"
+                                    },
+                                    "ValidUntil": {
+                                        "title": "Ngày hết hạn",
+                                        "type": "string"
+                                    },
+            						"PassengerOrCargo": {
+                                        "title": "Hình thức hoạt động",
+                                        "type": "string"
+                                    },
+            						"ExpImpGate": {
+                                        "title": "Cửa khẩu xuất nhập",
+                                        "type": "string"
+                                    },
+            						"Allow": {
+                                        "title": "Cấp phép",
+                                        "type": "string"
+                                    },
+                                    "NotAllow": {
+                                        "title": "Không cấp phép",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "required": false,
+                            "type": "array"
+                        },
+            			"ValidFrom": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "ValidUntil": {
+                            "required": true,
+                            "type": "object"
+                        },
+            			"RegistrationNumber": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "SequenceNo": {
+                            "required": true,
+                            "type": "object"
+                        },
+            			"PassengerOrCargo": {
+                            "required": true,
+                            "type": "object"
+                        },
+            			"ExpImpGate": {
+                            "required": true,
+                            "type": "object"
+                        },
+            			"initEvent": {
+                            "type": "object",
+                            "required": false
+                        },
+            			"stt1": {
+                            "type": "object",
+                            "required": false
+                        },
+            			"stt2": {
+                            "type": "object",
+                            "required": false
+                        },
+            			"stt3": {
+                            "type": "object",
+                            "required": false
+                        },
+            			"stt4": {
+                            "type": "object",
+                            "required": false
+                        },
+                        "BizCertificationDate": {
+                            "required": false,
+                            "type": "object"
+                        },
+                        "BizCertificationIssuedBy": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "BizCertificationNo": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "IsCargoTransport": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "IsContractRoadTransport": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "IsFixedRoadTransport": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "IsPassengerTaxi": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "IsPassengerTransport": {
+                            "required": true,
+                            "type": "object"
+                        },
+            			"IsCargoTransport": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "IsContractRoadTransport_text": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "IsFixedRoadTransport_text": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "IsCargoTransport_text": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "IsPassengerTransport_text": {
+                            "required": true,
+                            "type": "object"
+                        },
+                        "cbB3": {
+                            "required": false,
+                            "type": "object",
+            				"enum": ["1","2"]
+                        },
+                        "cbTP2": {
+                            "required": false,
+                            "type": "object",
+            				"enum": ["1","2"]
+                        },
+                        "cbTP3": {
+                            "required": false,
+                            "type": "object",
+            				"enum": ["1","2"]
+                        },
+            			"cbTP4": {
+                            "required": false,
+                            "type": "object",
+            				"enum": ["1","2"]
+                        }
+                    }
+                },
+                "options": {
+                    "type": "object",
+                    "legendStyle": "",
+                    "fields": {
+            			"TPTable": {
+                            "id": "TPTable",
+                            "name": "TPTable",
+                            "type": "table",
+                            "label": "",
+            				"items": {
+            					"fields": {
+            						"Accepted": {
+            							"type": "select",
+            							"optionLabels": [" Đạt", "Không Đạt"]
+            						}
+            					}
+            				}
+                        },
+            			"STTTable": {
+                            "id": "STTTable",
+                            "name": "STTTable",
+                            "type": "table",
+                            "label": ""
+                        },
+            			"ExpImpGate": {
+                            "id": "ExpImpGate",
+                            "name": "ExpImpGate",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "ExpImpGate"
+                        },
+            			"PassengerOrCargo": {
+                            "id": "PassengerOrCargo",
+                            "name": "PassengerOrCargo",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "PassengerOrCargo"
+                        },
+                        "RegistrationNumber": {
+                            "id": "RegistrationNumber",
+                            "name": "RegistrationNumber",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "RegistrationNumber"
+                        },
+                        "SequenceNo": {
+                            "id": "SequenceNo",
+                            "name": "SequenceNo",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "SequenceNo"
+                        },
+                        "ValidFrom": {
+                            "id": "ValidFrom",
+                            "name": "ValidFrom",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "ValidFrom"
+                        },
+                        "ValidUntil": {
+                            "id": "ValidUntil",
+                            "name": "ValidUntil",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "ValidUntil"
+                        },
+            			"stt1": {
+                            "id": "stt1",
+                            "name": "stt1",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": ""
+                        },
+            			"stt2": {
+                            "id": "stt2",
+                            "name": "stt2",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": ""
+                        },
+            			"stt3": {
+                            "id": "stt3",
+                            "name": "stt3",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": ""
+                        },
+            			"stt4": {
+                            "id": "stt4",
+                            "name": "stt4",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": ""
+                        },
+                        "BizCertificationDate": {
+                            "placeholder": "BizCertificationDate",
+                            "dateFormat": "DD/MM/YYYY",
+                            "picker": {
+                                "locale": "vi_VN",
+                                "useCurrent": false,
+                                "dayViewHeaderFormat": "MMMM YYYY",
+                                "format": "DD/MM/YYYY",
+                                "extraFormats": []
+                            },
+                            "id": "BizCertificationDate",
+                            "name": "BizCertificationDate",
+                            "type": "date",
+                            "label": "",
+                            "fieldClass": "form-input-100"
+                        },
+                        "BizCertificationIssuedBy": {
+                            "id": "BizCertificationIssuedBy",
+                            "name": "BizCertificationIssuedBy",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "BizCertificationIssuedBy"
+                        },
+                        "BizCertificationNo": {
+                            "id": "BizCertificationNo",
+                            "name": "BizCertificationNo",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "BizCertificationNo"
+                        },
+                        "IsCargoTransport": {
+                            "id": "IsCargoTransport",
+                            "name": "IsCargoTransport",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "IsCargoTransport"
+                        },
+                        "IsContractRoadTransport": {
+                            "id": "IsContractRoadTransport",
+                            "name": "IsContractRoadTransport",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "IsContractRoadTransport"
+                        },
+                        "IsFixedRoadTransport": {
+                            "id": "IsFixedRoadTransport",
+                            "name": "IsFixedRoadTransport",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "IsFixedRoadTransport"
+                        },
+                        "IsPassengerTaxi": {
+                            "id": "IsPassengerTaxi",
+                            "name": "IsPassengerTaxi",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "IsPassengerTaxi"
+                        },
+                        "IsPassengerTransport": {
+                            "id": "IsPassengerTransport",
+                            "name": "IsPassengerTransport",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "IsPassengerTransport"
+                        },
+            			"IsPassengerTransport_text": {
+                            "id": "IsPassengerTransport_text",
+                            "name": "IsPassengerTransport_text",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "IsPassengerTransport"
+                        },
+            			"IsCargoTransport_text": {
+                            "id": "IsCargoTransport_text",
+                            "name": "IsCargoTransport_text",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "IsCargoTransport"
+                        },
+                        "IsContractRoadTransport_text": {
+                            "id": "IsContractRoadTransport_text",
+                            "name": "IsContractRoadTransport_text",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "IsContractRoadTransport"
+                        },
+                        "IsFixedRoadTransport_text": {
+                            "id": "IsFixedRoadTransport_text",
+                            "name": "IsFixedRoadTransport_text",
+                            "type": "text",
+                            "label": "",
+                            "fieldClass": "form-input-100",
+                            "placeholder": "IsFixedRoadTransport"
+                        },
+
+                        "cbB3": {
+                            "type": "radio",
+                            "id": "cbB3",
+                            "name": "cbB3",
+                            "optionLabels": [" Đạt","Không đạt"],
+            				"hideNone": true
+                        },
+                        "cbTP2": {
+                            "type": "radio",
+                            "id": "cbTP2",
+                            "name": "cbTP2",
+                            "optionLabels": [" Đạt","Không đạt"],
+            				"hideNone": true
+                        },
+                        "cbTP3": {
+                            "type": "radio",
+                            "id": "cbTP3",
+                            "name": "cbTP3",
+                            "optionLabels": [" Đạt","Không đạt"],
+            				"hideNone": true
+                        },
+            			"cbTP4": {
+                            "type": "radio",
+                            "id": "cbTP4",
+                            "name": "cbTP4",
+                            "optionLabels": [" Đạt","Không đạt"],
+            				"hideNone": true
+                        },
+            			"initEvent": {
+                            "id": "initEvent",
+                            "name": "initEvent",
+                            "type": "hidden",
+                            "events": {
+            					"ready": function(){
+            						$('#IsFixedRoadTransport_text').val('Vận tải hành khách bằng ô tô theo tuyến cố định');
+            						$('#IsContractRoadTransport_text').val('Vận tải hành khách theo hợp đồng');
+            						$('#IsPassengerTransport_text').val('Vận tải khách du lịch bằng xe ô tô');
+            						$('#IsCargoTransport_text').val('Vận tải hàng hóa bằng xe ô tô');
+
+            						var fix = $('#IsFixedRoadTransport').val();
+            						var contract = $('#IsContractRoadTransport').val();
+            						var passenger = $('#IsPassengerTransport').val();
+            						var cargo = $('#IsCargoTransport').val();
+
+            						if(fix == '0'){
+            							$('#line1').hide();
+            						}
+            						if(contract == '0'){
+            							$('#line2').hide();
+            						}
+            						if(passenger == '0'){
+            							$('#line3').hide();
+            						}
+            						if(cargo == '0'){
+            							$('#line4').hide();
+            						}
+
+
+            						if(fix == '1' && contract == '0' && passenger == '0' && cargo == '0'){
+            							$('#stt1').val('1');
+            						}
+            						if(fix == '0' && contract == '1' && passenger == '0' && cargo == '0'){
+            							$('#stt2').val('1');
+            						}
+            						if(fix == '0' && contract == '0' && passenger == '1' && cargo == '0'){
+            							$('#stt3').val('1');
+            						}
+            						if(fix == '0' && contract == '0' && passenger == '0' && cargo == '1'){
+            							$('#stt4').val('1');
+            						}
+            						if(fix == '1' && contract == '1' && passenger == '0' && cargo == '0'){
+            							$('#stt1').val('1');
+            							$('#stt2').val('2');
+            						}
+            						if(fix == '1' && contract == '0' && passenger == '1' && cargo == '0'){
+            							$('#stt1').val('1');
+            							$('#stt3').val('2');
+            						}
+            						if(fix == '1' && contract == '0' && passenger == '0' && cargo == '1'){
+            							$('#stt1').val('1');
+            							$('#stt3').val('2');
+            						}
+            						if(fix == '0' && contract == '1' && passenger == '1' && cargo == '0'){
+            							$('#stt2').val('1');
+            							$('#stt3').val('2');
+            						}
+            						if(fix == '0' && contract == '1' && passenger == '0' && cargo == '1'){
+            							$('#stt2').val('1');
+            							$('#stt4').val('2');
+            						}
+            						if(fix == '0' && contract == '0' && passenger == '1' && cargo == '1'){
+            							$('#stt3').val('1');
+            							$('#stt4').val('2');
+            						}
+            						if(fix == '1' && contract == '1' && passenger == '1' && cargo == '0'){
+            							$('#stt1').val('1');
+            							$('#stt2').val('2');
+            							$('#stt3').val('3');
+            						}
+            						if(fix == '1' && contract == '1' && passenger == '0' && cargo == '1'){
+            							$('#stt1').val('1');
+            							$('#stt2').val('2');
+            							$('#stt4').val('3');
+            						}
+            						if(fix == '0' && contract == '1' && passenger == '1' && cargo == '1'){
+            							$('#stt2').val('1');
+            							$('#stt3').val('2');
+            							$('#stt4').val('3');
+            						}
+            						if(fix == '1' && contract == '1' && passenger == '1' && cargo == '1'){
+            							$('#stt1').val('1');
+            							$('#stt2').val('2');
+            							$('#stt3').val('3');
+            							$('#stt4').val('4');
+            						}
+
+
+            					}
+            				}
+
+            			}
+                    }
+                },
+                "view": {
+                    "layout": {
+                        "template": "<div class='row-fluid'><div class='row-fluid' style='font-size: 14px; line-height: normal; font-family: Times New Roman, Times, serif;text-rendering: optimizeLegibility;width: 100%;position: relative;left: 50%;transform: translateX(-50%);-webkit-transform: translateX(-50%);'><style type='text/css'>#IsCargoTransport_text{width: 400px!important;} #IsContractRoadTransport_text{width: 400px!important;} #IsFixedRoadTransport_text{width: 400px!important;} #IsPassengerTransport_text{width: 400px!important;}.alpaca-field .radio + .radio{margin-top: 10px !important; } .alpaca-field table .alpaca-control label { display: block !important; }.alpaca-field p { line-height: 20px !important; } #column-cbB3 .form-group{display: flex;} #column-cbTP2 .form-group{display: flex;} #column-cbTP3 .form-group{display: flex;} #column-cbTP4 .form-group{display: flex;} .has-error.alpaca-field-text:before{content:'';position:absolute;bottom:3px;left:0;width:100%;height:1px;background-color:red}.alpaca-container-item input{border-bottom: 0px !important;} input:focus{outline:none}.alpaca-field-text,.alpaca-field-date,.alpaca-field-datetime{position:relative;}.alpaca-field-text:before, .alpaca-field-date:before, .alpaca-field-datetime:before{content:'';position:absolute;bottom:3px;left:0;width:100%;height:1px;background-color:#ccc} .notBBAT .alpaca-field-text:before, .notBBAT .alpaca-field-date:before, .notBBAT .alpaca-field-date:before, .notBBAT .alpaca-field-datetime:before, .notBBAT.alpaca-field-text:before, .notBBAT.alpaca-field-date:before, .notBBAT.alpaca-field-datetime:before{content:'';position:absolute;bottom:3px;left:0;width:100%;height:0px;background-color:#ccc} .alpaca-layout-binding-holder{margin-bottom: -15px !important;} p .form-group, p .control-group{margin-bottom: 1px !important;}p{text-indent: 0pt !important;}ul{list-style: none;}.alpaca-field li .form-group, .alpaca-field li .control-group{margin-bottom: 0px !important;} .alpaca-field .row-fluid table td{padding: 5px 10px 0px 10px !important;}</style><p align='center' style='text-align:center;'><strong><span style='font-family:times new roman,serif;'><span style='font-size:14.0pt;'>Biên bản</span></span></strong><strong><span style='font-family:times new roman,serif;'><span style='font-size:14.0pt;'> thẩm định</span></span></strong><strong><span style='font-family:times new roman,serif;'><span style='font-size:14.0pt;'> hồ sơ</span></span></strong></p><table border='0' cellpadding='0' cellspacing='0' style='width:100%;border-collapse:collapse;' width='1119'><tbody><tr style='height:20px;'><td style='padding:1.5pt 0in 0in 0in;height:20px;vertical-align:top;'><h5 style='margin-top:1.5pt;margin-right:0in;margin-bottom:1.5pt;margin-left:0in;'>Bước 1: <span style='font-size:12.0pt;'>Thông tin giấy phép kinh doanh vận tải bằng xe ô tô:</span></h5><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='background:white;'><span style='font-family:times new roman,serif;'>Số GPKD vận tải bằng xe ô tô</span></span><span style='background:white;'><span style='font-family:times new roman,serif;'> :</span></span> <span style='display: inline-table;' id='column-BizCertificationNo' ></span>&nbsp;</p><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='background:white;'><span style='font-family:times new roman,serif;'>Ngày cấp</span></span>: <span style='display: inline-table;' id='column-BizCertificationDate' ></span>&nbsp;&nbsp;&nbsp;&nbsp;</p><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='background:white;'><span style='font-family:times new roman,serif;'>Cơ quan cấp : </span></span><span style='display: inline-table;' id='column-BizCertificationIssuedBy' ></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style='display:none; margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='display: inline-table;' id='column-IsFixedRoadTransport' ></span><span style='display: inline-table;' id='column-IsCargoTransport' ></span><span style='display: inline-table;' id='column-IsContractRoadTransport' ></span><span style='display: inline-table;' id='column-IsPassengerTransport' ></span></p></td><td style='padding:1.5pt 0in 0in 7.5pt;height:20px;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'>&nbsp;</p></td></tr><tr style='height:20px;'><td style='padding:1.5pt 0in 0in 7.5pt;height:20px;vertical-align:top;'><p><span style='font-family:times new roman,serif;'><br>Thông tin Giấy phép kinh doanh vận tải (Nếu được cấp phép):</span></p><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='font-family:times new roman,serif;'>Số GP vận tải quốc tế*</span> : <span style='display: inline-table;'  ></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background:white;'><span style='font-family:times new roman,serif;'>Cấp lần thứ</span></span></p><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='font-family:times new roman,serif;'>Ngày cấp*</span> : <span style='display: inline-table;'  ></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-family:times new roman,serif;'>Ngày hết hạn*</span><span style='font-family:times new roman,serif;'>:</span> <span style='display: inline-table;' ></span></p></td></tr><tr style='height:20px;'><td colspan='2' style='padding:1.5pt 0in 0in 0in;height:20px;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='font-family:times new roman,serif;'><br>Bước 2: Kiểm tra thông tin hồ sơ đăng ký</span></p><p><span style='display: inline-table;' id='column-TPTable' ></span></p></td></tr><tr style='height:20px;'><td style='padding:1.5pt 0in 0in 0in;height:20px;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='font-family:times new roman,serif;'>Bước 3: Kiểm tra thông tin loại hình hoạt động&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style='display: inline-table;' id='column-cbB3' ></span></p><table border='1' cellpadding='0' cellspacing='0' style='border-collapse:collapse;border:none;'><tbody><tr><td style='width:56px;border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='font-family:times new roman,serif;'>STT</span></p></td><td style='width:435px;border:solid windowtext 1.0pt;border-left:none;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='font-family:times new roman,serif;'>Loại hình hoạt động</span></p></td><td style='width:68px;border:solid windowtext 1.0pt;border-left:none;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='font-family:times new roman,serif;'>Chọn</span></p></td></tr><tr id='line1' ><td style='width:56px;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span id='column-stt1' style='font-family:times new roman,serif;'></span></p></td><td style='width:435px;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='display: inline-table;' id='column-IsFixedRoadTransport_text' ></span></p></td><td style='width:68px;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'>x</p></td></tr><tr id='line2' ><td style='width:56px;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span id='column-stt2' style='font-family:times new roman,serif;'></span></p></td><td style='width:435px;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='display: inline-table;' id='column-IsContractRoadTransport_text' ></span></p></td><td style='width:68px;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'>x</p></td></tr><tr id='line3' ><td style='width:56px;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span id='column-stt3' style='font-family:times new roman,serif;'></span></p></td><td style='width:435px;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='display: inline-table;' id='column-IsPassengerTransport_text' ></span></p></td><td style='width:68px;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'>x</p></td></tr><tr id='line4'><td style='width:56px;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span id='column-stt4' style='font-family:times new roman,serif;'></span></p></td><td style='width:435px;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'><span style='display: inline-table;' id='column-IsCargoTransport_text' ></span></p></td><td style='width:68px;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'>x</p></td></tr></tbody></table><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'>&nbsp;</p></td><td style='padding:1.5pt 0in 0in 7.5pt;height:20px;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'>&nbsp;</p></td></tr><tr style='height:20px;'><td style='padding:1.5pt 0in 0in 0in;height:20px;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'>&nbsp;</p></td><td style='padding:1.5pt 0in 0in 7.5pt;height:20px;vertical-align:top;'><p style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;'>&nbsp;</p></td></tr></tbody></table><br><p><span style='display: inline-table;' id='column-STTTable' ></span></p><p>&nbsp;</p><div id='column-initEvent' ></div><div class='' id='column-auto'></div></div></div>",
+                        "bindings": {
+            				"TPTable": "column-TPTable",
+            				"STTTable": "column-STTTable",
+            				"stt1": "column-stt1",
+            				"stt2": "column-stt2",
+            				"stt3": "column-stt3",
+            				"stt4": "column-stt4",
+            				"initEvent": "column-initEvent",
+                            "cbB3": "column-cbB3",
+                            "IsPassengerTransport": "column-IsPassengerTransport",
+                            "cbTP2": "column-cbTP2",
+            				"cbTP4": "column-cbTP4",
+                            "IsFixedRoadTransport": "column-IsFixedRoadTransport",
+                            "IsCargoTransport": "column-IsCargoTransport",
+            				"IsFixedRoadTransport_text": "column-IsFixedRoadTransport_text",
+                            "IsCargoTransport_text": "column-IsCargoTransport_text",
+                            "BizCertificationIssuedBy": "column-BizCertificationIssuedBy",
+                            "cbTP3": "column-cbTP3",
+                            "IsPassengerTaxi": "column-IsPassengerTaxi",
+                            "BizCertificationDate": "column-BizCertificationDate",
+                            "BizCertificationNo": "column-BizCertificationNo",
+            				"IsPassengerTaxi": "column-IsPassengerTaxi",
+                            "IsContractRoadTransport": "column-IsContractRoadTransport",
+            				"IsPassengerTransport_text": "column-IsPassengerTransport_text",
+                            "IsContractRoadTransport_text": "column-IsContractRoadTransport_text",
+            				"SequenceNo": "column-SequenceNo",
+                            "ExpImpGate": "column-ExpImpGate",
+            				"ValidFrom": "column-ValidFrom",
+                            "ValidUntil": "column-ValidUntil",
+            				"RegistrationNumber": "column-RegistrationNumber",
+                            "PassengerOrCargo": "column-PassengerOrCargo"
+                        }
+                    },
+                    "parent": "bootstrap-edit",
+                    "fields": {}
+                }
+              });
+            });
+        </script>
+    </body>
+</html>

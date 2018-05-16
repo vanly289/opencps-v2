@@ -25,7 +25,7 @@ public interface RegistrationFormActions {
 			String formData, String formScript, String formReport, long fileEntryId, boolean isNew, boolean removed,
 			ServiceContext serviceContext) throws PortalException;
 
-	public RegistrationForm deleteRegistrationForm(long groupId, long registrationId, String referenceUid) throws PortalException;
+	public boolean deleteRegistrationForm(String referenceUid) throws PortalException;
 
 	public void addRegistrationFormbaseonRegTemplate(long groupId,  long companyId, long registrationId, String govAgencyCode, ServiceContext serviceContext)
 			throws PortalException;
@@ -42,7 +42,7 @@ public interface RegistrationFormActions {
 			Sort[] sorts, int start, int end, ServiceContext serviceContext);
 
     public void cloneRegistrationFormByRegistrationId(
-        long groupId, long registrationId, ServiceContext serviceContext)
+        long groupId, long oldRegistrationId, long newRegistrationId, ServiceContext serviceContext)
         throws PortalException, SystemException;
 
 }

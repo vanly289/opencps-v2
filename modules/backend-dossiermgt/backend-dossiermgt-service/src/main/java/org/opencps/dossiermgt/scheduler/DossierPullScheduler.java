@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
@@ -27,6 +28,7 @@ import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
+import org.opencps.dossiermgt.model.DossierRequestUD;
 import org.opencps.dossiermgt.model.PaymentFile;
 import org.opencps.dossiermgt.model.ProcessAction;
 import org.opencps.dossiermgt.model.ProcessOption;
@@ -36,6 +38,7 @@ import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
 import org.opencps.dossiermgt.service.PaymentFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
@@ -47,6 +50,9 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -101,7 +107,6 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 		try {
 			String endPointDossier = "dossiers?submitting=true&secetKey=" + serectKey;
-
 			JSONObject resDossierSearch = rest.callAPI(0l, HttpMethods.GET, "application/json",
 					RESTFulConfiguration.SERVER_PATH_BASE, endPointDossier, RESTFulConfiguration.SERVER_USER,
 					RESTFulConfiguration.SERVER_PASS, properties, serviceContext);
@@ -115,37 +120,9 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 					.createJSONObject(resDossierSearch.getString(RESTFulConfiguration.MESSAGE));
 
 			JSONArray array = JSONFactoryUtil.createJSONArray(jsData.getString("data"));
-			
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject object = array.getJSONObject(i);
-				
-				long dossierId = object.getLong(DossierTerm.DOSSIER_ID);
-				
-				Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
-				
-				
-				if (Validator.isNotNull(dossier)) {
-					dossier.setSubmitting(false);
-					
-					DossierLocalServiceUtil.updateDossier(dossier);
-				}
-			}
-			
 
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject object = array.getJSONObject(i);
-				
-/*				long dossierId = object.getLong(DossierTerm.DOSSIER_ID);
-				
-				Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
-				
-				
-				if (Validator.isNotNull(dossier)) {
-					dossier.setSubmitting(false);
-					
-					DossierLocalServiceUtil.updateDossier(dossier);
-				}*/
-				
 				try {
 					pullDossier(company, object, systemUser);
 				} catch (Exception e) {
@@ -163,23 +140,13 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 	private void pullDossier(Company company, JSONObject object, User systemUser) throws PortalException {
 		long dossierId = GetterUtil.getLong(object.get(DossierTerm.DOSSIER_ID));
 
-		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
-		
-		
-		if (Validator.isNotNull(dossier)) {
-			dossier.setSubmitting(false);
-			
-			DossierLocalServiceUtil.updateDossier(dossier);
-		}
-		
 		ServiceContext serviceContext = new ServiceContext();
 		serviceContext.setCompanyId(company.getCompanyId());
 		serviceContext.setUserId(object.getLong(DossierTerm.USER_ID));
 
 		long sourceGroupId = object.getLong(Field.GROUP_ID);
 		String referenceUid = object.getString(DossierTerm.REFERENCE_UID);
-		
-		
+
 		String serverno = object.getString(DossierTerm.SERVER_NO);
 
 		List<ServiceProcess> processes = ServiceProcessLocalServiceUtil.getByServerNo(serverno);
@@ -215,15 +182,12 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 					syncProcesses.add(desServiceProcess);
 
 					break;
-
-					// TODO : check again
 				}
 
 			} catch (Exception e) {
 				_log.info("NOProcess");
 			}
 
-			// ProcessOption option = ProcessOptionLocalServiceUtil.get
 		}
 
 		for (ServiceProcess syncServiceProcess : syncProcesses) {
@@ -233,11 +197,28 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 			Dossier desDossier = DossierLocalServiceUtil.getByRef(syncServiceProcess.getGroupId(),
 					object.getString(DossierTerm.REFERENCE_UID));
+			long userId = systemUser.getUserId();
+			_log.info("userId: " + userId);
 
 			if (Validator.isNull(desDossier)) {
 				// Create DOSSIER
 
+				_log.info("CREATE DOSSIER PULL");
 				long desGroupId = syncServiceProcess.getGroupId();
+
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+				Date submitDate = new Date();
+
+				String strSubmitDate = object.getString(DossierTerm.SUBMIT_DATE);
+				_log.info("strSubmitDate: " + strSubmitDate);
+				try {
+					submitDate = sdf.parse(object.getString(DossierTerm.SUBMIT_DATE));
+					_log.info("submitDate: " + submitDate);
+
+				} catch (Exception e) {
+					_log.info("SUBMITDATE_NOT_VALID");
+				}
 
 				desDossier = DossierLocalServiceUtil.updateDossier(desGroupId, 0l, referenceUid,
 						object.getInt(DossierTerm.COUNTER), object.getString(DossierTerm.SERVICE_CODE),
@@ -263,7 +244,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 						object.getString(DossierTerm.POSTAL_CITY_CODE), object.getString(DossierTerm.POSTAL_CITY_NAME),
 						object.getString(DossierTerm.POSTAL_TEL_NO), object.getString(DossierTerm.PASSWORD),
 						object.getBoolean(DossierTerm.NOTIFICATION), object.getBoolean(DossierTerm.ONLINE),
-						object.getString(DossierTerm.SERVER_NO), serviceContext);
+						object.getString(DossierTerm.SERVER_NO), submitDate, serviceContext);
 
 				// TODO add sync DOSSIERFILE and PAYMENTFILE
 
@@ -272,7 +253,8 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 				// get the list of file of source dossier need to sync
 				getDossierFiles(sourceGroupId, dossierId, lsFileSync);
 
-				pullDossierFiles(desDossier.getGroupId(), desDossier.getDossierId(), lsFileSync, sourceGroupId,
+				_log.info("START pull dossier File1: ");
+				pullDossierFiles(userId, desDossier.getGroupId(), desDossier.getDossierId(), lsFileSync, sourceGroupId,
 						dossierId, referenceUid, serviceContext);
 
 				// get the list of payment file need to sync
@@ -310,17 +292,35 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 			} else {
 
+				_log.error("UPDATE_____IN_CASE_HAS_DES_DOSSIER___________");
+
 				if (Validator.isNotNull(object.getString(DossierTerm.CANCELLING_DATE))) {
 					// Update cancellingDate
+
+					_log.error("UPDATE____CANCELLING_DATE");
 					desDossier.setCancellingDate(APIDateTimeUtils.convertStringToDate(
 							object.getString(DossierTerm.CANCELLING_DATE), APIDateTimeUtils._NORMAL_PARTTERN));
+
 				}
 
 				if (Validator.isNotNull(object.getString(DossierTerm.CORRECTING_DATE))) {
+					_log.error("UPDATE____CORRECTTING_DATE");
 					// Update correctingDate
 					desDossier.setCorrecttingDate(APIDateTimeUtils.convertStringToDate(
 							object.getString(DossierTerm.CORRECTING_DATE), APIDateTimeUtils._NORMAL_PARTTERN));
 				}
+				
+				
+				if (Validator.isNotNull(object.getString(DossierTerm.ENDORSEMENT_DATE))) {
+					_log.error("UPDATE____ENDOSEMENT_DATE");
+					// Update correctingDate
+					desDossier.setEndorsementDate(APIDateTimeUtils.convertStringToDate(
+							object.getString(DossierTerm.ENDORSEMENT_DATE), APIDateTimeUtils._NORMAL_PARTTERN));
+				}
+	
+				// Update dossier
+
+				DossierLocalServiceUtil.updateDossier(desDossier);
 
 				// the resubmit case
 				if (object.getBoolean(DossierTerm.SUBMITTING, false)) {
@@ -334,7 +334,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 						processAction = ProcessActionLocalServiceUtil.fetchBySPI_PRESC_AEV(
 								syncServiceProcess.getServiceProcessId(), dossierAction.getStepCode(), "SUBMIT");
 
-						//_log.info(JSONFactoryUtil.looseSerialize(processAction));
+						// _log.info(JSONFactoryUtil.looseSerialize(processAction));
 
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -347,9 +347,9 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 					// get the list of file of source dossier need to sync
 					getDossierFiles(sourceGroupId, dossierId, lsFileSync);
 
-					pullDossierFiles(desDossier.getGroupId(), desDossier.getDossierId(), lsFileSync, sourceGroupId,
-							dossierId, referenceUid, serviceContext);
-					
+					_log.info("START pull dossier File2: ");
+					pullDossierFiles(userId, desDossier.getGroupId(), desDossier.getDossierId(), lsFileSync,
+							sourceGroupId, dossierId, referenceUid, serviceContext);
 
 					// get the list of payment file need to sync
 					List<JSONObject> lsPaymentsFileSync = new ArrayList<>();
@@ -360,6 +360,11 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 					pullPaymentFile(sourceGroupId, dossierId, desDossier.getGroupId(), desDossier.getDossierId(),
 							lsPaymentsFileSync, serviceContext);
+					
+					serviceContext.setCompanyId(desDossier.getCompanyId());
+					serviceContext.setScopeGroupId(desDossier.getGroupId());
+					
+					synDossierRequest(dossierId, desDossier.getDossierId(), serviceContext);
 
 					if (Validator.isNotNull(processAction)) {
 						// doAction
@@ -367,7 +372,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 						String applicantNote = object.getString(DossierTerm.APPLICANT_NOTE);
 						String applicantName = object.getString(DossierTerm.APPLICANT_NAME);
 
-						//String subUsers = StringPool.BLANK;
+						// String subUsers = StringPool.BLANK;
 
 						actions.doAction(syncServiceProcess.getGroupId(), desDossier.getDossierId(),
 								desDossier.getReferenceUid(), processAction.getActionCode(),
@@ -378,13 +383,10 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 					} else {
 						desDossier.setSubmitting(true);
-/*						desDossier.setSubmitDate(APIDateTimeUtils.convertStringToDate(
-								object.getString(DossierTerm.SUBMIT_DATE), APIDateTimeUtils._NORMAL_PARTTERN));
-*/					}
+
+					}
 
 				}
-
-
 
 			}
 
@@ -393,6 +395,33 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 		// ResetDossier
 		resetDossier(sourceGroupId, referenceUid, true, serviceContext);
 
+	}
+
+	private void synDossierRequest(long srcDossierId, long desDossierId, ServiceContext context) {
+
+		try {
+			
+			_log.info("****RUN SYN DOSSIER REQUEST****" +  srcDossierId );
+			
+			List<DossierRequestUD> dossierRequests = DossierRequestUDLocalServiceUtil.getDossierRequest(srcDossierId, 1);
+			_log.info("****RUN SYN DOSSIER REQUEST**** 1" +dossierRequests.size() + " " + srcDossierId );
+
+			for (DossierRequestUD dr : dossierRequests) {
+
+				dr.setIsNew(0);
+
+				DossierRequestUDLocalServiceUtil.updateDossierRequestUD(dr);
+				
+				context.setUserId(dr.getUserId());
+				
+				DossierRequestUDLocalServiceUtil.updateDossierRequest(0, desDossierId, dr.getReferenceUid(),
+						dr.getRequestType(), dr.getComment(), 0, context);
+
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	private void getPaymentFiles(long srcGroupId, long srcDossierId, List<JSONObject> lsPaymentsFileSync) {
@@ -586,7 +615,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 						}
 
 					} else {
-						
+
 						_log.info("PULL PAYMENT FILE" + dossierId + "fileReference" + fileRef);
 
 						String requestURL = "dossiers/" + dossierId + "/payments/" + fileRef + "/confirm/noattachment";
@@ -670,7 +699,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			HashMap<String, String> properties = new HashMap<String, String>();
 			properties.put("Content-Type", "application/x-www-form-urlencoded");
 
-			String path = "dossiers/" + dossierId + "/files";
+			String path = "dossiers/" + dossierId + "/all/files";
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -692,18 +721,18 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 					JSONObject object = array.getJSONObject(i);
 
 					if (GetterUtil.getBoolean(object.get("isNew"))) {
-						
-						
+
 						lsFileSync.add(object);
-						
+
 						long dossierFileId = object.getLong("dossierFileId");
-						
+
 						if (dossierFileId != 0) {
-							DossierFile file = DossierFileLocalServiceUtil.getDossierFile(object.getLong("dossierFileId"));
+							DossierFile file = DossierFileLocalServiceUtil
+									.getDossierFile(object.getLong("dossierFileId"));
 							file.setIsNew(false);
 							DossierFileLocalServiceUtil.updateDossierFile(file);
 						}
-						
+
 					}
 
 				}
@@ -715,106 +744,174 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 		}
 	}
 
-	private void pullDossierFiles(long desGroupId, long dossierId, List<JSONObject> lsFileSync, long srcGroupId,
-			long srcDossierId, String dossierRef, ServiceContext serviceContext) {
+	private void pullDossierFiles(long userId, long desGroupId, long dossierId, List<JSONObject> lsFileSync,
+			long srcGroupId, long srcDossierId, String dossierRef, ServiceContext serviceContext)
+			throws PortalException {
 
 		for (JSONObject ref : lsFileSync) {
+			String fileRef = ref.getString("referenceUid");
+			boolean isRemoved = ref.getBoolean("removed");
 
-			try {
-				String fileRef = ref.getString("referenceUid");
-				
-				DossierFile srcDossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(srcDossierId, fileRef);
-				
-				srcDossierFile.setIsNew(false);
-				
-				DossierFileLocalServiceUtil.updateDossierFile(srcDossierFile);
+			_log.info("REMOVED_" + ref.getString("fileTemplateNo") + isRemoved);
 
-				// Get file from SERVER
-				String path = "dossiers/" + srcDossierId + "/files/" + fileRef;
+			if (isRemoved) {
 
-				URL url = new URL(RESTFulConfiguration.SERVER_PATH_BASE + path);
-
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-				String authString = RESTFulConfiguration.SERVER_USER + ":" + RESTFulConfiguration.SERVER_PASS;
-
-				String authStringEnc = new String(Base64.getEncoder().encodeToString(authString.getBytes()));
-
-				conn.setRequestProperty("Authorization", "Basic " + authStringEnc);
-
-				conn.setRequestMethod(HttpMethods.GET);
-				conn.setDoInput(true);
-				conn.setDoOutput(true);
-				conn.setRequestProperty("Accept", "application/json");
-				conn.setRequestProperty("groupId", String.valueOf(srcGroupId));
-
-				int responseCode = conn.getResponseCode();
-
-				if (responseCode != 200) {
-
-					if (responseCode != 204) {
-						throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-					} else {
-						// Sync FormData
-
-						String dossierTemplateNo = ref.getString("dossierTemplateNo");
-						String formData = ref.getString("formData");
-
-						DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(desGroupId,
-								ref.getString("fileTemplateNo"));
-
-						pullFormData(desGroupId, fileRef, dossierTemplateNo, dossierId, formData, part, serviceContext);
-					}
-
-				} else {
-
-					DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(dossierId,
-							fileRef);
-
-					if (Validator.isNull(dossierFile)) {
-
-						InputStream is = conn.getInputStream();
-
-						File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()),
-								StringPool.PERIOD + ref.getString("fileType"));
-
-						FileOutputStream outStream = new FileOutputStream(tempFile);
-
-						int bytesRead = -1;
-						byte[] buffer = new byte[BUFFER_SIZE];
-						while ((bytesRead = is.read(buffer)) != -1) {
-							outStream.write(buffer, 0, bytesRead);
-						}
-
-						outStream.close();
-						is.close();
-
-						String requestURL = RESTFulConfiguration.CLIENT_PATH_BASE + "dossiers/" + dossierId + "/files";
-
-
-						String clientAuthString = new String(Base64.getEncoder().encodeToString(
-								(RESTFulConfiguration.CLIENT_USER + StringPool.COLON + RESTFulConfiguration.CLIENT_PASS)
-										.getBytes()));
-
-						pullDossierFile(requestURL, "UTF-8", desGroupId, dossierId, clientAuthString, tempFile,
-								ref.getString("dossierTemplateNo"), ref.getString("dossierPartNo"),
-								ref.getString("fileTemplateNo"), ref.getString("displayName"),
-								ref.getString("formData"), dossierRef, fileRef, serviceContext);
-					}
-
+				// remove file in CLIENT
+				_log.info("referenceUid" + fileRef);
+				_log.info("dossierId" + dossierId);
+				_log.info("srcDossierId" + srcDossierId);
+				DossierFile file = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(dossierId, fileRef);
+				if (file != null) {
+					file.setRemoved(true);
+					DossierFileLocalServiceUtil.updateDossierFile(file);
 				}
 
-				conn.disconnect();
+			} else {
 
-			} catch (MalformedURLException e) {
+				try {
+					// String fileRef = ref.getString("referenceUid");
 
-				e.printStackTrace();
-			} catch (IOException e) {
+					_log.info("START update dossier File not Removed: " + isRemoved);
+					DossierFile srcDossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(srcDossierId,
+							fileRef);
 
-				e.printStackTrace();
+					srcDossierFile.setIsNew(false);
 
+					DossierFileLocalServiceUtil.updateDossierFile(srcDossierFile);
+
+					// Get file from SERVER
+					String path = "dossiers/" + srcDossierId + "/files/" + fileRef;
+
+					URL url = new URL(RESTFulConfiguration.SERVER_PATH_BASE + path);
+
+					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+					String authString = RESTFulConfiguration.SERVER_USER + ":" + RESTFulConfiguration.SERVER_PASS;
+
+					String authStringEnc = new String(Base64.getEncoder().encodeToString(authString.getBytes()));
+
+					conn.setRequestProperty("Authorization", "Basic " + authStringEnc);
+
+					conn.setRequestMethod(HttpMethods.GET);
+					conn.setDoInput(true);
+					conn.setDoOutput(true);
+					conn.setRequestProperty("Accept", "application/json");
+					conn.setRequestProperty("groupId", String.valueOf(srcGroupId));
+
+					int responseCode = conn.getResponseCode();
+					_log.info("responseCode: " + responseCode);
+
+					if (responseCode != 200) {
+
+						if (responseCode != 204) {
+							throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+						} else {
+							// Sync FormData
+
+							_log.info("Sync FormData START ERROR:****** ");
+							String dossierTemplateNo = ref.getString("dossierTemplateNo");
+							String formData = ref.getString("formData");
+							_log.info("formData: " + formData);
+
+							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(desGroupId,
+									ref.getString("fileTemplateNo"));
+
+							pullFormData(desGroupId, fileRef, dossierTemplateNo, dossierId, formData, part,
+									serviceContext);
+						}
+
+					} else {
+
+						_log.info("Sync FormData START NOTTTT ERROR:****** ");
+						_log.info("dossierId: " + dossierId);
+						_log.info("ReferenceUid fileRef: " + fileRef);
+						DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(dossierId,
+								fileRef);
+
+						if (Validator.isNull(dossierFile)) {
+
+							_log.info("dossierFile NULL:****** ");
+							InputStream is = conn.getInputStream();
+
+							File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()),
+									StringPool.PERIOD + ref.getString("fileType"));
+
+							FileOutputStream outStream = new FileOutputStream(tempFile);
+
+							int bytesRead = -1;
+							byte[] buffer = new byte[BUFFER_SIZE];
+							while ((bytesRead = is.read(buffer)) != -1) {
+								outStream.write(buffer, 0, bytesRead);
+							}
+
+							outStream.close();
+							is.close();
+
+							String requestURL = RESTFulConfiguration.CLIENT_PATH_BASE + "dossiers/" + dossierId
+									+ "/files";
+
+							String clientAuthString = new String(
+									Base64.getEncoder().encodeToString((RESTFulConfiguration.CLIENT_USER
+											+ StringPool.COLON + RESTFulConfiguration.CLIENT_PASS).getBytes()));
+
+							pullDossierFile(requestURL, "UTF-8", desGroupId, dossierId, clientAuthString, tempFile,
+									ref.getString("dossierTemplateNo"), ref.getString("dossierPartNo"),
+									ref.getString("fileTemplateNo"), ref.getString("displayName"),
+									ref.getString("formData"), dossierRef, fileRef, serviceContext);
+						} else {
+							// Sync FormData
+
+							_log.info("Sync FormData START NOT ERROR:****** ");
+							String dossierTemplateNo = ref.getString("dossierTemplateNo");
+							String formData = ref.getString("formData");
+							_log.info("formData: " + formData);
+
+							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(desGroupId,
+									ref.getString("fileTemplateNo"));
+
+							pullFormData(desGroupId, fileRef, dossierTemplateNo, dossierId, formData, part,
+									serviceContext);
+
+							// TODO: Write file upload sync
+							InputStream is = conn.getInputStream();
+
+							File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()),
+									StringPool.PERIOD + ref.getString("fileType"));
+
+							FileOutputStream outStream = new FileOutputStream(tempFile);
+
+							int bytesRead = -1;
+							byte[] buffer = new byte[BUFFER_SIZE];
+							while ((bytesRead = is.read(buffer)) != -1) {
+								outStream.write(buffer, 0, bytesRead);
+							}
+
+							outStream.close();
+							is.close();
+							// Update file entry
+							_log.info("START UPDATE FILE ENTRY");
+							DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil
+									.fetchDLFileEntry(dossierFile.getFileEntryId());
+
+							DLAppLocalServiceUtil.updateFileEntry(userId, dlFileEntry.getFileEntryId(),
+									dlFileEntry.getTitle(), dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
+									dlFileEntry.getDescription(), StringPool.BLANK, true, tempFile, serviceContext);
+							_log.info("END UPDATE FILE ENTRY");
+						}
+
+					}
+
+					conn.disconnect();
+
+				} catch (MalformedURLException e) {
+
+					e.printStackTrace();
+				} catch (IOException e) {
+
+					e.printStackTrace();
+
+				}
 			}
-
 		}
 
 	}
@@ -875,6 +972,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			String authStringEnc, File file, String dossierTemplateNo, String dossierPartNo, String fileTemplateNo,
 			String displayName, String formData, String dossierRef, String fileRef, ServiceContext serviceContext) {
 
+		_log.info("START update FORMDATA*****");
 		try {
 			MultipartUtility multipart = new MultipartUtility(requestURL, charset, desGroupId, authStringEnc);
 			// TODO; check logic here, if ref fileId in SERVER equal CLIENT
@@ -889,20 +987,14 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			multipart.addFormField("isSync", StringPool.BLANK);
 			multipart.addFormField("formData", formData);
 
-			JSONObject object = JSONFactoryUtil.createJSONObject();
+			_log.info("START update FORMDATA*****referenceUid"+fileRef);
+			_log.info("START update FORMDATA*****dossierTemplateNo"+dossierTemplateNo);
+			_log.info("START update FORMDATA*****dossierPartNo"+dossierPartNo);
+			_log.info("START update FORMDATA*****fileTemplateNo"+fileTemplateNo);
+			_log.info("START update FORMDATA*****displayName"+displayName);
+			_log.info("START update FORMDATA*****formData"+formData);
 
-			List<String> response = multipart.finish();
-
-			// updateFormData(desGroupId, response, dossierId, formData,
-			// serviceContext);
-
-			// DossierPart part =
-			// DossierPartLocalServiceUtil.getByFileTemplateNo(desGroupId,
-			// fileTemplateNo);
-
-			// pullFormData(desGroupId, fileRef, dossierTemplateNo, dossierId,
-			// formData, part, serviceContext);
-
+			multipart.finish();
 			resetDossier(desGroupId, dossierRef, false, serviceContext);
 
 		} catch (Exception e) {
@@ -964,6 +1056,29 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 		// DossierFileLocalServiceUtil.updateFormData(desGroupId, dossierId,
 		// fileRef, formData, serviceContext);
 
+	}
+
+	public void pullRequestDossiers(long dossierId, long desDossierId) {
+		// TODO need update use API not use LocalService
+
+		try {
+			List<DossierRequestUD> lsDossierRequest = DossierRequestUDLocalServiceUtil.getDossierRequest(dossierId, 1);
+
+			ServiceContext context = new ServiceContext();
+
+			context.setUserId(0);
+			context.setScopeGroupId(55301);
+
+			for (DossierRequestUD dr : lsDossierRequest) {
+				// update to client
+
+				DossierRequestUDLocalServiceUtil.updateDossierRequest(0, desDossierId, dr.getReferenceUid(),
+						dr.getRequestType(), dr.getComment(), 0, context);
+			}
+
+		} catch (Exception e) {
+
+		}
 	}
 
 	@Activate

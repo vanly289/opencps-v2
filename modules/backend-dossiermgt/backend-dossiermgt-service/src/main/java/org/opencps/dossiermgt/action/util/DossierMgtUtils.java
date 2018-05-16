@@ -58,8 +58,24 @@ public class DossierMgtUtils {
 				result = result && checkCancelling(dossier);
 				break;
 
+			case "reject_cancelling":
+				result = result && checkCancelling(dossier);
+				break;
+
 			case "correcting":
 				result = result && checkCorrecting(dossier);
+				break;
+
+			case "reject_correcting":
+				result = result && checkCorrecting(dossier);
+				break;
+
+			case "submitting":
+				result = result && checkSubmitting(dossier);
+				break;
+
+			case "reject_submitting":
+				result = result && checkSubmitting(dossier);
 				break;
 
 			default:
@@ -85,14 +101,23 @@ public class DossierMgtUtils {
 	}
 
 	private static boolean checkCancelling(Dossier dossier) {
-		if (dossier.getCancellingDate() != null && dossier.getDossierStatus() == "cancelling") {
+		if (dossier.getCancellingDate() != null) {
 			return true;
 		}
 		return false;
 	}
 
 	private static boolean checkCorrecting(Dossier dossier) {
-		if (dossier.getCorrecttingDate() != null && dossier.getDossierStatus() == "correcting") {
+		if (dossier.getCorrecttingDate() != null) {
+			return true;
+		}
+
+		return false;
+	}
+	
+	
+	private static boolean checkSubmitting(Dossier dossier) {
+		if (dossier.getEndorsementDate() != null) {
 			return true;
 		}
 

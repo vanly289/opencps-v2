@@ -9,13 +9,23 @@ import org.opencps.api.registration.model.RegistrationDetailModel;
 import org.opencps.api.registration.model.RegistrationDetailResultModel;
 import org.opencps.api.registration.model.RegistrationModel;
 import org.opencps.auth.utils.APIDateTimeUtils;
+import org.opencps.dossiermgt.action.RegistrationFormActions;
+import org.opencps.dossiermgt.action.impl.RegistrationFormActionsImpl;
 import org.opencps.dossiermgt.constants.RegistrationTerm;
 import org.opencps.dossiermgt.model.Registration;
+import org.opencps.dossiermgt.model.RegistrationForm;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 public class RegistrationUtils {
@@ -35,7 +45,7 @@ public class RegistrationUtils {
                 
                 createDate = APIDateTimeUtils.convertDateToString(date, APIDateTimeUtils._TIMESTAMP);
             }
-            model.setCreateDate(doc.get(Field.CREATE_DATE));
+            model.setCreateDate(createDate);
 			
             String modifiedDate = doc.get(Field.MODIFIED_DATE);
             if (Validator.isNotNull(modifiedDate)) {
@@ -246,4 +256,37 @@ public class RegistrationUtils {
 
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(RegistrationUtils.class);
+	public static JSONArray mappingFormData(Registration reg) throws PortalException {
+		JSONArray data = JSONFactoryUtil.createJSONArray();
+
+//		for (Document doc : documents) {
+		long registrationId = reg.getRegistrationId();
+		_log.info("registrationId: "+registrationId);
+//			long groupId = GetterUtil.getLong(doc.get(Field.GROUP_ID));
+		if (Validator.isNotNull(registrationId) && registrationId > 0) {
+			RegistrationFormActions action = new RegistrationFormActionsImpl();
+			List<RegistrationForm> registrationFormList = action.getFormbyRegId(reg.getGroupId(), registrationId);
+
+			if (registrationFormList != null && registrationFormList.size() > 0) {
+				for (RegistrationForm regForm : registrationFormList) {
+					JSONObject xuongSXJson = JSONFactoryUtil.createJSONObject();
+					String formData = regForm.getFormData();
+					_log.info("formData: "+formData);
+					try {
+						JSONObject formJson = JSONFactoryUtil.createJSONObject(formData);
+						String xuongSX = formJson.getString("ten_xuong_san_xuat");
+						if (Validator.isNotNull(xuongSX)) {
+							xuongSXJson.put("ten_xuong_san_xuat", xuongSX);
+							data.put(xuongSXJson);
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			}
+		}
+//		}
+		return data;
+	}
 }

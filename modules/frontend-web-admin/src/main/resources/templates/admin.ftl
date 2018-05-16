@@ -125,6 +125,14 @@
 				</div>
 				<div class="col-sm-9 PL10 P0">ServerConfigs</div>
 			</li>
+			<li class="clearfix" >
+				<div class="col-sm-2 clearfix ">
+					<a href="javascript:;" >
+						<i class="fa fa-gg" aria-hidden="true"></i>
+					</a>
+				</div>
+				<div class="col-sm-9 PL10 P0">Danh sách tham số hệ thống</div>
+			</li>
 		</ul>
 	</div>
 </div>
@@ -149,6 +157,7 @@
 			'efrom.ftl',
 			'${ajax.registrationtemplates}',
 			'${ajax.serverconfigs}',
+			'${ajax.certnumber}',
 		]
 	}).data('kendoTabStrip');
 
@@ -311,6 +320,11 @@
 				status = "error";
 				break;
 
+				case 406:
+				message = "Dữ liệu đang được sử dụng, không thể xoá tài nguyên!!!";
+				status = "error";
+				break;
+				
 				case 409:
 				message = "Yêu cầu của bạn xử lý thất bại, xung đột dữ liệu";
 				status = "error";

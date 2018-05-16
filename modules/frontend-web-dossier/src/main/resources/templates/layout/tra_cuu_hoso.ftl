@@ -32,30 +32,37 @@
 			<div class="flex xs12 sm3 pr-4 no-wrap" jx-bind="advanced_filter_applicantName">
 			
 			</div>
-			<div class="flex xs12 sm3 pr-4 no-wrap" jx-bind="advanced_filter_dossierIdCTN">
+			<div class="flex xs12 sm2 pr-4 no-wrap" jx-bind="advanced_filter_dossierIdCTN">
 			
 			</div>
-			<div class="flex xs12 sm3 pr-4 no-wrap" jx-bind="advanced_filter_dossierNo">
+			
+			<div class="flex xs12 sm2 pr-4 no-wrap" jx-bind="advanced_filter_startDate">
+			
+			</div>
+			<div class="flex xs12 sm2 pr-4 no-wrap" jx-bind="advanced_filter_endDate">
 			
 			</div>
 		</div>
 		<div class="layout wrap">
+			<div class="flex xs12 sm3 pr-4 no-wrap" jx-bind="advanced_filter_dossierStatus">
+			
+			</div>
 			<div class="flex xs12 sm3 pr-4 no-wrap" jx-bind="advanced_filter_loaiSanPham">
 			
 			</div>
-			<div class="flex xs12 sm3 pr-4 no-wrap" jx-bind="advanced_filter_nhanHieu">
+			<div class="flex xs12 sm2 pr-4 no-wrap" jx-bind="advanced_filter_nhanHieu">
 			
 			</div>
-			<div class="flex xs12 sm3 pr-4 no-wrap" jx-bind="advanced_filter_tenThuongMai">
+			<div class="flex xs12 sm2 pr-4 no-wrap" jx-bind="advanced_filter_tenThuongMai">
 			
 			</div>
-			<div class="flex xs12 sm3 pr-4 no-wrap" jx-bind="advanced_filter_maKieuLoai">
+			<div class="flex xs12 sm2 pr-4 no-wrap" jx-bind="advanced_filter_maKieuLoai">
 			
 			</div>
 		</div>
 		<v-layout wrap>
 			<v-flex xs12>
-			 	<v-btn color="primary" class="mx-0 my-0 mt-2">Tìm kiếm</v-btn>
+			 	<v-btn color="primary" class="mx-0 my-0 mt-2" v-on:click.native.prevent="advanced_filter_btn_click">Tìm kiếm</v-btn>
 			</v-flex>
 		</v-layout>
 	</div>

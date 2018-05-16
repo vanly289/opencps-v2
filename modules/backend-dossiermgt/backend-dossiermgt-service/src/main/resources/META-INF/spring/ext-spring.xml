@@ -4,7 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	default-destroy-method="destroy" default-init-method="afterPropertiesSet"
 	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean class="org.opencps.dossiermgt.service.indexer.ServiceInfoIndexer"
+ 	<bean class="org.opencps.dossiermgt.service.indexer.ServiceInfoIndexer"
 		id="org.opencps.dossiermgt.service.indexer.ServiceInfoIndexer" />
 	<bean class="org.opencps.dossiermgt.service.indexer.ProcessOptionIndexer"
 		id="org.opencps.dossiermgt.service.indexer.ProcessOptionIndexer" />
@@ -56,7 +56,7 @@
 
 	<bean class="org.opencps.dossiermgt.service.indexer.DeliverableIndexer"
 		id="org.opencps.dossiermgt.service.indexer.DeliverableIndexer" />
-
+ 
 	<!-- Listeners -->
 	<bean id="dossier.listener.jasper" class="org.opencps.jasper.message.Engine" />
 

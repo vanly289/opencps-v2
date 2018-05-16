@@ -1,20 +1,42 @@
 **/!bnd.bnd
 **/!build.gradle
+
+.gradle/
+build/
+target/
+bin/
+**/vr-business-api/**/model/
+**/vr-business-api/**/exception/
+**/vr-business-api/**/service/
+**/vr-business-api/**/service/persistence/
+**/.DS_Store
+**/**.class
+
+##Ignore tracking in service layer
+**/model/impl/
+**/service/base/
+**/service/persistence/impl/
+**/service/http/
+
+##Ignore database
 **/indexes.sql
 **/sequences.sql
 **/tables.sql
 **/module-hbm.xml
 **/portlet-model-hints.xml
+
 **/module-spring.xml 
 **/service.properties
 **/sql/**
 **/**/**.sql
 **/*.iml
 **/.ivy
+
 **/.classpath
 **/.project
 **/.sass-cache
 **/.settings
+
 **/bin
 **/build
 **/build_gradle
@@ -25,6 +47,7 @@ themes/
 **/.web_bundle_build
 .gradle
 .idea
+.metadata
 /bundles
 /plugins-sdk/**/classes
 /plugins-sdk/**/ivy.xml.MD5
@@ -69,6 +92,15 @@ gradle-local.properties
 **/backend-kyso-process-api/**/service/
 **/backend-kyso-process-api/**/service/persistence/
 
+**/backend-synchronization-api/**/model/
+**/backend-synchronization-api/**/exception/
+**/backend-synchronization-api/**/service/
+**/backend-synchronization-api/**/service/persistence/
+
+**/backend-thirdparty-system-api/**/model/
+**/backend-thirdparty-system-api/**/exception/
+**/backend-thirdparty-system-api/**/service/
+**/backend-thirdparty-system-api/**/service/persistence/
 **/**/ServiceProps.java
 
 **/vr-business/**

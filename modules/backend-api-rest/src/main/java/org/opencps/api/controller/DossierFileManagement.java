@@ -200,9 +200,24 @@ public interface DossierFileManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext,
 			@ApiParam(value = "id of dossier", required = true) @PathParam("id") long id,
+			@ApiParam(value = "referenceUid of dossierfile", required = true) @PathParam("referenceUid") String referenceUid/*,
+			@ApiParam(value = "password for access dossier file", required = false) String password*/);
+
+	@GET
+	@Path("/{id}/files/{referenceUid}/public/{password}")
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })
+	@ApiOperation(value = "getDossierFilesByDossierReferenceUid", response = DossierFileResultsModel.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "downloadByDossierId_ReferenceUid"),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+	public Response downloadByPublicUser(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@ApiParam(value = "id of dossier", required = true) @PathParam("id") long id,
 			@ApiParam(value = "referenceUid of dossierfile", required = true) @PathParam("referenceUid") String referenceUid,
 			@ApiParam(value = "password for access dossier file", required = false) @PathParam("password") String password);
-
 	/*
 	 * @GET
 	 * 
@@ -324,7 +339,6 @@ public interface DossierFileManagement {
 	
 	@DELETE
 	@Path("/{id}/files/{fileTemplateNo}/all")
-	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	@ApiOperation(value = "update DossierFile")
 	@ApiResponses(value = { @ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Returns"),
@@ -335,7 +349,7 @@ public interface DossierFileManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext,
 			@ApiParam(value = "id of dossier", required = true) @PathParam("id") long id,
-			@ApiParam(value = "fileTemplateNo of dossierfile", required = true) @FormParam("fileTemplateNo") String fileTemplateNo);
+			@ApiParam(value = "fileTemplateNo of dossierfile", required = true) @PathParam("fileTemplateNo") String fileTemplateNo);
 
 
 	@DELETE
@@ -383,4 +397,33 @@ public interface DossierFileManagement {
 			@Context ServiceContext serviceContext,
 			@ApiParam(value = "id of dossier", required = true) @PathParam("id") long id,
 			@ApiParam(value = "password for access dossier file", required = false) @PathParam("password") String password);
+
+	@GET
+	@Path("/file/{deliverableCode}")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "deliverableCode")
+	@ApiResponses(value = { @ApiResponse(code = HttpURLConnection.HTTP_OK, message = "deliverableCode"),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+
+	public Response getDossierFileByDeliverableCode(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@ApiParam(value = "deliverable Code", required = true) @PathParam("deliverableCode") String deliverableCode);
+	
+	// Get all dossierFile by dossierID
+	@GET
+	@Path("/{id}/all/files")
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "getDossierFilesByDossierId", response = DossierFileResultsModel.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Returns a list", response = DossierFileResultsModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+	public Response getAllDossierFilesByDossierId(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@ApiParam(value = "id of dossier", required = true) @PathParam("id") long id);
 }

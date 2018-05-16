@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xsd:element name="NSWRequest" type="NSWRequest" />
+
+	<xsd:complexType name="NSWRequest">
+		<xsd:sequence>
+			<xsd:element name="officeCode" type="xsd:string" />
+			<xsd:element name="documentType" type="xsd:string" />
+			<xsd:element ref="requestPayload" minOccurs="0"
+				maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="requestPayload">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Envelope" minOccurs="0" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="responsePayload">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Envelope" minOccurs="0" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- Envelope, header and body -->
+	<xsd:element name="Envelope">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Header" minOccurs="0" />
+				<xsd:element ref="Body" minOccurs="1" />
+				<xsd:element name="systemSignature" type="xsd:string" />
+				<xsd:any namespace="##other" minOccurs="0" maxOccurs="unbounded"
+					processContents="lax" />
+			</xsd:sequence>
+			<xsd:anyAttribute namespace="##other"
+				processContents="lax" />
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Reference" type="Reference" />
+	<xsd:complexType name="Reference">
+		<xsd:sequence>
+			<xsd:element name="version" type="xsd:string" />
+			<xsd:element name="messageId" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="From" type="From" />
+	<xsd:complexType name="From">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" />
+			<xsd:element name="identity" type="xsd:string" />
+			<xsd:element name="countryCode" type="xsd:string" />
+			<xsd:element name="ministryCode" type="xsd:string" />
+			<xsd:element name="organizationCode" type="xsd:string" />
+			<xsd:element name="unitCode" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="To" type="To" />
+	<xsd:complexType name="To">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" />
+			<xsd:element name="identity" type="xsd:string" />
+			<xsd:element name="countryCode" type="xsd:string" />
+			<xsd:element name="ministryCode" type="xsd:string" />
+			<xsd:element name="organizationCode" type="xsd:string" />
+			<xsd:element name="unitCode" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="Subject" type="Subject" />
+	<xsd:complexType name="Subject">
+		<xsd:sequence>
+			<xsd:element name="documentType" type="xsd:string" />
+			<xsd:element name="type" type="xsd:string" />
+			<xsd:element name="function" type="xsd:string" />
+			<xsd:element name="reference" type="xsd:string" />
+			<xsd:element name="documentYear" type="xsd:int" />
+			<xsd:element name="preReference" type="xsd:string" />
+			<xsd:element name="sendDate" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="Header" type="Header" />
+	<xsd:complexType name="Header">
+		<xsd:sequence>
+			<xsd:element ref="Reference" minOccurs="1" />
+			<xsd:element ref="From" minOccurs="1" />
+			<xsd:element ref="To" minOccurs="1" />
+			<xsd:element ref="Subject" minOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="DS_Loi" type="DS_Loi" />
+	<xsd:complexType name="DS_Loi">
+		<xsd:sequence>
+			<xsd:element ref="Thongtin_Loi" minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="Thongtin_Loi" type="Thongtin_Loi" />
+	<xsd:complexType name="Thongtin_Loi">
+		<xsd:sequence>
+			<xsd:element name="ma_loi">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="250"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ten_loi">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="5000"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="Content" type="Content" />
+	<xsd:complexType name="Content">
+		<xsd:sequence>
+			<xsd:element ref="DS_Loi" minOccurs="0" />
+			<xsd:element ref="KetQuaXuLy" minOccurs="0" />
+			<xsd:element ref="VLInterRoadTransportLicence" minOccurs="0"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="KetQuaXuLy" type="KetQuaXuLy"/>
+	<xsd:complexType name="KetQuaXuLy">
+		<xsd:sequence>
+			<xsd:element name="so_gp" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="noi_dung" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="2000"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ngay_xu_ly">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />					
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="don_vi_xu_ly">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="250"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="link_congvan">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="2000"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="VLInterRoadTransportLicence" type="VLInterRoadTransportLicence"/>
+	<xsd:complexType name="VLInterRoadTransportLicence">
+		<xsd:sequence>
+			<xsd:element name="LicenceNo">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="FirstRegistrationDate">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />					
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ValidUntil">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />					
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="TransportOperation">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="500"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element ref="Transporter" minOccurs="0"></xsd:element>
+			<xsd:element ref="AttachedFile" minOccurs="1" maxOccurs="unbounded"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Transporter" type="Transporter"/>
+	<xsd:complexType name="Transporter">
+		<xsd:sequence>
+			<xsd:element name="NameOfCompany">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Address">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Tel">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Fax">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Email">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Website">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AttachedFile" type="AttachedFile"/>
+	<xsd:complexType name="AttachedFile">
+		<xsd:sequence>
+			<xsd:element name="AttachedTypeCode">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="AttachedTypeName">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="AttachedNote">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="FullFileName">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="FileURL">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>		
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="IssuingAuthority" type="IssuingAuthority"/>
+	<xsd:complexType name="IssuingAuthority">
+		<xsd:sequence>
+			<xsd:element name="SignName">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>				
+			<xsd:element name="SignTitle">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>				
+			<xsd:element name="SignPlace">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>				
+			<xsd:element name="SignDate">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />					
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>				
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Body" type="Body" />
+	<xsd:complexType name="Body">
+		<xsd:sequence>
+			<xsd:element ref="Content" />
+			<xsd:element name="personSignature" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

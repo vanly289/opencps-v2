@@ -17,6 +17,9 @@ public interface DossierActions {
 	public JSONObject getDossiers(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
 			Sort[] sorts, int start, int end, ServiceContext serviceContext);
 
+	public JSONObject getDossiersTest(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
+			Sort[] sorts, int start, int end, ServiceContext serviceContext);
+
 	public Dossier initDossier(long groupId, long dossierId, String referenceUid, int counter, String serviceCode,
 			String serviceName, String govAgencyCode, String govAgencyName, String applicantName,
 			String applicantIdType, String applicantIdNo, String applicantIdDate, String address, String cityCode,
@@ -78,6 +81,16 @@ public interface DossierActions {
 	public JSONObject getDossierTodo(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
 			Sort[] sorts, ServiceContext serviceContext);
 	
+//	public JSONObject getDossierTodoPermission(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
+//			Sort[] sorts, ServiceContext serviceContext);
+
 	public JSONObject getDossierTodoPermission(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
 			Sort[] sorts, ServiceContext serviceContext);
+	
+	
+	public Dossier submitPostDossier(long groupId, long dossierId, String referenceUid, ServiceContext context) throws PortalException ;
+
+	public JSONObject getDossierCountTodoPermission(long userId, long companyId, long groupId,
+			LinkedHashMap<String, Object> params, Object object, ServiceContext serviceContext);
+
 }

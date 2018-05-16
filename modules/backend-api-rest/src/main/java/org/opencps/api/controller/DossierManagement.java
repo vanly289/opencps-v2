@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -48,6 +49,20 @@ public interface DossierManagement {
 			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
 
 	public Response getDossiers(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam DossierSearchModel query);
+
+	@GET
+	@Path("/dossiersTest")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "Get a list of Dossiers", response = DossierResultsModel.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Returns a list of Dossiers have been filtered", response = DossierResultsModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+
+	public Response getDossiersTest(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam DossierSearchModel query);
 
@@ -121,7 +136,35 @@ public interface DossierManagement {
 	public Response cancellingDossier(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @PathParam("id") String id);
+	@POST
+	@Path("/{id}/cancelling")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "Owner requset cancalling for Dossier", response = DossierDetailModel.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Returns a Dossier has been cancelled", response = DossierDetailModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
 
+	public Response cancellingRequestDossier(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @PathParam("id") String id, String body);
+
+	@POST
+	@Path("/{id}/correcting")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "Owner requset correcting for Dossier", response = DossierDetailModel.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Returns a Dossier has been correcting requested", response = DossierDetailModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+
+	public Response correctingRequestDossier(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @PathParam("id") String id, String body);
+
+	
 	@GET
 	@Path("/{id}/correcting")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
@@ -136,6 +179,20 @@ public interface DossierManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @PathParam("id") String id);
 
+	@POST
+	@Path("/{id}/submit")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "Owner submitting Dossier", response = DossierDetailModel.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Returns a Dossier has been submitted", response = DossierDetailModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+
+	public Response submitDossier(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @PathParam("id") String id, String body);
+
 	@GET
 	@Path("/{id}/submitting")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
@@ -149,6 +206,20 @@ public interface DossierManagement {
 	public Response submittingDossier(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @PathParam("id") String id);
+	
+	@POST
+	@Path("/{id}/submitting")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "Owner submitting Dossier", response = DossierDetailModel.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Returns a Dossier has been submitted", response = DossierDetailModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+
+	public Response submittingDossierPOST(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @PathParam("id") String id, String body);
 
 	@GET
 	@Path("/{id}/reset")
@@ -203,7 +274,8 @@ public interface DossierManagement {
 			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
 			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
 	
-	public Response cloneDossier(@Context HttpHeaders header, @Context ServiceContext serviceContext,
+	public Response cloneDossier(@Context HttpServletRequest request, @Context HttpHeaders header, @Context Company company,
+			@Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@PathParam("id") long dossierId, @Context String referenceUid);
 
 	@PUT
@@ -221,4 +293,74 @@ public interface DossierManagement {
 			@Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@PathParam("id") String id);
 
+	@GET
+	@Path("/number/{certificateNumber}")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "certificateNumber")
+	@ApiResponses(value = { @ApiResponse(code = HttpURLConnection.HTTP_OK, message = "certificateNumber"),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+
+	public Response getDossierByCertificateNumber(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@ApiParam(value = "certificateNumber", required = true) @PathParam("certificateNumber") String certificateNumber);
+
+	@GET
+	@Path("/{id}/processstep")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "restrictDossier")
+	@ApiResponses(value = { @ApiResponse(code = HttpURLConnection.HTTP_OK, message = "certificateNumber"),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+
+	public Response getProcessStepByDossierId(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@ApiParam(value = "dossier id", required = true) @PathParam("id") String id);
+	
+	@GET
+	@Path("/{referenceUid}/dossierAction/pedding")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "pending")
+	@ApiResponses(value = { @ApiResponse(code = HttpURLConnection.HTTP_OK, message = "pending"),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+
+	public Response getDossierPenddingByDossierId(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@ApiParam(value = "dossier referenceUid", required = true) @PathParam("referenceUid") String referenceUid);
+
+	//TODO: Get dossier pending
+	@GET
+	@Path("/processing/pending")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "Get a list of Dossiers pending", response = DossierResultsModel.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Returns a list of Dossiers have been filtered", response = DossierResultsModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+
+	public Response getDossiersPendingList(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam DossierSearchModel query);
+
+	@GET
+	@Path("/processing/getInfoDossier")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "Get a list of Dossiers", response = DossierResultsModel.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Returns a list of Dossiers have been filtered", response = DossierResultsModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
+			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
+
+	public Response getDossiersInfoList(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam DossierSearchModel query);
 }

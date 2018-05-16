@@ -131,11 +131,14 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 	@Override
 	public Response add(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, RegistrationInputModel input) {
+		_log.info("START");
 		RegistrationDetailModel result = null;
 		
 		long companyId = company.getCompanyId();
+		_log.info("companyId: "+companyId);
 		try {
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+			_log.info("groupId: "+groupId);
 			String cityName = "";
 			String districtName = "";
 			String wardName = "";
@@ -152,6 +155,10 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 				wardName = getDictItemName(groupId, ADMINISTRATIVE_REGION, input.getWardCode());
 
 			}
+			_log.info("cityName: "+cityName);
+			_log.info("districtName: "+districtName);
+			_log.info("wardName: "+wardName);
+
 			RegistrationActions action = new RegistrationActionsImpl();
 
 			Registration registration = action.insert(groupId, companyId, input.getApplicantName(), input.getApplicantIdType(),
@@ -218,7 +225,7 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 					input.getContactEmail(), input.getGovAgencyCode(), input.getGovAgencyName(),
 					input.getRegistrationState(), input.getRegistrationClass(), serviceContext);
 
-			RegistrationDetailModel result = RegistrationUtils.mappingToRegistrationDetailModel(registration);
+			RegistrationDetailResultModel result = RegistrationUtils.mappingToRegistrationDetailResultModel(registration);
 
 			return Response.status(200).entity(result).build();
 		} catch (Exception e) {
@@ -256,6 +263,9 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 
 			List<RegistrationForm> lstRegistrationForm = action.getFormbyRegId(groupId, id);
 			int total = lstRegistrationForm.size();
+			for (RegistrationForm registrationForm : lstRegistrationForm) {
+				_log.info("registrationFormXXXXXXX: "+registrationForm.getRemoved());
+			}
 
 			List<RegistrationFormModel> lstRegistrationFormModel = RegistrationFormUtils
 					.mappingToRegistrationFormResultsModel(lstRegistrationForm);
@@ -535,5 +545,35 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 			return Response.status(404).entity(error).build();
 		}
 
+	}
+
+	@Override
+	public Response getFormDataByReferenceUid(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long registrationId) {
+		BackendAuth auth = new BackendAuthImpl();
+		try {
+
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+
+			Registration reg = RegistrationLocalServiceUtil.fetchRegistration(registrationId);
+
+			JSONObject results = JSONFactoryUtil.createJSONObject();
+			JSONArray JsonArr = null;
+			if (reg != null) {
+				JsonArr = RegistrationUtils.mappingFormData(reg);
+			}
+			
+			//
+			results.put("total",JsonArr.length());
+
+			results.put("data", JsonArr);
+
+			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(results)).build();
+
+		} catch (Exception e) {
+			return processException(e);
+		}
 	}
 }

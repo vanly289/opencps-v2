@@ -1,6 +1,8 @@
 package org.opencps.datamgt.action;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.opencps.datamgt.exception.NoSuchDictItemException;
 import org.opencps.datamgt.model.DictCollection;
@@ -16,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import org.opencps.auth.api.exception.DataInUsedException;
 import org.opencps.auth.api.exception.NotFoundException;
 import org.opencps.auth.api.exception.UnauthenticationException;
 import org.opencps.auth.api.exception.UnauthorizationException;
@@ -46,6 +49,8 @@ public interface DictcollectionInterface {
 	public JSONObject getDictgroups(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
 			Sort[] sorts, int start, int end, ServiceContext serviceContext);
 	
+	public DictGroup getDictGroupDetail(String dictCollectionCode, String groupCode, long groupId);
+	
 	public JSONObject getDictItemsGroup(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
 			Sort[] sorts, int start, int end, ServiceContext serviceContext);
 	
@@ -59,8 +64,14 @@ public interface DictcollectionInterface {
 			DuplicateCategoryException, NotFoundException;
 	
 	public boolean deleteDictgroups(String groupCode, long groupId, ServiceContext serviceContext)
-			throws NotFoundException, UnauthenticationException, UnauthorizationException;
+			throws NotFoundException, UnauthenticationException, UnauthorizationException, DataInUsedException;
 	
+	public boolean deleteDictgroups(String collectionCode, String groupCode, long groupId, ServiceContext serviceContext)
+			throws NotFoundException, UnauthenticationException, UnauthorizationException, DataInUsedException;
+
+	public boolean deleteDictgroupsAndSomethingUseIt(String collectionCode, String groupCode, long groupId, ServiceContext serviceContext)
+			throws NotFoundException, UnauthenticationException, UnauthorizationException, DataInUsedException;
+
 	public DictItemGroup addDictgroupsDictItems(long userId, long groupId, String code, String groupCode,
 			String itemCode, ServiceContext serviceContext) throws NoSuchUserException, UnauthenticationException,
 			UnauthorizationException, DuplicateCategoryException;
@@ -91,4 +102,19 @@ public interface DictcollectionInterface {
 
 	public DictItem getDictItemByItemCode(String code, String itemCode, long groupId, ServiceContext serviceContext);
 	
+	public JSONObject getDictCollectionsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
+	public JSONObject getDictItemsOlderThanDate(long userId, long companyId, long groupId, Date date,
+			int start, int end, ServiceContext serviceContext);
+	public List<DictCollection> getListDictCollectionsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
+	public List<DictItem> getListDictItemsOlderThanDate(long userId, long companyId, long groupId, Date date,
+			int start, int end, ServiceContext serviceContext);	
+	public long countDictCollectionsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
+	public long countDictItemsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
+
+	public JSONObject getDictGroupsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
+	public List<DictGroup> getListDictGroupsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
+	public long countDictGroupsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
+
+	public List<DictItemGroup> getListDictItemGroupsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
+	public long countDictItemGroupsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
 }

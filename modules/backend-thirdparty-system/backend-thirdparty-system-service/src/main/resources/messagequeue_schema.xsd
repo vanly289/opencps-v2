@@ -1,0 +1,80 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xsd:element name="MessageQueueInputModel">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="rawMessage" type="xsd:string" minOccurs="0" />
+				<xsd:element name="content" type="xsd:string" minOccurs="0" />
+				<xsd:element name="sender" type="xsd:string" minOccurs="0" />
+				<xsd:element name="receiver" type="xsd:string" minOccurs="0" />
+				<xsd:element name="personSignature" type="xsd:string" minOccurs="0" />
+				<xsd:element name="systemSignature" type="xsd:string" minOccurs="0" />
+				<xsd:element name="status" type="xsd:int" minOccurs="0" />
+				<xsd:element name="version" type="xsd:string" minOccurs="0" />
+				<xsd:element name="messageId" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromName" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromIdentity" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromCountryCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromMinistryCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromOrganizationCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromUnitCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toName" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toIdentity" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toCountryCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toMinistryCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toOrganizationCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toUnitCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="documentType" type="xsd:string" minOccurs="0" />
+				<xsd:element name="type" type="xsd:string" minOccurs="0" />
+				<xsd:element name="function" type="xsd:string" minOccurs="0" />
+				<xsd:element name="reference" type="xsd:string" minOccurs="0" />
+				<xsd:element name="documentYear" type="xsd:int" minOccurs="0" />
+				<xsd:element name="preReference" type="xsd:string" minOccurs="0" />
+				<xsd:element name="sendDate" type="xsd:string" minOccurs="0" />
+				<xsd:element name="retryCount" type="xsd:int" minOccurs="0" />
+				<xsd:element name="direction" type="xsd:int" minOccurs="0" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="MessageQueueDetailModel">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="messageQueueId" type="xsd:long" minOccurs="0" />
+				<xsd:element name="createDate" type="xsd:string" minOccurs="0" />
+				<xsd:element name="modifiedDate" type="xsd:string" minOccurs="0" />		
+				<xsd:element name="rawMessage" type="xsd:string" minOccurs="0" />
+				<xsd:element name="content" type="xsd:string" minOccurs="0" />
+				<xsd:element name="sender" type="xsd:string" minOccurs="0" />
+				<xsd:element name="receiver" type="xsd:string" minOccurs="0" />
+				<xsd:element name="personSignature" type="xsd:string" minOccurs="0" />
+				<xsd:element name="systemSignature" type="xsd:string" minOccurs="0" />
+				<xsd:element name="status" type="xsd:int" minOccurs="0" />
+				<xsd:element name="version" type="xsd:string" minOccurs="0" />
+				<xsd:element name="messageId" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromName" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromIdentity" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromCountryCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromMinistryCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromOrganizationCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fromUnitCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toName" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toIdentity" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toCountryCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toMinistryCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toOrganizationCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="toUnitCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="documentType" type="xsd:string" minOccurs="0" />
+				<xsd:element name="type" type="xsd:string" minOccurs="0" />
+				<xsd:element name="function" type="xsd:string" minOccurs="0" />
+				<xsd:element name="reference" type="xsd:string" minOccurs="0" />
+				<xsd:element name="documentYear" type="xsd:int" minOccurs="0" />
+				<xsd:element name="preReference" type="xsd:string" minOccurs="0" />
+				<xsd:element name="sendDate" type="xsd:string" minOccurs="0" />
+				<xsd:element name="retryCount" type="xsd:int" minOccurs="0" />
+				<xsd:element name="direction" type="xsd:int" minOccurs="0" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

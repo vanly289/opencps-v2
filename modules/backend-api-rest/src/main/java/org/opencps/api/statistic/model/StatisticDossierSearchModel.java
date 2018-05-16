@@ -9,6 +9,8 @@
 package org.opencps.api.statistic.model;
 
 import java.math.BigInteger;
+
+import javax.ws.rs.QueryParam;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,16 +42,30 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "dossierStatus",
     "dossierSubStatus",
-    "level"
+    "level",
+    "dossierArr"
 })
 @XmlRootElement(name = "StatisticDossierSearchModel")
 public class StatisticDossierSearchModel {
 
+	@QueryParam(value = "dossierStatus")
     protected String dossierStatus;
+	@QueryParam(value = "dossierSubStatus")
     protected String dossierSubStatus;
+	@QueryParam(value = "level")
     protected BigInteger level;
+	@QueryParam(value = "dossierArr")
+    protected String dossierArr;
 
-    /**
+    public String getDossierArr() {
+		return dossierArr;
+	}
+
+	public void setDossierArr(String dossierArr) {
+		this.dossierArr = dossierArr;
+	}
+
+	/**
      * Gets the value of the dossierStatus property.
      * 
      * @return

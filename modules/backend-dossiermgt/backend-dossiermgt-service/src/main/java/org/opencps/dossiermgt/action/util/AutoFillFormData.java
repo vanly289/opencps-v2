@@ -1,6 +1,8 @@
 package org.opencps.dossiermgt.action.util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,6 +27,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -59,13 +63,19 @@ public class AutoFillFormData {
 			String _dossierFileDate = StringPool.BLANK;
 			String _receiveDate = StringPool.BLANK;
 			String _dossierNo = StringPool.BLANK;
-			
+
 			String _employee_employeeNo = StringPool.BLANK;
 			String _employee_fullName = StringPool.BLANK;
+			String _employee_title = StringPool.BLANK;
 			String _applicantName = StringPool.BLANK;
 			String _applicantIdType = StringPool.BLANK;
 			String _applicantIdNo = StringPool.BLANK;
 			String _applicantIdDate = StringPool.BLANK;
+			String _curDate = StringPool.BLANK;
+			
+			SimpleDateFormat sfd = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			
+			_curDate = sfd.format(new Date());
 			
 			if (Validator.isNotNull(dossier)) {
 				_receiveDate = Validator.isNotNull(dossier.getReceiveDate())?dossier.getReceiveDate().toGMTString():StringPool.BLANK;
@@ -130,18 +140,25 @@ public class AutoFillFormData {
 			}
 			
 			try {
-
 				Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(dossier.getGroupId(), serviceContext.getUserId());
+				
+//				_log.info("GET EMPLOYEE ID ____" + serviceContext.getUserId());
+				
 				JSONObject employeeJSON = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(employee));
+				
+//				_log.info("GET EMPLOYEE ____");
 
-				_employee_employeeNo = employeeJSON.getString("_employee_employeeNo");
-				_employee_fullName = employeeJSON.getString("_employee_fullName");
-
-			} catch (PortalException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+//				_log.info(employeeJSON);
+				
+				_employee_employeeNo = employeeJSON.getString("employeeNo");
+				_employee_fullName = employeeJSON.getString("fullName");
+				_employee_title = employeeJSON.getString("title");
+				
+			} catch (Exception e) {
+				_log.info("NOT FOUN EMPLOYEE" + serviceContext.getUserId());
+				_log.error(e);
 			}
-			
+
 			// process sampleData
 			if (Validator.isNull(sampleData)) {
 				sampleData = "{}";
@@ -152,7 +169,7 @@ public class AutoFillFormData {
 			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
 
 				String value = String.valueOf(entry.getValue());
-
+				
 				if (value.startsWith("_") && !value.contains(":")) {
 
 					if (value.equals("_subjectName")) {
@@ -187,6 +204,8 @@ public class AutoFillFormData {
 						jsonMap.put(entry.getKey(), _employee_employeeNo);
 					} else if (value.equals("_employee_fullName")) {
 						jsonMap.put(entry.getKey(), _employee_fullName);
+					}else if (value.equals("_employee_title")) {
+						jsonMap.put(entry.getKey(), _employee_title);
 					} else if (value.equals("_applicantName")) {
 						jsonMap.put(entry.getKey(), _applicantName);
 					} else if (value.equals("_applicantIdType")) {
@@ -195,6 +214,8 @@ public class AutoFillFormData {
 						jsonMap.put(entry.getKey(), _applicantIdNo);
 					} else if (value.equals("_applicantIdDate")) {
 						jsonMap.put(entry.getKey(), _applicantIdDate);
+					}else if (value.equals("_curDate")) {
+						jsonMap.put(entry.getKey(), _curDate);
 					}
 
 				} else if (value.startsWith("_") && value.contains(":")) {
@@ -233,6 +254,8 @@ public class AutoFillFormData {
 							resultBinding += ", " + _employee_employeeNo;
 						} else if (value.equals("_employee_fullName")) {
 							resultBinding += ", " + _employee_fullName;
+						}else if (value.equals("_employee_title")) {
+							resultBinding += ", " + _employee_title;
 						} else if (value.equals("_applicantName")) {
 							resultBinding += ", " + _applicantName;
 						} else if (value.equals("_applicantIdType")) {
@@ -241,6 +264,8 @@ public class AutoFillFormData {
 							resultBinding += ", " + _applicantIdNo;
 						} else if (value.equals("_applicantIdDate")) {
 							resultBinding += ", " + _applicantIdDate;
+						} else if (value.equals("_curDate")) {
+							resultBinding += ", " + _curDate;
 						}
 					}
 
@@ -257,7 +282,9 @@ public class AutoFillFormData {
 						
 						if (Validator.isNotNull(dossierFile) && Validator.isNotNull(dossierFile.getFormData()) && dossierFile.getFormData().trim().length() != 0) {
 							JSONObject jsonOtherData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
+							
 							Map<String, Object> jsonOtherMap = jsonToMap(jsonOtherData);
+//							_log.info("JSON other map: " + Arrays.toString(jsonOtherMap.entrySet().toArray()));
 							String myCHK = StringPool.BLANK;
 							try {
 								if (variable.contains(":")) {
@@ -297,7 +324,6 @@ public class AutoFillFormData {
 				}
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -355,4 +381,6 @@ public class AutoFillFormData {
 		}
 		return list;
 	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(AutoFillFormData.class);
 }
