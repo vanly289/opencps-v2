@@ -27,7 +27,11 @@
 		</div>
 	
 	</div>
-	
+
+	<v-expansion-panel expand focusable>
+	  
+	</v-expansion-panel>
+
 	<v-expansion-panel expand class="my-0 opencps-dossier-info">
 		<v-expansion-panel-content v-bind:value="true">
 		<div slot="header" class="text-bold primary--text">Thông tin chung hồ sơ</div>
@@ -43,7 +47,7 @@
 				</div>
 				<div class="pb-1">
 					<span>
-						Mã hồ sơ: 
+						Mã tham chiếu: 
 					</span>
 					<span class="text-bold">
 						{{ detailModel.dossierIdCTN }}
@@ -52,7 +56,7 @@
 				</div>
 				<div class="pb-1">
 					<span>
-						Số hồ sơ: 
+						Mã hồ sơ: 
 					</span>
 					<span class="text-bold">
 						{{ detailModel.dossierNo }}
@@ -108,7 +112,7 @@
 			<div>
 				{{detailModel.lastActionName}}
 			</div>
-				<#-- <div v-html="detailModel.applicantNote">
+				<!-- <div v-html="detailModel.applicantNote">
 				
 				</div> -->
 			</v-flex>
@@ -163,7 +167,7 @@
 			</v-flex>
 		</v-layout>
 	
-		<#-- <div class="text-bold primary--text expansion-panel__header">Thông tin sản phẩm</div>
+		<!-- <div class="text-bold primary--text expansion-panel__header">Thông tin sản phẩm</div>
 		<v-layout wrap class="px-4 pb-2">
 			<v-flex xs12 sm6>
 			<div class="pb-1" v-html="detailModel.briefNote"></div>
