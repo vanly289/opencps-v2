@@ -2333,25 +2333,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							align: 'left',
 							sortable: true,
 							value: 'submitDate'
-						},
-						{
-							text: 'Số chứng chỉ. Ngày cấp',
-							align: 'center',
-							sortable: false,
-							value: 'action'
-						},
-						{
-							text: 'Nội dung',
-							align: 'left',
-							sortable: false,
-							value: 'action'
-						},
-						{
-							text: 'Ghi chú',
-							align: 'left',
-							sortable: true,
-							value: 'lastActionNote'
 						}
+
 						];
 
 						var statusParam = vm.statusParamFilter;
