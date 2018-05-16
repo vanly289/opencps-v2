@@ -1,29 +1,24 @@
 package org.opencps.thirdparty.system.scheduler;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
-import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
-import org.opencps.dossiermgt.model.DossierPart;
 import org.opencps.dossiermgt.model.ProcessAction;
 import org.opencps.dossiermgt.model.ProcessOption;
 import org.opencps.dossiermgt.model.ServiceConfig;
 import org.opencps.dossiermgt.model.ServiceInfo;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.service.DeliverableLocalService;
-import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionLocalService;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalService;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalService;
-import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierSyncLocalService;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
@@ -34,7 +29,6 @@ import org.opencps.thirdparty.system.constants.SyncServerTerm;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueDetailModel;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueInputModel;
 import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
-import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.Body;
 import org.opencps.thirdparty.system.nsw.model.Content;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
@@ -45,8 +39,6 @@ import org.opencps.thirdparty.system.nsw.model.NSWRequest;
 import org.opencps.thirdparty.system.nsw.model.RequestPayload;
 import org.opencps.thirdparty.system.nsw.model.Subject;
 import org.opencps.thirdparty.system.nsw.model.To;
-import org.opencps.thirdparty.system.nsw.model.Transporter;
-import org.opencps.thirdparty.system.nsw.model.VLInterRoadTransportLicence;
 import org.opencps.thirdparty.system.rest.client.OpenCPSRestClient;
 import org.opencps.thirdparty.system.rest.client.PrefsProperties;
 import org.opencps.thirdparty.system.service.ThirdPartyDossierSyncLocalService;
@@ -58,8 +50,6 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -73,7 +63,6 @@ import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 @Component(immediate = true, service = OutsideSystemSyncScheduler.class)
@@ -170,7 +159,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
-
+						body.setPersonSignature("");
+						envelope.setSystemSignature("");
 						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -236,6 +226,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+
+						body.setPersonSignature("");
+						envelope.setSystemSignature("");
 
 						List<DossierFile> dossierFileList = DossierFileLocalServiceUtil
 								.getAllDossierFile(dossier.getDossierId());
@@ -342,6 +335,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
+						body.setPersonSignature("");
+						envelope.setSystemSignature("");
+
 						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
@@ -410,6 +406,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						body.setPersonSignature("");
+						envelope.setSystemSignature("");
 
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
@@ -481,6 +479,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						body.setPersonSignature("");
+						envelope.setSystemSignature("");
 
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
@@ -552,6 +552,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						body.setPersonSignature("");
+						envelope.setSystemSignature("");
 
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
@@ -617,182 +619,23 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						subject.setSendDate(
 								APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 
+						body.setPersonSignature("");
+						envelope.setSystemSignature("");
+						if (dossier.getReceiveDate() != null) {
+							cal.setTime(dossier.getReceiveDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						} else {
+							cal.setTime(dossier.getCreateDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						}
+
 						if (dossier.getServiceCode().equals("BGTVT0600001")
 								|| dossier.getServiceCode().equals("BGTVT0600002")
 								|| dossier.getServiceCode().equals("BGTVT0600003")
 								|| dossier.getServiceCode().equals("BGTVT0600004")) {
-							VLInterRoadTransportLicence vlInterRoadTransportLicense = new VLInterRoadTransportLicence();
-							vlInterRoadTransportLicense.setLicenceNo("");
-							vlInterRoadTransportLicense.setFirstRegistrationDate("");
-							vlInterRoadTransportLicense.setValidUntil("");
-							vlInterRoadTransportLicense.setTransportOperation("");
-							Transporter transporter = new Transporter();
-							vlInterRoadTransportLicense.setTransporter(transporter);
-							transporter.setNameOfCompany("");
-							transporter.setAddress("");
-							transporter.setTel("");
-							transporter.setFax("");
-							transporter.setEmail("");
-							transporter.setWebsite("");
-							AttachedFile attachedFile = new AttachedFile();
-							List<AttachedFile> lstFiles = new ArrayList<>();
 
-							MessageQueueInputModel model = new MessageQueueInputModel();
-							model.setContent("");
-							model.setSender("BGTVT");
-							model.setReceiver("NSW");
-							model.setPersonSignature("");
-							model.setSystemSignature("");
-							model.setStatus(1);
-							model.setMessageId(PortalUUIDUtil.generate());
-							model.setFromName("BGTVT");
-							model.setFromCountryCode("VN");
-							model.setFromMinistryCode("BGTVT");
-							model.setFromOrganizationCode("TCDBVN");
-							model.setFromUnitCode("");
-							model.setFromIdentity("");
-							model.setToName("NSW");
-							model.setToCountryCode("VN");
-							model.setToIdentity("");
-							model.setToMinistryCode("NSW");
-							model.setToOrganizationCode("NSW");
-							model.setToUnitCode("");
-							model.setDocumentType(dossier.getServiceCode());
-							model.setType("18");
-							model.setFunction("15");
-							model.setReference(dossier.getReferenceUid());
-							if (dossier.getReceiveDate() != null) {
-								cal.setTime(dossier.getReceiveDate());
-								subject.setDocumentYear(cal.get(Calendar.YEAR));
-							} else {
-								cal.setTime(dossier.getCreateDate());
-								subject.setDocumentYear(cal.get(Calendar.YEAR));
-							}
-							model.setPreReference(dossier.getReferenceUid());
-							model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-							model.setRetryCount(1);
-							model.setDirection(2);
+							MessageQueueInputModel model = BGTVT060001.convertResult(dossier, dossierSync, envelope, "18", "15");
 
-							List<DossierFile> dossierFileList = DossierFileLocalServiceUtil
-									.getAllDossierFile(dossier.getDossierId());
-
-							String templateNo = StringPool.BLANK;
-							String partNo = StringPool.BLANK;
-							int partType = 2;
-							boolean eSign = true;
-							String deliverableCode = StringPool.BLANK;
-
-							ServiceInfo serviceInfo = ServiceInfoLocalServiceUtil.getByCode(dossier.getGroupId(),
-									dossier.getServiceCode());
-							ServiceConfig serviceConfig = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(
-									dossier.getGroupId(), serviceInfo.getServiceCode(), dossier.getGovAgencyCode());
-
-							ProcessOption processOption = ProcessOptionLocalServiceUtil.getByDTPLNoAndServiceCF(
-									dossier.getGroupId(), dossier.getDossierTemplateNo(),
-									serviceConfig.getServiceConfigId());
-
-							ServiceProcess serviceProcess = ServiceProcessLocalServiceUtil
-									.fetchServiceProcess(processOption.getServiceProcessId());
-							ProcessAction processAction = ProcessActionLocalServiceUtil.fetchBySPID_AC(
-									serviceProcess.getServiceProcessId(), dossierAction.getActionCode());
-
-							for (DossierFile dossierFile : dossierFileList) {
-								templateNo = dossierFile.getFileTemplateNo();
-
-								String returnDossierFiles = processAction.getReturnDossierFiles();
-								String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
-								for (String returnDossierFile : returnDossierFilesArr) {
-									if (templateNo.equals(returnDossierFile)) {
-										attachedFile = new AttachedFile();
-										attachedFile.setAttachedNote("");
-										attachedFile.setAttachedTypeCode(partNo);
-										attachedFile.setAttachedTypeName(templateNo);
-										attachedFile.setFullFileName(dossierFile.getDisplayName());
-
-										lstFiles.add(attachedFile);
-
-										String linkCongVan = jaxRsPublicUrl + "dossiers/" + dossier.getDossierId()
-												+ "/files/" + dossierFile.getReferenceUid();
-										if (dossier.getPassword() != null) {
-											linkCongVan += "/public/" + dossier.getPassword();
-										}
-										attachedFile.setFileURL(linkCongVan);
-										JSONObject formDataObj = JSONFactoryUtil
-												.createJSONObject(dossierFile.getFormData());
-										vlInterRoadTransportLicense.setLicenceNo(dossierFile.getDeliverableCode());
-										vlInterRoadTransportLicense.setFirstRegistrationDate(
-												formDataObj.getString("FirstRegistrationDate"));
-										vlInterRoadTransportLicense.setValidUntil(formDataObj.getString("ValidUntil"));
-										transporter.setNameOfCompany(formDataObj.getString("NameOfCompany"));
-										transporter.setAddress(formDataObj.getString("Address"));
-										transporter.setTel(formDataObj.getString("Tel"));
-										transporter.setFax(formDataObj.getString("Fax"));
-										transporter.setEmail(formDataObj.getString("Email"));
-										transporter.setWebsite(formDataObj.getString("Website"));
-										_log.info("Link cong van: " + linkCongVan);
-									}
-								}
-							}
-
-							// for (DossierFile dossierFile : dossierFileList) {
-							// partNo = dossierFile.getDossierPartNo();
-							// templateNo = dossierFile.getFileTemplateNo();
-							//
-							// String returnDossierFiles =
-							// processAction.getReturnDossierFiles();
-							//
-							// String[] returnDossierFilesArr =
-							// StringUtil.split(returnDossierFiles);
-							// for (String returnDossierFile :
-							// returnDossierFilesArr) {
-							// if (templateNo.equals(returnDossierFile)) {
-							// attachedFile = new AttachedFile();
-							// attachedFile.setAttachedNote("");
-							// attachedFile.setAttachedTypeCode(partNo);
-							// attachedFile.setAttachedTypeName(templateNo);
-							// attachedFile.setFileURL("");
-							// attachedFile.setFullFileName(dossierFile.getDisplayName());
-							//
-							// lstFiles.add(attachedFile);
-							//
-							// DossierPart dossierPart =
-							// DossierPartLocalServiceUtil.getByPartTypeEsign
-							// (templateNo,
-							// partNo, partType, eSign);
-							// if (dossierPart != null) {
-							// List<DossierFile> dossierFileRefList =
-							// DossierFileLocalServiceUtil
-							// .getByReferenceUid(dossierFile.getReferenceUid());
-							// if (dossierFileRefList != null &&
-							// dossierFileRefList.size() > 0) {
-							// for (DossierFile dof : dossierFileRefList) {
-							// _log.info("Dossier file form data: " +
-							// dof.getFormData());
-							// deliverableCode = dof.getDeliverableCode();
-							// if (Validator.isNotNull(deliverableCode)) {
-							// Deliverable deli =
-							// DeliverableLocalServiceUtil.getByCodeAndState(deliverableCode,
-							// "2");
-							// if (deli != null) {
-							// String formData = StringPool.BLANK;
-							// formData = deli.getFormData();
-							// _log.info("Form data: " + formData);
-							// }
-							// }
-							// }
-							// }
-							// }
-							// }
-							// }
-							// }
-
-							vlInterRoadTransportLicense.getAttachedFile().addAll(lstFiles);
-							content.setVLInterRoadTransportLicence(vlInterRoadTransportLicense);
-
-							String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
-
-							model.setRawMessage(rawMessage);
-							System.out.println("1815 raw message: " + rawMessage);
 							MessageQueueDetailModel result = client.postMessageQueue(model);
 							if (result != null) {
 								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
@@ -819,12 +662,15 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						subject.setSendDate(
 								APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 
+						body.setPersonSignature("");
+						envelope.setSystemSignature("");
+						
 						KetQuaXuLy ketqua = new KetQuaXuLy();
 						content.setKetQuaXuLy(ketqua);
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
-
+						
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
 						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
@@ -889,169 +735,37 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						subject.setSendDate(
 								APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 
-//						KetQuaXuLy ketqua = new KetQuaXuLy();
-//						content.setKetQuaXuLy(ketqua);
-//
-//						ketqua.setNoiDung(dossierAction.getActionNote());
-//						ketqua.setDonViXuLy(dossier.getGovAgencyName());
-
+						body.setPersonSignature("");
+						envelope.setSystemSignature("");
+						
 						if (dossier.getServiceCode().equals("BGTVT0600001")
 								|| dossier.getServiceCode().equals("BGTVT0600002")
 								|| dossier.getServiceCode().equals("BGTVT0600003")
 								|| dossier.getServiceCode().equals("BGTVT0600004")) {
-							VLInterRoadTransportLicence vlInterRoadTransportLicense = new VLInterRoadTransportLicence();
-							vlInterRoadTransportLicense.setLicenceNo("");
-							vlInterRoadTransportLicense.setFirstRegistrationDate("");
-							vlInterRoadTransportLicense.setValidUntil("");
-							vlInterRoadTransportLicense.setTransportOperation("");
-							Transporter transporter = new Transporter();
-							vlInterRoadTransportLicense.setTransporter(transporter);
-							transporter.setNameOfCompany("");
-							transporter.setAddress("");
-							transporter.setTel("");
-							transporter.setFax("");
-							transporter.setEmail("");
-							transporter.setWebsite("");
-							AttachedFile attachedFile = new AttachedFile();
-							List<AttachedFile> lstFiles = new ArrayList<>();
-								
-							MessageQueueInputModel model = new MessageQueueInputModel();
-							model.setContent("");
-							model.setSender("BGTVT");
-							model.setReceiver("NSW");
-							model.setPersonSignature("");
-							model.setSystemSignature("");
-							model.setStatus(1);
-							model.setMessageId(PortalUUIDUtil.generate());
-							model.setFromName("BGTVT");
-							model.setFromCountryCode("VN");
-							model.setFromMinistryCode("BGTVT");
-							model.setFromOrganizationCode("TCDBVN");
-							model.setFromUnitCode("");
-							model.setFromIdentity("");
-							model.setToName("NSW");
-							model.setToCountryCode("VN");
-							model.setToIdentity("");
-							model.setToMinistryCode("NSW");
-							model.setToOrganizationCode("NSW");
-							model.setToUnitCode("");
-							model.setDocumentType(dossier.getServiceCode());
-							model.setType("18");
-							model.setFunction("16");
-							model.setReference(dossier.getReferenceUid());
-							if (dossier.getReceiveDate() != null) {
-								cal.setTime(dossier.getReceiveDate());
-								subject.setDocumentYear(cal.get(Calendar.YEAR));
-							} else {
-								cal.setTime(dossier.getCreateDate());
-								subject.setDocumentYear(cal.get(Calendar.YEAR));
-							}
-							model.setPreReference(dossier.getReferenceUid());
-							model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-							model.setRetryCount(1);
-							model.setDirection(2);
-							
-							List<DossierFile> dossierFileList = DossierFileLocalServiceUtil
-									.getAllDossierFile(dossier.getDossierId());
+							if (dossier.getServiceCode().equals("BGTVT0600001")
+									|| dossier.getServiceCode().equals("BGTVT0600002")
+									|| dossier.getServiceCode().equals("BGTVT0600003")
+									|| dossier.getServiceCode().equals("BGTVT0600004")) {
 
-							String templateNo = StringPool.BLANK;
-							String partNo = StringPool.BLANK;
-							int partType = 2;
-							boolean eSign = true;
-							String deliverableCode = StringPool.BLANK;
+								MessageQueueInputModel model = BGTVT060001.convertResult(dossier, dossierSync, envelope, "18", "15");
 
-							ServiceInfo serviceInfo = ServiceInfoLocalServiceUtil.getByCode(dossier.getGroupId(),
-									dossier.getServiceCode());
-							ServiceConfig serviceConfig = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(
-									dossier.getGroupId(), serviceInfo.getServiceCode(), dossier.getGovAgencyCode());
+								MessageQueueDetailModel result = client.postMessageQueue(model);
+								if (result != null) {
+									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+											: sync.getMethod());
 
-							ProcessOption processOption = ProcessOptionLocalServiceUtil.getByDTPLNoAndServiceCF(
-									dossier.getGroupId(), dossier.getDossierTemplateNo(),
-									serviceConfig.getServiceConfigId());
-
-							ServiceProcess serviceProcess = ServiceProcessLocalServiceUtil
-									.fetchServiceProcess(processOption.getServiceProcessId());
-							ProcessAction processAction = ProcessActionLocalServiceUtil.fetchBySPID_AC(
-									serviceProcess.getServiceProcessId(), dossierAction.getActionCode());
-
-							for (DossierFile dossierFile : dossierFileList) {
-								templateNo = dossierFile.getFileTemplateNo();
-
-								String returnDossierFiles = processAction.getReturnDossierFiles();
-								String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
-								for (String returnDossierFile : returnDossierFilesArr) {
-									if (templateNo.equals(returnDossierFile)) {
-										attachedFile = new AttachedFile();
-										attachedFile.setAttachedNote("");
-										attachedFile.setAttachedTypeCode(partNo);
-										attachedFile.setAttachedTypeName(templateNo);
-										attachedFile.setFullFileName(dossierFile.getDisplayName());
-
-										lstFiles.add(attachedFile);
-
-										String linkCongVan = jaxRsPublicUrl + "dossiers/" + dossier.getDossierId()
-												+ "/files/" + dossierFile.getReferenceUid();
-										if (dossier.getPassword() != null) {
-											linkCongVan += "/public/" + dossier.getPassword();
-										}
-										attachedFile.setFileURL(linkCongVan);
-										JSONObject formDataObj = JSONFactoryUtil
-												.createJSONObject(dossierFile.getFormData());
-										vlInterRoadTransportLicense.setLicenceNo(dossierFile.getDeliverableCode());
-										vlInterRoadTransportLicense.setFirstRegistrationDate(
-												formDataObj.getString("FirstRegistrationDate"));
-										vlInterRoadTransportLicense.setValidUntil(formDataObj.getString("ValidUntil"));
-										transporter.setNameOfCompany(formDataObj.getString("NameOfCompany"));
-										transporter.setAddress(formDataObj.getString("Address"));
-										transporter.setTel(formDataObj.getString("Tel"));
-										transporter.setFax(formDataObj.getString("Fax"));
-										transporter.setEmail(formDataObj.getString("Email"));
-										transporter.setWebsite(formDataObj.getString("Website"));
-										_log.info("Link cong van: " + linkCongVan);
+									DossierAction foundAction = DossierActionLocalServiceUtil
+											.fetchDossierAction(clientDossierActionId);
+									if (foundAction != null) {
+										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 									}
+
+									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 								}
 							}
-
-							vlInterRoadTransportLicense.getAttachedFile().addAll(lstFiles);
-							content.setVLInterRoadTransportLicence(vlInterRoadTransportLicense);
-
-							String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
-
-							model.setRawMessage(rawMessage);
-							System.out.println("1816 raw message: " + rawMessage);
-							MessageQueueDetailModel result = client.postMessageQueue(model);
-							if (result != null) {
-								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
-										: sync.getMethod());
-
-								DossierAction foundAction = DossierActionLocalServiceUtil
-										.fetchDossierAction(clientDossierActionId);
-								if (foundAction != null) {
-									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
-								}
-
-								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-
-								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-							}							
 						}
-						// MessageQueueDetailModel result =
-						// client.postMessageQueue(model);
-						// if (result != null) {
-						// long clientDossierActionId = (sync.getMethod() == 0 ?
-						// sync.getClassPK() : sync.getMethod());
-						//
-						// DossierAction foundAction =
-						// DossierActionLocalServiceUtil.fetchDossierAction(clientDossierActionId);
-						// if (foundAction != null) {
-						// DossierActionLocalServiceUtil.updatePending(clientDossierActionId,
-						// false);
-						// }
-						//
-						// _dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-						//
-						// _thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-						// }
 					} else {
 						long clientDossierActionId = (dossierSync.getMethod() == 0 ? dossierSync.getClassPK()
 								: dossierSync.getMethod());
