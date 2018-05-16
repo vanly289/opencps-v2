@@ -193,10 +193,6 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		}
 		_log.info("****Start autofill file at:" + new Date());
 
-		if (Validator.isNotNull(dossierPart.getSampleData())) {
-			object.setFormData(
-					AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, serviceContext));
-		}
 		_log.info("****End autofill file at:" + new Date());
 
 		object.setDisplayName(displayName);
@@ -211,12 +207,23 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 //		if (Validator.isNotNull(dossierPart.getDeliverableType())) {
 //			object.setDeliverableCode(deliverableCode);
 //		}
+		String deliverableCode = StringPool.BLANK;
 		
 		if (Validator.isNotNull(dossierPart.getDeliverableType())) {
 			DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
 			
-			String deliverableCode = DeliverableNumberGenerator.generateDeliverableNumber(groupId, serviceContext.getCompanyId(), deliverableType.getDeliverableTypeId());
+			deliverableCode = DeliverableNumberGenerator.generateDeliverableNumber(groupId, serviceContext.getCompanyId(), deliverableType.getDeliverableTypeId());
 			object.setDeliverableCode(deliverableCode);
+		}
+
+		if (Validator.isNotNull(dossierPart.getSampleData())) {
+			String formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, serviceContext);
+			JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
+			formDataObj.put("LicenceNo", deliverableCode);
+			formData = formDataObj.toJSONString();
+			object.setFormData(
+					formData
+					);
 		}
 
 		return dossierFilePersistence.update(object);

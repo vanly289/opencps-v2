@@ -916,7 +916,7 @@ public class DossierActionsImpl implements DossierActions {
 																	formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(),
 																			dossierId, serviceContext);
 																	formScript = dossierPart.getFormScript();
-						
+																	
 																	_log.info("Dossier part: " + dossierPart.getPartNo());
 																	_log.info("Form data: " + formData);
 																	
@@ -953,6 +953,8 @@ public class DossierActionsImpl implements DossierActions {
 																		docFileReferenceUid = dossierFile.getReferenceUid();
 						
 																		dossierFileId = dossierFile.getDossierFileId();
+																		formDataObj = JSONFactoryUtil.createJSONObject(formData);
+																		formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
 																		_log.info("UPDATE FORM DATA GENERATE RESULT FILE");
 //																		actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, formData, serviceContext);
 																	}
@@ -991,6 +993,9 @@ public class DossierActionsImpl implements DossierActions {
 																				docFileReferenceUid = dossierFile.getReferenceUid();
 								
 																				dossierFileId = dossierFile.getDossierFileId();
+																				formDataObj = JSONFactoryUtil.createJSONObject(formData);
+																				formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+				
 																				_log.info("UPDATE FORM DATA GENERATE RESULT FILE");
 																				actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, formData, serviceContext);																						
 																			}
@@ -1044,6 +1049,9 @@ public class DossierActionsImpl implements DossierActions {
 																						docFileReferenceUid = dossierFile.getReferenceUid();
 										
 																						dossierFileId = dossierFile.getDossierFileId();
+																						formDataObj = JSONFactoryUtil.createJSONObject(formData);
+																						formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+						
 																						_log.info("UPDATE FORM DATA GENERATE RESULT FILE");
 																						actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, newFormDataObj.toJSONString(), serviceContext);																						
 																					}
