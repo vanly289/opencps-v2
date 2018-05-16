@@ -351,7 +351,7 @@ public class DossierNumberGenerator {
 				}
 
 
-				certNumber = String.format("%7d", _counterNumber); 
+				certNumber = String.format("%07d", _counterNumber); 
 				
 			} else {
 				certNumber = "0";
@@ -376,9 +376,9 @@ public class DossierNumberGenerator {
 		return password;
 	}
 
-	public static final String PRE_FIX_CERT = "DKLR_CERT@";
-	public static final String PRE_FIX_CERT_CURR = "DKLR_CERT_CURR@";
-	public static final String PRE_FIX_CERT_ELM = "DKLR_CERT_ELM@";
+	public static final String PRE_FIX_CERT = "TCDB_CERT@";
+	public static final String PRE_FIX_CERT_CURR = "TCDB_CERT_CURR@";
+	public static final String PRE_FIX_CERT_ELM = "TCDB_CERT_ELM@";
 
 	private static Log _log = LogFactoryUtil.getLog(DossierNumberGenerator.class.getName());
 }

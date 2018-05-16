@@ -262,11 +262,11 @@ public class DossierActionsImpl implements DossierActions {
 					String metaData = dictItem.getMetaData();
 					String specialStatus = StringPool.BLANK;
 					if (Validator.isNotNull(metaData)) {
-						_log.info("metaData: " + metaData);
+//						_log.info("metaData: " + metaData);
 						try {
 							JSONObject metaJson = JSONFactoryUtil.createJSONObject(metaData);
 							specialStatus = metaJson.getString("specialStatus");
-							_log.info("specialStatus: " + specialStatus);
+//							_log.info("specialStatus: " + specialStatus);
 
 						} catch (Exception e) {
 							// TODO: handle exception
@@ -284,9 +284,9 @@ public class DossierActionsImpl implements DossierActions {
 					hits = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
 					if (hits != null && hits.getLength() > 0) {
 						result.put("data", hits.toList());
-						_log.info("hits.toList(): " + hits.toList().size());
+//						_log.info("hits.toList(): " + hits.toList().size());
 						total = DossierLocalServiceUtil.countLucene(params, searchContext);
-						_log.info("total: " + total);
+//						_log.info("total: " + total);
 						result.put("total", total);
 					}
 				}
@@ -315,11 +315,11 @@ public class DossierActionsImpl implements DossierActions {
 						String metaData = dictItem.getMetaData();
 						String specialStatus = StringPool.BLANK;
 						if (Validator.isNotNull(metaData)) {
-							_log.info("metaData: " + metaData);
+//							_log.info("metaData: " + metaData);
 							try {
 								JSONObject metaJson = JSONFactoryUtil.createJSONObject(metaData);
 								specialStatus = metaJson.getString("specialStatus");
-								_log.info("specialStatus: " + specialStatus);
+//								_log.info("specialStatus: " + specialStatus);
 
 							} catch (Exception e) {
 								// TODO: handle exception
@@ -331,21 +331,21 @@ public class DossierActionsImpl implements DossierActions {
 						// Get info status of dossier
 						if (dictItem.getParentItemId() != 0) {
 							subStatusCode = dictItem.getItemCode();
-							_log.info("subStatusCode: " + subStatusCode);
+//							_log.info("subStatusCode: " + subStatusCode);
 							DictItem parentDictItem = DictItemLocalServiceUtil.getDictItem(dictItem.getParentItemId());
 							statusCode = parentDictItem.getItemCode();
-							_log.info("statusCode: " + statusCode);
+//							_log.info("statusCode: " + statusCode);
 						} else {
 							statusCode = dictItem.getItemCode();
-							_log.info("statusCode: " + statusCode);
+//							_log.info("statusCode: " + statusCode);
 						}
 
 						// Check permission user login
 						boolean isPermission = checkPermission(statusCode, subStatusCode, groupId, userId);
 
 						if (isPermission) {
-							_log.info("isPermission: " + isPermission);
-							_log.info("userId: " + userId);
+//							_log.info("isPermission: " + isPermission);
+//							_log.info("userId: " + userId);
 							// _log.info("strdossierActionId: " +
 							// sb.toString());
 
@@ -361,10 +361,10 @@ public class DossierActionsImpl implements DossierActions {
 
 								if (hits != null && hits.getLength() > 0) {
 									long count = DossierLocalServiceUtil.countLucene(params, searchContext);
-									_log.info("count: " + count);
+//									_log.info("count: " + count);
 									if (dictItem.getParentItemId() != 0) {
 										allDocsList.addAll(hits.toList());
-										_log.info("SizeList1: " + hits.toList().size());
+//										_log.info("SizeList1: " + hits.toList().size());
 										total += count;
 									}
 								}
