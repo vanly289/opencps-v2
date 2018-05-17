@@ -23,10 +23,10 @@ import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 import org.opencps.thirdparty.system.constants.SyncServerTerm;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueInputModel;
 import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
+import org.opencps.thirdparty.system.nsw.model.ApprovalOfVLStopTransport;
 import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
-import org.opencps.thirdparty.system.nsw.model.Transporter;
-import org.opencps.thirdparty.system.nsw.model.VLInterRoadTransportLicence;
+import org.opencps.thirdparty.system.nsw.model.IssuingAuthority;
 import org.opencps.thirdparty.system.util.OutsideSystemConverter;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,24 +37,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
-public class BGTVT060001 {
+public class BGTVT0600016 {
 	public static MessageQueueInputModel convertResult(Dossier dossier, ThirdPartyDossierSync dossierSync, Envelope envelope, String type, String function) throws PortalException {
 		long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
 		String jaxRsPublicUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_PUBLIC_URL);
 
-		VLInterRoadTransportLicence vlInterRoadTransportLicense = new VLInterRoadTransportLicence();
-		vlInterRoadTransportLicense.setLicenceNo("");
-		vlInterRoadTransportLicense.setFirstRegistrationDate("");
-		vlInterRoadTransportLicense.setValidUntil("");
-		vlInterRoadTransportLicense.setTransportOperation("");
-		Transporter transporter = new Transporter();
-		vlInterRoadTransportLicense.setTransporter(transporter);
-		transporter.setNameOfCompany("");
-		transporter.setAddress("");
-		transporter.setTel("");
-		transporter.setFax("");
-		transporter.setEmail("");
-		transporter.setWebsite("");
+		ApprovalOfVLStopTransport approvalOfVLStopTransport = new ApprovalOfVLStopTransport();
 		AttachedFile attachedFile = new AttachedFile();
 		List<AttachedFile> lstFiles = new ArrayList<>();
 
@@ -135,22 +123,21 @@ public class BGTVT060001 {
 					attachedFile.setFileURL(linkCongVan);
 					JSONObject formDataObj = JSONFactoryUtil
 							.createJSONObject(dossierFile.getFormData());
-					vlInterRoadTransportLicense.setLicenceNo(dossierFile.getDeliverableCode());
-					vlInterRoadTransportLicense.setFirstRegistrationDate(
-							formDataObj.getString("FirstRegistrationDate"));
-					vlInterRoadTransportLicense.setValidUntil(formDataObj.getString("ValidUntil"));
-					transporter.setNameOfCompany(formDataObj.getString("NameOfCompany"));
-					transporter.setAddress(formDataObj.getString("Address"));
-					transporter.setTel(formDataObj.getString("Tel"));
-					transporter.setFax(formDataObj.getString("Fax"));
-					transporter.setEmail(formDataObj.getString("Email"));
-					transporter.setWebsite(formDataObj.getString("Website"));
+					approvalOfVLStopTransport.setOfficialDispatchNo(formDataObj.getString("OfficialDispatchNo"));
+					
+					IssuingAuthority issuingAuthority = new IssuingAuthority();
+					issuingAuthority.setSignName(formDataObj.getString("SignName"));
+					issuingAuthority.setSignDate(formDataObj.getString("SignDate"));
+					issuingAuthority.setSignPlace(formDataObj.getString("SignPlace"));
+					issuingAuthority.setSignTitle(formDataObj.getString("SignTitle"));
+					
+					approvalOfVLStopTransport.setIssuingAuthority(issuingAuthority);
 				}
 			}
 		}
 
-		vlInterRoadTransportLicense.getAttachedFile().addAll(lstFiles);
-		envelope.getBody().getContent().setVLInterRoadTransportLicence(vlInterRoadTransportLicense);
+		approvalOfVLStopTransport.getAttachedFile().addAll(lstFiles);
+		envelope.getBody().getContent().setApprovalOfVLStopTransport(approvalOfVLStopTransport);
 
 		String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 

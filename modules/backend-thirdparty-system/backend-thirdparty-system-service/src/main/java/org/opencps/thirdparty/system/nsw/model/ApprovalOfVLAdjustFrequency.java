@@ -17,45 +17,52 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for VLInterRoadTransportLicence complex type.
+ * <p>Java class for ApprovalOfVLAdjustFrequency complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="VLInterRoadTransportLicence">
+ * &lt;complexType name="ApprovalOfVLAdjustFrequency">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="LicenceNo">
+ *         &lt;element name="OfficialDispatchNo" minOccurs="0">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="FirstRegistrationDate">
+ *         &lt;element name="NameOfCompany">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="ValidUntil">
+ *         &lt;element name="DepartureFrom">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="TransportOperation">
+ *         &lt;element name="DepartureTo">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="500"/>
+ *               &lt;maxLength value="255"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element ref="{}Transporter" minOccurs="0"/>
+ *         &lt;element name="NumberOfLot">
+ *           &lt;simpleType>
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *               &lt;maxLength value="1000"/>
+ *             &lt;/restriction>
+ *           &lt;/simpleType>
+ *         &lt;/element>
  *         &lt;element ref="{}AttachedFile" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}IssuingAuthority"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -65,147 +72,150 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "VLInterRoadTransportLicence", propOrder = {
-    "licenceNo",
-    "firstRegistrationDate",
-    "validUntil",
-    "transportOperation",
-    "transporter",
-    "attachedFile"
+@XmlType(name = "ApprovalOfVLAdjustFrequency", propOrder = {
+    "officialDispatchNo",
+    "nameOfCompany",
+    "departureFrom",
+    "departureTo",
+    "numberOfLot",
+    "attachedFile",
+    "issuingAuthority"
 })
-public class VLInterRoadTransportLicence {
+public class ApprovalOfVLAdjustFrequency {
 
-    @XmlElement(name = "LicenceNo", required = true)
-    protected String licenceNo;
-    @XmlElement(name = "FirstRegistrationDate", required = true)
-    protected String firstRegistrationDate;
-    @XmlElement(name = "ValidUntil", required = true)
-    protected String validUntil;
-    @XmlElement(name = "TransportOperation", required = true)
-    protected String transportOperation;
-    @XmlElement(name = "Transporter")
-    protected Transporter transporter;
+    @XmlElement(name = "OfficialDispatchNo")
+    protected String officialDispatchNo;
+    @XmlElement(name = "NameOfCompany", required = true)
+    protected String nameOfCompany;
+    @XmlElement(name = "DepartureFrom", required = true)
+    protected String departureFrom;
+    @XmlElement(name = "DepartureTo", required = true)
+    protected String departureTo;
+    @XmlElement(name = "NumberOfLot", required = true)
+    protected String numberOfLot;
     @XmlElement(name = "AttachedFile", required = true)
     protected List<AttachedFile> attachedFile;
+    @XmlElement(name = "IssuingAuthority", required = true)
+    protected IssuingAuthority issuingAuthority;
 
     /**
-     * Gets the value of the licenceNo property.
+     * Gets the value of the officialDispatchNo property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getLicenceNo() {
-        return licenceNo;
+    public String getOfficialDispatchNo() {
+        return officialDispatchNo;
     }
 
     /**
-     * Sets the value of the licenceNo property.
+     * Sets the value of the officialDispatchNo property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setLicenceNo(String value) {
-        this.licenceNo = value;
+    public void setOfficialDispatchNo(String value) {
+        this.officialDispatchNo = value;
     }
 
     /**
-     * Gets the value of the firstRegistrationDate property.
+     * Gets the value of the nameOfCompany property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getFirstRegistrationDate() {
-        return firstRegistrationDate;
+    public String getNameOfCompany() {
+        return nameOfCompany;
     }
 
     /**
-     * Sets the value of the firstRegistrationDate property.
+     * Sets the value of the nameOfCompany property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setFirstRegistrationDate(String value) {
-        this.firstRegistrationDate = value;
+    public void setNameOfCompany(String value) {
+        this.nameOfCompany = value;
     }
 
     /**
-     * Gets the value of the validUntil property.
+     * Gets the value of the departureFrom property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getValidUntil() {
-        return validUntil;
+    public String getDepartureFrom() {
+        return departureFrom;
     }
 
     /**
-     * Sets the value of the validUntil property.
+     * Sets the value of the departureFrom property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setValidUntil(String value) {
-        this.validUntil = value;
+    public void setDepartureFrom(String value) {
+        this.departureFrom = value;
     }
 
     /**
-     * Gets the value of the transportOperation property.
+     * Gets the value of the departureTo property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getTransportOperation() {
-        return transportOperation;
+    public String getDepartureTo() {
+        return departureTo;
     }
 
     /**
-     * Sets the value of the transportOperation property.
+     * Sets the value of the departureTo property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setTransportOperation(String value) {
-        this.transportOperation = value;
+    public void setDepartureTo(String value) {
+        this.departureTo = value;
     }
 
     /**
-     * Gets the value of the transporter property.
+     * Gets the value of the numberOfLot property.
      * 
      * @return
      *     possible object is
-     *     {@link Transporter }
+     *     {@link String }
      *     
      */
-    public Transporter getTransporter() {
-        return transporter;
+    public String getNumberOfLot() {
+        return numberOfLot;
     }
 
     /**
-     * Sets the value of the transporter property.
+     * Sets the value of the numberOfLot property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Transporter }
+     *     {@link String }
      *     
      */
-    public void setTransporter(Transporter value) {
-        this.transporter = value;
+    public void setNumberOfLot(String value) {
+        this.numberOfLot = value;
     }
 
     /**
@@ -235,6 +245,30 @@ public class VLInterRoadTransportLicence {
             attachedFile = new ArrayList<AttachedFile>();
         }
         return this.attachedFile;
+    }
+
+    /**
+     * Gets the value of the issuingAuthority property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link IssuingAuthority }
+     *     
+     */
+    public IssuingAuthority getIssuingAuthority() {
+        return issuingAuthority;
+    }
+
+    /**
+     * Sets the value of the issuingAuthority property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link IssuingAuthority }
+     *     
+     */
+    public void setIssuingAuthority(IssuingAuthority value) {
+        this.issuingAuthority = value;
     }
 
 }

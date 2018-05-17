@@ -955,7 +955,10 @@ public class DossierActionsImpl implements DossierActions {
 																		dossierFileId = dossierFile.getDossierFileId();
 																		formDataObj = JSONFactoryUtil.createJSONObject(formData);
 																		formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+																		formData = formDataObj.toJSONString();
+																		dossierFile.setFormData(formData);
 																		_log.info("UPDATE FORM DATA GENERATE RESULT FILE");
+																		DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
 //																		actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, formData, serviceContext);
 																	}
 																	else if (Validator.isNotNull(formData)) {
