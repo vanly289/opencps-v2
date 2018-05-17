@@ -632,7 +632,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						if (dossier.getServiceCode().equals("BGTVT0600001")
 								|| dossier.getServiceCode().equals("BGTVT0600002")
 								|| dossier.getServiceCode().equals("BGTVT0600003")
-								|| dossier.getServiceCode().equals("BGTVT0600004")) {
+								|| dossier.getServiceCode().equals("BGTVT0600004")
+								|| dossier.getServiceCode().equals("BGTVT0600019")
+								|| dossier.getServiceCode().equals("BGTVT0600020")
+								|| dossier.getServiceCode().equals("BGTVT0600021")
+								|| dossier.getServiceCode().equals("BGTVT0600022")) {
 
 							MessageQueueInputModel model = BGTVT0600001.convertResult(dossier, dossierSync, envelope, "18", "15");
 
@@ -659,7 +663,15 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600009")
 								|| dossier.getServiceCode().equals("BGTVT0600010")
 								|| dossier.getServiceCode().equals("BGTVT0600011")
-								|| dossier.getServiceCode().equals("BGTVT0600012")) {
+								|| dossier.getServiceCode().equals("BGTVT0600012")
+								|| dossier.getServiceCode().equals("BGTVT0600023")
+								|| dossier.getServiceCode().equals("BGTVT0600024")
+								|| dossier.getServiceCode().equals("BGTVT0600025")
+								|| dossier.getServiceCode().equals("BGTVT0600026")
+								|| dossier.getServiceCode().equals("BGTVT0600027")
+								|| dossier.getServiceCode().equals("BGTVT0600028")
+								|| dossier.getServiceCode().equals("BGTVT0600029")
+								|| dossier.getServiceCode().equals("BGTVT0600030")) {
 							MessageQueueInputModel model = BGTVT0600005.convertResult(dossier, dossierSync, envelope, "18", "15");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);
@@ -681,7 +693,10 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						}
 						else if (dossier.getServiceCode().equals("BGTVT0600013")
 								|| dossier.getServiceCode().equals("BGTVT0600014")
-								|| dossier.getServiceCode().equals("BGTVT0600015")) {
+								|| dossier.getServiceCode().equals("BGTVT0600015")
+								|| dossier.getServiceCode().equals("BGTVT0600030")
+								|| dossier.getServiceCode().equals("BGTVT0600031")
+								|| dossier.getServiceCode().equals("BGTVT0600032")) {
 							MessageQueueInputModel model = BGTVT0600013.convertResult(dossier, dossierSync, envelope, "18", "15");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);
@@ -701,7 +716,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							}
 							
 						}
-						else if (dossier.getServiceCode().equals("BGTVT0600016")) {
+						else if (dossier.getServiceCode().equals("BGTVT0600016")
+								|| dossier.getServiceCode().equals("BGTVT0600033")) {
 							MessageQueueInputModel model = BGTVT0600016.convertResult(dossier, dossierSync, envelope, "18", "15");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);
@@ -721,8 +737,56 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							}
 							
 						}
-						else if (dossier.getServiceCode().equals("BGTVT0600017")) {
+						else if (dossier.getServiceCode().equals("BGTVT0600017")
+								|| dossier.getServiceCode().equals("BGTVT0600034")) {
 							MessageQueueInputModel model = BGTVT0600017.convertResult(dossier, dossierSync, envelope, "18", "15");
+
+							MessageQueueDetailModel result = client.postMessageQueue(model);
+							if (result != null) {
+								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+										: sync.getMethod());
+
+								DossierAction foundAction = DossierActionLocalServiceUtil
+										.fetchDossierAction(clientDossierActionId);
+								if (foundAction != null) {
+									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+								}
+
+								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							}
+							
+						}
+						else if (dossier.getServiceCode().equals("BGTVT0600036")
+								|| dossier.getServiceCode().equals("BGTVT0600037")
+								|| dossier.getServiceCode().equals("BGTVT0600038")
+								|| dossier.getServiceCode().equals("BGTVT0600039")
+								|| dossier.getServiceCode().equals("BGTVT0600040")
+								|| dossier.getServiceCode().equals("BGTVT0600041")
+								|| dossier.getServiceCode().equals("BGTVT0600042")
+								|| dossier.getServiceCode().equals("BGTVT0600043")) {
+							MessageQueueInputModel model = BGTVT0600036.convertResult(dossier, dossierSync, envelope, "18", "15");
+
+							MessageQueueDetailModel result = client.postMessageQueue(model);
+							if (result != null) {
+								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+										: sync.getMethod());
+
+								DossierAction foundAction = DossierActionLocalServiceUtil
+										.fetchDossierAction(clientDossierActionId);
+								if (foundAction != null) {
+									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+								}
+
+								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							}
+							
+						}
+						else if (dossier.getServiceCode().equals("BGTVT0600044")) {
+							MessageQueueInputModel model = BGTVT0600044.convertResult(dossier, dossierSync, envelope, "18", "15");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);
 							if (result != null) {
@@ -830,11 +894,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						if (dossier.getServiceCode().equals("BGTVT0600001")
 								|| dossier.getServiceCode().equals("BGTVT0600002")
 								|| dossier.getServiceCode().equals("BGTVT0600003")
-								|| dossier.getServiceCode().equals("BGTVT0600004")) {
-							if (dossier.getServiceCode().equals("BGTVT0600001")
-									|| dossier.getServiceCode().equals("BGTVT0600002")
-									|| dossier.getServiceCode().equals("BGTVT0600003")
-									|| dossier.getServiceCode().equals("BGTVT0600004")) {
+								|| dossier.getServiceCode().equals("BGTVT0600004") 
+								|| dossier.getServiceCode().equals("BGTVT0600019")
+								|| dossier.getServiceCode().equals("BGTVT0600020")
+								|| dossier.getServiceCode().equals("BGTVT0600021")
+								|| dossier.getServiceCode().equals("BGTVT0600022")) {
 
 								MessageQueueInputModel model = BGTVT0600001.convertResult(dossier, dossierSync, envelope, "18", "16");
 
@@ -853,7 +917,6 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 								}
-							}
 						}
 						else if (dossier.getServiceCode().equals("BGTVT0600005")
 								|| dossier.getServiceCode().equals("BGTVT0600006")
@@ -862,7 +925,15 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600009")
 								|| dossier.getServiceCode().equals("BGTVT0600010")
 								|| dossier.getServiceCode().equals("BGTVT0600011")
-								|| dossier.getServiceCode().equals("BGTVT0600012")) {
+								|| dossier.getServiceCode().equals("BGTVT0600012")
+								|| dossier.getServiceCode().equals("BGTVT0600023")
+								|| dossier.getServiceCode().equals("BGTVT0600024")
+								|| dossier.getServiceCode().equals("BGTVT0600025")
+								|| dossier.getServiceCode().equals("BGTVT0600026")
+								|| dossier.getServiceCode().equals("BGTVT0600027")
+								|| dossier.getServiceCode().equals("BGTVT0600028")
+								|| dossier.getServiceCode().equals("BGTVT0600029")
+								) {
 							MessageQueueInputModel model = BGTVT0600005.convertResult(dossier, dossierSync, envelope, "18", "16");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);
@@ -884,7 +955,10 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						}
 						else if (dossier.getServiceCode().equals("BGTVT0600013")
 								|| dossier.getServiceCode().equals("BGTVT0600014")
-								|| dossier.getServiceCode().equals("BGTVT0600015")) {
+								|| dossier.getServiceCode().equals("BGTVT0600015")
+								|| dossier.getServiceCode().equals("BGTVT0600030")
+								|| dossier.getServiceCode().equals("BGTVT0600031")
+								|| dossier.getServiceCode().equals("BGTVT0600032")) {
 							MessageQueueInputModel model = BGTVT0600013.convertResult(dossier, dossierSync, envelope, "18", "16");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);
@@ -904,7 +978,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							}
 							
 						}
-						else if (dossier.getServiceCode().equals("BGTVT0600016")) {
+						else if (dossier.getServiceCode().equals("BGTVT0600016")
+								|| dossier.getServiceCode().equals("BGTVT0600033")) {
 							MessageQueueInputModel model = BGTVT0600016.convertResult(dossier, dossierSync, envelope, "18", "16");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);
@@ -924,7 +999,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							}
 							
 						}
-						else if (dossier.getServiceCode().equals("BGTVT0600017")) {
+						else if (dossier.getServiceCode().equals("BGTVT0600017")
+								|| dossier.getServiceCode().equals("BGTVT0600034")) {
 							MessageQueueInputModel model = BGTVT0600017.convertResult(dossier, dossierSync, envelope, "18", "16");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);
@@ -944,6 +1020,53 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							}
 							
 						}
+						else if (dossier.getServiceCode().equals("BGTVT0600036")
+								|| dossier.getServiceCode().equals("BGTVT0600037")
+								|| dossier.getServiceCode().equals("BGTVT0600038")
+								|| dossier.getServiceCode().equals("BGTVT0600039")
+								|| dossier.getServiceCode().equals("BGTVT0600040")
+								|| dossier.getServiceCode().equals("BGTVT0600041")
+								|| dossier.getServiceCode().equals("BGTVT0600042")
+								|| dossier.getServiceCode().equals("BGTVT0600043")) {
+							MessageQueueInputModel model = BGTVT0600036.convertResult(dossier, dossierSync, envelope, "18", "16");
+
+							MessageQueueDetailModel result = client.postMessageQueue(model);
+							if (result != null) {
+								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+										: sync.getMethod());
+
+								DossierAction foundAction = DossierActionLocalServiceUtil
+										.fetchDossierAction(clientDossierActionId);
+								if (foundAction != null) {
+									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+								}
+
+								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							}
+							
+						}
+						else if (dossier.getServiceCode().equals("BGTVT0600044")) {
+							MessageQueueInputModel model = BGTVT0600044.convertResult(dossier, dossierSync, envelope, "18", "16");
+
+							MessageQueueDetailModel result = client.postMessageQueue(model);
+							if (result != null) {
+								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+										: sync.getMethod());
+
+								DossierAction foundAction = DossierActionLocalServiceUtil
+										.fetchDossierAction(clientDossierActionId);
+								if (foundAction != null) {
+									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+								}
+
+								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							}
+							
+						}	
 					} else {
 						long clientDossierActionId = (dossierSync.getMethod() == 0 ? dossierSync.getClassPK()
 								: dossierSync.getMethod());

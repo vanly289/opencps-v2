@@ -17,12 +17,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ApprovalOfVLFixRoadTransport complex type.
+ * <p>Java class for ApprovalOfVTFixRoadTransport complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ApprovalOfVLFixRoadTransport">
+ * &lt;complexType name="ApprovalOfVTFixRoadTransport">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -104,34 +104,6 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;/simpleType>
  *         &lt;/element>
  *         &lt;element name="ToProvinceName">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="255"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="Distance">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="255"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="RouteDescription">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="255"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="ExpImpGateCode">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="255"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="ExpImpGate">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;maxLength value="255"/>
@@ -253,7 +225,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="ToLAOAuthority">
+ *         &lt;element name="ToTQAuthority">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;maxLength value="255"/>
@@ -285,7 +257,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ApprovalOfVLFixRoadTransport", propOrder = {
+@XmlType(name = "ApprovalOfVTFixRoadTransport", propOrder = {
     "issuingDispatchNo",
     "officialDispatchNo",
     "officialDispatchDate",
@@ -298,23 +270,19 @@ import javax.xml.bind.annotation.XmlType;
     "toParkingLot",
     "toProvinceCode",
     "toProvinceName",
-    "distance",
-    "routeDescription",
-    "expImpGateCode",
-    "expImpGate",
     "vehicleList",
     "itemNo",
     "circularNo",
     "circularDate",
     "numberOfVehicle",
     "toVNAuthority",
-    "toLAOAuthority",
+    "toTQAuthority",
     "atParkingLot",
     "atProvinceName",
     "attachedFile",
     "issuingAuthority"
 })
-public class ApprovalOfVLFixRoadTransport {
+public class ApprovalOfVTFixRoadTransport {
 
     @XmlElement(name = "IssuingDispatchNo", required = true)
     protected String issuingDispatchNo;
@@ -340,16 +308,8 @@ public class ApprovalOfVLFixRoadTransport {
     protected String toProvinceCode;
     @XmlElement(name = "ToProvinceName", required = true)
     protected String toProvinceName;
-    @XmlElement(name = "Distance", required = true)
-    protected String distance;
-    @XmlElement(name = "RouteDescription", required = true)
-    protected String routeDescription;
-    @XmlElement(name = "ExpImpGateCode", required = true)
-    protected String expImpGateCode;
-    @XmlElement(name = "ExpImpGate", required = true)
-    protected String expImpGate;
     @XmlElement(name = "VehicleList", required = true)
-    protected List<ApprovalOfVLFixRoadTransport.VehicleList> vehicleList;
+    protected List<ApprovalOfVTFixRoadTransport.VehicleList> vehicleList;
     @XmlElement(name = "ItemNo", required = true)
     protected String itemNo;
     @XmlElement(name = "CircularNo", required = true)
@@ -360,8 +320,8 @@ public class ApprovalOfVLFixRoadTransport {
     protected String numberOfVehicle;
     @XmlElement(name = "ToVNAuthority", required = true)
     protected String toVNAuthority;
-    @XmlElement(name = "ToLAOAuthority", required = true)
-    protected String toLAOAuthority;
+    @XmlElement(name = "ToTQAuthority", required = true)
+    protected String toTQAuthority;
     @XmlElement(name = "AtParkingLot", required = true)
     protected String atParkingLot;
     @XmlElement(name = "AtProvinceName", required = true)
@@ -660,102 +620,6 @@ public class ApprovalOfVLFixRoadTransport {
     }
 
     /**
-     * Gets the value of the distance property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDistance() {
-        return distance;
-    }
-
-    /**
-     * Sets the value of the distance property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDistance(String value) {
-        this.distance = value;
-    }
-
-    /**
-     * Gets the value of the routeDescription property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRouteDescription() {
-        return routeDescription;
-    }
-
-    /**
-     * Sets the value of the routeDescription property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setRouteDescription(String value) {
-        this.routeDescription = value;
-    }
-
-    /**
-     * Gets the value of the expImpGateCode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getExpImpGateCode() {
-        return expImpGateCode;
-    }
-
-    /**
-     * Sets the value of the expImpGateCode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setExpImpGateCode(String value) {
-        this.expImpGateCode = value;
-    }
-
-    /**
-     * Gets the value of the expImpGate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getExpImpGate() {
-        return expImpGate;
-    }
-
-    /**
-     * Sets the value of the expImpGate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setExpImpGate(String value) {
-        this.expImpGate = value;
-    }
-
-    /**
      * Gets the value of the vehicleList property.
      * 
      * <p>
@@ -773,13 +637,13 @@ public class ApprovalOfVLFixRoadTransport {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ApprovalOfVLFixRoadTransport.VehicleList }
+     * {@link ApprovalOfVTFixRoadTransport.VehicleList }
      * 
      * 
      */
-    public List<ApprovalOfVLFixRoadTransport.VehicleList> getVehicleList() {
+    public List<ApprovalOfVTFixRoadTransport.VehicleList> getVehicleList() {
         if (vehicleList == null) {
-            vehicleList = new ArrayList<ApprovalOfVLFixRoadTransport.VehicleList>();
+            vehicleList = new ArrayList<ApprovalOfVTFixRoadTransport.VehicleList>();
         }
         return this.vehicleList;
     }
@@ -905,27 +769,27 @@ public class ApprovalOfVLFixRoadTransport {
     }
 
     /**
-     * Gets the value of the toLAOAuthority property.
+     * Gets the value of the toTQAuthority property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getToLAOAuthority() {
-        return toLAOAuthority;
+    public String getToTQAuthority() {
+        return toTQAuthority;
     }
 
     /**
-     * Sets the value of the toLAOAuthority property.
+     * Sets the value of the toTQAuthority property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setToLAOAuthority(String value) {
-        this.toLAOAuthority = value;
+    public void setToTQAuthority(String value) {
+        this.toTQAuthority = value;
     }
 
     /**
