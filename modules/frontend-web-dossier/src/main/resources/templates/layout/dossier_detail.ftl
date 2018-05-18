@@ -420,8 +420,7 @@
         }
         var plugin = plugin0;
             
-        alert("Plugin: " + plugin);
-		var fnSaveForm = function(id, value){
+ 		var fnSaveForm = function(id, value){
 			var current = $("#btn-save-formalpaca"+id);
 			var referentUid = current.attr("referenceUid");
 			var dossierId = current.attr("dossierId");
