@@ -420,13 +420,13 @@
         }
         var plugin = plugin0;
             
+        alert("Plugin: " + plugin);
 		var fnSaveForm = function(id, value){
 			var current = $("#btn-save-formalpaca"+id);
 			var referentUid = current.attr("referenceUid");
 			var dossierId = current.attr("dossierId");
 			console.log('dossierId: '+dossierId);
 			if(referentUid){
-				/*
 				$.ajax({
 					url : "/o/rest/v2/dossiers/"+dossierId+"/files/"+referentUid+"/formdata",
 					dataType : "json",
@@ -461,7 +461,6 @@
 						10000);
 					}
 				});
-				*/
 			}
 		};
 		

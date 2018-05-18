@@ -684,6 +684,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								console.log(x);
 								isKyOk = true;
 							}*/
+							console.log("Plugin: " + plugin());
 							if (isKyOk) {
 								if (!plugin().valid) {
 									alert("Plugin is not working :(");
@@ -808,6 +809,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 													var msg = msgs[i];
 													if(msg == 'success') {
 														try {
+															console.log('Complete sign');
 															vm.completeKyDuyetYCGiamDinh(sign, signFieldName, fileName, fileEntryId, paramObj, actionName);
 														}
 														catch(err) {
@@ -860,12 +862,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									/*var jsonData = JSON.parse(result);*/
 									var msg = result.msg;
 									if(msg == 'success'){
-										//	alert('ký số thành công!');
+										alert('ký số thành công!');
 										vm.snackbartextdossierViewJX = actionName + " thành công!";
 										vm.snackbardossierViewJX = true;
 
 										vm._inidanhSachHoSoTable();
 										setTimeout(function(){ 
+											alert('Next action signature');
 											vm._initlistgroupHoSoFilter();
 										}, 1000);
 

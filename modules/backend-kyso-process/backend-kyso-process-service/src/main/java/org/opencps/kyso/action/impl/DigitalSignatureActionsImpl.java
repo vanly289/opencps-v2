@@ -31,9 +31,9 @@ import vgca.svrsigner.ServerSigner;
 public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 
 	private static Log _log = LogFactoryUtil.getLog(DigitalSignatureActionsImpl.class);
-	private static final String TYPE_KYSO = "1135, 1158, 1160";
+	private static final String TYPE_KYSO = "1135, 1158, 1160, 1032";
 	private static final String TYPE_DONGDAU = "1137, 1160, 1162";
-	private static final String STEPCODE_KYSO = "300, 301";
+	private static final String STEPCODE_KYSO = "300, 301, 105";
 	private static final String STEPCODE_DONGDAU = "400";
 
 	@Override
