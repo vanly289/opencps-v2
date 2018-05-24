@@ -106,7 +106,7 @@ public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 				signer.setSignatureAppearance(PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION);
 
 				ExtractTextLocations textLocation = new ExtractTextLocations(fullPath);
-
+				
 				_log.info("*********************************" + textLocation.getAnchorX() + "-"
 						+ textLocation.getAnchorY() + "********************************");
 

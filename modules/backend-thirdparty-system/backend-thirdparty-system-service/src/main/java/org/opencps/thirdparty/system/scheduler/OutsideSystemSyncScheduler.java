@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
+import org.opencps.datamgt.utils.DateTimeUtils;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
@@ -157,6 +158,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						content.setKetQuaXuLy(ketqua);
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
 
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 						body.setPersonSignature("");
@@ -226,6 +228,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
 
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
@@ -332,6 +335,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
 
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
@@ -406,6 +410,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
+
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
 
@@ -479,6 +485,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
+
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
 
@@ -552,6 +560,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
+
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
 
@@ -823,6 +833,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
+						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
 						
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 

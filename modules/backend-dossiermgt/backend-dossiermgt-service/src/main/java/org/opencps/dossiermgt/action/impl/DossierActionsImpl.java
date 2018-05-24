@@ -637,7 +637,7 @@ public class DossierActionsImpl implements DossierActions {
 						List<String> returnDossierFileTemplateNos = ListUtil
 								.toList(StringUtil.split(returnDossierFiles));
 
-//						_log.info("-----RETURN DOSSIER FILE TEMPLATE NOS----" + returnDossierFileTemplateNos.size());
+						_log.info("-----RETURN DOSSIER FILE TEMPLATE NOS----" + returnDossierFileTemplateNos.size());
 						JSONArray createFiles = JSONFactoryUtil.createJSONArray();
 
 						if (dossierFileTemplateNos != null && !dossierFileTemplateNos.isEmpty()) {
@@ -692,6 +692,9 @@ public class DossierActionsImpl implements DossierActions {
 
 										
 										//End add generate deliverable if has deliverable type
+										_log.info("Dossier part no: " + dossierPart.getPartNo());
+										_log.info("Dossier part no deliverable type: " + dossierPart.getDeliverableType());
+										
 										if (Validator.isNull(dossierPart.getDeliverableType())) {
 											
 											List<DossierFile> dossierFilesResult = DossierFileLocalServiceUtil
@@ -791,8 +794,8 @@ public class DossierActionsImpl implements DossierActions {
 												String deliverableFormData = StringPool.BLANK;
 												JSONObject deliverableFormDataObj = JSONFactoryUtil.createJSONObject();
 												
-//												_log.info("------DELIVERABLE FORM DATA------" + deliverableFormData);
-//												_log.info("------DELIVERABLE TYPE STR-------" + deliverableTypeStr);
+												_log.info("------DELIVERABLE FORM DATA------" + deliverableFormData);
+												_log.info("------DELIVERABLE TYPE STR-------" + deliverableTypeStr);
 												if (Validator.isNotNull(deliverableTypeStr)) {
 													DeliverableType deliverableTypeObject = DeliverableTypeLocalServiceUtil.getByCode(groupId, deliverableTypeStr);
 //													_log.info("Deliverable type: " + deliverableTypeObject);
@@ -801,9 +804,9 @@ public class DossierActionsImpl implements DossierActions {
 														JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
 														if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
 															String deliverables = mappingDataObj.getString(DeliverableTypesTerm.DELIVERABLES_KEY);
-//															_log.info("--------DELIVERABLES----------" + deliverables);
-//															_log.info("--------HAS E SIGNATURE----------" + processAction.getESignature());
-//															_log.info("---------FILE TEMPLATE NO--------" + fileTemplateNo);
+															_log.info("--------DELIVERABLES----------" + deliverables);
+															_log.info("--------HAS E SIGNATURE----------" + processAction.getESignature());
+															_log.info("---------FILE TEMPLATE NO--------" + fileTemplateNo);
 															if (Validator.isNull(deliverables)) {
 																//Add one deliverable
 																List<DossierFile> dossierFilesResult = DossierFileLocalServiceUtil
@@ -1030,13 +1033,16 @@ public class DossierActionsImpl implements DossierActions {
 						
 																_log.info("Dossier file result 21-5-2018:" + dossierFilesResult.size());
 																if (dossierFilesResult != null && !dossierFilesResult.isEmpty()) {
-																	dossierFilesResult = DossierFileLocalServiceUtil
-																			.getDossierFileByDID_FTNO_DPT_NOT_NULL_FID(dossierId, fileTemplateNo, 2,
-																					0, false);
-
-																	counter = (dossierFilesResult != null && !dossierFilesResult.isEmpty())
-																			? dossierFilesResult.size() : 0;
+//																	dossierFilesResult = DossierFileLocalServiceUtil
+//																			.getDossierFileByDID_FTNO_DPT_NOT_NULL_FID(dossierId, fileTemplateNo, 2,
+//																					0, false);
+//
+//																	counter = (dossierFilesResult != null && !dossierFilesResult.isEmpty())
+//																			? dossierFilesResult.size() : 0;
+																	
+																	_log.info("Dossier file result");
 																	for (DossierFile dossierFile : dossierFilesResult) {
+																		_log.info("Dossier file part: " + dossierFile.getDossierPartNo() + ", " + dossierPart.getPartNo());
 																		if (dossierFile.getDossierPartNo().equals(dossierPart.getPartNo())) {
 																			eForm = dossierFile.getEForm();
 																			formData = dossierFile.getFormData();
