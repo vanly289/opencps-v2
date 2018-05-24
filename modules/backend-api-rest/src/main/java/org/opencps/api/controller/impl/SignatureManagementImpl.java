@@ -460,6 +460,7 @@ public class SignatureManagementImpl implements SignatureManagement{
 		String signs = input.getSign();
 		String signFieldNames = input.getSignFieldName();
 		String fileNames = input.getFileName();
+		_log.info("Sign: " + signs + ", field name: " + signFieldNames + ", file name: " + fileNames + ", file entry id: " + fileEntryIds);
 		String[] fileEntryIdArr = StringUtil.split(fileEntryIds);
 		String[] signArr = StringUtil.split(signs);
 		String[] signFieldNameArr = StringUtil.split(signFieldNames);

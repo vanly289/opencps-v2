@@ -864,6 +864,24 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								},
 								success : function(result) {
 									console.log(result);
+
+									var msg = result.msg;
+									if(msg == 'success'){
+										vm.snackbartextdossierViewJX = actionName + " thành công!";
+										vm.snackbardossierViewJX = true;
+
+										vm._inidanhSachHoSoTable();
+										setTimeout(function(){ 
+											vm._initlistgroupHoSoFilter();
+										}, 1000);
+
+										vm.detailPage = false;
+										vm.actionsSubmitLoading = false;
+									} else if (msg == 'fileEntryId') {
+										alert("Cảnh báo: Không tìm thấy file bản thảo. Tạm dừng tiến trình đóng dấu số");
+									} else {
+										alert(msg);
+									}									
 								},
 								error: function(){
 									alert('ky so false');
