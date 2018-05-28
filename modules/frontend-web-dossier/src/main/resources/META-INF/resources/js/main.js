@@ -46,7 +46,256 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			advancedFilterLoaiSanPham : {},
 			advancedFilterNhanHieu : {},
 			advancedFilterDossierStatus : {},
-			stateOnlyFollow : false
+			stateOnlyFollow : false,
+			menuTuNgay: '',
+			menuDenNgay: '',
+			modelLienVan: {
+				so_dang_ky: 'asdfgh',
+				historys: [
+				{
+					loai: 1,
+					cua_khau: '12345678',
+					thong_tin_lai_xe: 'asdfghjasdfgh',
+					giay_phep_lai_xe: 'asdfghjasdfgh',
+					thoi_gian: '1/1/2018'
+				}
+				]
+			},
+			giayPhepVanTaiQuocTeTableheaders: [
+			{
+				text: 'STT',
+				align: 'center',
+				sortable: false,
+				value: 'stt'
+			},
+			{
+				text: 'Gíây phép - Số giấy phép',
+				align: 'left',
+				sortable: true,
+				value: 'deliverableCode'
+			},
+			{
+				text: 'Tên doanh nghiệp được cấp phép',
+				align: 'center',
+				sortable: true,
+				value: 'applicantName'
+			},
+			{
+				text: 'Cơ quan cấp',
+				align: 'center',
+				sortable: true,
+				value: 'coQuan'
+			},
+			{
+				text: 'Hiệu lực giấy phép',
+				align: 'center',
+				sortable: true,
+				value: 'hieuLuc'
+			},
+			{
+				text: 'Thao tác',
+				align: 'center',
+				sortable: true,
+				value: 'thaoTac'
+			}
+			],
+			giayPhepVanTaiQuocTeTableItems: [],
+			pageGiayPhepVanTaiQuocTeTableLength: 0,
+			pageGiayPhepVanTaiQuocTeTable: 1,
+
+			giayPhepLienVanTableheaders: [
+			{
+				text: 'STT',
+				align: 'center',
+				sortable: false,
+				value: 'stt'
+			},
+			{
+				text: 'Gíây phép - Số giấy phép',
+				align: 'left',
+				sortable: true,
+				value: 'deliverableCode'
+			},
+			{
+				text: 'Số đăng ký phương tiện Đơn vị khai thác',
+				align: 'left',
+				sortable: true,
+				value: 'applicantName'
+			},
+			{
+				text: 'Cơ quan cấp phép',
+				align: 'left',
+				sortable: true,
+				value: 'coQuan'
+			},
+			{
+				text: 'Hiệu lực giấy phép',
+				align: 'left',
+				sortable: true,
+				value: 'hieuLuc'
+			},
+			{
+				text: 'Thao tác',
+				align: 'left',
+				sortable: true,
+				value: 'thaoTac'
+			}
+
+
+			],
+			giayPhepLienVanTableItems: [],
+			pageGiayPhepLienVanTableLength: 0,
+			pageGiayPhepLienVanTable: 1,
+
+			chapThuanKhaiThacTableheaders: [
+			{
+				text: 'STT',
+				align: 'center',
+				sortable: false,
+				value: 'stt'
+			},
+			{
+				text: 'Gíây phép - Số giấy phép',
+				align: 'left',
+				sortable: true,
+				value: 'so_giay_phep'
+			},
+			{
+				text: 'Doanh nghiệp đăng ký khai thác',
+				align: 'left',
+				sortable: true,
+				value: 'doanh_nghiep'
+			},
+			{
+				text: 'Tuyến khai thác',
+				align: 'left',
+				sortable: true,
+				value: 'tuyen_khai_thac'
+			},
+			{
+				text: 'Cơ quan cấp phép',
+				align: 'left',
+				sortable: true,
+				value: 'co_quan'
+			},
+			{
+				text: 'Số xe tham gia Hiệu lực khai thác',
+				align: 'left',
+				sortable: true,
+				value: 'hieu_luc'
+			},
+			{
+				text: 'Thao tác',
+				align: 'left',
+				sortable: true,
+				value: 'thao_tac'
+			}
+			],
+			chapThuanKhaiThacTableItems: [],
+			pageChapThuanKhaiThacTableLength: 0,
+			pageChapThuanKhaiThacTable: 1,
+
+			stateTraCuuGiayPhep: 'giay_phep_van_tai_quoc_te',
+			detailTraCuuGiayPhepPage: false,
+			serviceInfos: [
+				{
+					serviceCode: 111,
+					serviceName: 'thu tuc1'
+				},
+				{
+					serviceCode: 1222,
+					serviceName: 'thu tuc2'
+				},
+				{
+					serviceCode: 333,
+					serviceName: 'thu tuc3'
+				}
+			],
+			govAgencys: [
+			{
+				govAgencyName: 1233,
+				govAgencyCode: '123'
+			},
+			{
+				govAgencyName: 1234,
+				govAgencyCode: '123'
+			},
+			{
+				govAgencyName: 1235,
+				govAgencyCode: '123'
+			}
+			],
+			tuyens: [
+			{
+				itemCode: 1,
+				itemName: 'asdf'
+			},
+			{
+				itemCode: 1,
+				itemName: 'asdf'
+			},
+			{
+				itemCode: 1,
+				itemName: 'asdf'
+			},
+			{
+				itemCode: 1,
+				itemName: 'asdf'
+			}
+			],
+			keywordTraCuuGiayPhep: '',
+			searchTuNgay: '',
+			searchDenNgay: '',
+			hinhThucSelect: '',
+			hinhThucs: [
+
+			],
+			serviceInfoSelect: '',
+			govAgencySelect: '',
+			tuyenSelect: '',
+			cuaKhaus: [
+				{
+					itemCode: 1,
+					itemName: 'asdf'
+				},
+				{
+					itemCode: 2,
+					itemName: 'asdf'
+				},
+				{
+					itemCode: 3,
+					itemName: 'asdf'
+				}
+			],
+			cuaKhauSelect: '',
+			menuThongTinXeDate: '',
+			thongTinXeDate: '',
+			thong_tin_lai_xe: '',
+			giay_phep_lai_xe: '',
+			pageHistory: 1,
+			lengthPageHistory: 0
+		},
+		watch: {
+			pageGiayPhepVanTaiQuocTeTable: {
+				handler () {
+                    this._inigiayPhepVanTaiQuocTeTable()
+                }
+			},
+			pageGiayPhepLienVanTable: {
+				handler () {
+                    this._inigiayPhepLienVanTable()
+                }
+			},
+			pageChapThuanKhaiThacTable: {
+				handler () {
+                    this._inichapThuanKhaiThacTable()
+                }
+			},
+			pageHistory: {
+				handler () {
+                    this.loadHistoryThongTinXe()
+                }
+			}
 		},
 		onScroll: 'onScroll',
 		schema: {
@@ -130,6 +379,413 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								console.log(error);
 
 							});
+						},
+						toDetailGiayPhep: function(item){
+							var vm = this;
+							var url ="/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid ;
+
+							var config_blob =  {
+								headers: {
+									'groupId': themeDisplay.getScopeGroupId(),
+								},
+								responseType: 'blob'
+							};
+
+							axios.get(url, config_blob).then(function (response) {
+								var urlblob = window.URL.createObjectURL(response.data);
+								window.open(urlblob, '_blank')
+							})
+							.catch(function (error) {
+								console.log(error);
+							});
+						},
+						toDetailThongTinXe: function(item){
+							var vm = this;
+							vm.popUpThongTinXe  = !vm.popUpThongTinXe;
+							var urlThongTinXe = '/o/rest/v2/deliverable/'+item.so_giay_phep;
+							var urlHistorys = '/o/rest/v2/deliverable/'+item.so_giay_phep;
+							axios.all([
+								axios.get(urlThongTinXe, config),
+								axios.get(urlHistorys, config)
+								]).then( axios.spread(function (responseThongTinXe, responseHistory) {
+									var thongTinXe = responseThongTinXe.data;
+									var historys = responseHistory.data.data;
+									thongTinXe.historys = historys;
+									vm.modelLienVan = thongTinXe;
+								}))
+								.catch(function (error) {
+									console.log(error);
+
+								});
+						},
+						loadHistoryThongTinXe: function(append){
+							var vm = this;
+							var urlHistorys = '/o/rest/v2/deliverable/'+item.so_giay_phep;
+							var paramsBuilder = {
+								start: vm.pageHistory * 5 - 5,
+								end: vm.pageHistory * 5,
+								order: 'false'
+							};
+
+							const config_historys = {
+								params: paramsBuilder,
+								headers: {
+									'groupId': themeDisplay.getScopeGroupId(),
+								}
+							};
+							axios.get(urlHistorys, config_historys).then(function (response) {
+								var serializable = response.data.data;
+								vm.modelLienVan.historys = serializable;
+							})
+							.catch(function (error) {
+								console.log(error);
+
+							});
+						},
+						addThongTinXe: function(append){
+							var vm = this;
+							var urlHistorys = '/o/rest/v2/deliverable/'+item.so_dang_ky;
+							var paramsBuilder = {
+								hinhThucSelect: vm.hinhThucSelect,
+								cuaKhauSelect: vm.cuaKhauSelect,
+								thongTinXeDate: vm.thongTinXeDate,
+								thong_tin_lai_xe: vm.thong_tin_lai_xe,
+								giay_phep_lai_xe: vm.giay_phep_lai_xe
+							};
+							axios.post(urlHistorys, paramsBuilder, config).then(function (response) {
+								vm.snackbartextdossierViewJX = "Yêu cầu thực hiện thành công";
+								vm.snackbardossierViewJX = true;
+							})
+							.catch(function (error) {
+								console.log(error);
+							});
+						},
+						_inigiayPhepVanTaiQuocTeTable: function (append) {
+							var vm = this;
+							vm.traCuuFilter = false;
+							vm.viewmore = true;
+
+							var paramsBuilder = {
+								follow: true,
+								start: vm.pageGiayPhepVanTaiQuocTeTable * 15 - 15,
+								end: vm.pageGiayPhepVanTaiQuocTeTable * 15,
+								sort: 'modified',
+								order: 'false',
+								serviceInfoSelect: vm.serviceInfoSelect,
+								keywordTraCuuGiayPhep: vm.keywordTraCuuGiayPhep,
+								govAgencySelect: vm.govAgencySelect,
+								searchTuNgay: vm.searchTuNgay,
+								searchDenNgay: vm.searchDenNgay
+							};
+
+							const config_dossiers = {
+								params: paramsBuilder,
+								headers: {
+									'groupId': themeDisplay.getScopeGroupId(),
+								}
+							};
+
+							var url = '/o/rest/v2/dossiers/ccc';
+
+							axios.get(url, config_dossiers).then(function (response) {
+								var serializable = response.data;
+
+
+								if (append) {
+									vm.giayPhepVanTaiQuocTeTableItems.push.apply(vm.giayPhepVanTaiQuocTeTableItems, serializable.data);
+								} else if(serializable.data){
+
+									vm.giayPhepVanTaiQuocTeTableItems = serializable.data;
+
+								}else {
+									vm.giayPhepVanTaiQuocTeTableItems = [];
+								}
+
+								console.log(vm.giayPhepVanTaiQuocTeTableItems);
+							})
+							.catch(function (error) {
+								console.log(error);
+								vm.giayPhepVanTaiQuocTeTableItems = [
+								{
+									giay_phep: 'abc123',
+									so_giay_phep: 'abc123',
+									ten_doanh_nghiep: 'abc123',
+									co_quan: 'abc123',
+									hieu_luc_tu_ngay: 'abc123',
+									hieu_luc_den_ngay: 'abc123'
+								},
+								{
+									giay_phep: 'abc123',
+									so_giay_phep: 'abc123',
+									ten_doanh_nghiep: 'abc123',
+									co_quan: 'abc123',
+									hieu_luc_tu_ngay: 'abc123',
+									hieu_luc_den_ngay: 'abc123'
+								},
+								{
+									giay_phep: 'abc123',
+									so_giay_phep: 'abc123',
+									ten_doanh_nghiep: 'abc123',
+									co_quan: 'abc123',
+									hieu_luc_tu_ngay: 'abc123',
+									hieu_luc_den_ngay: 'abc123'
+								}
+								];
+								var temp = vm.giayPhepVanTaiQuocTeTableItems.length % 15;
+								var page = Math.floor(vm.giayPhepVanTaiQuocTeTableItems.length / 15);
+								if(temp > 0) {
+									page = page + 1;
+								}
+								vm.pageGiayPhepVanTaiQuocTeTableLength = page;
+
+							});
+							return false; 
+						},
+						_inigiayPhepLienVanTable: function (append) {
+							var vm = this;
+							vm.traCuuFilter = false;
+							vm.viewmore = true;
+							var paramsBuilder = {
+								follow: true,
+								dossierNo: vm.dossierNoFilter,
+								start: vm.pageGiayPhepLienVanTable * 15 - 15,
+								end: vm.pageGiayPhepLienVanTable * 15,
+								sort: 'modified',
+								order: 'false',
+								serviceInfoSelect: vm.serviceInfoSelect,
+								keywordTraCuuGiayPhep: vm.keywordTraCuuGiayPhep,
+								govAgencySelect: vm.govAgencySelect,
+								searchTuNgay: vm.searchTuNgay,
+								searchDenNgay: vm.searchDenNgay
+							};
+
+							const config_dossiers = {
+								params: paramsBuilder,
+								headers: {
+									'groupId': themeDisplay.getScopeGroupId(),
+								}
+							};
+
+							var url = '/o/rest/v2/dossiers/cccc';
+
+							axios.get(url, config_dossiers).then(function (response) {
+								var serializable = response.data;
+
+
+								if (append) {
+									vm.giayPhepLienVanTableItems.push.apply(vm.giayPhepLienVanTableItems, serializable.data);
+								} else if(serializable.data){
+
+									vm.giayPhepLienVanTableItems = serializable.data;
+
+								}else {
+									vm.giayPhepLienVanTableItems = [];
+								}
+								var temp = vm.giayPhepLienVanTableItems.length % 15;
+								var page = Math.floor(vm.giayPhepLienVanTableItems.length / 15);
+								if(temp > 0) {
+									page = page + 1;
+								}
+								vm.pageGiayPhepLienVanTableLength = page;
+
+								console.log(vm.giayPhepLienVanTableItems);
+							})
+							.catch(function (error) {
+								console.log(error);
+								vm.giayPhepLienVanTableItems = [
+								{
+									giay_phep: 'asdfgh',
+									so_giay_phep: 'asdfgh',
+									so_dang_ky_phuong_tien: 'asdfgh',
+									ten_doanh_nghiep: 'asdfgh',
+									co_quan: 'asdfgh',
+									hieu_luc_tu_ngay: '1/1/2017',
+									hieu_luc_den_ngay: '1/1/2018'
+								},
+								{
+									giay_phep: 'asdfgh',
+									so_giay_phep: 'asdfgh',
+									so_dang_ky_phuong_tien: 'asdfgh',
+									ten_doanh_nghiep: 'asdfgh',
+									co_quan: 'asdfgh',
+									hieu_luc_tu_ngay: '1/1/2017',
+									hieu_luc_den_ngay: '1/1/2018'
+								},
+								{
+									giay_phep: 'asdfgh',
+									so_giay_phep: 'asdfgh',
+									so_dang_ky_phuong_tien: 'asdfgh',
+									ten_doanh_nghiep: 'asdfgh',
+									co_quan: 'asdfgh',
+									hieu_luc_tu_ngay: '1/1/2017',
+									hieu_luc_den_ngay: '1/1/2018'
+								},
+								{
+									giay_phep: 'asdfgh',
+									so_giay_phep: 'asdfgh',
+									so_dang_ky_phuong_tien: 'asdfgh',
+									ten_doanh_nghiep: 'asdfgh',
+									co_quan: 'asdfgh',
+									hieu_luc_tu_ngay: '1/1/2017',
+									hieu_luc_den_ngay: '1/1/2018'
+								}
+								];
+
+							});
+							return false; 
+						},
+						_inichapThuanKhaiThacTable: function (append) {
+							var vm = this;
+							vm.traCuuFilter = false;
+							vm.viewmore = true;
+							var paramsBuilder = {
+								follow: true,
+								dossierNo: vm.dossierNoFilter,
+								start: vm.pageChapThuanKhaiThacTable * 15 - 15,
+								end: vm.pageChapThuanKhaiThacTable * 15,
+								sort: 'modified',
+								order: 'false',
+								serviceInfoSelect: vm.serviceInfoSelect,
+								keywordTraCuuGiayPhep: vm.keywordTraCuuGiayPhep,
+								govAgencySelect: vm.govAgencySelect,
+								tuyenSelect: vm.tuyenSelect,
+								searchTuNgay: vm.searchTuNgay,
+								searchDenNgay: vm.searchDenNgay
+							};
+
+							const config_dossiers = {
+								params: paramsBuilder,
+								headers: {
+									'groupId': themeDisplay.getScopeGroupId(),
+								}
+							};
+
+							var url = '/o/rest/v2/dossiers/cccc';
+
+							axios.get(url, config_dossiers).then(function (response) {
+								var serializable = response.data;
+								if (append) {
+									vm.chapThuanKhaiThacTableItems.push.apply(vm.chapThuanKhaiThacTableItems, serializable.data);
+								} else if(serializable.data){
+
+									vm.chapThuanKhaiThacTableItems = serializable.data;
+
+								}else {
+									vm.chapThuanKhaiThacTableItems = [];
+								}
+
+								var temp = vm.chapThuanKhaiThacTableItems.length % 15;
+								var page = Math.floor(vm.chapThuanKhaiThacTableItems.length / 15);
+								if(temp > 0) {
+									page = page + 1;
+								}
+								vm.pageChapThuanKhaiThacTableLength = page;
+
+								console.log(vm.chapThuanKhaiThacTableItems);
+							})
+							.catch(function (error) {
+								console.log(error);
+								vm.chapThuanKhaiThacTableItems = [
+									{
+										giay_phep: 'ccccc',
+										so_giay_phep: 'ccccc',
+										ten_doanh_nghiep: 'ccccc',
+										tuyen_khai_thac: 'ccccc',
+										so_xe: 'ccccc',
+										hieu_luc_tu_ngay: 'ccccc',
+										hieu_luc_tu_ngay: '1/1/2017',
+										hieu_luc_den_ngay: '11/1/2018'
+									},
+									{
+										giay_phep: 'ccccc',
+										so_giay_phep: 'ccccc',
+										ten_doanh_nghiep: 'ccccc',
+										tuyen_khai_thac: 'ccccc',
+										so_xe: 'ccccc',
+										hieu_luc_tu_ngay: 'ccccc',
+										hieu_luc_tu_ngay: '1/1/2017',
+										hieu_luc_den_ngay: '11/1/2018'
+									},
+									{
+										giay_phep: 'ccccc',
+										so_giay_phep: 'ccccc',
+										ten_doanh_nghiep: 'ccccc',
+										tuyen_khai_thac: 'ccccc',
+										so_xe: 'ccccc',
+										hieu_luc_tu_ngay: 'ccccc',
+										hieu_luc_tu_ngay: '1/1/2017',
+										hieu_luc_den_ngay: '11/1/2018'
+									},
+									{
+										giay_phep: 'ccccc',
+										so_giay_phep: 'ccccc',
+										ten_doanh_nghiep: 'ccccc',
+										tuyen_khai_thac: 'ccccc',
+										so_xe: 'ccccc',
+										hieu_luc_tu_ngay: 'ccccc',
+										hieu_luc_tu_ngay: '1/1/2017',
+										hieu_luc_den_ngay: '11/1/2018'
+									}
+								];
+
+							});
+							return false; 
+						},
+						_initServiceInfos: function(param){
+							var vm = this;
+							var url = '/o/rest/v2/serviceinfos';
+							axios.get(url, config).then(function (response) {
+								var serializable = response.data;
+								vm.serviceInfos = serializable.data;
+								
+							})
+							.catch(function (error) {
+								console.log(error);
+
+							});
+						},
+						_initGovAgencys: function(param){
+							var vm = this;
+							var url = '/o/rest/v2/serviceinfos';
+							axios.get(url, config).then(function (response) {
+								var serializable = response.data;
+								vm.govAgencys = serializable.data;
+								
+							})
+							.catch(function (error) {
+								console.log(error);
+
+							});
+						},
+						_initTuyens: function(param){
+							var vm = this;
+							var url = '/o/rest/v2/serviceinfos';
+							axios.get(url, config).then(function (response) {
+								var serializable = response.data;
+								vm.tuyens = serializable.data;
+								
+							})
+							.catch(function (error) {
+								console.log(error);
+
+							});
+						},
+						changeStateTraCuuGiayPhep: function(state){
+							var vm = this;
+							vm.stateTraCuuGiayPhep = state;
+							if(state == 'giay_phep_van_tai_quoc_te'){
+								vm._inigiayPhepVanTaiQuocTeTable();
+							}else if(state == 'giay_phep_lien_van'){
+								vm._inigiayPhepLienVanTable();
+							}else {
+								vm._inichapThuanKhaiThacTable();
+							}
+							console.log('vm.stateTraCuuGiayPhep=========',vm.stateTraCuuGiayPhep);
+						},
+						searchTraCuuGiayPhep: function(){
+							var vm = this;
+							var state = vm.stateTraCuuGiayPhep;
+							vm.changeStateTraCuuGiayPhep(state);
 						},
 						getLastedStateUserInfo : function(callBack){
 							var vm = this;
@@ -1412,6 +2068,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								// TODO vm._inidanhSachHoSoTable(false);
 							} else if (item.id == 'tra_cuu_thong_tin_doanh_nghiep') {
 								vm._inithongTinDoanhNghiepTable(false);
+							}else if (item.id == 'tra_cuu_giay_phep') {
+								console.log("GO------------")
+								vm._inigiayPhepVanTaiQuocTeTable(false);
+
 							}else if(item.id === 'tat_ca_hoso'){
 
 								vm.detailPage = false;
@@ -1449,6 +2109,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							{
 								id: 'tra_cuu_thong_tin_doanh_nghiep',
 								title: 'Thông tin doanh nghiệp'
+							},
+							{
+								id: 'tra_cuu_giay_phep',
+								title: 'Tra cứu giấy phép'
 							}
 							];
 							
@@ -1998,6 +2662,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						}
 					}
 				},
+
 				'traCuuHoSoTable': {
 					'id': 'traCuuHoSoTable',
 					'name': 'traCuuHoSoTable',
@@ -3009,6 +3674,26 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							});
 							return false; 
+						}
+					}
+				},
+				'popUpThongTinXe' : {
+					'id': 'popUpThongTinXe',
+					'name': 'popUpThongTinXe',
+					"type": "dialog",
+					"type_dialog": "fullScreen",
+					'icon_save': 'undo',
+					'label_save': 'Quay lại',
+					"color": "primary",
+					"template": "popUpThongTinXeTemplate",
+					"events": {
+						popUpThongTinXeClose: function () {
+							var vm = this;
+							vm.popUpThongTinXe = !vm.popUpThongTinXe;
+						},
+						popUpThongTinXeSave: function () {
+							var vm = this;
+							vm.popUpThongTinXe = !vm.popUpThongTinXe;
 						}
 					}
 				},
