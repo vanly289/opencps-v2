@@ -10,12 +10,12 @@
 			</a>
 			{{ props.item.applicantName }} 
 		</td>
-		<td style="padding: 8px; width: 20%;" class="text-xs-left">
+		<td style="padding: 8px; width: 20%;" class="text-xs-center">
 			{{ props.item.dossierIdCTN }} 
 			<br v-if="props.item.dossierNo">
 			{{ props.item.dossierNo }} 
 		</td>
-		<td style="padding: 8px; width: 20%;" class="text-xs-left">
+		<td style="padding: 8px; width: 20%;" class="text-xs-center">
 			{{ props.item.submitDate}}
 			<br v-if="props.item.submitDate">
 			{{ props.item.receiveDate}}

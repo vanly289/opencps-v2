@@ -3034,25 +3034,25 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						this.danhSachHoSoTableheaders = [
 						{
 							text: 'STT',
-							align: 'left',
+							align: 'center',
 							sortable: false,
 							value: 'stt'
 						},
 						{
 							text: 'Tên thủ tục. Tên doanh nghiệp',
-							align: 'left',
+							align: 'center',
 							sortable: true,
 							value: 'applicantName'
 						},
 						{
 							text: 'Mã hồ sơ. Số hồ sơ',
-							align: 'left',
+							align: 'center',
 							sortable: true,
 							value: 'dossierId'
 						},
 						{
 							text: 'Ngày gửi. Ngày tiếp nhận. Hạn xử lý',
-							align: 'left',
+							align: 'center',
 							sortable: true,
 							value: 'submitDate'
 						}
