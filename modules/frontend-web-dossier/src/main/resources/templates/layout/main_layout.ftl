@@ -21,6 +21,12 @@
 
         </div>
 
+        <div class="layout wrap" v-else-if="stageFilterView === 'tra_cuu_giay_phep' && !detailTraCuuGiayPhepPage ">
+        
+          <#include "tra_cuu_giay_phep.ftl">
+
+        </div>
+
         <div class="layout wrap" v-else-if="stageFilterView !== 'tra_cuu' && !detailPage && !detailRegistPage ">
         
           <#include "danh_sach_hoso.ftl">
@@ -36,10 +42,18 @@
         </div>
       </v-slide-x-transition>
 	
-	  <v-slide-x-transition>
+	   <v-slide-x-transition>
         <div class="layout wrap" v-if="detailRegistPage">
         
           <#include "regist_detail.ftl">
+
+        </div>
+      </v-slide-x-transition>
+
+      <v-slide-x-transition>
+        <div class="layout wrap" v-if="detailTraCuuGiayPhepPage">
+        
+          <#include "thong_tin_xe.ftl">
 
         </div>
       </v-slide-x-transition>
