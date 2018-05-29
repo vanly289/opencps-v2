@@ -144,7 +144,7 @@ public class RegistrationInputModel {
 		this.representativeEnterprise = representativeEnterprise;
 	}
 
-    /**
+	/**
      * Gets the value of the applicantName property.
      * 
      * @return

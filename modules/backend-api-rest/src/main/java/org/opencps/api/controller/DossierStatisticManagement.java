@@ -1,6 +1,6 @@
 package org.opencps.api.controller;
 
-import java.util.List;
+import java.net.HttpURLConnection;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;

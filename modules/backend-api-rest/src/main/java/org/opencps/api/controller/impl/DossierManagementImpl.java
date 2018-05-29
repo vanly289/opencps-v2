@@ -225,9 +225,9 @@ public class DossierManagementImpl implements DossierManagement {
 					break;
 				default:
 					break;
-					}
+				}
 
-							}
+			}
 
 			DossierResultsModel results = new DossierResultsModel();
 

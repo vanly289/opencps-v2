@@ -136,9 +136,9 @@ public class SignatureManagementImpl implements SignatureManagement{
 //					_log.info("subUsers: "+subUsers);
 					DossierActions dossierAction = new DossierActionsImpl();
 					//if (TYPE_KYSO.contains(actionCode)) {
-					dossierAction.doAction(groupId, dossierId, dossier.getReferenceUid(), actionCode,
-					0L, actionUser, actionNote, assignUserId, user.getUserId(), subUsers,
-					serviceContext);
+						dossierAction.doAction(groupId, dossierId, dossier.getReferenceUid(), actionCode,
+								0L, actionUser, actionNote, assignUserId, user.getUserId(), subUsers,
+								serviceContext);
 
 //					if (TYPE_KYSO.contains(actionCode)) {
 //						dossierAction.doAction(groupId, dossierId, dossier.getReferenceUid(), actionCode,
@@ -253,7 +253,7 @@ public class SignatureManagementImpl implements SignatureManagement{
 
 						try {
 							JSONObject newHashComputedResult = callHashComputedSync(groupId, user, fileEntryId, input.getActionCode(),
-										input.getPostStepCode(), serviceContext);
+									input.getPostStepCode(), serviceContext);
 //							_log.info("Obj: " + newHashComputedResult.toJSONString());
 							String newHashComputedStr = newHashComputedResult.getString("message");
 							

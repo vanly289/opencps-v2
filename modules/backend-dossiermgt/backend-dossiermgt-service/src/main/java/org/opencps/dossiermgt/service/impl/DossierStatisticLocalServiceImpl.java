@@ -152,4 +152,130 @@ public class DossierStatisticLocalServiceImpl extends DossierStatisticLocalServi
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, DossierStatistic.class.getName());
 		return IndexSearcherHelperUtil.search(searchContext, booleanQuery);
 	}
+	
+	public long countLucene(LinkedHashMap<String, Object> params, SearchContext searchContext)
+			throws ParseException, SearchException {
+
+		String keywords = (String) params.get(Field.KEYWORD_SEARCH);
+		String groupId = (String) params.get(Field.GROUP_ID);
+
+		Indexer<DossierStatistic> indexer = IndexerRegistryUtil.nullSafeGetIndexer(DossierStatistic.class);
+
+		searchContext.addFullQueryEntryClassName(CLASS_NAME);
+		searchContext.setEntryClassNames(new String[] { CLASS_NAME });
+		searchContext.setAttribute("paginationType", "regular");
+		searchContext.setLike(true);
+		searchContext.setAndSearch(true);
+
+		BooleanQuery booleanQuery = null;
+
+		if (Validator.isNotNull(keywords)) {
+			booleanQuery = BooleanQueryFactoryUtil.create(searchContext);
+		} else {
+			booleanQuery = indexer.getFullQuery(searchContext);
+		}
+		
+		if (Validator.isNotNull(groupId)) {
+			MultiMatchQuery query = new MultiMatchQuery(groupId);
+
+			query.addFields(Field.GROUP_ID);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		
+		// Extra fields
+		String year = GetterUtil.getString(params.get(DossierStatisticTerm.YEAR));
+		String month = GetterUtil.getString(params.get(DossierStatisticTerm.MONTH));
+		String domainCd = GetterUtil.getString(params.get(DossierStatisticTerm.DOMAIN_CODE));
+		String agencyCd = GetterUtil.getString(params.get(DossierStatisticTerm.GOV_AGENCY_CODE));
+		String level = GetterUtil.getString(params.get(DossierStatisticTerm.ADMINISTRATION_LEVEL));
+		if (Validator.isNotNull(year)) {
+			MultiMatchQuery query = new MultiMatchQuery(year);
+
+			query.addFields(DossierStatisticTerm.YEAR);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		
+		if (Validator.isNotNull(month)) {
+			MultiMatchQuery query = new MultiMatchQuery(month);
+
+			query.addFields(DossierStatisticTerm.MONTH);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		
+		if (Validator.isNotNull(domainCd)) {
+			MultiMatchQuery query = new MultiMatchQuery(domainCd);
+
+			query.addFields(DossierStatisticTerm.DOMAIN_CODE);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		if (Validator.isNotNull(agencyCd)) {
+			MultiMatchQuery query = new MultiMatchQuery(agencyCd);
+
+			query.addFields(DossierStatisticTerm.GOV_AGENCY_CODE);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		if (Validator.isNotNull(level)) {
+			MultiMatchQuery query = new MultiMatchQuery(level);
+
+			query.addFields(DossierStatisticTerm.ADMINISTRATION_LEVEL);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+
+		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);
+
+		return IndexSearcherHelperUtil.searchCount(searchContext, booleanQuery);
+	}
+	
+	@Indexable(type = IndexableType.REINDEX)
+	public DossierStatistic insert(long groupId, int month, int year,int remainingCount, int receivedCount, int onlineCount, 
+			int undueCount, int overdueCount, int ontimeCount, int overtimeCount, String govAgencyCode, String govAgencyName,
+			String domainCode,String domainName, int administrationLevel, boolean reporting,
+			ServiceContext serviceContext) throws PortalException{
+		long userId = serviceContext.getUserId();
+		User userAction = userLocalService.getUser(userId);
+		
+		Date now = new Date();
+		
+		long dossierStatisticId = counterLocalService.increment(DossierStatistic.class.getName());
+		
+		DossierStatistic object = dossierStatisticPersistence.create(dossierStatisticId);
+		// Add audit fields
+		object.setGroupId(groupId);
+		object.setCreateDate(now);
+		object.setModifiedDate(now);
+		object.setUserId(userAction.getUserId());
+		object.setUserName(userAction.getFullName());
+		
+		// Add other fields
+		object.setDossierStatisticId(dossierStatisticId);
+		object.setMonth(month);
+		object.setYear(year);
+		object.setReceivedCount(receivedCount);
+		object.setRemainingCount(remainingCount);
+		object.setOnlineCount(onlineCount);
+		object.setUndueCount(undueCount);
+		object.setOverdueCount(overdueCount);
+		object.setOntimeCount(ontimeCount);
+		object.setOvertimeCount(overtimeCount);
+		object.setGovAgencyCode(govAgencyCode);
+		object.setGovAgencyName(govAgencyName);
+		object.setDomainCode(domainCode);
+		object.setDomainName(domainName);
+		object.setAdministrationLevel(administrationLevel);
+		object.setReporting(reporting);
+		
+		return dossierStatisticPersistence.update(object);
+	}
+	
+	public List<DossierStatistic> getDossierStatisticbyYear(long groupId, long userId, int year){
+		return dossierStatisticPersistence.findByG_UID_Y(groupId, userId, year);
+	}
+	
+	public static final String CLASS_NAME = DossierStatistic.class.getName();
 }

@@ -533,7 +533,7 @@
         	<finder-column name="groupId" />
         	<finder-column name="referenceUid" />
         </finder>
-        <finder return-type="DossierFile" name="FILE_ID">
+	<finder return-type="DossierFile" name="FILE_ID">
         	<finder-column name="fileEntryId" />
         </finder>
          <finder return-type="Collection" name="REF_UID">
@@ -897,8 +897,7 @@
 		<finder return-type="Collection" name="IS_NEW">
 			<finder-column name="isNew" />
 		</finder>
-		
-<finder return-type="Collection" name="DID_IN">
+		<finder return-type="Collection" name="DID_IN">
 			<finder-column name="dossierId" />
 			<finder-column name="isNew" />
 		</finder>
@@ -1535,7 +1534,7 @@
 
 		<column name="userLogId" type="long" primary="true" />
 
-		<!-- Audit fields -->
+ 		<!-- Audit fields -->
 		<column name="userId" type="long" />
 		<column name="createDate" type="Date" />
 		<column name="payload" type="String" />

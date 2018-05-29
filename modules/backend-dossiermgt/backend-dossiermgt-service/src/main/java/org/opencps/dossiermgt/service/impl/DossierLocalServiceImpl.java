@@ -195,9 +195,9 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 					if (groupId != 55301) {
 
-						dossierFileLocalService.addDossierFile(groupId, dossierId, dossierFileUUID, dossierTemplateNo,
-								part.getPartNo(), part.getFileTemplateNo(), part.getPartName(), StringPool.BLANK, 0l,
-								null, StringPool.BLANK, StringPool.TRUE, context);
+					dossierFileLocalService.addDossierFile(groupId, dossierId, dossierFileUUID, dossierTemplateNo,
+							part.getPartNo(), part.getFileTemplateNo(), part.getPartName(), StringPool.BLANK, 0l,
+							null, StringPool.BLANK, StringPool.TRUE, context);
 					}
 				}
 			}
@@ -1157,7 +1157,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 			query.addTerms(subQuerieArr, keywords, true);
 
-				booleanQuery.add(query, BooleanClauseOccur.MUST);
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
 			
 			
 //			TermQuery termQuery = TermQueryFactoryUtil.create(searchContext, Field.TITLE, "%"+keywords);
@@ -1245,7 +1245,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 			query.addField(DossierTerm.SUBMITTING);
 
-				booleanQuery.add(query, BooleanClauseOccur.MUST);
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
 		}
 
 		if (Validator.isNotNull(status)) {
@@ -1513,8 +1513,8 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 				query.addField(DossierTerm.CANCELLING_DATE_TIMESTAMP);
 
-			booleanQuery.add(query, BooleanClauseOccur.MUST);
-		}
+				booleanQuery.add(query, BooleanClauseOccur.MUST);
+			}
 			//LamTV: Case not have flag correct and endorsement
 			if (notState.contains("correcting") ) {
 
@@ -1540,15 +1540,15 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			query.addField(DossierTerm.STATUS_REG);
 
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
-				}
+		}
 
 		if (Validator.isNotNull(notStatusReg)) {
 			MultiMatchQuery query = new MultiMatchQuery(String.valueOf(notStatusReg));
 
 			query.addField(DossierTerm.STATUS_REG);
 
-				booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
-			}
+			booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
+		}
 
 		if (Validator.isNotNull(keySearch)) {
 			BooleanQuery query = new BooleanQueryImpl();
@@ -1640,7 +1640,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 			query.addTerms(subQuerieArr, keywords, true);
 
-				booleanQuery.add(query, BooleanClauseOccur.MUST);
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
 		}
 
 		if (!(Validator.isNotNull(secetKey) && secetKey.contentEquals("OPENCPSV2"))) {
@@ -1981,8 +1981,8 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 				query.addField(DossierTerm.CANCELLING_DATE_TIMESTAMP);
 
-			booleanQuery.add(query, BooleanClauseOccur.MUST);
-		}
+				booleanQuery.add(query, BooleanClauseOccur.MUST);
+			}
 			//LamTV: Case not have flag correct and endorsement
 			if (notState.contains("correcting") ) {
 
@@ -2009,15 +2009,15 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			query.addField(DossierTerm.STATUS_REG);
 
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
-				}
+		}
 
 		if (Validator.isNotNull(notStatusReg)) {
 			MultiMatchQuery query = new MultiMatchQuery(String.valueOf(notStatusReg));
 
 			query.addField(DossierTerm.STATUS_REG);
 
-				booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
-			}
+			booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
+		}
 		
 		if (Validator.isNotNull(keySearch)) {
 			BooleanQuery query = new BooleanQueryImpl();

@@ -471,15 +471,15 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 			if (Validator.isNotNull(dossierPart.getDeliverableType())) {
 				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
 				if (dlt != null) {					
-					if (original) {
+			if (original) {
 						String mappingData = dlt.getMappingData();
 						JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
 						if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
 							String deliverables = mappingDataObj.getString(DeliverableTypesTerm.DELIVERABLES_KEY);
 							_log.info("--------DELIVERABLES----------" + deliverables);
-							if (Validator.isNotNull(dossierFile)) {
-								formData = dossierFile.getFormData();
-							}
+				if (Validator.isNotNull(dossierFile)) {
+					formData = dossierFile.getFormData();
+				}
 
 							JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 							JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
@@ -524,7 +524,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 							
 						}
 
-					} else {
+			} else {
 						String mappingData = dlt.getMappingData();
 						JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
 						if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
@@ -535,34 +535,34 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 							}
 						}
 						
-						DossierFileActions actions = new DossierFileActionsImpl();
+				DossierFileActions actions = new DossierFileActionsImpl();
 
-						if (Validator.isNull(dossierFile)) {
+				if (Validator.isNull(dossierFile)) {
 
-							if (autoRun) {
-								// create DossierFile
+					if (autoRun) {
+						// create DossierFile
 
-								dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
-										dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
-										StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
+						dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
+								dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
+								StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
 
-								_log.info("UPDATED DOSSIERFILE");
+						_log.info("UPDATED DOSSIERFILE");
 
-								actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
-										context);
+						actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
+								context);
 
-							} else {
-								// add temp File
+					} else {
+						// add temp File
 
-							}
+					}
 
-						} else {
-							// formData = dossierFile.getFormData();
+				} else {
+					// formData = dossierFile.getFormData();
 
-							actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
-									context);
+					actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
+							context);
 
-						}
+				}
 					}									
 				}
 			}

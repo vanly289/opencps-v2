@@ -660,41 +660,41 @@ public class DossierActionsImpl implements DossierActions {
 										//End add generate deliverable if has deliverable type
 										if (Validator.isNull(dossierPart.getDeliverableType())) {
 											
-											List<DossierFile> dossierFilesResult = DossierFileLocalServiceUtil
-													.getDossierFileByDID_FTNO_DPT(dossierId, fileTemplateNo, 2, false,
-															QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-															new DossierFileComparator(false, "createDate", Date.class));
+										List<DossierFile> dossierFilesResult = DossierFileLocalServiceUtil
+												.getDossierFileByDID_FTNO_DPT(dossierId, fileTemplateNo, 2, false,
+														QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+														new DossierFileComparator(false, "createDate", Date.class));
 
-											if (dossierFilesResult != null && !dossierFilesResult.isEmpty()) {
-												df: for (DossierFile dossierFile : dossierFilesResult) {
-													if (dossierFile.getDossierPartNo().equals(dossierPart.getPartNo())) {
-														eForm = dossierFile.getEForm();
-														formData = dossierFile.getFormData();
-														formScript = dossierFile.getFormScript();
-														docFileReferenceUid = dossierFile.getReferenceUid();
-														fileEntryId = dossierFile.getFileEntryId();
-														if (returnDossierFileTemplateNos
-																.contains(dossierFile.getFileTemplateNo())) {
-															returned = true;
-														}
-
-														dossierFileId = dossierFile.getDossierFileId();
-
-														break df;
+										if (dossierFilesResult != null && !dossierFilesResult.isEmpty()) {
+											df: for (DossierFile dossierFile : dossierFilesResult) {
+												if (dossierFile.getDossierPartNo().equals(dossierPart.getPartNo())) {
+													eForm = dossierFile.getEForm();
+													formData = dossierFile.getFormData();
+													formScript = dossierFile.getFormScript();
+													docFileReferenceUid = dossierFile.getReferenceUid();
+													fileEntryId = dossierFile.getFileEntryId();
+													if (returnDossierFileTemplateNos
+															.contains(dossierFile.getFileTemplateNo())) {
+														returned = true;
 													}
-												}
-											} else {
-												eForm = Validator.isNotNull(dossierPart.getFormScript()) ? true : false;
 
-												formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(),
-														dossierId, serviceContext);
-												formScript = dossierPart.getFormScript();
+													dossierFileId = dossierFile.getDossierFileId();
 
-												if (returnDossierFileTemplateNos
-														.contains(dossierPart.getFileTemplateNo())) {
-													returned = true;
+													break df;
 												}
-	
+											}
+										} else {
+											eForm = Validator.isNotNull(dossierPart.getFormScript()) ? true : false;
+
+											formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(),
+													dossierId, serviceContext);
+											formScript = dossierPart.getFormScript();
+
+											if (returnDossierFileTemplateNos
+													.contains(dossierPart.getFileTemplateNo())) {
+												returned = true;
+											}
+												
 // create Dossier File
 	
 												if (eForm) {
@@ -815,8 +815,8 @@ public class DossierActionsImpl implements DossierActions {
 																	}
 						
 //																	if (Validator.isNotNull(formData)) {
-																	if (eForm) {
-																		DossierFileActions actions = new DossierFileActionsImpl();
+											if (eForm) {
+												DossierFileActions actions = new DossierFileActionsImpl();
 						
 																		DossierFile dossierFile = null;
 						
@@ -924,27 +924,27 @@ public class DossierActionsImpl implements DossierActions {
 																						
 																						DossierFile dossierFile = null;
 																						
-																						try {
-																							dossierFile = DossierFileLocalServiceUtil
-																									.getDossierFileByDID_FTNO_DPT_First(dossierId,
-																											fileTemplateNo, 2, false, new DossierFileComparator(
-																													false, "createDate", Date.class));
-																						} catch (Exception e) {
+												try {
+													dossierFile = DossierFileLocalServiceUtil
+															.getDossierFileByDID_FTNO_DPT_First(dossierId,
+																	fileTemplateNo, 2, false, new DossierFileComparator(
+																			false, "createDate", Date.class));
+												} catch (Exception e) {
 													// TODO: handle exception
-																						}
-																						DossierFileActions actions = new DossierFileActionsImpl();
-																						if (Validator.isNull(dossierFile)) {
-																							dossierFile = actions.addDossierFile(groupId, dossierId,
-																									referenceUid, dossier.getDossierTemplateNo(),
-																									dossierPart.getPartNo(), fileTemplateNo,
-																									dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-																									StringPool.BLANK, String.valueOf(false), serviceContext);
+												}
+												DossierFileActions actions = new DossierFileActionsImpl();
+												if (Validator.isNull(dossierFile)) {
+													dossierFile = actions.addDossierFile(groupId, dossierId,
+															referenceUid, dossier.getDossierTemplateNo(),
+															dossierPart.getPartNo(), fileTemplateNo,
+															dossierPart.getPartName(), StringPool.BLANK, 0L, null,
+															StringPool.BLANK, String.valueOf(false), serviceContext);
 													// SimpleDate
-																							_log.info("dossierFile create:" + dossierFile.getDossierPartNo()
-																									+ "Timer create :" + new Date());
-																						}
+													_log.info("dossierFile create:" + dossierFile.getDossierPartNo()
+															+ "Timer create :" + new Date());
+												}
 
-																						docFileReferenceUid = dossierFile.getReferenceUid();
+												docFileReferenceUid = dossierFile.getReferenceUid();
 										
 																						dossierFileId = dossierFile.getDossierFileId();
 																						formDataObj = JSONFactoryUtil.createJSONObject(formData);
@@ -1016,7 +1016,7 @@ public class DossierActionsImpl implements DossierActions {
 																				returned = true;
 																			}
 						
-																			dossierFileId = dossierFile.getDossierFileId();
+												dossierFileId = dossierFile.getDossierFileId();
 																			createFile = JSONFactoryUtil.createJSONObject();
 																			createFile.put("dossierPartId", dossierPart.getDossierPartId());
 																			createFile.put("partNo", dossierPart.getPartNo());
@@ -1035,7 +1035,7 @@ public class DossierActionsImpl implements DossierActions {
 																			createFile.put("fileEntryId", fileEntryId);
 																			
 																			createFiles.put(createFile);																
-																			
+						
 																		}
 																	}
 																} else {
@@ -1053,7 +1053,7 @@ public class DossierActionsImpl implements DossierActions {
 																	if (returnDossierFileTemplateNos
 																			.contains(dossierPart.getFileTemplateNo())) {
 																		returned = true;
-																	}
+											}
 																	if (eForm && !dossierPart.getESign()) {
 																		DossierFileActions actions = new DossierFileActionsImpl();
 																		
@@ -1096,7 +1096,7 @@ public class DossierActionsImpl implements DossierActions {
 //																						_log.info("--------DELIVERABLES----------" + deliverables);
 																						if (Validator.isNotNull(dossierFile)) {
 																							formData = dossierFile.getFormData();
-																						}
+										}
 
 																						formDataObj = JSONFactoryUtil.createJSONObject(formData);
 																						JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
@@ -1191,21 +1191,21 @@ public class DossierActionsImpl implements DossierActions {
 //																		dossierFileId = dossierFile.getDossierFileId();
 //																	}
 						
-																	dossierFilesResult = DossierFileLocalServiceUtil
-																			.getDossierFileByDID_FTNO_DPT_NOT_NULL_FID(dossierId, fileTemplateNo, 2,
-																					0, false);
+										dossierFilesResult = DossierFileLocalServiceUtil
+												.getDossierFileByDID_FTNO_DPT_NOT_NULL_FID(dossierId, fileTemplateNo, 2,
+														0, false);
 
-																	counter = (dossierFilesResult != null && !dossierFilesResult.isEmpty())
-																			? dossierFilesResult.size() : 0;
+										counter = (dossierFilesResult != null && !dossierFilesResult.isEmpty())
+												? dossierFilesResult.size() : 0;
 
-																	createFile.put("eform", eForm);
-																	createFile.put("dossierFileId", dossierFileId);
-																	createFile.put("formData", formData);
-																	createFile.put("formScript", formScript);
-																	createFile.put("referenceUid", docFileReferenceUid);
-																	createFile.put("counter", counter);
-																	createFile.put("returned", returned);
-																	createFile.put("fileEntryId", fileEntryId);
+										createFile.put("eform", eForm);
+										createFile.put("dossierFileId", dossierFileId);
+										createFile.put("formData", formData);
+										createFile.put("formScript", formScript);
+										createFile.put("referenceUid", docFileReferenceUid);
+										createFile.put("counter", counter);
+										createFile.put("returned", returned);
+										createFile.put("fileEntryId", fileEntryId);
 																	
 																}
 															}
@@ -1633,7 +1633,7 @@ public class DossierActionsImpl implements DossierActions {
 			// Set dossierStatus by CUR_STEP
 			// LamTV: Update lockState when Sync
 			dossier = DossierLocalServiceUtil.updateStatus(groupId, dossierId, referenceUid, curStep.getDossierStatus(),
-					jsStatus.getString(curStep.getDossierStatus()), curStep.getDossierSubStatus(),
+			jsStatus.getString(curStep.getDossierStatus()), curStep.getDossierSubStatus(),
 			jsSubStatus.getString(curStep.getDossierSubStatus()), curStep.getLockState(), context);
 			
 			//_log.info(jsStatus.toJSONString());
@@ -1730,32 +1730,32 @@ public class DossierActionsImpl implements DossierActions {
 
 			if (Validator.isNotNull(preCondition)) {
 				// case reject_cancelling
-			_log.info("REJECT_CANCELLING....");
+				_log.info("REJECT_CANCELLING....");
 
 				if (preCondition.toLowerCase().contentEquals("reject_cancelling")) {
-				// flag-off
-				_log.info("DO REJECT_CANCELLING....");
+					// flag-off
+					_log.info("DO REJECT_CANCELLING....");
 
-				Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
-				_log.info("DO REJECT_CANCELLING.... FIND RESOURCE");
+					Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
+					_log.info("DO REJECT_CANCELLING.... FIND RESOURCE");
 
-				sourceDossier.setCancellingDate(null);
+					sourceDossier.setCancellingDate(null);
 
-				DossierLocalServiceUtil.updateDossier(sourceDossier);
+					DossierLocalServiceUtil.updateDossier(sourceDossier);
 
-				dossier.setCancellingDate(null);
+					dossier.setCancellingDate(null);
 
-				// To index
-				DossierLocalServiceUtil.syncDossier(dossier);
+					// To index
+					DossierLocalServiceUtil.syncDossier(dossier);
 
-				// add dossierLog
+					// add dossierLog
 
-				// in CLIENT
+					// in CLIENT
 
-				String refUid = PortalUUIDUtil.generate();
+					String refUid = PortalUUIDUtil.generate();
 					int status = 2;
 
-				DossierRequestUDLocalServiceUtil.updateDossierRequest(0, dossierId, refUid, "reject_cancelling",
+					DossierRequestUDLocalServiceUtil.updateDossierRequest(0, dossierId, refUid, "reject_cancelling",
 							actionNote, 0, status, context);
 
 					// in SERVER
@@ -1780,44 +1780,44 @@ public class DossierActionsImpl implements DossierActions {
 					DossierRequestUDLocalServiceUtil.updateDossierRequest(0, dossierId, refUid, "cancelling",
 							actionNote, 0, status, context);
 
-				// in SERVER
+					// in SERVER
 
 					Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
 					if (sourceDossier != null) {
-				context.setScopeGroupId(sourceDossier.getGroupId());
+						context.setScopeGroupId(sourceDossier.getGroupId());
 						DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid, "cancelling",
 								actionNote, 0, status, context);
 					}
 
-				context.setScopeGroupId(dossier.getGroupId());
+					context.setScopeGroupId(dossier.getGroupId());
 
-			}
+				}
 
-			_log.info("REJECT_SUBMIT....");
+				_log.info("REJECT_SUBMIT....");
 				if (preCondition.toLowerCase().contentEquals("reject_submitting")) {
-				// flag-off
-				_log.info("DO REJECT_SUBMIT....");
+					// flag-off
+					_log.info("DO REJECT_SUBMIT....");
 
-				Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
-				_log.info("DO REJECT_SUBMIT.... FIND RESOURCE");
+					Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
+					_log.info("DO REJECT_SUBMIT.... FIND RESOURCE");
 
 					sourceDossier.setEndorsementDate(null);
 
-				DossierLocalServiceUtil.updateDossier(sourceDossier);
+					DossierLocalServiceUtil.updateDossier(sourceDossier);
 
 					dossier.setEndorsementDate(null);
 
-				// To index
-				DossierLocalServiceUtil.syncDossier(dossier);
+					// To index
+					DossierLocalServiceUtil.syncDossier(dossier);
 					
 					
-				String refUid = PortalUUIDUtil.generate();
+					String refUid = PortalUUIDUtil.generate();
 					int status = 2;
 
-				DossierRequestUDLocalServiceUtil.updateDossierRequest(0, dossierId, refUid, "reject_submitting",
+					DossierRequestUDLocalServiceUtil.updateDossierRequest(0, dossierId, refUid, "reject_submitting",
 							actionNote, 0, status, context);
 
-				// in SERVER
+					// in SERVER
 					
 					context.setScopeGroupId(sourceDossier.getGroupId());
 					DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid, "reject_submitting",
@@ -1865,48 +1865,48 @@ public class DossierActionsImpl implements DossierActions {
 						
 						Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
 						if (sourceDossier != null) {
-				context.setScopeGroupId(sourceDossier.getGroupId());
-				DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid,
+							context.setScopeGroupId(sourceDossier.getGroupId());
+							DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid,
 									"submitting", actionNote, 0, status, context);
 						}
 
-				context.setScopeGroupId(dossier.getGroupId());
+						context.setScopeGroupId(dossier.getGroupId());
 					}
 
-			}
+				}
 
-			_log.info("REJECT_CORRECTING....");
+				_log.info("REJECT_CORRECTING....");
 				if (preCondition.toLowerCase().contentEquals("reject_correcting")) {
-				// flag-off
-				_log.info("DO REJECT_CORRECTING....");
+					// flag-off
+					_log.info("DO REJECT_CORRECTING....");
 
-				Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
-				_log.info("DO REJECT_CORRECTING.... FIND RESOURCE");
+					Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
+					_log.info("DO REJECT_CORRECTING.... FIND RESOURCE");
 
 					sourceDossier.setCorrecttingDate(null);
 
-				DossierLocalServiceUtil.updateDossier(sourceDossier);
+					DossierLocalServiceUtil.updateDossier(sourceDossier);
 
 					dossier.setCorrecttingDate(null);
 
-				// To index
-				DossierLocalServiceUtil.syncDossier(dossier);
+					// To index
+					DossierLocalServiceUtil.syncDossier(dossier);
 
-				String refUid = PortalUUIDUtil.generate();
+					String refUid = PortalUUIDUtil.generate();
 					int status = 2;
 
-				DossierRequestUDLocalServiceUtil.updateDossierRequest(0, dossierId, refUid, "reject_correcting",
+					DossierRequestUDLocalServiceUtil.updateDossierRequest(0, dossierId, refUid, "reject_correcting",
 							actionNote, 0, status, context);
 
-				// in SERVER
+					// in SERVER
 
-				context.setScopeGroupId(sourceDossier.getGroupId());
+					context.setScopeGroupId(sourceDossier.getGroupId());
 					DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid, "reject_correcting",
 							actionNote, 0, status, context);
 					
-				context.setScopeGroupId(dossier.getGroupId());
+					context.setScopeGroupId(dossier.getGroupId());
 
-			}
+				}
 
 				//LamTV: Update process approved correcting
 				if (preCondition.toLowerCase().contentEquals("correcting")) {

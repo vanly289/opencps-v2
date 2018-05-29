@@ -97,7 +97,7 @@
 			<finder-column name="treeIndex" comparator="LIKE"></finder-column>
 		</finder>
 		
-	<finder return-type="WorkingUnit" name="F_WID">
+		<finder return-type="WorkingUnit" name="F_WID">
 			<finder-column name="groupId"></finder-column>
 			<finder-column name="workingUnitId"></finder-column>
 		</finder>
@@ -164,7 +164,7 @@
 			<finder-column name="groupId"></finder-column>
 			<finder-column name="email"></finder-column>
 		</finder>
-	<finder return-type="Collection" name="G_UID">
+		<finder return-type="Collection" name="G_UID">
 			<finder-column name="groupId"></finder-column>
 			<finder-column name="userId"></finder-column>
 		</finder>
@@ -284,8 +284,7 @@
 			<finder-column name="workingUnitId"></finder-column>
 		</finder>
 	
-		
-<finder return-type="EmployeeJobPos" name="G_EmployeeId">
+		<finder return-type="EmployeeJobPos" name="G_EmployeeId">
 			<finder-column name="groupId"></finder-column>
 			<finder-column name="employeeId"></finder-column>
 		</finder>

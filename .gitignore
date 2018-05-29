@@ -1,5 +1,6 @@
 **/!bnd.bnd
 **/!build.gradle
+<<<<<<< HEAD
 
 .gradle/
 build/
@@ -19,24 +20,35 @@ bin/
 **/service/http/
 
 ##Ignore database
+=======
+>>>>>>> upstream/pre-develop
 **/indexes.sql
 **/sequences.sql
 **/tables.sql
 **/module-hbm.xml
 **/portlet-model-hints.xml
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/pre-develop
 **/module-spring.xml 
 **/service.properties
 **/sql/**
 **/**/**.sql
 **/*.iml
 **/.ivy
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/pre-develop
 **/.classpath
 **/.project
 **/.sass-cache
 **/.settings
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/pre-develop
 **/bin
 **/build
 **/build_gradle
@@ -47,7 +59,6 @@ themes/
 **/.web_bundle_build
 .gradle
 .idea
-.metadata
 /bundles
 /plugins-sdk/**/classes
 /plugins-sdk/**/ivy.xml.MD5

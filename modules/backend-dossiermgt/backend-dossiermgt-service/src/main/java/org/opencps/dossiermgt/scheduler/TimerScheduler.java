@@ -106,39 +106,39 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 
 				boolean flag = false;
 				if (dRegUD != null && dRegUD.getStatusReg() == 3) {
-				for (ProcessAction processAction : lstProcessAction) {
+					for (ProcessAction processAction : lstProcessAction) {
 
-					if (processAction.getAutoEvent().contains("timmer")) {
-						
-						String perConditionStr = processAction.getPreCondition();
-
-						boolean checkPreCondition = DossierMgtUtils
-								.checkPreCondition(StringUtil.split(perConditionStr, StringPool.COMMA), dossier);
-
-						// do action
-
-						String userActionName = _getUserActionName(perConditionStr, dossier.getDossierId(),
-								systemUser.getFullName());
-
-						// String subUsers = StringPool.BLANK;
-						if (checkPreCondition) {
+						if (processAction.getAutoEvent().contains("timmer")) {
 							
-							_log.info("$$$$$dossierId_"+dossier.getDossierId() + "autoEvent_" + processAction.getAutoEvent());
+							String perConditionStr = processAction.getPreCondition();
 
-							flag = true;
+							boolean checkPreCondition = DossierMgtUtils
+									.checkPreCondition(StringUtil.split(perConditionStr, StringPool.COMMA), dossier);
 
-							dossierActions.doAction(dossier.getGroupId(), dossier.getDossierId(),
-									dossier.getReferenceUid(), processAction.getActionCode(),
+							// do action
+
+							String userActionName = _getUserActionName(perConditionStr, dossier.getDossierId(),
+									systemUser.getFullName());
+
+							// String subUsers = StringPool.BLANK;
+							if (checkPreCondition) {
+								
+								_log.info("$$$$$dossierId_"+dossier.getDossierId() + "autoEvent_" + processAction.getAutoEvent());
+
+								flag = true;
+
+								dossierActions.doAction(dossier.getGroupId(), dossier.getDossierId(),
+										dossier.getReferenceUid(), processAction.getActionCode(),
 										processAction.getProcessActionId(), userActionName, StringPool.BLANK,
-									processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
-									serviceContext);
+										processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
+										serviceContext);
+							}
+						}
+						
+						if (flag) {
+							break;
 						}
 					}
-					
-					if (flag) {
-						break;
-					}
-				}
 				} else {
 					for (ProcessAction processAction : lstProcessAction) {
 

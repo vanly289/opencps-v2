@@ -451,7 +451,7 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		if (Validator.isNotNull(strUserIdList)) {
 			String[] sliptUserId = strUserIdList.split(StringPool.COMMA);
 			if (sliptUserId != null && sliptUserId.length > 0) {
-				BooleanQuery subQuery = new BooleanQueryImpl();
+			BooleanQuery subQuery = new BooleanQueryImpl();
 				for (String strUserId : sliptUserId) {
 					if (Validator.isNotNull(strUserId)) {
 
@@ -614,7 +614,7 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		if (Validator.isNotNull(strUserIdList)) {
 			String[] sliptUserId = strUserIdList.split(StringPool.COMMA);
 			if (sliptUserId != null && sliptUserId.length > 0) {
-				BooleanQuery subQuery = new BooleanQueryImpl();
+			BooleanQuery subQuery = new BooleanQueryImpl();
 				for (String strUserId : sliptUserId) {
 					if (Validator.isNotNull(strUserId)) {
 

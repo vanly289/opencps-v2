@@ -101,7 +101,7 @@ public class ProcessStepInputModel {
 		this.lockState = lockState;
 	}
 
-    public String getBriefNote() {
+	public String getBriefNote() {
 		return briefNote;
 	}
 

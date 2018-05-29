@@ -47,6 +47,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			advancedFilterNhanHieu : {},
 			advancedFilterDossierStatus : {},
 			stateOnlyFollow : false,
+
 			menuTuNgay: '',
 			menuDenNgay: '',
 			modelLienVan: {
@@ -296,6 +297,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                     this.loadHistoryThongTinXe()
                 }
 			}
+			stateButtonregistration : true
 		},
 		onScroll: 'onScroll',
 		schema: {
@@ -331,13 +333,22 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										headers : {
 											groupId : themeDisplay.getScopeGroupId()
 										},
-										success :  function(result){
+										success : function(result){
 											item.counter = 0;
 										},
 										error : function(xhr){
-											console.log(error);
+											console.log(xhr);
 										}
 									});
+
+									/*axios.put(urlFiles, config).then(function (response) {
+										item.counter = 0;
+										
+									})
+									.catch(function (error) {
+										console.log(error);
+										
+									});*/
 									
 //									axios.put(urlFiles, "", config).then(function (response) {
 //										item.counter = 0;
@@ -931,8 +942,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.snackbartextdossierViewJX = "Lưu form thành công!";
 										vm.snackbardossierViewJX = true;
 										vm.loadingAlpacajsForm = false;
-
-										
 
 										try{
 											
@@ -1924,8 +1933,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 									var indexTree = -1;
 									var index = 0;
-									console.log("listgroupHoSoFilterItems=======FISRT",vm.listgroupHoSoFilterItems);
-									console.log("serializable=======",serializable.data);
+									//console.log("listgroupHoSoFilterItems=======FISRT",vm.listgroupHoSoFilterItems);
+									//console.log("serializable=======",serializable.data);
 									for (var key in serializable.data) {
 										for(var i in vm.listgroupHoSoFilterItems){
 											if ( serializable.data[key].level === 0) {
@@ -1950,7 +1959,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}
 
 								}
-								console.log("listgroupHoSoFilterItems=======LAST",vm.listgroupHoSoFilterItems);
+								//console.log("listgroupHoSoFilterItems=======LAST",vm.listgroupHoSoFilterItems);
 
 							},
 							error : function(result){
@@ -2512,6 +2521,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.detailRegistPage = true;
 								window.scrollBy(0, -99999);
 								vm._getListForms();
+								vm.stateButtonregistration = true;
 
 							})
 							.catch(function (error) {
@@ -2528,8 +2538,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
-
-								vm.registForms = serializable.data;
+								var arrFormnotRemmove = [];
+								if(serializable.data){
+									for (var i = 0; i < serializable.data.length; i++) {
+										if(!serializable.data[i].removed){
+											arrFormnotRemmove.push(serializable.data[i]);
+										}
+									}
+								}
+								vm.registForms = arrFormnotRemmove;
 								vm.detailRegistPage = true;
 								
 							})
@@ -2609,7 +2626,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							})
 						},
 						registrationPheDuyet: function(registrationState) {
+
+							
 							var vm = this;
+							vm.stateButtonregistration = false;
 							var defaultMessage = 'Đồng ý phê duyệt hồ sơ doanh nghiệp này?';
 							
 							if (registrationState === 3) {
@@ -2644,12 +2664,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										console.log(vm.detailRegistModel);
 										vm.snackbartextdossierViewJX = "Yêu cầu xử lý thành công thành công!";
 										vm.snackbardossierViewJX = true;
+										vm.stateButtonregistration = false;
 										
 									},
 									error: function(xhr, textStatus, errorThrown) {
 										vm.detailRegistModel = {};
 										vm.snackbartextdossierViewJX = "Yêu cầu xử lý thành công thất bại!";
 										vm.snackbarerordossierViewJX = true;
+										vm.stateButtonregistration = true;
 									}
 								});
 								
@@ -2657,7 +2679,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								return false; 
 							})
 							.catch((e) => {
-								console.log(e)
+								console.log(e);
+								vm.stateButtonregistration = true;
 							})
 						}
 					}
@@ -2924,7 +2947,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								axios.get(urlGetFile, config_blob).then(function (response) {
 									var url = window.URL.createObjectURL(response.data);
-									console.log("url===========>",url);
+									//console.log("url===========>",url);
 									window.open(url , '_blank');
 								})
 								.catch(function (error) {
@@ -3160,7 +3183,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\./g,"<br/>"));
 									}
 								});
-								console.log(vm.danhSachHoSoTableItems);
+								//console.log(vm.danhSachHoSoTableItems);
 							})
 							.catch(function (error) {
 								console.log(error);
@@ -3307,7 +3330,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									animation: 'fade'
 								})
 								.then((dialog) => {
-									console.log("dialog============",dialog);
+									//console.log("dialog============",dialog);
 
 									window.open(url, "_blank", "ccc");
 
@@ -3377,7 +3400,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							
 							axios.get(url, config_blob).then(function (response) {
 								var url = window.URL.createObjectURL(response.data);
-								console.log(url);
+								//console.log(url);
 								window.open(url);
 							})
 							.catch(function (error) {
@@ -3730,7 +3753,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							
 							axios.get(url, config_blob).then(function (response) {
 								var url = window.URL.createObjectURL(response.data);
-								console.log(url);
+								//console.log(url);
 								window.open(url);
 							})
 							.catch(function (error) {

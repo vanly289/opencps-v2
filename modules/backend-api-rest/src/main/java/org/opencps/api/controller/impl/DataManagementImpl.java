@@ -170,8 +170,8 @@ public class DataManagementImpl implements DataManagement {
 			DictCollectionTemp oldCollectionTemp = dictItemDataTempUtil.getDictCollectionTempDetail(input.getCollectionCode(), groupId);
 			
 			if (oldCollectionTemp == null) {
-				dictItemDataTempUtil.addDictCollectionTemp(user.getUserId(), groupId,
-						input.getCollectionCode(), input.getCollectionName(), input.getCollectionNameEN(),
+			dictItemDataTempUtil.addDictCollectionTemp(user.getUserId(), groupId,
+					input.getCollectionCode(), input.getCollectionName(), input.getCollectionNameEN(),
 						input.getDescription(), DataMGTTempConstants.DATA_STATUS_ACTIVE, DataMGTTempConstants.DATA_MUST_SYNCHRONIZED, serviceContext);				
 			}
 			else {
@@ -260,11 +260,11 @@ public class DataManagementImpl implements DataManagement {
 
 			DictCollectionTemp temp = dictItemDataTempUtil.getDictCollectionTempDetail(code, groupId);
 			if (temp != null) {
-				dictItemDataTempUtil.updateDictCollectionTemp(user.getUserId(), groupId, code,
-						input.getCollectionCode(), input.getCollectionName(), input.getCollectionNameEN(),
-						input.getDescription(), 
-						DataMGTTempConstants.DATA_STATUS_ACTIVE,
-						DataMGTTempConstants.DATA_MUST_SYNCHRONIZED,
+			dictItemDataTempUtil.updateDictCollectionTemp(user.getUserId(), groupId, code,
+					input.getCollectionCode(), input.getCollectionName(), input.getCollectionNameEN(),
+					input.getDescription(), 
+					DataMGTTempConstants.DATA_STATUS_ACTIVE,
+					DataMGTTempConstants.DATA_MUST_SYNCHRONIZED,
 						serviceContext);				
 			}
 			else {
@@ -455,7 +455,7 @@ public class DataManagementImpl implements DataManagement {
 				DictCollection dictCollection = dictItemDataUtil.addDataForm(user.getUserId(), groupId, code, dataform,
 						serviceContext);
 				if (dictCollection != null) {
-					dictItemDataTempUtil.addDataForm(user.getUserId(), groupId, code, dataform,
+				dictItemDataTempUtil.addDataForm(user.getUserId(), groupId, code, dataform,
 							serviceContext);					
 				}
 
@@ -586,9 +586,9 @@ public class DataManagementImpl implements DataManagement {
 			
 			DictGroupTemp temp = dictItemDataTempUtil.getDictGroupTempDetail(code, input.getGroupCode(), groupId);
 			if (temp == null) {
-				dictItemDataTempUtil.addDictGroupsTemp(user.getUserId(), groupId, code, input.getGroupCode(),
-						input.getGroupName(), input.getGroupNameEN(), input.getGroupDescription(), 
-						DataMGTTempConstants.DATA_STATUS_ACTIVE,
+			dictItemDataTempUtil.addDictGroupsTemp(user.getUserId(), groupId, code, input.getGroupCode(),
+					input.getGroupName(), input.getGroupNameEN(), input.getGroupDescription(), 
+					DataMGTTempConstants.DATA_STATUS_ACTIVE,
 						serviceContext);				
 			}
 			else {
@@ -680,9 +680,9 @@ public class DataManagementImpl implements DataManagement {
 			
 			DictGroupTemp temp = dictItemDataTempUtil.getDictGroupTempDetail(code, groupCode, groupId);
 			if (temp != null) {
-				dictItemDataTempUtil.updateDictGroupsTemp(user.getUserId(), groupId, code, groupCode,
-						input.getGroupCode(), input.getGroupName(), input.getGroupNameEN(), input.getGroupDescription(),
-						DataMGTTempConstants.DATA_STATUS_ACTIVE,
+			dictItemDataTempUtil.updateDictGroupsTemp(user.getUserId(), groupId, code, groupCode,
+					input.getGroupCode(), input.getGroupName(), input.getGroupNameEN(), input.getGroupDescription(),
+					DataMGTTempConstants.DATA_STATUS_ACTIVE,
 						serviceContext);				
 			}
 			else {
@@ -900,8 +900,8 @@ public class DataManagementImpl implements DataManagement {
 					groupCode, itemCode, serviceContext);
 
 			try {
-				dictItemDataTempUtil.addDictGroupsDictItemsTemp(user.getUserId(), groupId, code,
-						groupCode, itemCode, serviceContext);
+			dictItemDataTempUtil.addDictGroupsDictItemsTemp(user.getUserId(), groupId, code,
+					groupCode, itemCode, serviceContext);
 			}
 			catch (DuplicateCategoryException e) {
 				e.printStackTrace();
@@ -1051,8 +1051,8 @@ public class DataManagementImpl implements DataManagement {
 					serviceContext);
 			
 			try {
-				dictItemDataTempUtil.deleteDictGroupsDictItemsTemp(groupId, code, groupCode, itemCode,
-						serviceContext);
+			dictItemDataTempUtil.deleteDictGroupsDictItemsTemp(groupId, code, groupCode, itemCode,
+					serviceContext);
 			}
 			catch (NotFoundException e) {
 				e.printStackTrace();
@@ -1239,10 +1239,10 @@ public class DataManagementImpl implements DataManagement {
 					serviceContext);
 			DictItemTemp temp = dictItemDataTempUtil.getDictItemTempByItemCode(code, input.getItemCode(), groupId, serviceContext);
 			if (temp == null) {
-				dictItemDataTempUtil.addDictItemsTemp(user.getUserId(), groupId, code,
-						input.getParentItemCode(), input.getItemCode(), input.getItemName(), input.getItemNameEN(),
-						input.getItemDescription(), input.getSibling(), input.getLevel(), input.getMetaData(),
-						DataMGTTempConstants.DATA_STATUS_ACTIVE,
+			dictItemDataTempUtil.addDictItemsTemp(user.getUserId(), groupId, code,
+					input.getParentItemCode(), input.getItemCode(), input.getItemName(), input.getItemNameEN(),
+					input.getItemDescription(), input.getSibling(), input.getLevel(), input.getMetaData(),
+					DataMGTTempConstants.DATA_STATUS_ACTIVE,
 						serviceContext);				
 			}
 			else {
@@ -1406,8 +1406,8 @@ public class DataManagementImpl implements DataManagement {
 
 			DictItemTemp temp = dictItemDataTempUtil.getDictItemTempByItemCode(code, itemCode, groupId, serviceContext);
 			if (temp != null) {
-				dictItemDataTempUtil.updateDictItemTempByItemCode(user.getUserId(), groupId, serviceContext, code,
-						itemCode, input.getItemCode(), input.getItemName(), input.getItemNameEN(),
+			dictItemDataTempUtil.updateDictItemTempByItemCode(user.getUserId(), groupId, serviceContext, code,
+					itemCode, input.getItemCode(), input.getItemName(), input.getItemNameEN(),
 						input.getItemDescription(), input.getSibling(), input.getParentItemCode(), DataMGTTempConstants.DATA_STATUS_ACTIVE);				
 			}
 			else {
@@ -1552,7 +1552,7 @@ public class DataManagementImpl implements DataManagement {
 
 				DictItemLocalServiceUtil.deleteDictItem(groupId, itemCode, serviceContext);
 				try {
-					DictItemTempLocalServiceUtil.deleteDictItemTemp(groupId, itemCode, serviceContext);
+				DictItemTempLocalServiceUtil.deleteDictItemTemp(groupId, itemCode, serviceContext);
 				}
 				catch (NotFoundException e) {
 					e.printStackTrace();
@@ -1901,11 +1901,11 @@ public class DataManagementImpl implements DataManagement {
 					//Update DictItemTemp
 					DictItemTemp temp = dictItemDataTempUtil.getDictItemTempByItemCode(code, itemCode, groupId, serviceContext);
 					if (temp != null) {
-						dictItemDataTempUtil.updateDictItemTempByItemCode(user.getUserId(), groupId, serviceContext, code,
-								itemCode, input.getItemCode(), input.getItemName(), input.getItemNameEN(),
-								input.getItemDescription(), input.getSibling(), input.getParentItemCode(), DataMGTTempConstants.DATA_STATUS_ACTIVE);							
-					}
-					else {
+					dictItemDataTempUtil.updateDictItemTempByItemCode(user.getUserId(), groupId, serviceContext, code,
+							itemCode, input.getItemCode(), input.getItemName(), input.getItemNameEN(),
+							input.getItemDescription(), input.getSibling(), input.getParentItemCode(), DataMGTTempConstants.DATA_STATUS_ACTIVE);	
+				}
+				else {
 						dictItemDataTempUtil.addDictItemsTemp(user.getUserId(), groupId, code,
 								input.getParentItemCode(), input.getItemCode(), input.getItemName(), input.getItemNameEN(),
 								input.getItemDescription(), input.getSibling(), input.getLevel(), input.getMetaData(),
@@ -1935,8 +1935,8 @@ public class DataManagementImpl implements DataManagement {
 				//Update DictItemTemp
 				DictItemTemp temp = dictItemDataTempUtil.getDictItemTempByItemCode(code, itemCode, groupId, serviceContext);
 				if (temp == null) {
-					dictItemDataTempUtil.addDictItemsTemp(user.getUserId(), groupId, code, input.getParentItemCode(),
-							itemCode, input.getItemName(), input.getItemNameEN(), input.getItemDescription(),
+				dictItemDataTempUtil.addDictItemsTemp(user.getUserId(), groupId, code, input.getParentItemCode(),
+						itemCode, input.getItemName(), input.getItemNameEN(), input.getItemDescription(),
 							input.getSibling(), input.getLevel(), input.getMetaData(), DataMGTTempConstants.DATA_STATUS_ACTIVE, serviceContext);					
 				}
 				else {
@@ -2054,10 +2054,10 @@ public class DataManagementImpl implements DataManagement {
 							input.getDescription(), serviceContext);
 					DictCollectionTemp temp = dictItemDataTempUtil.getDictCollectionTempDetail(code, groupId);
 					if (temp != null) {
-						dictItemDataTempUtil.updateDictCollectionTemp(user.getUserId(), groupId, code,
-								input.getCollectionCode(), input.getCollectionName(), input.getCollectionNameEN(),
-								input.getDescription(), DataMGTTempConstants.DATA_STATUS_ACTIVE, 
-								DataMGTTempConstants.DATA_MUST_SYNCHRONIZED,
+					dictItemDataTempUtil.updateDictCollectionTemp(user.getUserId(), groupId, code,
+							input.getCollectionCode(), input.getCollectionName(), input.getCollectionNameEN(),
+							input.getDescription(), DataMGTTempConstants.DATA_STATUS_ACTIVE, 
+							DataMGTTempConstants.DATA_MUST_SYNCHRONIZED,
 								serviceContext);						
 					}
 					else {
@@ -2076,10 +2076,10 @@ public class DataManagementImpl implements DataManagement {
 						input.getCollectionName(), input.getCollectionNameEN(), input.getDescription(), serviceContext);
 				DictCollectionTemp temp = dictItemDataTempUtil.getDictCollectionTempDetail(code, groupId);
 				if (temp == null) {
-					dictItemDataTempUtil.addDictCollectionTemp(user.getUserId(), groupId, code,
-							input.getCollectionName(), input.getCollectionNameEN(), input.getDescription(), 
-							DataMGTTempConstants.DATA_STATUS_ACTIVE, 
-							DataMGTTempConstants.DATA_MUST_SYNCHRONIZED,
+				dictItemDataTempUtil.addDictCollectionTemp(user.getUserId(), groupId, code,
+						input.getCollectionName(), input.getCollectionNameEN(), input.getDescription(), 
+						DataMGTTempConstants.DATA_STATUS_ACTIVE, 
+						DataMGTTempConstants.DATA_MUST_SYNCHRONIZED,
 							serviceContext);					
 				}
 				else {
@@ -2308,10 +2308,10 @@ public class DataManagementImpl implements DataManagement {
 							input.getGroupDescription(), serviceContext);
 					DictGroupTemp temp = dictItemDataTempUtil.getDictGroupTempDetail(code, groupCode, groupId);
 					if (temp != null) {
-						dictItemDataTempUtil.updateDictGroupsTemp(user.getUserId(), groupId, code, groupCode,
-								input.getGroupCode(), input.getGroupName(), input.getGroupNameEN(),
-								input.getGroupDescription(), 
-								DataMGTTempConstants.DATA_STATUS_ACTIVE,
+					dictItemDataTempUtil.updateDictGroupsTemp(user.getUserId(), groupId, code, groupCode,
+							input.getGroupCode(), input.getGroupName(), input.getGroupNameEN(),
+							input.getGroupDescription(), 
+							DataMGTTempConstants.DATA_STATUS_ACTIVE,
 								serviceContext);						
 					}
 					else {
@@ -2330,9 +2330,9 @@ public class DataManagementImpl implements DataManagement {
 				DictGroupTemp temp = dictItemDataTempUtil.getDictGroupTempDetail(code, groupCode, groupId);
 
 				if (temp == null) {
-					dictItemDataTempUtil.addDictGroupsTemp(user.getUserId(), groupId, code, groupCode,
-							input.getGroupName(), input.getGroupNameEN(), input.getGroupDescription(), 
-							DataMGTTempConstants.DATA_STATUS_ACTIVE,
+				dictItemDataTempUtil.addDictGroupsTemp(user.getUserId(), groupId, code, groupCode,
+						input.getGroupName(), input.getGroupNameEN(), input.getGroupDescription(), 
+						DataMGTTempConstants.DATA_STATUS_ACTIVE,
 							serviceContext);					
 				}
 				else {

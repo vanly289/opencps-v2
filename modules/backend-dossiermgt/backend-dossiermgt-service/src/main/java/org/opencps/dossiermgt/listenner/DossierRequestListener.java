@@ -84,33 +84,33 @@ public class DossierRequestListener extends BaseModelListener<DossierRequestUD>{
 			}
 			if (!flagRequestType) {
 
-			String content = model.getComment();
+				String content = model.getComment();
 
 
-			JSONObject payload = JSONFactoryUtil.createJSONObject();
+				JSONObject payload = JSONFactoryUtil.createJSONObject();
 
-			
-			payload.put("stepName", "type_"+model.getRequestType());
-			
-			String userName = getUserName(userId, model.getGroupId());
+				
+				payload.put("stepName", "type_"+model.getRequestType());
+				
+				String userName = getUserName(userId, model.getGroupId());
 
-			// payloads.put(payload);
+				// payloads.put(payload);
 
-			serviceContext.setCompanyId(20116l);
-			serviceContext.setUserId(userId);
+				serviceContext.setCompanyId(20116l);
+				serviceContext.setUserId(userId);
 
-			DossierLogLocalServiceUtil.addDossierLog(model.getGroupId(), model.getDossierId(),
-					userName, content, "PROCESS_TYPE", payload.toString(), serviceContext);
-			
-			// Add applicationNote
-			
-			Dossier dossier = DossierLocalServiceUtil.fetchDossier(model.getDossierId());
-			
-			String dossierNote = _buildDossierNote(dossier, content, dossier.getGroupId(), "DN");
-			
-			dossier.setApplicantNote(dossierNote);
-			
-			DossierLocalServiceUtil.syncDossier(dossier);
+				DossierLogLocalServiceUtil.addDossierLog(model.getGroupId(), model.getDossierId(),
+						userName, content, "PROCESS_TYPE", payload.toString(), serviceContext);
+				
+				// Add applicationNote
+				
+				Dossier dossier = DossierLocalServiceUtil.fetchDossier(model.getDossierId());
+				
+				String dossierNote = _buildDossierNote(dossier, content, dossier.getGroupId(), "DN");
+				
+				dossier.setApplicantNote(dossierNote);
+				
+				DossierLocalServiceUtil.syncDossier(dossier);
 			}
 
 		} catch (SystemException | PortalException e) {

@@ -201,7 +201,7 @@ public class DossierSearchModel {
 		this.notState = notState;
 	}
 
-    public String getDossierArr() {
+	public String getDossierArr() {
 		return dossierArr;
 	}
 

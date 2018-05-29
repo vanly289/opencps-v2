@@ -99,7 +99,7 @@
 
 					<a href="javascript:;">
 					
-						<span>#:sibling#</span>
+						<span>#:itemIndex#</span>
 						
 					</a>
 
@@ -327,17 +327,25 @@ function _collectionSub_dictItem_autocompleteSearch(val) {
 			}
 		});
 
+		var itemIndex = 0;
 		$("#_collectionSub_dictItem_listView").kendoListView({
 			remove: function(e) {
 				
 			},
 			
 			dataSource: _collectionSub_dictItem_dataSource_detail,
-			dataBound: function(e) {
-         		checkboxEventBinding();
-     		},
-			
-			template: kendo.template($("#_collectionSub_dictItem_template").html()),
+
+			template : function(data){
+
+				itemIndex++ ;
+
+				data.itemIndex = itemIndex;
+
+				return kendo.template($("#_collectionSub_dictItem_template").html())(data);
+			},
+			dataBound : function(e){
+				itemIndex = 0;
+			},
 			
 			filterable: {
 			

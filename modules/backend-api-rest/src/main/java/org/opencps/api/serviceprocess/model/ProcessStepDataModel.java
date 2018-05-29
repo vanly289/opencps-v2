@@ -84,7 +84,7 @@ public class ProcessStepDataModel {
 		this.lockState = lockState;
 	}
 
-    public String getBriefNote() {
+	public String getBriefNote() {
 		return briefNote;
 	}
 
