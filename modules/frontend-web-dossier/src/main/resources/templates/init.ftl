@@ -48,3 +48,11 @@
 <#include "details/history_processing_table_design.ftl">
 
 <#include "details/popup_dossier_file.ftl">
+
+<#include "details/danh_sach_giay_phep_van_tai_quoc_te.ftl">
+
+<#include "details/danh_sach_giay_phep_lien_van.ftl">
+
+<#include "details/danh_sach_chap_thuan_khai_thac_tuyen_hanh_khach.ftl">
+
+<#include "layout/thong_tin_xe.ftl">
