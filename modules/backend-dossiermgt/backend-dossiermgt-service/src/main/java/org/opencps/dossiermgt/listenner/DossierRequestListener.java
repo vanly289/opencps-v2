@@ -61,6 +61,29 @@ public class DossierRequestListener extends BaseModelListener<DossierRequestUD>{
 						: StringPool.BLANK;
 			}
 
+			//TODO: Hot fix
+			String requestType = model.getRequestType();
+			long companyId = model.getCompanyId();
+			long groupId = model.getGroupId();
+			boolean flagRequestType = false;
+			if (Validator.isNotNull(requestType)) {
+				if (requestType.toLowerCase().contentEquals("reject_submitting")
+					|| requestType.toLowerCase().contentEquals("reject_correcting")
+					|| requestType.toLowerCase().contentEquals("reject_cancelling")) {
+					flagRequestType = true;
+				}
+			}
+			if (Validator.isNotNull(requestType)) {
+				if (requestType.toLowerCase().contentEquals("submitting")
+						|| requestType.toLowerCase().contentEquals("correcting")
+						|| requestType.toLowerCase().contentEquals("cancelling")) {
+					if (companyId == 0 && groupId == 55217) {
+						flagRequestType = true;
+					}
+				}
+			}
+			if (!flagRequestType) {
+
 			String content = model.getComment();
 
 
@@ -88,6 +111,7 @@ public class DossierRequestListener extends BaseModelListener<DossierRequestUD>{
 			dossier.setApplicantNote(dossierNote);
 			
 			DossierLocalServiceUtil.syncDossier(dossier);
+			}
 
 		} catch (SystemException | PortalException e) {
 			_log.error(e);
@@ -120,6 +144,10 @@ public class DossierRequestListener extends BaseModelListener<DossierRequestUD>{
 					sb.append("[" + sdf.format(date) + "]");
 					sb.append(": ");
 					sb.append(actionNote);
+				}
+			} else {
+				if (groupId != 55217) {
+					sb.append(oldNote);
 				}
 			}
 		} else if (Validator.isNotNull(actionNote)) {

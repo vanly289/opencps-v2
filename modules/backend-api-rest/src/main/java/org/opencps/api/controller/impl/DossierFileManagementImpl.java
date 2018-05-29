@@ -247,22 +247,17 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 
 	@Override
 	public Response downloadByDossierId_ReferenceUid(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, long id, String referenceUid/*, String password*/) {
+			Locale locale, User user, ServiceContext serviceContext, long id, String referenceUid, String password) {
 
 		// TODO: check user is loged or password for access dossier file
 		BackendAuth auth = new BackendAuthImpl();
 
 		try {
-			Dossier dossier = DossierLocalServiceUtil.fetchDossier(id);
-			boolean isAuthenticated = false;
-//			_log.info("Dossier password: " + dossier.getPassword() + ", " + password);
-//			if (dossier.getPassword() != null && dossier.getPassword().equals(password)) {
-//				isAuthenticated = true;
-//			}
-			if (!auth.isAuth(serviceContext) && !isAuthenticated) {
+
+			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
-			_log.info("After check permission");
+
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(id, referenceUid);
 			
 			// TODO download file with dossierFileID
@@ -288,7 +283,6 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			return processException(e);
 		}
 	}
@@ -425,6 +419,7 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 
 			DossierFile dossierFile = action.updateDossierFileFormData(groupId, id, referenceUid, formdata,
 					serviceContext);
+
 			DossierFileModel result = DossierFileUtils.mappingToDossierFileModel(dossierFile);
 
 			return Response.status(200).entity(result).build();
@@ -630,8 +625,6 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 
 			DossierFileActions action = new DossierFileActionsImpl();
 
-//			DossierFile dossierFile = action.resetDossierFileFormData(groupId, id, referenceUid, StringPool.BLANK,
-//					serviceContext);
 			DossierFile dossierFile = action.resetDossierFileFormData(groupId, id, referenceUid, formdata,
 					serviceContext);
 
@@ -745,6 +738,32 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 			return Response.status(200).entity(results).build();
 
 		} catch (Exception e) {
+			return processException(e);
+		}
+	}
+
+	@Override
+	public Response getDossierFileByDossierId_FileTemplateNo(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long id, String fileTemplateNo) {
+
+		BackendAuth auth = new BackendAuthImpl();
+
+		try {
+
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+
+			DossierFileActions action = new DossierFileActionsImpl();
+
+			DossierFile dossierFile = action.getDossierFileByFileTemplateNo(id, fileTemplateNo);
+			
+			DossierFileModel result = DossierFileUtils.mappingToDossierFileModel(dossierFile);
+
+			return Response.status(200).entity(result).build();
+
+		} catch (Exception e) {
+			_log.error(e);
 			return processException(e);
 		}
 	}

@@ -368,7 +368,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						formReport = _getFormScript(formCode, dossier.getDossierId());
 					}
 
-					_log.info("Form data to preview: " + formData);
+					//_log.info("Form data to preview: " + formData);
 					Message message = new Message();
 
 					message.put("formReport", formReport);

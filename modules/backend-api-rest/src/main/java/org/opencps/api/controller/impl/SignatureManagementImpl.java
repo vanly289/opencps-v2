@@ -44,7 +44,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -57,6 +56,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.json.JSONArray;
 
 public class SignatureManagementImpl implements SignatureManagement{
 
@@ -135,6 +135,7 @@ public class SignatureManagementImpl implements SignatureManagement{
 //					_log.info("assignUserId: "+assignUserId);
 //					_log.info("subUsers: "+subUsers);
 					DossierActions dossierAction = new DossierActionsImpl();
+					//if (TYPE_KYSO.contains(actionCode)) {
 					dossierAction.doAction(groupId, dossierId, dossier.getReferenceUid(), actionCode,
 					0L, actionUser, actionNote, assignUserId, user.getUserId(), subUsers,
 					serviceContext);

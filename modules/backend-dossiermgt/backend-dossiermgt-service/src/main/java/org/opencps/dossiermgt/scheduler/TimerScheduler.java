@@ -11,10 +11,12 @@ import org.opencps.dossiermgt.constants.DossierActionTerm;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
+import org.opencps.dossiermgt.model.DossierRequestUD;
 import org.opencps.dossiermgt.model.PaymentFile;
 import org.opencps.dossiermgt.model.ProcessAction;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
 import org.opencps.dossiermgt.service.PaymentFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.osgi.service.component.annotations.Activate;
@@ -98,9 +100,12 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 
 				lstProcessAction = ProcessActionLocalServiceUtil.getProcessActionByG_SPID_PRESC(dossier.getGroupId(),
 						serviceProcessId, stepCode);
+				//TODO : test case auto event
+				DossierRequestUD dRegUD = DossierRequestUDLocalServiceUtil
+						.getDossierRequestByDossierId(dossier.getDossierId());
 
 				boolean flag = false;
-
+				if (dRegUD != null && dRegUD.getStatusReg() == 3) {
 				for (ProcessAction processAction : lstProcessAction) {
 
 					if (processAction.getAutoEvent().contains("timmer")) {
@@ -124,7 +129,7 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 
 							dossierActions.doAction(dossier.getGroupId(), dossier.getDossierId(),
 									dossier.getReferenceUid(), processAction.getActionCode(),
-									processAction.getProcessActionId(), userActionName, processAction.getActionName(),
+										processAction.getProcessActionId(), userActionName, StringPool.BLANK,
 									processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
 									serviceContext);
 						}
@@ -134,7 +139,41 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 						break;
 					}
 				}
+				} else {
+					for (ProcessAction processAction : lstProcessAction) {
 
+						if (processAction.getAutoEvent().contains("timmer")) {
+							
+							String perConditionStr = processAction.getPreCondition();
+
+							boolean checkPreCondition = DossierMgtUtils
+									.checkPreCondition(StringUtil.split(perConditionStr, StringPool.COMMA), dossier);
+
+							// do action
+
+							String userActionName = _getUserActionName(perConditionStr, dossier.getDossierId(),
+									systemUser.getFullName());
+
+							// String subUsers = StringPool.BLANK;
+							if (checkPreCondition && perConditionStr.contains("payok")) {
+								
+								_log.info("$$$$$dossierId_"+dossier.getDossierId() + "autoEvent_" + processAction.getAutoEvent());
+
+								flag = true;
+
+								dossierActions.doAction(dossier.getGroupId(), dossier.getDossierId(),
+										dossier.getReferenceUid(), processAction.getActionCode(),
+										processAction.getProcessActionId(), userActionName, processAction.getActionName(),
+										processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
+										serviceContext);
+							}
+						}
+						
+						if (flag) {
+							break;
+						}
+					}
+				}
 			}
 
 		}

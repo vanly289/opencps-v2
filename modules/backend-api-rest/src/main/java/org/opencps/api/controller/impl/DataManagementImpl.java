@@ -66,6 +66,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -1881,9 +1883,22 @@ public class DataManagementImpl implements DataManagement {
 
 			if (oldEtt != null) {
 				if (modifiedDateTime != 0 && oldEtt.getModifiedDate().compareTo(new Date(modifiedDateTime)) < 0) {
+					//Update DictItem
 					ett = dictItemDataUtil.updateDictItemByItemCode(user.getUserId(), groupId, serviceContext, code,
 							itemCode, input.getItemCode(), input.getItemName(), input.getItemNameEN(),
 							input.getItemDescription(), input.getSibling(), input.getParentItemCode());
+					// TODO: Reindex dictItemGroup
+					List<DictItemGroup> digList = DictItemGroupLocalServiceUtil.findByF_dictItemId(
+							groupId, ett.getDictItemId());
+					if (digList != null && digList.size() > 0) {
+						Indexer<DictItemGroup> indexer = IndexerRegistryUtil
+								.nullSafeGetIndexer(DictItemGroup.class);
+						for (DictItemGroup dig : digList) {
+							indexer.reindex(dig);
+						}
+					}
+
+					//Update DictItemTemp
 					DictItemTemp temp = dictItemDataTempUtil.getDictItemTempByItemCode(code, itemCode, groupId, serviceContext);
 					if (temp != null) {
 						dictItemDataTempUtil.updateDictItemTempByItemCode(user.getUserId(), groupId, serviceContext, code,
@@ -1902,9 +1917,22 @@ public class DataManagementImpl implements DataManagement {
 					throw new DuplicateCategoryException();
 				}
 			} else {
+				//Update DictItem
 				ett = dictItemDataUtil.addDictItems(user.getUserId(), groupId, code, input.getParentItemCode(),
 						itemCode, input.getItemName(), input.getItemNameEN(), input.getItemDescription(),
 						input.getSibling(), input.getLevel(), input.getMetaData(), serviceContext);
+				// TODO: Reindex dictItemGroup
+				List<DictItemGroup> digList = DictItemGroupLocalServiceUtil.findByF_dictItemId(
+						groupId, ett.getDictItemId());
+				if (digList != null && digList.size() > 0) {
+					Indexer<DictItemGroup> indexer = IndexerRegistryUtil
+							.nullSafeGetIndexer(DictItemGroup.class);
+					for (DictItemGroup dig : digList) {
+						indexer.reindex(dig);
+					}
+				}
+
+				//Update DictItemTemp
 				DictItemTemp temp = dictItemDataTempUtil.getDictItemTempByItemCode(code, itemCode, groupId, serviceContext);
 				if (temp == null) {
 					dictItemDataTempUtil.addDictItemsTemp(user.getUserId(), groupId, code, input.getParentItemCode(),

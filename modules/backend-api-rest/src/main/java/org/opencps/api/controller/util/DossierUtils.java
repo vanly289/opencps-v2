@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.opencps.api.dossier.model.DossierDataModel;
 import org.opencps.api.dossier.model.DossierDetailModel;
+import org.opencps.api.dossier.model.DossierSearchDetailModel;
 import org.opencps.auth.utils.APIDateTimeUtils;
 import org.opencps.datamgt.model.DictCollection;
 import org.opencps.datamgt.model.DictItem;
@@ -129,6 +130,8 @@ public class DossierUtils {
 			}
 
 			model.setEndorsementDate(doc.get(DossierTerm.ENDORSEMENT_DATE));
+			model.setLockState(doc.get(DossierTerm.LOCK_STATE));
+			model.setStatusReg(doc.get(DossierTerm.STATUS_REG));
 
 			//TODO: Get info cert Number
 //			List<DossierFile> dossierFileList = DossierFileLocalServiceUtil
@@ -301,6 +304,10 @@ public class DossierUtils {
 				model.setCertNo(doc.get("so_chung_chi"));
 			}
 
+			model.setEndorsementDate(doc.get(DossierTerm.ENDORSEMENT_DATE));
+			model.setLockState(doc.get(DossierTerm.LOCK_STATE));
+			model.setStatusReg(doc.get(DossierTerm.STATUS_REG));
+
 			ouputs.add(model);
 		}
 //		_log.info("ouputs: "+ouputs.size());
@@ -454,6 +461,29 @@ public class DossierUtils {
 		model.setApplicantNote(input.getApplicantNote());
 		model.setNotification(Boolean.toString(input.getNotification()));
 		model.setOnline(Boolean.toString(input.getOnline()));
+		model.setLockState(input.getLockState());
+
+		return model;
+	}
+
+	public static DossierDetailModel mappingForGetDetailSearch(Dossier input) {
+
+		DossierDetailModel model = new DossierDetailModel();
+		
+		try {
+			Document dossierDoc = DossierLocalServiceUtil.getDossierById(input.getDossierId(), input.getCompanyId());
+			model.setDossierIdCTN(dossierDoc.get(DossierTerm.DOSSIER_ID+"CTN"));
+		} catch (Exception e) {
+			model.setDossierIdCTN("");
+		}
+		
+
+		model.setUserName(input.getUserName());
+		model.setGovAgencyName(input.getGovAgencyName());
+		model.setDossierNo(input.getDossierNo());
+		model.setSubmitDate(
+				APIDateTimeUtils.convertDateToString(input.getSubmitDate(), APIDateTimeUtils._NORMAL_PARTTERN));
+		model.setDueDate(APIDateTimeUtils.convertDateToString(input.getDueDate(), APIDateTimeUtils._NORMAL_PARTTERN));
 
 		return model;
 	}

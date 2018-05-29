@@ -106,7 +106,7 @@ public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 				signer.setSignatureAppearance(PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION);
 
 				ExtractTextLocations textLocation = new ExtractTextLocations(fullPath);
-				
+
 				_log.info("*********************************" + textLocation.getAnchorX() + "-"
 						+ textLocation.getAnchorY() + "********************************");
 
@@ -161,6 +161,7 @@ public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 //						new Rectangle(llx + 20, lly - 105,
 //								urx + 94, ury - 70), 1);
 //				inHash = signer.computeHash(new Rectangle(llx + 22, lly - 145, urx + 94, ury - 70), 1);
+//				if (TYPE_KYSO.contains(typeSignature) && STEPCODE_KYSO.contains(postStepCode)) {
 				inHash = signer.computeHash(new Rectangle(llx + 10, lly - 15, urx + 90, ury), 1);
 //				if (TYPE_KYSO.contains(typeSignature) && STEPCODE_KYSO.contains(postStepCode)) {
 //					inHash = signer.computeHash(new Rectangle(llx + 10, lly - 15, urx + 90, ury), 1);

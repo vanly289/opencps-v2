@@ -516,7 +516,7 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 
 				}
 
-				_log.info("Update deliverable form data: " + formData);
+				//_log.info("Update deliverable form data: " + formData);
 				
 				DeliverableLocalServiceUtil.updateFormData(model.getGroupId(), dlv.getDeliverableId(), formData,
 						serviceContext);

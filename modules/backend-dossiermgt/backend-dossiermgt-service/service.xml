@@ -370,6 +370,7 @@
 		<column name="online" type="boolean" />
 		<column name="serverNo" type="String" />
 		<column name="endorsementDate" type="Date" />
+		<column name="lockState" type="String" />
 
 		<!-- Order -->
 
@@ -794,6 +795,7 @@
 		<column name="briefNote" type="String" />
 		<column name="editable" type="boolean" />
 		<column name="restrictDossier" type="String" />
+		<column name="lockState" type="String" />
 
 		<finder return-type="Collection" name="S_P_ID">
 			<finder-column name="serviceProcessId" />
@@ -876,6 +878,12 @@
 		<column name="requestType" type="String" />
 		<column name="comment" type="String" />
 		<column name="isNew" type="int" />
+		<column name="statusReg" type="int" />
+
+		<!-- Filter -->
+		<order by="desc">
+			<order-column name="modifiedDate" order-by="desc" />
+		</order>
 
 		<finder return-type="Collection" name="D_">
 			<finder-column name="dossierId" />
@@ -890,7 +898,7 @@
 			<finder-column name="isNew" />
 		</finder>
 		
-		<finder return-type="Collection" name="DID_IN">
+<finder return-type="Collection" name="DID_IN">
 			<finder-column name="dossierId" />
 			<finder-column name="isNew" />
 		</finder>
@@ -1183,7 +1191,11 @@
 		<!-- Order -->
 
 		<!-- Filter -->
-
+		<finder return-type="Collection" name="G_UID_Y">
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="userId"></finder-column>
+			<finder-column name="year"></finder-column>
+		</finder>
 
 	</entity>
 
@@ -1218,6 +1230,7 @@
 		<column name="registrationState" type="int" />
 		<column name="registrationClass" type="String" />
 		<column name="submitting" type="boolean" />
+		<column name="representativeEnterprise" type="String" />
 
 		<!-- Order -->
 
@@ -1317,7 +1330,7 @@
 		<column name="removed" type="boolean" />
 		<!-- Order -->
 		<order>
-			<order-column name="createDate" order-by="desc" />
+			<order-column name="createDate" order-by="asc" />
 		</order>
 
 		<!-- Filter -->
@@ -1351,6 +1364,7 @@
 		<finder return-type="Collection" name="F_REFID">
 			<finder-column name="referenceUid" />
 		</finder>
+
 	</entity>
 
 	<entity local-service="true" name="DeliverableType"
@@ -1529,6 +1543,40 @@
 		<order>
 			<order-column name="createDate" order-by="desc" />
 		</order>
+
+		<finder return-type="Collection" name="F_USERID">
+			<finder-column name="userId"></finder-column>
+		</finder>
+	</entity>
+
+		<entity local-service="true" name="DossierMark" remote-service="false"
+		table="opencps_dossiermark" uuid="true">
+
+		<column name="dossierMarkId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+		<column name="dossierId" type="long" />
+		<column name="dossierPartNo" type="String" />
+		<column name="fileCheck" type="boolean" />
+		<column name="fileType" type="int" />
+
+		<finder return-type="DossierMark" name="G_DID_PN">
+			<finder-column name="groupId" />
+			<finder-column name="dossierId" />
+			<finder-column name="dossierPartNo" />
+		</finder>
+		
+		<finder return-type="Collection" name="G_DID">
+			<finder-column name="groupId" />
+			<finder-column name="dossierId" />
+		</finder>
 	</entity>
 
 	<exceptions>
