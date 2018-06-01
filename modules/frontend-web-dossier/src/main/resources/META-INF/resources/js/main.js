@@ -76,25 +76,25 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			},
 			{
 				text: 'Tên doanh nghiệp được cấp phép',
-				align: 'center',
+				align: 'left',
 				sortable: true,
 				value: 'applicantName'
 			},
 			{
 				text: 'Cơ quan cấp',
-				align: 'center',
+				align: 'left',
 				sortable: true,
 				value: 'coQuan'
 			},
 			{
 				text: 'Hiệu lực giấy phép',
-				align: 'center',
+				align: 'left',
 				sortable: true,
 				value: 'hieuLuc'
 			},
 			{
 				text: 'Thao tác',
-				align: 'center',
+				align: 'left',
 				sortable: true,
 				value: 'thaoTac'
 			}
@@ -531,11 +531,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									hieu_luc_den_ngay: 'abc123'
 								}
 								];
-								var temp = vm.giayPhepVanTaiQuocTeTableItems.length % 15;
-								var page = Math.floor(vm.giayPhepVanTaiQuocTeTableItems.length / 15);
-								if(temp > 0) {
-									page = page + 1;
-								}
+								var page = Math.ceil(vm.giayPhepVanTaiQuocTeTableItems.length / 15);
 								vm.pageGiayPhepVanTaiQuocTeTableLength = page;
 
 							});
@@ -581,11 +577,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}else {
 									vm.giayPhepLienVanTableItems = [];
 								}
-								var temp = vm.giayPhepLienVanTableItems.length % 15;
-								var page = Math.floor(vm.giayPhepLienVanTableItems.length / 15);
-								if(temp > 0) {
-									page = page + 1;
-								}
+								var page = Math.ceil(vm.giayPhepLienVanTableItems.length / 15);
 								vm.pageGiayPhepLienVanTableLength = page;
 
 								console.log(vm.giayPhepLienVanTableItems);
@@ -673,14 +665,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}else {
 									vm.chapThuanKhaiThacTableItems = [];
 								}
-
-								var temp = vm.chapThuanKhaiThacTableItems.length % 15;
-								var page = Math.floor(vm.chapThuanKhaiThacTableItems.length / 15);
-								if(temp > 0) {
-									page = page + 1;
-								}
+								var page = Math.ceil(vm.chapThuanKhaiThacTableItems.length / 15);
 								vm.pageChapThuanKhaiThacTableLength = page;
-
 								console.log(vm.chapThuanKhaiThacTableItems);
 							})
 							.catch(function (error) {
@@ -2684,7 +2670,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							this.traCuuHoSoTableheaders = [
 							{
 								text: 'STT',
-								align: 'left',
+								align: 'center',
 								sortable: false,
 								value: 'stt'
 							},
@@ -3040,19 +3026,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						{
 							text: 'Tên thủ tục. Tên doanh nghiệp',
-							align: 'center',
+							align: 'left',
 							sortable: true,
 							value: 'applicantName'
 						},
 						{
 							text: 'Mã hồ sơ. Số hồ sơ',
-							align: 'center',
+							align: 'left',
 							sortable: true,
 							value: 'dossierId'
 						},
 						{
 							text: 'Ngày gửi. Ngày tiếp nhận. Hạn xử lý',
-							align: 'center',
+							align: 'left',
 							sortable: true,
 							value: 'submitDate'
 						}

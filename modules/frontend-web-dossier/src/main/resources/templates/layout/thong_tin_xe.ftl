@@ -17,7 +17,6 @@
               item-text="itemName"
               item-code="itemCode"
 						  v-model="hinhThucSelect"
-						  label="Hình thức"
               clearable
 						></v-select>
   					</v-flex>
@@ -32,7 +31,6 @@
               item-text="itemName"
               item-value="itemCode"
 						  v-model="cuaKhauSelect"
-						  label="Cửa khẩu"
               clearable
 						></v-select>
   					</v-flex>
@@ -65,7 +63,6 @@
   					</v-flex>
   					<v-flex xs12 sm8>
 						<v-text-field
-						  label="Thông tin lái xe"
 						  v-model="thong_tin_lai_xe"
 						></v-text-field>
   					</v-flex>
@@ -76,7 +73,6 @@
   					</v-flex>
   					<v-flex xs12 sm8>
 						<v-text-field
-						  label="Giấy phép lái xe"
               v-model="giay_phep_lai_xe"
 						></v-text-field>
   					</v-flex>
