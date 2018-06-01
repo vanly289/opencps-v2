@@ -1,7 +1,7 @@
 <template>
 	<v-container fluid grid-list-md>
 		<v-layout row wrap>
-			<v-flex sm3 class="pr-0">
+			<v-flex sm3 class="pr-0" id="tracuugiayphep">
 				<v-card>
 					<v-list>
 						<v-list-tile key="giay_phep_van_tai_quoc_te" avatar @click="changeStateTraCuuGiayPhep('giay_phep_van_tai_quoc_te')">
@@ -48,10 +48,10 @@
 			<v-flex sm9 class="pl-0">
 				<v-card style="padding-bottom: 10px;">
 					<v-layout row wrap style="margin-top:8px;">
-						<v-flex sm2 xs12 class="pt-2">
+						<!-- <v-flex sm2 xs12 class="pt-2">
 							<v-subheader>Tìm theo thủ tục</v-subheader>
-						</v-flex>
-						<v-flex sm3 xs12>
+						</v-flex> -->
+						<v-flex sm5 xs12 class="pl-4">
 							<v-select
 							:items="serviceInfos"
 							v-model="serviceInfoSelect"
@@ -61,10 +61,10 @@
 							clearable
 							></v-select>
 						</v-flex>
-						<v-flex sm2 xs12 >
+						<!-- <v-flex sm2 xs12 >
 						  
-						</v-flex>
-						<v-flex sm3 xs12>
+						</v-flex> -->
+						<v-flex sm5 xs12 class="pl-3">
 							<v-text-field
 							label="Nhập từ khóa"
 							v-model="keywordTraCuuGiayPhep"
@@ -75,10 +75,10 @@
 						</v-flex>
 					</v-layout>
 					<v-layout row wrap>
-						<v-flex xs12 sm2 class="pt-2">
+						<!-- <v-flex xs12 sm2 class="pt-2">
 							<v-subheader>Cơ quan cấp phép</v-subheader>
-						</v-flex>
-						<v-flex xs12 sm3>
+						</v-flex> -->
+						<v-flex xs12 sm5 class="pl-4">
 							<v-select
 							:items="govAgencys"
 							v-model="govAgencySelect"
@@ -88,10 +88,10 @@
 							clearable
 							></v-select>
 						</v-flex>
-						<v-flex xs12 sm2 class="pt-2" v-if="stateTraCuuGiayPhep == 'van_ban_chap_thuan'">
+						<!-- <v-flex xs12 sm2 class="pt-2" v-if="stateTraCuuGiayPhep == 'van_ban_chap_thuan'">
 							<v-subheader>Tuyến</v-subheader>
-						</v-flex>
-						<v-flex xs12 sm3 v-if="stateTraCuuGiayPhep == 'van_ban_chap_thuan'">
+						</v-flex> -->
+						<v-flex xs12 sm5 class="pl-3" v-if="stateTraCuuGiayPhep == 'van_ban_chap_thuan'">
 							<v-select
 							:items="tuyens"
 							v-model="tuyenSelect"
@@ -103,10 +103,10 @@
 						</v-flex>
 					</v-layout>
 					<v-layout row wrap>
-						<v-flex xs12 sm2 class="pt-2">
+						<!-- <v-flex xs12 sm2 class="pt-2">
 							<v-subheader>Từ ngày</v-subheader>
-						</v-flex>
-						<v-flex xs12 sm3>
+						</v-flex> -->
+						<v-flex xs12 sm5 class="pl-4">
 							<v-menu
 							ref="menuTuNgay"
 							:close-on-content-click="false"
@@ -124,14 +124,16 @@
 							v-model="searchTuNgay"
 							persistent-hint
 							prepend-icon="event"
+							label="Từ ngày"
+							clearable
 							></v-text-field>
 							<v-date-picker v-model="searchTuNgay" no-title @input="menuTuNgay = false"></v-date-picker>
 						</v-menu>
 					</v-flex>
-					<v-flex xs12 sm2 text-right class="pt-2">
+					<!-- <v-flex xs12 sm2 text-right class="pt-2">
 						<v-subheader>Đến ngày</v-subheader>
-					</v-flex>
-					<v-flex xs3 sm3>
+					</v-flex> -->
+					<v-flex xs3 sm5 class="pl-3">
 						<v-menu
 						ref="menuDenNgay"
 						:close-on-content-click="false"
@@ -149,6 +151,8 @@
 						v-model="searchDenNgay"
 						persistent-hint
 						prepend-icon="event"
+						label="Đến ngày"
+						clearable
 						></v-text-field>
 						<v-date-picker v-model="searchDenNgay" no-title @input="menuDenNgay = false"></v-date-picker>
 					</v-menu>
@@ -158,7 +162,7 @@
 	  		</v-flex>
 		</v-layout>		
 		<v-layout row wrap>
-			<v-flex xs12 sm12 class="text-xs-right">
+			<v-flex xs12 sm12 class="text-xs-right pt-3">
 				<div v-if="stateTraCuuGiayPhep == 'giay_phep_van_tai_quoc_te'">
 					<v-data-table
 						:headers="giayPhepVanTaiQuocTeTableheaders"
@@ -166,7 +170,7 @@
 						hide-actions
 						class="elevation-1">
 						<template slot="items" slot-scope="props">
-							<td style="padding: 8px; padding-left: 0px;width: 5%; " class="text-xs-center">{{ pageGiayPhepVanTaiQuocTeTable * 15 - 15 + props.index + 1 }}</td>
+							<td style="padding: 8px; padding-left: 0px;width: 4%; " class="text-xs-center">{{ pageGiayPhepVanTaiQuocTeTable * 15 - 15 + props.index + 1 }}</td>
 							<td style="padding: 8px;" class="text-xs-left">
 								{{ props.item.giay_phep }} 
 								<br v-if="props.item.so_giay_phep">
@@ -188,7 +192,7 @@
 							</td>
 						</template>
 					</v-data-table>
-					<v-pagination :length="pageGiayPhepVanTaiQuocTeTableLength" v-model="pageGiayPhepVanTaiQuocTeTable"></v-pagination>
+					<v-pagination :length="pageGiayPhepVanTaiQuocTeTableLength" v-model="pageGiayPhepVanTaiQuocTeTable" class="pt-3"></v-pagination>
 				</div>
 				
 				<div v-if="stateTraCuuGiayPhep == 'giay_phep_lien_van'">
@@ -198,7 +202,7 @@
 						hide-actions
 						class="elevation-1">
 						<template slot="items" slot-scope="props">
-							<td style="padding: 8px; padding-left: 0px;width: 5%; " class="text-xs-center">{{ pageGiayPhepLienVanTable * 15 - 15 + props.index + 1 }}</td>
+							<td style="padding: 8px; padding-left: 0px;width: 4%; " class="text-xs-center">{{ pageGiayPhepLienVanTable * 15 - 15 + props.index + 1 }}</td>
 							<td style="padding: 8px;" class="text-xs-left">
 								{{ props.item.giay_phep }} 
 								<br v-if="props.item.so_giay_phep">
@@ -217,28 +221,38 @@
 								<br v-if="props.item.hieu_luc_den_ngay">
 								{{ props.item.hieu_luc_den_ngay }} 
 							</td>
-							<td style="padding: 8px; width: 10%;" class="text-xs-center">
-								<div class="ml-15">
-									<span @click="printGiayPhep(props.item)" class="hover-pointer">
+							<td style="padding: 8px; width: 18%;" class="text-xs-center">
+								<!-- <div class="ml-15">
+									
+									<v-btn flat icon @click="printGiayPhep(props.item)">
+										<v-icon >print</v-icon>
+									</v-btn>
+								</div> -->
+								<div>
+									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="printGiayPhep(props.item)">
+										<v-icon >print</v-icon>
+									</v-btn> 
+									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailGiayPhep(props.item)">
+										<v-icon >visibility</v-icon>
+									</v-btn> 
+									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailThongTinXe(props.item)">
+										<v-icon >fas fa-truck</v-icon>
+									</v-btn> 
+									<!-- <span @click="printGiayPhep(props.item)" class="hover-pointer">
 										<v-icon >print</v-icon>
 									</span>
-									<!-- <v-btn flat icon @click="printGiayPhep(props.item)">
-										<v-icon >print</v-icon>
-									</v-btn> -->
-								</div>
-								<div class="ml-15">
 									<span @click="toDetailGiayPhep(props.item)" class="hover-pointer">
 										<v-icon >visibility</v-icon>
-									</span>
+									</span> -->
 									<!-- <v-btn flat icon @click="toDetailGiayPhep(props.item)">
 										<v-icon >visibility</v-icon>
 									</v-btn> -->
 								</div>
-								<v-btn small color="" @click="toDetailThongTinXe(props.item)">Thông tin xe</v-btn> 
+								
 							</td>
 						</template>
 					</v-data-table>
-					<v-pagination :length="pageGiayPhepLienVanTableLength" v-model="pageGiayPhepLienVanTable"></v-pagination>
+					<v-pagination :length="pageGiayPhepLienVanTableLength" v-model="pageGiayPhepLienVanTable" class="pt-3"></v-pagination>
 				</div>
 
 				<div v-if="stateTraCuuGiayPhep == 'van_ban_chap_thuan'">
@@ -248,7 +262,7 @@
 						hide-actions
 						class="elevation-1">
 						<template slot="items" slot-scope="props">
-							<td style="padding: 8px; padding-left: 0px;width: 5%; " class="text-xs-center">{{ pageChapThuanKhaiThacTable * 15 - 15 + props.index + 1 }}</td>
+							<td style="padding: 8px; padding-left: 0px;width: 4%; " class="text-xs-center">{{ pageChapThuanKhaiThacTable * 15 - 15 + props.index + 1 }}</td>
 							<td style="padding: 8px;" class="text-xs-left">
 								{{ props.item.giay_phep }} 
 								<br v-if="props.item.so_giay_phep">
@@ -276,7 +290,7 @@
 							</td>
 						</template>
 					</v-data-table>
-					<v-pagination :length="pageChapThuanKhaiThacTableLength" v-model="pageChapThuanKhaiThacTable"></v-pagination>
+					<v-pagination :length="pageChapThuanKhaiThacTableLength" v-model="pageChapThuanKhaiThacTable" class="pt-3"></v-pagination>
 				</div>
 			</v-flex>
 		</v-layout>
