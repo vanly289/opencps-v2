@@ -115,7 +115,6 @@ body .navigation-drawer  .list--group__header--active {
 }
 
 #tab-dossier-detail-2 .tabs__item--active > button {
-  color: yellow;
   position: relative;
 }
 

@@ -28,14 +28,13 @@
 	
 	</div>
 
-	<v-expansion-panel expand focusable>
-	  
-	</v-expansion-panel>
-
-	<v-expansion-panel expand class="my-0 opencps-dossier-info">
-		<v-expansion-panel-content v-bind:value="true">
-		<div slot="header" class="text-bold primary--text">Thông tin chung hồ sơ</div>
-		<v-layout wrap class="px-4 pb-2">
+<!-- 	<v-expansion-panel expand focusable>
+  
+</v-expansion-panel> -->
+	
+	<v-card class="pt-2">
+	  	<div class="text-bold primary--text pl-2 pb-2">Thông tin chung hồ sơ</div>
+		<v-layout wrap class="px-4 pb-3">
 			<v-flex xs12 sm4>
 				<div class="pb-1">
 					<span>
@@ -119,13 +118,18 @@
 
 			<v-flex xs12 sm4>
 				<div>
-					<a href="javascript:;" @click.prevent.stop="showContactDetail = !showContactDetail">
+					<!-- <a href="javascript:;" @click.prevent.stop="showContactDetail = !showContactDetail">
 						Thông tin liên hệ: <v-icon color="primary" v-if="!showContactDetail">keyboard_arrow_down</v-icon>
 						<v-icon color="primary" v-if="showContactDetail">keyboard_arrow_up</v-icon>
-					</a>
+					</a> -->
 					
+					<a href="javascript:;">
+						Thông tin liên hệ: 
+					</a>
+
 					<v-slide-y-transition>
-						<div v-if="showContactDetail">
+						<!-- <div v-if="showContactDetail"> -->
+						<div>
 							<div class="pb-1">
 								<span>
 									Tên doanh nghiệp: 
@@ -166,17 +170,23 @@
 				</div>
 			</v-flex>
 		</v-layout>
+	</v-card>
+
+	<!-- <v-expansion-panel expand class="my-0 opencps-dossier-info">
+		<v-expansion-panel-content v-bind:value="true">
+		
+		TODO
 	
-		<!-- <div class="text-bold primary--text expansion-panel__header">Thông tin sản phẩm</div>
+		<div class="text-bold primary--text expansion-panel__header">Thông tin sản phẩm</div>
 		<v-layout wrap class="px-4 pb-2">
 			<v-flex xs12 sm6>
 			<div class="pb-1" v-html="detailModel.briefNote"></div>
 			</v-flex>
-		</v-layout> -->
+		</v-layout>
 		</v-expansion-panel-content>
-	</v-expansion-panel>
+	</v-expansion-panel> -->
 
-	<v-tabs :scrollable="false">
+	<v-tabs :scrollable="false" id="tabs-style-1">
 		<v-tabs-bar class="grey-opencps-panel" dark>
 			<v-tabs-item :href="'#tab-dossier-detail-1'">
 			THÀNH PHẦN HỒ SƠ
@@ -195,15 +205,21 @@
 		<v-tabs-items>
 			<v-tabs-content :id="'tab-dossier-detail-1'" reverse-transition="slide-y-transition" transition="slide-y-transition">
 			<v-expansion-panel expand class="my-0">
-				<v-expansion-panel-content v-bind:value="true">
-				<div slot="header" class="text-bold"> <span>I. </span>Tài liệu nộp</div>
+				<v-expansion-panel-content v-bind:value="true" class="pl-0">
+				<div slot="header">
+					<div class="background-triangle-small">I.</div> <span>Tài liệu nộp</span>
+				</div>
+				<!-- <div slot="header" class="text-bold"> <span>I. </span>Tài liệu nộp</div> -->
 				<small slot="header" class="text-gray text-right mr-4"> Những thành phần hồ sơ có dấu ( <span style="color: red;"> * </span> ) là thành phần bắt buộc</small>
 				<div class="opencps_list_border_style" jx-bind="listDocumentIn"></div>
 				</v-expansion-panel-content>
 			</v-expansion-panel>
-			<v-expansion-panel expand class="my-0">
-				<v-expansion-panel-content v-bind:value="true">
-				<div slot="header" class="text-bold"> <span>II. </span>Kết quả</div>
+			<v-expansion-panel expand class="my-0">	
+				<v-expansion-panel-content v-bind:value="true" class="pl-0">
+				<div slot="header">
+					<div class="background-triangle-small">II.</div> <span>Kết quả</span>
+				</div>
+				<!-- <div slot="header" class="text-bold"> <span>II. </span>Kết quả</div> -->
 				<div class="opencps_list_border_style" jx-bind="listDocumentOut"></div> 
 				</v-expansion-panel-content>
 			</v-expansion-panel>
