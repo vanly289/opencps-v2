@@ -1466,12 +1466,17 @@ public class DossierActionsImpl implements DossierActions {
 		
 		String type = StringPool.BLANK;
 
+		if (dossier != null) {
+			String dossierStatus = dossier.getDossierStatus().toLowerCase();
+			if (Validator.isNotNull(dossierStatus) && !dossierStatus.equals("new")) {
 		String applicantNote = _buildDossierNote(dossier, actionNote, groupId, type);
 		_log.info("applicantNote: "+applicantNote);
 
 		dossier.setApplicantNote(applicantNote);
 
 		DossierLocalServiceUtil.updateDossier(dossier);
+			}
+		}
 
 		if (Validator.isNull(dossier)) {
 			throw new NotFoundException("DossierNotFoundException");
@@ -1684,37 +1689,39 @@ public class DossierActionsImpl implements DossierActions {
 
 				// TODO add SYNC for DossierFile and PaymentFile here
 
+				//TODO: process SyncDossierFile
+				processSyncDossierFile(dossierId, dossier.getReferenceUid(), processAction, groupId, userId, serviceProcess.getServerNo());
 				// SyncDossierFile
-				List<DossierFile> lsDossierFile = DossierFileLocalServiceUtil.getByDossierIdAndIsNew(dossierId, true);
+				//List<DossierFile> lsDossierFile = DossierFileLocalServiceUtil.getByDossierIdAndIsNew(dossierId, true);
 
 				// check return file
-				List<String> returnDossierFileTemplateNos = ListUtil
-						.toList(StringUtil.split(processAction.getReturnDossierFiles()));
+				//List<String> returnDossierFileTemplateNos = ListUtil
+				//		.toList(StringUtil.split(processAction.getReturnDossierFiles()));
 
-				_log.info("__return dossierFiles" + processAction.getReturnDossierFiles());
+				//_log.info("__return dossierFiles" + processAction.getReturnDossierFiles());
 
-				for (DossierFile dosserFile : lsDossierFile) {
+				//for (DossierFile dosserFile : lsDossierFile) {
 
-					_log.info("&&&StartUpdateDossierFile" + new Date());
+				//	_log.info("&&&StartUpdateDossierFile" + new Date());
 
-					dosserFile.setIsNew(false);
+				//	dosserFile.setIsNew(false);
 
-					DossierFileLocalServiceUtil.updateDossierFile(dosserFile);
+				//	DossierFileLocalServiceUtil.updateDossierFile(dosserFile);
 
-					_log.info("&&&EndUpdateDossierFile" + new Date());
+				//	_log.info("&&&EndUpdateDossierFile" + new Date());
 
-					_log.info("__dossierPart" + processAction.getReturnDossierFiles());
-					_log.info("__dossierPart" + dosserFile.getFileTemplateNo());
+				//	_log.info("__dossierPart" + processAction.getReturnDossierFiles());
+				//	_log.info("__dossierPart" + dosserFile.getFileTemplateNo());
 
-					if (returnDossierFileTemplateNos.contains(dosserFile.getFileTemplateNo())) {
-						_log.info("START SYNC DOSSIER FILE");
-						DossierSyncLocalServiceUtil.updateDossierSync(groupId, userId, dossierId,
-								dossier.getReferenceUid(), false, 1, dosserFile.getDossierFileId(),
-								dosserFile.getReferenceUid(), serviceProcess.getServerNo());
+				//	if (returnDossierFileTemplateNos.contains(dosserFile.getFileTemplateNo())) {
+				//		_log.info("START SYNC DOSSIER FILE");
+				//		DossierSyncLocalServiceUtil.updateDossierSync(groupId, userId, dossierId,
+				//				dossier.getReferenceUid(), false, 1, dosserFile.getDossierFileId(),
+				//				dosserFile.getReferenceUid(), serviceProcess.getServerNo());
 
-					}
+				//	}
 
-				}
+				//}
 
 			}
 
@@ -2674,7 +2681,8 @@ private String _buildDossierNote(Dossier dossier, String actionNote, long groupI
 		StringBuilder sb = new StringBuilder();
 
 		String oldNote = dossier.getApplicantNote();
-		//_log.info("oldNote: "+oldNote);
+		_log.info("oldNote: "+oldNote);
+		_log.info("actionNote: "+actionNote);
 
 		if (Validator.isNotNull(oldNote) && oldNote.contains("<br>")) {
 			if (Validator.isNotNull(actionNote)) {
@@ -2984,4 +2992,80 @@ private String _buildDossierNote(Dossier dossier, String actionNote, long groupI
 		return result;
 	}
 
+	@Override
+	public Dossier createDossier(long groupId,String serviceCode, String govAgencyCode, String applicantName,
+			String applicantIdType, String applicantIdNo, Date applicantIdDate, String address, String cityCode,
+			String districtCode, String wardCode, String contactName, String contactTelNo, String contactEmail,
+			boolean isSameAsApplicant, String delegateName, String delegateIdNo, String delegateTelNo,
+			String delegateEmail, String delegateAddress, String delegateCityCode, String delegateDistrictCode,
+			String delegateWardCode, String applicantNote, String briefNote,
+			String dossierNo, String dossierTemplateNo, int viaPostal, String postalServiceCode,
+			String postalServiceName, String postalAddress, String postalCityCode, String postalDistrictCode,
+			String postalWardCode, String postalTelNo, ServiceContext context) throws PortalException {
+
+		return DossierLocalServiceUtil.createDossier(groupId, serviceCode, govAgencyCode, applicantName,
+				applicantIdType, applicantIdNo, applicantIdDate, address, cityCode, districtCode, wardCode, contactName,
+				contactTelNo, contactEmail, isSameAsApplicant, delegateName, delegateIdNo, delegateTelNo, delegateEmail,
+				delegateAddress, delegateCityCode, delegateDistrictCode, delegateWardCode, applicantNote, briefNote,
+				dossierNo, dossierTemplateNo, viaPostal, postalServiceCode, postalServiceName, postalAddress, postalCityCode, postalDistrictCode, postalWardCode, postalTelNo, context);
+				
+	}
+
+	private void processSyncDossierFile(long dossierId, String referenceUid, ProcessAction processAction, long groupId,
+			long userId, String serverNo) {
+
+		// check return file
+		List<String> returnDossierFileTemplateNos = ListUtil
+				.toList(StringUtil.split(processAction.getReturnDossierFiles()));
+		_log.info("__return dossierFiles" + processAction.getReturnDossierFiles());
+		_log.info("__return dossierId" + dossierId);
+
+		List<DossierFile> dossierFileList = null;
+		if (returnDossierFileTemplateNos != null && returnDossierFileTemplateNos.size() > 0) {
+			dossierFileList = DossierFileLocalServiceUtil.getDossierFilesByD_DP(dossierId, 2);
+		} else {
+			dossierFileList = DossierFileLocalServiceUtil.getByDossierIdAndIsNew(dossierId, true);
+		}
+
+		// Update and sync dossierFile
+		if (returnDossierFileTemplateNos != null && returnDossierFileTemplateNos.size() > 0) {
+			_log.info("__return dossierFiles" + processAction.getReturnDossierFiles());
+			if (dossierFileList != null && dossierFileList.size() > 0) {
+				_log.info("__return size" + dossierFileList.size());
+				String fileTemplateNo = StringPool.BLANK;
+				for (DossierFile dossierFile : dossierFileList) {
+
+					// Update record dossierFile
+					if (dossierFile.getIsNew()) {
+						updateIsNewDossierFile(dossierFile);
+					}
+
+					_log.info("__dossierPart" + processAction.getReturnDossierFiles());
+					_log.info("__dossierPart" + dossierFile.getFileTemplateNo());
+					fileTemplateNo = dossierFile.getFileTemplateNo();
+
+					if (returnDossierFileTemplateNos.contains(fileTemplateNo)) {
+						_log.info("START SYNC DOSSIER FILE");
+						DossierSyncLocalServiceUtil.updateDossierSync(groupId, userId, dossierId, referenceUid, false,
+								1, dossierFile.getDossierFileId(), dossierFile.getReferenceUid(), serverNo);
+
+					}
+				}
+			}
+		} else {// only update dossierFile
+			if (dossierFileList != null && dossierFileList.size() > 0) {
+				for (DossierFile dossierFile : dossierFileList) {
+					updateIsNewDossierFile(dossierFile);
+				}
+			}
+		}
+	}
+
+	//Update DossierFile when Sync
+	private void updateIsNewDossierFile(DossierFile dossierFile) {
+		_log.info("&&&StartUpdateDossierFile" + new Date());
+		dossierFile.setIsNew(false);
+		DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+		_log.info("&&&EndUpdateDossierFile" + new Date());
+	}
 }

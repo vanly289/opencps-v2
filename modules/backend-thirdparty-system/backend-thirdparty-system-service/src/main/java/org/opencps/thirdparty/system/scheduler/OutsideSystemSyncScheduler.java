@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 @Component(immediate = true, service = OutsideSystemSyncScheduler.class)
 public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListener {
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		_log.info("Starting sync with third party system is starting at  : "
@@ -142,6 +141,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				body.setContent(content);
 
 				DossierAction dossierAction = _dossierActionLocalService.fetchDossierAction(dossierActionId);
+				
 				if (dossierAction != null) {
 					if (dossierAction.getSyncActionCode().equals("1105")) {
 						nswRequest.setDocumentType(dossier.getServiceCode());
@@ -375,11 +375,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							cal.setTime(dossier.getCreateDate());
 							subject.setDocumentYear(cal.get(Calendar.YEAR));
 						}
+						cal.setTime(dossier.getCreateDate());
+						model.setDocumentYear(cal.get(Calendar.YEAR));
 						model.setPreReference(dossier.getReferenceUid());
 						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 						model.setRetryCount(1);
 						model.setDirection(2);
-
+											
 						MessageQueueDetailModel result = client.postMessageQueue(model);
 						if (result != null) {
 							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK() : sync.getMethod());
@@ -443,6 +445,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setType("11");
 						model.setFunction("17");
 						model.setReference(dossier.getReferenceUid());
+						cal.setTime(dossier.getCreateDate());
+						model.setDocumentYear(cal.get(Calendar.YEAR));
 
 						if (dossier.getReceiveDate() != null) {
 							cal.setTime(dossier.getReceiveDate());
@@ -469,6 +473,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
 
 							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						}
+						else {
+							
 						}
 					} else if (dossierAction.getSyncActionCode().equals("1409")) {
 						nswRequest.setDocumentType(dossier.getServiceCode());
@@ -525,6 +532,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							cal.setTime(dossier.getCreateDate());
 							subject.setDocumentYear(cal.get(Calendar.YEAR));
 						}
+						cal.setTime(dossier.getCreateDate());
+						model.setDocumentYear(cal.get(Calendar.YEAR));	
 						model.setPreReference(dossier.getReferenceUid());
 						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 						model.setRetryCount(1);
@@ -604,6 +613,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 						model.setRetryCount(1);
 						model.setDirection(2);
+						cal.setTime(dossier.getCreateDate());
+						model.setDocumentYear(cal.get(Calendar.YEAR));
 
 						MessageQueueDetailModel result = client.postMessageQueue(model);
 						if (result != null) {
@@ -638,7 +649,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							cal.setTime(dossier.getCreateDate());
 							subject.setDocumentYear(cal.get(Calendar.YEAR));
 						}
-
+						
 						if (dossier.getServiceCode().equals("BGTVT0600001")
 								|| dossier.getServiceCode().equals("BGTVT0600002")
 								|| dossier.getServiceCode().equals("BGTVT0600003")
@@ -649,8 +660,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600022")) {
 
 							MessageQueueInputModel model = BGTVT0600001.convertResult(dossier, dossierSync, envelope, "18", "15");
-
+							
 							MessageQueueDetailModel result = client.postMessageQueue(model);
+							
 							if (result != null) {
 								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
 										: sync.getMethod());
@@ -874,6 +886,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 						model.setRetryCount(1);
 						model.setDirection(2);
+						cal.setTime(dossier.getCreateDate());
+						model.setDocumentYear(cal.get(Calendar.YEAR));
 
 						MessageQueueDetailModel result = client.postMessageQueue(model);
 						if (result != null) {

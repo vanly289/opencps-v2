@@ -1,6 +1,7 @@
 package org.opencps.thirdparty.system.scheduler;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -74,6 +75,14 @@ public class BGTVT0600044 {
 		model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
 		model.setRetryCount(1);
 		model.setDirection(2);
+		Calendar cal = Calendar.getInstance();
+		
+		if (dossier.getReceiveDate() != null) {
+			cal.setTime(dossier.getReceiveDate());
+		} else {
+			cal.setTime(dossier.getCreateDate());
+		}
+		model.setDocumentYear(cal.get(Calendar.YEAR));
 
 		List<DossierFile> dossierFileList = DossierFileLocalServiceUtil
 				.getAllDossierFile(dossier.getDossierId());
