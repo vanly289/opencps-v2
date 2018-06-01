@@ -15,23 +15,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for KetQuaXuLy complex type.
+ * <p>Java class for Phanhoi_Yeucau_Sua complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="KetQuaXuLy">
+ * &lt;complexType name="Phanhoi_Yeucau_Sua">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="so_gp" minOccurs="0">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="255"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="noi_dung" minOccurs="0">
+ *         &lt;element name="noi_dung">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;maxLength value="2000"/>
@@ -52,13 +45,6 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="link_congvan">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="2000"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -68,49 +54,19 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "KetQuaXuLy", propOrder = {
-    "soGp",
+@XmlType(name = "Phanhoi_Yeucau_Sua", propOrder = {
     "noiDung",
     "ngayXuLy",
-    "donViXuLy",
-    "linkCongvan"
+    "donViXuLy"
 })
-public class KetQuaXuLy {
+public class PhanhoiYeucauSua {
 
-    @XmlElement(name = "so_gp")
-    protected String soGp;
-    @XmlElement(name = "noi_dung")
+    @XmlElement(name = "noi_dung", required = true)
     protected String noiDung;
     @XmlElement(name = "ngay_xu_ly", required = true)
     protected String ngayXuLy;
     @XmlElement(name = "don_vi_xu_ly", required = true)
     protected String donViXuLy;
-    @XmlElement(name = "link_congvan", required = true)
-    protected String linkCongvan;
-
-    /**
-     * Gets the value of the soGp property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSoGp() {
-        return soGp;
-    }
-
-    /**
-     * Sets the value of the soGp property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSoGp(String value) {
-        this.soGp = value;
-    }
 
     /**
      * Gets the value of the noiDung property.
@@ -182,30 +138,6 @@ public class KetQuaXuLy {
      */
     public void setDonViXuLy(String value) {
         this.donViXuLy = value;
-    }
-
-    /**
-     * Gets the value of the linkCongvan property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLinkCongvan() {
-        return linkCongvan;
-    }
-
-    /**
-     * Sets the value of the linkCongvan property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setLinkCongvan(String value) {
-        this.linkCongvan = value;
     }
 
 }

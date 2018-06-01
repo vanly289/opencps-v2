@@ -148,6 +148,29 @@ public class BGTVT0600001 {
 						linkCongVan += "/public/" + dossier.getPassword();
 					}
 					attachedFile.setFileURL(linkCongVan);
+
+//					if (dossierFile.getFileEntryId() > 0) {
+//						FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
+//
+//						File file = DLFileEntryLocalServiceUtil.getFile(fileEntry.getFileEntryId(), fileEntry.getVersion(),
+//								true);
+//						
+//				        String encodedBase64 = null;
+//				        try {
+//				            FileInputStream fileInputStreamReader = new FileInputStream(file);
+//				            byte[] bytes = new byte[(int)file.length()];
+//				            fileInputStreamReader.read(bytes);
+//				            encodedBase64 = new String(Base64.getEncoder().encodeToString(bytes));
+//				            
+//				            fileInputStreamReader.close();
+//				        } catch (FileNotFoundException e) {
+//				            e.printStackTrace();
+//				        } catch (IOException e) {
+//				            e.printStackTrace();
+//				        }						
+//				        
+//					}
+					
 					JSONObject formDataObj = JSONFactoryUtil
 							.createJSONObject(dossierFile.getFormData());
 					vlInterRoadTransportLicense.setLicenceNo(dossierFile.getDeliverableCode());

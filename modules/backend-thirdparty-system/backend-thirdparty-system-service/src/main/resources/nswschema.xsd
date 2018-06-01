@@ -35,7 +35,7 @@
 			<xsd:sequence>
 				<xsd:element ref="Header" minOccurs="0" />
 				<xsd:element ref="Body" minOccurs="1" />
-				<xsd:element name="systemSignature" type="xsd:string" />
+				<xsd:element name="SystemSignature" type="xsd:string" />
 				<xsd:any namespace="##other" minOccurs="0" maxOccurs="unbounded"
 					processContents="lax" />
 			</xsd:sequence>
@@ -128,7 +128,8 @@
 	<xsd:complexType name="Content">
 		<xsd:sequence>
 			<xsd:element ref="DS_Loi" minOccurs="0" />
-			<xsd:element ref="KetQuaXuLy" minOccurs="0" />
+			<xsd:element ref="KetQuaXuLy" minOccurs="0" />			
+			<xsd:element ref="Phanhoi_Yeucau_Sua" minOccurs="0" />
 			<xsd:element ref="VLInterRoadTransportLicence" minOccurs="0"></xsd:element>
 			<xsd:element ref="VLCrossBorderTransportPermit" minOccurs="0"></xsd:element>
 			<xsd:element ref="ApprovalOfVLFixRoadTransport" minOccurs="0"></xsd:element>
@@ -175,6 +176,34 @@
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">
 						<xsd:maxLength value="2000"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="Phanhoi_Yeucau_Sua" type="Phanhoi_Yeucau_Sua"/>
+	<xsd:complexType name="Phanhoi_Yeucau_Sua">
+		<xsd:sequence>
+			<xsd:element name="noi_dung">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="2000"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ngay_xu_ly">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />					
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="don_vi_xu_ly">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="250"></xsd:maxLength>
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
@@ -1402,7 +1431,7 @@
 	<xsd:complexType name="Body">
 		<xsd:sequence>
 			<xsd:element ref="Content" />
-			<xsd:element name="personSignature" type="xsd:string" />
+			<xsd:element name="PersonSignature" type="xsd:string" />
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

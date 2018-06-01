@@ -368,7 +368,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						formReport = _getFormScript(formCode, dossier.getDossierId());
 					}
 
-					//_log.info("Form data to preview: " + formData);
+					_log.info("Form data to preview: " + formData);
 					Message message = new Message();
 
 					message.put("formReport", formReport);
@@ -457,13 +457,26 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 		fileTemplateNo = StringUtil.replaceFirst(fileTemplateNo, "#", StringPool.BLANK);
 
 		try {
-			// Dossier dossier = DossierLocalServiceUtil.getDossier(dossierId);
+			Dossier dossier = DossierLocalServiceUtil.getDossier(dossierId);
 
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 					fileTemplateNo, false, new DossierFileComparator(false, "createDate", Date.class));
 
-			DossierPart dossierPart = DossierPartLocalServiceUtil.getByFileTemplateNo(groupId, fileTemplateNo);
+			List<DossierPart> lstParts = DossierPartLocalServiceUtil.getByTemplateNo(groupId, dossier.getDossierTemplateNo());
+			
+			DossierPart dossierPart = null;
 
+//			dossierParth = DossierPartLocalServiceUtil.getByFileTemplateNo(groupId, fileTemplateNo);		
+			
+			for (DossierPart part : lstParts) {
+				if (part.getFileTemplateNo().equals(fileTemplateNo)) {
+					dossierPart = part;
+					break;
+				}
+			}
+
+			_log.info("Form data: " + dossierFile.getFormData());
+			_log.info("Dossier part: " + dossierPart.getPartNo() + ", " + dossierPart.getSampleData());
 			formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
 
 			_log.info(formData);
@@ -532,6 +545,14 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 							_log.info("--------DELIVERABLES----------" + deliverables);
 							
 							if (Validator.isNull(deliverables)) {
+								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
+								formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+								formData = formDataObj.toJSONString();
+							}
+							else {
+								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
+								formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+								formData = formDataObj.toJSONString();
 							}
 						}
 						
@@ -584,7 +605,15 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 			Dossier dossier = DossierLocalServiceUtil.getDossier(dossierId);
 
-			DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossier.getGroupId(), fileTemplateNo);
+			List<DossierPart> lstParts = DossierPartLocalServiceUtil.getByTemplateNo(dossier.getGroupId(), dossier.getDossierTemplateNo());
+			DossierPart part = null;
+			for (DossierPart temppart : lstParts) {
+				if (temppart.getFileTemplateNo().equals(fileTemplateNo)) {
+					part = temppart;
+					break;
+				}
+			}
+//			DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossier.getGroupId(), fileTemplateNo);
 
 			formData = part.getFormReport();
 

@@ -31,8 +31,8 @@ import vgca.svrsigner.ServerSigner;
 public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 
 	private static Log _log = LogFactoryUtil.getLog(DigitalSignatureActionsImpl.class);
-//	private static final String TYPE_KYSO = "1135, 1158, 1160, 1032";
-//	private static final String TYPE_DONGDAU = "1137, 1160, 1162";
+	private static final String TYPE_KYSO = "1032,1050";
+	private static final String TYPE_DONGDAU = "1035,1053";
 //	private static final String STEPCODE_KYSO = "300, 301, 105";
 //	private static final String STEPCODE_DONGDAU = "400";
 
@@ -90,6 +90,7 @@ public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 //					_log.info("signImagePath_Dongdau: "+realPath);
 //				}
 //				String signImagePath = new File(realPath + email + ".png").getAbsolutePath();
+				_log.info("Sign image path real path: " + signImagePath);
 				String imageBase64 = ImageUtil.getSignatureImageBase64ByPath(signImagePath);
 //				_log.info("signImagePath: "+signImagePath);
 //				_log.info("imageBase64: "+imageBase64);
@@ -106,7 +107,7 @@ public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 				signer.setSignatureAppearance(PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION);
 
 				ExtractTextLocations textLocation = new ExtractTextLocations(fullPath);
-
+				
 				_log.info("*********************************" + textLocation.getAnchorX() + "-"
 						+ textLocation.getAnchorY() + "********************************");
 
@@ -161,8 +162,7 @@ public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 //						new Rectangle(llx + 20, lly - 105,
 //								urx + 94, ury - 70), 1);
 //				inHash = signer.computeHash(new Rectangle(llx + 22, lly - 145, urx + 94, ury - 70), 1);
-//				if (TYPE_KYSO.contains(typeSignature) && STEPCODE_KYSO.contains(postStepCode)) {
-				inHash = signer.computeHash(new Rectangle(llx + 10, lly - 15, urx + 90, ury), 1);
+//				inHash = signer.computeHash(new Rectangle(llx + 10, lly - 15, urx + 90, ury), 1);
 //				if (TYPE_KYSO.contains(typeSignature) && STEPCODE_KYSO.contains(postStepCode)) {
 //					inHash = signer.computeHash(new Rectangle(llx + 10, lly - 15, urx + 90, ury), 1);
 //					_log.info("inHash_Kyso: "+inHash);
@@ -171,6 +171,16 @@ public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 //					_log.info("inHash_Dongdau: "+inHash);
 //				}
 //				inHash = signer.computeHash(new Rectangle(llx + 10, lly - 15, urx + 90, ury), 1);
+
+				if (TYPE_KYSO.contains(typeSignature)) {
+					inHash = signer.computeHash(new Rectangle(llx + 10, lly - 15, urx + 90, ury), 1);
+					_log.info("inHash_Kyso: "+inHash);
+				} else if (TYPE_DONGDAU.contains(typeSignature)) {
+					inHash = signer.computeHash(new Rectangle(llx + 10, lly - 115, urx + 90, ury-95), 1);
+					_log.info("inHash_Dongdau: "+inHash);
+				}
+//			inHash = signer.computeHash(new Rectangle(llx + 10, lly - 15, urx + 90, ury), 1);
+				
 				_log.info("********************************* llx " + llx);
 
 				_log.info("********************************* lly " + lly);

@@ -86,6 +86,34 @@
 		</xsd:sequence>
 	</xsd:complexType>
 	
+	<xsd:element name="Phanhoi_Yeucau_Sua" type="Phanhoi_Yeucau_Sua"/>
+	<xsd:complexType name="Phanhoi_Yeucau_Sua">
+		<xsd:sequence>
+			<xsd:element name="noi_dung">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="2000"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ngay_xu_ly">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />					
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="don_vi_xu_ly">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="250"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
 	<xsd:element name="DN_Yeucau_Rut" type="DN_Yeucau_Rut"/>
 	<xsd:complexType name="DN_Yeucau_Rut">
 		<xsd:sequence>

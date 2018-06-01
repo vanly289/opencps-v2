@@ -9,6 +9,7 @@ import org.opencps.datamgt.utils.DateTimeUtils;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
+import org.opencps.dossiermgt.model.DossierPart;
 import org.opencps.dossiermgt.model.ProcessAction;
 import org.opencps.dossiermgt.model.ProcessOption;
 import org.opencps.dossiermgt.model.ServiceConfig;
@@ -20,6 +21,7 @@ import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalService;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalService;
+import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierSyncLocalService;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
@@ -30,6 +32,7 @@ import org.opencps.thirdparty.system.constants.SyncServerTerm;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueDetailModel;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueInputModel;
 import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
+import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.Body;
 import org.opencps.thirdparty.system.nsw.model.Content;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
@@ -37,6 +40,7 @@ import org.opencps.thirdparty.system.nsw.model.From;
 import org.opencps.thirdparty.system.nsw.model.Header;
 import org.opencps.thirdparty.system.nsw.model.KetQuaXuLy;
 import org.opencps.thirdparty.system.nsw.model.NSWRequest;
+import org.opencps.thirdparty.system.nsw.model.PhanhoiYeucauSua;
 import org.opencps.thirdparty.system.nsw.model.RequestPayload;
 import org.opencps.thirdparty.system.nsw.model.Subject;
 import org.opencps.thirdparty.system.nsw.model.To;
@@ -64,6 +68,7 @@ import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 @Component(immediate = true, service = OutsideSystemSyncScheduler.class)
@@ -98,12 +103,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				envelope.setHeader(header);
 				requestPayload.setEnvelope(envelope);
 				From from = new From();
+				from.setName("Bộ giao thông vận tải");
 				from.setCountryCode("VN");
 				from.setIdentity("BGTVT");
 				from.setMinistryCode("BGTVT");
 				from.setOrganizationCode("TCDBVN");
 				if (!dossier.getGovAgencyCode().equals("TCDBVN")) {
 					from.setUnitCode(dossier.getGovAgencyCode());					
+				}
+				else {
+					from.setUnitCode(StringPool.BLANK);
 				}
 				header.setFrom(from);
 				To to = new To();
@@ -112,10 +121,12 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				to.setMinistryCode("BTC");
 				to.setOrganizationCode("BTC");
 				to.setUnitCode("BTC");
+				to.setCountryCode("VN");
+				
 				header.setTo(to);
 				org.opencps.thirdparty.system.nsw.model.Reference reference = new org.opencps.thirdparty.system.nsw.model.Reference();
 
-				reference.setVersion("1.0");
+				reference.setVersion("1");
 				reference.setMessageId(PortalUUIDUtil.generate());
 
 				header.setReference(reference);
@@ -156,10 +167,12 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						KetQuaXuLy ketqua = new KetQuaXuLy();
 						content.setKetQuaXuLy(ketqua);
+						ketqua.setSoGp(StringPool.BLANK);
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
-
+						ketqua.setLinkCongvan(StringPool.BLANK);
+						
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
@@ -226,10 +239,15 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						KetQuaXuLy ketqua = new KetQuaXuLy();
 						content.setKetQuaXuLy(ketqua);
 
+						ketqua.setSoGp(StringPool.BLANK);
 						ketqua.setNoiDung(dossierAction.getActionNote());
+						if (Validator.isNull(ketqua.getNoiDung())) {
+							ketqua.setNoiDung("Hồ sơ bị thiếu cần bổ sung!!");
+						}
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
-
+						ketqua.setLinkCongvan(StringPool.BLANK);
+						
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
 
@@ -333,10 +351,12 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						KetQuaXuLy ketqua = new KetQuaXuLy();
 						content.setKetQuaXuLy(ketqua);
 
+						ketqua.setSoGp(StringPool.BLANK);
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
-
+						ketqua.setLinkCongvan(StringPool.BLANK);
+						
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 
 						body.setPersonSignature("");
@@ -410,10 +430,31 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						KetQuaXuLy ketqua = new KetQuaXuLy();
 						content.setKetQuaXuLy(ketqua);
 
+						List<DossierFile> dossierFileList = DossierFileLocalServiceUtil
+								.getAllDossierFile(dossier.getDossierId());
+
+						String templateNo = StringPool.BLANK;
+						String partNo = StringPool.BLANK;
+
+						for (DossierFile dossierFile : dossierFileList) {
+							templateNo = dossierFile.getFileTemplateNo();
+							partNo = dossierFile.getDossierPartNo();
+
+							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossierFile.getGroupId(), templateNo);
+							
+							if (part.getPartType() == 2 && part.getESign()) {
+								ketqua.setSoGp(dossierFile.getDeliverableCode());
+							}
+						}
+						
+						if (Validator.isNull(ketqua.getSoGp())) {
+							ketqua.setSoGp("11");
+						}
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
-
+						ketqua.setLinkCongvan(StringPool.BLANK);
+						
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
 
@@ -487,13 +528,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						subject.setSendDate(
 								APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 
-						KetQuaXuLy ketqua = new KetQuaXuLy();
-						content.setKetQuaXuLy(ketqua);
+						PhanhoiYeucauSua phanhoi = new PhanhoiYeucauSua();
+						phanhoi.setNoiDung(dossierAction.getActionNote());
+						phanhoi.setDonViXuLy(dossier.getGovAgencyName());
+						phanhoi.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
 
-						ketqua.setNoiDung(dossierAction.getActionNote());
-						ketqua.setDonViXuLy(dossier.getGovAgencyName());
-						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
-
+						content.setPhanhoiYeucauSua(phanhoi);
+						
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
 
@@ -564,13 +605,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						subject.setSendDate(
 								APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 
-						KetQuaXuLy ketqua = new KetQuaXuLy();
-						content.setKetQuaXuLy(ketqua);
+						PhanhoiYeucauSua phanhoi = new PhanhoiYeucauSua();
+						phanhoi.setNoiDung(dossierAction.getActionNote());
+						phanhoi.setDonViXuLy(dossier.getGovAgencyName());
+						phanhoi.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
 
-						ketqua.setNoiDung(dossierAction.getActionNote());
-						ketqua.setDonViXuLy(dossier.getGovAgencyName());
-						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
-
+						content.setPhanhoiYeucauSua(phanhoi);
+						
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
 
@@ -846,6 +887,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
+						ketqua.setLinkCongvan(StringPool.BLANK);
 						
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 

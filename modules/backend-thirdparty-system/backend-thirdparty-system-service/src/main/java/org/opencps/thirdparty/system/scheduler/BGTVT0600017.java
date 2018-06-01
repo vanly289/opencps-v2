@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
+import org.opencps.datamgt.utils.DateTimeUtils;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
@@ -110,6 +111,7 @@ public class BGTVT0600017 {
 				serviceProcess.getServiceProcessId(), dossierAction.getActionCode());
 
 		for (DossierFile dossierFile : dossierFileList) {
+			partNo = dossierFile.getDossierPartNo();
 			templateNo = dossierFile.getFileTemplateNo();
 
 			String returnDossierFiles = processAction.getReturnDossierFiles();
@@ -118,8 +120,8 @@ public class BGTVT0600017 {
 				if (templateNo.equals(returnDossierFile)) {
 					attachedFile = new AttachedFile();
 					attachedFile.setAttachedNote("");
-					attachedFile.setAttachedTypeCode(partNo);
-					attachedFile.setAttachedTypeName(templateNo);
+					attachedFile.setAttachedTypeCode(templateNo);
+					attachedFile.setAttachedTypeName(partNo);
 					attachedFile.setFullFileName(dossierFile.getDisplayName());
 
 					lstFiles.add(attachedFile);
@@ -132,13 +134,67 @@ public class BGTVT0600017 {
 					attachedFile.setFileURL(linkCongVan);
 					JSONObject formDataObj = JSONFactoryUtil
 							.createJSONObject(dossierFile.getFormData());
-					approvalOfVLAdjustFrequency.setOfficialDispatchNo(formDataObj.getString("OfficialDispatchNo"));
+					if (formDataObj.has("OfficialDispatchNo")) {
+						approvalOfVLAdjustFrequency.setOfficialDispatchNo(formDataObj.getString("OfficialDispatchNo"));						
+					}
+					else {
+						approvalOfVLAdjustFrequency.setOfficialDispatchNo(StringPool.BLANK);						
+					}
+					if (formDataObj.has("NameOfCompany")) {
+						approvalOfVLAdjustFrequency.setNameOfCompany(formDataObj.getString("NameOfCompany"));						
+					}
+					else {
+						approvalOfVLAdjustFrequency.setNameOfCompany(StringPool.BLANK);						
+					}
+					if (formDataObj.has("DepartureFrom")) {
+						approvalOfVLAdjustFrequency.setDepartureFrom(formDataObj.getString("DepartureFrom"));						
+					}
+					else {
+						approvalOfVLAdjustFrequency.setDepartureFrom(StringPool.BLANK);						
+					}
+					if (formDataObj.has("DepartureTo")) {
+						approvalOfVLAdjustFrequency.setDepartureTo(formDataObj.getString("DepartureTo"));						
+					}
+					else {
+						approvalOfVLAdjustFrequency.setDepartureTo(StringPool.BLANK);						
+					}
+					if (formDataObj.has("NumberOfLot")) {
+						approvalOfVLAdjustFrequency.setNumberOfLot(formDataObj.getString("NumberOfLot"));						
+					}
+					else {
+						approvalOfVLAdjustFrequency.setNumberOfLot(StringPool.BLANK);						
+					}
 					
 					IssuingAuthority issuingAuthority = new IssuingAuthority();
-					issuingAuthority.setSignName(formDataObj.getString("SignName"));
-					issuingAuthority.setSignDate(formDataObj.getString("SignDate"));
-					issuingAuthority.setSignPlace(formDataObj.getString("SignPlace"));
-					issuingAuthority.setSignTitle(formDataObj.getString("SignTitle"));
+					Date now = new Date();
+					
+					if (formDataObj.has("SignName")) {
+						issuingAuthority.setSignName(formDataObj.getString("SignName"));						
+					}
+					else {
+						issuingAuthority.setSignName("Nguyễn Tô An");						
+					}
+					if (formDataObj.has("SignDate")) {
+						String signDateStr = formDataObj.getString("SignDate");
+						Date signDate = DateTimeUtils.convertStringToDate(signDateStr);
+						
+						issuingAuthority.setSignDate(DateTimeUtils.convertDateToString(signDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					else {
+						issuingAuthority.setSignDate(DateTimeUtils.convertDateToString(now, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					if (formDataObj.has("SignPlace")) {
+						issuingAuthority.setSignPlace(formDataObj.getString("SignPlace"));						
+					}
+					else {
+						issuingAuthority.setSignPlace("Hà Nội");						
+					}
+					if (formDataObj.has("SignTitle")) {
+						issuingAuthority.setSignTitle(formDataObj.getString("SignTitle"));						
+					}
+					else {
+						issuingAuthority.setSignTitle("Cục trưởng");												
+					}
 					
 					approvalOfVLAdjustFrequency.setIssuingAuthority(issuingAuthority);
 				}
