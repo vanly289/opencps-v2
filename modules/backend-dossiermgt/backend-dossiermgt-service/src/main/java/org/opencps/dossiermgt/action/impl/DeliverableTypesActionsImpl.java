@@ -125,6 +125,12 @@ public class DeliverableTypesActionsImpl implements DeliverableTypesActions {
 				else if (key.equals(DeliverableTypesTerm.MAPPING_REVALIDATE)) {
 					return DeliverableTypesTerm.MAPPING_DEFAULT_REVALIDATE;
 				}
+				else if (key.equals(DeliverableTypesTerm.MAPPING_ALLOW)) {
+					return DeliverableTypesTerm.MAPPING_DEFAULT_ALLOW;
+				}
+				else if (key.equals(DeliverableTypesTerm.MAPPING_ACCEPTED)) {
+					return DeliverableTypesTerm.MAPPING_DEFAULT_ACCEPTED;
+				}
 				else {
 					return StringPool.BLANK;
 				}

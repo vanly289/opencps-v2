@@ -487,7 +487,10 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 			
 			if (Validator.isNotNull(dossierPart.getDeliverableType())) {
 				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
-				if (dlt != null) {					
+				if (dlt != null) {
+					String allowKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
+					String acceptedKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
+					
 			if (original) {
 						String mappingData = dlt.getMappingData();
 						JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
@@ -511,27 +514,33 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 									JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
 
 									for (int i = 0; i < deliverablesArr.length(); i++) {
-										JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
-
-										Iterator<?> keys = formDataObj.keys();
-
-										while( keys.hasNext() ) {
-										    String key = (String)keys.next();
-										    if (!key.equals(deliverables)) {
-										    	newFormDataObj.put(key, formDataObj.get(key));
-										    }
-										}							
 
 										JSONObject deliverableObj = deliverablesArr.getJSONObject(i);
 										
-										keys = deliverableObj.keys();
+										if (deliverableObj.has(acceptedKey) || deliverableObj.has(allowKey)) {
+											String value = (deliverableObj.has(acceptedKey) ? deliverableObj.getString(acceptedKey) : deliverableObj.getString(allowKey));
+											if ("1".equals(value)) {
+												JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
 
-										while( keys.hasNext() ) {
-										    String key = (String)keys.next();
-										    newFormDataObj.put(key, deliverableObj.get(key));
-										}																	
-										
-										deliverableListArr.put(newFormDataObj);
+												Iterator<?> keys = formDataObj.keys();
+
+												while( keys.hasNext() ) {
+												    String key = (String)keys.next();
+												    if (!key.equals(deliverables)) {
+												    	newFormDataObj.put(key, formDataObj.get(key));
+												    }
+												}							
+												
+												keys = deliverableObj.keys();
+
+												while( keys.hasNext() ) {
+												    String key = (String)keys.next();
+												    newFormDataObj.put(key, deliverableObj.get(key));
+												}																	
+												
+												deliverableListArr.put(newFormDataObj);
+											}
+										}
 									}
 								}
 								formData = deliverableListArr.toJSONString();

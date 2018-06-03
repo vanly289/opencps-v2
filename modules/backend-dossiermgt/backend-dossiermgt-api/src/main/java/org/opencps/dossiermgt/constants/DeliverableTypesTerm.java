@@ -23,6 +23,7 @@ public class DeliverableTypesTerm {
 	public static final String MAPPING_EXPIREDATE = "expireDate";
 	public static final String MAPPING_REVALIDATE = "revalidate";
 	public static final String MAPPING_ALLOW = "allow";
+	public static final String MAPPING_ACCEPTED = "accepted";
 	public static final String MAPPING_SIGNNAME = "signName";
 	public static final String MAPPING_SIGNDATE = "signDate";
 	public static final String MAPPING_SIGNTITLE = "signTitle";
@@ -37,4 +38,6 @@ public class DeliverableTypesTerm {
 	public static final String MAPPING_DEFAULT_REVALIDATE = "ValidUntil";	
 	public static final String MAPPING_DEFAULT_ISSUEDATE = "SignDate";	
 	
+	public static final String MAPPING_DEFAULT_ALLOW = "Allow";
+	public static final String MAPPING_DEFAULT_ACCEPTED = "Accepted";	
 }
