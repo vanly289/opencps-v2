@@ -503,6 +503,11 @@ public class DossierManagementImpl implements DossierManagement {
 			if (Validator.isNull(dossier)) {
 				throw new NotFoundException("Cant add DOSSIER");
 			}
+			else {
+				if (!online) {
+					DossierLocalServiceUtil.updateReceivingDate(groupId, dossier.getDossierId(), dossier.getReferenceUid(), new Date(), serviceContext);
+				}
+			}
 
 			DossierDetailModel result = DossierUtils.mappingForGetDetail(dossier, user.getUserId());
 
