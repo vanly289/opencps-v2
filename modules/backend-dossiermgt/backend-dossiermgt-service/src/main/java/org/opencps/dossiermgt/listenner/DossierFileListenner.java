@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
+import org.opencps.dossiermgt.action.DeliverableTypesActions;
+import org.opencps.dossiermgt.action.impl.DeliverableTypesActionsImpl;
 import org.opencps.dossiermgt.action.util.DossierLogUtils;
+import org.opencps.dossiermgt.constants.DeliverableTypesTerm;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.DeliverableType;
@@ -45,7 +48,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 @Component(immediate = true, service = ModelListener.class)
 public class DossierFileListenner extends BaseModelListener<DossierFile> {
-
 	@Override
 	public void onBeforeCreate(DossierFile model) throws ModelListenerException {
 		_log.info("Before Created........... ==> " + model.getDossierId());
@@ -469,7 +471,39 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 					deliverableState = "2";
 				}
 
-				if (Validator.isNotNull(formDataContent)) {
+				DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
+				DateFormatValidator dateValidator = new DateFormatValidator();
+				
+				_log.info("Update deliverable");
+				if (dlvType != null) {
+					String subjectKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_SUBJECT, dlvType);
+					String issueDateKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ISSUEDATE, dlvType);
+					String expireDateKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_EXPIREDATE, dlvType);
+					String revalidateKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_REVALIDATE, dlvType);
+					
+					if (Validator.isNotNull(subjectKey)) {
+						subject = formDataContent.getString(subjectKey);						
+					}
+					if (Validator.isNotNull(issueDateKey)) {
+						issueDate = formDataContent.getString(issueDateKey);	
+						if (dateValidator.validate(issueDate)) {
+							issueDate += " 00:00:00";
+						}
+					}
+					if (Validator.isNotNull(expireDateKey)) {
+						expireDate = formDataContent.getString(expireDateKey);						
+						if (dateValidator.validate(expireDate)) {
+							expireDate += " 00:00:00";
+						}
+					}
+					if (Validator.isNotNull(revalidateKey)) {
+						revalidate = formDataContent.getString(revalidateKey);						
+						if (dateValidator.validate(revalidate)) {
+							revalidate += " 00:00:00";
+						}
+					}					
+				}
+				else if (Validator.isNotNull(formDataContent)) {
 					subject = formDataContent.getString("subject");
 					issueDate = formDataContent.getString("issueDate");
 					expireDate = formDataContent.getString("expireDate");
@@ -477,6 +511,7 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 
 				}
 
+				_log.info("Deliverable info: revalidate " + revalidate);
 				if (Validator.isNull(dlv)) {
 					// add deliverable
 					dlv = DeliverableLocalServiceUtil.addDeliverable(model.getGroupId(), deliverableType,

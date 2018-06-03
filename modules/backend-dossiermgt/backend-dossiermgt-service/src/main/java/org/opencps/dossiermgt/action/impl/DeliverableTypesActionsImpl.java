@@ -3,6 +3,7 @@ package org.opencps.dossiermgt.action.impl;
 import java.util.List;
 
 import org.opencps.dossiermgt.action.DeliverableTypesActions;
+import org.opencps.dossiermgt.constants.DeliverableTypesTerm;
 import org.opencps.dossiermgt.model.DeliverableType;
 import org.opencps.dossiermgt.service.DeliverableTypeLocalServiceUtil;
 
@@ -13,6 +14,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 public class DeliverableTypesActionsImpl implements DeliverableTypesActions {
 
@@ -86,5 +89,50 @@ public class DeliverableTypesActionsImpl implements DeliverableTypesActions {
 			ServiceContext serviceContext) throws SystemException, PortalException {
 
 		return DeliverableTypeLocalServiceUtil.updateMappingData(groupId, deliverableTypeId, mappingData, serviceContext);
+	}
+
+	@Override
+	public String getMappingKey(String key, DeliverableType type) {
+		if (type == null)
+			return StringPool.BLANK;
+		String mappingData = type.getMappingData();
+		if (Validator.isNull(mappingData))
+			return StringPool.BLANK;
+		try {
+			JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
+			if (mappingDataObj.has(key)) {
+				return mappingDataObj.getString(key);
+			}
+			else {
+				if (key.equals(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE)) {
+					return DeliverableTypesTerm.MAPPING_DEFAULT_DELIVERABLE_CODE;
+				}
+				else if (key.equals(DeliverableTypesTerm.MAPPING_SIGNNAME)) {
+					return DeliverableTypesTerm.MAPPING_DEFAULT_SIGNNAME;
+				}
+				else if (key.equals(DeliverableTypesTerm.MAPPING_SIGNDATE)) {
+					return DeliverableTypesTerm.MAPPING_DEFAULT_SIGNDATE;
+				}
+				else if (key.equals(DeliverableTypesTerm.MAPPING_SIGNTITLE)) {
+					return DeliverableTypesTerm.MAPPING_DEFAULT_SIGNTITLE;
+				}
+				else if (key.equals(DeliverableTypesTerm.MAPPING_SIGNPLACE)) {
+					return DeliverableTypesTerm.MAPPING_DEFAULT_SIGNPLACE;
+				}
+				else if (key.equals(DeliverableTypesTerm.MAPPING_ISSUEDATE)) {
+					return DeliverableTypesTerm.MAPPING_DEFAULT_ISSUEDATE;
+				}
+				else if (key.equals(DeliverableTypesTerm.MAPPING_REVALIDATE)) {
+					return DeliverableTypesTerm.MAPPING_DEFAULT_REVALIDATE;
+				}
+				else {
+					return StringPool.BLANK;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+		return StringPool.BLANK;
 	}
 }

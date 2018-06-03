@@ -18,7 +18,9 @@ import org.opencps.auth.api.BackendAuth;
 import org.opencps.auth.api.BackendAuthImpl;
 import org.opencps.auth.api.exception.UnauthenticationException;
 import org.opencps.auth.api.exception.UnauthorizationException;
+import org.opencps.dossiermgt.action.DeliverableTypesActions;
 import org.opencps.dossiermgt.action.DossierFileActions;
+import org.opencps.dossiermgt.action.impl.DeliverableTypesActionsImpl;
 import org.opencps.dossiermgt.action.impl.DossierFileActionsImpl;
 import org.opencps.dossiermgt.action.util.AutoFillFormData;
 import org.opencps.dossiermgt.constants.DeliverableTypesTerm;
@@ -481,6 +483,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 			_log.info(formData);
 			_log.info("ORIGINAL PLUGIN: " + original);
+			DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
+			
 			if (Validator.isNotNull(dossierPart.getDeliverableType())) {
 				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
 				if (dlt != null) {					
@@ -543,15 +547,17 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
 							String deliverables = mappingDataObj.getString(DeliverableTypesTerm.DELIVERABLES_KEY);
 							_log.info("--------DELIVERABLES----------" + deliverables);
+							String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dlt);
 							
 							if (Validator.isNull(deliverables)) {
 								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
-								formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+								
+								formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
 								formData = formDataObj.toJSONString();
 							}
 							else {
 								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
-								formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+								formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
 								formData = formDataObj.toJSONString();
 							}
 						}

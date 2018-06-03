@@ -14,6 +14,7 @@ import org.opencps.datamgt.model.DictCollection;
 import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
+import org.opencps.dossiermgt.action.DeliverableTypesActions;
 import org.opencps.dossiermgt.action.DossierActions;
 import org.opencps.dossiermgt.action.DossierFileActions;
 import org.opencps.dossiermgt.action.util.AutoFillFormData;
@@ -840,9 +841,14 @@ public class DossierActionsImpl implements DossierActions {
 						
 																		docFileReferenceUid = dossierFile.getReferenceUid();
 						
+																		DeliverableType dt = DeliverableTypeLocalServiceUtil.getByCode(dossierPart.getGroupId(), dossierPart.getDeliverableType());
+																		DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
+																		
+																		String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dt);
+
 																		dossierFileId = dossierFile.getDossierFileId();
 																		formDataObj = JSONFactoryUtil.createJSONObject(formData);
-																		formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+																		formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
 																		formData = formDataObj.toJSONString();
 																		dossierFile.setFormData(formData);
 //																		_log.info("UPDATE FORM DATA GENERATE RESULT FILE");
@@ -884,8 +890,13 @@ public class DossierActionsImpl implements DossierActions {
 																				docFileReferenceUid = dossierFile.getReferenceUid();
 								
 																				dossierFileId = dossierFile.getDossierFileId();
+																				DeliverableType dt = DeliverableTypeLocalServiceUtil.getByCode(dossierPart.getGroupId(), dossierPart.getDeliverableType());
+																				DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
+																				
+																				String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dt);
+				
 																				formDataObj = JSONFactoryUtil.createJSONObject(formData);
-																				formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+																				formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
 				
 																				_log.info("UPDATE FORM DATA GENERATE RESULT FILE");
 																				actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, formData, serviceContext);																						
@@ -945,10 +956,14 @@ public class DossierActionsImpl implements DossierActions {
 												}
 
 												docFileReferenceUid = dossierFile.getReferenceUid();
+																						DeliverableType dt = DeliverableTypeLocalServiceUtil.getByCode(dossierPart.getGroupId(), dossierPart.getDeliverableType());
+																						DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
+																						
+																						String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dt);
 										
 																						dossierFileId = dossierFile.getDossierFileId();
 																						formDataObj = JSONFactoryUtil.createJSONObject(formData);
-																						formDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+																						formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
 						
 																						_log.info("UPDATE FORM DATA GENERATE RESULT FILE");
 																						actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, newFormDataObj.toJSONString(), serviceContext);																						
@@ -1144,7 +1159,11 @@ public class DossierActionsImpl implements DossierActions {
 																										
 																									dossierFileId = dossierFile.getDossierFileId();
 
-																									newFormDataObj.put("LicenceNo", DeliverableNumberGenerator.generateDeliverableNumber(groupId, companyId, dlt.getDeliverableTypeId()));
+																									DeliverableType dt = DeliverableTypeLocalServiceUtil.getByCode(dossierPart.getGroupId(), dossierPart.getDeliverableType());
+																									DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
+																									
+																									String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dt);
+																									newFormDataObj.put(deliverableCodeKey, DeliverableNumberGenerator.generateDeliverableNumber(groupId, companyId, dlt.getDeliverableTypeId()));
 
 																									DossierFileLocalServiceUtil.updateFormData(groupId, dossierId, docFileReferenceUid, newFormDataObj.toJSONString(), serviceContext);
 																								}

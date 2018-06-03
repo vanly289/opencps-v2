@@ -12,15 +12,19 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.opencps.dossiermgt.action.DeliverableTypesActions;
 import org.opencps.dossiermgt.action.DossierFileActions;
 import org.opencps.dossiermgt.action.util.AutoFillFormData;
+import org.opencps.dossiermgt.constants.DeliverableTypesTerm;
 import org.opencps.dossiermgt.constants.DossierFileTerm;
 import org.opencps.dossiermgt.constants.DossierStatusConstants;
 import org.opencps.dossiermgt.model.Deliverable;
+import org.opencps.dossiermgt.model.DeliverableType;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
 import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
+import org.opencps.dossiermgt.service.DeliverableTypeLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
@@ -227,8 +231,13 @@ public class DossierFileActionsImpl implements DossierFileActions {
 				defaultData = AutoFillFormData.sampleDataBinding(part.getSampleData(), dossierId, serviceContext);
 				dossierFile = DossierFileLocalServiceUtil.getByReferenceUid(referenceUid).get(0);
 				JSONObject defaultDataObj = JSONFactoryUtil.createJSONObject(defaultData);
+				DeliverableType dt = DeliverableTypeLocalServiceUtil.getByCode(part.getGroupId(), part.getDeliverableType());
+				DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
+				
+				String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dt);
+				
 				_log.info("Default data obj: " + defaultDataObj.toJSONString());
-				defaultDataObj.put("LicenceNo", dossierFile.getDeliverableCode());
+				defaultDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
 				_log.info("Default data obj: " + defaultDataObj.toJSONString());
 				defaultData = defaultDataObj.toJSONString();
 			}

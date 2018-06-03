@@ -17,4 +17,5 @@ public class DeliverableTerm {
 	public static final String EXPIRE_DATE = "expireDate";
 	public static final String REVALIDATE = "revalidate";
 	public static final String DELIVERABLE_STATE = "deliverableState";
+	
 }
