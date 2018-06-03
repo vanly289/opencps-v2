@@ -297,7 +297,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                     this.loadHistoryThongTinXe()
                 }
 			}
-			stateButtonregistration : true
+//			stateButtonregistration : true
 		},
 		onScroll: 'onScroll',
 		schema: {
@@ -2087,7 +2087,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						_initlistgroupTraCuuFilter: function(){
 							var vm = this;
-
+							
 							vm.listgroupTraCuuFilterItems = [
 							{
 								id: 'tat_ca_hoso',

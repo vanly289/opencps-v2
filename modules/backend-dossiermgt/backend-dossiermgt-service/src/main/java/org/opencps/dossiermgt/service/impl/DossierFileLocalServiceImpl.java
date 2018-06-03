@@ -209,18 +209,28 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 //		}
 		String deliverableCode = StringPool.BLANK;
 		
-		if (Validator.isNotNull(dossierPart.getDeliverableType())) {
+		_log.info("Dossier part ESign: " + dossierPart.getESign());
+		
+		if (Validator.isNotNull(dossierPart.getDeliverableType()) && dossierPart.getESign()) {
 			DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
 			
 			deliverableCode = DeliverableNumberGenerator.generateDeliverableNumber(groupId, serviceContext.getCompanyId(), deliverableType.getDeliverableTypeId());
 			object.setDeliverableCode(deliverableCode);
+			
+			_log.info("Deliverable code when add dossier file: " + deliverableCode);
 		}
 
 		if (Validator.isNotNull(dossierPart.getSampleData())) {
 			String formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, serviceContext);
 			JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
-			formDataObj.put("LicenceNo", deliverableCode);
+			if (Validator.isNotNull(deliverableCode)) {
+				formDataObj.put("LicenceNo", deliverableCode);				
+			}
+			else {
+				formDataObj.put("LicenceNo", StringPool.BLANK);
+			}
 			formData = formDataObj.toJSONString();
+			_log.info("Form data before update form data: " + formData);
 			object.setFormData(
 					formData
 					);
