@@ -37,6 +37,8 @@ import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessPluginLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
+import org.opencps.usermgt.model.Employee;
+import org.opencps.usermgt.service.EmployeeLocalServiceUtil;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -551,12 +553,23 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						}
 
 			} else {
-						String mappingData = dlt.getMappingData();
+				String employeeName = StringPool.BLANK;
+				try {
+					Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(groupId, context.getUserId());
+					employeeName = employee.getFullName();
+				}
+				catch (Exception e) {
+					// TODO: handle exception
+					_log.info(e.getMessage());
+				}
+		
+				String mappingData = dlt.getMappingData();
 						JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
 						if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
 							String deliverables = mappingDataObj.getString(DeliverableTypesTerm.DELIVERABLES_KEY);
 							_log.info("--------DELIVERABLES----------" + deliverables);
 							String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dlt);
+							String signNameKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_SIGNNAME, dlt);
 							
 							if (Validator.isNull(deliverables)) {
 								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
@@ -567,6 +580,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 							else {
 								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 								formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
+								formDataObj.put(signNameKey, employeeName);
 								formData = formDataObj.toJSONString();
 							}
 						}
