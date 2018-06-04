@@ -122,8 +122,8 @@ public class BGTVT0600036 {
 				if (templateNo.equals(returnDossierFile)) {
 					attachedFile = new AttachedFile();
 					attachedFile.setAttachedNote("");
-					attachedFile.setAttachedTypeCode(partNo);
-					attachedFile.setAttachedTypeName(templateNo);
+					attachedFile.setAttachedTypeCode(templateNo);
+					attachedFile.setAttachedTypeName(partNo);
 					attachedFile.setFullFileName(dossierFile.getDisplayName());
 
 					lstFiles.add(attachedFile);
@@ -140,6 +140,13 @@ public class BGTVT0600036 {
 					vtOfficialTransportPermit.setNameOfCompany(formDataObj.getString("NameOfCompany"));
 					vtOfficialTransportPermit.setAddress(formDataObj.getString("Address"));
 	
+					if (formDataObj.has("Tel")) {
+						vtOfficialTransportPermit.setTel(formDataObj.getString("Tel"));						
+					}
+					else {
+						vtOfficialTransportPermit.setTel(StringPool.BLANK);												
+					}
+
 					if (formDataObj.has("ContactName")) {
 						vtOfficialTransportPermit.setContactName(formDataObj.getString("ContactName"));						
 					}
