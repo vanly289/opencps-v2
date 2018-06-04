@@ -982,5 +982,9 @@ public class DeliverableLocalServiceImpl extends DeliverableLocalServiceBaseImpl
 		return booleanQueries;
 	}
 
+	public List<Deliverable> findDeliverableByDateAndState(String syncDate, long deliverableState) {
+		return deliverableFinder.findDeliverableByDateAndState(syncDate, deliverableState);
+	}
+	
 	private static Log _log = LogFactoryUtil.getLog(DeliverableLocalServiceImpl.class);
  }
