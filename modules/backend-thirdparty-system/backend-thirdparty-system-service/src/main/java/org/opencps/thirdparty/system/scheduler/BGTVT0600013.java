@@ -403,6 +403,15 @@ public class BGTVT0600013 {
 							else if (dossier.getServiceCode().equals("BGTVT0600015")) {
 								vl.setOperationType("3");
 							}	
+							if (dossier.getServiceCode().equals("BGTVT0600030")) {
+								vl.setOperationType("1");
+							}
+							else if (dossier.getServiceCode().equals("BGTVT0600031")) {
+								vl.setOperationType("2");
+							}
+							else if (dossier.getServiceCode().equals("BGTVT0600032")) {
+								vl.setOperationType("3");
+							}	
 							
 							lstVehicleList.add(vl);
 						}
