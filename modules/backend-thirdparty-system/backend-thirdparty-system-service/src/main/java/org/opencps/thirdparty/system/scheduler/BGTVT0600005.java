@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
+import org.opencps.datamgt.utils.DateTimeUtils;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
@@ -39,6 +40,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 public class BGTVT0600005 {
+	private static String DUMMY_DATA = "1";
+	
 	public static MessageQueueInputModel convertResult(Dossier dossier, ThirdPartyDossierSync dossierSync, Envelope envelope, String type, String function) throws PortalException {
 		long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
 		String jaxRsPublicUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_PUBLIC_URL);
@@ -133,17 +136,69 @@ public class BGTVT0600005 {
 					JSONObject formDataObj = JSONFactoryUtil
 							.createJSONObject(dossierFile.getFormData());
 					vlCrossBorderTransportPermit.setLicenceNo(dossierFile.getDeliverableCode());
-					vlCrossBorderTransportPermit.setValidUntil(formDataObj.getString("ValidUntil"));
-					vlCrossBorderTransportPermit.setRegistrationNumber(formDataObj.getString("RegistrationNumber"));
-					vlCrossBorderTransportPermit.setManufacturedYear(formDataObj.getString("ManufacturedYear"));
-					vlCrossBorderTransportPermit.setTrademarkCode(formDataObj.getString("TrademarkCode"));
-					vlCrossBorderTransportPermit.setTrademarkName(formDataObj.getString("TrademarkName"));
+					if (formDataObj.has("ValidUntil")) {
+						String validUntilStr = formDataObj.getString("ValidUntil");
+						Date validUntilDate = DateTimeUtils.convertStringToDate(validUntilStr);
+
+						vlCrossBorderTransportPermit.setValidUntil(DateTimeUtils.convertDateToString(validUntilDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));
+						
+					}
+					else {
+						vlCrossBorderTransportPermit.setValidUntil(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					if (formDataObj.has("RegistrationNumber")) {
+						vlCrossBorderTransportPermit.setRegistrationNumber(formDataObj.getString("RegistrationNumber"));						
+					}
+					else {
+						vlCrossBorderTransportPermit.setRegistrationNumber(DUMMY_DATA);
+					}
+					if (formDataObj.has("ManufacturedYear")) {
+						vlCrossBorderTransportPermit.setManufacturedYear(formDataObj.getString("ManufacturedYear"));						
+					}
+					else {
+						vlCrossBorderTransportPermit.setManufacturedYear(DUMMY_DATA);
+					}
+					if (formDataObj.has("TrademarkCode")) {
+						vlCrossBorderTransportPermit.setTrademarkCode(formDataObj.getString("TrademarkCode"));						
+					}
+					else {
+						vlCrossBorderTransportPermit.setTrademarkCode(DUMMY_DATA);
+					}
+					if (formDataObj.has("TrademarkName")) {
+						vlCrossBorderTransportPermit.setTrademarkName(formDataObj.getString("TrademarkName"));						
+					}
+					else {
+						vlCrossBorderTransportPermit.setTrademarkName(DUMMY_DATA);
+					}
 					
 					IssuingAuthority issuingAuthority = new IssuingAuthority();
-					issuingAuthority.setSignName(formDataObj.getString("SignName"));
-					issuingAuthority.setSignDate(formDataObj.getString("SignDate"));
-					issuingAuthority.setSignPlace(formDataObj.getString("SignPlace"));
-					issuingAuthority.setSignTitle(formDataObj.getString("SignTitle"));
+					if (formDataObj.has("SignName")) {
+						issuingAuthority.setSignName(formDataObj.getString("SignName"));						
+					}
+					else {
+						issuingAuthority.setSignName("Nguyễn Tô An");						
+					}
+					if (formDataObj.has("SignDate")) {
+						String signDateStr = formDataObj.getString("SignDate");
+						Date signDate = DateTimeUtils.convertStringToDate(signDateStr);
+						
+						issuingAuthority.setSignDate(DateTimeUtils.convertDateToString(signDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					else {
+						issuingAuthority.setSignDate(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					if (formDataObj.has("SignPlace")) {
+						issuingAuthority.setSignPlace(formDataObj.getString("SignPlace"));						
+					}
+					else {
+						issuingAuthority.setSignPlace("Hà Nội");						
+					}
+					if (formDataObj.has("SignTitle")) {
+						issuingAuthority.setSignTitle(formDataObj.getString("SignTitle"));						
+					}
+					else {
+						issuingAuthority.setSignTitle("Cục trưởng");												
+					}
 					
 					vlCrossBorderTransportPermit.setIssuingAuthority(issuingAuthority);
 				}
