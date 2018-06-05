@@ -1765,9 +1765,11 @@ public class DossierActionsImpl implements DossierActions {
 					Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
 					_log.info("DO REJECT_CANCELLING.... FIND RESOURCE");
 
-					sourceDossier.setCancellingDate(null);
+					if (sourceDossier != null) {
+						sourceDossier.setCancellingDate(null);
 
-					DossierLocalServiceUtil.updateDossier(sourceDossier);
+						DossierLocalServiceUtil.updateDossier(sourceDossier);						
+					}
 
 					dossier.setCancellingDate(null);
 
@@ -1786,9 +1788,11 @@ public class DossierActionsImpl implements DossierActions {
 
 					// in SERVER
 					
-					context.setScopeGroupId(sourceDossier.getGroupId());
-					DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid, "reject_cancelling",
-							actionNote, 0, status, context);
+					if (sourceDossier != null) {
+						context.setScopeGroupId(sourceDossier.getGroupId());
+						DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid, "reject_cancelling",
+								actionNote, 0, status, context);						
+					}
 					
 					context.setScopeGroupId(dossier.getGroupId());
 				}
@@ -1827,9 +1831,11 @@ public class DossierActionsImpl implements DossierActions {
 					Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
 					_log.info("DO REJECT_SUBMIT.... FIND RESOURCE");
 
-					sourceDossier.setEndorsementDate(null);
+					if (sourceDossier != null) {
+						sourceDossier.setEndorsementDate(null);
 
-					DossierLocalServiceUtil.updateDossier(sourceDossier);
+						DossierLocalServiceUtil.updateDossier(sourceDossier);						
+					}
 
 					dossier.setEndorsementDate(null);
 
@@ -1845,9 +1851,11 @@ public class DossierActionsImpl implements DossierActions {
 
 					// in SERVER
 					
-					context.setScopeGroupId(sourceDossier.getGroupId());
-					DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid, "reject_submitting",
-							actionNote, 0, status, context);
+					if (sourceDossier != null) {
+						context.setScopeGroupId(sourceDossier.getGroupId());
+						DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid, "reject_submitting",
+								actionNote, 0, status, context);						
+					}
 					
 					context.setScopeGroupId(dossier.getGroupId());
 
@@ -1909,9 +1917,11 @@ public class DossierActionsImpl implements DossierActions {
 					Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
 					_log.info("DO REJECT_CORRECTING.... FIND RESOURCE");
 
-					sourceDossier.setCorrecttingDate(null);
+					if (sourceDossier != null) {
+						sourceDossier.setCorrecttingDate(null);
 
-					DossierLocalServiceUtil.updateDossier(sourceDossier);
+						DossierLocalServiceUtil.updateDossier(sourceDossier);						
+					}
 
 					dossier.setCorrecttingDate(null);
 
@@ -1926,11 +1936,12 @@ public class DossierActionsImpl implements DossierActions {
 
 					// in SERVER
 
-					context.setScopeGroupId(sourceDossier.getGroupId());
-					DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid, "reject_correcting",
-							actionNote, 0, status, context);
-					
-					context.setScopeGroupId(dossier.getGroupId());
+					if (sourceDossier != null) {
+						context.setScopeGroupId(sourceDossier.getGroupId());
+						DossierRequestUDLocalServiceUtil.updateDossierRequest(0, sourceDossier.getDossierId(), refUid, "reject_correcting",
+								actionNote, 0, status, context);						
+					}
+					context.setScopeGroupId(dossier.getGroupId());						
 
 				}
 

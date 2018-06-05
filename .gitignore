@@ -1,6 +1,5 @@
 **/!bnd.bnd
 **/!build.gradle
-<<<<<<< HEAD
 
 .gradle/
 build/
@@ -20,35 +19,27 @@ bin/
 **/service/http/
 
 ##Ignore database
-=======
->>>>>>> upstream/pre-develop
 **/indexes.sql
 **/sequences.sql
 **/tables.sql
 **/module-hbm.xml
 **/portlet-model-hints.xml
-<<<<<<< HEAD
 
-=======
->>>>>>> upstream/pre-develop
+
 **/module-spring.xml 
 **/service.properties
 **/sql/**
 **/**/**.sql
 **/*.iml
 **/.ivy
-<<<<<<< HEAD
 
-=======
->>>>>>> upstream/pre-develop
+
 **/.classpath
 **/.project
 **/.sass-cache
 **/.settings
-<<<<<<< HEAD
 
-=======
->>>>>>> upstream/pre-develop
+
 **/bin
 **/build
 **/build_gradle
@@ -112,6 +103,12 @@ gradle-local.properties
 **/backend-thirdparty-system-api/**/exception/
 **/backend-thirdparty-system-api/**/service/
 **/backend-thirdparty-system-api/**/service/persistence/
+**/**/ServiceProps.java
+
+**/inland-html-report-api/**/model/
+**/inland-html-report-api/**/exception/
+**/inland-html-report-api/**/service/
+**/inland-html-report-api/**/service/persistence/
 **/**/ServiceProps.java
 
 **/vr-business/**

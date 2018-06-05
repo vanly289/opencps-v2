@@ -853,6 +853,7 @@ public class DossierManagementImpl implements DossierManagement {
 				// action);
 
 				_log.info("input.getActionCode(): " + input.getActionCode());
+				_log.info("process action: " + action);
 				_log.info("action.getProcessActionId(): " + action.getProcessActionId());
 				_log.info("input.getActionUser(): " + input.getActionUser());
 				DossierAction dossierAction = actions.doAction(groupId, dossier.getDossierId(),

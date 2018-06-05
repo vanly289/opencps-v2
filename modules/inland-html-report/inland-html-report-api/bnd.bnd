@@ -1,0 +1,9 @@
+Bundle-Name: inland-html-report-api
+Bundle-SymbolicName: org.opencps.inland.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	org.opencps.inland.exception,\
+	org.opencps.inland.model,\
+	org.opencps.inland.service,\
+	org.opencps.inland.service.persistence
+-includeresource: META-INF/service.xml=../inland-html-report-service/service.xml
