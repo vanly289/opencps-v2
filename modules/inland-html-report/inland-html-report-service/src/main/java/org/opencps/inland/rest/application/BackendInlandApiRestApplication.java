@@ -1,12 +1,19 @@
 package org.opencps.inland.rest.application;
 
+import java.net.HttpURLConnection;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.BeanParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
@@ -18,7 +25,9 @@ import javax.ws.rs.core.Response;
 import org.opencps.auth.api.BackendAuth;
 import org.opencps.auth.api.BackendAuthImpl;
 import org.opencps.auth.api.exception.UnauthenticationException;
+import org.opencps.auth.api.exception.UnauthorizationException;
 import org.opencps.inland.api.inlandprinttemplate.model.ErrorMsg;
+import org.opencps.inland.api.inlandprinttemplate.model.InlandPrintTemplateInputModel;
 import org.opencps.inland.api.inlandprinttemplate.model.InlandPrintTemplateModel;
 import org.opencps.inland.context.provider.CompanyContextProvider;
 import org.opencps.inland.context.provider.LocaleContextProvider;
@@ -34,6 +43,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 @ApplicationPath("/v2/inland")
 @Component(immediate = true, service = Application.class)
@@ -97,7 +107,144 @@ public class BackendInlandApiRestApplication extends Application {
 		}
 		
 	}
+	
+	@POST
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response addInlandPrintTemplate(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam InlandPrintTemplateInputModel input) {
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+
+		BackendAuth auth = new BackendAuthImpl();
+
+		try {
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+
+			InlandPrintTemplate inlandPrintTemplate = InlandPrintTemplateLocalServiceUtil.addInlandPrintTemplate(groupId, user.getUserId(), user.getUserId(), 0, input.getServiceCode(), input.getDossierPartNo(), input.getFileTemplateNo(), input.getTemplateNo(), input.getFormTemplate(), input.getOriginalDocumentURL());
+			
+
+			InlandPrintTemplateModel result = new InlandPrintTemplateModel();
+
+			if (inlandPrintTemplate != null) {
+				result.setPrintTemplateId(inlandPrintTemplate.getPrintTemplateId());
+				result.setFormTemplate(inlandPrintTemplate.getFormTemplate());
+				result.setOriginalDocumentURL(inlandPrintTemplate.getOriginalDocumentURL());
+				result.setDossierPartNo(inlandPrintTemplate.getDossierPartNo());
+				result.setEmployeeId(inlandPrintTemplate.getEmployeeId());
+				result.setFileTemplateNo(inlandPrintTemplate.getFileTemplateNo());
+				result.setServiceCode(inlandPrintTemplate.getServiceCode());
+				result.setTemplateNo(inlandPrintTemplate.getTemplateNo());
+			}
+			return Response.status(200).entity(result).build();
+
+		} catch (Exception e) {
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					error.setMessage("Internal Server Error");
+					error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
+					error.setDescription(e.getMessage());
+
+					return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+
+				}
+			}
+		}
 		
+	}
+	
+	@PUT
+	@Path("/{id}")
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response updateInlandPrintTemplate(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @PathParam("id") long id, @BeanParam InlandPrintTemplateInputModel input) {
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+
+		BackendAuth auth = new BackendAuthImpl();
+
+		try {
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+
+			InlandPrintTemplate inlandPrintTemplate = InlandPrintTemplateLocalServiceUtil.updateInlandPrintTemplate(
+					groupId, 
+					user.getUserId(), 
+					input.getPrintTemplateId(), 
+					user.getUserId(), 
+					0L, 
+					input.getServiceCode(), 
+					input.getDossierPartNo(), 
+					input.getFileTemplateNo(), 
+					input.getTemplateNo(), 
+					input.getFormTemplate(), 
+					input.getOriginalDocumentURL());
+			
+			InlandPrintTemplateModel result = new InlandPrintTemplateModel();
+
+			if (inlandPrintTemplate != null) {
+				result.setPrintTemplateId(inlandPrintTemplate.getPrintTemplateId());
+				result.setFormTemplate(inlandPrintTemplate.getFormTemplate());
+				result.setOriginalDocumentURL(inlandPrintTemplate.getOriginalDocumentURL());
+				result.setDossierPartNo(inlandPrintTemplate.getDossierPartNo());
+				result.setEmployeeId(inlandPrintTemplate.getEmployeeId());
+				result.setFileTemplateNo(inlandPrintTemplate.getFileTemplateNo());
+				result.setServiceCode(inlandPrintTemplate.getServiceCode());
+				result.setTemplateNo(inlandPrintTemplate.getTemplateNo());
+			}
+			return Response.status(200).entity(result).build();
+
+		} catch (Exception e) {
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					error.setMessage("Internal Server Error");
+					error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
+					error.setDescription(e.getMessage());
+
+					return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+
+				}
+			}
+		}
+		
+	}
+	
 	@Reference
 	private CompanyContextProvider _companyContextProvider;
 

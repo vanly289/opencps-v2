@@ -25,8 +25,6 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="printTemplateId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="createDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="modifiedDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="serviceCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="dossierPartNo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fileTemplateNo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -46,8 +44,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "printTemplateId",
-    "createDate",
-    "modifiedDate",
     "serviceCode",
     "dossierPartNo",
     "fileTemplateNo",
@@ -57,12 +53,10 @@ import javax.xml.bind.annotation.XmlType;
     "formTemplate",
     "originalDocumentURL"
 })
-@XmlRootElement(name = "InlandPrintTemplateModel")
-public class InlandPrintTemplateModel {
+@XmlRootElement(name = "InlandPrintTemplateInputModel")
+public class InlandPrintTemplateInputModel {
 
     protected Long printTemplateId;
-    protected String createDate;
-    protected String modifiedDate;
     protected String serviceCode;
     protected String dossierPartNo;
     protected String fileTemplateNo;
@@ -94,54 +88,6 @@ public class InlandPrintTemplateModel {
      */
     public void setPrintTemplateId(Long value) {
         this.printTemplateId = value;
-    }
-
-    /**
-     * Gets the value of the createDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    /**
-     * Sets the value of the createDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCreateDate(String value) {
-        this.createDate = value;
-    }
-
-    /**
-     * Gets the value of the modifiedDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getModifiedDate() {
-        return modifiedDate;
-    }
-
-    /**
-     * Sets the value of the modifiedDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setModifiedDate(String value) {
-        this.modifiedDate = value;
     }
 
     /**
