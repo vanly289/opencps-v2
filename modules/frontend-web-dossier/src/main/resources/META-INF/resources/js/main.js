@@ -274,7 +274,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			thong_tin_lai_xe: '',
 			giay_phep_lai_xe: '',
 			pageHistory: 1,
-			lengthPageHistory: 0
+			lengthPageHistory: 0,
+			gradient: 'to top right, rgba(63,81,181, .7), rgba(25,32,72, .7)',
+			formTemplate: {}
 		},
 		watch: {
 			pageGiayPhepVanTaiQuocTeTable: {
@@ -391,6 +393,44 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							});
 						},
+						getInLand: function(item){
+							var vm = this;
+							var url ="/o/il/v2/inland" ;
+							var configInland = {
+								params: {
+									serviceCode: item.serviceCode,
+									dossierPartNo: item.dossierPartNo,
+									fileTemplateNo: item.fileTemplateNo,
+									templateNo: item.templateNo
+								},
+								headers: {
+									groupId: themeDisplay.getScopeGroupId()
+								}
+							}
+
+							axios.get(url, configInland).then(function (response) {
+								document.getElementById('printTraCuu').style.backgroundImage = 'url('+response.data.originalDocumentURL+')';
+								var formTemplate = JSON.parse(response.data.formTemplate);
+								for (var key in formTemplate) {
+									$("#printTraCuu").append('<div id='+key+' style="position:relative; top : '+formTemplate[key].offsetX+'; left : '+formTemplate[key].offsetY+'"></div>');
+								}
+							})
+							.catch(function (error) {
+								console.log(error);
+							});
+						},
+						getAllOffSet: function(){
+							var arrOffset = [];
+							$("#printTraCuu > div").each(function(){
+								var xPos = $(this).offset().left;
+								var yPos = $(this).offset().top;
+								arrOffset.push({
+									offsetX: xPos,
+									offsetY: yPos
+								})
+							});
+							return arrOffset;
+						},
 						toDetailGiayPhep: function(item){
 							var vm = this;
 							var url ="/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid ;
@@ -409,6 +449,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							.catch(function (error) {
 								console.log(error);
 							});
+						},
+						printGiayPhep: function(item) {
+							console.log("ccc");
+							var vm = this;
+							vm.popUpPrintTraCuu  = !vm.popUpPrintTraCuu;
+
+							setTimeout(function(){
+								vm.getInLand(item)
+							}, 500)
 						},
 						toDetailThongTinXe: function(item){
 							var vm = this;
@@ -3142,6 +3191,20 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 									vm.danhSachHoSoTableItems = serializable.data;
 
+									for (var i = 0; i < vm.danhSachHoSoTableItems.length; i++) {
+										var createDate = vm.danhSachHoSoTableItems[i].createDate.toString();
+										var year = createDate.substr(0,4);
+										var month = createDate.substr(4,2);
+										var day = createDate.substr(6,2);
+
+										var hh = createDate.substr(8,2);
+										var mm = createDate.substr(10,2);
+										var ss = createDate.substr(12,2);
+
+										vm.danhSachHoSoTableItems[i].createDate = day + "/" + month +"/" + year + " " + hh + ":" + mm + ":" + ss;
+
+									}
+
 									vm.danhSachHoSoTableTotal = Math.ceil(serializable.total / 15);
 									
 								}else {
@@ -3703,6 +3766,26 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						popUpThongTinXeSave: function () {
 							var vm = this;
 							vm.popUpThongTinXe = !vm.popUpThongTinXe;
+						}
+					}
+				},
+				'popUpPrintTraCuu' : {
+					'id': 'popUpPrintTraCuu',
+					'name': 'popUpPrintTraCuu',
+					"type": "dialog",
+					"type_dialog": "fullScreen",
+					'icon_save': 'undo',
+					'label_save': 'Quay lại',
+					"color": "primary",
+					"template": "popUpPrintTraCuuTemplate",
+					"events": {
+						popUpPrintTraCuuClose: function () {
+							var vm = this;
+							vm.popUpPrintTraCuu = !vm.popUpPrintTraCuu;
+						},
+						popUpPrintTraCuuSave: function () {
+							var vm = this;
+							
 						}
 					}
 				},
