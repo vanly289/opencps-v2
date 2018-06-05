@@ -16,7 +16,7 @@
 			{{ props.item.dossierNo }} 
 		</td>
 		<td style="padding: 8px; width: 17%;" class="text-xs-center">
-			{{ props.item.submitDate}}
+			{{ props.item.createDate}}
 			<br v-if="props.item.submitDate">
 			{{ props.item.receiveDate}}
 		</td>

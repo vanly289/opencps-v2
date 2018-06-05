@@ -49,6 +49,8 @@
 
 <#include "details/popup_dossier_file.ftl">
 
+<#include "details/popup_print_tracuu.ftl">
+
 <#include "details/danh_sach_giay_phep_van_tai_quoc_te.ftl">
 
 <#include "details/danh_sach_giay_phep_lien_van.ftl">

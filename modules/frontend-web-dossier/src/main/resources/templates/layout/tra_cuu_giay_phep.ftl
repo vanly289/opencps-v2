@@ -188,7 +188,13 @@
 								{{ props.item.hieu_luc_den_ngay }} 
 							</td>
 							<td style="padding: 8px; width: 10%;" class="text-xs-center">
-								<v-btn small color="" @click="toDetailGiayPhep(props.item)">Xem</v-btn> 
+								<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="printGiayPhep(props.item)">
+									<v-icon >print</v-icon>
+								</v-btn> 
+								<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailGiayPhep(props.item)">
+									<v-icon >visibility</v-icon>
+								</v-btn> 
+								<!-- <v-btn small color="" @click="toDetailGiayPhep(props.item)">Xem</v-btn>  -->
 							</td>
 						</template>
 					</v-data-table>
