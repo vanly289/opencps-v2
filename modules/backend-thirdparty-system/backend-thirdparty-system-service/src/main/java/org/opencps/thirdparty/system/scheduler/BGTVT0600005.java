@@ -114,15 +114,16 @@ public class BGTVT0600005 {
 
 		for (DossierFile dossierFile : dossierFileList) {
 			templateNo = dossierFile.getFileTemplateNo();
-
+			partNo = dossierFile.getDossierPartNo();
+			
 			String returnDossierFiles = processAction.getReturnDossierFiles();
 			String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
 			for (String returnDossierFile : returnDossierFilesArr) {
 				if (templateNo.equals(returnDossierFile)) {
 					attachedFile = new AttachedFile();
 					attachedFile.setAttachedNote("");
-					attachedFile.setAttachedTypeCode(partNo);
-					attachedFile.setAttachedTypeName(templateNo);
+					attachedFile.setAttachedTypeCode(templateNo);
+					attachedFile.setAttachedTypeName(partNo);
 					attachedFile.setFullFileName(dossierFile.getDisplayName());
 
 					lstFiles.add(attachedFile);

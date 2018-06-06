@@ -115,6 +115,7 @@ public class BGTVT0600036 {
 
 		for (DossierFile dossierFile : dossierFileList) {
 			templateNo = dossierFile.getFileTemplateNo();
+			partNo = dossierFile.getDossierPartNo();
 
 			String returnDossierFiles = processAction.getReturnDossierFiles();
 			String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
@@ -151,7 +152,7 @@ public class BGTVT0600036 {
 						vtOfficialTransportPermit.setContactName(formDataObj.getString("ContactName"));						
 					}
 					else {
-						vtOfficialTransportPermit.setContactName(StringPool.BLANK);												
+						vtOfficialTransportPermit.setContactName(formDataObj.getString("NameOfCompany"));												
 					}
 					
 					if (formDataObj.has("RegistrationNumber")) {
@@ -305,10 +306,15 @@ public class BGTVT0600036 {
 						String validFromStr = formDataObj.getString("ValidFrom");
 						Date validFromDate = DateTimeUtils.convertStringToDate(validFromStr);
 
-						vtOfficialTransportPermit.setValidFrom(
-								DateTimeUtils.convertDateToString(validFromDate, DateTimeUtils._NSW_DATE_TIME_FORMAT)
-								);						
-
+						if (Validator.isNotNull(validFromDate)) {
+							vtOfficialTransportPermit.setValidFrom(
+									DateTimeUtils.convertDateToString(validFromDate, DateTimeUtils._NSW_DATE_TIME_FORMAT)
+									);						
+							
+						}
+						else {
+							vtOfficialTransportPermit.setValidFrom(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));																			
+						}
 					}
 					else {
 						Date now = new Date();
