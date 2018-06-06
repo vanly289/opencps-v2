@@ -7,6 +7,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 		}
 	};
 
+	const configPage = {
+		pageSize: 15,
+		serviceinfosQuocTe: 'BGTVT0600001,BGTVT0600002,BGTVT0600003,BGTVT0600004,BGTVT0600019,BGTVT0600020,BGTVT0600021,BGTVT0600022',
+		serviceinfosLienVan: 'BGTVT060005,BGTVT060006,BGTVT060007,BGTVT060008,BGTVT060009,BGTVT0600010,BGTVT0600011,BGTVT0600012,BGTVT0600023,BGTVT0600024,BGTVT0600025,BGTVT0600026,BGTVT0600027,BGTVT0600028,BGTVT0600029',
+		serviceinfosChapThuan: 'BGTVT0600013,BGTVT0600014,BGTVT0600015,BGTVT0600016,BGTVT0600017,BGTVT0600030,BGTVT0600031,BGTVT0600032,BGTVT0600033,BGTVT0600034'
+
+	};
+
 	var dossierViewJX = new VueJX({
 		el: 'dossierViewJX',
 		pk: 1,
@@ -296,7 +304,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			},
 			pageHistory: {
 				handler () {
-                    this.loadHistoryThongTinXe()
+                    this.loadDetailThongTinXe()
                 }
 			}
 //			stateButtonregistration : true
@@ -433,7 +441,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						toDetailGiayPhep: function(item){
 							var vm = this;
-							var url ="/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid ;
+							var url ="/o/rest/v2/dossiers/"+item.dossierId+"/files/"+item.referenceUid ;
 
 							var config_blob =  {
 								headers: {
@@ -462,49 +470,18 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						toDetailThongTinXe: function(item){
 							var vm = this;
 							vm.popUpThongTinXe  = !vm.popUpThongTinXe;
-							var urlThongTinXe = '/o/rest/v2/deliverable/'+item.so_giay_phep;
-							var urlHistorys = '/o/rest/v2/deliverable/'+item.so_giay_phep;
-							axios.all([
-								axios.get(urlThongTinXe, config),
-								axios.get(urlHistorys, config)
-								]).then( axios.spread(function (responseThongTinXe, responseHistory) {
-									var thongTinXe = responseThongTinXe.data;
-									var historys = responseHistory.data.data;
-									thongTinXe.historys = historys;
-									vm.modelLienVan = thongTinXe;
-								}))
-								.catch(function (error) {
-									console.log(error);
-
-								});
-						},
-						loadHistoryThongTinXe: function(append){
-							var vm = this;
-							var urlHistorys = '/o/rest/v2/deliverable/'+item.so_giay_phep;
-							var paramsBuilder = {
-								start: vm.pageHistory * 5 - 5,
-								end: vm.pageHistory * 5,
-								order: 'false'
-							};
-
-							const config_historys = {
-								params: paramsBuilder,
-								headers: {
-									'groupId': themeDisplay.getScopeGroupId(),
-								}
-							};
-							axios.get(urlHistorys, config_historys).then(function (response) {
-								var serializable = response.data.data;
-								vm.modelLienVan.historys = serializable;
+							var urlThongTinXe = '/o/rest/vr-app/certDoc/borderGuard/'+item.registrationNumber;
+							axios.get(urlThongTinXe, config).then(function (response) {
+								var serializable = response.data;
+								vm.modelLienVan = serializable;
 							})
 							.catch(function (error) {
 								console.log(error);
-
 							});
 						},
 						addThongTinXe: function(append){
 							var vm = this;
-							var urlHistorys = '/o/rest/v2/deliverable/'+item.so_dang_ky;
+							var urlHistorys = '/o/rest/vr-app/certDoc/borderGuard/'+item.registrationNumber;
 							var paramsBuilder = {
 								hinhThucSelect: vm.hinhThucSelect,
 								cuaKhauSelect: vm.cuaKhauSelect,
@@ -526,16 +503,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.viewmore = true;
 
 							var paramsBuilder = {
-								follow: true,
+								keywords: vm.keywordTraCuuGiayPhep,
+								serviceCode: vm.serviceInfoSelect,
+								govAgencyCode: vm.govAgencySelect,
+								routeCode: vm.tuyenSelect,
+								fromDate: vm.searchTuNgay,
+								fromDate: vm.searchDenNgay,
 								start: vm.pageGiayPhepVanTaiQuocTeTable * 15 - 15,
-								end: vm.pageGiayPhepVanTaiQuocTeTable * 15,
-								sort: 'modified',
-								order: 'false',
-								serviceInfoSelect: vm.serviceInfoSelect,
-								keywordTraCuuGiayPhep: vm.keywordTraCuuGiayPhep,
-								govAgencySelect: vm.govAgencySelect,
-								searchTuNgay: vm.searchTuNgay,
-								searchDenNgay: vm.searchDenNgay
+								limit: 15
 							};
 
 							const config_dossiers = {
@@ -545,7 +520,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}
 							};
 
-							var url = '/o/rest/v2/dossiers/ccc';
+							var url = '/o/rest/vr-app/certDoc';
 
 							axios.get(url, config_dossiers).then(function (response) {
 								var serializable = response.data;
@@ -602,17 +577,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.traCuuFilter = false;
 							vm.viewmore = true;
 							var paramsBuilder = {
-								follow: true,
-								dossierNo: vm.dossierNoFilter,
+								keywords: vm.keywordTraCuuGiayPhep,
+								serviceCode: vm.serviceInfoSelect,
+								govAgencyCode: vm.govAgencySelect,
+								routeCode: vm.tuyenSelect,
+								fromDate: vm.searchTuNgay,
+								fromDate: vm.searchDenNgay,
 								start: vm.pageGiayPhepLienVanTable * 15 - 15,
-								end: vm.pageGiayPhepLienVanTable * 15,
-								sort: 'modified',
-								order: 'false',
-								serviceInfoSelect: vm.serviceInfoSelect,
-								keywordTraCuuGiayPhep: vm.keywordTraCuuGiayPhep,
-								govAgencySelect: vm.govAgencySelect,
-								searchTuNgay: vm.searchTuNgay,
-								searchDenNgay: vm.searchDenNgay
+								limit: 15
 							};
 
 							const config_dossiers = {
@@ -622,12 +594,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}
 							};
 
-							var url = '/o/rest/v2/dossiers/cccc';
+							var url = '/o/rest/vr-app/certDoc';
 
 							axios.get(url, config_dossiers).then(function (response) {
 								var serializable = response.data;
-
-
 								if (append) {
 									vm.giayPhepLienVanTableItems.push.apply(vm.giayPhepLienVanTableItems, serializable.data);
 								} else if(serializable.data){
@@ -691,18 +661,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.traCuuFilter = false;
 							vm.viewmore = true;
 							var paramsBuilder = {
-								follow: true,
-								dossierNo: vm.dossierNoFilter,
+								keywords: vm.keywordTraCuuGiayPhep,
+								serviceCode: vm.serviceInfoSelect,
+								govAgencyCode: vm.govAgencySelect,
+								routeCode: vm.tuyenSelect,
+								fromDate: vm.searchTuNgay,
+								fromDate: vm.searchDenNgay,
 								start: vm.pageChapThuanKhaiThacTable * 15 - 15,
-								end: vm.pageChapThuanKhaiThacTable * 15,
-								sort: 'modified',
-								order: 'false',
-								serviceInfoSelect: vm.serviceInfoSelect,
-								keywordTraCuuGiayPhep: vm.keywordTraCuuGiayPhep,
-								govAgencySelect: vm.govAgencySelect,
-								tuyenSelect: vm.tuyenSelect,
-								searchTuNgay: vm.searchTuNgay,
-								searchDenNgay: vm.searchDenNgay
+								limit: 15
 							};
 
 							const config_dossiers = {
@@ -712,7 +678,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}
 							};
 
-							var url = '/o/rest/v2/dossiers/cccc';
+							var url = '/o/rest/vr-app/certDoc';
 
 							axios.get(url, config_dossiers).then(function (response) {
 								var serializable = response.data;
@@ -780,7 +746,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						_initServiceInfos: function(param){
 							var vm = this;
 							var url = '/o/rest/v2/serviceinfos';
-							axios.get(url, config).then(function (response) {
+							var config_serviceinfo = {
+								headers: {
+									groupId: themeDisplay.getScopeGroupId()
+								},
+								params: {
+									serviceCode: param.serviceCode
+								}
+							}
+							axios.get(url, config_serviceinfo).then(function (response) {
 								var serializable = response.data;
 								vm.serviceInfos = serializable.data;
 								
@@ -792,8 +766,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						_initGovAgencys: function(param){
 							var vm = this;
-							var url = '/o/rest/v2/serviceinfos';
-							axios.get(url, config).then(function (response) {
+							var url = '/o/rest/v2/temp/dictcollections/GOVERNMENT_AGENCY/dictitems?sort=sibling';
+							var config_gov = {
+								headers: {
+									groupId: themeDisplay.getScopeGroupId()
+								},
+								params: {
+									govAgencyCode: param.govAgencyCode
+								}
+							}
+							axios.get(url, config_gov).then(function (response) {
 								var serializable = response.data;
 								vm.govAgencys = serializable.data;
 								
@@ -805,7 +787,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						_initTuyens: function(param){
 							var vm = this;
-							var url = '/o/rest/v2/serviceinfos';
+							var url = '/o/rest/v2/temp/dictcollections/DB01/dictitems?sort=sibling';
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
 								vm.tuyens = serializable.data;
@@ -821,10 +803,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.stateTraCuuGiayPhep = state;
 							if(state == 'giay_phep_van_tai_quoc_te'){
 								vm._inigiayPhepVanTaiQuocTeTable();
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosQuocTe
+								});
 							}else if(state == 'giay_phep_lien_van'){
 								vm._inigiayPhepLienVanTable();
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosLienVan
+								});
 							}else {
 								vm._inichapThuanKhaiThacTable();
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosChapThuan
+								});
 							}
 							console.log('vm.stateTraCuuGiayPhep=========',vm.stateTraCuuGiayPhep);
 						},
@@ -2115,6 +2106,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}else if (item.id == 'tra_cuu_giay_phep') {
 								console.log("GO------------")
 								vm._inigiayPhepVanTaiQuocTeTable(false);
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosQuocTe
+								});
+								vm._initGovAgencys({
+
+								});
+								vm._initTuyens();
 
 							}else if(item.id === 'tat_ca_hoso'){
 

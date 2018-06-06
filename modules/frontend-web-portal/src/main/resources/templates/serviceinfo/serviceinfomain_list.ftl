@@ -530,7 +530,7 @@ serverFiltering: false
        </span>
      </span>
    </div>
-   <div class="panel-body">
+   <div class="panel-body PB0">
     <div class="row">
       <div class="col-sm-8">
         <div class="row">

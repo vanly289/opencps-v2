@@ -82,8 +82,8 @@
 							<v-select
 							:items="govAgencys"
 							v-model="govAgencySelect"
-							item-text="govAgencyName"
-							item-value="govAgencyCode"
+							item-text="itemName"
+							item-value="itemCode"
 							label="Cơ quan cấp phép"
 							clearable
 							></v-select>
@@ -172,20 +172,20 @@
 						<template slot="items" slot-scope="props">
 							<td style="padding: 8px; padding-left: 0px;width: 4%; " class="text-xs-center">{{ pageGiayPhepVanTaiQuocTeTable * 15 - 15 + props.index + 1 }}</td>
 							<td style="padding: 8px;" class="text-xs-left">
-								{{ props.item.giay_phep }} 
-								<br v-if="props.item.so_giay_phep">
-								{{ props.item.so_giay_phep }} 
+								{{ props.item.licenceName }} 
+								<br v-if="props.item.licenceNo">
+								{{ props.item.licenceNo }} 
 							</td>
 							<td style="padding: 8px; width: 15%;" class="text-xs-center">
-								{{ props.item.ten_doanh_nghiep }} 
+								{{ props.item.applicantName }} 
 							</td>
 							<td style="padding: 8px; width: 15%;" class="text-xs-center">
-								{{ props.item.co_quan }} 
+								{{ props.item.govAgencyName }} 
 							</td>
 							<td style="padding: 8px; width: 15%;" class="text-xs-center">
-								{{ props.item.hieu_luc_tu_ngay }} 
-								<br v-if="props.item.hieu_luc_den_ngay">
-								{{ props.item.hieu_luc_den_ngay }} 
+								{{ props.item.validFrom }} 
+								<br v-if="props.item.validUntil">
+								{{ props.item.validUntil }} 
 							</td>
 							<td style="padding: 8px; width: 10%;" class="text-xs-center">
 								<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="printGiayPhep(props.item)">
@@ -210,22 +210,22 @@
 						<template slot="items" slot-scope="props">
 							<td style="padding: 8px; padding-left: 0px;width: 4%; " class="text-xs-center">{{ pageGiayPhepLienVanTable * 15 - 15 + props.index + 1 }}</td>
 							<td style="padding: 8px;" class="text-xs-left">
-								{{ props.item.giay_phep }} 
-								<br v-if="props.item.so_giay_phep">
-								{{ props.item.so_giay_phep }} 
+								{{ props.item.licenceName }} 
+								<br v-if="props.item.licenceNo">
+								{{ props.item.licenceNo }} 
 							</td>
 							<td style="padding: 8px; width: 15%;" class="text-xs-center">
-								{{ props.item.so_dang_ky_phuong_tien }} 
-								<br v-if="props.item.ten_doanh_nghiep">
-								{{ props.item.ten_doanh_nghiep }} 
+								{{ props.item.registrationNumber }} 
+								<br v-if="props.item.applicantName">
+								{{ props.item.applicantName }} 
 							</td>
 							<td style="padding: 8px; width: 15%;" class="text-xs-center">
-								{{ props.item.co_quan }} 
+								{{ props.item.govAgencyName }} 
 							</td>
 							<td style="padding: 8px; width: 15%;" class="text-xs-center">
-								{{ props.item.hieu_luc_tu_ngay }} 
-								<br v-if="props.item.hieu_luc_den_ngay">
-								{{ props.item.hieu_luc_den_ngay }} 
+								{{ props.item.validFrom }} 
+								<br v-if="props.item.validUntil">
+								{{ props.item.validUntil }} 
 							</td>
 							<td style="padding: 8px; width: 18%;" class="text-xs-center">
 								<!-- <div class="ml-15">
@@ -270,26 +270,26 @@
 						<template slot="items" slot-scope="props">
 							<td style="padding: 8px; padding-left: 0px;width: 4%; " class="text-xs-center">{{ pageChapThuanKhaiThacTable * 15 - 15 + props.index + 1 }}</td>
 							<td style="padding: 8px;" class="text-xs-left">
-								{{ props.item.giay_phep }} 
+								{{ props.item.licenceName }} 
 								<br v-if="props.item.so_giay_phep">
-								{{ props.item.so_giay_phep }} 
+								{{ props.item.licenceNo }} 
 							</td>
 							<td style="padding: 8px; width: 15%;" class="text-xs-center">
-								{{ props.item.ten_doanh_nghiep }} 
+								{{ props.item.applicantName }} 
 							</td>
 							<td style="padding: 8px; width: 15%;" class="text-xs-center">
-								{{ props.item.tuyen_khai_thac }} 
+								{{ props.item.routes }} 
 							</td>
 							<td style="padding: 8px; width: 15%;" class="text-xs-center">
-								{{ props.item.so_xe }} 
+								{{ props.item.numberOfLot }} 
 							</td>
 							<td style="padding: 8px; width: 15%;" class="text-xs-center">
-								{{ props.item.hieu_luc_tu_ngay }} 
+								{{ props.item.registrationNumber }} 
 
-								<br v-if="props.item.hieu_luc_tu_ngay">
-								{{ props.item.hieu_luc_tu_ngay }} 
-								<br v-if="props.item.hieu_luc_den_ngay">
-								{{ props.item.hieu_luc_den_ngay }} 
+								<br v-if="props.item.validFrom">
+								{{ props.item.validFrom }} 
+								<br v-if="props.item.validUntil">
+								{{ props.item.validUntil }} 
 							</td>
 							<td style="padding: 8px; width: 10%;" class="text-xs-center">
 								<v-btn small color="" @click="toDetailGiayPhep(props.item)">Xem</v-btn> 
