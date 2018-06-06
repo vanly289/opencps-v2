@@ -7,6 +7,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 		}
 	};
 
+	const configPage = {
+		pageSize: 15,
+		serviceinfosQuocTe: 'BGTVT0600001,BGTVT0600002,BGTVT0600003,BGTVT0600004,BGTVT0600019,BGTVT0600020,BGTVT0600021,BGTVT0600022',
+		serviceinfosLienVan: 'BGTVT060005,BGTVT060006,BGTVT060007,BGTVT060008,BGTVT060009,BGTVT0600010,BGTVT0600011,BGTVT0600012,BGTVT0600023,BGTVT0600024,BGTVT0600025,BGTVT0600026,BGTVT0600027,BGTVT0600028,BGTVT0600029',
+		serviceinfosChapThuan: 'BGTVT0600013,BGTVT0600014,BGTVT0600015,BGTVT0600016,BGTVT0600017,BGTVT0600030,BGTVT0600031,BGTVT0600032,BGTVT0600033,BGTVT0600034'
+
+	};
+
 	var dossierViewJX = new VueJX({
 		el: 'dossierViewJX',
 		pk: 1,
@@ -502,7 +510,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								fromDate: vm.searchTuNgay,
 								fromDate: vm.searchDenNgay,
 								start: vm.pageGiayPhepVanTaiQuocTeTable * 15 - 15,
-								end: vm.pageGiayPhepVanTaiQuocTeTable * 15
+								limit: 15
 							};
 
 							const config_dossiers = {
@@ -576,7 +584,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								fromDate: vm.searchTuNgay,
 								fromDate: vm.searchDenNgay,
 								start: vm.pageGiayPhepLienVanTable * 15 - 15,
-								end: vm.pageGiayPhepLienVanTable * 15,
+								limit: 15
 							};
 
 							const config_dossiers = {
@@ -660,7 +668,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								fromDate: vm.searchTuNgay,
 								fromDate: vm.searchDenNgay,
 								start: vm.pageChapThuanKhaiThacTable * 15 - 15,
-								end: vm.pageChapThuanKhaiThacTable * 15,
+								limit: 15
 							};
 
 							const config_dossiers = {
@@ -738,7 +746,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						_initServiceInfos: function(param){
 							var vm = this;
 							var url = '/o/rest/v2/serviceinfos';
-							axios.get(url, config).then(function (response) {
+							var config_serviceinfo = {
+								headers: {
+									groupId: themeDisplay.getScopeGroupId()
+								},
+								params: {
+									serviceCode: param.serviceCode
+								}
+							}
+							axios.get(url, config_serviceinfo).then(function (response) {
 								var serializable = response.data;
 								vm.serviceInfos = serializable.data;
 								
@@ -751,7 +767,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						_initGovAgencys: function(param){
 							var vm = this;
 							var url = '/o/rest/v2/temp/dictcollections/GOVERNMENT_AGENCY/dictitems?sort=sibling';
-							axios.get(url, config).then(function (response) {
+							var config_gov = {
+								headers: {
+									groupId: themeDisplay.getScopeGroupId()
+								},
+								params: {
+									govAgencyCode: param.govAgencyCode
+								}
+							}
+							axios.get(url, config_gov).then(function (response) {
 								var serializable = response.data;
 								vm.govAgencys = serializable.data;
 								
@@ -779,10 +803,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.stateTraCuuGiayPhep = state;
 							if(state == 'giay_phep_van_tai_quoc_te'){
 								vm._inigiayPhepVanTaiQuocTeTable();
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosQuocTe
+								});
 							}else if(state == 'giay_phep_lien_van'){
 								vm._inigiayPhepLienVanTable();
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosLienVan
+								});
 							}else {
 								vm._inichapThuanKhaiThacTable();
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosChapThuan
+								});
 							}
 							console.log('vm.stateTraCuuGiayPhep=========',vm.stateTraCuuGiayPhep);
 						},
@@ -2073,8 +2106,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}else if (item.id == 'tra_cuu_giay_phep') {
 								console.log("GO------------")
 								vm._inigiayPhepVanTaiQuocTeTable(false);
-								vm._initServiceInfos();
-								vm._initGovAgencys();
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosQuocTe
+								});
+								vm._initGovAgencys({
+
+								});
+								vm._initTuyens();
 
 							}else if(item.id === 'tat_ca_hoso'){
 
