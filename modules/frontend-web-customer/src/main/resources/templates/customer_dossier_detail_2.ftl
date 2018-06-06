@@ -886,7 +886,7 @@
 				};
 			},
 			validate: function(value) {
-				if (value.length < 1){
+				if (value.length < 1 && value !== '-'){
 					return 'Đây là trường bắt buộc';
 				}
 			},
@@ -1607,7 +1607,6 @@
 			}
 		}
 
-
 		var fnSaveForm = function(id, value){
 			var current = $("#btn-save-formalpaca"+id);
 			var referentUid = current.attr("referenceUid");
@@ -1697,7 +1696,6 @@
 				}
 			}
 		});
-
 
 		$("#guide-toggle").click(function(event){
 			event.preventDefault();

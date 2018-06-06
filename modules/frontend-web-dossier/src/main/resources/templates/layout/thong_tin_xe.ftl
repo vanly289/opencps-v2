@@ -1,6 +1,6 @@
 <div id="popUpThongTinXeTemplate">
   <v-flex xs12 sm12 class="pl-5">
-    <p>Số đăng ký phương tiện : {{modelLienVan.so_dang_ky}}</p>
+    <p>Số đăng ký phương tiện : {{modelLienVan.registrationNumber}}</p>
   </v-flex>
   <v-flex xs12 sm12>
   	<v-expansion-panel>
@@ -87,7 +87,7 @@
   	</v-expansion-panel>
   </v-flex>
   <v-flex xs12 sm12>
-  	<v-list two-line subheader v-for="item in modelLienVan.historys" key="thongTinXeHistorys">
+  	<v-list two-line subheader v-for="item in modelLienVan.data" key="thongTinXeHistorys">
   		<v-list-tile avatar>
   			<v-list-tile-content>
   				<div>
