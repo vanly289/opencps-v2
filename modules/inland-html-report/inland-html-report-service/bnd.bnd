@@ -1,0 +1,7 @@
+Bundle-Name: inland-html-report-service
+Bundle-SymbolicName: org.opencps.inland.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+ConfigurationPath: /configuration
+Include-Resource: configuration=src/main/resources/configuration
+Liferay-Service: true

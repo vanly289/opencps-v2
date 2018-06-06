@@ -126,7 +126,7 @@ public class ExtractTextLocations extends PDFTextStripper {
 
 	@Override
 	protected void processTextPosition(TextPosition text) {
-		System.out.println("Process text position: " + text.getCharacter());
+
 		if (text
 			.getCharacter().equals(StringPool.POUND) && text
 				.getFontSize() == 1L) {

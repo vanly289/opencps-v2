@@ -15,4 +15,29 @@ public class DeliverableTypesTerm {
 	public static final String DELIVERABLE_ISSUEDATE = "issueDate";
 	public static final String DELIVERABLE_EXPIREDATE = "expireDate";
 	public static final String DELIVERABLE_REVALIDDATE = "revalidDate";
+	
+	public static final String MAPPING_DELIVERABLES = "deliverables";
+	public static final String MAPPING_DELIVERABLE_CODE = "deliverableCode";
+	public static final String MAPPING_SUBJECT = "subject";
+	public static final String MAPPING_ISSUEDATE = "issueDate";
+	public static final String MAPPING_EXPIREDATE = "expireDate";
+	public static final String MAPPING_REVALIDATE = "revalidate";
+	public static final String MAPPING_ALLOW = "allow";
+	public static final String MAPPING_ACCEPTED = "accepted";
+	public static final String MAPPING_SIGNNAME = "signName";
+	public static final String MAPPING_SIGNDATE = "signDate";
+	public static final String MAPPING_SIGNTITLE = "signTitle";
+	public static final String MAPPING_SIGNPLACE = "signPlace";
+	
+	public static final String MAPPING_DEFAULT_DELIVERABLE_CODE = "LicenceNo";
+	public static final String MAPPING_DEFAULT_SIGNNAME = "SignName";
+	public static final String MAPPING_DEFAULT_SIGNDATE = "SignDate";
+	public static final String MAPPING_DEFAULT_SIGNTITLE = "SignTitle";
+	public static final String MAPPING_DEFAULT_SIGNPLACE = "SignPlace";	
+	
+	public static final String MAPPING_DEFAULT_REVALIDATE = "ValidUntil";	
+	public static final String MAPPING_DEFAULT_ISSUEDATE = "SignDate";	
+	
+	public static final String MAPPING_DEFAULT_ALLOW = "Allow";
+	public static final String MAPPING_DEFAULT_ACCEPTED = "Accepted";	
 }

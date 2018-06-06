@@ -1,0 +1,63 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" >
+	<xsd:element name="InlandPrintTemplateSearchModel">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="serviceCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="dossierPartNo" type="xsd:int" minOccurs="0" />
+				<xsd:element name="fileTemplateNo" type="xsd:int" minOccurs="0" />
+				<xsd:element name="templateNo" type="xsd:string" minOccurs="0" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	
+	<xsd:element name="InlandPrintTemplateModel">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="printTemplateId" type="xsd:long" minOccurs="0" /> 
+				<xsd:element name="createDate" type="xsd:string" minOccurs="0" />
+				<xsd:element name="modifiedDate" type="xsd:string" minOccurs="0" />
+				<xsd:element name="serviceCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="dossierPartNo" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fileTemplateNo" type="xsd:string" minOccurs="0" />
+				<xsd:element name="templateNo" type="xsd:string" minOccurs="0" />
+	
+				<xsd:element name="createUserId" type="xsd:long" minOccurs="0" /> 
+				<xsd:element name="employeeId" type="xsd:long" minOccurs="0" /> 
+				<xsd:element name="formTemplate" type="xsd:string" minOccurs="0" />
+				<xsd:element name="originalDocumentURL" type="xsd:string" minOccurs="0" />
+	
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="InlandPrintTemplateInputModel">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="printTemplateId" type="xsd:long" minOccurs="0" /> 
+
+				<xsd:element name="serviceCode" type="xsd:string" minOccurs="0" />
+				<xsd:element name="dossierPartNo" type="xsd:string" minOccurs="0" />
+				<xsd:element name="fileTemplateNo" type="xsd:string" minOccurs="0" />
+				<xsd:element name="templateNo" type="xsd:string" minOccurs="0" />
+	
+				<xsd:element name="createUserId" type="xsd:long" minOccurs="0" /> 
+				<xsd:element name="employeeId" type="xsd:long" minOccurs="0" /> 
+				<xsd:element name="formTemplate" type="xsd:string" minOccurs="0" />
+				<xsd:element name="originalDocumentURL" type="xsd:string" minOccurs="0" />
+	
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="ErrorMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="message" type="xsd:string" minOccurs="0" />
+				<xsd:element name="code" type="xsd:int" minOccurs="0" />
+				<xsd:element name="description" type="xsd:string" minOccurs="0" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+		
+</xsd:schema>

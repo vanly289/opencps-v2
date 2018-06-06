@@ -1,6 +1,7 @@
 package org.opencps.thirdparty.system.scheduler;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -32,12 +33,16 @@ import org.opencps.thirdparty.system.util.OutsideSystemConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 public class BGTVT0600001 {
+	private static Log _log = LogFactoryUtil.getLog(BGTVT0600001.class);
+	
 	public static MessageQueueInputModel convertResult(Dossier dossier, ThirdPartyDossierSync dossierSync, Envelope envelope, String type, String function) throws PortalException {
 		long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
 		String jaxRsPublicUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_PUBLIC_URL);
@@ -81,6 +86,15 @@ public class BGTVT0600001 {
 		model.setDocumentType(dossier.getServiceCode());
 		model.setType(type);
 		model.setFunction(function);
+		Calendar cal = Calendar.getInstance();
+		
+		if (dossier.getReceiveDate() != null) {
+			cal.setTime(dossier.getReceiveDate());
+		} else {
+			cal.setTime(dossier.getCreateDate());
+		}
+		model.setDocumentYear(cal.get(Calendar.YEAR));
+		
 		model.setReference(dossier.getReferenceUid());
 		model.setPreReference(dossier.getReferenceUid());
 		model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
@@ -118,6 +132,7 @@ public class BGTVT0600001 {
 			String returnDossierFiles = processAction.getReturnDossierFiles();
 			String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
 			for (String returnDossierFile : returnDossierFilesArr) {
+				
 				if (templateNo.equals(returnDossierFile)) {
 					attachedFile = new AttachedFile();
 					attachedFile.setAttachedNote("");
@@ -133,6 +148,29 @@ public class BGTVT0600001 {
 						linkCongVan += "/public/" + dossier.getPassword();
 					}
 					attachedFile.setFileURL(linkCongVan);
+
+//					if (dossierFile.getFileEntryId() > 0) {
+//						FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
+//
+//						File file = DLFileEntryLocalServiceUtil.getFile(fileEntry.getFileEntryId(), fileEntry.getVersion(),
+//								true);
+//						
+//				        String encodedBase64 = null;
+//				        try {
+//				            FileInputStream fileInputStreamReader = new FileInputStream(file);
+//				            byte[] bytes = new byte[(int)file.length()];
+//				            fileInputStreamReader.read(bytes);
+//				            encodedBase64 = new String(Base64.getEncoder().encodeToString(bytes));
+//				            
+//				            fileInputStreamReader.close();
+//				        } catch (FileNotFoundException e) {
+//				            e.printStackTrace();
+//				        } catch (IOException e) {
+//				            e.printStackTrace();
+//				        }						
+//				        
+//					}
+					
 					JSONObject formDataObj = JSONFactoryUtil
 							.createJSONObject(dossierFile.getFormData());
 					vlInterRoadTransportLicense.setLicenceNo(dossierFile.getDeliverableCode());

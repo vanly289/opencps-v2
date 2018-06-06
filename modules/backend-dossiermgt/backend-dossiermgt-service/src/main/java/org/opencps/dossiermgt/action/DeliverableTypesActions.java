@@ -30,5 +30,7 @@ public interface DeliverableTypesActions {
 
 	public DeliverableType updateDeliverableTypeMappingData(long groupId, long deliverableTypeId, String mappingData,
 			ServiceContext serviceContext) throws SystemException, PortalException;
+	
+	public String getMappingKey(String key, DeliverableType type);
 
 }

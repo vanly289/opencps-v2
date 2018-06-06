@@ -53,8 +53,9 @@ public class OpenCPSRestClient {
 
 			postRequest.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
+//			System.out.println("Params: " + params.toString());
 			CloseableHttpResponse httpresponse = httpClient.execute(postRequest);
-
+			
 			if (httpresponse.getStatusLine().getStatusCode() >= 401) {
 				return result;
 			}

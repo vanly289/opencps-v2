@@ -25,6 +25,7 @@ bin/
 **/module-hbm.xml
 **/portlet-model-hints.xml
 
+
 **/module-spring.xml 
 **/service.properties
 **/sql/**
@@ -32,10 +33,12 @@ bin/
 **/*.iml
 **/.ivy
 
+
 **/.classpath
 **/.project
 **/.sass-cache
 **/.settings
+
 
 **/bin
 **/build
@@ -47,7 +50,6 @@ themes/
 **/.web_bundle_build
 .gradle
 .idea
-.metadata
 /bundles
 /plugins-sdk/**/classes
 /plugins-sdk/**/ivy.xml.MD5
@@ -101,6 +103,12 @@ gradle-local.properties
 **/backend-thirdparty-system-api/**/exception/
 **/backend-thirdparty-system-api/**/service/
 **/backend-thirdparty-system-api/**/service/persistence/
+**/**/ServiceProps.java
+
+**/inland-html-report-api/**/model/
+**/inland-html-report-api/**/exception/
+**/inland-html-report-api/**/service/
+**/inland-html-report-api/**/service/persistence/
 **/**/ServiceProps.java
 
 **/vr-business/**

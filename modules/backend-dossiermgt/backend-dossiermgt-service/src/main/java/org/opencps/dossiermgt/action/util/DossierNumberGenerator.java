@@ -108,7 +108,9 @@ public class DossierNumberGenerator {
 						if (number.length() < tmp.length()) {
 							number = tmp.substring(0, tmp.length() - number.length()).concat(number);
 						}
+
 						seriNumberPattern = seriNumberPattern.replace(m.group(0), number);
+
 					} else if (r.toString().equals(datetimePattern)) {
 						System.out.println(tmp);
 
