@@ -53,7 +53,8 @@ import com.liferay.portal.kernel.util.StringPool;
     "start",
     "end",
     "sort",
-    "order"
+    "order",
+    "serviceCode"
 })
 @XmlRootElement(name = "ServiceInfoSearchModel")
 public class ServiceInfoSearchModel {
@@ -73,6 +74,16 @@ public class ServiceInfoSearchModel {
     protected String sort;
 	@QueryParam(value = "order")
     protected String order;
+	@QueryParam(value = "serviceCode")
+    protected String serviceCode;
+
+	public String getServiceCode() {
+		return serviceCode;
+	}
+
+	public void setServiceCode(String serviceCode) {
+		this.serviceCode = serviceCode;
+	}
 
     /**
      * Gets the value of the keyword property.
