@@ -3103,6 +3103,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							value: 'applicantName'
 						},
 						{
+							text: 'Mã tiếp nhận',
+							align: 'left',
+							sortable: true,
+							value: 'referenceUid'
+						},
+						{
 							text: 'Mã hồ sơ. Số hồ sơ',
 							align: 'left',
 							sortable: true,

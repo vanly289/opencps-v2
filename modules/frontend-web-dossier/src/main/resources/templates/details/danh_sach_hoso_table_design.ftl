@@ -11,6 +11,9 @@
 			{{ props.item.applicantName }} 
 		</td>
 		<td style="padding: 8px; width: 15%;" class="text-xs-center">
+			{{ props.item.referenceUid }} 
+		</td>
+		<td style="padding: 8px; width: 15%;" class="text-xs-center">
 			{{ props.item.dossierIdCTN }} 
 			<br v-if="props.item.dossierNo">
 			{{ props.item.dossierNo }} 
