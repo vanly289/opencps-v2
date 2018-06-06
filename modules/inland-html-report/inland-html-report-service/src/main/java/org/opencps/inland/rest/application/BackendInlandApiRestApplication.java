@@ -33,6 +33,7 @@ import org.opencps.inland.context.provider.CompanyContextProvider;
 import org.opencps.inland.context.provider.LocaleContextProvider;
 import org.opencps.inland.context.provider.ServiceContextProvider;
 import org.opencps.inland.context.provider.UserContextProvider;
+import org.opencps.inland.exception.NoSuchInlandPrintTemplateException;
 import org.opencps.inland.model.InlandPrintTemplate;
 import org.opencps.inland.service.InlandPrintTemplateLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
@@ -81,8 +82,12 @@ public class BackendInlandApiRestApplication extends Application {
 			_log.info("Get print template: " + user.getUserId() + "," + serviceCode + "," + templateNo + "," + dossierPartNo + "," + fileTemplateNo);
 			
 			InlandPrintTemplate printTemplate = null;
-			printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN(user.getUserId(), serviceCode, templateNo, dossierPartNo, fileTemplateNo);
-			
+			try {
+				printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN(user.getUserId(), serviceCode, templateNo, dossierPartNo, fileTemplateNo);
+			}
+			catch (NoSuchInlandPrintTemplateException e) {
+				
+			}
 			InlandPrintTemplateModel result = new InlandPrintTemplateModel();
 			if (printTemplate != null) {
 				result.setPrintTemplateId(printTemplate.getPrintTemplateId());
@@ -93,6 +98,24 @@ public class BackendInlandApiRestApplication extends Application {
 				result.setTemplateNo(templateNo);
 				result.setFormTemplate(printTemplate.getFormTemplate());
 				result.setOriginalDocumentURL(printTemplate.getOriginalDocumentURL());
+			}
+			else {
+				try {
+					printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN(0, serviceCode, templateNo, dossierPartNo, fileTemplateNo);					
+				}
+				catch (NoSuchInlandPrintTemplateException e) {
+					
+				}
+				if (printTemplate != null) {
+					result.setPrintTemplateId(printTemplate.getPrintTemplateId());
+					result.setCreateDate("");
+					result.setCreateUserId(user.getUserId());
+					result.setDossierPartNo(dossierPartNo);
+					result.setFileTemplateNo(fileTemplateNo);
+					result.setTemplateNo(templateNo);
+					result.setFormTemplate(printTemplate.getFormTemplate());
+					result.setOriginalDocumentURL(printTemplate.getOriginalDocumentURL());
+				}				
 			}
 			
 			return Response.status(200).entity(result).build();
