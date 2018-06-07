@@ -147,6 +147,12 @@ public class ApplicantActionsImpl implements ApplicantActions {
 
 	Log _log = LogFactoryUtil.getLog(ApplicantActionsImpl.class);
 
+	@Override
+	public Applicant getApplicantByApplicantIdNo(ServiceContext serviceContext, String applicationIdNo)
+			throws PortalException {
+		return ApplicantLocalServiceUtil.fetchByAppId(applicationIdNo);
+	}
+
 	
 
 }

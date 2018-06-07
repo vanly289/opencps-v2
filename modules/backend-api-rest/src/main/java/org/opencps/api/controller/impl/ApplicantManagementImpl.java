@@ -838,6 +838,71 @@ public class ApplicantManagementImpl implements ApplicantManagement {
 			}
 		}
 	}
+
+	@Override
+	public Response getApplicantDetailByApplicantIdNo(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String applicantIdNo) {
+		// TODO Auto-generated method stub
+		ApplicantActions actions = new ApplicantActionsImpl();
+		ApplicantModel results = new ApplicantModel();
+		BackendAuth auth = new BackendAuthImpl();
+		Applicant applicant = null;
+		try {
+
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+
+			applicant = actions.getApplicantByApplicantIdNo(serviceContext, applicantIdNo);
+
+			if (Validator.isNotNull(applicant)) {
+				results = ApplicantUtils.mappingToApplicantModel(applicant);
+
+				return Response.status(200).entity(results).build();				
+			}
+			else {
+				ApplicantModel model = new ApplicantModel();
+				return Response.status(HttpURLConnection.HTTP_OK).entity(model).build();				
+			}
+
+		} catch (Exception e) {
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					if (e instanceof NoSuchUserException) {
+						error.setMessage("Not Found");
+						error.setCode(HttpURLConnection.HTTP_NOT_FOUND);
+						error.setDescription("Not Found");
+
+						return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(error).build();
+
+					} else {
+						error.setMessage("Internal Server Error");
+						error.setCode(HttpURLConnection.HTTP_INTERNAL_ERROR);
+						error.setDescription(e.getMessage());
+
+						return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+					}
+
+				}
+			}
+		}
+	}
 	
 
 
