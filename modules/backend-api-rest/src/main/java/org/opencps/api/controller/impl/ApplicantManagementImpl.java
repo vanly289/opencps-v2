@@ -840,8 +840,8 @@ public class ApplicantManagementImpl implements ApplicantManagement {
 	}
 
 	@Override
-	public Response getApplicantDetailByApplicantIdNo(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, String applicantIdNo) {
+	public Response getApplicantDetailByManyFilter(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String applicantIdNo, String applicantName, String address) {
 		// TODO Auto-generated method stub
 		ApplicantActions actions = new ApplicantActionsImpl();
 		ApplicantModel results = new ApplicantModel();
@@ -861,8 +861,15 @@ public class ApplicantManagementImpl implements ApplicantManagement {
 				return Response.status(200).entity(results).build();				
 			}
 			else {
-				ApplicantModel model = new ApplicantModel();
-				return Response.status(HttpURLConnection.HTTP_OK).entity(model).build();				
+				applicant = actions.getApplicantByNameAndAddress(serviceContext, applicantName, address);
+				if (applicant != null) {
+					results = ApplicantUtils.mappingToApplicantModel(applicant);	
+					return Response.status(200).entity(results).build();
+				}
+				else {
+					ApplicantModel model = new ApplicantModel();
+					return Response.status(HttpURLConnection.HTTP_OK).entity(model).build();									
+				}
 			}
 
 		} catch (Exception e) {

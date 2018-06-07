@@ -563,5 +563,9 @@ public class ApplicantLocalServiceImpl extends ApplicantLocalServiceBaseImpl {
 		return IndexSearcherHelperUtil.searchCount(searchContext, booleanQuery);
 	}
 
+	public Applicant fetchByNameAndAddress(String name, String address) {
+		return applicantPersistence.fetchByF_NAME_ADDR(name, address);
+	}
+	
 	private Log _log = LogFactoryUtil.getLog(ApplicantLocalServiceImpl.class);
 }

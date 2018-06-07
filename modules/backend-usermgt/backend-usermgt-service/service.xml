@@ -530,6 +530,11 @@
 			<finder-column name="mappingUserId"/>
 		</finder>
 		
+		<finder return-type="Applicant" name="F_NAME_ADDR" unique="true">
+			<finder-column name="applicantName"/>
+			<finder-column name="address"/>
+		</finder>
+
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>

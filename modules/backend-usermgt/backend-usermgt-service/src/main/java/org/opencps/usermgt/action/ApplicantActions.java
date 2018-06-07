@@ -51,4 +51,6 @@ public interface ApplicantActions {
 	public Applicant getApplicantByMappingUserId(long userId) throws PortalException;
 
 	public Applicant getApplicantByApplicantIdNo(ServiceContext serviceContext, String applicationIdNo) throws PortalException;
+
+	public Applicant getApplicantByNameAndAddress(ServiceContext serviceContext, String name, String address) throws PortalException;
 }

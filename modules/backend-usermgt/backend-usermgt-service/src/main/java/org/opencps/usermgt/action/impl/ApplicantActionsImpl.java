@@ -153,6 +153,12 @@ public class ApplicantActionsImpl implements ApplicantActions {
 		return ApplicantLocalServiceUtil.fetchByAppId(applicationIdNo);
 	}
 
+	@Override
+	public Applicant getApplicantByNameAndAddress(ServiceContext serviceContext, String name, String address)
+			throws PortalException {
+		return ApplicantLocalServiceUtil.fetchByNameAndAddress(name, address);
+	}
+
 	
 
 }

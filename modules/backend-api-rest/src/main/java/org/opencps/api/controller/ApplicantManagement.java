@@ -13,6 +13,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -176,7 +177,7 @@ public interface ApplicantManagement {
 			@Context ServiceContext serviceContext, @PathParam("id") long id, @PathParam("code") String code);
 
 	@GET
-	@Path("/applicantIdNo/{applicantIdNo}")
+	@Path("/detail")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })
 	@ApiOperation(value = "Get a detail applicant", response = ApplicantModel.class)
 	@ApiResponses(value = {
@@ -185,8 +186,10 @@ public interface ApplicantManagement {
 			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found", response = ExceptionModel.class),
 			@ApiResponse(code = HttpURLConnection.HTTP_FORBIDDEN, message = "Access denied", response = ExceptionModel.class) })
 
-	public Response getApplicantDetailByApplicantIdNo(@Context HttpServletRequest request, @Context HttpHeaders header,
+	public Response getApplicantDetailByManyFilter(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, @PathParam("applicantIdNo") String applicantIdNo);
-	
+			@Context ServiceContext serviceContext, 
+			@QueryParam("applicantIdNo") String applicantIdNo,
+			@QueryParam("applicantName") String applicantName,
+			@QueryParam("address") String address);
 }
