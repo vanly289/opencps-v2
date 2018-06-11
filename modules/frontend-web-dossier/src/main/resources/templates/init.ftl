@@ -30,6 +30,17 @@
 	
 </#if>
 
+<script>
+	define._amd = define.amd;
+	define.amd = false;
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.12.3/printThis.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+	define.amd = define._amd;
+</script>
 
 <#include "layout/navigation.ftl">
 

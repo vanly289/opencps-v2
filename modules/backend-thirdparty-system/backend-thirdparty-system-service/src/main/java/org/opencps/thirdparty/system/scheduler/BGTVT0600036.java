@@ -145,7 +145,7 @@ public class BGTVT0600036 {
 						vtOfficialTransportPermit.setTel(formDataObj.getString("Tel"));						
 					}
 					else {
-						vtOfficialTransportPermit.setTel(StringPool.BLANK);												
+						vtOfficialTransportPermit.setTel(DUMMY_DATA);												
 					}
 
 					if (formDataObj.has("ContactName")) {
@@ -278,11 +278,13 @@ public class BGTVT0600036 {
 					else {
 						vtOfficialTransportPermit.setRoutes(StringPool.BLANK);												
 					}
-					if (formDataObj.has("GoodsType")) {
-						vtOfficialTransportPermit.setGoodsType(formDataObj.getString("GoodsType"));						
-					}
-					else {
-						vtOfficialTransportPermit.setGoodsType(StringPool.BLANK);												
+					if (!dossier.getServiceCode().equals("BGTVT0600041")) {
+						if (formDataObj.has("GoodsType")) {
+							vtOfficialTransportPermit.setGoodsType(formDataObj.getString("GoodsType"));						
+						}
+						else {
+							vtOfficialTransportPermit.setGoodsType(StringPool.BLANK);												
+						}						
 					}
 					if (formDataObj.has("Stops")) {
 						vtOfficialTransportPermit.setStops(formDataObj.getString("Stops"));						

@@ -73,7 +73,7 @@ public class InlandPrintTemplateLocalServiceImpl
 		inlandPrintTemplate.setFormTemplate(formTemplate);
 		inlandPrintTemplate.setOriginalDocumentURL(originalDocumentURL);
 		
-		return inlandPrintTemplate;
+		return inlandPrintTemplatePersistence.update(inlandPrintTemplate);
 	}
 	
 	public InlandPrintTemplate updateInlandPrintTemplate(
@@ -104,7 +104,7 @@ public class InlandPrintTemplateLocalServiceImpl
 		inlandPrintTemplate.setFormTemplate(formTemplate);
 		inlandPrintTemplate.setOriginalDocumentURL(originalDocumentURL);
 		
-		return inlandPrintTemplate;
+		return inlandPrintTemplatePersistence.update(inlandPrintTemplate);
 	}	
 	
 	public InlandPrintTemplate deleteInlandPrintTemplate(long printTemplateId) throws NoSuchInlandPrintTemplateException {

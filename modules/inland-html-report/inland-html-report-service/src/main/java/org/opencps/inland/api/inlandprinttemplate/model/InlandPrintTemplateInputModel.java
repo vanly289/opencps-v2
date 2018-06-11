@@ -8,6 +8,7 @@
 
 package org.opencps.inland.api.inlandprinttemplate.model;
 
+import javax.ws.rs.FormParam;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -56,14 +57,23 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "InlandPrintTemplateInputModel")
 public class InlandPrintTemplateInputModel {
 
+	@FormParam(value="printTemplateId")
     protected Long printTemplateId;
+	@FormParam(value="serviceCode")
     protected String serviceCode;
+	@FormParam(value="dossierPartNo")
     protected String dossierPartNo;
+	@FormParam(value="fileTemplateNo")
     protected String fileTemplateNo;
+	@FormParam(value="templateNo")
     protected String templateNo;
+	@FormParam(value="createUserId")
     protected Long createUserId;
+	@FormParam(value="employeeId")
     protected Long employeeId;
+	@FormParam(value="formTemplate")
     protected String formTemplate;
+	@FormParam(value="originalDocumentURL")
     protected String originalDocumentURL;
 
     /**
