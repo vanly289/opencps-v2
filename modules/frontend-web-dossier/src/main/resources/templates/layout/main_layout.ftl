@@ -21,9 +21,35 @@
 
         </div>
 
-        <div class="layout wrap" v-else-if="stageFilterView === 'tra_cuu_giay_phep' && !detailTraCuuGiayPhepPage ">
-        
-          <#include "tra_cuu_giay_phep.ftl">
+        <div class="layout wrap" v-else-if="stageFilterView === 'tra_cuu_giay_phep' && !detailTraCuuGiayPhepPage ">        
+		      <v-dialog v-if="popUpPrintTraCuu" v-model="dialog" fullscreen hide-overlay>
+		        <v-card>
+		          <v-toolbar dark color="primary">
+		            <v-btn icon dark @click.native="popUpPrintTraCuu = false">
+		              <v-icon>close</v-icon>
+		            </v-btn>
+		            <v-toolbar-title>In giấy phép</v-toolbar-title>
+		            <v-spacer></v-spacer>
+		            <v-toolbar-items>
+		              <v-btn dark flat v-on:click="printDeliverable()">
+		                <v-icon>print</v-icon>
+		              	In ấn
+		              </v-btn>
+		              <v-btn dark flat @click.native="savePrintTemplate()">
+		                <v-icon>save</v-icon>
+		              	Lưu lại
+		              </v-btn>
+		            </v-toolbar-items>
+		          </v-toolbar>
+		          <div style="text-align: center;">
+					  <v-flex xs12 sm12 id="printTraCuu" style="position: relative;">
+				          <img id="imgTraCuu" style="z-index: -1" />				    
+					  </v-flex>
+				  </div>
+		        </v-card>
+		      </v-dialog>      									
+  
+        	<#include "tra_cuu_giay_phep.ftl">
 
         </div>
 

@@ -20,6 +20,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 		pk: 1,
 		groupid: themeDisplay.getScopeGroupId(),
 		data: {
+			currentPrintTemplate: {},
+			popUpPrintTraCuu: false,
 			offsetTop: 0,
 			stageFilterView: null,
 			detailPage: false,
@@ -408,15 +410,69 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							});
 						},
+						printDeliverable: function() {						    
+							$('#printTraCuu').printThis();
+							console.log("Print deliverable");
+						},
+						savePrintTemplate: function() {
+							var formTemplate = {};
+							
+							$("#printTraCuu > div").each(function(){
+								var id = $(this).attr('id');
+								var xPos = $(this).position().left;
+								var yPos = $(this).position().top;
+								formTemplate[id] = {
+									offsetX: xPos,
+									offsetY: yPos										
+								};
+							});
+							var vm = this;
+							var url ="/o/il/v2/inland";
+							
+							vm.currentPrintTemplate.formTemplate = JSON.stringify(formTemplate);
+							vm.currentPrintTemplate.employeeId = 0;
+							
+							console.log(vm.currentPrintTemplate);
+					        if (vm.currentPrintTemplate.createUserId == 0) {
+					        	axios.post(url, $.param(vm.currentPrintTemplate), {
+									headers: {
+										'Content-Type': 'application/x-www-form-urlencoded',
+										groupId: themeDisplay.getScopeGroupId()
+									}												        		
+					        	})
+					        	.then(function (response) {
+									vm.popUpPrintTraCuu = !vm.popUpPrintTraCuu;
+					        	    console.log(response);
+					        	})
+					        	.catch(function (error) {
+					        	    console.log(error);
+					        	});	
+					        }
+					        else {
+					        	axios.put(url + "/" + vm.currentPrintTemplate.printTemplateId, $.param(vm.currentPrintTemplate), {
+									headers: {
+										'Content-Type': 'application/x-www-form-urlencoded',
+										groupId: themeDisplay.getScopeGroupId()
+									}												        		
+					        	})
+					        	.then(function (response) {
+					        	    console.log(response);
+					        	})
+					        	.catch(function (error) {
+					        	    console.log(error);
+					        	});	
+					        }							
+						},
 						getInLand: function(item){
 							var vm = this;
-							var url ="/o/il/v2/inland" ;
+							console.log(item);
+							var url ="/o/il/v2/inland";
 							var configInland = {
 								params: {
 									serviceCode: item.serviceCode,
 									dossierPartNo: item.dossierPartNo,
 									fileTemplateNo: item.fileTemplateNo,
-									templateNo: item.templateNo
+									templateNo: item.dossierTemplateNo
 								},
 								headers: {
 									groupId: themeDisplay.getScopeGroupId()
@@ -424,27 +480,74 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}
 
 							axios.get(url, configInland).then(function (response) {
-								document.getElementById('printTraCuu').style.backgroundImage = 'url('+response.data.originalDocumentURL+')';
-								var formTemplate = JSON.parse(response.data.formTemplate);
-								for (var key in formTemplate) {
-									$("#printTraCuu").append('<div id='+key+' style="position:relative; top : '+formTemplate[key].offsetX+'; left : '+formTemplate[key].offsetY+'"></div>');
+								if (response.data.formTemplate != '' && response.data.formTemplate.length != 0) {
+						        	vm.currentPrintTemplate = {
+										printTemplateId: response.data.printTemplateId,
+						        		serviceCode: response.data.serviceCode,
+							        	dossierPartNo: response.data.dossierPartNo,
+							        	fileTemplateNo: response.data.fileTemplateNo,
+							        	templateNo: response.data.templateNo,
+							        	createUserId: response.data.createUserId,
+							        	employeeId: response.data.employeeId,
+							        	formTemplate: response.data.formTemplate,
+							        	originalDocumentURL: response.data.originalDocumentURL
+						        	};
+						        	
+									$('#imgTraCuu').attr("src", response.data.originalDocumentURL);
+									var formTemplate = response.data.formTemplate;
+									var imgTraCuu = $('#imgTraCuu');
+									imgTraCuu.load(function(){
+										$('#printTraCuu').height(imgTraCuu.height());
+										$('#printTraCuu').width(imgTraCuu.width());
+										
+										var formData = JSON.parse(formTemplate);
+										
+										for (var key in formData) {
+											if (item.hasOwnProperty(key) && !document.getElementById(key)) {
+												$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');												
+												$('#' + key).draggable({
+													stop: function() {
+														var position = $(this).position();
+												        var xPos = position.left;
+												        var yPos = position.top;
+												        formData[key].offsetX = xPos;
+												        formData[key].offsetY = yPos;
+												        
+												        var data = {
+												        	serviceCode: response.data.serviceCode,
+												        	dossierPartNo: response.data.dossierPartNo,
+												        	fileTemplateNo: response.data.fileTemplateNo,
+												        	templateNo: response.data.templateNo,
+												        	createUserId: themeDisplay.getUserId(),
+												        	employeeId: 0,
+												        	formTemplate: JSON.stringify(formData),
+												        	originalDocumentURL: response.data.originalDocumentURL
+												        };
+												        if (response.data.createUserId != 0) {
+												        	data.printTemplateId = response.data.printTemplateId;
+												        	axios.put(url + "/" + response.data.printTemplateId, $.param(data), {
+																headers: {
+																	'Content-Type': 'application/x-www-form-urlencoded',
+																	groupId: themeDisplay.getScopeGroupId()
+																}												        		
+												        	})
+												        	.then(function (response) {
+												        	    console.log(response);
+												        	})
+												        	.catch(function (error) {
+												        	    console.log(error);
+												        	});	
+												        }
+												    }
+												});
+											}
+										}									
+									});
 								}
 							})
 							.catch(function (error) {
 								console.log(error);
 							});
-						},
-						getAllOffSet: function(){
-							var arrOffset = [];
-							$("#printTraCuu > div").each(function(){
-								var xPos = $(this).offset().left;
-								var yPos = $(this).offset().top;
-								arrOffset.push({
-									offsetX: xPos,
-									offsetY: yPos
-								})
-							});
-							return arrOffset;
 						},
 						toDetailGiayPhep: function(item){
 							var vm = this;
@@ -466,13 +569,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							});
 						},
 						printGiayPhep: function(item) {
-							console.log("ccc");
 							var vm = this;
 							vm.popUpPrintTraCuu  = !vm.popUpPrintTraCuu;
-
+							
 							setTimeout(function(){
 								vm.getInLand(item)
 							}, 500)
+							
 						},
 						toDetailThongTinXe: function(item){
 							var vm = this;
@@ -3779,13 +3882,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						}
 					}
 				},
+				/*
 				'popUpPrintTraCuu' : {
 					'id': 'popUpPrintTraCuu',
 					'name': 'popUpPrintTraCuu',
 					"type": "dialog",
 					"type_dialog": "fullScreen",
-					'icon_save': 'undo',
-					'label_save': 'Quay lại',
+					'icon_save': 'save',
+					'label_save': 'Lưu lại',
 					"color": "primary",
 					"template": "popUpPrintTraCuuTemplate",
 					"events": {
@@ -3799,6 +3903,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						}
 					}
 				},
+				*/
 				"cbxDocumentNewTab": {
 					'id': 'cbxDocumentNewTab',
 					'name': 'cbxDocumentNewTab',
