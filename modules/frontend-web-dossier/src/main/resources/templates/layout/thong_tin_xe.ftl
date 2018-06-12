@@ -15,7 +15,7 @@
 						<v-select
 						  :items="hinhThucs"
               item-text="itemName"
-              item-code="itemCode"
+              item-value="itemCode"
 						  v-model="hinhThucSelect"
               clearable
 						></v-select>
@@ -36,26 +36,25 @@
   					</v-flex>
   					<v-flex xs12 sm4>
             <v-menu
-              ref="menuThongTinXeDate"
-              :close-on-content-click="false"
-              v-model="menuThongTinXeDate"
-              :nudge-right="40"
-              lazy
-              transition="scale-transition"
-              offset-y
-              full-width
-              max-width="290px"
-              min-width="290px"
-              >
-              <v-text-field
+            ref="menuThongTinXeDate"
+            :close-on-content-click="false"
+            v-model="menuThongTinXeDate"
+            :nudge-right="40"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            max-width="290px"
+            min-width="290px"
+          >
+            <v-text-field
               slot="activator"
               v-model="thongTinXeDate"
               persistent-hint
               prepend-icon="event"
-              ></v-text-field>
-              <v-date-picker v-model="thongTinXeDate" no-title @input="menuThongTinXeDate = false"></v-date-picker>
-            </v-menu>
-  					</v-flex>
+            ></v-text-field>
+            <v-date-picker v-model="thongTinXeDate" no-title @input="menuThongTinXeDate = false"></v-date-picker>
+          </v-menu>
   				</v-layout>
   				<v-layout row wrap class="text-xs-right">
   					<v-flex xs12 sm3 class="pl-5">
@@ -91,9 +90,9 @@
   		<v-list-tile avatar>
   			<v-list-tile-content>
   				<div>
-  					<span class="bold">{{ (item.loai == 1) ? 'Nhập cảnh' : 'Xuất Cảnh'}}</span> &nbsp;&nbsp;&nbsp; <span>Cửa khẩu : </span> {{item.cua_khau}} &nbsp;&nbsp;&nbsp; {{item.thoi_gian}}
-  					<p>Thông tin lái xe : {{item.thong_tin_lai_xe}}</p>
-  					<span>Giấy phép lái xe : {{item.giay_phep_lai_xe}}</span>
+  					<span class="bold">{{ (item.expImpGateType == 'NC') ? 'Nhập cảnh' : 'Xuất Cảnh'}}</span> &nbsp;&nbsp;&nbsp; <span>Cửa khẩu : </span> {{item.expImpGate}} &nbsp;&nbsp;&nbsp; {{item.registrationDate}}
+  					<p>Thông tin lái xe : {{item.driverName}}</p>
+  					<span>Giấy phép lái xe : {{item.driverLicenceNo}}</span>
   				</div>
   			</v-list-tile-content>
   		</v-list-tile>
