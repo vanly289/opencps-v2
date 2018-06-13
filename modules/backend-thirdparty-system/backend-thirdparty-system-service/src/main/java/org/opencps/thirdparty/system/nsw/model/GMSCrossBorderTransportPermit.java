@@ -17,12 +17,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for VLCrossBorderTransportPermit complex type.
+ * <p>Java class for GMSCrossBorderTransportPermit complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="VLCrossBorderTransportPermit">
+ * &lt;complexType name="GMSCrossBorderTransportPermit">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -34,13 +34,6 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;/simpleType>
  *         &lt;/element>
  *         &lt;element name="ManufacturedYear" minOccurs="0">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="255"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="TechnicalData" minOccurs="0">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;maxLength value="255"/>
@@ -155,13 +148,6 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="PurposeOfTheTrip" minOccurs="0">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;maxLength value="500"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
  *         &lt;element name="LicenceNo" minOccurs="0">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -190,7 +176,14 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="BorderGate" minOccurs="0">
+ *         &lt;element name="ExpImpGateCode" minOccurs="0">
+ *           &lt;simpleType>
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *               &lt;maxLength value="255"/>
+ *             &lt;/restriction>
+ *           &lt;/simpleType>
+ *         &lt;/element>
+ *         &lt;element name="ExpImpGate" minOccurs="0">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;maxLength value="255"/>
@@ -208,6 +201,20 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;maxLength value="255"/>
+ *             &lt;/restriction>
+ *           &lt;/simpleType>
+ *         &lt;/element>
+ *         &lt;element name="LicenceNoGMS" minOccurs="0">
+ *           &lt;simpleType>
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *               &lt;maxLength value="255"/>
+ *             &lt;/restriction>
+ *           &lt;/simpleType>
+ *         &lt;/element>
+ *         &lt;element name="ExpireDateGMS" minOccurs="0">
+ *           &lt;simpleType>
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *               &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
@@ -235,44 +242,6 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
- *         &lt;element name="CustomsBorderGuards">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="CustomsDepartureDate">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="CustomsArrivalDate">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="BorderGuardsDepartureDate">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="BorderGuardsArrivalDate">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
  *         &lt;element ref="{}AttachedFile" maxOccurs="unbounded"/>
  *         &lt;element ref="{}IssuingAuthority"/>
  *       &lt;/sequence>
@@ -284,10 +253,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "VLCrossBorderTransportPermit", propOrder = {
+@XmlType(name = "GMSCrossBorderTransportPermit", propOrder = {
     "registrationNumber",
     "manufacturedYear",
-    "technicalData",
     "trademarkCode",
     "trademarkName",
     "model",
@@ -300,27 +268,26 @@ import javax.xml.bind.annotation.XmlType;
     "tel",
     "fax",
     "transportOperation",
-    "purposeOfTheTrip",
     "licenceNo",
     "expiredDate",
     "validFrom",
     "validUntil",
-    "borderGate",
+    "expImpGateCode",
+    "expImpGate",
     "travelingArea",
     "destination",
+    "licenceNoGMS",
+    "expireDateGMS",
     "extension",
-    "customsBorderGuards",
     "attachedFile",
     "issuingAuthority"
 })
-public class VLCrossBorderTransportPermit {
+public class GMSCrossBorderTransportPermit {
 
     @XmlElement(name = "RegistrationNumber", required = true)
     protected String registrationNumber;
     @XmlElement(name = "ManufacturedYear")
     protected String manufacturedYear;
-    @XmlElement(name = "TechnicalData")
-    protected String technicalData;
     @XmlElement(name = "TrademarkCode")
     protected String trademarkCode;
     @XmlElement(name = "TrademarkName")
@@ -328,7 +295,7 @@ public class VLCrossBorderTransportPermit {
     @XmlElement(name = "Model")
     protected String model;
     @XmlElement(name = "VehicleType", required = true)
-    protected VLCrossBorderTransportPermit.VehicleType vehicleType;
+    protected GMSCrossBorderTransportPermit.VehicleType vehicleType;
     @XmlElement(name = "VehicleColor")
     protected String vehicleColor;
     @XmlElement(name = "EngineNumber")
@@ -345,8 +312,6 @@ public class VLCrossBorderTransportPermit {
     protected String fax;
     @XmlElement(name = "TransportOperation")
     protected String transportOperation;
-    @XmlElement(name = "PurposeOfTheTrip")
-    protected String purposeOfTheTrip;
     @XmlElement(name = "LicenceNo")
     protected String licenceNo;
     @XmlElement(name = "ExpiredDate", required = true)
@@ -355,16 +320,20 @@ public class VLCrossBorderTransportPermit {
     protected String validFrom;
     @XmlElement(name = "ValidUntil", required = true)
     protected String validUntil;
-    @XmlElement(name = "BorderGate")
-    protected String borderGate;
+    @XmlElement(name = "ExpImpGateCode")
+    protected String expImpGateCode;
+    @XmlElement(name = "ExpImpGate")
+    protected String expImpGate;
     @XmlElement(name = "TravelingArea")
     protected String travelingArea;
     @XmlElement(name = "Destination")
     protected String destination;
+    @XmlElement(name = "LicenceNoGMS")
+    protected String licenceNoGMS;
+    @XmlElement(name = "ExpireDateGMS")
+    protected String expireDateGMS;
     @XmlElement(name = "Extension", required = true)
-    protected VLCrossBorderTransportPermit.Extension extension;
-    @XmlElement(name = "CustomsBorderGuards", required = true)
-    protected VLCrossBorderTransportPermit.CustomsBorderGuards customsBorderGuards;
+    protected GMSCrossBorderTransportPermit.Extension extension;
     @XmlElement(name = "AttachedFile", required = true)
     protected List<AttachedFile> attachedFile;
     @XmlElement(name = "IssuingAuthority", required = true)
@@ -416,30 +385,6 @@ public class VLCrossBorderTransportPermit {
      */
     public void setManufacturedYear(String value) {
         this.manufacturedYear = value;
-    }
-
-    /**
-     * Gets the value of the technicalData property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTechnicalData() {
-        return technicalData;
-    }
-
-    /**
-     * Sets the value of the technicalData property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTechnicalData(String value) {
-        this.technicalData = value;
     }
 
     /**
@@ -519,10 +464,10 @@ public class VLCrossBorderTransportPermit {
      * 
      * @return
      *     possible object is
-     *     {@link VLCrossBorderTransportPermit.VehicleType }
+     *     {@link GMSCrossBorderTransportPermit.VehicleType }
      *     
      */
-    public VLCrossBorderTransportPermit.VehicleType getVehicleType() {
+    public GMSCrossBorderTransportPermit.VehicleType getVehicleType() {
         return vehicleType;
     }
 
@@ -531,10 +476,10 @@ public class VLCrossBorderTransportPermit {
      * 
      * @param value
      *     allowed object is
-     *     {@link VLCrossBorderTransportPermit.VehicleType }
+     *     {@link GMSCrossBorderTransportPermit.VehicleType }
      *     
      */
-    public void setVehicleType(VLCrossBorderTransportPermit.VehicleType value) {
+    public void setVehicleType(GMSCrossBorderTransportPermit.VehicleType value) {
         this.vehicleType = value;
     }
 
@@ -731,30 +676,6 @@ public class VLCrossBorderTransportPermit {
     }
 
     /**
-     * Gets the value of the purposeOfTheTrip property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPurposeOfTheTrip() {
-        return purposeOfTheTrip;
-    }
-
-    /**
-     * Sets the value of the purposeOfTheTrip property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPurposeOfTheTrip(String value) {
-        this.purposeOfTheTrip = value;
-    }
-
-    /**
      * Gets the value of the licenceNo property.
      * 
      * @return
@@ -851,27 +772,51 @@ public class VLCrossBorderTransportPermit {
     }
 
     /**
-     * Gets the value of the borderGate property.
+     * Gets the value of the expImpGateCode property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getBorderGate() {
-        return borderGate;
+    public String getExpImpGateCode() {
+        return expImpGateCode;
     }
 
     /**
-     * Sets the value of the borderGate property.
+     * Sets the value of the expImpGateCode property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setBorderGate(String value) {
-        this.borderGate = value;
+    public void setExpImpGateCode(String value) {
+        this.expImpGateCode = value;
+    }
+
+    /**
+     * Gets the value of the expImpGate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getExpImpGate() {
+        return expImpGate;
+    }
+
+    /**
+     * Sets the value of the expImpGate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setExpImpGate(String value) {
+        this.expImpGate = value;
     }
 
     /**
@@ -923,14 +868,62 @@ public class VLCrossBorderTransportPermit {
     }
 
     /**
+     * Gets the value of the licenceNoGMS property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLicenceNoGMS() {
+        return licenceNoGMS;
+    }
+
+    /**
+     * Sets the value of the licenceNoGMS property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLicenceNoGMS(String value) {
+        this.licenceNoGMS = value;
+    }
+
+    /**
+     * Gets the value of the expireDateGMS property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getExpireDateGMS() {
+        return expireDateGMS;
+    }
+
+    /**
+     * Sets the value of the expireDateGMS property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setExpireDateGMS(String value) {
+        this.expireDateGMS = value;
+    }
+
+    /**
      * Gets the value of the extension property.
      * 
      * @return
      *     possible object is
-     *     {@link VLCrossBorderTransportPermit.Extension }
+     *     {@link GMSCrossBorderTransportPermit.Extension }
      *     
      */
-    public VLCrossBorderTransportPermit.Extension getExtension() {
+    public GMSCrossBorderTransportPermit.Extension getExtension() {
         return extension;
     }
 
@@ -939,35 +932,11 @@ public class VLCrossBorderTransportPermit {
      * 
      * @param value
      *     allowed object is
-     *     {@link VLCrossBorderTransportPermit.Extension }
+     *     {@link GMSCrossBorderTransportPermit.Extension }
      *     
      */
-    public void setExtension(VLCrossBorderTransportPermit.Extension value) {
+    public void setExtension(GMSCrossBorderTransportPermit.Extension value) {
         this.extension = value;
-    }
-
-    /**
-     * Gets the value of the customsBorderGuards property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link VLCrossBorderTransportPermit.CustomsBorderGuards }
-     *     
-     */
-    public VLCrossBorderTransportPermit.CustomsBorderGuards getCustomsBorderGuards() {
-        return customsBorderGuards;
-    }
-
-    /**
-     * Sets the value of the customsBorderGuards property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link VLCrossBorderTransportPermit.CustomsBorderGuards }
-     *     
-     */
-    public void setCustomsBorderGuards(VLCrossBorderTransportPermit.CustomsBorderGuards value) {
-        this.customsBorderGuards = value;
     }
 
     /**
@@ -1021,169 +990,6 @@ public class VLCrossBorderTransportPermit {
      */
     public void setIssuingAuthority(IssuingAuthority value) {
         this.issuingAuthority = value;
-    }
-
-
-    /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="CustomsDepartureDate">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="CustomsArrivalDate">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="BorderGuardsDepartureDate">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="BorderGuardsArrivalDate">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;pattern value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
-     */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "customsDepartureDate",
-        "customsArrivalDate",
-        "borderGuardsDepartureDate",
-        "borderGuardsArrivalDate"
-    })
-    public static class CustomsBorderGuards {
-
-        @XmlElement(name = "CustomsDepartureDate", required = true)
-        protected String customsDepartureDate;
-        @XmlElement(name = "CustomsArrivalDate", required = true)
-        protected String customsArrivalDate;
-        @XmlElement(name = "BorderGuardsDepartureDate", required = true)
-        protected String borderGuardsDepartureDate;
-        @XmlElement(name = "BorderGuardsArrivalDate", required = true)
-        protected String borderGuardsArrivalDate;
-
-        /**
-         * Gets the value of the customsDepartureDate property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getCustomsDepartureDate() {
-            return customsDepartureDate;
-        }
-
-        /**
-         * Sets the value of the customsDepartureDate property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setCustomsDepartureDate(String value) {
-            this.customsDepartureDate = value;
-        }
-
-        /**
-         * Gets the value of the customsArrivalDate property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getCustomsArrivalDate() {
-            return customsArrivalDate;
-        }
-
-        /**
-         * Sets the value of the customsArrivalDate property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setCustomsArrivalDate(String value) {
-            this.customsArrivalDate = value;
-        }
-
-        /**
-         * Gets the value of the borderGuardsDepartureDate property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getBorderGuardsDepartureDate() {
-            return borderGuardsDepartureDate;
-        }
-
-        /**
-         * Sets the value of the borderGuardsDepartureDate property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setBorderGuardsDepartureDate(String value) {
-            this.borderGuardsDepartureDate = value;
-        }
-
-        /**
-         * Gets the value of the borderGuardsArrivalDate property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getBorderGuardsArrivalDate() {
-            return borderGuardsArrivalDate;
-        }
-
-        /**
-         * Sets the value of the borderGuardsArrivalDate property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setBorderGuardsArrivalDate(String value) {
-            this.borderGuardsArrivalDate = value;
-        }
-
     }
 
 

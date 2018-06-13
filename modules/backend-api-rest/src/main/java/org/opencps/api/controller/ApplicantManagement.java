@@ -191,5 +191,6 @@ public interface ApplicantManagement {
 			@Context ServiceContext serviceContext, 
 			@QueryParam("applicantIdNo") String applicantIdNo,
 			@QueryParam("applicantName") String applicantName,
-			@QueryParam("address") String address);
+			@QueryParam("address") String address,
+			@QueryParam("email") String email);
 }

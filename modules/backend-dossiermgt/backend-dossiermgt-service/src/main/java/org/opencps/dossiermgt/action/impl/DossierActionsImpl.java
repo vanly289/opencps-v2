@@ -899,6 +899,8 @@ public class DossierActionsImpl implements DossierActions {
 																				formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
 				
 																				_log.info("UPDATE FORM DATA GENERATE RESULT FILE");
+																				formData = formDataObj.toJSONString();
+																				
 																				actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, formData, serviceContext);																						
 																			}
 																			else {
@@ -1240,6 +1242,34 @@ public class DossierActionsImpl implements DossierActions {
 								}
 							}
 						}
+						
+						//TODO: Generate formData
+					      _log.info("IN_CURRENT_STEP:" + processStep.getStepCode() + processStep.getStepName());
+
+					      List<ProcessPlugin> plugins = ProcessPluginLocalServiceUtil.getProcessPlugins(serviceProcessId,
+					        processStep.getStepCode());
+
+					      _log.info("WE_HAVE_PLUGINS:" + plugins.size());
+
+					      List<ProcessPlugin> autoPlugins = new ArrayList<ProcessPlugin>();
+
+					      for (ProcessPlugin plg : plugins) {
+					       if (plg.getAutoRun()) {
+					        autoPlugins.add(plg);
+					       }
+					      }
+
+					      _log.info("AND_HAVE_AUTO_RUN_PLUGINS:" + autoPlugins.size());
+
+					      for (ProcessPlugin plg : autoPlugins) {
+					       // do create file
+					       String fileTemplateNo = plg.getSampleData();
+
+					       fileTemplateNo = StringUtil.replaceFirst(fileTemplateNo, "#", StringPool.BLANK);
+
+					       _doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(), serviceContext);
+					      }
+					      
 						result.put("pending", pending);
 						result.put("processAction", processAction);
 						result.put("lstUser", lstUser);
@@ -1385,6 +1415,8 @@ public class DossierActionsImpl implements DossierActions {
 
 						}
 
+						//Add auto plugin
+						
 						result.put("pending", pending);
 						result.put("processAction", processAction);
 						result.put("lstUser", lstUser);

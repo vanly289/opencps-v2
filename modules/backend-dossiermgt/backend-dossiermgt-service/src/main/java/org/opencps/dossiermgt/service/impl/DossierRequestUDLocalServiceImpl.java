@@ -129,4 +129,7 @@ public class DossierRequestUDLocalServiceImpl
 		}
 	}
 
+	public List<DossierRequestUD> getDossierRequestByRT(long companyId, long groupId, long dossierId, String requestType) throws PortalException, SystemException {
+		return dossierRequestUDPersistence.findByDID_RT(companyId, groupId, dossierId, requestType);
+	}
 }

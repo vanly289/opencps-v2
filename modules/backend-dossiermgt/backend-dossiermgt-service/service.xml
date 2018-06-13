@@ -923,6 +923,12 @@
 			<finder-column name="dossierId" />
 			<finder-column name="isNew" />
 		</finder>
+		<finder return-type="Collection" name="DID_RT">
+			<finder-column name="companyId"/>
+			<finder-column name="groupId"/>
+			<finder-column name="dossierId" />
+			<finder-column name="requestType" />
+		</finder>
 	</entity>
 	
 	<entity local-service="true" name="ProcessAction"

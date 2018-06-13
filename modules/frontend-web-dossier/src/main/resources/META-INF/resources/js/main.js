@@ -2050,6 +2050,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							/*var url = '/o/rest/v2/statistics/dossiers/todo';*/
 							var url = '/o/rest/v2/statistics/dossiers/todo';
+							console.log("Init load");
 							$.ajax({
 								url : url,
 								dataType : "json",
@@ -2057,6 +2058,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								headers : {
 									'groupId': themeDisplay.getScopeGroupId(),
 								},
+								data: {
+									service: vm.serviceInfoFilter.serviceCode									
+								},								
 								success : function(result){
 									var serializable = result;
 
@@ -2112,7 +2116,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							/*var url = '/o/rest/v2/statistics/dossiers/todo';*/
 							var url = '/o/rest/v2/statistics/dossiers/todo';
-							
+							console.log("Init load 2");
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
 
@@ -3346,6 +3350,58 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.danhSachHoSoTableItems = [];
 
 							});
+							
+							var todoUrl = '/o/rest/v2/statistics/dossiers/todo';
+							
+							$.ajax({
+								url : todoUrl,
+								dataType : "json",
+								type : "GET",
+								headers : {
+									'groupId': themeDisplay.getScopeGroupId(),
+								},
+								data: {
+									service: vm.serviceInfoFilter.serviceCode									
+								},
+								success : function(result){
+									var serializable = result;
+
+									var indexTree = -1;
+									var index = 0;
+									//console.log("listgroupHoSoFilterItems=======FISRT",vm.listgroupHoSoFilterItems);
+									//console.log("serializable=======",serializable.data);
+									for (var key in serializable.data) {
+										for(var i in vm.listgroupHoSoFilterItems){
+											if ( serializable.data[key].level === 0) {
+
+												if (serializable.data[key].dossierStatus === 'cancelling' ||
+													serializable.data[key].dossierStatus === 'cancelled' ||
+													serializable.data[key].dossierStatus === 'processing' ||
+													serializable.data[key].dossierStatus === 'paid') {
+													serializable.data[key].items = [];
+
+												if(serializable.data[key].dossierStatus === vm.listgroupHoSoFilterItems[i].id){
+													vm.listgroupHoSoFilterItems[i].count = serializable.data[key].count;
+												}
+											}
+
+										} else {
+
+											if(serializable.data[key].dossierSubStatus === vm.listgroupHoSoFilterItems[i].id){
+												vm.listgroupHoSoFilterItems[i].count = serializable.data[key].count;
+											}
+										}
+									}
+
+								}
+								//console.log("listgroupHoSoFilterItems=======LAST",vm.listgroupHoSoFilterItems);
+
+							},
+							error : function(result){
+
+							}
+						});	
+							
 							return false; 
 						},
 						toDetailHoSo: function (item) {
@@ -4027,7 +4083,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                 			if (!vm.advanced_filter_dossierStatusItems) {
 
                 				var url = '/o/rest/v2/statistics/dossiers/todo';
-
+                				console.log("Init load 3");
                 				axios.get(url, config).then(function (response) {
                 					var serializable = response.data;
 

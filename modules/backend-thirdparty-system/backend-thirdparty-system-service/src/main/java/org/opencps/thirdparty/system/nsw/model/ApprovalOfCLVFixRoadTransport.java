@@ -17,12 +17,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ApprovalOfVTFixRoadTransport complex type.
+ * <p>Java class for ApprovalOfCLVFixRoadTransport complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ApprovalOfVTFixRoadTransport">
+ * &lt;complexType name="ApprovalOfCLVFixRoadTransport">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -110,87 +110,14 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="VehicleList" maxOccurs="unbounded">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="SequenceNo">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;maxLength value="10"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="RegistrationNumber">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;maxLength value="255"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="RegistrationDriver">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;maxLength value="255"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="VehicleModelCode">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;maxLength value="255"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="VehicleModelName">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;maxLength value="255"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="Capacity">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;maxLength value="255"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="ManufacturedYear">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;maxLength value="255"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="VehicleExpImpGateCode">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;maxLength value="255"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="VehicleExpImpGate">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;maxLength value="255"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                   &lt;element name="OperationType">
- *                     &lt;simpleType>
- *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                         &lt;maxLength value="1"/>
- *                       &lt;/restriction>
- *                     &lt;/simpleType>
- *                   &lt;/element>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
+ *         &lt;element name="FromBorderGate">
+ *           &lt;simpleType>
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *               &lt;maxLength value="255"/>
+ *             &lt;/restriction>
+ *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="ItemNo">
+ *         &lt;element name="ToBorderGate">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;maxLength value="255"/>
@@ -225,7 +152,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="ToTQAuthority">
+ *         &lt;element name="ToLAOAuthority">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;maxLength value="255"/>
@@ -257,7 +184,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ApprovalOfVTFixRoadTransport", propOrder = {
+@XmlType(name = "ApprovalOfCLVFixRoadTransport", propOrder = {
     "issuingDispatchNo",
     "officialDispatchNo",
     "officialDispatchDate",
@@ -270,19 +197,19 @@ import javax.xml.bind.annotation.XmlType;
     "toParkingLot",
     "toProvinceCode",
     "toProvinceName",
-    "vehicleList",
-    "itemNo",
+    "fromBorderGate",
+    "toBorderGate",
     "circularNo",
     "circularDate",
     "numberOfVehicle",
     "toVNAuthority",
-    "toTQAuthority",
+    "toLAOAuthority",
     "atParkingLot",
     "atProvinceName",
     "attachedFile",
     "issuingAuthority"
 })
-public class ApprovalOfVTFixRoadTransport {
+public class ApprovalOfCLVFixRoadTransport {
 
     @XmlElement(name = "IssuingDispatchNo", required = true)
     protected String issuingDispatchNo;
@@ -308,10 +235,10 @@ public class ApprovalOfVTFixRoadTransport {
     protected String toProvinceCode;
     @XmlElement(name = "ToProvinceName", required = true)
     protected String toProvinceName;
-    @XmlElement(name = "VehicleList", required = true)
-    protected List<ApprovalOfVTFixRoadTransport.VehicleList> vehicleList;
-    @XmlElement(name = "ItemNo", required = true)
-    protected String itemNo;
+    @XmlElement(name = "FromBorderGate", required = true)
+    protected String fromBorderGate;
+    @XmlElement(name = "ToBorderGate", required = true)
+    protected String toBorderGate;
     @XmlElement(name = "CircularNo", required = true)
     protected String circularNo;
     @XmlElement(name = "CircularDate", required = true)
@@ -320,8 +247,8 @@ public class ApprovalOfVTFixRoadTransport {
     protected String numberOfVehicle;
     @XmlElement(name = "ToVNAuthority", required = true)
     protected String toVNAuthority;
-    @XmlElement(name = "ToTQAuthority", required = true)
-    protected String toTQAuthority;
+    @XmlElement(name = "ToLAOAuthority", required = true)
+    protected String toLAOAuthority;
     @XmlElement(name = "AtParkingLot", required = true)
     protected String atParkingLot;
     @XmlElement(name = "AtProvinceName", required = true)
@@ -620,56 +547,51 @@ public class ApprovalOfVTFixRoadTransport {
     }
 
     /**
-     * Gets the value of the vehicleList property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the vehicleList property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getVehicleList().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ApprovalOfVTFixRoadTransport.VehicleList }
-     * 
-     * 
-     */
-    public List<ApprovalOfVTFixRoadTransport.VehicleList> getVehicleList() {
-        if (vehicleList == null) {
-            vehicleList = new ArrayList<ApprovalOfVTFixRoadTransport.VehicleList>();
-        }
-        return this.vehicleList;
-    }
-
-    /**
-     * Gets the value of the itemNo property.
+     * Gets the value of the fromBorderGate property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getItemNo() {
-        return itemNo;
+    public String getFromBorderGate() {
+        return fromBorderGate;
     }
 
     /**
-     * Sets the value of the itemNo property.
+     * Sets the value of the fromBorderGate property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setItemNo(String value) {
-        this.itemNo = value;
+    public void setFromBorderGate(String value) {
+        this.fromBorderGate = value;
+    }
+
+    /**
+     * Gets the value of the toBorderGate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getToBorderGate() {
+        return toBorderGate;
+    }
+
+    /**
+     * Sets the value of the toBorderGate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setToBorderGate(String value) {
+        this.toBorderGate = value;
     }
 
     /**
@@ -769,27 +691,27 @@ public class ApprovalOfVTFixRoadTransport {
     }
 
     /**
-     * Gets the value of the toTQAuthority property.
+     * Gets the value of the toLAOAuthority property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getToTQAuthority() {
-        return toTQAuthority;
+    public String getToLAOAuthority() {
+        return toLAOAuthority;
     }
 
     /**
-     * Sets the value of the toTQAuthority property.
+     * Sets the value of the toLAOAuthority property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setToTQAuthority(String value) {
-        this.toTQAuthority = value;
+    public void setToLAOAuthority(String value) {
+        this.toLAOAuthority = value;
     }
 
     /**
@@ -891,373 +813,6 @@ public class ApprovalOfVTFixRoadTransport {
      */
     public void setIssuingAuthority(IssuingAuthority value) {
         this.issuingAuthority = value;
-    }
-
-
-    /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="SequenceNo">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;maxLength value="10"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="RegistrationNumber">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;maxLength value="255"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="RegistrationDriver">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;maxLength value="255"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="VehicleModelCode">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;maxLength value="255"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="VehicleModelName">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;maxLength value="255"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="Capacity">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;maxLength value="255"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="ManufacturedYear">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;maxLength value="255"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="VehicleExpImpGateCode">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;maxLength value="255"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="VehicleExpImpGate">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;maxLength value="255"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *         &lt;element name="OperationType">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *               &lt;maxLength value="1"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
-     */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "sequenceNo",
-        "registrationNumber",
-        "registrationDriver",
-        "vehicleModelCode",
-        "vehicleModelName",
-        "capacity",
-        "manufacturedYear",
-        "vehicleExpImpGateCode",
-        "vehicleExpImpGate",
-        "operationType"
-    })
-    public static class VehicleList {
-
-        @XmlElement(name = "SequenceNo", required = true)
-        protected String sequenceNo;
-        @XmlElement(name = "RegistrationNumber", required = true)
-        protected String registrationNumber;
-        @XmlElement(name = "RegistrationDriver", required = true)
-        protected String registrationDriver;
-        @XmlElement(name = "VehicleModelCode", required = true)
-        protected String vehicleModelCode;
-        @XmlElement(name = "VehicleModelName", required = true)
-        protected String vehicleModelName;
-        @XmlElement(name = "Capacity", required = true)
-        protected String capacity;
-        @XmlElement(name = "ManufacturedYear", required = true)
-        protected String manufacturedYear;
-        @XmlElement(name = "VehicleExpImpGateCode", required = true)
-        protected String vehicleExpImpGateCode;
-        @XmlElement(name = "VehicleExpImpGate", required = true)
-        protected String vehicleExpImpGate;
-        @XmlElement(name = "OperationType", required = true)
-        protected String operationType;
-
-        /**
-         * Gets the value of the sequenceNo property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getSequenceNo() {
-            return sequenceNo;
-        }
-
-        /**
-         * Sets the value of the sequenceNo property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setSequenceNo(String value) {
-            this.sequenceNo = value;
-        }
-
-        /**
-         * Gets the value of the registrationNumber property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getRegistrationNumber() {
-            return registrationNumber;
-        }
-
-        /**
-         * Sets the value of the registrationNumber property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setRegistrationNumber(String value) {
-            this.registrationNumber = value;
-        }
-
-        /**
-         * Gets the value of the registrationDriver property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getRegistrationDriver() {
-            return registrationDriver;
-        }
-
-        /**
-         * Sets the value of the registrationDriver property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setRegistrationDriver(String value) {
-            this.registrationDriver = value;
-        }
-
-        /**
-         * Gets the value of the vehicleModelCode property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getVehicleModelCode() {
-            return vehicleModelCode;
-        }
-
-        /**
-         * Sets the value of the vehicleModelCode property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setVehicleModelCode(String value) {
-            this.vehicleModelCode = value;
-        }
-
-        /**
-         * Gets the value of the vehicleModelName property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getVehicleModelName() {
-            return vehicleModelName;
-        }
-
-        /**
-         * Sets the value of the vehicleModelName property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setVehicleModelName(String value) {
-            this.vehicleModelName = value;
-        }
-
-        /**
-         * Gets the value of the capacity property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getCapacity() {
-            return capacity;
-        }
-
-        /**
-         * Sets the value of the capacity property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setCapacity(String value) {
-            this.capacity = value;
-        }
-
-        /**
-         * Gets the value of the manufacturedYear property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getManufacturedYear() {
-            return manufacturedYear;
-        }
-
-        /**
-         * Sets the value of the manufacturedYear property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setManufacturedYear(String value) {
-            this.manufacturedYear = value;
-        }
-
-        /**
-         * Gets the value of the vehicleExpImpGateCode property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getVehicleExpImpGateCode() {
-            return vehicleExpImpGateCode;
-        }
-
-        /**
-         * Sets the value of the vehicleExpImpGateCode property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setVehicleExpImpGateCode(String value) {
-            this.vehicleExpImpGateCode = value;
-        }
-
-        /**
-         * Gets the value of the vehicleExpImpGate property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getVehicleExpImpGate() {
-            return vehicleExpImpGate;
-        }
-
-        /**
-         * Sets the value of the vehicleExpImpGate property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setVehicleExpImpGate(String value) {
-            this.vehicleExpImpGate = value;
-        }
-
-        /**
-         * Gets the value of the operationType property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getOperationType() {
-            return operationType;
-        }
-
-        /**
-         * Sets the value of the operationType property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setOperationType(String value) {
-            this.operationType = value;
-        }
-
     }
 
 }

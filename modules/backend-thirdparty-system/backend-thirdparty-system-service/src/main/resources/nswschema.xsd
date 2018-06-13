@@ -185,6 +185,13 @@
 	<xsd:element name="Phanhoi_Yeucau_Sua" type="Phanhoi_Yeucau_Sua"/>
 	<xsd:complexType name="Phanhoi_Yeucau_Sua">
 		<xsd:sequence>
+			<xsd:element name="so_gp">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="5000"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
 			<xsd:element name="noi_dung">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">
