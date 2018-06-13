@@ -259,7 +259,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			searchDenNgay: '',
 			hinhThucSelect: '',
 			hinhThucs: [
-
+				{
+					itemCode: 'XC',
+					itemName: 'Xuất cảnh'
+				},
+				{
+					itemCode: 'NC',
+					itemName: 'Nhập cảnh'
+				}
 			],
 			serviceInfoSelect: '',
 			govAgencySelect: '',
@@ -286,7 +293,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			pageHistory: 1,
 			lengthPageHistory: 0,
 			gradient: 'to top right, rgba(63,81,181, .7), rgba(25,32,72, .7)',
-			formTemplate: {}
+			formTemplate: {},
+			thongTinXeDatePK: ''
 		},
 		watch: {
 			pageGiayPhepVanTaiQuocTeTable: {
@@ -584,17 +592,26 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						addThongTinXe: function(append){
 							var vm = this;
-							var urlHistorys = '/o/rest/vr-app/certDoc/borderGuard/'+item.registrationNumber;
-							var paramsBuilder = {
-								hinhThucSelect: vm.hinhThucSelect,
-								cuaKhauSelect: vm.cuaKhauSelect,
-								thongTinXeDate: vm.thongTinXeDate,
-								thong_tin_lai_xe: vm.thong_tin_lai_xe,
-								giay_phep_lai_xe: vm.giay_phep_lai_xe
-							};
-							axios.post(urlHistorys, paramsBuilder, config).then(function (response) {
+							console.log('addThongTinXe')
+							var urlHistorys = '/o/rest/vr-app/certDoc/borderGuard/'+append.registrationNumber;
+							var formData = new URLSearchParams();
+							var registrationDate = vm.parseDate(vm.thongTinXeDate)
+							formData.append('expImpGateType', vm.hinhThucSelect);
+							formData.append('expImpGate', vm.cuaKhauSelect);
+							formData.append('registrationDate', registrationDate);
+							formData.append('driverName', vm.thong_tin_lai_xe);
+							formData.append('driverLicenceNo', vm.giay_phep_lai_xe);
+							axios.post(urlHistorys, formData, config).then(function (response) {
 								vm.snackbartextdossierViewJX = "Yêu cầu thực hiện thành công";
 								vm.snackbardossierViewJX = true;
+								var urlThongTinXe = '/o/rest/vr-app/certDoc/borderGuard/'+append.registrationNumber;
+								axios.get(urlThongTinXe, config).then(function (response) {
+									var serializable = response.data;
+									vm.modelLienVan = serializable;
+								})
+								.catch(function (error) {
+									console.log(error);
+								});
 							})
 							.catch(function (error) {
 								console.log(error);
@@ -2704,12 +2721,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							return '${month}/${day}/${year}';
 						},
 						parseDate (date) {
-							if (!date) {
-								return null;
-							}
+							if (!date) return null;
 
-							const [month, day, year] = date.split('/');
-							return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+							const [year, month, day] = date.split('-');
+							return `${day}/${month}/${year}`;
 						},
 						addRegistrations: function() {
 							var vm = this;
