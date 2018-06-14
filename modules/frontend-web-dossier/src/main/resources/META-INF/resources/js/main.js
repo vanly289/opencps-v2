@@ -1,6 +1,6 @@
 
 
-var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, emailAddress){
+var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, emailAddress, agencies){
 	const config = {
 		headers: {
 			'groupId': themeDisplay.getScopeGroupId()
@@ -2076,7 +2076,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									'groupId': themeDisplay.getScopeGroupId(),
 								},
 								data: {
-									service: vm.serviceInfoFilter.serviceCode									
+									service: vm.serviceInfoFilter.serviceCode,
+									agency: agencies
 								},								
 								success : function(result){
 									var serializable = result;
@@ -3255,6 +3256,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								keyword: vm.keywordsSearch,
 								owner: vm.applicantNameFilter.applicantIdNo,
 								service: vm.serviceInfoFilter.serviceCode,
+								agency: agencies,
 								follow: true,
 								dossierNo: vm.dossierNoFilter,
 								start: vm.danhSachHoSoTablepage * 15 - 15,
@@ -3376,7 +3378,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									'groupId': themeDisplay.getScopeGroupId(),
 								},
 								data: {
-									service: vm.serviceInfoFilter.serviceCode									
+									service: vm.serviceInfoFilter.serviceCode,
+									agency: agencies
 								},
 								success : function(result){
 									var serializable = result;

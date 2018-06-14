@@ -779,7 +779,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600027")
 								|| dossier.getServiceCode().equals("BGTVT0600028")
 								|| dossier.getServiceCode().equals("BGTVT0600029")
-								|| dossier.getServiceCode().equals("BGTVT0600030")) {
+								) {
 							MessageQueueInputModel model = BGTVT0600005.convertResult(dossier, dossierSync, envelope, "18", "15");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);
