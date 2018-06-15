@@ -466,56 +466,63 @@ public class DossierManagementImpl implements DossierManagement {
 			dossierPermission.hasCreateDossier(groupId, user.getUserId(), input.getServiceCode(),
 					input.getGovAgencyCode(), input.getDossierTemplateNo());
 
-			int counter = DossierNumberGenerator.counterDossier(user.getUserId(), groupId);
-			String referenceUid = input.getReferenceUid();
-
-			ProcessOption option = getProcessOption(input.getServiceCode(), input.getGovAgencyCode(),
-					input.getDossierTemplateNo(), groupId);
-
-			// Create dossierNote
-
-			ServiceProcess process = ServiceProcessLocalServiceUtil.getServiceProcess(option.getServiceProcessId());
-
-			if (Validator.isNull(referenceUid) || referenceUid.trim().length() == 0)
-				referenceUid = DossierNumberGenerator.generateReferenceUID(groupId);
-
-			String serviceName = getServiceName(input.getServiceCode(), groupId);
-
-			String govAgencyName = getDictItemName(groupId, GOVERNMENT_AGENCY, input.getGovAgencyCode());
-
-			String cityName = getDictItemName(groupId, ADMINISTRATIVE_REGION, input.getCityCode());
-			String districtName = getDictItemName(groupId, ADMINISTRATIVE_REGION, input.getDistrictCode());
-			String wardName = getDictItemName(groupId, ADMINISTRATIVE_REGION, input.getWardCode());
-
-			boolean online = true;
-
-			// DOSSIER that was created in CLIENT is set ONLINE = false
-			if (process.getServerNo().trim().length() != 0) {
-				online = false;
+			Dossier oldDossier = actions.getDossierDetail(groupId, 0, input.getReferenceUid());
+			
+			if (oldDossier == null) {
+				int counter = DossierNumberGenerator.counterDossier(user.getUserId(), groupId);
+				String referenceUid = input.getReferenceUid();
+	
+				ProcessOption option = getProcessOption(input.getServiceCode(), input.getGovAgencyCode(),
+						input.getDossierTemplateNo(), groupId);
+	
+				// Create dossierNote
+	
+				ServiceProcess process = ServiceProcessLocalServiceUtil.getServiceProcess(option.getServiceProcessId());
+	
+				if (Validator.isNull(referenceUid) || referenceUid.trim().length() == 0)
+					referenceUid = DossierNumberGenerator.generateReferenceUID(groupId);
+	
+				String serviceName = getServiceName(input.getServiceCode(), groupId);
+	
+				String govAgencyName = getDictItemName(groupId, GOVERNMENT_AGENCY, input.getGovAgencyCode());
+	
+				String cityName = getDictItemName(groupId, ADMINISTRATIVE_REGION, input.getCityCode());
+				String districtName = getDictItemName(groupId, ADMINISTRATIVE_REGION, input.getDistrictCode());
+				String wardName = getDictItemName(groupId, ADMINISTRATIVE_REGION, input.getWardCode());
+	
+				boolean online = true;
+	
+				// DOSSIER that was created in CLIENT is set ONLINE = false
+				if (process.getServerNo().trim().length() != 0) {
+					online = false;
+				}
+	
+				String password = StringPool.BLANK;
+	
+				if (Validator.isNotNull(process.getGeneratePassword()) && process.getGeneratePassword()) {
+					password = DossierNumberGenerator.generatePassword(DEFAULT_PATTERN_PASSWORD, LENGHT_DOSSIER_PASSWORD);
+				}
+	
+				Dossier dossier = actions.initDossier(groupId, 0l, referenceUid, counter, input.getServiceCode(),
+						serviceName, input.getGovAgencyCode(), govAgencyName, input.getApplicantName(),
+						input.getApplicantIdType(), input.getApplicantIdNo(), input.getApplicantIdDate(),
+						input.getAddress(), input.getCityCode(), cityName, input.getDistrictCode(), districtName,
+						input.getWardCode(), wardName, input.getContactName(), input.getContactTelNo(),
+						input.getContactEmail(), input.getDossierTemplateNo(), password, 0, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, online, process.getDirectNotification(),
+						input.getApplicantNote(), serviceContext);
+	
+				if (Validator.isNull(dossier)) {
+					throw new NotFoundException("Cant add DOSSIER");
+				}
+	
+				DossierDetailModel result = DossierUtils.mappingForGetDetail(dossier, user.getUserId());
+				return Response.status(200).entity(result).build();
 			}
-
-			String password = StringPool.BLANK;
-
-			if (Validator.isNotNull(process.getGeneratePassword()) && process.getGeneratePassword()) {
-				password = DossierNumberGenerator.generatePassword(DEFAULT_PATTERN_PASSWORD, LENGHT_DOSSIER_PASSWORD);
+			else {
+				DossierDetailModel result = DossierUtils.mappingForGetDetail(oldDossier, user.getUserId());
+				return Response.status(200).entity(result).build();				
 			}
-
-			Dossier dossier = actions.initDossier(groupId, 0l, referenceUid, counter, input.getServiceCode(),
-					serviceName, input.getGovAgencyCode(), govAgencyName, input.getApplicantName(),
-					input.getApplicantIdType(), input.getApplicantIdNo(), input.getApplicantIdDate(),
-					input.getAddress(), input.getCityCode(), cityName, input.getDistrictCode(), districtName,
-					input.getWardCode(), wardName, input.getContactName(), input.getContactTelNo(),
-					input.getContactEmail(), input.getDossierTemplateNo(), password, 0, StringPool.BLANK,
-					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, online, process.getDirectNotification(),
-					input.getApplicantNote(), serviceContext);
-
-			if (Validator.isNull(dossier)) {
-				throw new NotFoundException("Cant add DOSSIER");
-			}
-
-			DossierDetailModel result = DossierUtils.mappingForGetDetail(dossier, user.getUserId());
-
-			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
 //			_log.info(e);
