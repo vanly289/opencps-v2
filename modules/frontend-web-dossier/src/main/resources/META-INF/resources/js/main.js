@@ -10,7 +10,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 	const configPage = {
 		pageSize: 15,
 		serviceinfosQuocTe: 'BGTVT0600001,BGTVT0600002,BGTVT0600003,BGTVT0600004,BGTVT0600019,BGTVT0600020,BGTVT0600021,BGTVT0600022',
-		serviceinfosLienVan: 'BGTVT060005,BGTVT060006,BGTVT060007,BGTVT060008,BGTVT060009,BGTVT0600010,BGTVT0600011,BGTVT0600012,BGTVT0600023,BGTVT0600024,BGTVT0600025,BGTVT0600026,BGTVT0600027,BGTVT0600028,BGTVT0600029',
+		serviceinfosLienVan: 'BGTVT0600005,BGTVT0600006,BGTVT0600007,BGTVT0600008,BGTVT0600009,BGTVT0600010,BGTVT0600011,BGTVT0600012,BGTVT0600023,BGTVT0600024,BGTVT0600025,BGTVT0600026,BGTVT0600027,BGTVT0600028,BGTVT0600029',
 		serviceinfosChapThuan: 'BGTVT0600013,BGTVT0600014,BGTVT0600015,BGTVT0600016,BGTVT0600017,BGTVT0600030,BGTVT0600031,BGTVT0600032,BGTVT0600033,BGTVT0600034'
 
 	};
@@ -420,6 +420,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							
 							$("#printTraCuu > div").each(function(){
 								var id = $(this).attr('id');
+								console.log("Div id: " + id);
 								var xPos = $(this).position().left;
 								var yPos = $(this).position().top;
 								formTemplate[id] = {
@@ -433,7 +434,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.currentPrintTemplate.formTemplate = JSON.stringify(formTemplate);
 							vm.currentPrintTemplate.employeeId = 0;
 							
-							console.log(vm.currentPrintTemplate);
+							console.log(formTemplate);
 					        if (vm.currentPrintTemplate.createUserId == 0) {
 					        	axios.post(url, $.param(vm.currentPrintTemplate), {
 									headers: {
@@ -491,9 +492,89 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							        	createUserId: response.data.createUserId,
 							        	employeeId: response.data.employeeId,
 							        	formTemplate: response.data.formTemplate,
+							        	defaultCss: response.data.defaultCss,
 							        	originalDocumentURL: response.data.originalDocumentURL
 						        	};
+						        	$('#printTraCuu').empty();
 						        	
+						        	var originalDocumentURLArr = JSON.parse(response.data.originalDocumentURL);
+						        	for (var i = 0; i < originalDocumentURLArr.length; i++) {
+						        		var originalDocumentURLObj = originalDocumentURLArr[i];
+						        		if (originalDocumentURLObj.display) {
+						        			if (originalDocumentURLObj.hasOwnProperty("css")) {
+							        			$('#printTraCuu').append("<img src='" + originalDocumentURLObj.url + "' style='" + originalDocumentURLObj.css + "'/>");						        				
+						        			}
+						        			else {
+							        			$('#printTraCuu').append("<img src='" + originalDocumentURLObj.url + "'/>");						        				
+						        			}
+						        		}
+						        	}
+						        	
+									var formTemplate = response.data.formTemplate;
+
+									var formData = JSON.parse(formTemplate);
+									
+									$('#printTraCuu').attr("style", response.data.defaultCss);
+									
+									for (var key in formData) {
+										if (!document.getElementById(key)) {
+											if (key.indexOf("_") != -1) {
+												console.log("Key contain _: " + key);
+												var newKeyArr = key.split("_");
+												var newKey = newKeyArr[1];
+												if (item.hasOwnProperty(newKey)) {
+													$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[newKey] + '</div>');																																					
+												}
+											}
+											else {
+												if (item.hasOwnProperty(key)) {
+													$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');																																			
+												}
+											}
+											$('#' + key).draggable({
+												stop: function() {
+													var position = $(this).position();
+											        var xPos = position.left;
+											        var yPos = position.top;
+											        formData[this.id].offsetX = xPos;
+											        formData[this.id].offsetY = yPos;
+											        
+											        var data = {
+											        	serviceCode: response.data.serviceCode,
+											        	dossierPartNo: response.data.dossierPartNo,
+											        	fileTemplateNo: response.data.fileTemplateNo,
+											        	templateNo: response.data.templateNo,
+											        	createUserId: themeDisplay.getUserId(),
+											        	employeeId: 0,
+											        	formTemplate: JSON.stringify(formData),
+											        	defaultCss: response.data.defaultCss,
+											        	originalDocumentURL: response.data.originalDocumentURL
+											        };
+											        
+											        if (response.data.createUserId != 0) {
+											        	data.printTemplateId = response.data.printTemplateId;
+											        	axios.put(url + "/" + response.data.printTemplateId, $.param(data), {
+															headers: {
+																'Content-Type': 'application/x-www-form-urlencoded',
+																groupId: themeDisplay.getScopeGroupId()
+															}												        		
+											        	})
+											        	.then(function (response) {
+											        	    console.log(response);
+											        	})
+											        	.catch(function (error) {
+											        	    console.log(error);
+											        	});	
+											        }
+											        else {
+											        	
+											        }
+											    }
+											});
+										}
+									}
+									
+						        	/*
 									$('#imgTraCuu').attr("src", response.data.originalDocumentURL);
 									var formTemplate = response.data.formTemplate;
 									var imgTraCuu = $('#imgTraCuu');
@@ -544,6 +625,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 											}
 										}									
 									});
+									*/
+						        	
 								}
 							})
 							.catch(function (error) {

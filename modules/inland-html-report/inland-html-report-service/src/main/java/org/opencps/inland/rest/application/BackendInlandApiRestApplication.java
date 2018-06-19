@@ -98,6 +98,7 @@ public class BackendInlandApiRestApplication extends Application {
 				result.setFileTemplateNo(fileTemplateNo);
 				result.setTemplateNo(templateNo);
 				result.setFormTemplate(printTemplate.getFormTemplate());
+				result.setDefaultCss(printTemplate.getDefaultCss());
 				result.setOriginalDocumentURL(printTemplate.getOriginalDocumentURL());
 			}
 			else {
@@ -116,6 +117,7 @@ public class BackendInlandApiRestApplication extends Application {
 					result.setFileTemplateNo(fileTemplateNo);
 					result.setTemplateNo(templateNo);
 					result.setFormTemplate(printTemplate.getFormTemplate());
+					result.setDefaultCss(printTemplate.getDefaultCss());
 					result.setOriginalDocumentURL(printTemplate.getOriginalDocumentURL());
 				}				
 			}
@@ -147,7 +149,7 @@ public class BackendInlandApiRestApplication extends Application {
 			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
-			InlandPrintTemplate inlandPrintTemplate = InlandPrintTemplateLocalServiceUtil.addInlandPrintTemplate(groupId, user.getUserId(), user.getUserId(), 0, input.getServiceCode(), input.getDossierPartNo(), input.getFileTemplateNo(), input.getTemplateNo(), input.getFormTemplate(), input.getOriginalDocumentURL());
+			InlandPrintTemplate inlandPrintTemplate = InlandPrintTemplateLocalServiceUtil.addInlandPrintTemplate(groupId, user.getUserId(), user.getUserId(), 0, input.getServiceCode(), input.getDossierPartNo(), input.getFileTemplateNo(), input.getTemplateNo(), input.getFormTemplate(), input.getDefaultCss(), input.getOriginalDocumentURL());
 			
 
 			InlandPrintTemplateModel result = new InlandPrintTemplateModel();
@@ -155,6 +157,7 @@ public class BackendInlandApiRestApplication extends Application {
 			if (inlandPrintTemplate != null) {
 				result.setPrintTemplateId(inlandPrintTemplate.getPrintTemplateId());
 				result.setFormTemplate(inlandPrintTemplate.getFormTemplate());
+				result.setDefaultCss(inlandPrintTemplate.getDefaultCss());
 				result.setOriginalDocumentURL(inlandPrintTemplate.getOriginalDocumentURL());
 				result.setDossierPartNo(inlandPrintTemplate.getDossierPartNo());
 				result.setEmployeeId(inlandPrintTemplate.getEmployeeId());
@@ -223,6 +226,7 @@ public class BackendInlandApiRestApplication extends Application {
 					input.getFileTemplateNo(), 
 					input.getTemplateNo(), 
 					input.getFormTemplate(), 
+					input.getDefaultCss(),
 					input.getOriginalDocumentURL());
 			
 			InlandPrintTemplateModel result = new InlandPrintTemplateModel();
@@ -230,6 +234,7 @@ public class BackendInlandApiRestApplication extends Application {
 			if (inlandPrintTemplate != null) {
 				result.setPrintTemplateId(inlandPrintTemplate.getPrintTemplateId());
 				result.setFormTemplate(inlandPrintTemplate.getFormTemplate());
+				result.setDefaultCss(inlandPrintTemplate.getDefaultCss());
 				result.setOriginalDocumentURL(inlandPrintTemplate.getOriginalDocumentURL());
 				result.setDossierPartNo(inlandPrintTemplate.getDossierPartNo());
 				result.setEmployeeId(inlandPrintTemplate.getEmployeeId());

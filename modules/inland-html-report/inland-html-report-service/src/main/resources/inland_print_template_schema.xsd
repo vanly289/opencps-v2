@@ -25,6 +25,7 @@
 				<xsd:element name="createUserId" type="xsd:long" minOccurs="0" /> 
 				<xsd:element name="employeeId" type="xsd:long" minOccurs="0" /> 
 				<xsd:element name="formTemplate" type="xsd:string" minOccurs="0" />
+				<xsd:element name="defaultCss" type="xsd:string" minOccurs="0" />
 				<xsd:element name="originalDocumentURL" type="xsd:string" minOccurs="0" />
 	
 			</xsd:sequence>
@@ -44,6 +45,7 @@
 				<xsd:element name="createUserId" type="xsd:long" minOccurs="0" /> 
 				<xsd:element name="employeeId" type="xsd:long" minOccurs="0" /> 
 				<xsd:element name="formTemplate" type="xsd:string" minOccurs="0" />
+				<xsd:element name="defaultCss" type="xsd:string" minOccurs="0" />
 				<xsd:element name="originalDocumentURL" type="xsd:string" minOccurs="0" />
 	
 			</xsd:sequence>
