@@ -10,15 +10,15 @@
 			</a>
 			{{ props.item.applicantName }} 
 		</td>
-		<td style="padding: 8px; width: 15%;" class="text-xs-center">
+		<td style="padding: 8px; width: 15%;" class="text-xs-left">
 			{{ props.item.referenceUid }} 
 		</td>
-		<td style="padding: 8px; width: 15%;" class="text-xs-center">
+		<td style="padding: 8px; width: 15%;" class="text-xs-left">
 			{{ props.item.dossierIdCTN }} 
 			<br v-if="props.item.dossierNo">
 			{{ props.item.dossierNo }} 
 		</td>
-		<td style="padding: 8px; width: 17%;" class="text-xs-center">
+		<td style="padding: 8px; width: 17%;" class="text-xs-left">
 			{{ props.item.createDate}}
 			<br v-if="props.item.submitDate">
 			{{ props.item.receiveDate}}
