@@ -2389,10 +2389,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								id: 'tat_ca_hoso',
 								title: 'Tất cả hồ sơ'
 							},
-							{
-								id: 'tra_cuu_hoso',
-								title: 'Tra cứu kết quả'
-							},
 							// {
 							// 	id: 'tra_cuu_phuong_tien',
 							// 	title: 'Phương tiện sản xuất lắp ráp'
