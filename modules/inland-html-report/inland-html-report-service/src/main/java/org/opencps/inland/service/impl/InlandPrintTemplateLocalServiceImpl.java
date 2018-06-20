@@ -55,6 +55,7 @@ public class InlandPrintTemplateLocalServiceImpl
 			String fileTemplateNo,
 			String templateNo,
 			String formTemplate,
+			String defaultCss,
 			String originalDocumentURL
 			) {
 		long printTemplateId = counterLocalService.increment(InlandPrintTemplate.class.getName());
@@ -71,6 +72,7 @@ public class InlandPrintTemplateLocalServiceImpl
 		inlandPrintTemplate.setDossierPartNo(dossierPartNo);
 		inlandPrintTemplate.setFileTemplateNo(fileTemplateNo);
 		inlandPrintTemplate.setFormTemplate(formTemplate);
+		inlandPrintTemplate.setDefaultCss(defaultCss);
 		inlandPrintTemplate.setOriginalDocumentURL(originalDocumentURL);
 		
 		return inlandPrintTemplatePersistence.update(inlandPrintTemplate);
@@ -87,6 +89,7 @@ public class InlandPrintTemplateLocalServiceImpl
 			String fileTemplateNo,
 			String templateNo,
 			String formTemplate,
+			String defaultCss,
 			String originalDocumentURL
 			) throws NoSuchInlandPrintTemplateException {
 		Date now = new Date();
@@ -102,6 +105,7 @@ public class InlandPrintTemplateLocalServiceImpl
 		inlandPrintTemplate.setDossierPartNo(dossierPartNo);
 		inlandPrintTemplate.setFileTemplateNo(fileTemplateNo);
 		inlandPrintTemplate.setFormTemplate(formTemplate);
+		inlandPrintTemplate.setDefaultCss(defaultCss);
 		inlandPrintTemplate.setOriginalDocumentURL(originalDocumentURL);
 		
 		return inlandPrintTemplatePersistence.update(inlandPrintTemplate);

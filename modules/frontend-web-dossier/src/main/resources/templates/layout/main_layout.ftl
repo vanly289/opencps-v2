@@ -42,8 +42,9 @@
 		            </v-toolbar-items>
 		          </v-toolbar>
 		          <div style="text-align: center;">
-					  <v-flex xs12 sm12 id="printTraCuu" style="position: relative;">
-				          <img id="imgTraCuu" style="z-index: -1" />				    
+					  <v-flex xs12 sm12 style="position: relative;">
+					  	<div id="printTraCuu">
+					  	</div>
 					  </v-flex>
 				  </div>
 		        </v-card>
