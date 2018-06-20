@@ -10,7 +10,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 	const configPage = {
 		pageSize: 15,
 		serviceinfosQuocTe: 'BGTVT0600001,BGTVT0600002,BGTVT0600003,BGTVT0600004,BGTVT0600019,BGTVT0600020,BGTVT0600021,BGTVT0600022',
-		serviceinfosLienVan: 'BGTVT0600005,BGTVT0600006,BGTVT0600007,BGTVT0600008,BGTVT0600009,BGTVT0600010,BGTVT0600011,BGTVT0600012,BGTVT0600023,BGTVT0600024,BGTVT0600025,BGTVT0600026,BGTVT0600027,BGTVT0600028,BGTVT0600029',
+		serviceinfosLienVan: 'BGTVT0600005,BGTVT0600006,BGTVT0600007,BGTVT0600008,BGTVT0600009,BGTVT0600010,BGTVT0600011,BGTVT0600012,BGTVT0600023,BGTVT0600024,BGTVT0600025,BGTVT0600026,BGTVT0600027,BGTVT0600028,BGTVT0600029,BGTVT0600030,BGTVT0600031,BGTVT0600032,BGTVT0600033,BGTVT0600034,BGTVT0600035,BGTVT0600036,BGTVT0600037,BGTVT0600038,BGTVT0600039,BGTVT0600040,BGTVT0600041,BGTVT0600042,BGTVT0600043,BGTVT0600044',
 		serviceinfosChapThuan: 'BGTVT0600013,BGTVT0600014,BGTVT0600015,BGTVT0600016,BGTVT0600017,BGTVT0600030,BGTVT0600031,BGTVT0600032,BGTVT0600033,BGTVT0600034'
 
 	};
@@ -714,6 +714,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							if(!vm.serviceInfoSelect) {
 								serviceCodeTemp = configPage.serviceinfosQuocTe
 							}
+							else {
+								serviceCodeTemp = vm.serviceInfoSelect;
+							}
 							var paramsBuilder = {
 								keywords: vm.keywordTraCuuGiayPhep,
 								serviceCode: serviceCodeTemp,
@@ -791,6 +794,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var serviceCodeTemp = '';
 							if(!vm.serviceInfoSelect) {
 								serviceCodeTemp = configPage.serviceinfosLienVan
+							}
+							else {
+								serviceCodeTemp = vm.serviceInfoSelect;
 							}
 							var paramsBuilder = {
 								keywords: vm.keywordTraCuuGiayPhep,
@@ -879,6 +885,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var serviceCodeTemp = '';
 							if(!vm.serviceInfoSelect) {
 								serviceCodeTemp = configPage.serviceinfosChapThuan
+							}
+							else {
+								serviceCodeTemp = vm.serviceInfoSelect;
 							}
 							var paramsBuilder = {
 								keywords: vm.keywordTraCuuGiayPhep,
@@ -1021,6 +1030,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						changeStateTraCuuGiayPhep: function(state){
 							var vm = this;
 							vm.stateTraCuuGiayPhep = state;
+							vm.serviceInfoSelect = '';
+							
 							if(state == 'giay_phep_van_tai_quoc_te'){
 								vm._inigiayPhepVanTaiQuocTeTable();
 								vm._initServiceInfos({
@@ -1042,7 +1053,23 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						searchTraCuuGiayPhep: function(){
 							var vm = this;
 							var state = vm.stateTraCuuGiayPhep;
-							vm.changeStateTraCuuGiayPhep(state);
+							vm.stateTraCuuGiayPhep = state;
+							if(state == 'giay_phep_van_tai_quoc_te'){
+								vm._inigiayPhepVanTaiQuocTeTable();
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosQuocTe
+								});
+							}else if(state == 'giay_phep_lien_van'){
+								vm._inigiayPhepLienVanTable();
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosLienVan
+								});
+							}else {
+								vm._inichapThuanKhaiThacTable();
+								vm._initServiceInfos({
+									serviceCode: configPage.serviceinfosChapThuan
+								});
+							}
 						},
 						getLastedStateUserInfo : function(callBack){
 							var vm = this;
