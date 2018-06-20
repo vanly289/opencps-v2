@@ -80,7 +80,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 				value: 'stt'
 			},
 			{
-				text: 'Gíây phép - Số giấy phép',
+				text: 'Tên giấy phép. Gíây phép - Số giấy phép',
 				align: 'left',
 				sortable: true,
 				value: 'deliverableCode'
@@ -122,7 +122,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 				value: 'stt'
 			},
 			{
-				text: 'Gíây phép - Số giấy phép',
+				text: 'Tên giấy phép. Gíây phép - Số giấy phép',
 				align: 'left',
 				sortable: true,
 				value: 'deliverableCode'
@@ -166,7 +166,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 				value: 'stt'
 			},
 			{
-				text: 'Gíây phép - Số giấy phép',
+				text: 'Tên giấy phép. Gíây phép - Số giấy phép',
 				align: 'left',
 				sortable: true,
 				value: 'so_giay_phep'
@@ -294,7 +294,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			lengthPageHistory: 0,
 			gradient: 'to top right, rgba(63,81,181, .7), rgba(25,32,72, .7)',
 			formTemplate: {},
-			thongTinXeDatePK: ''
+			thongTinXeDatePK: '',
+			popUpThongTinXe: false,
+			addHistoryCar: false
 		},
 		watch: {
 			pageGiayPhepVanTaiQuocTeTable: {
@@ -696,6 +698,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								axios.get(urlThongTinXe, config).then(function (response) {
 									var serializable = response.data;
 									vm.modelLienVan = serializable;
+									vm.hinhThucSelect = '';
+									vm.thongTinXeDate = '';
+									vm.cuaKhauSelect = '';
+									vm.registrationDate = '';
+									vm.thong_tin_lai_xe = '';
+									vm.giay_phep_lai_xe = '';
 								})
 								.catch(function (error) {
 									console.log(error);
@@ -752,6 +760,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								var page = Math.ceil(vm.giayPhepVanTaiQuocTeTableItems.length / 15);
 								vm.pageGiayPhepVanTaiQuocTeTableLength = page;
 								console.log(vm.giayPhepVanTaiQuocTeTableItems);
+								$("#tableGiayPhepVanTaiQuocTe").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
 							})
 							.catch(function (error) {
 								console.log(error);
@@ -831,7 +840,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}
 								var page = Math.ceil(vm.giayPhepLienVanTableItems.length / 15);
 								vm.pageGiayPhepLienVanTableLength = page;
-
+								$("#tableGiayPhepLienVan").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
 								console.log(vm.giayPhepLienVanTableItems);
 							})
 							.catch(function (error) {
@@ -923,6 +932,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								var page = Math.ceil(vm.chapThuanKhaiThacTableItems.length / 15);
 								vm.pageChapThuanKhaiThacTableLength = page;
 								console.log(vm.chapThuanKhaiThacTableItems);
+								$("#tableChapThuanKhaiThac").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
 							})
 							.catch(function (error) {
 								console.log(error);
@@ -1031,22 +1041,25 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 							vm.stateTraCuuGiayPhep = state;
 							vm.serviceInfoSelect = '';
-							
+							$("#listTraCuuGiayPhep > li").removeClass("active");
 							if(state == 'giay_phep_van_tai_quoc_te'){
 								vm._inigiayPhepVanTaiQuocTeTable();
 								vm._initServiceInfos({
 									serviceCode: configPage.serviceinfosQuocTe
 								});
+								$("#listTraCuuGiayPhep > li:nth-child(1)").addClass("active");
 							}else if(state == 'giay_phep_lien_van'){
 								vm._inigiayPhepLienVanTable();
 								vm._initServiceInfos({
 									serviceCode: configPage.serviceinfosLienVan
 								});
+								$("#listTraCuuGiayPhep > li:nth-child(2)").addClass("active");
 							}else {
 								vm._inichapThuanKhaiThacTable();
 								vm._initServiceInfos({
 									serviceCode: configPage.serviceinfosChapThuan
 								});
+								$("#listTraCuuGiayPhep > li:nth-child(3)").addClass("active");
 							}
 							console.log('vm.stateTraCuuGiayPhep=========',vm.stateTraCuuGiayPhep);
 						},
@@ -4049,26 +4062,26 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						}
 					}
 				},
-				'popUpThongTinXe' : {
-					'id': 'popUpThongTinXe',
-					'name': 'popUpThongTinXe',
-					"type": "dialog",
-					"type_dialog": "fullScreen",
-					'icon_save': 'undo',
-					'label_save': 'Quay lại',
-					"color": "primary",
-					"template": "popUpThongTinXeTemplate",
-					"events": {
-						popUpThongTinXeClose: function () {
-							var vm = this;
-							vm.popUpThongTinXe = !vm.popUpThongTinXe;
-						},
-						popUpThongTinXeSave: function () {
-							var vm = this;
-							vm.popUpThongTinXe = !vm.popUpThongTinXe;
-						}
-					}
-				},
+				// 'popUpThongTinXe' : {
+				// 	'id': 'popUpThongTinXe',
+				// 	'name': 'popUpThongTinXe',
+				// 	"type": "dialog",
+				// 	"type_dialog": "fullScreen",
+				// 	'icon_save': 'undo',
+				// 	'label_save': 'Quay lại',
+				// 	"color": "primary",
+				// 	"template": "popUpThongTinXeTemplate",
+				// 	"events": {
+				// 		popUpThongTinXeClose: function () {
+				// 			var vm = this;
+				// 			vm.popUpThongTinXe = !vm.popUpThongTinXe;
+				// 		},
+				// 		popUpThongTinXeSave: function () {
+				// 			var vm = this;
+				// 			vm.popUpThongTinXe = !vm.popUpThongTinXe;
+				// 		}
+				// 	}
+				// },
 				/*
 				'popUpPrintTraCuu' : {
 					'id': 'popUpPrintTraCuu',
