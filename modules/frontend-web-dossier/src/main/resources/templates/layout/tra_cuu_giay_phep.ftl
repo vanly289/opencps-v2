@@ -188,18 +188,22 @@
 								{{ props.item.validUntil }} 
 							</td>
 							<td style="padding: 8px; width: 10%;" class="text-xs-center">
-								<v-tooltip bottom>
-									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BÈ0;" @click="printGiayPhep(props.item)">
+								<#-- <v-tooltip bottom>
+									
+									<span>In giấy phép</span>
+								</v-tooltip> -->
+								<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="printGiayPhep(props.item)">
 										<v-icon >print</v-icon>
 									</v-btn> 
-									<span>In giấy phép</span>
-								</v-tooltip>
-								<v-tooltip bottom>
-									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BÈ0;" @click="toDetailGiayPhep(props.item)">
+								<#-- <v-tooltip bottom>
+									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailGiayPhep(props.item)">
 										<v-icon >visibility</v-icon>
 									</v-btn>
 									<span>Xem giấy phép</span>
-								</v-tooltip>
+								</v-tooltip> -->
+								<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailGiayPhep(props.item)">
+										<v-icon >visibility</v-icon>
+									</v-btn>
 								<!-- <v-btn small color="" @click="toDetailGiayPhep(props.item)">Xem</v-btn>  -->
 							</td>
 						</template>
@@ -241,24 +245,27 @@
 									</v-btn>
 								</div> -->
 								<div>
-									<v-tooltip bottom>
-										<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="printGiayPhep(props.item)">
+									<#-- <v-tooltip bottom>
+										
+										<span>In giấy phép</span>
+									</v-tooltip> -->
+									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="printGiayPhep(props.item)">
 											<v-icon >print</v-icon>
 										</v-btn>
-										<span>In giấy phép</span>
-									</v-tooltip>
-									<v-tooltip bottom>
-										<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BÈ0;" @click="toDetailGiayPhep(props.item)">
+									<#-- <v-tooltip bottom>
+										
+										<span>Xem giấy phép</span>
+									</v-tooltip> -->
+									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailGiayPhep(props.item)">
 											<v-icon >visibility</v-icon>
 										</v-btn>
-										<span>Xem giấy phép</span>
-									</v-tooltip>
-									<v-tooltip bottom>
-										<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BÈ0;" @click="toDetailThongTinXe(props.item)">
+									<#-- <v-tooltip bottom>
+										
+										<span>Thông tin xe</span>
+									</v-tooltip> -->
+									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailThongTinXe(props.item)">
 											<v-icon >fas fa-truck</v-icon>
 										</v-btn> 
-										<span>Thông tin xe</span>
-									</v-tooltip>
 									<!-- <span @click="printGiayPhep(props.item)" class="hover-pointer">
 										<v-icon >print</v-icon>
 									</span>
@@ -307,12 +314,13 @@
 							</td>
 							<td style="padding: 8px; width: 10%;" class="text-xs-center">
 								<#-- <v-btn small color="" @click="toDetailGiayPhep(props.item)">Xem</v-btn>  -->
-								<v-tooltip bottom>
-									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BÈ0;" @click="toDetailGiayPhep(props.item)">
+								<#-- <v-tooltip bottom>
+									
+									<span>Xem giấy phép</span>
+								</v-tooltip> -->
+								<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailGiayPhep(props.item)">
 										<v-icon >visibility</v-icon>
 									</v-btn> 
-									<span>Xem giấy phép</span>
-								</v-tooltip>
 							</td>
 						</template>
 					</v-data-table>
