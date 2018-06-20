@@ -1410,7 +1410,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
     								var length = fileArr.length;                        		
 	                        		for (var i = 0; i < length; i++) {
 	                        			var fileItem = fileArr[i];
-	                        			if (fileItem.counter == 0 && (!fileItem.eform)) {
+	                        			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned)) {
 	                        				needIntervalRefresh = true;
 	                        				break;
 	                        			}
@@ -1418,7 +1418,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
     							}
     							else if (fileArr) {
                         			var fileItem = fileArr;
-                        			if (fileItem.counter == 0 && (!fileItem.eform)) {
+                        			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned)) {
                         				needIntervalRefresh = true;
                         			}    								
     							}
@@ -1990,12 +1990,46 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 
                             		vm.processSteps = $.merge( nextactions, plugins );
-                            		vm.stepLoading = false;
-                            		console.log(vm.processSteps);
+                            		
+                            		var processStepsLength = vm.processSteps.length;
+                            		
+                            		var needIntervalRefresh = false;
+                            		for (var rc = 0; rc < processStepsLength; rc++) {
+                            			var item = vm.processSteps[rc];
+                            			
+                                		var fileArr = item.createFiles;
+            							if (fileArr && fileArr.length) {
+            								var length = fileArr.length;                        		
+        	                        		for (var i = 0; i < length; i++) {
+        	                        			var fileItem = fileArr[i];
+        	                        			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned)) {
+        	                        				needIntervalRefresh = true;
+        	                        				break;
+        	                        			}
+        	                        		}
+            							}
+            							else if (fileArr) {
+                                			var fileItem = fileArr;
+                                			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned)) {
+                                				needIntervalRefresh = true;
+                                			}    								
+            							}     
+            							if (needIntervalRefresh) break;
+                            		}
+                            		
+                            		if (needIntervalRefresh) {
+                            		    setTimeout(function () {
+                            		        vm.refreshProcess();
+                            		      }.bind(this), 3000);                             			
+                            		}
+                            		else {
+                                		vm.stepLoading = false;
+                                		console.log(vm.processSteps);
 
-                            		//neu processSteps chi co 1, trigger chanProcessStep 
-                            		if(vm.processSteps.length === 1){
-                            			vm.changeProcessStep(vm.processSteps[0]);
+                                		//neu processSteps chi co 1, trigger chanProcessStep 
+                                		if(vm.processSteps.length === 1){
+                                			vm.changeProcessStep(vm.processSteps[0]);
+                                		}                            			
                             		}
 
                             	}))
