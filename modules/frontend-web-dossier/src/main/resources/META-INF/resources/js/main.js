@@ -750,7 +750,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}else {
 									vm.giayPhepVanTaiQuocTeTableItems = [];
 								}
-
+								var page = Math.ceil(vm.giayPhepVanTaiQuocTeTableItems.length / 15);
+								vm.pageGiayPhepVanTaiQuocTeTableLength = page;
 								console.log(vm.giayPhepVanTaiQuocTeTableItems);
 							})
 							.catch(function (error) {
@@ -2351,11 +2352,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm._initAdvanced_filter_nhanHieu();
 								vm._initAdvanced_filter_dossierStatus();
 								
-							} else if (item.id == 'tra_cuu_phuong_tien') {
-								// TODO vm._inidanhSachHoSoTable(false);
-							} else if (item.id == 'tra_cuu_thong_tin_doanh_nghiep') {
-								vm._inithongTinDoanhNghiepTable(false);
-							}else if (item.id == 'tra_cuu_giay_phep') {
+							} else if (item.id == 'tra_cuu_giay_phep') {
 								console.log("GO------------")
 								vm._inigiayPhepVanTaiQuocTeTable(false);
 								vm._initServiceInfos({
@@ -2392,18 +2389,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								id: 'tat_ca_hoso',
 								title: 'Tất cả hồ sơ'
 							},
-							{
-								id: 'tra_cuu_hoso',
-								title: 'Tra cứu kết quả'
-							},
-							{
-								id: 'tra_cuu_phuong_tien',
-								title: 'Phương tiện sản xuất lắp ráp'
-							},
-							{
-								id: 'tra_cuu_thong_tin_doanh_nghiep',
-								title: 'Thông tin doanh nghiệp'
-							},
+							// {
+							// 	id: 'tra_cuu_phuong_tien',
+							// 	title: 'Phương tiện sản xuất lắp ráp'
+							// },
+							// {
+							// 	id: 'tra_cuu_thong_tin_doanh_nghiep',
+							// 	title: 'Thông tin doanh nghiệp'
+							// },
 							{
 								id: 'tra_cuu_giay_phep',
 								title: 'Tra cứu giấy phép'
