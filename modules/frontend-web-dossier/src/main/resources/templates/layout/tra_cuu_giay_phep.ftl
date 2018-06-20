@@ -3,7 +3,7 @@
 		<v-layout row wrap>
 			<v-flex sm3 class="pr-0" id="tracuugiayphep">
 				<v-card>
-					<v-list>
+					<v-list id="listTraCuuGiayPhep">
 						<v-list-tile key="giay_phep_van_tai_quoc_te" avatar @click="changeStateTraCuuGiayPhep('giay_phep_van_tai_quoc_te')">
 							<v-list-tile-action>
 								<v-icon>local_car_wash</v-icon>
@@ -18,7 +18,7 @@
 								<v-icon>group_work</v-icon>
 							</v-list-tile-action>
 							<v-list-tile-content>
-								<v-list-tile-title>Giấy phép liên vận</v-list-tile-title>
+								<v-list-tile-title>Giấy phép cho phương tiện</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
 
@@ -91,7 +91,7 @@
 						<!-- <v-flex xs12 sm2 class="pt-2" v-if="stateTraCuuGiayPhep == 'van_ban_chap_thuan'">
 							<v-subheader>Tuyến</v-subheader>
 						</v-flex> -->
-						<v-flex xs12 sm5 class="pl-3" v-if="stateTraCuuGiayPhep == 'van_ban_chap_thuan'">
+						<v-flex xs12 sm5 class="pl-3" v-if="stateTraCuuGiayPhep == 'van_ban_chap_thuan' || stateTraCuuGiayPhep == 'giay_phep_lien_van'">
 							<v-select
 							:items="tuyens"
 							v-model="tuyenSelect"
@@ -176,24 +176,30 @@
 								<br v-if="props.item.licenceNo">
 								{{ props.item.licenceNo }} 
 							</td>
-							<td style="padding: 8px; width: 15%;" class="text-xs-center">
+							<td style="padding: 8px; width: 15%;" class="text-xs-left">
 								{{ props.item.applicantName }} 
 							</td>
-							<td style="padding: 8px; width: 15%;" class="text-xs-center">
+							<td style="padding: 8px; width: 15%;" class="text-xs-left">
 								{{ props.item.govAgencyName }} 
 							</td>
-							<td style="padding: 8px; width: 15%;" class="text-xs-center">
+							<td style="padding: 8px; width: 15%;" class="text-xs-left">
 								{{ props.item.validFrom }} 
 								<br v-if="props.item.validUntil">
 								{{ props.item.validUntil }} 
 							</td>
 							<td style="padding: 8px; width: 10%;" class="text-xs-center">
-								<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="printGiayPhep(props.item)">
-									<v-icon >print</v-icon>
-								</v-btn> 
-								<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailGiayPhep(props.item)">
-									<v-icon >visibility</v-icon>
-								</v-btn> 
+								<v-tooltip bottom>
+									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BÈ0;" @click="printGiayPhep(props.item)">
+										<v-icon >print</v-icon>
+									</v-btn> 
+									<span>In giấy phép</span>
+								</v-tooltip>
+								<v-tooltip bottom>
+									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BÈ0;" @click="toDetailGiayPhep(props.item)">
+										<v-icon >visibility</v-icon>
+									</v-btn>
+									<span>Xem giấy phép</span>
+								</v-tooltip>
 								<!-- <v-btn small color="" @click="toDetailGiayPhep(props.item)">Xem</v-btn>  -->
 							</td>
 						</template>
@@ -214,15 +220,15 @@
 								<br v-if="props.item.licenceNo">
 								{{ props.item.licenceNo }} 
 							</td>
-							<td style="padding: 8px; width: 15%;" class="text-xs-center">
+							<td style="padding: 8px; width: 15%;" class="text-xs-left">
 								{{ props.item.registrationNumber }} 
 								<br v-if="props.item.applicantName">
 								{{ props.item.applicantName }} 
 							</td>
-							<td style="padding: 8px; width: 15%;" class="text-xs-center">
+							<td style="padding: 8px; width: 15%;" class="text-xs-left">
 								{{ props.item.govAgencyName }} 
 							</td>
-							<td style="padding: 8px; width: 15%;" class="text-xs-center">
+							<td style="padding: 8px; width: 15%;" class="text-xs-left">
 								{{ props.item.validFrom }} 
 								<br v-if="props.item.validUntil">
 								{{ props.item.validUntil }} 
@@ -235,15 +241,24 @@
 									</v-btn>
 								</div> -->
 								<div>
-									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="printGiayPhep(props.item)">
-										<v-icon >print</v-icon>
-									</v-btn> 
-									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailGiayPhep(props.item)">
-										<v-icon >visibility</v-icon>
-									</v-btn> 
-									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailThongTinXe(props.item)">
-										<v-icon >fas fa-truck</v-icon>
-									</v-btn> 
+									<v-tooltip bottom>
+										<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="printGiayPhep(props.item)">
+											<v-icon >print</v-icon>
+										</v-btn>
+										<span>In giấy phép</span>
+									</v-tooltip>
+									<v-tooltip bottom>
+										<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BÈ0;" @click="toDetailGiayPhep(props.item)">
+											<v-icon >visibility</v-icon>
+										</v-btn>
+										<span>Xem giấy phép</span>
+									</v-tooltip>
+									<v-tooltip bottom>
+										<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BÈ0;" @click="toDetailThongTinXe(props.item)">
+											<v-icon >fas fa-truck</v-icon>
+										</v-btn> 
+										<span>Thông tin xe</span>
+									</v-tooltip>
 									<!-- <span @click="printGiayPhep(props.item)" class="hover-pointer">
 										<v-icon >print</v-icon>
 									</span>
@@ -274,25 +289,30 @@
 								<br v-if="props.item.so_giay_phep">
 								{{ props.item.licenceNo }} 
 							</td>
-							<td style="padding: 8px; width: 15%;" class="text-xs-center">
+							<td style="padding: 8px; width: 15%;" class="text-xs-left">
 								{{ props.item.applicantName }} 
 							</td>
-							<td style="padding: 8px; width: 15%;" class="text-xs-center">
+							<td style="padding: 8px; width: 15%;" class="text-xs-left">
 								{{ props.item.routes }} 
 							</td>
-							<td style="padding: 8px; width: 15%;" class="text-xs-center">
+							<td style="padding: 8px; width: 15%;" class="text-xs-left">
 								{{ props.item.numberOfLot }} 
 							</td>
-							<td style="padding: 8px; width: 15%;" class="text-xs-center">
+							<td style="padding: 8px; width: 15%;" class="text-xs-left">
 								{{ props.item.registrationNumber }} 
-
 								<br v-if="props.item.validFrom">
 								{{ props.item.validFrom }} 
 								<br v-if="props.item.validUntil">
 								{{ props.item.validUntil }} 
 							</td>
 							<td style="padding: 8px; width: 10%;" class="text-xs-center">
-								<v-btn small color="" @click="toDetailGiayPhep(props.item)">Xem</v-btn> 
+								<#-- <v-btn small color="" @click="toDetailGiayPhep(props.item)">Xem</v-btn>  -->
+								<v-tooltip bottom>
+									<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BÈ0;" @click="toDetailGiayPhep(props.item)">
+										<v-icon >visibility</v-icon>
+									</v-btn> 
+									<span>Xem giấy phép</span>
+								</v-tooltip>
 							</td>
 						</template>
 					</v-data-table>
@@ -302,3 +322,15 @@
 		</v-layout>
 	</v-container>
 </template>
+
+<script>
+	$(function () {
+		document.addEventListener('DOMContentLoaded', function (event) {
+			$("#listTraCuuGiayPhep > li").click(function (event) {
+				event.preventDefault();
+				console.log('item list click');
+				$(this).addClass('active');
+			})
+		});
+	})
+</script>
