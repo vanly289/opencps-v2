@@ -497,25 +497,24 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						        	};
 						        	$('#printTraCuu').empty();
 						        	
-						        	var originalDocumentURLArr = JSON.parse(response.data.originalDocumentURL);
-						        	for (var i = 0; i < originalDocumentURLArr.length; i++) {
-						        		var originalDocumentURLObj = originalDocumentURLArr[i];
-						        		if (originalDocumentURLObj.display) {
-						        			if (originalDocumentURLObj.hasOwnProperty("css")) {
-							        			$('#printTraCuu').append("<img src='" + originalDocumentURLObj.url + "' style='" + originalDocumentURLObj.css + "'/>");						        				
-						        			}
-						        			else {
-							        			$('#printTraCuu').append("<img src='" + originalDocumentURLObj.url + "'/>");						        				
-						        			}
-						        		}
-						        	}
-						        	
+						        	var originalDocumentObj = JSON.parse(response.data.originalDocumentURL);
+//						        	$('#printTraCuu').css("background-image",'url(' + originalDocumentObj.url + ')');
+									$('#imgTraCuu').attr("src", originalDocumentObj.url);
+									$('#imgTraCuu').css(originalDocumentObj.css);
+									
+									var imgTraCuu = $('#imgTraCuu');
+									imgTraCuu.load(function(){
+							        	var style = 'background-image: url(' + originalDocumentObj.url + ');background-size:' + imgTraCuu.width() + 'px ' + imgTraCuu.height() + 'px;';
+							        	style += response.data.defaultCss;
+							        	$('#printTraCuu').attr("style", style);
+										$('#printTraCuu').height(imgTraCuu.height());
+										$('#printTraCuu').width(imgTraCuu.width());
+									});
+									
 									var formTemplate = response.data.formTemplate;
 
 									var formData = JSON.parse(formTemplate);
-									
-									$('#printTraCuu').attr("style", response.data.defaultCss);
-									
+																		
 									for (var key in formData) {
 										if (!document.getElementById(key)) {
 											if (key.indexOf("_") != -1) {
