@@ -1234,9 +1234,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 											if(item.hasSubmit){
 
 											}else {
-
-												item.counter ++;
-												item.hasSubmit = true;
+												if (item.counter == 0) {
+													item.counter ++;
+													item.hasSubmit = true;													
+												}
 											}
 
 
@@ -1391,6 +1392,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         },
                         changeProcessStep: function (item){
                         	var vm = this;
+                        	console.log("Change process step");
                         	console.log(item);
                         	var status = vm.statusParamFilter;
                         	var subStatus = vm.substatusParamFilter;
@@ -1402,6 +1404,24 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         	}*/
 
                         	if(item.type === 1){
+                        		var needIntervalRefresh = false;
+                        		var fileArr = item.createFiles;
+    							if (fileArr && fileArr.length) {
+    								var length = fileArr.length;                        		
+	                        		for (var i = 0; i < length; i++) {
+	                        			var fileItem = fileArr[i];
+	                        			if (fileItem.counter == 0 && (!fileItem.eform)) {
+	                        				needIntervalRefresh = true;
+	                        				break;
+	                        			}
+	                        		}
+    							}
+    							else if (fileArr) {
+                        			var fileItem = fileArr;
+                        			if (fileItem.counter == 0 && (!fileItem.eform)) {
+                        				needIntervalRefresh = true;
+                        			}    								
+    							}
                         		$("textarea#processActionNote").val("");
 
                         		if (item.hasOwnProperty('createFiles') && !(item.createFiles instanceof Array)) {
@@ -1417,7 +1437,24 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         		}
 
                         		vm.processAssignUserIdItems = item.toUsers;
-
+                        		console.log("Need interval refresh: " + needIntervalRefresh);
+                        		if (needIntervalRefresh) {
+                        		    setTimeout(function () {
+                        		        vm.refreshProcess();
+                        		        if(vm.processSteps.length === 1){
+                        		        	vm.changeProcessStep(vm.processSteps[0]);
+                        		        }
+                        		        else {
+                        		        	var length = vm.processSteps.length;
+                        		        	for (var i = 0; i < length; i++) {
+                        		        		var actionItem = vm.processSteps[i];
+                        		        		if (item.actionCode === actionItem.actionCode) {
+                        		        			vm.changeProcessStep(actionItem);
+                        		        		}
+                        		        	}
+                        		        }
+                        		      }.bind(this), 3000); 
+                        		}
                         	}else {
 
                         		var urlPluginFormData = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/formdata';
@@ -1577,12 +1614,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         		vm.actionsSubmitLoading = true;
                         		var fileArr = item.createFiles;
                         		var idArr = [];
+                        		var waitingFiles = false;
 							// var dossierFileId
 							if (fileArr) {
 								var length = fileArr.length;
 								for (var i = 0; i < length; i++) {
 									var fileDetail = fileArr[i];
-
+									if (fileDetail.counter == 0) {
+										waitingFiles = true;
+										break;
+									}
 									var dossierFileId = fileDetail.dossierFileId;
 									var dossierPartId = fileDetail.dossierPartId;
 									if (dossierFileId && dossierPartId) {
@@ -1641,6 +1682,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									alert("Plugin is not working :(");
 									vm.actionsSubmitLoading = false;
 									isKyOk = false;
+									return;
+								}
+								if (waitingFiles) {
+									alert("Tệp điện tử chưa sẵn sàng. Xin vui lòng chờ một lát!");
+									vm.actionsSubmitLoading = false;
 									return;
 								}
 							}
@@ -1893,9 +1939,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						_initchangeProcessStep: function (){
 							var vm = this;
 							vm.stepLoading = true;
-
-							var url = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/nextactions';
-							var urlPlugin = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins';
+							var timestamp = new Date().getTime();
+							var url = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/nextactions?timestamp=' + timestamp;
+							var urlPlugin = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins?timestamp=' + timestamp;
                             // var url = '/o/frontendwebdossier/json/steps.json';
                             
                             axios.all([
