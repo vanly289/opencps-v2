@@ -833,15 +833,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								if (append) {
 									vm.giayPhepLienVanTableItems.push.apply(vm.giayPhepLienVanTableItems, serializable.data);
 								} else if(serializable.data){
-
 									vm.giayPhepLienVanTableItems = serializable.data;
-
 								}else {
 									vm.giayPhepLienVanTableItems = [];
 								}
 								var page = Math.ceil(vm.giayPhepLienVanTableItems.length / 15);
 								vm.pageGiayPhepLienVanTableLength = page;
 								$("#tableGiayPhepLienVan").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
+								$("#tableGiayPhepLienVan").find('table > thead > tr > th:nth-child(3)').html("Số đăng ký phương tiện <br> Đơn vị khai thác")
 								console.log(vm.giayPhepLienVanTableItems);
 							})
 							.catch(function (error) {
@@ -934,6 +933,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.pageChapThuanKhaiThacTableLength = page;
 								console.log(vm.chapThuanKhaiThacTableItems);
 								$("#tableChapThuanKhaiThac").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
+								$("#tableChapThuanKhaiThac").find('table > thead > tr > th:nth-child(6)').html("Số xe tham gia <br> Hiệu lực khai thác")
 							})
 							.catch(function (error) {
 								console.log(error);
