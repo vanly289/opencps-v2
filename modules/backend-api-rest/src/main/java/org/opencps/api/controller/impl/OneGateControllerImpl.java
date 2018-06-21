@@ -76,7 +76,7 @@ public class OneGateControllerImpl implements OneGateController {
 		for (EmployeeJobPos ejp : lstEmJobPos) {
 			WorkingUnit wu = WorkingUnitLocalServiceUtil.fetchWorkingUnit(ejp.getWorkingUnitId());
 			if (wu != null) {
-				if (agencies.equals("")) {
+				if (agencies.toString().isEmpty()) {
 					agencies.append(wu.getGovAgencyCode());
 					
 					break;
@@ -92,7 +92,7 @@ public class OneGateControllerImpl implements OneGateController {
 			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
-			
+			_log.info("Check auth");
 			List<ServiceInfo> serviceInfos = ServiceInfoLocalServiceUtil.getServiceInfosByGroupId(groupId);
 
 
@@ -103,43 +103,46 @@ public class OneGateControllerImpl implements OneGateController {
 			results.put("total", serviceInfos.size());
 
 			for (ServiceInfo serviceInfo : serviceInfos) {
-				
+				_log.info("Service info code: " + serviceInfo.getServiceCode());
+				_log.info("Agencies: " + agencies.toString());
 				ServiceConfig serviceConfig = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(groupId, serviceInfo.getServiceCode(), agencies.toString());
 				
-				JSONObject elmData = JSONFactoryUtil.createJSONObject();
+				if (Validator.isNotNull(serviceConfig)) {
+					JSONObject elmData = JSONFactoryUtil.createJSONObject();
 
-				elmData.put("serviceConfigId", serviceConfig.getServiceConfigId());
-
-
-				elmData.put("serviceCode", serviceInfo.getServiceCode());
-				elmData.put("serviceName", serviceInfo.getServiceName());
-				elmData.put("govAgencyCode", serviceConfig.getGovAgencyCode());
-				elmData.put("govAgencyName", serviceConfig.getGovAgencyName());
-
-				List<ProcessOption> processOptions = ProcessOptionLocalServiceUtil
-						.getByServiceProcessId(serviceConfig.getServiceConfigId());
+					elmData.put("serviceConfigId", serviceConfig.getServiceConfigId());
 
 
-				for (ProcessOption processOption : processOptions) {
-					JSONArray options = JSONFactoryUtil.createJSONArray();
-					JSONObject elmOption = JSONFactoryUtil.createJSONObject();
+					elmData.put("serviceCode", serviceInfo.getServiceCode());
+					elmData.put("serviceName", serviceInfo.getServiceName());
+					elmData.put("govAgencyCode", serviceConfig.getGovAgencyCode());
+					elmData.put("govAgencyName", serviceConfig.getGovAgencyName());
+
+					List<ProcessOption> processOptions = ProcessOptionLocalServiceUtil
+							.getByServiceProcessId(serviceConfig.getServiceConfigId());
+
+
+					for (ProcessOption processOption : processOptions) {
+						JSONArray options = JSONFactoryUtil.createJSONArray();
+						JSONObject elmOption = JSONFactoryUtil.createJSONObject();
+						
+						elmOption.put("processOptionId", processOption.getProcessOptionId());
+						elmOption.put("optionName", processOption.getOptionName());
+						elmOption.put("instructionNote", processOption.getInstructionNote());
+						
+						DossierTemplate dossierTemplate = DossierTemplateLocalServiceUtil.getDossierTemplate(processOption.getDossierTemplateId());
+						elmOption.put("templateNo", dossierTemplate.getTemplateNo());
+						elmOption.put("templateName", dossierTemplate.getTemplateName());
+						
+						options.put(elmOption);
+						
+						elmData.put("options", options);
+
+					}
 					
-					elmOption.put("processOptionId", processOption.getProcessOptionId());
-					elmOption.put("optionName", processOption.getOptionName());
-					elmOption.put("instructionNote", processOption.getInstructionNote());
 					
-					DossierTemplate dossierTemplate = DossierTemplateLocalServiceUtil.getDossierTemplate(processOption.getDossierTemplateId());
-					elmOption.put("templateNo", dossierTemplate.getTemplateNo());
-					elmOption.put("templateName", dossierTemplate.getTemplateName());
-					
-					options.put(elmOption);
-					
-					elmData.put("options", options);
-
+					data.put(elmData);					
 				}
-				
-				
-				data.put(elmData);
 			}
 			
 			results.put("data", data);
@@ -149,6 +152,7 @@ public class OneGateControllerImpl implements OneGateController {
 			return Response.status(200).entity(results.toJSONString()).build();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			return _processException(e);
 		}
 
