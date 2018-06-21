@@ -24,20 +24,24 @@ import org.opencps.dossiermgt.action.impl.DossierActionsImpl;
 import org.opencps.dossiermgt.action.impl.DossierPermission;
 import org.opencps.dossiermgt.action.impl.ServiceProcessActionsImpl;
 import org.opencps.dossiermgt.model.Dossier;
-import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierTemplate;
 import org.opencps.dossiermgt.model.ProcessAction;
 import org.opencps.dossiermgt.model.ProcessOption;
 import org.opencps.dossiermgt.model.ServiceConfig;
 import org.opencps.dossiermgt.model.ServiceInfo;
 import org.opencps.dossiermgt.model.ServiceProcess;
-import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierTemplateLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceInfoLocalServiceUtil;
+import org.opencps.usermgt.model.Employee;
+import org.opencps.usermgt.model.EmployeeJobPos;
+import org.opencps.usermgt.model.WorkingUnit;
+import org.opencps.usermgt.service.EmployeeJobPosLocalServiceUtil;
+import org.opencps.usermgt.service.EmployeeLocalServiceUtil;
+import org.opencps.usermgt.service.WorkingUnitLocalServiceUtil;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -49,6 +53,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 public class OneGateControllerImpl implements OneGateController {
 
@@ -61,57 +67,82 @@ public class OneGateControllerImpl implements OneGateController {
 		BackendAuth auth = new BackendAuthImpl();
 
 		// TODO need implement user in GovAgency
+		
+		Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(groupId, user.getUserId());
 
+		List<EmployeeJobPos> lstEmJobPos = EmployeeJobPosLocalServiceUtil.findByF_EmployeeId(employee.getEmployeeId());
+		StringBuilder agencies = new StringBuilder();
+
+		for (EmployeeJobPos ejp : lstEmJobPos) {
+			WorkingUnit wu = WorkingUnitLocalServiceUtil.fetchWorkingUnit(ejp.getWorkingUnitId());
+			if (wu != null) {
+				if (agencies.toString().isEmpty()) {
+					agencies.append(wu.getGovAgencyCode());
+					
+					break;
+				} 
+			}
+		}
+		
+		_log.info(agencies.toString());
+
+		
 		try {
 
 			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
+			_log.info("Check auth");
+			List<ServiceInfo> serviceInfos = ServiceInfoLocalServiceUtil.getServiceInfosByGroupId(groupId);
 
-			List<ServiceConfig> serviceConfigs = ServiceConfigLocalServiceUtil.getByGroupId(groupId);
 
 			JSONObject results = JSONFactoryUtil.createJSONObject();
 
 			JSONArray data = JSONFactoryUtil.createJSONArray();
 
-			results.put("total", serviceConfigs.size());
+			results.put("total", serviceInfos.size());
 
-			for (ServiceConfig serviceConfig : serviceConfigs) {
-				JSONObject elmData = JSONFactoryUtil.createJSONObject();
+			for (ServiceInfo serviceInfo : serviceInfos) {
+				_log.info("Service info code: " + serviceInfo.getServiceCode());
+				_log.info("Agencies: " + agencies.toString());
+				ServiceConfig serviceConfig = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(groupId, serviceInfo.getServiceCode(), agencies.toString());
+				
+				if (Validator.isNotNull(serviceConfig)) {
+					JSONObject elmData = JSONFactoryUtil.createJSONObject();
 
-				elmData.put("serviceConfigId", serviceConfig.getServiceConfigId());
-
-				ServiceInfo serviceInfo = ServiceInfoLocalServiceUtil.getServiceInfo(serviceConfig.getServiceInfoId());
-
-				elmData.put("serviceCode", serviceInfo.getServiceCode());
-				elmData.put("serviceName", serviceInfo.getServiceName());
-				elmData.put("govAgencyCode", serviceConfig.getGovAgencyCode());
-				elmData.put("govAgencyName", serviceConfig.getGovAgencyName());
-
-				List<ProcessOption> processOptions = ProcessOptionLocalServiceUtil
-						.getByServiceProcessId(serviceConfig.getServiceConfigId());
+					elmData.put("serviceConfigId", serviceConfig.getServiceConfigId());
 
 
-				for (ProcessOption processOption : processOptions) {
-					JSONArray options = JSONFactoryUtil.createJSONArray();
-					JSONObject elmOption = JSONFactoryUtil.createJSONObject();
+					elmData.put("serviceCode", serviceInfo.getServiceCode());
+					elmData.put("serviceName", serviceInfo.getServiceName());
+					elmData.put("govAgencyCode", serviceConfig.getGovAgencyCode());
+					elmData.put("govAgencyName", serviceConfig.getGovAgencyName());
+
+					List<ProcessOption> processOptions = ProcessOptionLocalServiceUtil
+							.getByServiceProcessId(serviceConfig.getServiceConfigId());
+
+
+					for (ProcessOption processOption : processOptions) {
+						JSONArray options = JSONFactoryUtil.createJSONArray();
+						JSONObject elmOption = JSONFactoryUtil.createJSONObject();
+						
+						elmOption.put("processOptionId", processOption.getProcessOptionId());
+						elmOption.put("optionName", processOption.getOptionName());
+						elmOption.put("instructionNote", processOption.getInstructionNote());
+						
+						DossierTemplate dossierTemplate = DossierTemplateLocalServiceUtil.getDossierTemplate(processOption.getDossierTemplateId());
+						elmOption.put("templateNo", dossierTemplate.getTemplateNo());
+						elmOption.put("templateName", dossierTemplate.getTemplateName());
+						
+						options.put(elmOption);
+						
+						elmData.put("options", options);
+
+					}
 					
-					elmOption.put("processOptionId", processOption.getProcessOptionId());
-					elmOption.put("optionName", processOption.getOptionName());
-					elmOption.put("instructionNote", processOption.getInstructionNote());
 					
-					DossierTemplate dossierTemplate = DossierTemplateLocalServiceUtil.getDossierTemplate(processOption.getDossierTemplateId());
-					elmOption.put("templateNo", dossierTemplate.getTemplateNo());
-					elmOption.put("templateName", dossierTemplate.getTemplateName());
-					
-					options.put(elmOption);
-					
-					elmData.put("options", options);
-
+					data.put(elmData);					
 				}
-				
-				
-				data.put(elmData);
 			}
 			
 			results.put("data", data);
@@ -121,6 +152,7 @@ public class OneGateControllerImpl implements OneGateController {
 			return Response.status(200).entity(results.toJSONString()).build();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			return _processException(e);
 		}
 
@@ -132,6 +164,9 @@ public class OneGateControllerImpl implements OneGateController {
 
 		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
 		BackendAuth auth = new BackendAuthImpl();
+		
+		backend.auth.api.BackendAuth auth2 = new backend.auth.api.BackendAuthImpl();
+		
 		DossierPermission dossierPermission = new DossierPermission();
 
 		DossierActions actions = new DossierActionsImpl();
@@ -141,11 +176,13 @@ public class OneGateControllerImpl implements OneGateController {
 		_log.info("__XXXXXXXXXXXXX");
 
 		try {
+			
+			
 
 			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
-
+			
 			dossierPermission.hasCreateDossier(groupId, user.getUserId(), input.getServiceCode(),
 					input.getGovAgencyCode(), input.getDossierTemplateNo());
 
@@ -288,7 +325,7 @@ public class OneGateControllerImpl implements OneGateController {
 		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
 		long dActionId = GetterUtil.getLong(dossierActionId);
 		ServiceProcessActions actions = new ServiceProcessActionsImpl();
-
+	
 		BackendAuth auth = new BackendAuthImpl();
 
 		try {

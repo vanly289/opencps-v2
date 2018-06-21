@@ -43,6 +43,7 @@
 		          </v-toolbar>
 		          <div style="text-align: center;">
 					  <v-flex xs12 sm12 style="position: relative;">
+					  	<img id ="imgTraCuu" style="display:none;">
 					  	<div id="printTraCuu">
 					  	</div>
 					  </v-flex>
