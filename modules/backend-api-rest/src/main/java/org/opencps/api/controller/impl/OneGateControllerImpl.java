@@ -67,21 +67,22 @@ public class OneGateControllerImpl implements OneGateController {
 		BackendAuth auth = new BackendAuthImpl();
 
 		// TODO need implement user in GovAgency
+		StringBuilder agencies = new StringBuilder();
 		
 		Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(groupId, user.getUserId());
+		if (employee != null) {
+			List<EmployeeJobPos> lstEmJobPos = EmployeeJobPosLocalServiceUtil.findByF_EmployeeId(employee.getEmployeeId());
 
-		List<EmployeeJobPos> lstEmJobPos = EmployeeJobPosLocalServiceUtil.findByF_EmployeeId(employee.getEmployeeId());
-		StringBuilder agencies = new StringBuilder();
-
-		for (EmployeeJobPos ejp : lstEmJobPos) {
-			WorkingUnit wu = WorkingUnitLocalServiceUtil.fetchWorkingUnit(ejp.getWorkingUnitId());
-			if (wu != null) {
-				if (agencies.toString().isEmpty()) {
-					agencies.append(wu.getGovAgencyCode());
-					
-					break;
-				} 
-			}
+			for (EmployeeJobPos ejp : lstEmJobPos) {
+				WorkingUnit wu = WorkingUnitLocalServiceUtil.fetchWorkingUnit(ejp.getWorkingUnitId());
+				if (wu != null) {
+					if (agencies.toString().isEmpty()) {
+						agencies.append(wu.getGovAgencyCode());
+						
+						break;
+					} 
+				}
+			}			
 		}
 		
 		_log.info(agencies.toString());
@@ -92,7 +93,6 @@ public class OneGateControllerImpl implements OneGateController {
 			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
-			_log.info("Check auth");
 			List<ServiceInfo> serviceInfos = ServiceInfoLocalServiceUtil.getServiceInfosByGroupId(groupId);
 
 
@@ -103,8 +103,6 @@ public class OneGateControllerImpl implements OneGateController {
 			results.put("total", serviceInfos.size());
 
 			for (ServiceInfo serviceInfo : serviceInfos) {
-				_log.info("Service info code: " + serviceInfo.getServiceCode());
-				_log.info("Agencies: " + agencies.toString());
 				ServiceConfig serviceConfig = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(groupId, serviceInfo.getServiceCode(), agencies.toString());
 				
 				if (Validator.isNotNull(serviceConfig)) {
@@ -152,7 +150,6 @@ public class OneGateControllerImpl implements OneGateController {
 			return Response.status(200).entity(results.toJSONString()).build();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			return _processException(e);
 		}
 
