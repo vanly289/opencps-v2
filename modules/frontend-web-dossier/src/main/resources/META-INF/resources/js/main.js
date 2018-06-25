@@ -15,6 +15,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 	};
 
+	const MAX_RETRY = 200;
+	var nOfRetry = 0;
+	
 	var dossierViewJX = new VueJX({
 		el: 'dossierViewJX',
 		pk: 1,
@@ -484,117 +487,82 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}
 
 							axios.get(url, configInland).then(function (response) {
-								if (response.data.formTemplate != '' && response.data.formTemplate.length != 0) {
-						        	vm.currentPrintTemplate = {
-										printTemplateId: response.data.printTemplateId,
-						        		serviceCode: response.data.serviceCode,
-							        	dossierPartNo: response.data.dossierPartNo,
-							        	fileTemplateNo: response.data.fileTemplateNo,
-							        	templateNo: response.data.templateNo,
-							        	createUserId: response.data.createUserId,
-							        	employeeId: response.data.employeeId,
-							        	formTemplate: response.data.formTemplate,
-							        	defaultCss: response.data.defaultCss,
-							        	originalDocumentURL: response.data.originalDocumentURL
-						        	};
-						        	$('#printTraCuu').empty();
-						        	
-						        	var originalDocumentObj = JSON.parse(response.data.originalDocumentURL);
-//						        	$('#printTraCuu').css("background-image",'url(' + originalDocumentObj.url + ')');
-									$('#imgTraCuu').attr("src", originalDocumentObj.url);
-									$('#imgTraCuu').css(originalDocumentObj.css);
-									
-									var imgTraCuu = $('#imgTraCuu');
-									imgTraCuu.load(function(){
-							        	var style = 'background-image: url(' + originalDocumentObj.url + ');background-size:' + imgTraCuu.width() + 'px ' + imgTraCuu.height() + 'px;';
-							        	style += response.data.defaultCss;
-							        	$('#printTraCuu').attr("style", style);
-										$('#printTraCuu').height(imgTraCuu.height());
-										$('#printTraCuu').width(imgTraCuu.width());
-									});
-									
-									var formTemplate = response.data.formTemplate;
-
-									var formData = JSON.parse(formTemplate);
-																		
-									for (var key in formData) {
-										if (!document.getElementById(key)) {
-											if (key.indexOf("_") != -1) {
-												console.log("Key contain _: " + key);
-												var newKeyArr = key.split("_");
-												var newKey = newKeyArr[1];
-												if (item.hasOwnProperty(newKey)) {
-													$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[newKey] + '</div>');																																					
-												}
-											}
-											else {
-												if (item.hasOwnProperty(key)) {
-													$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');																																			
-												}
-											}
-											$('#' + key).draggable({
-												stop: function() {
-													var position = $(this).position();
-											        var xPos = position.left;
-											        var yPos = position.top;
-											        formData[this.id].offsetX = xPos;
-											        formData[this.id].offsetY = yPos;
-											        
-											        var data = {
-											        	serviceCode: response.data.serviceCode,
-											        	dossierPartNo: response.data.dossierPartNo,
-											        	fileTemplateNo: response.data.fileTemplateNo,
-											        	templateNo: response.data.templateNo,
-											        	createUserId: themeDisplay.getUserId(),
-											        	employeeId: 0,
-											        	formTemplate: JSON.stringify(formData),
-											        	defaultCss: response.data.defaultCss,
-											        	originalDocumentURL: response.data.originalDocumentURL
-											        };
-											        
-											        if (response.data.createUserId != 0) {
-											        	data.printTemplateId = response.data.printTemplateId;
-											        	axios.put(url + "/" + response.data.printTemplateId, $.param(data), {
-															headers: {
-																'Content-Type': 'application/x-www-form-urlencoded',
-																groupId: themeDisplay.getScopeGroupId()
-															}												        		
-											        	})
-											        	.then(function (response) {
-											        	    console.log(response);
-											        	})
-											        	.catch(function (error) {
-											        	    console.log(error);
-											        	});	
-											        }
-											        else {
-											        	
-											        }
-											    }
-											});
-										}
-									}
-									
-						        	/*
-									$('#imgTraCuu').attr("src", response.data.originalDocumentURL);
-									var formTemplate = response.data.formTemplate;
-									var imgTraCuu = $('#imgTraCuu');
-									imgTraCuu.load(function(){
-										$('#printTraCuu').height(imgTraCuu.height());
-										$('#printTraCuu').width(imgTraCuu.width());
+								if (response.data.hasOwnProperty('formTemplate')) {
+									if (response.data.formTemplate != '' && response.data.formTemplate.length != 0) {
+							        	vm.currentPrintTemplate = {
+											printTemplateId: response.data.printTemplateId,
+							        		serviceCode: response.data.serviceCode,
+								        	dossierPartNo: response.data.dossierPartNo,
+								        	fileTemplateNo: response.data.fileTemplateNo,
+								        	templateNo: response.data.templateNo,
+								        	createUserId: response.data.createUserId,
+								        	employeeId: response.data.employeeId,
+								        	formTemplate: response.data.formTemplate,
+								        	defaultCss: response.data.defaultCss,
+								        	originalDocumentURL: response.data.originalDocumentURL
+							        	};
+							        	$('#printTraCuu').empty();
+							        				        	
+							        	var originalDocumentArr = JSON.parse(response.data.originalDocumentURL);
+							        	var originalDocumentObj = originalDocumentArr[0];
+							        	
+							        	for (var i = 0; i < originalDocumentArr.length; i++) {
+							        		var originalDocumentTemp = originalDocumentArr[i];
+							        		if (originalDocumentTemp.hasOwnProperty('licenceType') && originalDocumentTemp['licenceType'] == item.licenceType) {
+							        			originalDocumentObj = originalDocumentTemp;
+							        			break;
+							        		}
+							        	}
+							        	
+	//						        	$('#printTraCuu').css("background-image",'url(' + originalDocumentObj.url + ')');
+										$('#imgTraCuu').attr("src", originalDocumentObj.url);
+										$('#imgTraCuu').css(originalDocumentObj.css);
 										
+										var imgTraCuu = $('#imgTraCuu');
+										imgTraCuu.load(function(){
+								        	var style = 'background-image: url(' + originalDocumentObj.url + ');background-size:' + imgTraCuu.width() + 'px ' + imgTraCuu.height() + 'px;';
+								        	style += response.data.defaultCss;
+								        	$('#printTraCuu').attr("style", style);
+											$('#printTraCuu').height(imgTraCuu.height());
+											$('#printTraCuu').width(imgTraCuu.width());
+										});
+										
+										var formTemplate = response.data.formTemplate;
+	
 										var formData = JSON.parse(formTemplate);
-										
+																			
 										for (var key in formData) {
-											if (item.hasOwnProperty(key) && !document.getElementById(key)) {
-												$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');												
+											if (!document.getElementById(key)) {
+												if (key.indexOf("array_") != -1) {
+													var newKeyArr = key.split("_");
+													var newKey = newKeyArr[2];
+													if (item.hasOwnProperty(newKey)) {
+														var itemDataArr = item[newKey].split("/");
+														if (itemDataArr.length > newKeyArr[1]) {
+															$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + itemDataArr[newKeyArr[1]] + '</div>');																																																				
+														}
+													}													
+												}
+												else if (key.indexOf("_") != -1) {
+													console.log("Key contain _: " + key);
+													var newKeyArr = key.split("_");
+													var newKey = newKeyArr[1];
+													if (item.hasOwnProperty(newKey)) {
+														$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[newKey] + '</div>');																																					
+													}
+												}
+												else {
+													if (item.hasOwnProperty(key)) {
+														$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');																																			
+													}
+												}
 												$('#' + key).draggable({
 													stop: function() {
 														var position = $(this).position();
 												        var xPos = position.left;
 												        var yPos = position.top;
-												        formData[key].offsetX = xPos;
-												        formData[key].offsetY = yPos;
+												        formData[this.id].offsetX = xPos;
+												        formData[this.id].offsetY = yPos;
 												        
 												        var data = {
 												        	serviceCode: response.data.serviceCode,
@@ -604,8 +572,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 												        	createUserId: themeDisplay.getUserId(),
 												        	employeeId: 0,
 												        	formTemplate: JSON.stringify(formData),
+												        	defaultCss: response.data.defaultCss,
 												        	originalDocumentURL: response.data.originalDocumentURL
 												        };
+												        
 												        if (response.data.createUserId != 0) {
 												        	data.printTemplateId = response.data.printTemplateId;
 												        	axios.put(url + "/" + response.data.printTemplateId, $.param(data), {
@@ -621,13 +591,72 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 												        	    console.log(error);
 												        	});	
 												        }
+												        else {
+												        	
+												        }
 												    }
 												});
 											}
-										}									
-									});
-									*/
-						        	
+										}
+										
+							        	/*
+										$('#imgTraCuu').attr("src", response.data.originalDocumentURL);
+										var formTemplate = response.data.formTemplate;
+										var imgTraCuu = $('#imgTraCuu');
+										imgTraCuu.load(function(){
+											$('#printTraCuu').height(imgTraCuu.height());
+											$('#printTraCuu').width(imgTraCuu.width());
+											
+											var formData = JSON.parse(formTemplate);
+											
+											for (var key in formData) {
+												if (item.hasOwnProperty(key) && !document.getElementById(key)) {
+													$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');												
+													$('#' + key).draggable({
+														stop: function() {
+															var position = $(this).position();
+													        var xPos = position.left;
+													        var yPos = position.top;
+													        formData[key].offsetX = xPos;
+													        formData[key].offsetY = yPos;
+													        
+													        var data = {
+													        	serviceCode: response.data.serviceCode,
+													        	dossierPartNo: response.data.dossierPartNo,
+													        	fileTemplateNo: response.data.fileTemplateNo,
+													        	templateNo: response.data.templateNo,
+													        	createUserId: themeDisplay.getUserId(),
+													        	employeeId: 0,
+													        	formTemplate: JSON.stringify(formData),
+													        	originalDocumentURL: response.data.originalDocumentURL
+													        };
+													        if (response.data.createUserId != 0) {
+													        	data.printTemplateId = response.data.printTemplateId;
+													        	axios.put(url + "/" + response.data.printTemplateId, $.param(data), {
+																	headers: {
+																		'Content-Type': 'application/x-www-form-urlencoded',
+																		groupId: themeDisplay.getScopeGroupId()
+																	}												        		
+													        	})
+													        	.then(function (response) {
+													        	    console.log(response);
+													        	})
+													        	.catch(function (error) {
+													        	    console.log(error);
+													        	});	
+													        }
+													    }
+													});
+												}
+											}									
+										});
+										*/
+							        	
+									}
+								}
+								else {
+									vm.popUpPrintTraCuu  = !vm.popUpPrintTraCuu;
+									vm.toDetailGiayPhep(item);
 								}
 							})
 							.catch(function (error) {
@@ -2020,6 +2049,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             		if (needIntervalRefresh) {
                             		    setTimeout(function () {
                             		        vm.refreshProcess();
+                            		        nOfRetry++;
                             		      }.bind(this), 3000);                             			
                             		}
                             		else {
