@@ -60,7 +60,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			advancedFilterNhanHieu : {},
 			advancedFilterDossierStatus : {},
 			stateOnlyFollow : false,
-
 			menuTuNgay: '',
 			menuDenNgay: '',
 			modelLienVan: {
@@ -700,6 +699,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.thong_tin_lai_xe = '';
 							vm.giay_phep_lai_xe = '';
 							vm.popUpThongTinXe  = !vm.popUpThongTinXe;
+							vm._initCuaKhau();
 							var urlThongTinXe = '/o/rest/vr-app/certDoc/borderGuard/'+item.registrationNumber;
 							axios.get(urlThongTinXe, config).then(function (response) {
 								var serializable = response.data;
@@ -758,8 +758,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								serviceCode: serviceCodeTemp,
 								govAgencyCode: vm.govAgencySelect,
 								routeCode: vm.tuyenSelect,
-								fromDate: vm.searchTuNgay,
-								fromDate: vm.searchDenNgay,
+								startDate: vm.parseDate(vm.searchTuNgay),
+								fromDate: vm.parseDate(vm.searchDenNgay),
 								start: vm.pageGiayPhepVanTaiQuocTeTable * 15 - 15,
 								limit: 15
 							};
@@ -841,8 +841,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								serviceCode: serviceCodeTemp,
 								govAgencyCode: vm.govAgencySelect,
 								routeCode: vm.tuyenSelect,
-								fromDate: vm.searchTuNgay,
-								fromDate: vm.searchDenNgay,
+								startDate: vm.parseDate(vm.searchTuNgay),
+								fromDate: vm.parseDate(vm.searchDenNgay),
 								start: vm.pageGiayPhepLienVanTable * 15 - 15,
 								limit: 15
 							};
@@ -861,15 +861,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								if (append) {
 									vm.giayPhepLienVanTableItems.push.apply(vm.giayPhepLienVanTableItems, serializable.data);
 								} else if(serializable.data){
-
 									vm.giayPhepLienVanTableItems = serializable.data;
-
 								}else {
 									vm.giayPhepLienVanTableItems = [];
 								}
 								var page = Math.ceil(vm.giayPhepLienVanTableItems.length / 15);
 								vm.pageGiayPhepLienVanTableLength = page;
 								$("#tableGiayPhepLienVan").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
+								$("#tableGiayPhepLienVan").find('table > thead > tr > th:nth-child(3)').html("Số đăng ký phương tiện <br> Đơn vị khai thác")
 								console.log(vm.giayPhepLienVanTableItems);
 							})
 							.catch(function (error) {
@@ -932,8 +931,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								serviceCode: serviceCodeTemp,
 								govAgencyCode: vm.govAgencySelect,
 								routeCode: vm.tuyenSelect,
-								fromDate: vm.searchTuNgay,
-								fromDate: vm.searchDenNgay,
+								startDate: vm.parseDate(vm.searchTuNgay),
+								fromDate: vm.parseDate(vm.searchDenNgay),
 								start: vm.pageChapThuanKhaiThacTable * 15 - 15,
 								limit: 15
 							};
@@ -962,6 +961,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.pageChapThuanKhaiThacTableLength = page;
 								console.log(vm.chapThuanKhaiThacTableItems);
 								$("#tableChapThuanKhaiThac").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
+								$("#tableChapThuanKhaiThac").find('table > thead > tr > th:nth-child(6)').html("Số xe tham gia <br> Hiệu lực khai thác")
 							})
 							.catch(function (error) {
 								console.log(error);
@@ -1060,6 +1060,18 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								var serializable = response.data;
 								vm.tuyens = serializable.data;
 								
+							})
+							.catch(function (error) {
+								console.log(error);
+
+							});
+						},
+						_initCuaKhau: function (param) {
+							var vm = this;
+							var url = '/o/rest/v2/temp/dictcollections/DB05/dictitems?sort=sibling';
+							axios.get(url, config).then(function (response) {
+								var serializable = response.data;
+								vm.cuaKhaus = serializable.data;
 							})
 							.catch(function (error) {
 								console.log(error);
@@ -2306,7 +2318,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							} else {
 								vm._inidanhSachHoSoTable(false);
 							}
-							
 							vm.onScrollTop();
 
 						},

@@ -21,7 +21,7 @@
 								<v-flex xs12 sm12>
 									<v-layout row wrap>
 									  <v-flex xs12 sm12>
-									    <span class="text-bold pt-2" style="color: #1E88E5; text-transform: uppercase;">Lịch sử xuất nhập cảnh</span>  <v-btn class="pull-right btn--small" color="primary" @click.native="addHistoryCar = !addHistoryCar">Thêm thông tin xe</v-btn>
+									    <span class="text-bold pt-2" style="color: #1E88E5; text-transform: uppercase;">Lịch sử xuất nhập cảnh</span>  <v-btn class="pull-right btn--small" color="primary" @click.native="addHistoryCar = !addHistoryCar">Thêm lịch sử xuất nhập cảnh</v-btn>
 									  </v-flex>
 									</v-layout>
 									<v-divider class="mt-0"></v-divider>
@@ -387,7 +387,6 @@
 										<v-icon style="font-size: 16px;">fas fa-truck</v-icon>
 									</v-btn> 
 								</div>
-								
 							</td>
 						</template>
 					</v-data-table>
@@ -424,10 +423,13 @@
 								<br v-if="props.item.validUntil">
 								{{ props.item.validUntil }} 
 							</td>
-							<td style="padding: 8px; width: 10%;" class="text-xs-center">
+							<td style="width: 14%;" class="text-xs-center">
+								<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="printGiayPhep(props.item)">
+									<v-icon style="font-size: 16px;">print</v-icon>
+								</v-btn>
 								<v-btn class="ml-0 mr-0 btn__info" flat icon style="color: #14BEF0;" @click="toDetailGiayPhep(props.item)">
-										<v-icon style="font-size: 16px;">visibility</v-icon>
-									</v-btn> 
+									<v-icon style="font-size: 16px;">visibility</v-icon>
+								</v-btn> 
 							</td>
 						</template>
 					</v-data-table>
