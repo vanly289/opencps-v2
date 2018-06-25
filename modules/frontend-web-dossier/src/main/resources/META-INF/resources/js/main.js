@@ -57,7 +57,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			advancedFilterNhanHieu : {},
 			advancedFilterDossierStatus : {},
 			stateOnlyFollow : false,
-
 			menuTuNgay: '',
 			menuDenNgay: '',
 			modelLienVan: {
@@ -671,6 +670,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.thong_tin_lai_xe = '';
 							vm.giay_phep_lai_xe = '';
 							vm.popUpThongTinXe  = !vm.popUpThongTinXe;
+							vm._initCuaKhau();
 							var urlThongTinXe = '/o/rest/vr-app/certDoc/borderGuard/'+item.registrationNumber;
 							axios.get(urlThongTinXe, config).then(function (response) {
 								var serializable = response.data;
@@ -729,8 +729,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								serviceCode: serviceCodeTemp,
 								govAgencyCode: vm.govAgencySelect,
 								routeCode: vm.tuyenSelect,
-								fromDate: vm.searchTuNgay,
-								fromDate: vm.searchDenNgay,
+								startDate: vm.parseDate(vm.searchTuNgay),
+								fromDate: vm.parseDate(vm.searchDenNgay),
 								start: vm.pageGiayPhepVanTaiQuocTeTable * 15 - 15,
 								limit: 15
 							};
@@ -812,8 +812,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								serviceCode: serviceCodeTemp,
 								govAgencyCode: vm.govAgencySelect,
 								routeCode: vm.tuyenSelect,
-								fromDate: vm.searchTuNgay,
-								fromDate: vm.searchDenNgay,
+								startDate: vm.parseDate(vm.searchTuNgay),
+								fromDate: vm.parseDate(vm.searchDenNgay),
 								start: vm.pageGiayPhepLienVanTable * 15 - 15,
 								limit: 15
 							};
@@ -902,8 +902,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								serviceCode: serviceCodeTemp,
 								govAgencyCode: vm.govAgencySelect,
 								routeCode: vm.tuyenSelect,
-								fromDate: vm.searchTuNgay,
-								fromDate: vm.searchDenNgay,
+								startDate: vm.parseDate(vm.searchTuNgay),
+								fromDate: vm.parseDate(vm.searchDenNgay),
 								start: vm.pageChapThuanKhaiThacTable * 15 - 15,
 								limit: 15
 							};
@@ -1031,6 +1031,18 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								var serializable = response.data;
 								vm.tuyens = serializable.data;
 								
+							})
+							.catch(function (error) {
+								console.log(error);
+
+							});
+						},
+						_initCuaKhau: function (param) {
+							var vm = this;
+							var url = '/o/rest/v2/temp/dictcollections/DB05/dictitems?sort=sibling';
+							axios.get(url, config).then(function (response) {
+								var serializable = response.data;
+								vm.cuaKhaus = serializable.data;
 							})
 							.catch(function (error) {
 								console.log(error);
@@ -2276,7 +2288,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							} else {
 								vm._inidanhSachHoSoTable(false);
 							}
-							
 							vm.onScrollTop();
 
 						},
