@@ -120,6 +120,9 @@
 											<v-flex xs12 sm12>
 												<span>Giấy phép lái xe :</span>&nbsp;&nbsp; <span>{{item.driverLicenceNo}}</span>
 											</v-flex>
+											<v-flex xs12 sm12>
+												<span>{{item.registrationDate}}</span>
+											</v-flex>
 										</v-layout>
 										<v-divider></v-divider>
 									</div>

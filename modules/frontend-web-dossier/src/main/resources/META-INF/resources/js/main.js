@@ -298,7 +298,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			formTemplate: {},
 			thongTinXeDatePK: '',
 			popUpThongTinXe: false,
-			addHistoryCar: false
+			addHistoryCar: false,
+			historyLienVan: []
 		},
 		watch: {
 			pageGiayPhepVanTaiQuocTeTable: {
@@ -318,7 +319,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			},
 			pageHistory: {
 				handler () {
-                    this.loadDetailThongTinXe()
+                    this.toDetailThongTinXe()
                 }
 			}
 //			stateButtonregistration : true
@@ -700,9 +701,25 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.giay_phep_lai_xe = '';
 							vm.popUpThongTinXe  = !vm.popUpThongTinXe;
 							vm._initCuaKhau();
+							var paramsBuilder = {
+								start: vm.pageHistory * 10 - 10,
+								end: vm.pageHistory * 10
+							};
+							var config_dossiers = {
+								params: paramsBuilder,
+								headers: {
+									'groupId': themeDisplay.getScopeGroupId(),
+								}
+							};
 							var urlThongTinXe = '/o/rest/vr-app/certDoc/borderGuard/'+item.registrationNumber;
-							axios.get(urlThongTinXe, config).then(function (response) {
+							axios.get(urlThongTinXe, config_dossiers).then(function (response) {
 								var serializable = response.data;
+								if (serializable.data) {
+									var page = Math.ceil(serializable.total / 10);
+									vm.lengthPageHistory = page;
+								} else {
+									vm.lengthPageHistory = 1;
+								}
 								vm.modelLienVan = serializable;
 							})
 							.catch(function (error) {
@@ -786,7 +803,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}else {
 									vm.giayPhepVanTaiQuocTeTableItems = [];
 								}
-								var page = Math.ceil(vm.giayPhepVanTaiQuocTeTableItems.length / 15);
+								var page = Math.ceil(serializable.total / 15);
 								vm.pageGiayPhepVanTaiQuocTeTableLength = page;
 								console.log(vm.giayPhepVanTaiQuocTeTableItems);
 								$("#tableGiayPhepVanTaiQuocTe").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
@@ -819,7 +836,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									hieu_luc_den_ngay: 'abc123'
 								}
 								];
-								var page = Math.ceil(vm.giayPhepVanTaiQuocTeTableItems.length / 15);
+								var page = Math.ceil(serializable.total / 15);
 								vm.pageGiayPhepVanTaiQuocTeTableLength = page;
 
 							});
@@ -865,7 +882,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}else {
 									vm.giayPhepLienVanTableItems = [];
 								}
-								var page = Math.ceil(vm.giayPhepLienVanTableItems.length / 15);
+								var page = Math.ceil(serializable.total / 15);
 								vm.pageGiayPhepLienVanTableLength = page;
 								$("#tableGiayPhepLienVan").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
 								$("#tableGiayPhepLienVan").find('table > thead > tr > th:nth-child(3)').html("Số đăng ký phương tiện <br> Đơn vị khai thác")
@@ -957,7 +974,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}else {
 									vm.chapThuanKhaiThacTableItems = [];
 								}
-								var page = Math.ceil(vm.chapThuanKhaiThacTableItems.length / 15);
+								var page = Math.ceil(serializable.total / 15);
 								vm.pageChapThuanKhaiThacTableLength = page;
 								console.log(vm.chapThuanKhaiThacTableItems);
 								$("#tableChapThuanKhaiThac").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
