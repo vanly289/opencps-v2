@@ -318,7 +318,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			},
 			pageHistory: {
 				handler () {
-                    this.loadDetailThongTinXe()
+                    this.toDetailThongTinXe()
                 }
 			}
 //			stateButtonregistration : true
@@ -703,11 +703,26 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.giay_phep_lai_xe = '';
 							vm.popUpThongTinXe  = !vm.popUpThongTinXe;
 							vm._initCuaKhau();
+							var paramsBuilder = {
+					                start: vm.pageHistory * 10 - 10,
+					                end: vm.pageHistory * 10
+					        };
+					        var config_dossiers = {
+					                params: paramsBuilder,
+					                headers: {
+					                  'groupId': themeDisplay.getScopeGroupId(),
+					                }
+					        };							
 							var urlThongTinXe = '/o/rest/vr-app/certDoc/borderGuard/'+item.registrationNumber;
-							axios.get(urlThongTinXe, config).then(function (response) {
+							axios.get(urlThongTinXe, config_dossiers).then(function (response) {
 								var serializable = response.data;
 								vm.modelLienVan = serializable;
-								vm.lengthPageHistory = response.total;
+								if (serializable.data) {
+					                  var page = Math.ceil(serializable.data.length / 10);
+					                  vm.lengthPageHistory = page;
+					                } else {
+					                  vm.lengthPageHistory = 1;
+					                }
 							})
 							.catch(function (error) {
 								console.log(error);
