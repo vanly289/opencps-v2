@@ -6,6 +6,7 @@
 				<xsd:element name="dossierPartNo" type="xsd:int" minOccurs="0" />
 				<xsd:element name="fileTemplateNo" type="xsd:int" minOccurs="0" />
 				<xsd:element name="templateNo" type="xsd:string" minOccurs="0" />
+				<xsd:element name="licenceType" type="xsd:string" minOccurs="0" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -27,6 +28,7 @@
 				<xsd:element name="formTemplate" type="xsd:string" minOccurs="0" />
 				<xsd:element name="defaultCss" type="xsd:string" minOccurs="0" />
 				<xsd:element name="originalDocumentURL" type="xsd:string" minOccurs="0" />
+				<xsd:element name="licenceType" type="xsd:string" minOccurs="0" />
 	
 			</xsd:sequence>
 		</xsd:complexType>
@@ -47,7 +49,8 @@
 				<xsd:element name="formTemplate" type="xsd:string" minOccurs="0" />
 				<xsd:element name="defaultCss" type="xsd:string" minOccurs="0" />
 				<xsd:element name="originalDocumentURL" type="xsd:string" minOccurs="0" />
-	
+				<xsd:element name="licenceType" type="xsd:string" minOccurs="0" />
+				
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
