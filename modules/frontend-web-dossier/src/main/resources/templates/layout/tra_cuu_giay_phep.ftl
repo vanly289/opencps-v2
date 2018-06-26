@@ -49,7 +49,6 @@
 													<v-select
 													:items="cuaKhaus"
 													item-text="itemName"
-													item-value="itemCode"
 													v-model="cuaKhauSelect"
 													clearable
 													></v-select>
@@ -119,6 +118,9 @@
 											</v-flex>
 											<v-flex xs12 sm12>
 												<span>Giấy phép lái xe :</span>&nbsp;&nbsp; <span>{{item.driverLicenceNo}}</span>
+											</v-flex>
+											<v-flex xs12 sm12>
+												<span>Ngày xuất/nhập :</span>&nbsp;&nbsp; <span>{{item.registrationDate}}</span>
 											</v-flex>
 										</v-layout>
 										<v-divider></v-divider>

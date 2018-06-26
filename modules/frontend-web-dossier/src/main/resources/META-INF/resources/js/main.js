@@ -478,7 +478,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									serviceCode: item.serviceCode,
 									dossierPartNo: item.dossierPartNo,
 									fileTemplateNo: item.fileTemplateNo,
-									templateNo: item.dossierTemplateNo
+									templateNo: item.dossierTemplateNo,
+									licenceType: item.licenceType
 								},
 								headers: {
 									groupId: themeDisplay.getScopeGroupId()
@@ -498,7 +499,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								        	employeeId: response.data.employeeId,
 								        	formTemplate: response.data.formTemplate,
 								        	defaultCss: response.data.defaultCss,
-								        	originalDocumentURL: response.data.originalDocumentURL
+								        	originalDocumentURL: response.data.originalDocumentURL,
+								        	licenceType: response.data.licenceType
 							        	};
 							        	$('#printTraCuu').empty();
 							        				        	
@@ -572,7 +574,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 												        	employeeId: 0,
 												        	formTemplate: JSON.stringify(formData),
 												        	defaultCss: response.data.defaultCss,
-												        	originalDocumentURL: response.data.originalDocumentURL
+												        	originalDocumentURL: response.data.originalDocumentURL,
+												        	licenceType: response.data.licenceType
 												        };
 												        
 												        if (response.data.createUserId != 0) {
@@ -704,6 +707,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							axios.get(urlThongTinXe, config).then(function (response) {
 								var serializable = response.data;
 								vm.modelLienVan = serializable;
+								vm.lengthPageHistory = response.total;
 							})
 							.catch(function (error) {
 								console.log(error);
@@ -716,7 +720,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var formData = new URLSearchParams();
 							var registrationDate = vm.parseDate(vm.thongTinXeDate)
 							formData.append('expImpGateType', vm.hinhThucSelect);
-							formData.append('expImpGate', vm.cuaKhauSelect);
+							formData.append('expImpGate', vm.cuaKhauSelect.itemName);
+							formData.append('expImpGateCode', vm.cuaKhauSelect.itemCode);
 							formData.append('registrationDate', registrationDate);
 							formData.append('driverName', vm.thong_tin_lai_xe);
 							formData.append('driverLicenceNo', vm.giay_phep_lai_xe);
@@ -2575,20 +2580,20 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						_initlistgroupBaoCaoFilter: function(){
 							var vm = this;
 
-							vm.listgroupBaoCaoFilterItems = [
-							{
-								id: 'tham_dinh_bao_cao',
-								title: 'Thẩm định thiết kế'
-							},
-							{
-								id: 'kiem_tra_san_pham_mau',
-								title: 'Kiểm tra sản phẩm mẫu'
-							},
-							{
-								id: 'danh_gia_cop',
-								title: 'Đánh giá COP'
-							}
-							];
+//							vm.listgroupBaoCaoFilterItems = [
+//							{
+//								id: 'tham_dinh_bao_cao',
+//								title: 'Thẩm định thiết kế'
+//							},
+//							{
+//								id: 'kiem_tra_san_pham_mau',
+//								title: 'Kiểm tra sản phẩm mẫu'
+//							},
+//							{
+//								id: 'danh_gia_cop',
+//								title: 'Đánh giá COP'
+//							}
+//							];
 							
 						}
 					}
