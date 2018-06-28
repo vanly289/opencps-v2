@@ -724,12 +724,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									vm.lengthPageHistory = 1;
 								}
 								vm.modelLienVan = serializable;
-								if (serializable.data) {
-					                  var page = Math.ceil(serializable.data.length / 10);
-					                  vm.lengthPageHistory = page;
-					                } else {
-					                  vm.lengthPageHistory = 1;
-					                }
 							})
 							.catch(function (error) {
 								console.log(error);
