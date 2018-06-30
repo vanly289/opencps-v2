@@ -465,6 +465,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 					fileTemplateNo, false, new DossierFileComparator(false, "createDate", Date.class));
+			List<DossierFile> lstDossierFiles = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO(dossierId,
+					fileTemplateNo, false);
 
 			List<DossierPart> lstParts = DossierPartLocalServiceUtil.getByTemplateNo(groupId, dossier.getDossierTemplateNo());
 			
@@ -638,8 +640,17 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 											}																	
 											
 											deliverableListArr.put(newFormDataObj);
+											boolean flag = false;
+											DossierFile foundFile = null;
+											for (DossierFile tmpFile : lstDossierFiles) {
+												if (tmpFile.getFormData().equals(newFormDataObj.toJSONString())) {
+													flag = true;
+													foundFile = tmpFile;
+													break;
+												}
+											}
 											
-											if (Validator.isNull(dossierFile)) {
+											if (!flag) {
 
 												if (autoRun) {
 													// create DossierFile
@@ -659,6 +670,16 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 												}
 
 											} else {
+												if (autoRun) {
+													_log.info("UPDATED DOSSIERFILE");
+
+													actions.updateDossierFileFormData(groupId, dossierId, foundFile.getReferenceUid(), newFormDataObj.toJSONString(),
+															context);
+
+												} else {
+													// add temp File
+
+												}
 
 											}
 											

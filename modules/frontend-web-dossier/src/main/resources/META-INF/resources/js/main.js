@@ -702,7 +702,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.registrationDate = '';
 							vm.thong_tin_lai_xe = '';
 							vm.giay_phep_lai_xe = '';
-							vm.popUpThongTinXe  = !vm.popUpThongTinXe;
 							vm._initCuaKhau();
 							var paramsBuilder = {
 					                start: vm.pageHistory * 10 - 10,
@@ -724,6 +723,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									vm.lengthPageHistory = 1;
 								}
 								vm.modelLienVan = serializable;
+								vm.popUpThongTinXe  = !vm.popUpThongTinXe;
 							})
 							.catch(function (error) {
 								console.log(error);

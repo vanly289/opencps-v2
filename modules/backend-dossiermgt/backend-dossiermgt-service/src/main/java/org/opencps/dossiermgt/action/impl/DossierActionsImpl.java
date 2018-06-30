@@ -2176,12 +2176,16 @@ public class DossierActionsImpl implements DossierActions {
 
 		fileTemplateNo = StringUtil.replaceFirst(fileTemplateNo, "#", StringPool.BLANK);
 
+		_log.info("AUTO RUN PROCESS PLUGIN IN GET NEXT ACTIONS");
+		
 		try {
 			// Dossier dossier = DossierLocalServiceUtil.getDossier(dossierId);
 
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 					fileTemplateNo, false, new DossierFileComparator(false, "createDate", Date.class));
-
+			List<DossierFile> lstDossierFiles = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO(dossierId,
+					fileTemplateNo, false);
+			
 			DossierPart dossierPart = DossierPartLocalServiceUtil.getByFileTemplateNo(groupId, fileTemplateNo);
 
 			formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
@@ -2197,7 +2201,7 @@ public class DossierActionsImpl implements DossierActions {
 				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
 				if (dlt != null) {
 					allowKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
-					acceptedKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
+					acceptedKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ACCEPTED, dlt);
 					String mappingData = dlt.getMappingData();
 					JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
 					if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
@@ -2206,71 +2210,78 @@ public class DossierActionsImpl implements DossierActions {
 				}
 			}
 			
-			JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
-			JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
-			
-			for (int i = 0; i < deliverablesArr.length(); i++) {
+			if (Validator.isNotNull(deliverables)) {
+				JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
+				JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
+				_log.info("NUMBER OF VEHICLES: " + deliverablesArr.length());
+				for (int i = 0; i < deliverablesArr.length(); i++) {
 
-				JSONObject deliverableObj = deliverablesArr.getJSONObject(i);
-				
-				if (deliverableObj.has(acceptedKey) || deliverableObj.has(allowKey)) {
-					String value = (deliverableObj.has(acceptedKey) ? deliverableObj.getString(acceptedKey) : deliverableObj.getString(allowKey));
-					if ("1".equals(value)) {
-						JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
+					JSONObject deliverableObj = deliverablesArr.getJSONObject(i);
+					_log.info("DELIVERABLE OBJECT: " + deliverableObj.toJSONString());
+					if (deliverableObj.has(acceptedKey) || deliverableObj.has(allowKey)) {
+						String value = (deliverableObj.has(acceptedKey) ? deliverableObj.getString(acceptedKey) : deliverableObj.getString(allowKey));
+						if ("1".equals(value)) {
+							JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
 
-						Iterator<?> keys = formDataObj.keys();
+							Iterator<?> keys = formDataObj.keys();
 
-						while( keys.hasNext() ) {
-						    String key = (String)keys.next();
-						    if (!key.equals(deliverables)) {
-						    	newFormDataObj.put(key, formDataObj.get(key));
-						    }
-						}							
-						
-						keys = deliverableObj.keys();
+							while( keys.hasNext() ) {
+							    String key = (String)keys.next();
+							    if (!key.equals(deliverables)) {
+							    	newFormDataObj.put(key, formDataObj.get(key));
+							    }
+							}							
+							
+							keys = deliverableObj.keys();
 
-						while( keys.hasNext() ) {
-						    String key = (String)keys.next();
-						    newFormDataObj.put(key, deliverableObj.get(key));
-						}																	
-						
-						deliverableListArr.put(newFormDataObj);
-						
-						if (Validator.isNull(dossierFile)) {
+							while( keys.hasNext() ) {
+							    String key = (String)keys.next();
+							    newFormDataObj.put(key, deliverableObj.get(key));
+							}																	
+							
+							deliverableListArr.put(newFormDataObj);
+							
+							boolean flag = false;
+							DossierFile foundFile = null;
+							for (DossierFile tmpFile : lstDossierFiles) {
+								if (tmpFile.getFormData().equals(newFormDataObj.toJSONString())) {
+									flag = true;
+									foundFile = tmpFile;
+									break;
+								}
+							}
+							if (!flag) {
+									dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
+											dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
+											StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
 
-								// create DossierFile
+									_log.info("UPDATED DOSSIERFILE");
 
-								dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
-										dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
-										StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
+									actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), newFormDataObj.toJSONString(),
+											context);
 
-								_log.info("UPDATED DOSSIERFILE");
 
-								actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), newFormDataObj.toJSONString(),
+							} else {
+								actions.updateDossierFileFormData(groupId, dossierId, foundFile.getReferenceUid(), newFormDataObj.toJSONString(),
 										context);
-
-
-						} else {
-
+							}
+							
 						}
-						
 					}
+				}				
+			}
+			else {
+				if (Validator.isNull(dossierFile)) {			
+					dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(), dossierTemplateNo,
+					dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(), StringPool.BLANK, 0L, null,
+					StringPool.BLANK, String.valueOf(false), context);
+				}
+				else {
+					actions = new DossierFileActionsImpl();
+					
+					actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData, context);				
 				}
 			}
-			
-//			if (Validator.isNull(dossierFile)) {
-//
-//				DossierFileActions actions = new DossierFileActionsImpl();
-//
-//				dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(), dossierTemplateNo,
-//						dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-//						StringPool.BLANK, String.valueOf(false), context);
-//			}
-//
-//			DossierFileActions actions = new DossierFileActionsImpl();
-//
-//			actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData, context);
-
 		} catch (Exception e) {
 			_log.info("Cant get formdata with fileTemplateNo_" + fileTemplateNo);
 		}
