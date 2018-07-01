@@ -70,6 +70,7 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -2169,6 +2170,22 @@ public class DossierActionsImpl implements DossierActions {
 		return dossierAction;
 	}
 
+	private boolean equalsFormData(String oldFormData, String newFormData) {
+		try {
+			JSONObject oldObj = JSONFactoryUtil.createJSONObject(oldFormData);
+			JSONObject newObj = JSONFactoryUtil.createJSONObject(newFormData);
+			if (oldObj.has("RegistrationNumber") && newObj.has("RegistrationNumber")) {
+				if (oldObj.getString("RegistrationNumber").equals(newObj.getString("RegistrationNumber"))) {
+					return true;
+				}
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	private void _doAutoRun(long groupId, String fileTemplateNo, long dossierId, String dossierTemplateNo,
 			ServiceContext context) {
 
@@ -2244,7 +2261,7 @@ public class DossierActionsImpl implements DossierActions {
 							boolean flag = false;
 							DossierFile foundFile = null;
 							for (DossierFile tmpFile : lstDossierFiles) {
-								if (tmpFile.getFormData().equals(newFormDataObj.toJSONString())) {
+								if (equalsFormData(tmpFile.getFormData(), newFormDataObj.toJSONString())) {
 									flag = true;
 									foundFile = tmpFile;
 									break;

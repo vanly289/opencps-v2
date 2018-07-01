@@ -41,6 +41,7 @@ import org.opencps.usermgt.model.Employee;
 import org.opencps.usermgt.service.EmployeeLocalServiceUtil;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -451,6 +452,22 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 	}
 
+	private boolean equalsFormData(String oldFormData, String newFormData) {
+		try {
+			JSONObject oldObj = JSONFactoryUtil.createJSONObject(oldFormData);
+			JSONObject newObj = JSONFactoryUtil.createJSONObject(newFormData);
+			if (oldObj.has("RegistrationNumber") && newObj.has("RegistrationNumber")) {
+				if (oldObj.getString("RegistrationNumber").equals(newObj.getString("RegistrationNumber"))) {
+					return true;
+				}
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	private String _getFormData(long groupId, String fileTemplateNo, long dossierId, boolean autoRun,
 			String dossierTemplateNo, boolean original, ServiceContext context) {
 
@@ -643,7 +660,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 											boolean flag = false;
 											DossierFile foundFile = null;
 											for (DossierFile tmpFile : lstDossierFiles) {
-												if (tmpFile.getFormData().equals(newFormDataObj.toJSONString())) {
+												if (equalsFormData(tmpFile.getFormData(), newFormDataObj.toJSONString())) {
 													flag = true;
 													foundFile = tmpFile;
 													break;
