@@ -20,6 +20,7 @@ import org.opencps.api.deliverable.model.DeliverableUpdateModel;
 import org.opencps.auth.api.BackendAuth;
 import org.opencps.auth.api.BackendAuthImpl;
 import org.opencps.auth.api.exception.UnauthenticationException;
+import org.opencps.auth.api.exception.UnauthorizationException;
 import org.opencps.dossiermgt.action.DeliverableActions;
 import org.opencps.dossiermgt.action.DeliverableLogActions;
 import org.opencps.dossiermgt.action.impl.DeliverableActionsImpl;
@@ -562,4 +563,110 @@ public class DeliverablesManagementImpl implements DeliverablesManagement {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Response getDataFormByDeliverableType(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String agencyNo, String typeCode, String keyword,
+			String start, String end, String applicantIdNo, String deliverableState) {
+		BackendAuth auth = new BackendAuthImpl();
+
+		try {
+
+			// Check user is login
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+			
+			int startSearch = -1;
+			int endSearch = -1;
+			if (Validator.isNotNull(end) && !end.equals("0")) {
+				startSearch = Integer.parseInt(start);
+				endSearch = Integer.parseInt(end);
+			}
+
+			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+			_log.info("groupId: "+groupId +"*keyword*: "+ keyword);
+			_log.info("agencyNo: "+agencyNo +"*typeCode*: "+ typeCode);
+			JSONObject keyJson = JSONFactoryUtil.createJSONObject(keyword);
+			
+			String pattern = String.valueOf(keyJson.get("query"));
+			String paramValues = String.valueOf(keyJson.get("values"));
+			String paramTypes = String.valueOf(keyJson.get("type"));
+
+			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+			params.put(Field.GROUP_ID, String.valueOf(groupId));
+			params.put(DeliverableTerm.GOV_AGENCY_CODE, agencyNo);
+			params.put(DeliverableTerm.DELIVERABLE_TYPE, typeCode);
+			params.put(DeliverableTerm.APPLICANT_ID_NO, applicantIdNo);
+			params.put(DeliverableTerm.DELIVERABLE_STATE, deliverableState);
+			params.put("pattern", pattern);
+			params.put("paramValues", paramValues);
+			params.put("paramTypes", paramTypes);
+
+			DeliverableActions actions = new DeliverableActionsImpl();
+//			DeliverableResultModel results = new DeliverableResultModel();
+			JSONObject results = JSONFactoryUtil.createJSONObject();
+			
+			Sort[] sorts = new Sort[] {
+					SortFactoryUtil.create(Field.MODIFIED_DATE + "_sortable", Sort.STRING_TYPE, true) };
+			// get JSON data deliverable
+			JSONObject jsonData = actions.getFormDataByTypecode(serviceContext.getCompanyId(), params, sorts,
+					startSearch, endSearch, serviceContext);
+
+//			_log.info("total: "+jsonData.getInt("total"));
+//			results.setTotal(jsonData.getInt("total"));
+//			results.getData()
+//					.addAll(DeliverableUtils.mappingToDeliverableResultModel((List<Document>) jsonData.get("data")));
+
+			//TODO
+			results.put("total", jsonData.getInt("total"));
+			List<Document> docList =(List<Document>) jsonData.get("data");
+
+			JSONArray formDataArr = JSONFactoryUtil.createJSONArray();
+			for (Document doc : docList) {
+				String formData = doc.get(DeliverableTerm.FORM_DATA);
+				JSONObject formJson = JSONFactoryUtil.createJSONObject(formData);
+				formJson.put("ten_chung_chi", doc.get(DeliverableTerm.DELIVERABLE_NAME));
+				formJson.put("deliverableCode", doc.get(DeliverableTerm.DELIVERABLE_CODE));
+//				_log.info("formData: "+formData);
+				formDataArr.put(formJson);
+			}
+			results.put("data", formDataArr);
+
+			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(results)).build();
+
+		} catch (Exception e) {
+			return processException(e);
+		}
+	}
+
+	private Response processException(Exception e) {
+		ErrorMsg error = new ErrorMsg();
+
+		if (e instanceof UnauthenticationException) {
+			error.setMessage("Non-Authoritative Information.");
+			error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+			error.setDescription("Non-Authoritative Information.");
+
+			return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+		} else {
+			if (e instanceof UnauthorizationException) {
+				error.setMessage("Unauthorized.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Unauthorized.");
+
+				return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+			} else {
+
+				error.setMessage("No Content.");
+				error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
+				error.setDescription("No Content.");
+
+				return Response.status(HttpURLConnection.HTTP_FORBIDDEN).entity(error).build();
+
+			}
+		}
+	}
+
 }

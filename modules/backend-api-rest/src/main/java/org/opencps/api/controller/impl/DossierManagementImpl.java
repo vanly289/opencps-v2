@@ -119,7 +119,13 @@ public class DossierManagementImpl implements DossierManagement {
 
 			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 			params.put(Field.GROUP_ID, String.valueOf(groupId));
-			params.put(Field.KEYWORD_SEARCH, query.getKeyword());
+			// LamTV_Process search LIKE
+			String keywordSearch = query.getKeyword();
+			String keySearch = StringPool.BLANK;
+			if (Validator.isNotNull(keywordSearch)) {
+				keySearch = SpecialCharacterUtils.splitSpecial(keywordSearch);
+			}
+			params.put(Field.KEYWORD_SEARCH, keySearch);
 
 			String status = query.getStatus();
 			String substatus = query.getSubstatus();
@@ -270,7 +276,6 @@ public class DossierManagementImpl implements DossierManagement {
 			dossierPermission.hasGetDossiers(groupId, user.getUserId(), query.getSecetKey());
 
 			// _log.info("31" + query.getEnd());
-
 			if (query.getEnd() == 0) {
 
 				query.setStart(-1);
@@ -282,7 +287,13 @@ public class DossierManagementImpl implements DossierManagement {
 			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
 			params.put(Field.GROUP_ID, String.valueOf(groupId));
-			params.put(Field.KEYWORD_SEARCH, query.getKeyword());
+			// LamTV_Process search LIKE
+			String keywordSearch = query.getKeyword();
+			String keySearch = StringPool.BLANK;
+			if (Validator.isNotNull(keywordSearch)) {
+				keySearch = SpecialCharacterUtils.splitSpecial(keywordSearch);
+			}
+			params.put(Field.KEYWORD_SEARCH, keySearch);
 
 			String status = query.getStatus();
 			String substatus = query.getSubstatus();
@@ -323,12 +334,6 @@ public class DossierManagementImpl implements DossierManagement {
 			String dossierIdCTN = query.getDossierIdCTN();
 			String fromSubmitDate = APIDateTimeUtils.convertNormalDateToLuceneDate(query.getFromSubmitDate());
 			String toSubmitDate = APIDateTimeUtils.convertNormalDateToLuceneDate(query.getToSubmitDate());
-			//Add keyword Search
-			String keywordSearchLike = query.getKeywordSearchLike();
-			String keySearch = StringPool.BLANK;
-			if (Validator.isNotNull(keywordSearchLike)) {
-				keySearch = SpecialCharacterUtils.splitSpecial(keywordSearchLike);
-			}
 
 			params.put(DossierTerm.STATUS, status);
 			params.put(DossierTerm.SUBSTATUS, substatus);
@@ -354,7 +359,6 @@ public class DossierManagementImpl implements DossierManagement {
 			params.put(DossierTerm.DOSSIER_ID_CTN, dossierIdCTN);
 			params.put(DossierTerm.FROM_SUBMIT_DATE, fromSubmitDate);
 			params.put(DossierTerm.TO_SUBMIT_DATE, toSubmitDate);
-			params.put(DossierTerm.KEYWORD_SEARCH_LIKE, keySearch);
 
 			// _log.info("4");
 			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,

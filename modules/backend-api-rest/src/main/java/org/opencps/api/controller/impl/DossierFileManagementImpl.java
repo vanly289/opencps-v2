@@ -145,6 +145,9 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 
 			DataHandler dataHandler = file.getDataHandler();
 
+//			_log.info("dataHandle: "+dataHandler);
+//			_log.info("dataHandle.getContentType: "+dataHandler.getContentType());
+//			_log.info("sourceFileName: "+dataHandler.getName());
 			DossierFileActions action = new DossierFileActionsImpl();
 			
 			
@@ -267,6 +270,7 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 			if (dossierFile.getFileEntryId() > 0) {
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
 
+//				_log.info("fileEntry.getFileName(): "+fileEntry.getFileName()+ "|fileEntry.getMimeType(): "+fileEntry.getMimeType());
 				File file = DLFileEntryLocalServiceUtil.getFile(fileEntry.getFileEntryId(), fileEntry.getVersion(),
 						true);
 
@@ -332,6 +336,7 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 	public Response updateDossierFile(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, long id, String referenceUid, Attachment file) {
 
+//		_log.info("START POST DOSSIER=====");
 		BackendAuth auth = new BackendAuthImpl();
 
 		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
@@ -346,6 +351,9 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 
 			DossierFileActions action = new DossierFileActionsImpl();
 
+//			_log.info("dataHandle: "+dataHandle);
+//			_log.info("dataHandle.getContentType: "+dataHandle.getContentType());
+//			_log.info("sourceFileName: "+dataHandle.getName());
 			DossierFile dossierFile = action.updateDossierFile(groupId, id, referenceUid, dataHandle.getName(),
 					dataHandle.getInputStream(), serviceContext);
 

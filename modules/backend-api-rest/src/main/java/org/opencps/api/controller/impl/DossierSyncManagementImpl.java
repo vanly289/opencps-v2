@@ -326,7 +326,10 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
 
-				properties.put("fileType", fileEntry.getExtension());
+//				properties.put("fileType", fileEntry.getExtension());
+				//LamTV_ Get fileType
+				_log.info("LamTV_fileTypeSync: "+fileEntry.getMimeType());
+				properties.put("fileType", fileEntry.getMimeType());
 
 				File file = getFile(dossierFile.getFileEntryId());
 

@@ -253,7 +253,7 @@ public class DossierActionsImpl implements DossierActions {
 				List<DictItem> dictItems = DictItemLocalServiceUtil
 						.findByF_dictCollectionId(dictCollection.getDictCollectionId());
 
-				//TODO:   
+				//TODO:
 //				if (dictItems != null && dictItems.size() > 0) {
 //					StringBuilder sbNormal = new StringBuilder();
 //					StringBuilder sbSpecial = new StringBuilder();
@@ -715,12 +715,40 @@ public class DossierActionsImpl implements DossierActions {
 								}
 							}
 						}
+						//TODO: Generate formData
+						_log.info("IN_CURRENT_STEP:" + processStep.getStepCode() + processStep.getStepName());
+
+						List<ProcessPlugin> plugins = ProcessPluginLocalServiceUtil.getProcessPlugins(serviceProcessId,
+								processStep.getStepCode());
+
+						_log.info("WE_HAVE_PLUGINS:" + plugins.size());
+
+						List<ProcessPlugin> autoPlugins = new ArrayList<ProcessPlugin>();
+
+						for (ProcessPlugin plg : plugins) {
+							if (plg.getAutoRun()) {
+								autoPlugins.add(plg);
+							}
+						}
+
+						_log.info("AND_HAVE_AUTO_RUN_PLUGINS:" + autoPlugins.size());
+
+						for (ProcessPlugin plg : autoPlugins) {
+							// do create file
+							String fileTemplateNo = plg.getSampleData();
+
+							fileTemplateNo = StringUtil.replaceFirst(fileTemplateNo, "#", StringPool.BLANK);
+
+							_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(), serviceContext);
+						}
+
 						result.put("pending", pending);
 						result.put("processAction", processAction);
 						result.put("lstUser", lstUser);
 						result.put("createFiles", createFiles);
 						results.put(result);
 					}
+					
 				} catch (Exception e) {
 					_log.error(e);
 				}
@@ -1160,6 +1188,37 @@ public class DossierActionsImpl implements DossierActions {
 				// To index
 				DossierLocalServiceUtil.syncDossier(dossier);
 			}
+			//TODO: Hot fix COP
+			boolean flagCOP = false;
+			if (Validator.isNull(dossier.getDossierNo())) {
+				if (curStep.getDossierStatus().contentEquals(DossierStatusConstants.WAITING)
+							&& (curStep.getDossierSubStatus().contentEquals("waiting_4"))) {
+					flagCOP = true;
+				}
+				if (curStep.getDossierSubStatus().contentEquals("waiting_3")) {
+					flagCOP = true;
+				}
+			}
+			if (flagCOP) {
+
+				_log.info("PROCESS getDossierStatus COP");
+				LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+				params.put(DossierTerm.GOV_AGENCY_CODE, dossier.getGovAgencyCode());
+				params.put(DossierTerm.SERVICE_CODE, dossier.getServiceCode());
+				params.put(DossierTerm.DOSSIER_TEMPLATE_NO, dossier.getDossierTemplateNo());
+				params.put(DossierTerm.DOSSIER_STATUS, StringPool.BLANK);
+
+				String dossierRef = DossierNumberGenerator.generateDossierNumber(groupId, dossier.getCompanyId(),
+						dossierId, option.getProcessOptionId(), serviceProcess.getDossierNoPattern(), params);
+
+				// Cap nhat ngay tiep nhan khi duoc cap so
+
+				dossier.setReceiveDate(new Date());
+
+				dossier.setDossierNo(dossierRef.trim());
+				// To index
+				DossierLocalServiceUtil.syncDossier(dossier);
+			}
 
 			// update nextActionId
 			_log.info("prvAction:" + prvAction);
@@ -1180,6 +1239,10 @@ public class DossierActionsImpl implements DossierActions {
 				// TODO add SYNC for DossierFile and PaymentFile here
 
 				// SyncDossierFile
+				//TODO: process SyncDossierFile
+//				processSyncDossierFile(dossierId, dossier.getReferenceUid(), processAction, groupId, userId, serviceProcess.getServerNo());
+
+				//Comment code process pre-develop
 				List<DossierFile> lsDossierFile = DossierFileLocalServiceUtil.getByDossierIdAndIsNew(dossierId, true);
 
 				// check return file
@@ -2470,6 +2533,61 @@ private String _buildDossierNote(Dossier dossier, String actionNote, long groupI
 		}
 
 		return result;
+	}
+
+	private void processSyncDossierFile(long dossierId, String referenceUid, ProcessAction processAction, long groupId,
+			long userId, String serverNo) {
+
+		// check return file
+		List<String> returnDossierFileTemplateNos = ListUtil
+				.toList(StringUtil.split(processAction.getReturnDossierFiles()));
+		_log.info("__return dossierFiles" + processAction.getReturnDossierFiles());
+
+		List<DossierFile> dossierFileList = null;
+		if (returnDossierFileTemplateNos != null && returnDossierFileTemplateNos.size() > 0) {
+			dossierFileList = DossierFileLocalServiceUtil.getDossierFileByDID_DPNO(dossierId, "2", false);
+		} else {
+			dossierFileList = DossierFileLocalServiceUtil.getByDossierIdAndIsNew(dossierId, true);
+		}
+
+		//Update and sync dossierFile
+		if (returnDossierFileTemplateNos != null && returnDossierFileTemplateNos.size() > 0) {
+			if (dossierFileList != null && dossierFileList.size() > 0) {
+				String fileTemplateNo = StringPool.BLANK;
+				for (DossierFile dossierFile : dossierFileList) {
+
+					//Update record dossierFile
+					if (dossierFile.getIsNew()) {
+						updateIsNewDossierFile(dossierFile);
+					}
+
+					_log.info("__dossierPart" + processAction.getReturnDossierFiles());
+					_log.info("__dossierPart" + dossierFile.getFileTemplateNo());
+					fileTemplateNo = dossierFile.getFileTemplateNo();
+
+					if (returnDossierFileTemplateNos.contains(fileTemplateNo)) {
+						_log.info("START SYNC DOSSIER FILE");
+						DossierSyncLocalServiceUtil.updateDossierSync(groupId, userId, dossierId, referenceUid, false,
+								1, dossierFile.getDossierFileId(), dossierFile.getReferenceUid(), serverNo);
+
+					}
+				}
+			}
+		} else {//only update dossierFile
+			if (dossierFileList != null && dossierFileList.size() > 0) {
+				for (DossierFile dossierFile : dossierFileList) {
+					updateIsNewDossierFile(dossierFile);
+				}
+			}
+		}
+	}
+
+	//Update DossierFile when Sync
+	private void updateIsNewDossierFile(DossierFile dossierFile) {
+		_log.info("&&&StartUpdateDossierFile" + new Date());
+		dossierFile.setIsNew(false);
+		DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+		_log.info("&&&EndUpdateDossierFile" + new Date());
 	}
 
 }

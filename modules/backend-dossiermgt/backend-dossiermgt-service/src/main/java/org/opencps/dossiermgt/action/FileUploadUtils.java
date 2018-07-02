@@ -11,6 +11,8 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -21,7 +23,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 public class FileUploadUtils {
@@ -134,6 +135,10 @@ public class FileUploadUtils {
 				StringPool.BLANK, fileEntry.getContentStream(), fileEntry.getSize(), serviceContext);
 	}
 	
+	
+	private static Log _log = LogFactoryUtil.getLog(FileUploadUtils.class);
+	
+	
 	/**
 	 * 
 	 * @param userId
@@ -154,9 +159,11 @@ public class FileUploadUtils {
 		FileEntry fileEntry = null;
 
 		if (inputStream != null && Validator.isNotNull(sourceFileName)) {
-			
+//			_log.info("sourceFileName: "+sourceFileName);
+//			_log.info("fileType: "+fileType);
 			if(Validator.isNull(fileType)) {
 				fileType = MimeTypesUtil.getContentType(sourceFileName);
+//				_log.info("MimeTypesUtil.fileType: "+fileType);
 			}
 			
 			if(fileSize == 0) {
