@@ -373,7 +373,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						formReport = _getFormScript(formCode, dossier.getDossierId());
 					}
 
-					_log.info("Form data to preview: " + formData);
+					_log.info("Form data to preview: " + formData + ", auto run: " + autoRun);
 					Message message = new Message();
 
 					message.put("formReport", formReport);
@@ -630,6 +630,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 										
 								JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
 								JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
+								_log.info("DELIVERABLE ARRAY: " + deliverablesArr);
 								
 								for (int i = 0; i < deliverablesArr.length(); i++) {
 
@@ -677,6 +678,9 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 															StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
 
 													_log.info("UPDATED DOSSIERFILE");
+													if (Validator.isNotNull(dossierFile.getDeliverableCode())) {
+														newFormDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());														
+													}
 
 													actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), newFormDataObj.toJSONString(),
 															context);
@@ -689,6 +693,9 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 											} else {
 												if (autoRun) {
 													_log.info("UPDATED DOSSIERFILE");
+													if (Validator.isNotNull(foundFile.getDeliverableCode())) {
+														newFormDataObj.put(deliverableCodeKey, foundFile.getDeliverableCode());														
+													}
 
 													actions.updateDossierFileFormData(groupId, dossierId, foundFile.getReferenceUid(), newFormDataObj.toJSONString(),
 															context);

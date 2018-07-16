@@ -601,7 +601,7 @@ public class DossierActionsImpl implements DossierActions {
 						}
 
 						//TODO: Generate formData
-					      _log.info("IN_CURRENT_STEP:" + processStep.getStepCode() + processStep.getStepName());
+					      _log.info("IN_CURRENT_STEP:" + processStep.getStepCode() + processStep.getStepName() + ", serviceProcessId: " + serviceProcessId);
 
 					      List<ProcessPlugin> plugins = ProcessPluginLocalServiceUtil.getProcessPlugins(serviceProcessId,
 					        processStep.getStepCode());
@@ -1001,75 +1001,83 @@ public class DossierActionsImpl implements DossierActions {
 
 																					counter = (dossierFilesResult != null && !dossierFilesResult.isEmpty())
 																							? dossierFilesResult.size() : 0;
+																					DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
+																					String allowKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
+																					String acceptedKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
 
 																					for (int i = 0; i < deliverablesArr.length(); i++) {
-																						JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
-
-																						Iterator<?> keys = formDataObj.keys();
-
-																						while( keys.hasNext() ) {
-																						    String key = (String)keys.next();
-																						    if (!key.equals(deliverables)) {
-																						    	newFormDataObj.put(key, formDataObj.get(key));
-																						    }
-																						}							
-
 																						JSONObject deliverableObj = deliverablesArr.getJSONObject(i);
 																						
-																						keys = deliverableObj.keys();
-
-																						while( keys.hasNext() ) {
-																						    String key = (String)keys.next();
-																						    newFormDataObj.put(key, deliverableObj.get(key));
-																						}	
+																						if (deliverableObj.has(acceptedKey) || deliverableObj.has(allowKey)) {
+																							String value = (deliverableObj.has(acceptedKey) ? deliverableObj.getString(acceptedKey) : deliverableObj.getString(allowKey));
+																							if ("1".equals(value)) {																						
+																								JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
+		
+																								Iterator<?> keys = formDataObj.keys();
+		
+																								while( keys.hasNext() ) {
+																								    String key = (String)keys.next();
+																								    if (!key.equals(deliverables)) {
+																								    	newFormDataObj.put(key, formDataObj.get(key));
+																								    }
+																								}							
+																								
+																								keys = deliverableObj.keys();
+		
+																								while( keys.hasNext() ) {
+																								    String key = (String)keys.next();
+																								    newFormDataObj.put(key, deliverableObj.get(key));
+																								}	
+																								
+																								DossierFile dossierFile = null;
+																								
+																								try {
+																									dossierFile = DossierFileLocalServiceUtil
+																											.getDossierFileByDID_FTNO_DPT_First(dossierId,
+																													fileTemplateNo, 2, false, new DossierFileComparator(
+																															false, "createDate", Date.class));
+																								} catch (Exception e) {
+																									// TODO: handle exception
+																								}
+																								DossierFileActions actions = new DossierFileActionsImpl();
+																								if (Validator.isNull(dossierFile)) {
+																									dossierFile = actions.addDossierFile(groupId, dossierId,
+																											referenceUid, dossier.getDossierTemplateNo(),
+																											dossierPart.getPartNo(), fileTemplateNo,
+																											dossierPart.getPartName(), StringPool.BLANK, 0L, null,
+																											StringPool.BLANK, String.valueOf(false), serviceContext);
+																									// SimpleDate
+																									_log.info("dossierFile create:" + dossierFile.getDossierPartNo()
+																											+ "Timer create :" + new Date());
+																								}
+		
+																								docFileReferenceUid = dossierFile.getReferenceUid();
+																								DeliverableType dt = DeliverableTypeLocalServiceUtil.getByCode(dossierPart.getGroupId(), dossierPart.getDeliverableType());
+																								
+																								String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dt);
+												
+																								dossierFileId = dossierFile.getDossierFileId();
+																								formDataObj = JSONFactoryUtil.createJSONObject(formData);
+																								formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
+								
+																								_log.info("UPDATE FORM DATA GENERATE RESULT FILE");
+																								actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, newFormDataObj.toJSONString(), serviceContext);																						
+		
+																								createFile = JSONFactoryUtil.createJSONObject();
+																								
+																								createFile.put("eform", eForm);
+																								createFile.put("dossierFileId", dossierFileId);
+																								createFile.put("formData", formData);
+																								createFile.put("formScript", formScript);
+																								createFile.put("referenceUid", docFileReferenceUid);
+																								createFile.put("counter", counter);
+																								createFile.put("returned", returned);
+																								createFile.put("fileEntryId", fileEntryId);
+																								
+																								createFiles.put(createFile);
+																							}
+																						}
 																						
-																						DossierFile dossierFile = null;
-																						
-												try {
-													dossierFile = DossierFileLocalServiceUtil
-															.getDossierFileByDID_FTNO_DPT_First(dossierId,
-																	fileTemplateNo, 2, false, new DossierFileComparator(
-																			false, "createDate", Date.class));
-												} catch (Exception e) {
-													// TODO: handle exception
-												}
-												DossierFileActions actions = new DossierFileActionsImpl();
-												if (Validator.isNull(dossierFile)) {
-													dossierFile = actions.addDossierFile(groupId, dossierId,
-															referenceUid, dossier.getDossierTemplateNo(),
-															dossierPart.getPartNo(), fileTemplateNo,
-															dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-															StringPool.BLANK, String.valueOf(false), serviceContext);
-													// SimpleDate
-													_log.info("dossierFile create:" + dossierFile.getDossierPartNo()
-															+ "Timer create :" + new Date());
-												}
-
-												docFileReferenceUid = dossierFile.getReferenceUid();
-																						DeliverableType dt = DeliverableTypeLocalServiceUtil.getByCode(dossierPart.getGroupId(), dossierPart.getDeliverableType());
-																						DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
-																						
-																						String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dt);
-										
-																						dossierFileId = dossierFile.getDossierFileId();
-																						formDataObj = JSONFactoryUtil.createJSONObject(formData);
-																						formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
-						
-																						_log.info("UPDATE FORM DATA GENERATE RESULT FILE");
-																						actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, newFormDataObj.toJSONString(), serviceContext);																						
-
-																						createFile = JSONFactoryUtil.createJSONObject();
-																						
-																						createFile.put("eform", eForm);
-																						createFile.put("dossierFileId", dossierFileId);
-																						createFile.put("formData", formData);
-																						createFile.put("formScript", formScript);
-																						createFile.put("referenceUid", docFileReferenceUid);
-																						createFile.put("counter", counter);
-																						createFile.put("returned", returned);
-																						createFile.put("fileEntryId", fileEntryId);
-																						
-																						createFiles.put(createFile);
 																					}
 																				}
 																			}							
@@ -1228,56 +1236,64 @@ public class DossierActionsImpl implements DossierActions {
 																						else {
 																							if (formDataObj.has(deliverables)) {
 //																								_log.info("----GENERATE MANY DELIVERABLES----:" + formDataObj.toJSONString());
+																								DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
+																								String allowKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
+																								String acceptedKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
 																								
 																								JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
 
 																								for (int i = 0; i < deliverablesArr.length(); i++) {
-																									JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
-
-																									Iterator<?> keys = formDataObj.keys();
-
-																									while( keys.hasNext() ) {
-																									    String key = (String)keys.next();
-																									    if (!key.equals(deliverables)) {
-																									    	newFormDataObj.put(key, formDataObj.get(key));
-																									    }
-																									}							
-
 																									JSONObject deliverableObj = deliverablesArr.getJSONObject(i);
 																									
-																									keys = deliverableObj.keys();
-
-																									while( keys.hasNext() ) {
-																									    String key = (String)keys.next();
-																									    newFormDataObj.put(key, deliverableObj.get(key));
-																									}						
-																																																																									
-																									deliverableListArr.put(newFormDataObj);
-																																											
-																									dossierFile = actions.addDossierFile(groupId, dossierId,
-																												referenceUid, dossier.getDossierTemplateNo(),
-																												dossierPart.getPartNo(), fileTemplateNo,
-																												dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-																												StringPool.BLANK, String.valueOf(false), serviceContext);
-//																									_log.info("dossierFile create:" + dossierFile.getDossierPartNo()
-//																												+ "Timer create :" + new Date());
-																										
-																									docFileReferenceUid = dossierFile.getReferenceUid();
-																										
-																									dossierFileId = dossierFile.getDossierFileId();
-
-																									DeliverableType dt = DeliverableTypeLocalServiceUtil.getByCode(dossierPart.getGroupId(), dossierPart.getDeliverableType());
-																									DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
+																									if (deliverableObj.has(acceptedKey) || deliverableObj.has(allowKey)) {
+																										String value = (deliverableObj.has(acceptedKey) ? deliverableObj.getString(acceptedKey) : deliverableObj.getString(allowKey));
+																										if ("1".equals(value)) {																						
 																									
-																									String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dt);
-																									newFormDataObj.put(deliverableCodeKey, DeliverableNumberGenerator.generateDeliverableNumber(groupId, companyId, dlt.getDeliverableTypeId()));
-
-																									DossierFileLocalServiceUtil.updateFormData(groupId, dossierId, docFileReferenceUid, newFormDataObj.toJSONString(), serviceContext);
+																											JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
+		
+																											Iterator<?> keys = formDataObj.keys();
+		
+																											while( keys.hasNext() ) {
+																											    String key = (String)keys.next();
+																											    if (!key.equals(deliverables)) {
+																											    	newFormDataObj.put(key, formDataObj.get(key));
+																											    }
+																											}							
+																													
+																											keys = deliverableObj.keys();
+		
+																											while( keys.hasNext() ) {
+																											    String key = (String)keys.next();
+																											    newFormDataObj.put(key, deliverableObj.get(key));
+																											}						
+																																																																											
+																											deliverableListArr.put(newFormDataObj);
+																																													
+																											dossierFile = actions.addDossierFile(groupId, dossierId,
+																														referenceUid, dossier.getDossierTemplateNo(),
+																														dossierPart.getPartNo(), fileTemplateNo,
+																														dossierPart.getPartName(), StringPool.BLANK, 0L, null,
+																														StringPool.BLANK, String.valueOf(false), serviceContext);
+		//																									_log.info("dossierFile create:" + dossierFile.getDossierPartNo()
+		//																												+ "Timer create :" + new Date());
+																												
+																											docFileReferenceUid = dossierFile.getReferenceUid();
+																												
+																											dossierFileId = dossierFile.getDossierFileId();
+		
+																											DeliverableType dt = DeliverableTypeLocalServiceUtil.getByCode(dossierPart.getGroupId(), dossierPart.getDeliverableType());
+																											
+																											String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dt);
+																											newFormDataObj.put(deliverableCodeKey, DeliverableNumberGenerator.generateDeliverableNumber(groupId, companyId, dlt.getDeliverableTypeId()));
+		
+																											DossierFileLocalServiceUtil.updateFormData(groupId, dossierId, docFileReferenceUid, newFormDataObj.toJSONString(), serviceContext);
+																										}
+																									}
 																								}
+																								formData = deliverableListArr.toJSONString();
 																							}
 																						}
 																						
-																						formData = deliverableListArr.toJSONString();
 																						
 //																						_log.info("DELIVERABLES: " + formData);
 																					}
@@ -2213,9 +2229,13 @@ public class DossierActionsImpl implements DossierActions {
 			String allowKey = StringPool.BLANK;
 			String acceptedKey = StringPool.BLANK;
 			String deliverables = StringPool.BLANK;
+			String deliverableCodeKey = StringPool.BLANK;
+			String signNameKey = StringPool.BLANK;
 			
 			if (Validator.isNotNull(dossierPart.getDeliverableType())) {
 				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
+				deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dlt);
+				signNameKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_SIGNNAME, dlt);
 				if (dlt != null) {
 					allowKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
 					acceptedKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ACCEPTED, dlt);
@@ -2273,15 +2293,25 @@ public class DossierActionsImpl implements DossierActions {
 											StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
 
 									_log.info("UPDATED DOSSIERFILE");
+									if (Validator.isNotNull(dossierFile.getDeliverableCode())) {
+										newFormDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());														
+									}
 
 									actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), newFormDataObj.toJSONString(),
 											context);
 
 
 							} else {
+								if (Validator.isNotNull(foundFile.getDeliverableCode())) {
+									newFormDataObj.put(deliverableCodeKey, foundFile.getDeliverableCode());														
+								}
+
 								actions.updateDossierFileFormData(groupId, dossierId, foundFile.getReferenceUid(), newFormDataObj.toJSONString(),
 										context);
 							}
+							
+						}
+						else {
 							
 						}
 					}
@@ -2292,9 +2322,24 @@ public class DossierActionsImpl implements DossierActions {
 					dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(), dossierTemplateNo,
 					dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(), StringPool.BLANK, 0L, null,
 					StringPool.BLANK, String.valueOf(false), context);
+
+					if (Validator.isNotNull(dossierFile.getDeliverableCode())) {
+						formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());														
+					}
+					
+					formData = formDataObj.toJSONString();
+					
+					actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData, context);				
+				
 				}
 				else {
 					actions = new DossierFileActionsImpl();
+
+					if (Validator.isNotNull(dossierFile.getDeliverableCode())) {
+						formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());														
+					}
+					
+					formData = formDataObj.toJSONString();
 					
 					actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData, context);				
 				}

@@ -1472,7 +1472,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
     								var length = fileArr.length;                        		
 	                        		for (var i = 0; i < length; i++) {
 	                        			var fileItem = fileArr[i];
-	                        			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned)) {
+	                        			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned) && (fileItem.dossierFileId != 0)) {
 	                        				needIntervalRefresh = true;
 	                        				break;
 	                        			}
@@ -1480,7 +1480,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
     							}
     							else if (fileArr) {
                         			var fileItem = fileArr;
-                        			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned)) {
+                        			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned) && (fileItem.dossierFileId != 0)) {
                         				needIntervalRefresh = true;
                         			}    								
     							}
@@ -2064,7 +2064,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
             								var length = fileArr.length;                        		
         	                        		for (var i = 0; i < length; i++) {
         	                        			var fileItem = fileArr[i];
-        	                        			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned)) {
+        	                        			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned) && (fileItem.dossierFileId != 0)) {
         	                        				needIntervalRefresh = true;
         	                        				break;
         	                        			}
@@ -2072,7 +2072,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
             							}
             							else if (fileArr) {
                                 			var fileItem = fileArr;
-                                			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned)) {
+                                			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned) && (fileItem.dossierFileId != 0)) {
                                 				needIntervalRefresh = true;
                                 			}    								
             							}     

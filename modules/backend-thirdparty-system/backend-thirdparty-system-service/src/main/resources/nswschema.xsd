@@ -252,6 +252,7 @@
 			</xsd:element>
 			<xsd:element ref="Transporter" minOccurs="0"></xsd:element>
 			<xsd:element ref="AttachedFile" minOccurs="1" maxOccurs="unbounded"></xsd:element>
+			<xsd:element ref="IssuingAuthority"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 	
