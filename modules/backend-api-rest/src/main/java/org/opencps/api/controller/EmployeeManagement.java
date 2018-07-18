@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.StringPool;
 
 @Path("/employees")
 public interface EmployeeManagement {
+	String GROUP_ID = "groupId";
+	String IS_USER_ID = "isuserid";
 
 	@GET
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
@@ -48,6 +50,14 @@ public interface EmployeeManagement {
 	public Response read(@Context HttpServletRequest request, @Context HttpHeaders header, @Context Company company,
 			@Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@DefaultValue("0") @PathParam("id") long id);
+
+	@GET
+	@Path("/{id}/mainjobpos")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response getMainJobPos(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @DefaultValue("0") @PathParam("id") long id);
 
 	@POST
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
@@ -141,15 +151,15 @@ public interface EmployeeManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @PathParam("id") long id,
 			@DefaultValue("false") @FormParam("locked") boolean locked);
-	
+
 	@GET
 	@Path("/exits/{{employeeNo}}/{{email}}")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response validateExits(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, 
-			@DefaultValue(StringPool.BLANK) @PathParam("employeeNo") String employeeNo, 
+			@Context ServiceContext serviceContext,
+			@DefaultValue(StringPool.BLANK) @PathParam("employeeNo") String employeeNo,
 			@DefaultValue(StringPool.BLANK) @PathParam("email") String email);
 
 	// Get employee follow inspectors
@@ -160,4 +170,27 @@ public interface EmployeeManagement {
 	public Response getEmployeesByRole(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @PathParam("roleId") long roleId, @BeanParam DataSearchModel query);
+
+	@GET
+	@Path("{id}/workingunit")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response getEmployeesInWorkingUnit(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @PathParam("id") long workingUnitId);
+
+	@GET
+	@Path("{workingunitid}/workingunit/{jobposid}/jobpos")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response getEmployeesInWorkingUnitAndHaveJobPos(@Context HttpServletRequest request,
+			@Context HttpHeaders header, @Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @PathParam("workingunitid") long workingUnitId,
+			@PathParam("jobposid") long jobposid);
+
+	@GET
+	@Path("{jobposid}/byjobpos")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response getEmployeesHaveJobPos(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @PathParam("jobposid") long jobposid);
+
 }

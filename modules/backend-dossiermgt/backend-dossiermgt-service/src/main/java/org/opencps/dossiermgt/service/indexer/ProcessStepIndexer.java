@@ -68,7 +68,10 @@ public class ProcessStepIndexer extends BaseIndexer<ProcessStep> {
 		// add text fields
 		document.addTextSortable(ProcessStepTerm.STEP_CODE, object.getStepCode());
 		document.addTextSortable(ProcessStepTerm.STEP_NAME, object.getStepName());
-		document.addTextSortable(ProcessStepTerm.SEQUENCE_NO, object.getSequenceNo());
+		
+		
+		//document.addNumberSortable(ProcessStepTerm.SEQUENCE_NO, GetterUtil.getInteger(object.getSequenceNo()));
+		document.addTextSortable(ProcessStepTerm.SEQUENCE_NO, String.format("%03d", GetterUtil.getInteger(object.getSequenceNo())));
 		document.addTextSortable(ProcessStepTerm.DOSSIER_STATUS, object.getDossierStatus());
 
 		document.addTextSortable(ProcessStepTerm.DOSSIER_STATUS_TEXT,

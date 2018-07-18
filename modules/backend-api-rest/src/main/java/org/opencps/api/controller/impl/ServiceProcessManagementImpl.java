@@ -529,7 +529,7 @@ public class ServiceProcessManagementImpl implements ServiceProcessManagement {
 			params.put(Field.KEYWORD_SEARCH, query.getKeyword());
 			params.put(ProcessStepTerm.SERVICE_PROCESS_ID, id);
 
-			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
+			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.INT_TYPE,
 					GetterUtil.getBoolean(query.getOrder())) };
 
 			ProcessStepResultsModel results = new ProcessStepResultsModel();

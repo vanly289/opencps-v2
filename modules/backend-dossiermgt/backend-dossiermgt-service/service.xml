@@ -796,7 +796,10 @@
 		<column name="editable" type="boolean" />
 		<column name="restrictDossier" type="String" />
 		<column name="lockState" type="String" />
-
+		
+		<order by="asc">
+			<order-column name="sequenceNo" order-by="asc"/>
+		</order>
 		<finder return-type="Collection" name="S_P_ID">
 			<finder-column name="serviceProcessId" />
 		</finder>
