@@ -33,7 +33,6 @@ import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;

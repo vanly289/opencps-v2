@@ -13,6 +13,9 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 public interface DossierActions {
+	
+	public static final long SERVER_GROUP_ID = 55217;
+	public static final long CLIENT_GROUP_ID = 55301;	
 
 	public JSONObject getDossiers(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
 			Sort[] sorts, int start, int end, ServiceContext serviceContext);
