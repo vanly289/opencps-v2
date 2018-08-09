@@ -705,6 +705,9 @@ public class DossierActionsImpl implements DossierActions {
 				try {
 					lstProcessAction = ProcessActionLocalServiceUtil.getProcessActionByG_SPID_PRESC(groupId,
 							serviceProcessId, stepCode);
+					
+					_log.info("2.LOG::GO_TO_LIST_PROCESS_ACTION" + sdf.format(new Date()));
+
 					for (ProcessAction processAction : lstProcessAction) {
 
 						String[] preConditions = StringUtil.split(processAction.getPreCondition());
@@ -739,6 +742,7 @@ public class DossierActionsImpl implements DossierActions {
 							// TODO ?
 						} else {
 							// Check roles
+							_log.info("3.LOG::GO_TO_CHECK_ROLE" + sdf.format(new Date()));
 
 							if (lstProcessStepRole == null || lstProcessStepRole.isEmpty()) {
 								// Search in ServiceProcessRole
