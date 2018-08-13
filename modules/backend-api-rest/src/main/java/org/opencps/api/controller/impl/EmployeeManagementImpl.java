@@ -511,8 +511,7 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 	@Override
 	public Response getEmployeeJobpos(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, long id, DataSearchModel query) {
-		
-		
+
 		EmployeeInterface actions = new EmployeeActions();
 		EmployeeJobposResults result = new EmployeeJobposResults();
 		try {
@@ -555,7 +554,7 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 
 			return Response.status(404).entity(error).build();
 		}
-		
+
 	}
 
 	@Override
@@ -935,6 +934,7 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 			User user, ServiceContext serviceContext, long roleId, DataSearchModel query) {
 		EmployeeInterface actions = new EmployeeActions();
 		EmployeeResults result = new EmployeeResults();
+
 		try {
 
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
@@ -1114,9 +1114,8 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 	public Response getEmployeesHaveJobPos(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, long jobposid) {
 		List<Employee> employees = getEmployee(0, jobposid);
-		
-		_log.info("::::JOBPOS ID::" + jobposid);
 
+		_log.info("::::JOBPOS ID::" + jobposid);
 
 		EmployeeResults result = new EmployeeResults();
 
@@ -1174,11 +1173,11 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 		} catch (Exception e) {
 			_log.info(e);
 		}
-		
+
 		Set<Employee> hs = new HashSet<>();
-		
+
 		hs.addAll(employees);
-		
+
 		employees.clear();
 		employees.addAll(hs);
 

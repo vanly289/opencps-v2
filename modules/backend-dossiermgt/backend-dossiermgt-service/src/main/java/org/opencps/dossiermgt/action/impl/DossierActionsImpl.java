@@ -697,6 +697,7 @@ public class DossierActionsImpl implements DossierActions {
 			serviceProcessId = dossierAction != null ? dossierAction.getServiceProcessId() : 0;
 
 			stepCode = dossierAction != null ? dossierAction.getStepCode() : StringPool.BLANK;
+			_log.info("stepCode: "+stepCode);
 
 			boolean pending = dossierAction != null ? dossierAction.getPending() : false;
 
@@ -915,8 +916,10 @@ public class DossierActionsImpl implements DossierActions {
 						// TODO: Generate formData
 						_log.info("IN_CURRENT_STEP:" + processStep.getStepCode() + processStep.getStepName());
 
+//						List<ProcessPlugin> plugins = ProcessPluginLocalServiceUtil.getProcessPlugins(serviceProcessId,
+//								processStep.getStepCode());
 						List<ProcessPlugin> plugins = ProcessPluginLocalServiceUtil.getProcessPlugins(serviceProcessId,
-								processStep.getStepCode());
+								stepCode);
 
 						_log.info("WE_HAVE_PLUGINS:" + plugins.size());
 
@@ -933,11 +936,15 @@ public class DossierActionsImpl implements DossierActions {
 						for (ProcessPlugin plg : autoPlugins) {
 							// do create file
 							String fileTemplateNo = plg.getSampleData();
+							String pluginForm = plg.getPluginForm();
 
 							fileTemplateNo = StringUtil.replaceFirst(fileTemplateNo, "#", StringPool.BLANK);
 
-							_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(),
-									serviceContext);
+							
+							if (Validator.isNotNull(pluginForm) && !pluginForm.contains("original")) {
+								_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(),
+										serviceContext);
+							}
 						}
 
 						result.put("pending", pending);
@@ -1355,8 +1362,8 @@ public class DossierActionsImpl implements DossierActions {
 			// LamTV: Update lockState when Sync
 			dossier = DossierLocalServiceUtil.updateStatus(groupId, dossierId, referenceUid, curStep.getDossierStatus(),
 
-					jsStatus.getString(curStep.getDossierStatus()), curStep.getDossierSubStatus(),
-					jsSubStatus.getString(curStep.getDossierSubStatus()), curStep.getLockState(), context);
+			jsStatus.getString(curStep.getDossierStatus()), curStep.getDossierSubStatus(),
+			jsSubStatus.getString(curStep.getDossierSubStatus()), curStep.getLockState(), context);
 
 			_log.info(jsStatus.toJSONString());
 			_log.info(jsSubStatus.toJSONString());

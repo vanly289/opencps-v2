@@ -60,8 +60,10 @@ import com.liferay.portal.kernel.util.Validator;
 public class SignatureManagementImpl implements SignatureManagement{
 
 	Log _log = LogFactoryUtil.getLog(SignatureManagementImpl.class.getName());
-	private static final String TYPE_KYSO = "1135, 1158, 1160";
-	private static final String TYPE_DONGDAU = "1137, 1162";
+//	private static final String TYPE_KYSO = "1135, 1158, 1160";
+//	private static final String TYPE_DONGDAU = "1137, 1162";
+	private static final String TYPE_KYSO = "1135, 1158, 1160, 1129, 1130, 1153";
+	private static final String TYPE_DONGDAU = "1137, 1160, 1162";
 
 	@Override
 	public Response updateDossierFileBySignature(HttpServletRequest request, HttpHeaders header, Company company,
