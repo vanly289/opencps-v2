@@ -93,6 +93,7 @@ public class SyncQueueProcessScheduler extends BaseSchedulerEntryMessageListener
 								&& (configObj.has(SyncServerTerm.PUSH) && configObj.getBoolean(SyncServerTerm.PUSH))) {
 							List<SyncQueue> lstSyncs = _syncQueueLocalService.findByF_groupId_serverNo(sc.getGroupId(),
 									sc.getServerNo(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+							
 							synchronizeQueue(lstSyncs, sc, configObj);
 						}
 					} catch (Exception e) {

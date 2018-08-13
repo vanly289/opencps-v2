@@ -33,6 +33,72 @@ import backend.utils.APIDateTimeUtils;
 
 public class EmployeeUtils {
 
+	public static List<EmployeeModel> convertEmployeeToEntity(List<Employee> listEmployee, long workingUnitId, long jobPosId) {
+
+		List<EmployeeModel> results = new ArrayList<>();
+
+		try {
+
+			EmployeeModel ett = null;
+
+			for (Employee employee : listEmployee) {
+				ett = new EmployeeModel();
+
+				ett.setEmployeeId(employee.getPrimaryKey());
+				ett.setUserId(employee.getUserId());
+				ett.setUserName(employee.getUserName());
+
+				ett.setEmployeeNo(employee.getEmployeeNo());
+				ett.setFullName(employee.getFullName());
+				ett.setTitle(employee.getTitle());
+				ett.setGender(GetterUtil.getString(employee.getGender()));
+				ett.setTelNo(employee.getTelNo());
+				ett.setMobile(employee.getMobile());
+				ett.setEmail(employee.getEmail());
+				ett.setWorkingStatus(Integer.toString(employee.getWorkingStatus()));
+
+				// mapping userID
+				long mappingUserId = employee.getMappingUserId();
+
+				User user = UserLocalServiceUtil.fetchUser(mappingUserId);
+
+				MappingUser mappingUser = new MappingUser();
+
+				if (Validator.isNotNull(user)) {
+					mappingUser.setUserId(user.getUserId());
+					mappingUser.setScreenName(user.getScreenName());
+
+					boolean lock = false;
+
+					if (user.getStatus() == WorkflowConstants.STATUS_DENIED) {
+						lock = true;
+					}
+
+					mappingUser.setLocking(lock);
+				}
+
+				ett.getMappingUser().add(mappingUser);
+				
+
+				if (workingUnitId != 0) {
+					ett.setWorkingUnitName(WorkingUnitLocalServiceUtil.fetchWorkingUnit(workingUnitId).getName());
+				}
+				
+				if (jobPosId != 0) {
+					ett.setJobPosTitle(JobPosLocalServiceUtil.fetchJobPos(jobPosId).getTitle());
+
+				}
+				
+				results.add(ett);
+			}
+
+		} catch (Exception e) {
+			_log.error(e);
+		}
+
+		return results;
+	}
+
 	public static List<EmployeeModel> mapperEmployeeList(List<Document> listDocument) {
 
 		List<EmployeeModel> results = new ArrayList<>();
@@ -63,9 +129,9 @@ public class EmployeeUtils {
 				ett.setMobile(document.get(EmployeeTerm.MOBILE));
 				ett.setEmail(document.get(EmployeeTerm.EMAIL));
 				ett.setWorkingStatus(document.get(EmployeeTerm.WORKING_STATUS));
-				ett.setBirthdate(
-						Validator.isNotNull(document.get(EmployeeTerm.BIRTH_DATE)) ? APIDateTimeUtils.convertDateToString(
-								document.getDate(EmployeeTerm.BIRTH_DATE), APIDateTimeUtils._TIMESTAMP) : StringPool.BLANK);
+				ett.setBirthdate(Validator.isNotNull(document.get(EmployeeTerm.BIRTH_DATE)) ? APIDateTimeUtils
+						.convertDateToString(document.getDate(EmployeeTerm.BIRTH_DATE), APIDateTimeUtils._TIMESTAMP)
+						: StringPool.BLANK);
 				// TODO
 				ett.setPermission("read");
 
@@ -79,13 +145,13 @@ public class EmployeeUtils {
 				if (Validator.isNotNull(user)) {
 					mappingUser.setUserId(user.getUserId());
 					mappingUser.setScreenName(user.getScreenName());
-					
+
 					boolean lock = false;
-					
-					if(user.getStatus() == WorkflowConstants.STATUS_DENIED){
+
+					if (user.getStatus() == WorkflowConstants.STATUS_DENIED) {
 						lock = true;
 					}
-					
+
 					mappingUser.setLocking(lock);
 				}
 
@@ -110,7 +176,7 @@ public class EmployeeUtils {
 
 		try {
 			Employee employee = EmployeeLocalServiceUtil.fetchEmployee(employeeId);
-			
+
 			EmployeeJobposModel ett = null;
 
 			for (Document document : listDocument) {
@@ -122,15 +188,16 @@ public class EmployeeUtils {
 				ett.setJobPosId(Long.valueOf(document.get(EmployeeJobPosTerm.JOBPOST_ID)));
 				ett.setJobPosTitle(document.get(EmployeeJobPosTerm.JOBPOST_TITLE));
 				ett.setLeader(GetterUtil.get(document.get(EmployeeJobPosTerm.LEADER), 0));
-				
+
 				boolean isMain = false;
-				
-				if(Long.valueOf(document.get(EmployeeJobPosTerm.JOBPOST_ID)) == employee.getMainJobPostId() && employee.getMainJobPostId() > 0){
-					
+
+				if (Long.valueOf(document.get(EmployeeJobPosTerm.JOBPOST_ID)) == employee.getMainJobPostId()
+						&& employee.getMainJobPostId() > 0) {
+
 					isMain = true;
-					
+
 				}
-				
+
 				ett.setMainJobPos(isMain);
 
 				results.add(ett);
@@ -217,57 +284,56 @@ public class EmployeeUtils {
 					: StringPool.BLANK);
 			// TODO
 			ett.setPermission("read");
-			
+
 			EmployeeJobPos employeeJobPos = EmployeeJobPosLocalServiceUtil.fetchByF_EmployeeId_jobPostId(
 					employee.getGroupId(), employee.getEmployeeId(), employee.getMainJobPostId());
-			
-			long workingUnitId = Validator.isNotNull(employeeJobPos)?employeeJobPos.getWorkingUnitId():0;
-			
+
+			long workingUnitId = Validator.isNotNull(employeeJobPos) ? employeeJobPos.getWorkingUnitId() : 0;
+
 			String workingUnitName = StringPool.BLANK;
-			
-			if(workingUnitId > 0){
-				
+
+			if (workingUnitId > 0) {
+
 				WorkingUnit workingUnit = WorkingUnitLocalServiceUtil.fetchWorkingUnit(workingUnitId);
-				
-				workingUnitName = Validator.isNotNull(workingUnit)?workingUnit.getName():StringPool.BLANK;
-				
+
+				workingUnitName = Validator.isNotNull(workingUnit) ? workingUnit.getName() : StringPool.BLANK;
+
 			}
-			
+
 			JobPos jobPos = JobPosLocalServiceUtil.fetchJobPos(employee.getMainJobPostId());
-			
-			String jobPosTitle = Validator.isNotNull(jobPos)?jobPos.getTitle():StringPool.BLANK;
-			
+
+			String jobPosTitle = Validator.isNotNull(jobPos) ? jobPos.getTitle() : StringPool.BLANK;
+
 			ett.setWorkingUnitName(workingUnitName);
 			ett.setJobPosTitle(jobPosTitle);
-			
+
 			User user = UserLocalServiceUtil.fetchUser(employee.getMappingUserId());
-			
+
 			MappingUser mappingUser = new MappingUser();
-			
-			if(Validator.isNotNull(user)){
+
+			if (Validator.isNotNull(user)) {
 				mappingUser.setUserId(user.getUserId());
 				mappingUser.setScreenName(user.getScreenName());
-				
+
 				boolean lock = false;
-				
-				if(user.getStatus() == WorkflowConstants.STATUS_DENIED){
+
+				if (user.getStatus() == WorkflowConstants.STATUS_DENIED) {
 					lock = true;
 				}
-				
+
 				mappingUser.setLocking(lock);
-				
+
 			}
-			
+
 			ett.getMappingUser().add(mappingUser);
-			
-			
+
 		} catch (Exception e) {
 			_log.error(e);
 		}
 
 		return ett;
 	}
-	
+
 	public static EmployeeAccountModel mapperEmployeeAccountModel(JSONObject jsonObject) {
 
 		EmployeeAccountModel ett = new EmployeeAccountModel();
@@ -275,7 +341,7 @@ public class EmployeeUtils {
 		try {
 
 			if (Validator.isNotNull(jsonObject)) {
-				
+
 				ett.setScreenName(jsonObject.getString("screenName"));
 				ett.setEmail(jsonObject.getString("email"));
 				ett.setExist(jsonObject.getBoolean("exist"));

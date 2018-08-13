@@ -269,7 +269,15 @@
 		</finder>
 		
 		<finder return-type="Collection" name="F_workingUnitId">
-			<finder-column name="workingUnitId"></finder-column>
+			<finder-column name="workingUnitId"/>
+		</finder>
+		
+		<finder return-type="Collection" name="JP_ID">			<finder-column name="jobPostId"/>
+		</finder>
+				
+		<finder return-type="Collection" name="JP_WU_ID">
+			<finder-column name="jobPostId"/>
+			<finder-column name="workingUnitId"/>
 		</finder>
 		
 		<finder return-type="EmployeeJobPos" name="F_EmployeeId_jobPostId">

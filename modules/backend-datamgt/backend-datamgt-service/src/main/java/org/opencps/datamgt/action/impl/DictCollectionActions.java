@@ -520,6 +520,7 @@ public class DictCollectionActions implements DictcollectionInterface {
 		}
 		return flag;
 	}
+	
 
 	public DictItemGroup addDictgroupsDictItems(
 		long userId, long groupId, String code, String groupCode,

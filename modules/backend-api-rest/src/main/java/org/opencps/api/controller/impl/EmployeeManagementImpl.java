@@ -3,10 +3,13 @@ package org.opencps.api.controller.impl;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.activation.DataHandler;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import org.apache.commons.httpclient.util.HttpURLConnection;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.opencps.api.controller.EmployeeManagement;
 import org.opencps.api.controller.util.EmployeeUtils;
@@ -35,7 +39,12 @@ import org.opencps.usermgt.exception.DuplicateEmployeeEmailException;
 import org.opencps.usermgt.exception.DuplicateEmployeeNoException;
 import org.opencps.usermgt.model.Employee;
 import org.opencps.usermgt.model.EmployeeJobPos;
+import org.opencps.usermgt.model.JobPos;
+import org.opencps.usermgt.model.WorkingUnit;
+import org.opencps.usermgt.service.EmployeeJobPosLocalServiceUtil;
 import org.opencps.usermgt.service.EmployeeLocalServiceUtil;
+import org.opencps.usermgt.service.JobPosLocalServiceUtil;
+import org.opencps.usermgt.service.WorkingUnitLocalServiceUtil;
 import org.opencps.usermgt.utils.DateTimeUtils;
 
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
@@ -89,17 +98,17 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 			params.put(EmployeeTerm.JOB_POS_ID, query.getJobpos());
 			params.put(EmployeeTerm.WORKING_STATUS, query.getStatus());
 
-			if(Validator.isNotNull(query.getActive())){
+			if (Validator.isNotNull(query.getActive())) {
 				params.put(EmployeeTerm.ACTIVE,
 						query.getActive().equals(Boolean.TRUE.toString())
 								? String.valueOf(WorkflowConstants.STATUS_APPROVED)
 								: String.valueOf(WorkflowConstants.STATUS_DENIED));
 			}
-			
+
 			params.put(EmployeeTerm.MONTH, query.getMonth());
 
-			_log.info("EmployeeManagementImpl.getEmployees()"+params);
-			
+			_log.info("EmployeeManagementImpl.getEmployees()" + params);
+
 			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
 					Boolean.getBoolean(query.getOrder())) };
 
@@ -399,8 +408,8 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 			File file = actions.getEmployeePhoto(id, serviceContext);
 
 			FileEntry fileEntry = actions.getFileEntry(id, serviceContext);
-			
-			if(file != null && fileEntry != null){
+
+			if (file != null && fileEntry != null) {
 				String fileName = fileEntry.getFileName();
 
 				ResponseBuilder responseBuilder = Response.ok((Object) file);
@@ -409,7 +418,7 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 						.header("Content-Type", fileEntry.getMimeType());
 
 				return responseBuilder.build();
-			}else{
+			} else {
 				ErrorMsg error = new ErrorMsg();
 				error.setMessage("file not found!");
 				error.setCode(404);
@@ -502,6 +511,8 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 	@Override
 	public Response getEmployeeJobpos(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, long id, DataSearchModel query) {
+		
+		
 		EmployeeInterface actions = new EmployeeActions();
 		EmployeeJobposResults result = new EmployeeJobposResults();
 		try {
@@ -544,6 +555,7 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 
 			return Response.status(404).entity(error).build();
 		}
+		
 	}
 
 	@Override
@@ -926,7 +938,7 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 			try {
 
 				long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
-				
+
 				List<User> users = UserLocalServiceUtil.getRoleUsers(roleId);
 				StringBuilder strUserIdList = new StringBuilder();
 				if (users != null && users.size() > 0) {
@@ -981,4 +993,225 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 			return Response.status(404).entity(error).build();
 		}
 	}
+
+	@Override
+	public Response getMainJobPos(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, long id) {
+
+		long groupId = GetterUtil.getLong(header.getHeaderString(GROUP_ID));
+
+		boolean isUserId = GetterUtil.getBoolean(header.getHeaderString(IS_USER_ID));
+
+		_log.info("GROUP_ID:::" + groupId);
+		_log.info("ISUSERID:::" + isUserId);
+
+		Employee employee = null;
+
+		if (isUserId) {
+			employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(groupId, id);
+		} else {
+			employee = EmployeeLocalServiceUtil.fetchEmployee(id);
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (Validator.isNotNull(employee)) {
+			long mainJobPosId = employee.getMainJobPostId();
+
+			long employeeId = employee.getEmployeeId();
+
+			_log.info("MAINJOBPOSID:::" + mainJobPosId);
+			_log.info("EMPLOYEEID:::" + employeeId);
+
+			try {
+
+				EmployeeJobPos employeeJobPos = EmployeeJobPosLocalServiceUtil.getEmployeeJobPos(mainJobPosId);
+
+				JobPos jobPos = JobPosLocalServiceUtil.getJobPos(employeeJobPos.getJobPostId());
+
+				WorkingUnit workingUnit = WorkingUnitLocalServiceUtil.getWorkingUnit(employeeJobPos.getWorkingUnitId());
+
+				jsonObject.put("employeeId", employeeId);
+				jsonObject.put("emplyeeName", employee.getFullName());
+				jsonObject.put("mainJobPosId", employeeJobPos.getJobPostId());
+				jsonObject.put("mainJobPosName", jobPos.getTitle());
+				jsonObject.put("workingUnitId", workingUnit.getWorkingUnitId());
+				jsonObject.put("workingUnitName", workingUnit.getName());
+				jsonObject.put("userId", employee.getMappingUserId());
+				jsonObject.put("email", employee.getEmail());
+
+				return Response.status(200).entity(jsonObject.toJSONString()).build();
+
+			} catch (Exception e) {
+
+				_log.info(e);
+
+				return processException(e);
+			}
+
+		} else {
+			ErrorMsg error = new ErrorMsg();
+
+			error.setMessage("not found emplyee!");
+			error.setCode(404);
+			error.setDescription("not found emplyee!");
+
+			return Response.status(404).entity(error).build();
+		}
+
+	}
+
+	@Override
+	public Response getEmployeesInWorkingUnit(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long workingUnitId) {
+
+		List<Employee> employees = getEmployee(workingUnitId, 0);
+
+		EmployeeResults result = new EmployeeResults();
+
+		if (employees.size() != 0) {
+			result.setTotal(employees.size());
+			result.getEmployeeModel().addAll(EmployeeUtils.convertEmployeeToEntity(employees, workingUnitId, 0));
+
+			return Response.status(200).entity(result).build();
+		} else {
+			ErrorMsg error = new ErrorMsg();
+
+			error.setMessage("not found emplyee!");
+			error.setCode(404);
+			error.setDescription("not found emplyee!");
+
+			return Response.status(404).entity(error).build();
+		}
+
+	}
+
+	@Override
+	public Response getEmployeesInWorkingUnitAndHaveJobPos(HttpServletRequest request, HttpHeaders header,
+			Company company, Locale locale, User user, ServiceContext serviceContext, long workingUnitId,
+			long jobposid) {
+		List<Employee> employees = getEmployee(workingUnitId, jobposid);
+
+		EmployeeResults result = new EmployeeResults();
+
+		if (employees.size() != 0) {
+			result.setTotal(employees.size());
+			result.getEmployeeModel().addAll(EmployeeUtils.convertEmployeeToEntity(employees, workingUnitId, jobposid));
+
+			return Response.status(200).entity(result).build();
+		} else {
+			ErrorMsg error = new ErrorMsg();
+
+			error.setMessage("not found emplyee!");
+			error.setCode(404);
+			error.setDescription("not found emplyee!");
+
+			return Response.status(404).entity(error).build();
+		}
+	}
+
+	@Override
+	public Response getEmployeesHaveJobPos(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long jobposid) {
+		List<Employee> employees = getEmployee(0, jobposid);
+		
+		_log.info("::::JOBPOS ID::" + jobposid);
+
+
+		EmployeeResults result = new EmployeeResults();
+
+		if (employees.size() != 0) {
+			result.setTotal(employees.size());
+			result.getEmployeeModel().addAll(EmployeeUtils.convertEmployeeToEntity(employees, 0, jobposid));
+
+			return Response.status(200).entity(result).build();
+		} else {
+			ErrorMsg error = new ErrorMsg();
+
+			error.setMessage("not found emplyee!");
+			error.setCode(404);
+			error.setDescription("not found emplyee!");
+
+			return Response.status(404).entity(error).build();
+		}
+	}
+
+	private List<Employee> getEmployee(long workingUnitId, long jobposId) {
+
+		List<Employee> employees = new ArrayList<>();
+
+		List<EmployeeJobPos> employeeJobPos = new ArrayList<>();
+
+		try {
+			// case find employees in working unit and have jobpos
+			if (workingUnitId != 0 && jobposId != 0) {
+				_log.info("::::CASE FIND EMPLOYEES IN WORKING UNIT AND HAVE JOBPOS");
+				employeeJobPos = EmployeeJobPosLocalServiceUtil.finByWorkingUnitAndJobPosId(workingUnitId, jobposId);
+			}
+
+			// case find employees in working unit
+			if (workingUnitId != 0 && jobposId == 0) {
+				_log.info("::::CASE FIND EMPLOYEES IN WORKING UNIT");
+				employeeJobPos = EmployeeJobPosLocalServiceUtil.findByWorkingUnitId(workingUnitId);
+
+			}
+
+			// case find employees have jobpos
+			if (workingUnitId == 0 && jobposId != 0) {
+				_log.info("::::CASE FIND EMPLOYEES HAVE JOBPOS");
+				employeeJobPos = EmployeeJobPosLocalServiceUtil.findByJobposId(jobposId);
+			}
+
+			for (EmployeeJobPos jobPos : employeeJobPos) {
+
+				Employee employee = EmployeeLocalServiceUtil.fetchEmployee(jobPos.getEmployeeId());
+
+				if (Validator.isNotNull(employee)) {
+					employees.add(employee);
+				}
+			}
+
+		} catch (Exception e) {
+			_log.info(e);
+		}
+		
+		Set<Employee> hs = new HashSet<>();
+		
+		hs.addAll(employees);
+		
+		employees.clear();
+		employees.addAll(hs);
+
+		return employees;
+	}
+
+	private Response processException(Exception e) {
+		ErrorMsg error = new ErrorMsg();
+
+		if (e instanceof UnauthenticationException) {
+			error.setMessage("Non-Authoritative Information.");
+			error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+			error.setDescription("Non-Authoritative Information.");
+
+			return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+		} else {
+			if (e instanceof UnauthorizationException) {
+				error.setMessage("Unauthorized.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Unauthorized.");
+
+				return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+			} else {
+
+				error.setMessage("No Content.");
+				error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
+				error.setDescription(e.getMessage());
+
+				return Response.status(HttpURLConnection.HTTP_FORBIDDEN).entity(error).build();
+
+			}
+		}
+	}
+
 }
