@@ -151,8 +151,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 				sortable: true,
 				value: 'thaoTac'
 			}
-
-
 			],
 			giayPhepLienVanTableItems: [],
 			pageGiayPhepLienVanTableLength: 0,
@@ -576,10 +574,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							setTimeout(function(){
 								vm.getInLand(item)
 							}, 500)
-							
 						},
 						toDetailThongTinXe: function(item){
 							var vm = this;
+							vm.hinhThucSelect = '';
+							vm.thongTinXeDate = '';
+							vm.cuaKhauSelect = '';
+							vm.registrationDate = '';
+							vm.thong_tin_lai_xe = '';
+							vm.giay_phep_lai_xe = '';
 							vm.popUpThongTinXe  = !vm.popUpThongTinXe;
 							var urlThongTinXe = '/o/rest/vr-app/certDoc/borderGuard/'+item.registrationNumber;
 							axios.get(urlThongTinXe, config).then(function (response) {
@@ -621,10 +624,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 							vm.traCuuFilter = false;
 							vm.viewmore = true;
-
+							var serviceCodeTemp = '';
+							if(!vm.serviceInfoSelect) {
+								serviceCodeTemp = configPage.serviceinfosQuocTe
+							}
 							var paramsBuilder = {
 								keywords: vm.keywordTraCuuGiayPhep,
-								serviceCode: vm.serviceInfoSelect,
+								serviceCode: serviceCodeTemp,
 								govAgencyCode: vm.govAgencySelect,
 								routeCode: vm.tuyenSelect,
 								fromDate: vm.searchTuNgay,
@@ -696,9 +702,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 							vm.traCuuFilter = false;
 							vm.viewmore = true;
+							var serviceCodeTemp = '';
+							if(!vm.serviceInfoSelect) {
+								serviceCodeTemp = configPage.serviceinfosLienVan
+							}
 							var paramsBuilder = {
 								keywords: vm.keywordTraCuuGiayPhep,
-								serviceCode: vm.serviceInfoSelect,
+								serviceCode: serviceCodeTemp,
 								govAgencyCode: vm.govAgencySelect,
 								routeCode: vm.tuyenSelect,
 								fromDate: vm.searchTuNgay,
@@ -780,9 +790,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 							vm.traCuuFilter = false;
 							vm.viewmore = true;
+							var serviceCodeTemp = '';
+							if(!vm.serviceInfoSelect) {
+								serviceCodeTemp = configPage.serviceinfosChapThuan
+							}
 							var paramsBuilder = {
 								keywords: vm.keywordTraCuuGiayPhep,
-								serviceCode: vm.serviceInfoSelect,
+								serviceCode: serviceCodeTemp,
 								govAgencyCode: vm.govAgencySelect,
 								routeCode: vm.tuyenSelect,
 								fromDate: vm.searchTuNgay,
