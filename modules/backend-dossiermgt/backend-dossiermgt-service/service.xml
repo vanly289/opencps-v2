@@ -249,6 +249,10 @@
 			<finder-column name="serviceInfoId" />
 			<finder-column name="govAgencyCode" />
 		</finder>
+		
+		<finder return-type="Collection" name="G_">
+			<finder-column name="groupId"/>
+		</finder>
 
 	</entity>
 
@@ -922,6 +926,12 @@
 		<finder return-type="Collection" name="DID_IN">
 			<finder-column name="dossierId" />
 			<finder-column name="isNew" />
+		</finder>
+		<finder return-type="Collection" name="DID_RT">
+			<finder-column name="companyId"/>
+			<finder-column name="groupId"/>
+			<finder-column name="dossierId" />
+			<finder-column name="requestType" />
 		</finder>
 	</entity>
 	

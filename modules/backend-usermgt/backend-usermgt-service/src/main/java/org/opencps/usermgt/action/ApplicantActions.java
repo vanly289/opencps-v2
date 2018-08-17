@@ -53,4 +53,6 @@ public interface ApplicantActions {
 	public Applicant getApplicantByApplicantIdNo(ServiceContext serviceContext, String applicationIdNo) throws PortalException;
 
 	public Applicant getApplicantByNameAndAddress(ServiceContext serviceContext, String name, String address) throws PortalException;
+
+	public Applicant getApplicantByContactEmail(ServiceContext serviceContext, String contactEmail) throws PortalException;
 }

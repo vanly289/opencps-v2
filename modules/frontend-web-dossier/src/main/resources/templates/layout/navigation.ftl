@@ -14,7 +14,7 @@
                                 <div class="flex xs12 tracuu-dossier-navigation" jx-bind="listgroupTraCuuFilter"></div>
                         </v-expansion-panel-content>
                         <v-expansion-panel-content :key="3">
-                                <div slot="header">BÁO CÁO THỐNG KÊ</div>
+                                <!--<div slot="header">BÁO CÁO THỐNG KÊ</div>-->
                                 <div class="flex xs12 tracuu-dossier-navigation" jx-bind="listgroupBaoCaoFilter"></div>
                         </v-expansion-panel-content>
                 </v-expansion-panel>

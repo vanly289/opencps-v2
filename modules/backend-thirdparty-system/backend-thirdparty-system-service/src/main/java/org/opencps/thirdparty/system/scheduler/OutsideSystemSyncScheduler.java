@@ -10,6 +10,7 @@ import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
+import org.opencps.dossiermgt.model.DossierRequestUD;
 import org.opencps.dossiermgt.model.ProcessAction;
 import org.opencps.dossiermgt.model.ProcessOption;
 import org.opencps.dossiermgt.model.ServiceConfig;
@@ -22,6 +23,8 @@ import org.opencps.dossiermgt.service.DossierFileLocalService;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalService;
 import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierRequestLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierSyncLocalService;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
@@ -533,6 +536,28 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						phanhoi.setDonViXuLy(dossier.getGovAgencyName());
 						phanhoi.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
 
+						if (dossier.getServiceCode().equals("BGTVT0600036")
+								|| dossier.getServiceCode().equals("BGTVT0600037")
+								|| dossier.getServiceCode().equals("BGTVT0600038")
+								|| dossier.getServiceCode().equals("BGTVT0600039")
+								|| dossier.getServiceCode().equals("BGTVT0600040")
+								|| dossier.getServiceCode().equals("BGTVT0600041")
+								|| dossier.getServiceCode().equals("BGTVT0600042")
+								|| dossier.getServiceCode().equals("BGTVT0600043")
+								|| dossier.getServiceCode().equals("BGTVT0600044")) {
+							
+							List<DossierRequestUD> lstRequests = DossierRequestUDLocalServiceUtil.getDossierRequestByRT(
+									dossier.getCompanyId(),
+									dossier.getGroupId(),
+									dossier.getDossierId(), 
+									"correcting");
+							
+							if (lstRequests.size() > 0) {
+								DossierRequestUD dossierRequest = lstRequests.get(0);
+								phanhoi.setSoGp(dossierRequest.getComment());
+							}
+						}
+			
 						content.setPhanhoiYeucauSua(phanhoi);
 						
 						body.setPersonSignature("");
@@ -605,11 +630,31 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						subject.setSendDate(
 								APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
 
-						PhanhoiYeucauSua phanhoi = new PhanhoiYeucauSua();
+						List<DossierRequestUD> lstRequests = DossierRequestUDLocalServiceUtil.getDossierRequestByRT(
+								dossier.getCompanyId(),
+								dossier.getGroupId(),
+								dossier.getDossierId(), 
+								"correcting");
+						
+						PhanhoiYeucauSua phanhoi = new PhanhoiYeucauSua();					
 						phanhoi.setNoiDung(dossierAction.getActionNote());
 						phanhoi.setDonViXuLy(dossier.getGovAgencyName());
 						phanhoi.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
 
+						if (dossier.getServiceCode().equals("BGTVT0600036")
+								|| dossier.getServiceCode().equals("BGTVT0600037")
+								|| dossier.getServiceCode().equals("BGTVT0600038")
+								|| dossier.getServiceCode().equals("BGTVT0600039")
+								|| dossier.getServiceCode().equals("BGTVT0600040")
+								|| dossier.getServiceCode().equals("BGTVT0600041")
+								|| dossier.getServiceCode().equals("BGTVT0600042")
+								|| dossier.getServiceCode().equals("BGTVT0600043")
+								|| dossier.getServiceCode().equals("BGTVT0600044")) {
+							if (lstRequests.size() > 0) {
+								DossierRequestUD dossierRequest = lstRequests.get(0);
+								phanhoi.setSoGp(dossierRequest.getComment());
+							}
+						}
 						content.setPhanhoiYeucauSua(phanhoi);
 						
 						body.setPersonSignature("");
@@ -734,7 +779,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600027")
 								|| dossier.getServiceCode().equals("BGTVT0600028")
 								|| dossier.getServiceCode().equals("BGTVT0600029")
-								|| dossier.getServiceCode().equals("BGTVT0600030")) {
+								) {
 							MessageQueueInputModel model = BGTVT0600005.convertResult(dossier, dossierSync, envelope, "18", "15");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);

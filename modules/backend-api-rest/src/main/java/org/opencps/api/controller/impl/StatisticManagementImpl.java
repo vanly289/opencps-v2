@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 public class StatisticManagementImpl implements StatisticManagement {
 
@@ -107,7 +108,7 @@ public class StatisticManagementImpl implements StatisticManagement {
 
 	@Override
 	public Response getDossierTodo(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext, StatisticDossierSearchModel query) {
+			User user, ServiceContext serviceContext, StatisticDossierSearchModel query, String serviceCode, String govAgencyCode) {
 
 		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
 		BackendAuth auth = new BackendAuthImpl();
@@ -127,6 +128,12 @@ public class StatisticManagementImpl implements StatisticManagement {
 			params.put(Field.USER_ID, String.valueOf(user.getUserId()));
 			params.put(DossierTerm.FOLLOW, String.valueOf(false));
 
+			if (Validator.isNotNull(serviceCode)) {
+				params.put(DossierTerm.SERVICE, serviceCode);
+			}
+			if (Validator.isNotNull(govAgencyCode)) {
+				params.put(DossierTerm.AGENCY, govAgencyCode);
+			}
 			JSONObject jsonData = actions.getDossierTodoPermission(user.getUserId(), company.getCompanyId(), groupId, params,
 					null, serviceContext);
 
@@ -147,7 +154,7 @@ public class StatisticManagementImpl implements StatisticManagement {
 
 	@Override
 	public Response getDossierCountTodo(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext, StatisticDossierSearchModel query) {
+			User user, ServiceContext serviceContext, StatisticDossierSearchModel query, String serviceCode, String govAgencyCode) {
 
 		BackendAuth auth = new BackendAuthImpl();
 		DossierActions actions = new DossierActionsImpl();
@@ -175,6 +182,12 @@ public class StatisticManagementImpl implements StatisticManagement {
 			params.put(DossierTerm.OWNER, String.valueOf(true));
 			params.put(DossierTerm.NOT_STATUS_REG, notStatusReg);
 
+			if (Validator.isNotNull(serviceCode)) {
+				params.put(DossierTerm.SERVICE, serviceCode);
+			}
+			if (Validator.isNotNull(govAgencyCode)) {
+				params.put(DossierTerm.AGENCY, govAgencyCode);
+			}
 			JSONObject jsonData = actions.getDossierCountTodoPermission(user.getUserId(), company.getCompanyId(), groupId, params,
 					null, serviceContext);
 

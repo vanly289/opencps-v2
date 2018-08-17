@@ -25,6 +25,7 @@
 	<#assign dossierPartNo = (Request.dossierPartNo)!>
 	<#assign stateWindow = (Request.stateWindow)!>
 	<#assign employee = (Request.employee)!>
+	<#assign agencies = (Request.agencies)!>	
 	
 	<#assign RequestParameters = (Request.RequestParameters)!>
 	

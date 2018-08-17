@@ -159,6 +159,13 @@ public class ApplicantActionsImpl implements ApplicantActions {
 		return ApplicantLocalServiceUtil.fetchByNameAndAddress(name, address);
 	}
 
+	@Override
+	public Applicant getApplicantByContactEmail(ServiceContext serviceContext, String contactEmail)
+			throws PortalException {
+		// TODO Auto-generated method stub
+		return ApplicantLocalServiceUtil.fetchByEmail(contactEmail);
+	}
+
 	
 
 }

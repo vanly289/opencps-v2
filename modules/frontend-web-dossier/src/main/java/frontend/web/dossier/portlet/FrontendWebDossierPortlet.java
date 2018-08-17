@@ -1,6 +1,7 @@
 package frontend.web.dossier.portlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -11,7 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.usermgt.model.Employee;
+import org.opencps.usermgt.model.EmployeeJobPos;
+import org.opencps.usermgt.model.JobPos;
+import org.opencps.usermgt.model.WorkingUnit;
+import org.opencps.usermgt.service.EmployeeJobPosLocalServiceUtil;
 import org.opencps.usermgt.service.EmployeeLocalServiceUtil;
+import org.opencps.usermgt.service.JobPosLocalServiceUtil;
+import org.opencps.usermgt.service.WorkingUnitLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -61,10 +68,26 @@ public class FrontendWebDossierPortlet extends FreeMarkerPortlet {
 		
 		try {
 			Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
+			List<EmployeeJobPos> lstEmJobPos = EmployeeJobPosLocalServiceUtil.findByF_EmployeeId(employee.getEmployeeId());
+			StringBuilder agencies = new StringBuilder();
+			
+			for (EmployeeJobPos ejp : lstEmJobPos) {
+				WorkingUnit wu = WorkingUnitLocalServiceUtil.fetchWorkingUnit(ejp.getWorkingUnitId());
+				if (wu != null) {
+					if (agencies.toString().isEmpty()) {
+						agencies.append(wu.getGovAgencyCode());
+					}
+					else {
+						agencies.append(",");
+						agencies.append(wu.getGovAgencyCode());
+					}
+				}
+			}
 			String employeeStr = JSONFactoryUtil.looseSerialize(employee);
 			JSONObject employeeStrObj = JSONFactoryUtil.createJSONObject(employeeStr);
 			if (employeeStrObj != null) {
 				renderRequest.setAttribute("employee", employeeStrObj);
+				renderRequest.setAttribute("agencies", agencies.toString());
 			}
 			
 		}

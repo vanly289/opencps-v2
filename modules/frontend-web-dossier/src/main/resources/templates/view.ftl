@@ -17,8 +17,9 @@
 		var dossierPartNo = "${(dossierPartNo)!}";
 
 		var emailAddress = '${(user.emailAddress)!}';
-
-		funLoadVue(stateWindow, dossierId, dossierPartNo, emailAddress);
+		var agencies = '${(agencies)!}';
+		
+		funLoadVue(stateWindow, dossierId, dossierPartNo, emailAddress, agencies);
 	});
 
 </script>

@@ -172,6 +172,59 @@ public class BGTVT0600005 {
 						vlCrossBorderTransportPermit.setTrademarkName(DUMMY_DATA);
 					}
 					
+					StringBuilder transportOperation = new StringBuilder();
+					if (formDataObj.has("IsFixedRoadTransport")) {
+						if ("1".equals(formDataObj.getString("IsFixedRoadTransport"))) {
+							if (transportOperation.toString().isEmpty()) {
+								transportOperation.append("Vận tải hành khách bằng ô tô theo tuyến cố định");
+							}
+							else {
+								transportOperation.append(",Vận tải hành khách bằng ô tô theo tuyến cố định");
+							}
+						}
+					}
+					if (formDataObj.has("IsContractRoadTransport")) {
+						if ("1".equals(formDataObj.getString("IsContractRoadTransport"))) {
+							if (transportOperation.toString().isEmpty()) {
+								transportOperation.append("Vận tải hành khách theo hợp đồng");
+							}
+							else {
+								transportOperation.append(",Vận tải hành khách theo hợp đồng");
+							}
+						}
+					}
+					if (formDataObj.has("IsPassengerTransport")) {
+						if ("1".equals(formDataObj.getString("IsPassengerTransport"))) {
+							if (transportOperation.toString().isEmpty()) {
+								transportOperation.append("Vận tải khách du lịch bằng xe ô tô");
+							}
+							else {
+								transportOperation.append(",Vận tải khách du lịch bằng xe ô tô");
+							}
+						}
+					}
+					if (formDataObj.has("IsCargoTransport")) {
+						if ("1".equals(formDataObj.getString("IsCargoTransport"))) {
+							if (transportOperation.toString().isEmpty()) {
+								transportOperation.append("Vận tải hàng hóa bằng xe ô tô");
+							}
+							else {
+								transportOperation.append(",Vận tải hàng hóa bằng xe ô tô");
+							}
+						}
+					}
+					if (formDataObj.has("IsTaxiTransport")) {
+						if ("1".equals(formDataObj.getString("IsTaxiTransport"))) {
+							if (transportOperation.toString().isEmpty()) {
+								transportOperation.append("Vận tải hành khách bằng xe taxi");
+							}
+							else {
+								transportOperation.append(",Vận tải hành khách bằng xe taxi");
+							}
+						}
+					}
+					vlCrossBorderTransportPermit.setTransportOperation(transportOperation.toString());
+					
 					IssuingAuthority issuingAuthority = new IssuingAuthority();
 					if (formDataObj.has("SignName")) {
 						issuingAuthority.setSignName(formDataObj.getString("SignName"));						
