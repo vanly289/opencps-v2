@@ -16,7 +16,19 @@
 						<v-container grid-list-md>
 							<v-layout wrap>
 								<v-flex xs12 sm12>
-									<p>Số đăng ký phương tiện : <span class="text-bold">{{modelLienVan.registrationNumber}}</span></p>
+									<v-data-table :headers="vehicleHeaders"
+									               :items="vehicleItems"
+									               item-key="name"
+									               hide-actions
+									               expand
+									               class="elevation-1">
+									  <template slot="items" scope="props">
+									    <tr @click="props.expanded = !props.expanded">
+									      <td class="text-xs-left">{{ props.item.name }}</td>
+									      <td class="text-xs-left">{{ props.item.value }}</td>
+									    </tr>
+									  </template>	
+									</v-data-table>  							
 								</v-flex>
 								<v-flex xs12 sm12>
 									<v-layout row wrap>

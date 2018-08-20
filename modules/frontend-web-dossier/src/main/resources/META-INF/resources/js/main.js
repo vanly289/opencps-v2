@@ -74,6 +74,22 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 				}
 				]
 			},
+			modelVehicle: {
+				registrationNumber: '',
+				capacity: '',
+				manufacturedYear: '',
+				trademarkCode: '',
+				trademarkName: '',
+				chassisNumber: '',
+				engineNumber: '',
+				vehicleColor: ''
+			},
+		    vehicleHeaders: [
+		        { text: 'Thông tin', value: 'name' },
+		        { text: 'Giá trị', value: 'value' }
+		    ],
+		    vehicleItems: [
+		    ],		
 			giayPhepVanTaiQuocTeTableheaders: [
 			{
 				text: 'STT',
@@ -711,16 +727,57 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					                }
 					        };							
 							var urlThongTinXe = '/o/rest/vr-app/certDoc/borderGuard/'+item.registrationNumber;
-							axios.get(urlThongTinXe, config_dossiers).then(function (response) {
+							var urlVehicleDetail = '/o/rest/vr-app/ilvehicle/'+item.registrationNumber;
+							axios.get(urlVehicleDetail, config_dossiers).then(function (response) {
 								var serializable = response.data;
-								if (serializable.data) {
-									var page = Math.ceil(serializable.total / 10);
-									vm.lengthPageHistory = page;
-								} else {
-									vm.lengthPageHistory = 1;
+								vm.modelVehicle = serializable;
+								vm.vehicleItems = [];
+								for (var k in vm.modelVehicle) {
+									if (vm.modelVehicle.hasOwnProperty(k)) {
+										var name = '';
+										if (k == 'registrationNumber') {
+											name = 'Biển số';
+										}
+										else if (k == 'engineNumber') {
+											name = 'Số khung';
+										}
+										else if (k == 'chassisNumber') {
+											name = 'Số máy';
+										}
+										else if (k == 'manufaturedYear') {
+											name = 'Năm sản xuất';
+										}
+										else if (k == 'capacity') {
+											name = 'Số ghế';
+										}
+										else if (k == 'trademarkName') {
+											name = 'Nhãn hiệu';
+										}
+										else if (k == 'vehicleColor') {
+											name = 'Màu sơn';
+										}
+										if (name != '') {
+											vm.vehicleItems.push({
+												name: name,
+												value: vm.modelVehicle[k]
+											});																						
+										}
+									}
 								}
-								vm.modelLienVan = serializable;
-								vm.popUpThongTinXe  = !vm.popUpThongTinXe;
+								axios.get(urlThongTinXe, config_dossiers).then(function (response) {
+									var serializable = response.data;
+									if (serializable.data) {
+										var page = Math.ceil(serializable.total / 10);
+										vm.lengthPageHistory = page;
+									} else {
+										vm.lengthPageHistory = 1;
+									}
+									vm.modelLienVan = serializable;
+									vm.popUpThongTinXe  = !vm.popUpThongTinXe;
+								})
+								.catch(function (error) {
+									console.log(error);
+								});
 							})
 							.catch(function (error) {
 								console.log(error);
