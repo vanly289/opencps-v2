@@ -159,6 +159,12 @@ public class BGTVT0600005 {
 					else {
 						vlCrossBorderTransportPermit.setManufacturedYear(DUMMY_DATA);
 					}
+					if (formDataObj.has("TechnicalData")) {
+						vlCrossBorderTransportPermit.setTechnicalData(formDataObj.getString("TechnicalData"));						
+					}
+					else {
+						vlCrossBorderTransportPermit.setTechnicalData(DUMMY_DATA);
+					}
 					if (formDataObj.has("TrademarkCode")) {
 						vlCrossBorderTransportPermit.setTrademarkCode(formDataObj.getString("TrademarkCode"));						
 					}
@@ -171,7 +177,30 @@ public class BGTVT0600005 {
 					else {
 						vlCrossBorderTransportPermit.setTrademarkName(DUMMY_DATA);
 					}
-					
+					if (formDataObj.has("Model")) {
+						vlCrossBorderTransportPermit.setModel(formDataObj.getString("Model"));
+					}
+					if (formDataObj.has("VehicleColor")) {
+						vlCrossBorderTransportPermit.setVehicleColor(formDataObj.getString("VehicleColor"));
+					}
+					if (formDataObj.has("EngineNumber")) {
+						vlCrossBorderTransportPermit.setEngineNumber(formDataObj.getString("EngineNumber"));
+					}
+					if (formDataObj.has("ChassisNumber")) {
+						vlCrossBorderTransportPermit.setChassisNumber(formDataObj.getString("ChassisNumber"));
+					}
+					if (formDataObj.has("NameOfCompany")) {
+						vlCrossBorderTransportPermit.setNameOfCompany(formDataObj.getString("NameOfCompany"));
+					}
+					if (formDataObj.has("Address")) {
+						vlCrossBorderTransportPermit.setAddress(formDataObj.getString("Address"));
+					}
+					if (formDataObj.has("Tel")) {
+						vlCrossBorderTransportPermit.setTel(formDataObj.getString("Tel"));
+					}
+					if (formDataObj.has("Fax")) {
+						vlCrossBorderTransportPermit.setFax(formDataObj.getString("Fax"));
+					}
 					StringBuilder transportOperation = new StringBuilder();
 					if (formDataObj.has("IsFixedRoadTransport")) {
 						if ("1".equals(formDataObj.getString("IsFixedRoadTransport"))) {
@@ -224,7 +253,52 @@ public class BGTVT0600005 {
 						}
 					}
 					vlCrossBorderTransportPermit.setTransportOperation(transportOperation.toString());
+					if (formDataObj.has("TransportOperation")) {
+						vlCrossBorderTransportPermit.setTransportOperation(formDataObj.getString("TransportOperation"));
+					}
 					
+					if (formDataObj.has("ExpiredDate")) {
+						String expiredDateStr = formDataObj.getString("ExpiredDate");
+						Date expiredDate = DateTimeUtils.convertStringToDate(expiredDateStr);
+						
+						vlCrossBorderTransportPermit.setExpiredDate(DateTimeUtils.convertDateToString(expiredDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					else {
+						vlCrossBorderTransportPermit.setExpiredDate(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					
+					if (formDataObj.has("ValidFrom")) {
+						String validFromStr = formDataObj.getString("ValidFrom");
+						Date validFromDate = DateTimeUtils.convertStringToDate(validFromStr);
+						
+						vlCrossBorderTransportPermit.setValidFrom(DateTimeUtils.convertDateToString(validFromDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					else {
+						vlCrossBorderTransportPermit.setValidFrom(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+
+					if (formDataObj.has("ValidUntil")) {
+						String validUntilStr = formDataObj.getString("ValidUntil");
+						Date validUntilDate = DateTimeUtils.convertStringToDate(validUntilStr);
+						
+						vlCrossBorderTransportPermit.setValidUntil(DateTimeUtils.convertDateToString(validUntilDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					else {
+						vlCrossBorderTransportPermit.setValidUntil(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+
+					if (formDataObj.has("BorderGate")) {
+						vlCrossBorderTransportPermit.setBorderGate(formDataObj.getString("BorderGate"));
+					}
+					
+					if (formDataObj.has("TravelingArea")) {
+						vlCrossBorderTransportPermit.setTravelingArea(formDataObj.getString("TravelingArea"));
+					}
+
+					if (formDataObj.has("Destination")) {
+						vlCrossBorderTransportPermit.setDestination(formDataObj.getString("Destination"));
+					}
+
 					IssuingAuthority issuingAuthority = new IssuingAuthority();
 					if (formDataObj.has("SignName")) {
 						issuingAuthority.setSignName(formDataObj.getString("SignName"));						

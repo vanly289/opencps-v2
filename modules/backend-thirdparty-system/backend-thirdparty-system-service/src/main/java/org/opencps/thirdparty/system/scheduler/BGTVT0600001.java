@@ -177,9 +177,24 @@ public class BGTVT0600001 {
 					JSONObject formDataObj = JSONFactoryUtil
 							.createJSONObject(dossierFile.getFormData());
 					vlInterRoadTransportLicense.setLicenceNo(dossierFile.getDeliverableCode());
-					vlInterRoadTransportLicense.setFirstRegistrationDate(
-							formDataObj.getString("FirstRegistrationDate"));
-					vlInterRoadTransportLicense.setValidUntil(formDataObj.getString("ValidUntil"));
+					
+					if (formDataObj.has("FirstRegistrationDate")) {
+						String firstRegistrationDateStr = formDataObj.getString("FirstRegistrationDate");
+						Date firstRegistrationDate = DateTimeUtils.convertStringToDate(firstRegistrationDateStr);
+						
+						vlInterRoadTransportLicense.setFirstRegistrationDate(DateTimeUtils.convertDateToString(firstRegistrationDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+						
+					}
+					if (formDataObj.has("ValidUntil")) {
+						String validUntilStr = formDataObj.getString("ValidUntil");
+						Date validUntilDate = DateTimeUtils.convertStringToDate(validUntilStr);
+						
+						vlInterRoadTransportLicense.setValidUntil(DateTimeUtils.convertDateToString(validUntilDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					else {
+						vlInterRoadTransportLicense.setValidUntil(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					
 					transporter.setNameOfCompany(formDataObj.getString("NameOfCompany"));
 					transporter.setAddress(formDataObj.getString("Address"));
 					transporter.setTel(formDataObj.getString("Tel"));
