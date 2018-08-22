@@ -331,7 +331,7 @@
 						id="tableGiayPhepVanTaiQuocTe"
 						class="elevation-1">
 						<template slot="items" slot-scope="props">
-							<td style="padding: 8px; padding-left: 0px;width: 4%; " class="text-xs-center">{{ pageGiayPhepVanTaiQuocTeTable * 15 - 15 + props.index + 1 }}</td>
+							<td style="padding: 8px; padding-left: 0px;width: 3%; " class="text-xs-center">{{ pageGiayPhepVanTaiQuocTeTable * 15 - 15 + props.index + 1 }}</td>
 							<td style="padding: 8px;" class="text-xs-left">
 								{{ props.item.licenceName }} 
 								<br v-if="props.item.licenceNo">
