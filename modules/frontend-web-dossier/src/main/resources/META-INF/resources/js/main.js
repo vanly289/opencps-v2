@@ -4066,6 +4066,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								keyword: vm.keywordsSearch,
 								owner: vm.applicantIdNo,
 								service: vm.serviceInfo,
+								agency: agencies,
 								follow: true,
 								dossierNo: vm.dossierNo,
 								dossierIdCTN: vm.dossierIdCTN,
