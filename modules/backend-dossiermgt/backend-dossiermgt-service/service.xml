@@ -870,6 +870,11 @@
 			<finder-column name="stepCode" />
 			<finder-column name="serviceProcessId" />
 		</finder>
+
+		<finder return-type="Collection" name="SPID">
+			<finder-column name="groupId" />
+			<finder-column name="serviceProcessId" />
+		</finder>
 	</entity>
 
 	<entity local-service="true" name="ProcessStepRole"

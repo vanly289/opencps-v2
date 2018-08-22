@@ -11,7 +11,12 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.httpclient.util.HttpURLConnection;
 import org.opencps.api.controller.ServiceProcessManagement;
 import org.opencps.api.controller.exception.ErrorMsg;
+import org.opencps.api.controller.util.ProcessPluginUtils;
 import org.opencps.api.controller.util.ServiceProcessUtils;
+import org.opencps.api.processplugin.model.ProcessPluginDetailModel;
+import org.opencps.api.processplugin.model.ProcessPluginInputModel;
+import org.opencps.api.processplugin.model.ProcessPluginModel;
+import org.opencps.api.processplugin.model.ProcessPluginResultsModel;
 import org.opencps.api.serviceprocess.model.ProcessActionInputModel;
 import org.opencps.api.serviceprocess.model.ProcessActionResultsModel;
 import org.opencps.api.serviceprocess.model.ProcessActionReturnModel;
@@ -30,19 +35,24 @@ import org.opencps.auth.api.BackendAuthImpl;
 import org.opencps.auth.api.exception.UnauthenticationException;
 import org.opencps.auth.api.exception.UnauthorizationException;
 import org.opencps.auth.api.keys.ActionKeys;
+import org.opencps.dossiermgt.action.ProcessPluginActions;
 import org.opencps.dossiermgt.action.ServiceProcessActions;
+import org.opencps.dossiermgt.action.impl.ProcessPluginActionsImpl;
 import org.opencps.dossiermgt.action.impl.ServiceProcessActionsImpl;
 import org.opencps.dossiermgt.constants.ProcessActionTerm;
 import org.opencps.dossiermgt.constants.ProcessStepTerm;
 import org.opencps.dossiermgt.exception.DuplicateStepNoException;
 import org.opencps.dossiermgt.model.ProcessAction;
+import org.opencps.dossiermgt.model.ProcessPlugin;
 import org.opencps.dossiermgt.model.ProcessStep;
 import org.opencps.dossiermgt.model.ProcessStepRole;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.model.ServiceProcessRole;
+import org.opencps.dossiermgt.service.ProcessPluginLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 
+import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -1228,6 +1238,157 @@ public class ServiceProcessManagementImpl implements ServiceProcessManagement {
 			return Response.status(404).entity(error).build();
 		}
 
+	}
+
+	@Override
+	public Response getProcessPlugins(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, long id) {
+		ProcessPluginResultsModel result = new ProcessPluginResultsModel();
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		
+		ProcessPluginActions actions = new ProcessPluginActionsImpl();
+		List<ProcessPlugin> lstPlugins = actions.getProcessPluginsBySPID(groupId, id);
+		result.setTotal(lstPlugins.size());
+		for (ProcessPlugin pp : lstPlugins) {
+			ProcessPluginDetailModel model = new ProcessPluginDetailModel();
+		
+			ProcessStep processStep = ProcessStepLocalServiceUtil.fetchBySC_GID(pp.getStepCode(), groupId, pp.getServiceProcessId());
+			
+			model.setAutoRun(pp.getAutoRun());
+			model.setPluginForm(pp.getPluginForm());
+			model.setPluginName(pp.getPluginName());
+			model.setProcessPluginId(pp.getProcessPluginId());
+			model.setSampleData(pp.getSampleData());
+			model.setSequenceNo(pp.getSequenceNo());
+			model.setServiceProcessId(pp.getServiceProcessId());
+			model.setStepCode(pp.getStepCode());
+			model.setStepName(processStep != null ? processStep.getStepName() : StringPool.BLANK);
+			
+			result.getData().add(model);
+		}
+		
+		return Response.status(200).entity(result).build();
+	}
+
+	@Override
+	public Response updateProcessPlugin(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, long id, long pluginId, ProcessPluginInputModel input) {
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+
+		BackendAuth auth = new BackendAuthImpl();
+		ProcessPluginActions actions = new ProcessPluginActionsImpl();
+		
+		try {
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+
+			ProcessPlugin processPlugin = actions.updateProcessPlugin(
+					groupId, 
+					pluginId, 
+					input.getStepCode(), 
+					id, 
+					input.getPluginName(), 
+					input.getSequenceNo(), 
+					input.getPluginForm(), 
+					input.getSampleData(), 
+					input.isAutoRun(), serviceContext);
+
+			ProcessPluginModel result = ProcessPluginUtils.mappingToDetail(processPlugin);
+
+			return Response.status(200).entity(result).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					error.setMessage("Internal Server Error");
+					error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
+					error.setDescription(e.getMessage());
+
+					return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+
+				}
+			}
+		}
+	}
+
+	@Override
+	public Response addProcessPlugin(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, long id, ProcessPluginInputModel input) {
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+
+		BackendAuth auth = new BackendAuthImpl();
+		ProcessPluginActions actions = new ProcessPluginActionsImpl();
+		
+		try {
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+
+			List<ProcessPlugin> lstPlugins = ProcessPluginLocalServiceUtil.getProcessPlugins(id, input.getStepCode());
+			if (lstPlugins.size() > 0) {
+				throw new DuplicateCategoryException("Mã bước plugin đã được cấu hình");
+			}
+			ProcessPlugin processPlugin = actions.updateProcessPlugin(
+					groupId, 
+					0l, 
+					input.getStepCode(), 
+					input.getServiceProcessId(), 
+					input.getPluginName(), 
+					input.getSequenceNo(), 
+					input.getPluginForm(), 
+					input.getSampleData(), 
+					input.isAutoRun(), serviceContext);
+
+			ProcessPluginModel result = ProcessPluginUtils.mappingToDetail(processPlugin);
+
+			return Response.status(200).entity(result).build();
+
+		} catch (Exception e) {
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					error.setMessage("Internal Server Error");
+					error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
+					error.setDescription(e.getMessage());
+
+					return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+
+				}
+			}
+		}
 	}
 
 }
