@@ -521,7 +521,7 @@
 				</v-toolbar-items>
 			</v-toolbar>
 		</v-card-title>
-		<v-card-text>
+		<v-card-text class="pr-0 py-0">
 			<div v-if="stepModel === null" style="width: 100%;" class="text-xs-center">
 				<v-progress-circular indeterminate v-bind:size="100" color="purple"></v-progress-circular>
 			</div>
