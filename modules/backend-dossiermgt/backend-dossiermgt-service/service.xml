@@ -994,7 +994,12 @@
 			<finder-column name="actionCode" />
 			<finder-column name="actionName" />
 		</finder>
-
+		
+		<finder return-type="ProcessAction" name="S_A_P">
+			<finder-column name="serviceProcessId" />
+			<finder-column name="actionCode" />
+			<finder-column name="postStepCode" />
+		</finder>
 	</entity>
 
 	<entity local-service="true" name="DossierAction"
