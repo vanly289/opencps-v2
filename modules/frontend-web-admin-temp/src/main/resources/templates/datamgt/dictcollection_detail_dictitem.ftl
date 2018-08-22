@@ -370,7 +370,7 @@ function _collectionSub_dictItem_autocompleteSearch(val) {
 		$("#input_import_dictitems").click();
 	});
 		
-	$("#input_import_dictitems").click(function() {
+	$("#input_import_dictitems").change(function() {
 		var url = _collectionSub_dictItem_BaseUrl_detail + "/import";
 		var data = new FormData();
 		data.append( 'file', $(this)[0].files[0]);
