@@ -71,6 +71,7 @@ public class ProcessPluginLocalServiceImpl
 			
 			object = processPluginPersistence.create(processPluginId);
 			// Add audit fields
+			object.setProcessPluginId(processPluginId);
 			object.setCompanyId(context.getCompanyId());
 			object.setGroupId(groupId);
 			object.setCreateDate(now);

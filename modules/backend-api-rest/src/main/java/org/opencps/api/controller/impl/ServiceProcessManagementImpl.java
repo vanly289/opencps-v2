@@ -1350,12 +1350,59 @@ public class ServiceProcessManagementImpl implements ServiceProcessManagement {
 					groupId, 
 					0l, 
 					input.getStepCode(), 
-					input.getServiceProcessId(), 
+					id, 
 					input.getPluginName(), 
 					input.getSequenceNo(), 
 					input.getPluginForm(), 
 					input.getSampleData(), 
 					input.isAutoRun(), serviceContext);
+
+			ProcessPluginModel result = ProcessPluginUtils.mappingToDetail(processPlugin);
+
+			return Response.status(200).entity(result).build();
+
+		} catch (Exception e) {
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					error.setMessage("Internal Server Error");
+					error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
+					error.setDescription(e.getMessage());
+
+					return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+
+				}
+			}
+		}
+	}
+
+	@Override
+	public Response deleteProcessPlugin(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, long id, long pluginId) {
+		BackendAuth auth = new BackendAuthImpl();
+		ProcessPluginActions actions = new ProcessPluginActionsImpl();
+		
+		try {
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+
+			ProcessPlugin processPlugin = actions.deleteProcessPlugin(pluginId);
 
 			ProcessPluginModel result = ProcessPluginUtils.mappingToDetail(processPlugin);
 
