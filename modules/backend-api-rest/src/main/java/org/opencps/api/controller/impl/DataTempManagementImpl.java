@@ -1906,6 +1906,7 @@ public class DataTempManagementImpl implements DataTempManagement {
 			Workbook workbook = WorkbookFactory.create(fileInputStream);
 			_log.info("Number of sheets: " + workbook.getNumberOfSheets());
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(e.getMessage()).build();
 		}			
 		return Response.status(200).entity("").build();
