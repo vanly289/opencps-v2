@@ -2185,6 +2185,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         			}, function(error){
 
                         			});
+                        		vm.dialogThuLyHoSo = false;
 
                         			//console.log("submitAlpacajsFns============",submitAlpacajsFns);
                         			/*try{
