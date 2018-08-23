@@ -547,7 +547,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						});	
 							
 						},
-						menuTabChange: function (item) {
+						menuTabChange: function (item, event) {
 							var vm = this;
 							if (item.state === 'tat_ca_ho_so') {
 								vm.stageFilterView = 'danh_sach'
@@ -577,9 +577,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								});
 								vm._initTuyens();
 							} else {
+								console.log($(event)[0]);
+								console.log($(event)[0].target);
 								vm.detailRegistPage = false;
 								vm.detailPage = false;
-								vm.stageFilterView = 'danh_sach'
+								vm.stageFilterView = 'danh_sach';
+								// if (item.value === 'tab2') {
+								// 	$("#activatorTab2").trigger("click");
+								// }
 							}
 						},
 						viewDialogLog: function (item) {
@@ -2013,7 +2018,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         				if (vm.stepModel.hasOwnProperty('createFiles')) {
                         					for (var i = 0; i < vm.stepModel.createFiles.length; i++) {
                         						if (vm.stepModel.createFiles[i]['eform']) {
-                        							vm.maxWidthDialog = '800px';
+                        							vm.maxWidthDialog = '100%';
                         							vm.showAlpacaJSFORM(vm.stepModel.createFiles[i])
                         						}
                         					}
