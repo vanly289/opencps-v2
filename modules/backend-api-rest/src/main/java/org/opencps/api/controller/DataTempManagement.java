@@ -20,6 +20,8 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.opencps.api.datatempmgt.model.DataSearchModel;
 import org.opencps.api.datatempmgt.model.DictCollectionTempInputModel;
 import org.opencps.api.datatempmgt.model.DictCollectionTempModel;
@@ -335,4 +337,13 @@ public interface DataTempManagement {
 			@ApiParam(value = "itemCode of DictItemthat need to be deleted meatadata", required = true) @PathParam("itemCode") String itemCode,
 			@ApiParam(value = "metadata of DictItem that need to deleted", required = true) @PathParam("key") String key,
 			@ApiParam(value = "metadata of DictItem that need to deleted", required = true) String body);
+	
+	@POST
+	@Path("/{code}/dictitems/import")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response importDictItems(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@ApiParam(value = "Attachment files", required = true) @Multipart("file") Attachment file);	
 }

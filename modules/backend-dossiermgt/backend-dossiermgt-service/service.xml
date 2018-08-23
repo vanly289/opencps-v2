@@ -605,6 +605,17 @@
 			<finder-column name="dossierId" />
 		</finder>
 	
+		<finder return-type="Collection" name="G_DID">
+			<finder-column name="groupId" />
+			<finder-column name="dossierId" />
+		</finder>
+
+		<finder return-type="Collection" name="G_DID_NT">
+			<finder-column name="groupId" />
+			<finder-column name="dossierId" />
+			<finder-column name="notificationType" />
+		</finder>
+
 		<!-- References -->
 
 	</entity>
@@ -868,6 +879,11 @@
 
 		<finder return-type="Collection" name="SC_SPID">
 			<finder-column name="stepCode" />
+			<finder-column name="serviceProcessId" />
+		</finder>
+
+		<finder return-type="Collection" name="SPID">
+			<finder-column name="groupId" />
 			<finder-column name="serviceProcessId" />
 		</finder>
 	</entity>

@@ -111,8 +111,6 @@ gradle-local.properties
 **/inland-html-report-api/**/service/persistence/
 **/**/ServiceProps.java
 
-**/vr-business/**
-**/vr-rest/**
 mt-dklr/**
 theme_nz/*
 modules/vr-business

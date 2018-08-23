@@ -1,13 +1,19 @@
 package org.opencps.api.controller.impl;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
+import javax.activation.DataHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.opencps.api.controller.DataTempManagement;
 import org.opencps.api.controller.exception.ErrorMsg;
 import org.opencps.api.controller.util.DataTempManagementUtils;
@@ -23,6 +29,8 @@ import org.opencps.api.datatempmgt.model.DictGroupTempResults;
 import org.opencps.api.datatempmgt.model.DictItemTempDetailModel;
 import org.opencps.api.datatempmgt.model.DictItemTempInputModel;
 import org.opencps.api.datatempmgt.model.DictItemTempResults;
+import org.opencps.auth.api.BackendAuth;
+import org.opencps.auth.api.BackendAuthImpl;
 import org.opencps.auth.api.exception.NotFoundException;
 import org.opencps.auth.api.exception.UnauthenticationException;
 import org.opencps.auth.api.exception.UnauthorizationException;
@@ -1879,5 +1887,28 @@ public class DataTempManagementImpl implements DataTempManagement {
 			String body) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Response importDictItems(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, Attachment file) {
+		DataHandler dataHandle = file.getDataHandler();
+		InputStream fileInputStream = null;
+		BackendAuth auth = new BackendAuthImpl();
+		
+		try {
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+			
+			fileInputStream = dataHandle.getInputStream();
+			
+			Workbook workbook = WorkbookFactory.create(fileInputStream);
+			_log.info("Number of sheets: " + workbook.getNumberOfSheets());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(e.getMessage()).build();
+		}			
+		return Response.status(200).entity("").build();
 	}
 }

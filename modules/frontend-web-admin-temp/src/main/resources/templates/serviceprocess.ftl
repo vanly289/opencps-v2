@@ -189,7 +189,14 @@
 				}catch(e){
 
 				}
-				$("#service_process_action_listview").data("kendoListView").dataSource.read({serviceProcessId: dataItem.id});
+				$("#service_process_plugin_listview").data("kendoListView").dataSource.read({serviceProcessId: dataItem.id});
+
+				try{
+					$("#service_process_plugin_listview").data("kendoListView").dataSource.page(1);
+				}catch(e){
+
+				}
+				$("#service_process_plugin_listview").data("kendoListView").dataSource.read({serviceProcessId: dataItem.id});
 
 				$.ajax({
 					url: "${api.server}" + "/serviceprocesses/" + dataItem.id + "/roles",
@@ -281,6 +288,9 @@ var onSelectServiceProcess = function(id){
 		serviceProcessId: id
 	});
 	$("#service_process_action_listview").getKendoListView().dataSource.read({
+		serviceProcessId: id
+	});
+	$("#service_process_plugin_listview").getKendoListView().dataSource.read({
 		serviceProcessId: id
 	});
 }

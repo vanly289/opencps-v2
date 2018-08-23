@@ -140,6 +140,8 @@
 			<xsd:element ref="CLVCommercialCrossBorderTransportPermit" minOccurs="0"></xsd:element>
 			<xsd:element ref="CLVNonCommercialCrossBorderTransportPermit" minOccurs="0"></xsd:element>
 			<xsd:element ref="ApprovalOfCLVFixRoadTransport" minOccurs="0"></xsd:element>
+			<xsd:element ref="GMSInterRoadTransportLicence" minOccurs="0"></xsd:element>
+			<xsd:element ref="GMSCrossBorderTransportPermit" minOccurs="0"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 

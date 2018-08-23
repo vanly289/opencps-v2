@@ -13,6 +13,9 @@
 		<li>
 			<a data-toggle="tab" href="#tab_action">Thao tác</a>
 		</li>
+		<li>
+			<a data-toggle="tab" href="#tab_plugin">Plugins</a>
+		</li>
 	</ul>
 	<div class="tab-content">
 		<div id="tab_process_info" class="tab-pane fade in active">
@@ -32,6 +35,14 @@
 			</div>
 			<div id="serviceprocess_detail_formaction_container" style="display: none;">
 				<#include "serviceprocess_detail_formaction.ftl">
+			</div>
+		</div>
+		<div id="tab_plugin" class="tab-pane fade in">
+			<div id="serviceprocess_plugin_container">
+				<#include "serviceprocess_plugin.ftl">
+			</div>
+			<div id="serviceprocess_detail_formplugin_container" style="display: none;">
+				<#include "serviceprocess_detail_formplugin.ftl">
 			</div>
 		</div>
 	</div>

@@ -176,7 +176,8 @@ import javax.xml.bind.annotation.XmlType;
     "lockState",
     "statusReg",
     "processBlock",
-    "processUnit"
+    "processUnit",
+    "countLogs"
 })
 public class DossierDataModel {
 
@@ -254,6 +255,7 @@ public class DossierDataModel {
 	protected String endorsementDate;
 	protected String lockState;
 	protected String statusReg;
+	protected int countLogs;
 
 	public int getProcessBlock() {
 		return processBlock;
@@ -1876,6 +1878,13 @@ public class DossierDataModel {
 		this.certDate = certDate;
 	}
 
+	public int getCountLogs() {
+		return countLogs;
+	}
+	
+	public void setCountLogs(int value) {
+		this.countLogs = value;
+	}
     /**
      * Gets the value of the data property.
      * 

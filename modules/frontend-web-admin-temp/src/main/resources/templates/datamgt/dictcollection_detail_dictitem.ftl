@@ -7,6 +7,13 @@
 	
 	</div>
 		
+	<div class="col-xs-2 col-sm-2">
+		<input type="file" style="display: none;" name="input_import_dictitems" id="input_import_dictitems">
+		<span class="btn btn-active btn-block p-xxs" id="btnImportDictItems">
+		<i class="fa fa-file-excel-o"></i> Import	
+		</span> 
+	</div>
+
 	<div class="col-xs-3 col-sm-3">
 	
 		<span data-toggle="modal" class="btn btn-active btn-block"
@@ -19,7 +26,7 @@
 	
 	</div>
 	
-	<div class="col-xs-7 col-sm-7 input-group MB15 PR15">
+	<div class="col-xs-5 col-sm-5 input-group MB15 PR15">
 
 		<input type="text" class="form-control" id="_collectionSub_dictItem_keySearch"
 				oninput="_collectionSub_dictItem_autocompleteSearch(this.value)" 
@@ -359,7 +366,57 @@ function _collectionSub_dictItem_autocompleteSearch(val) {
 			}
 			
 		});
+	$("#btnImportDictItems").click(function() {
+		$("#input_import_dictitems").click();
+	});
 		
-
+	$("#input_import_dictitems").change(function() {
+		var url = _collectionSub_dictItem_BaseUrl_detail + "/import";
+		var data = new FormData();
+		data.append( 'file', $(this)[0].files[0]);
+		$.ajax({
+			type : 'POST', 
+			url  : url, 
+			data : data,
+			dataType: 'html',
+			headers: {"groupId": ${groupId}},
+			processData: false,
+			contentType: false,
+			cache: false,
+			success :  function(result){
+				// notification.show({
+				// 	message: "Yêu cầu được thực hiện thành công"
+				// }, "success");
+			},
+			error:function(result){
+				// notification.show({
+				// 	message: "Thực hiện không thành công, xin vui lòng thử lại"
+				// }, "error");
+			},
+			statusCode: {
+				200: function(result) {
+					console.log(result);
+					$("#titleListFile").show();
+					$("#statusImport").html('<span style="color: green;">Import thành công!</span>');
+					$("#messageImport").html(result);
+					$(this).val("");
+				},
+				500: function(result) {
+					console.log(result);
+					$("#titleListFile").show();
+					$("#statusImport").html('<span style="color: red;">Import không thành công, Vui lòng thử lại!</span>');
+					$("#messageImport").html(result);
+					$(this).val("");
+				},
+				504: function(result) {
+					console.log(result);
+					// $("#titleListFile").show();
+					$("#statusImport").html('<span style="color: red;">Quá thời gian, Vui lòng thử lại!</span>');
+					$("#messageImport").html(result);
+					$(this).val("");
+				}
+			}
+		});		
+	});
 })(jQuery);
 </script>

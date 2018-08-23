@@ -12,6 +12,7 @@ import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
 import org.opencps.dossiermgt.action.util.DossierOverDueUtils;
+import org.opencps.dossiermgt.constants.DossierLogTerm;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
@@ -23,6 +24,7 @@ import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionUserLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierLogLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
@@ -138,7 +140,7 @@ public class DossierUtils {
 			model.setLockState(doc.get(DossierTerm.LOCK_STATE));
 			model.setStatusReg(doc.get(DossierTerm.STATUS_REG));
 			
-			
+			model.setCountLogs(DossierLogLocalServiceUtil.countByDossierNotificationType(model.getGroupId(), model.getDossierId(), DossierLogTerm.PROCESS_TYPE));
 			int processBlock = 0;
 			int processUnit = 0;
 			
@@ -273,7 +275,8 @@ public class DossierUtils {
 			model.setEndorsementDate(doc.get(DossierTerm.ENDORSEMENT_DATE));
 			model.setLockState(doc.get(DossierTerm.LOCK_STATE));
 			model.setStatusReg(doc.get(DossierTerm.STATUS_REG));
-
+			model.setCountLogs(DossierLogLocalServiceUtil.countByDossierNotificationType(model.getGroupId(), model.getDossierId(), DossierLogTerm.PROCESS_TYPE));
+			
 			ouputs.add(model);
 		}
 //		_log.info("ouputs: "+ouputs.size());
