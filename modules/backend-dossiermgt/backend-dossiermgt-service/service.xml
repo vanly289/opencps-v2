@@ -605,6 +605,17 @@
 			<finder-column name="dossierId" />
 		</finder>
 	
+		<finder return-type="Collection" name="G_DID">
+			<finder-column name="groupId" />
+			<finder-column name="dossierId" />
+		</finder>
+
+		<finder return-type="Collection" name="G_DID_NT">
+			<finder-column name="groupId" />
+			<finder-column name="dossierId" />
+			<finder-column name="notificationType" />
+		</finder>
+
 		<!-- References -->
 
 	</entity>

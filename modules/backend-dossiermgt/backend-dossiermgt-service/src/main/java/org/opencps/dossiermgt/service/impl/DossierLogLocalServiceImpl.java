@@ -341,5 +341,11 @@ public class DossierLogLocalServiceImpl extends DossierLogLocalServiceBaseImpl {
         return IndexSearcherHelperUtil.searchCount(searchContext, booleanQuery);
     }
     
+    public int countByDossier(long groupId, long dossierId) {
+    	return dossierLogPersistence.countByG_DID(groupId, dossierId);
+    }
+    public int countByDossierNotificationType(long groupId, long dossierId, String notificationType) {
+    	return dossierLogPersistence.countByG_DID_NT(groupId, dossierId, notificationType);
+    }
     public static final String CLASS_NAME = DossierLog.class.getName();
 }

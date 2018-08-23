@@ -212,7 +212,7 @@
             <v-card>
               <v-card-title class="px-0 py-0" style="height: 50px;">
                 <v-toolbar dark color="primary" height="40">
-                  <div class="text-bold">Message</div>
+                  <div class="text-bold">Tin nhắn trao đổi</div>
                   <v-spacer></v-spacer>
                   <v-toolbar-items>
                     <v-btn icon dark @click.native="dialogViewLogs = false">

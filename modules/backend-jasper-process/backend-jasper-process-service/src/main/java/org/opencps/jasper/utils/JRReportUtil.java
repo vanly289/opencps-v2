@@ -147,6 +147,8 @@ public class JRReportUtil {
 				JasperReport reportTemplate = JRReportTemplate.getJasperReport(jrxmlTemplate);
 				JRJSONDataSource dataSource = null;
 				
+				_log.info("JSON Array length: " + jsonArrData.length());
+
 				for (int i = 0; i < jsonArrData.length(); i++) {
 					JSONObject jsonDataObj = jsonArrData.getJSONObject(i);
 					_log.info("JASPER ONE JSON: " + jsonDataObj.toJSONString());
@@ -157,6 +159,7 @@ public class JRReportUtil {
 					jasperPrints.add(jasperPrint);
 
 				}
+				_log.info("Before export pdf file");
 //				return exportReport(jasperPrint, destFileName, DocType.PDF);				
 				
 				return exportPdfFile(jasperPrints, destFileName);
