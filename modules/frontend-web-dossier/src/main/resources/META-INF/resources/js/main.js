@@ -1915,16 +1915,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 							if(item.counter > 0){
 								console.log("vm.detailModel========",vm.detailModel);
-
 								var url = "/group/cong-xu-ly/xu-ly-ho-so?stateWindow=stateWindow&dossierId="+vm.detailModel.dossierId+
 								"&dossierPartNo="+item.partNo;
-
 								console.log("url============",url);
-
 								window.open(url, "_blank");
-
 							}
-
 						},
 						parseDateUtc : function(date){
 							return moment(String(date)).utc().format('DD/MM/YYYY HH:mm:ss');
