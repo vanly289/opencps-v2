@@ -360,6 +360,13 @@
       margin-left: -30px;
       margin-right: -30px;
     }
+    body.open #wrapper {
+      margin-left: 0 !important;
+      padding-left: 0 !important;
+    }
+    .list {
+      margin-bottom: 0 !important;
+    }
   </style>
   <style>
     .history__download__link:hover{
