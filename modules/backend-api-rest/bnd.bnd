@@ -11,11 +11,11 @@ Include-Resource: configuration=src/main/resources/configuration
 @curvesapi-1.04.jar;lib:=true,\
 @junit-4.12.jar;lib:=true,\
 @log4j-1.2.17.jar;lib:=true,\
-@poi-3.17.jar;lib:=true,\
-@poi-excelant-3.17.jar;lib:=true,\
-@poi-ooxml-3.17.jar;lib:=true,\
-@poi-ooxml-schemas-3.17.jar;lib:=true,\
-@poi-scratchpad-3.17.jar;lib:=true,\
+@poi-3.16.jar;lib:=true,\
+@poi-excelant-3.16.jar;lib:=true,\
+@poi-ooxml-3.16.jar;lib:=true,\
+@poi-ooxml-schemas-3.16.jar;lib:=true,\
+@poi-scratchpad-3.16.jar;lib:=true,\
 @xmlbeans-2.6.0.jar;lib:=true
 
 Import-Package: *;resolution:=optional
