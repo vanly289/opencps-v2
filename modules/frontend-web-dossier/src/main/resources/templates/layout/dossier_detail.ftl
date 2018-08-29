@@ -61,7 +61,15 @@
 						{{ detailModel.dossierNo }}
 					</span>
 				</div>
-				
+
+				<div class="pb-1">
+					<span>
+						Trạng thái: 
+					</span>
+					<span class="text-bold">
+						{{detailModel.dossierStatusText}}
+					</span>
+				</div>				
 			</v-flex>
 
 		<v-flex xs12 sm4>
@@ -89,14 +97,6 @@
 				</span>
 				<span class="text-bold">
 					{{ detailModel.dueDate}}
-				</span>
-			</div>
-			<div class="pb-1">
-				<span>
-					Trạng thái: 
-				</span>
-				<span class="text-bold">
-					{{detailModel.dossierStatusText}}
 				</span>
 			</div>
 
@@ -132,7 +132,7 @@
 						<div>
 							<div class="pb-1">
 								<span>
-									Tên doanh nghiệp: 
+									Tên liên hệ: 
 								</span> 
 								<span class="text-bold">
 									{{detailModel.contactName}}
@@ -160,7 +160,7 @@
 									Địa chỉ: 
 								</span>
 								<span class="text-bold">
-									{{detailModel.wardName}}/{{detailModel.districtName}}/{{detailModel.cityName}}
+									{{detailModel.wardName}},&nbsp;{{detailModel.districtName}},&nbsp;{{detailModel.cityName}}
 								</span>
 							</div>
 							
@@ -522,7 +522,7 @@
 			</v-toolbar>
 		</v-card-title>
 		<v-card-text class="pr-0 py-0">
-			<div v-if="stepModel === null" style="width: 100%;" class="text-xs-center">
+			<div v-if="stepModel === null" style="width: 100%; height: 400px;" class="text-xs-center center-all">
 				<v-progress-circular indeterminate v-bind:size="100" color="purple"></v-progress-circular>
 			</div>
 			<div v-else-if="stepModel.pending">
@@ -625,6 +625,14 @@
 						small
 						v-on:click.native.prevent.stop="submitAlpacajsForm(item)"> Ghi lại </v-btn>
 
+						<v-btn color="primary"
+						v-for="(item, index) in stepModel.createFiles"
+						v-if="stepModel.hasOwnProperty('createFiles') && item.eform"
+						:loading="loadingAlpacajsForm"
+						:disabled="loadingAlpacajsForm"
+						small
+						v-on:click.native.prevent.stop="deleteDossierPDF(item)"> Hủy biên bản </v-btn>
+
 						<v-btn small color="primary" class="px-0" :loading="actionsSubmitLoading" :disabled="actionsSubmitLoading" v-if="stepModel.configNote.confirmButton"
 						@click.prevent.stop="postNextActions2(stepModel)">{{ stepModel.configNote.confirmButton }}</v-btn>
 
@@ -661,6 +669,15 @@
 						:disabled="loadingAlpacajsForm"
 						small
 						v-on:click.native.prevent.stop="submitAlpacajsForm(item)"> Ghi lại </v-btn>
+
+						<v-btn color="primary"
+						v-for="(item, index) in stepModel.createFiles"
+						v-if="stepModel.hasOwnProperty('createFiles') && item.eform"
+						:loading="loadingAlpacajsForm"
+						:disabled="loadingAlpacajsForm"
+						small
+						v-on:click.native.prevent.stop="deleteDossierPDF(item)"> Hủy biên bản </v-btn>
+
 						<v-btn small color="primary" class="px-0" :loading="actionsSubmitLoading" :disabled="actionsSubmitLoading"
 						@click.prevent.stop="postNextActions2(stepModel)">Xác nhận</v-btn>
 					</v-card-actions>

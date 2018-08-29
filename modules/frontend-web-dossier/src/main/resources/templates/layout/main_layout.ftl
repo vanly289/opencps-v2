@@ -17,6 +17,7 @@
             @keyup.enter="searchKeyWord"
             clearable
             ></v-text-field>
+            <v-btn small class="mt-3" color="primary" @click.native="searchKeyWord">Tìm kiếm</v-btn>
             <v-btn small class="mt-3" color="primary" @click.native="dialogSearch = !dialogSearch">Tìm kiếm nâng cao</v-btn>
           </v-flex>
           <v-flex xs12 sm3>
