@@ -12,6 +12,10 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.opencps.api.controller.DataTempManagement;
@@ -36,8 +40,10 @@ import org.opencps.auth.api.exception.UnauthenticationException;
 import org.opencps.auth.api.exception.UnauthorizationException;
 import org.opencps.communication.model.ServerConfig;
 import org.opencps.communication.service.ServerConfigLocalServiceUtil;
+import org.opencps.datamgt.action.DictcollectionInterface;
 import org.opencps.datamgt.constants.DictGroupTerm;
 import org.opencps.datamgt.constants.DictItemTerm;
+import org.opencps.datamgt.model.DictItem;
 import org.opencps.synchronization.action.DictCollectionTempInterface;
 import org.opencps.synchronization.action.impl.DictCollectionActions;
 import org.opencps.synchronization.constants.DictGroupTempTerm;
@@ -68,6 +74,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 public class DataTempManagementImpl implements DataTempManagement {
@@ -1891,7 +1898,7 @@ public class DataTempManagementImpl implements DataTempManagement {
 
 	@Override
 	public Response importDictItems(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext, Attachment file) {
+			User user, ServiceContext serviceContext, Attachment file, String code) {
 		DataHandler dataHandle = file.getDataHandler();
 		InputStream fileInputStream = null;
 		BackendAuth auth = new BackendAuthImpl();
@@ -1902,9 +1909,58 @@ public class DataTempManagementImpl implements DataTempManagement {
 			}
 			
 			fileInputStream = dataHandle.getInputStream();
+			DataFormatter dataFormatter = new DataFormatter();
+			DictCollectionTempInterface dictItemTempDataUtil = new DictCollectionActions();
+			DictcollectionInterface dictItemDataUtil = new org.opencps.datamgt.action.impl.DictCollectionActions();
 			
 			Workbook workbook = WorkbookFactory.create(fileInputStream);
-			_log.info("Number of sheets: " + workbook.getNumberOfSheets());
+			if (workbook.getNumberOfSheets() > 0) {
+				Sheet sheet = workbook.getSheetAt(0);
+				for (Row row : sheet) {
+					if (row.getRowNum() == 0) continue;
+					if (row.getPhysicalNumberOfCells() >= 2) {
+						String itemCode = StringPool.BLANK;
+						String itemName = StringPool.BLANK;
+						Cell codeCell = row.getCell(0);
+						Cell nameCell = row.getCell(1);
+						itemCode = dataFormatter.formatCellValue(codeCell);
+						itemName = dataFormatter.formatCellValue(nameCell);
+						if (Validator.isNotNull(itemCode)) {
+							long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+
+							DictItemTemp tempItem = dictItemTempDataUtil.getDictItemTempByItemCode(code, itemCode, groupId, serviceContext);
+							DictItem item = dictItemDataUtil.getDictItemByItemCode(code, itemCode, groupId, serviceContext);
+							
+							if (tempItem == null) {
+								dictItemTempDataUtil.addDictItemsTemp(
+										user.getUserId(), 
+										groupId, 
+										code,
+										StringPool.BLANK, 
+										itemCode, 
+										itemName, 
+										itemName,
+										StringPool.BLANK, 
+										StringPool.BLANK, 
+										0, 
+										StringPool.BLANK,
+										1,	
+										serviceContext);
+							}
+							if (item == null) {
+								dictItemDataUtil.addDictItems(user.getUserId(), groupId, 
+										code,
+										StringPool.BLANK, 
+										itemCode, itemName, itemName,
+										StringPool.BLANK, StringPool.BLANK, 0, 
+										StringPool.BLANK,
+										serviceContext);
+							}
+						}
+					}
+				}
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(e.getMessage()).build();

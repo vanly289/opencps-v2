@@ -37,18 +37,12 @@ dependencies {
 	
 	compileOnly project(":modules:backend-auth")
 	
-    compile name : "commons-codec-1.10"
-    compile name : "commons-collections4-4.1"
-    compile name : "commons-logging-1.2"
-    compile name : "curvesapi-1.04"
-    compile name : "junit-4.12"
-    compile name : "log4j-1.2.17"
-    compile name : "poi-3.16"
-    compile name : "poi-excelant-3.16"
-    compile name : "poi-ooxml-3.16"
-    compile name : "poi-ooxml-schemas-3.16"
-    compile name : "poi-scratchpad-3.16"
-    compile name : "xmlbeans-2.6.0"
+    compile name : "commons-collections-3.2.1"
+    compile name : "poi-3.10.1"
+    compile name : "poi-ooxml-3.10.1"
+    compile name : "poi-ooxml-schemas-3.10.1"
+    compile name : "xalan-2.7.1"
+	compile name : "xmlbeans-2.5.0"
 	
 	testCompile group: "junit", name: "junit", version: "4.12"
 }	
