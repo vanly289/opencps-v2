@@ -1735,7 +1735,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 
 						},
-						deleteDossierPDF: function(item, index) {
+						deleteDossierPDF: function(item) {
 							var vm = this;
 
 							vm.$dialog.confirm('Bạn có muốn xóa tài liệu này!', {
@@ -1747,20 +1747,20 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							})
 							.then((dialog) => {
 								$.ajax({
-									url : "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid,
+									url : "/o/rest/v2/dossiers/" + vm.detailModel.dossierId + "/files/" + item.referenceUid,
 									dataType : "json",
 									type : "DELETE",
 									headers: {
 										"groupId": themeDisplay.getScopeGroupId()
 									},
 									success : function(result){
-										vm.snackbartextdossierViewJX = "Xoá dữ liệu thành phần hồ sơ thành công!";
+										vm.snackbartextdossierViewJX = "Xoá dữ liệu thành công!";
 										vm.snackbardossierViewJX = true;
-										vm.listDocumentOutStepItems.splice(index, 1);
-										vm.stepModel.createFiles[item.index].counter = vm.stepModel.createFiles[item.index].counter - 1;
+										// vm.listDocumentOutStepItems.splice(index, 1);
+										// vm.stepModel.createFiles[item.index].counter = vm.stepModel.createFiles[item.index].counter - 1;
 									},
 									error : function(result){
-										vm.snackbartextdossierViewJX = "Xoá dữ liệu thành phần hồ sơ thất bại!";
+										vm.snackbartextdossierViewJX = "Xoá thất bại!";
 										vm.snackbarerordossierViewJX = true;
 									}
 								});
@@ -2161,6 +2161,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         		var vm = this;
                         		var createFiles = item.createFiles;
                         		console.log("createFiles============",createFiles);
+                        		vm.dialogThuLyHoSo = false;
                         		var submitAlpacajsFns = new Array();
 
                         			/*for (var i = 0; i < createFiles.length; i++) {
@@ -2185,7 +2186,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         			}, function(error){
 
                         			});
-                        		vm.dialogThuLyHoSo = false;
 
                         			//console.log("submitAlpacajsFns============",submitAlpacajsFns);
                         			/*try{
@@ -2618,7 +2618,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
                                 		//neu processSteps chi co 1, trigger chanProcessStep 
                                 		if(vm.processSteps.length === 1){
-                                			vm.changeProcessStep(vm.processSteps[0]);
+                                			// vm.changeProcessStep(vm.processSteps[0]);
                                 		}                            			
                             		}
 
@@ -4022,35 +4022,35 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							value: 'stt'
 						},
 						{
-							text: 'Tên thủ tục. Tên doanh nghiệp',
-							align: 'left',
-							sortable: true,
-							value: 'applicantName'
-						},
-						{
-							text: 'Mã tiếp nhận',
-							align: 'left',
-							sortable: true,
-							value: 'referenceUid'
-						},
-						{
 							text: 'Mã số hồ sơ',
-							align: 'left',
+							align: 'center',
 							sortable: true,
 							value: 'dossierId'
 						},
 						{
-							text: 'Trạng Thái',
+							text: 'Thông tin hồ sơ',
+							align: 'center',
+							sortable: true,
+							value: 'dossierDetail'
+						},
+						{
+							text: 'Trạng thái',
 							align: 'left',
 							sortable: true,
-							value: 'submitDate'
+							value: 'status'
 						},
 						{
 							text: 'Ghi chú',
 							align: 'left',
 							sortable: true,
-							value: 'submitDate'
+							value: 'note'
 						}
+						// {
+						// 	text: 'Mã tiếp nhận',
+						// 	align: 'left',
+						// 	sortable: true,
+						// 	value: 'referenceUid'
+						// },
 
 						];
 						vm.loadingDanhSachHoSoTable = true;
@@ -4167,13 +4167,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.viewmore = false;
 								
 								// temp fix header
-								$('.danhSachHoSoTable__class th[role="columnheader"]').each(function( index ) {
-									if ($( this ).attr('aria-label').indexOf("Activate") > 0) {
-										$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\./g,"<br/>") + ' <i aria-hidden="true" class="material-icons icon">arrow_upward</i>');
-									} else {
-										$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\./g,"<br/>"));
-									}
-								});
+								// $('.danhSachHoSoTable__class th[role="columnheader"]').each(function( index ) {
+								// 	if ($( this ).attr('aria-label').indexOf("Activate") > 0) {
+								// 		$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\#/g,"&nbsp;") + ' <i aria-hidden="true" class="material-icons icon">arrow_upward</i>');
+								// 	} else {
+								// 		$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\#/g,"&nbsp;"));
+								// 	}
+								// });
 								//console.log(vm.danhSachHoSoTableItems);
 							})
 							.catch(function (error) {
