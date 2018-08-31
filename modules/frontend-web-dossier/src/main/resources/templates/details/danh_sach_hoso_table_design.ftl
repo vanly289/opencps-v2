@@ -18,7 +18,7 @@
 		</td>
 		<td style="padding: 8px; width: 30%; position: relative;" class="text-xs-left">
 			{{ props.item.receiveDate }} : Nộp hồ sơ <br>
-			<span style="color: #da8f05;">{{ props.item.lastActionDate }} : <i>{{ props.item.lastActionName }}</i></span> <br> <br>
+			<span style="color: #da8f05;">{{ props.item.lastActionDate }} : <i>{{subLastActionUserName(props.item['lastActionUserEmail'])}} -> {{ props.item.lastActionName }}</i></span> <br> <br>
 			<div style="text-align: left; left: 5px; bottom: 0; position: absolute;">
 				{{ props.item.dossierNo }} 
 			</div>

@@ -91,14 +91,14 @@
 				</span>
 
 			</div>
-			<div class="pb-1">
+			<#-- <div class="pb-1">
 				<span >
 					Thời hạn xử lý: 
 				</span>
 				<span class="text-bold">
 					{{ detailModel.dueDate}}
 				</span>
-			</div>
+			</div> -->
 
 			<div class="pb-1">
 				<span>
