@@ -441,6 +441,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							return false; 
 							
 						},
+						subLastActionUserName: function (data) {
+							var vm = this;
+							if (data) {
+								var indexKey = data.indexOf('@');
+								if (indexKey === -1) {
+									return data;
+								} else {
+									return data.substring(0, indexKey);
+								}
+							} else {
+								return '?';
+							}
+						},
 						groupHoSoFilter: function(item, index){
 							var vm = this;
 
