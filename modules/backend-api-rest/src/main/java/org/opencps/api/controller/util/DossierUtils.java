@@ -276,6 +276,7 @@ public class DossierUtils {
 			model.setLockState(doc.get(DossierTerm.LOCK_STATE));
 			model.setStatusReg(doc.get(DossierTerm.STATUS_REG));
 			model.setCountLogs(DossierLogLocalServiceUtil.countByDossierNotificationType(model.getGroupId(), model.getDossierId(), DossierLogTerm.PROCESS_TYPE));
+			model.setLastActionUserEmail(doc.get(DossierTerm.LAST_ACTION_USER_EMAIL));
 			
 			ouputs.add(model);
 		}

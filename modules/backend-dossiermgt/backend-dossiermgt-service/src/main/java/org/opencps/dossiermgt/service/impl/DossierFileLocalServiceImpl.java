@@ -1057,5 +1057,13 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		return dossierFilePersistence.fetchByFILE_ID(fileEntryId);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
+	public DossierFile permanentDeleteDossierFile(long dossierFileId) throws PortalException {
+		return dossierFilePersistence.remove(dossierFileId);
+	}
+	
+	public List<DossierFile> findByGroup(long groupId) {
+		return dossierFilePersistence.findByG(groupId);
+	}
 	public static final String CLASS_NAME = DossierFile.class.getName();
 }

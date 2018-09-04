@@ -439,6 +439,9 @@
             <finder-column name="dossierStatus" comparator="!="></finder-column>
         </finder>
 
+		<finder return-type="Collection" name="G">
+			<finder-column name="groupId" />
+		</finder>
 	</entity>
 
 	<entity name="DossierFile" table="opencps_dossierfile"
@@ -563,6 +566,9 @@
          <finder return-type="Collection" name="REF_UID">
         	<finder-column name="referenceUid" />
        	</finder>
+         <finder return-type="Collection" name="G">
+        	<finder-column name="groupId" />
+       	</finder>
 	</entity>
 
 	<entity name="DossierLog" table="opencps_dossierlog"
@@ -614,6 +620,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="dossierId" />
 			<finder-column name="notificationType" />
+		</finder>
+
+		<finder return-type="Collection" name="G">
+			<finder-column name="groupId" />
 		</finder>
 
 		<!-- References -->

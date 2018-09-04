@@ -170,9 +170,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 
 		}
 
-		processActionPersistence.update(object);
-
-		return object;
+		return processActionPersistence.update(object);
 	}
 
 	@Deprecated
@@ -256,9 +254,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 
 		}
 
-		processActionPersistence.update(object);
-
-		return object;
+		return processActionPersistence.update(object);
 	}
 	
 	@Deprecated
@@ -337,9 +333,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 
 		}
 
-		processActionPersistence.update(object);
-
-		return object;
+		return processActionPersistence.update(object);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -349,9 +343,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 
 		ProcessAction processAction = processActionPersistence.fetchByPrimaryKey(processActionId);
 
-		processActionPersistence.remove(processAction);
-
-		return processAction;
+		return processActionPersistence.remove(processAction);
 	}
 
 	public Hits searchLucene(LinkedHashMap<String, Object> params, Sort[] sorts, int start, int end,

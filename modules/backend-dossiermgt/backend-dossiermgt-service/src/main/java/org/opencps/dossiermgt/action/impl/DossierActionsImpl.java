@@ -1495,6 +1495,7 @@ public class DossierActionsImpl implements DossierActions {
 
 			_log.info("curStep.getDossierStatus(): " + curStep.getDossierStatus());
 			getDossierStatus(jsStatus, groupId, DOSSIER_SATUS_DC_CODE, curStep.getDossierStatus());
+			getDossierStatus(jsSubStatus, groupId, DOSSIER_SATUS_DC_CODE, curStep.getDossierSubStatus());
 
 			// update reference dossier
 			DossierAction prvAction = DossierActionLocalServiceUtil.getByNextActionId(dossierId, 0l);

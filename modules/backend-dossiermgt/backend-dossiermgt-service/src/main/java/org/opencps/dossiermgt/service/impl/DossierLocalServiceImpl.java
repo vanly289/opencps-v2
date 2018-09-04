@@ -1267,9 +1267,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 		dossier.setSubmitDate(date);
 
-		dossierPersistence.update(dossier);
-
-		return dossier;
+		return dossierPersistence.update(dossier);
 
 	}
 
@@ -2747,4 +2745,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 	// searcher.close();
 	// }
 
+	public List<Dossier> findDossierByGroup(long groupId) {
+		return dossierPersistence.findByG(groupId);
+	}
 }

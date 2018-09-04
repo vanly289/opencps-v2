@@ -99,7 +99,10 @@
 			<order-column name="createDate" />
 		</order>
 
-
+		<finder return-type="Collection" name="GID">
+			<finder-column name="groupId"/>
+		</finder>
+	
 	</entity>
 	
 	<entity name="ServerConfig" local-service="true"

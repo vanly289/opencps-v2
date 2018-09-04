@@ -301,6 +301,14 @@ import backend.utils.ObjectConverterUtil;
 			deliverableTypeURL.setParameter(
 					"mvcPath", "/templates/deliverabletype/deliverabletype_list.ftl");
 			
+			PortletURL systemURL = PortletURLFactoryUtil.create(
+					renderRequest, portletId, themeDisplay.getPlid(),
+					PortletRequest.RENDER_PHASE);
+			systemURL.setPortletMode(PortletMode.VIEW);
+			systemURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+			systemURL.setParameter(
+					"mvcPath", "/templates/system.ftl");
+			
 			urlObject.put("deliverabletype", deliverableTypeURL.toString());
 			urlObject.put("registrationtemplates", registrationTemplatesURL.toString());
 			urlObject.put("serviceinfo_list", serviceInfoListURL.toString());
@@ -331,6 +339,7 @@ import backend.utils.ObjectConverterUtil;
 			urlObject.put("dictcollectiontemp_index", dataTempMgtURL.toString());
 			urlObject.put("serverconfigs", serverConfigsURL.toString());
 			urlObject.put("certnumber", certNumberURL.toString());
+			urlObject.put("system", systemURL.toString());
 			
 			// set object edit
 			long serviceInfoId = ParamUtil.getLong(renderRequest, "serviceInfoId");
