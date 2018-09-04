@@ -175,6 +175,7 @@
 			'${ajax.registrationtemplates}',
 			'${ajax.serverconfigs}',
 			'${ajax.certnumber}',
+			'${ajax.system}'
 		]
 	}).data('kendoTabStrip');
 
