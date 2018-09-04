@@ -14,12 +14,22 @@
 					Sửa bất đồng bộ dữ liệu
 				</a>
 			</li>
+			<li class=""  value="3">
+				<a data-toggle="tab" href="#garbagecollector">
+					Dọn rác hệ thống
+				</a>
+			</li>
+			<li class=""  value="4">
+				<a data-toggle="tab" href="#reindex">
+					Đánh lại chỉ mục
+				</a>
+			</li>
 		</ul>
 		<div id="systemDetail" class="tab-content">
 			<div id="site" class="tab-pane fade in active MT15">
 				<div class="row">
 					<div class="form-group">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmDeleteSite">
+						<button type="button" class="btn btn-active" data-toggle="modal" data-target="#confirmDeleteSite">
 						  Xoá site
 						</button>
 						
@@ -46,7 +56,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div id="progressDeleteSite" class="progress fade out">
+					<div id="progressDeleteSite" class="progress">
 					  <div id="progressSite" class="progress-bar progress-bar-striped active" role="progressbar"
 					  aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
 					    0%
@@ -238,7 +248,7 @@
 			</div>	
 			<div id="resolveconflict" class="tab-pane fade in MT15">
 				<div class="row">
-					<div class="progress fade out">
+					<div id="progressRC" class="progress">
 					  <div class="progress-bar progress-bar-striped" role="progressbar"
 					  aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
 					    0%
@@ -246,18 +256,128 @@
 					</div>
 				</div>
 				<div class="row">
-					<button id="btn-searchconflict" type="button" class="btn btn-success">Kiểm tra đồng bộ hồ sơ</button>
-					<button type="button" class="btn-active btn btn-danger">Sửa bất đồng bộ hồ sơ</button>
+					<button id="btn-searchconflict" type="button" class="btn btn-active btn-success">Kiểm tra đồng bộ hồ sơ</button>
+					<button type="button" class="btn btn-active btn-danger">Sửa bất đồng bộ hồ sơ</button>
 				</div>
 			</div>	
+			<div id="garbagecollector" class="tab-pane fade in active MT15">
+				<div class="row">
+					<div id="progressGC" class="progress">
+					  <div class="progress-bar progress-bar-striped active" role="progressbar"
+					  aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+					    0%
+					  </div>
+					</div>
+				</div>			
+				<div class="row">
+					<div class="form-group">
+						<button type="button" class="btn btn-active btn-primary" data-toggle="modal" data-target="#confirmGC">
+						 	Dọn rác
+						</button>
+						
+						<!-- Modal -->
+						<div class="modal fade" id="confirmGC" tabindex="-1" role="dialog" aria-labelledby="confirmGC" aria-hidden="true">
+						  <div class="modal-dialog modal-dialog-centered" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="confirmGCTitle">Xác nhận ?</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						      	Bạn có chắc chắn dọn sạch rác trong site này ?
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng lại</button>
+						        <button data-dismiss="modal" id="btn-garbagecollector" type="button" class="btn-active btn btn-danger">Dọn sạch</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>								
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<label>Chọn thư mục không dọn</label>
+					</div>
+					<div class="col-xs-12 col-sm-9">
+						<div class="form-group">
+							<select id="selectFolders" class="form-control selectpicker" data-style="btn-info" multiple>
+								<#list folders as folder>
+									<option value="${folder.folderId}">${folder.name}</option>
+								<#else>
+								    
+								</#list>
+							</select>
+						</div>
+					</div>
+				</div>				
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<label>Chọn tệp không dọn dẹp</label>
+					</div>
+					<div class="col-xs-12 col-sm-9">
+						<div class="form-group">
+							<select id="selectFiles" class="form-control selectpicker" data-style="btn-info" multiple>
+								<#list files as file>
+									<option value="${file.fileEntryId}">${file.fileName}</option>
+								<#else>
+								    
+								</#list>
+							</select>
+						</div>
+					</div>
+				</div>				
+			</div>
+			<div id="reindex" class="tab-pane fade in active MT15">
+				<div class="row">
+					<div id="progressReindexAll" class="progress">
+					  <div class="progress-bar progress-bar-striped active" role="progressbar"
+					  aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+					    0%
+					  </div>
+					</div>
+				</div>			
+				<div class="row">
+					<div class="form-group">
+						<button type="button" class="btn btn-active" data-toggle="modal" data-target="#confirmReindexAll">
+						  Đánh lại chỉ mục tất cả
+						</button>
+						
+						<div class="modal fade" id="confirmReindexAll" tabindex="-1" role="dialog" aria-labelledby="confirmReindexAll" aria-hidden="true">
+						  <div class="modal-dialog modal-dialog-centered" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="confirmDeleteTitle">Xác nhận</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						      	Bạn có chắc chắn muốn đánh lại toàn bộ chỉ mục ?
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng lại</button>
+						        <button data-dismiss="modal" id="btn-reindexall" type="button" class="btn-active btn btn-danger">Đánh lại chỉ mục</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>							
+					</div>
+				</div>
+			</div>			
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 	(function($){
 		var backgroundTaskId = 0;
+		$('#progressDeleteSite').hide();
+		$('#progressReindexAll').hide();
+		$('#progressRC').hide();
+		$('#progressGC').hide();
 		
-		$('#progressDeleteSite').attr('class', 'progress fade out');
 		$('#btn-searchconflict').click(function() {
 			$.ajax({
 				url: "${api.server}" + "/dossiers/lucene/searchconflict",
@@ -287,7 +407,7 @@
 						$('.progress-bar').css('width', result.percentage +'%').attr('aria-valuenow', result.percentage);
 						$('#progressSite').text(result.percentage + "% " + result.executionLog);
 						if (result.percentage == 100) {
-							$('#progressDeleteSite').attr('class', 'progress fade out');			
+							$('#progressDeleteSite').hide();			
 						}
 						else {
 					        timeout();			
@@ -297,7 +417,32 @@
 		    }, 1000);
 		};
 		
+		var checkReindexAllProgress = function timeout() {
+		    setTimeout(function () {
+				$.ajax({
+					url: "${api.server}" + "/system/progress/" + backgroundTaskId,
+					type: "GET",
+					dataType: "json",
+					headers: {"groupId": ${groupId}},
+					data: {
+								
+					},
+					success: function(result) {
+						$('.progress-bar').css('width', result.percentage +'%').attr('aria-valuenow', result.percentage);
+						$('#progressReindexAll').text(result.percentage + "% " + result.executionLog);
+						if (result.percentage == 100) {
+							$('#progressReindexAll').hide();			
+						}
+						else {
+					        timeout();			
+						}
+					}
+				});
+		    }, 1000);
+		};
+				
 		$('#btn-deletesite').click(function() {
+			$('#progressDeleteSite').show();
 			$.ajax({
 				url: "${api.server}" + "/system/clean/" + $('#selectSite').val(),
 				type: "POST",
@@ -308,10 +453,72 @@
 				},
 				success: function(result) {
 					backgroundTaskId = result.backgroundTaskId;
-					$('#progressDeleteSite').attr('class', 'progress');	
+					$('#progressDeleteSite').show();	
 					checkProgress();		
 				}
 			});			
 		});
+		
+		$('#btn-reindexall').click(function() {
+		$('#progressReindexAll').show();
+			$.ajax({
+				url: "${api.server}" + "/system/reindexall",
+				type: "POST",
+				dataType: "json",
+				headers: {"groupId": ${groupId}},
+				data: {
+							
+				},
+				success: function(result) {
+					backgroundTaskId = result.backgroundTaskId;
+					$('#progressReindexAll').show();	
+					checkReindexAllProgress();		
+				}
+			});			
+		});		
+		
+		var checkGarbageCollectorProgress = function timeout() {
+		    setTimeout(function () {
+				$.ajax({
+					url: "${api.server}" + "/system/progress/" + backgroundTaskId,
+					type: "GET",
+					dataType: "json",
+					headers: {"groupId": ${groupId}},
+					data: {
+								
+					},
+					success: function(result) {
+						$('.progress-bar').css('width', result.percentage +'%').attr('aria-valuenow', result.percentage);
+						$('#progressGC').text(result.percentage + "% " + result.executionLog);
+						if (result.percentage == 100) {
+							$('#progressGC').hide();			
+						}
+						else {
+					        timeout();			
+						}
+					}
+				});
+		    }, 1000);
+		};
+				
+		$('#btn-garbagecollector').click(function() {
+			$('#progressGC').show();
+			$.ajax({
+				url: "${api.server}" + "/system/garbagecollector",
+				type: "POST",
+				dataType: "json",
+				headers: {"groupId": ${groupId}},
+				data: {
+					"excludeFolders": $('#selectFolders').val() ? $('#selectFolders').val().join(",") : "",	
+					"excludeFiles": $('#selectFiles').val() ? $('#selectFiles').val().join(",") : ""
+				},
+				success: function(result) {
+					backgroundTaskId = result.backgroundTaskId;
+					$('#progressGC').show();	
+					checkGarbageCollectorProgress();		
+				}
+			});			
+		});		
+		
 	})(jQuery);
 </script>

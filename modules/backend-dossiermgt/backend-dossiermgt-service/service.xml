@@ -1050,6 +1050,9 @@
 			<finder-column name="actionName" />
 		</finder>
 
+		<finder return-type="Collection" name="GID">
+			<finder-column name="groupId" />
+		</finder>
 	</entity>
 
 	<entity local-service="true" name="DossierAction"

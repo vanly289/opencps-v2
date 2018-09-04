@@ -1,8 +1,10 @@
 package org.opencps.api.controller.util;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.opencps.api.serviceprocess.model.ProcessActionResultsModel;
 import org.opencps.background.executor.SiteCleanBackgroundTaskExecutor;
 import org.opencps.communication.action.NotificationTemplateInterface;
 import org.opencps.communication.action.impl.NotificationTemplateActions;
@@ -12,23 +14,31 @@ import org.opencps.communication.service.NotificationQueueLocalServiceUtil;
 import org.opencps.communication.service.NotificationtemplateLocalServiceUtil;
 import org.opencps.dossiermgt.action.DossierActions;
 import org.opencps.dossiermgt.action.ServiceInfoActions;
+import org.opencps.dossiermgt.action.ServiceProcessActions;
 import org.opencps.dossiermgt.action.impl.DossierActionsImpl;
 import org.opencps.dossiermgt.action.impl.ServiceInfoActionsImpl;
+import org.opencps.dossiermgt.action.impl.ServiceProcessActionsImpl;
 import org.opencps.dossiermgt.constants.DossierFileTerm;
 import org.opencps.dossiermgt.constants.DossierLogTerm;
 import org.opencps.dossiermgt.constants.DossierTerm;
+import org.opencps.dossiermgt.constants.ProcessActionTerm;
 import org.opencps.dossiermgt.constants.ServiceInfoTerm;
+import org.opencps.dossiermgt.constants.ServiceProcessTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierLog;
+import org.opencps.dossiermgt.model.ProcessAction;
 import org.opencps.dossiermgt.model.ServiceInfo;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLogLocalServiceUtil;
+import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceInfoLocalServiceUtil;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -42,8 +52,10 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 public class SystemUtils {
 	public static void cleanNotificationTemplate(long groupId, long userId, ServiceContext serviceContext) throws PortalException {
@@ -235,6 +247,89 @@ public class SystemUtils {
 		for (ServiceInfo si : infos) {
 			ServiceInfoLocalServiceUtil.removeServiceInfo(si.getServiceInfoId());
 		}
+	}
+	
+	public static void reindexProcessAction(long groupId, long userId, ServiceContext serviceContext) {
+		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+		ServiceProcessActions actions = new ServiceProcessActionsImpl();
+		Indexer<ProcessAction> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(ProcessAction.class);
+		
+		params.put(Field.GROUP_ID, String.valueOf(groupId));
+
+		Sort[] sorts = new Sort[] {};
+
+		JSONObject jsonData;
+		try {
+			jsonData = actions.getProcessActions(userId, serviceContext.getCompanyId(), groupId,
+					params, sorts, QueryUtil.ALL_POS, QueryUtil.ALL_POS, serviceContext);
+			if (jsonData.getInt("total") > 0) {
+				List<Document> lstDocs = (List<Document>) jsonData.get("data");
+				for (Document doc : lstDocs) {
+					long processActionId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+					long companyId = GetterUtil.getLong(doc.get(Field.COMPANY_ID));
+					String uid = doc.get(Field.UID);
+					indexer.delete(companyId, uid);
+					ProcessAction pa = ProcessActionLocalServiceUtil.fetchProcessAction(processActionId);
+					if (pa != null) {
+						indexer.delete(pa);
+					}
+				}
+			}
+		} catch (PortalException e) {
+			e.printStackTrace();
+		}
+
+		List<ProcessAction> lstActions = ProcessActionLocalServiceUtil.findByGroup(groupId);
+		for (ProcessAction pa : lstActions) {
+			try {
+				indexer.reindex(pa);
+			} catch (SearchException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void garbageCollector(long groupId, long userId, String excludeFolders, String excludeFiles, ServiceContext serviceContext) {
+		String[] folderIds = StringUtil.split(excludeFolders);
+		List<DLFileEntry> lstExcludes = new ArrayList<>();
+		for (String folderId : folderIds) {
+			List<DLFileEntry> lstFileEntries = DLFileEntryLocalServiceUtil.getFileEntries(groupId, GetterUtil.getLong(folderId));
+			lstExcludes.addAll(lstFileEntries);
+		}
+		String[] fileEntryIds = StringUtil.split(excludeFiles);
+		for (String fileEntryId : fileEntryIds) {
+			DLFileEntry fileEntry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(GetterUtil.getLong(fileEntryId));
+			if (fileEntry != null) {
+				lstExcludes.add(fileEntry);
+			}
+		}
+				
+		List<DLFileEntry> allFiles = DLFileEntryLocalServiceUtil.getGroupFileEntries(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		int count = 0;
+		for (DLFileEntry fentry : allFiles) {
+			boolean found = false;
+			for (DLFileEntry temp : lstExcludes) {
+				if (temp.getFileEntryId() == fentry.getFileEntryId()) {
+					found = true;
+					break;
+				}
+			}
+			DossierFile df = DossierFileLocalServiceUtil.getByFileEntryId(fentry.getFileEntryId());
+			if (df != null) {
+				found = true;
+			}
+			if (!found) {
+				try {
+					DLAppLocalServiceUtil.deleteFileEntry(fentry.getFileEntryId());		
+				}
+				catch (PortalException e) {
+					
+				}				
+				count++;
+			}
+		}
+		LOGGER.info("Delete files: " + count);
 	}
 	
 	public static final Log LOGGER = LogFactoryUtil

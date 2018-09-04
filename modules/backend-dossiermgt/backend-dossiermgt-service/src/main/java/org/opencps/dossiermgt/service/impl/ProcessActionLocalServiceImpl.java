@@ -586,4 +586,8 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 	public ProcessAction getByServiceProcess(long serviceProcessId, String actionCode) {
 		return processActionPersistence.fetchBySPID_AC(serviceProcessId, actionCode);
 	}
+	
+	public List<ProcessAction> findByGroup(long groupId) {
+		return processActionPersistence.findByGID(groupId);
+	}
 }
