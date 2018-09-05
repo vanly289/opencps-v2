@@ -35,6 +35,8 @@ import org.opencps.dossiermgt.service.DossierLogLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceInfoLocalServiceUtil;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -53,6 +56,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -273,6 +277,7 @@ public class SystemUtils {
 					ProcessAction pa = ProcessActionLocalServiceUtil.fetchProcessAction(processActionId);
 					if (pa != null) {
 						indexer.delete(pa);
+						ResourceLocalServiceUtil.deleteResource(pa.getCompanyId(), ProcessAction.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, pa.getProcessActionId());
 					}
 				}
 			}
@@ -283,7 +288,7 @@ public class SystemUtils {
 		List<ProcessAction> lstActions = ProcessActionLocalServiceUtil.findByGroup(groupId);
 		for (ProcessAction pa : lstActions) {
 			try {
-				indexer.reindex(pa);
+				indexer.reindex(ProcessAction.class.getName(), pa.getProcessActionId());
 			} catch (SearchException e) {
 				e.printStackTrace();
 			}
@@ -320,12 +325,26 @@ public class SystemUtils {
 				found = true;
 			}
 			if (!found) {
+				LOGGER.info("Garbage collector delete file: " + fentry.getFileName());
+				try {
+					AssetEntry asset = AssetEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), fentry.getPrimaryKey());
+					if (asset != null)
+						AssetEntryLocalServiceUtil.deleteAssetEntry(asset);					
+				}
+				catch (PortalException e) {
+					
+				}
 				try {
 					DLAppLocalServiceUtil.deleteFileEntry(fentry.getFileEntryId());		
 				}
 				catch (PortalException e) {
+				}	
+				try {
+					ResourceLocalServiceUtil.deleteResource(fentry.getCompanyId(), DLFileEntry.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, fentry.getFileEntryId());
+				}
+				catch (Exception e) {
 					
-				}				
+				}
 				count++;
 			}
 		}

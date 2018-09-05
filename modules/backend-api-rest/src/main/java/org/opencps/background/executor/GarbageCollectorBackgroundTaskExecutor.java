@@ -42,7 +42,7 @@ public class GarbageCollectorBackgroundTaskExecutor extends BaseBackgroundTaskEx
         Long siteId = (Long)taskContextMap.get("groupId") ;
         String excludeFolders = (String)taskContextMap.get("excludeFolders");
         String excludeFiles = (String)taskContextMap.get("excludeFiles");
-        
+        LOGGER.info("------GARBAGE COLLECTOR FILE------");
         Group site = GroupLocalServiceUtil.fetchGroup(GetterUtil.getLong(siteId));
         int progress = 0;
 		ServiceContext serviceContext = new ServiceContext();
