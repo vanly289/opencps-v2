@@ -1053,6 +1053,11 @@
 		<finder return-type="Collection" name="GID">
 			<finder-column name="groupId" />
 		</finder>
+		
+		<finder return-type="Collection" name="GID_SPID">
+			<finder-column name="groupId" />
+			<finder-column name="serviceProcessId" />
+		</finder>		
 	</entity>
 
 	<entity local-service="true" name="DossierAction"

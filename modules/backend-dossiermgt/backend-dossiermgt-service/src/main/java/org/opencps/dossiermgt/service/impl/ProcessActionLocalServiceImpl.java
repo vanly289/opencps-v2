@@ -590,4 +590,12 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 	public List<ProcessAction> findByGroup(long groupId) {
 		return processActionPersistence.findByGID(groupId);
 	}
+	
+	public List<ProcessAction> findByGroupAndProcess(long groupId, long serviceProcessId, int start, int end) {
+		return processActionPersistence.findByGID_SPID(groupId, serviceProcessId, start, end);
+	}
+	
+	public int countByGroupAndProcess(long groupId, long serviceProcessId) {
+		return processActionPersistence.countByGID_SPID(groupId, serviceProcessId);
+	}
 }

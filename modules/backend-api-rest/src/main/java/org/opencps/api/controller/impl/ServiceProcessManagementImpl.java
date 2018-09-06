@@ -48,6 +48,7 @@ import org.opencps.dossiermgt.model.ProcessStep;
 import org.opencps.dossiermgt.model.ProcessStepRole;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.model.ServiceProcessRole;
+import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 
@@ -999,10 +1000,12 @@ public class ServiceProcessManagementImpl implements ServiceProcessManagement {
 
 			JSONObject jsonData = actions.getProcessActions(user.getUserId(), serviceContext.getCompanyId(), groupId,
 					params, sorts, query.getStart(), query.getEnd(), serviceContext);
-
+//			List<ProcessAction> lstActions = ProcessActionLocalServiceUtil.findByGroupAndProcess(groupId, id, query.getStart(), query.getEnd());
+//			int count = ProcessActionLocalServiceUtil.countByGroupAndProcess(groupId, id);
+			
 			results.setTotal(jsonData.getInt("total"));
 			results.getData()
-					.addAll(ServiceProcessUtils.mappingToProcessActionData((List<Document>) jsonData.get("data")));
+					.addAll(ServiceProcessUtils.mappingToProcessActionData((List<Document>)jsonData.get("data")));
 
 			return Response.status(200).entity(results).build();
 
