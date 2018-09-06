@@ -157,15 +157,29 @@ public class DossierActionManagementImpl implements DossierActionManagement {
 			_log.info("dossierActionUsers___size()" + dossierActionUsers.size());
 
 			boolean hasPermission = false;
+			
+			_log.info("isSpecial(dossier)__" + isSpecial(dossier));
 
 			if (isSpecial(dossier)) {
 				for (DossierActionUser actionUser : dossierActionUsers) {
 					if (actionUser.getUserId() == userId && actionUser.getModerator() == 1) {
 						hasPermission = true;
+						
+						break;
 					}
 				}
 			} else {
-				hasPermission = hasPermisson(dossier, userId);
+				boolean isInUserAction = false;
+				
+				for (DossierActionUser actionUser : dossierActionUsers) {
+					if (actionUser.getUserId() == userId && actionUser.getModerator() == 1) {
+						isInUserAction = true;
+						
+						break;
+					}
+				}
+				
+				hasPermission = isInUserAction || hasPermisson(dossier, userId);
 			}
 
 			if (!hasPermission) {

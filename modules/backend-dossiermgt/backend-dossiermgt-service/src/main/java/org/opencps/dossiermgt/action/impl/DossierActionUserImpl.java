@@ -92,9 +92,8 @@ public class DossierActionUserImpl implements DossierActionUser {
 //			_log.info("roleId: "+roleId);
 			// Get list user
 			List<User> users = UserLocalServiceUtil.getRoleUsers(roleId);
-			for (int j = 0; j < users.size(); j++) {
-				_log.info("**** UserID: "+i +"." + j + ". "+ users.get(i).getUserId() + " " + users.get(i).getFullName());
-			}
+			
+		
 			
 			if (assignUserId > 0) {
 				for (User user : users) {
@@ -147,11 +146,6 @@ public class DossierActionUserImpl implements DossierActionUser {
 							// Add User
 							DossierActionUserLocalServiceUtil.addDossierActionUser(model);
 						}
-//						model.setModerator(mod);
-//						model.setAssigned(assigned);
-//						model.setVisited(false);
-						// Add User
-//						DossierActionUserLocalServiceUtil.addDossierActionUser(model);
 					}
 				}
 			}
