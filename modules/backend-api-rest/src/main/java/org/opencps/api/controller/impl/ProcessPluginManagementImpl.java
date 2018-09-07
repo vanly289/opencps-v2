@@ -471,26 +471,19 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 	private String _getFormData(long groupId, String fileTemplateNo, long dossierId, boolean autoRun,
 			String dossierTemplateNo, boolean original, ServiceContext context) {
 
-		_log.info("RUN TO GET FORM DATA");
-
 		String formData = StringPool.BLANK;
-
 		fileTemplateNo = StringUtil.replaceFirst(fileTemplateNo, "#", StringPool.BLANK);
 
 		try {
 			Dossier dossier = DossierLocalServiceUtil.getDossier(dossierId);
-
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 					fileTemplateNo, false, new DossierFileComparator(false, "createDate", Date.class));
 			List<DossierFile> lstDossierFiles = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO(dossierId,
 					fileTemplateNo, false);
 
 			List<DossierPart> lstParts = DossierPartLocalServiceUtil.getByTemplateNo(groupId, dossier.getDossierTemplateNo());
-			
 			DossierPart dossierPart = null;
 
-//			dossierParth = DossierPartLocalServiceUtil.getByFileTemplateNo(groupId, fileTemplateNo);		
-			
 			for (DossierPart part : lstParts) {
 				if (part.getFileTemplateNo().equals(fileTemplateNo)) {
 					dossierPart = part;
@@ -498,12 +491,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 				}
 			}
 
-			_log.info("Form data: " + dossierFile.getFormData());
-			_log.info("Dossier part: " + dossierPart.getPartNo() + ", " + dossierPart.getSampleData());
 			formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
 
-			_log.info(formData);
-			_log.info("ORIGINAL PLUGIN: " + original);
 			DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
 			
 			if (Validator.isNotNull(dossierPart.getDeliverableType())) {
@@ -512,26 +501,22 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 					String allowKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
 					String acceptedKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
 					
-			if (original) {
+					if (original) {
 						String mappingData = dlt.getMappingData();
 						JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
 						if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
 							String deliverables = mappingDataObj.getString(DeliverableTypesTerm.DELIVERABLES_KEY);
-							_log.info("--------DELIVERABLES----------" + deliverables);
-				if (Validator.isNotNull(dossierFile)) {
-					formData = dossierFile.getFormData();
-				}
+							if (Validator.isNotNull(dossierFile)) {
+								formData = dossierFile.getFormData();
+							}
 
 							JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 							JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
 														
 							if (Validator.isNull(deliverables)) {
-								_log.info("Form data plugin: " + formData);
 							}
 							else {
 								if (formDataObj.has(deliverables)) {
-									_log.info("----GENERATE MANY DELIVERABLES----:" + formDataObj.toJSONString());
-									
 									JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
 
 									for (int i = 0; i < deliverablesArr.length(); i++) {
@@ -586,7 +571,6 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
 						if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
 							String deliverables = mappingDataObj.getString(DeliverableTypesTerm.DELIVERABLES_KEY);
-							_log.info("--------DELIVERABLES----------" + deliverables);
 							String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dlt);
 							String signNameKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_SIGNNAME, dlt);
 							
@@ -598,7 +582,6 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 								DossierFileActions actions = new DossierFileActionsImpl();
 
 								if (Validator.isNull(dossierFile)) {
-
 									if (autoRun) {
 										// create DossierFile
 
@@ -606,22 +589,17 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 												dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
 												StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
 
-										_log.info("UPDATED DOSSIERFILE");
-
 										actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
 												context);
 
 									} else {
 										// add temp File
-
 									}
 
 								} else {
 									// formData = dossierFile.getFormData();
-
 									actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
 											context);
-
 								}
 							}
 							else {
@@ -630,7 +608,6 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 										
 								JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
 								JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
-								_log.info("DELIVERABLE ARRAY: " + deliverablesArr);
 								
 								for (int i = 0; i < deliverablesArr.length(); i++) {
 
@@ -677,7 +654,6 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 															dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
 															StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
 
-													_log.info("UPDATED DOSSIERFILE");
 													if (Validator.isNotNull(dossierFile.getDeliverableCode())) {
 														newFormDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());														
 													}
@@ -692,7 +668,6 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 											} else {
 												if (autoRun) {
-													_log.info("UPDATED DOSSIERFILE");
 													if (Validator.isNotNull(foundFile.getDeliverableCode())) {
 														newFormDataObj.put(deliverableCodeKey, foundFile.getDeliverableCode());														
 													}
@@ -748,8 +723,15 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 				}
 			}
 //			DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossier.getGroupId(), fileTemplateNo);
-
-			formData = part.getFormReport();
+			if (part != null) {
+				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(part.getGroupId(), part.getDeliverableType());
+				if (dlt != null) {
+					formData = dlt.getFormReport();
+				}
+				else {
+					formData = part.getFormReport();									
+				}
+			}
 
 		} catch (Exception e) {
 			_log.info("Cant get formdata with fileTemplateNo_" + fileTemplateNo);
