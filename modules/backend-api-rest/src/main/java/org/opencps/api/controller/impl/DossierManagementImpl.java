@@ -267,7 +267,7 @@ public class DossierManagementImpl implements DossierManagement {
 
 	@Override
 	public Response getDossiersTest(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext, DossierSearchModel query) {
+			User user, ServiceContext serviceContext, DossierSearchModel query, String referenceUid) {
 
 		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
 		BackendAuth auth = new BackendAuthImpl();
@@ -372,6 +372,7 @@ public class DossierManagementImpl implements DossierManagement {
 			params.put(DossierTerm.DOSSIER_ID_CTN, dossierIdCTN);
 			params.put(DossierTerm.FROM_SUBMIT_DATE, fromSubmitDate);
 			params.put(DossierTerm.TO_SUBMIT_DATE, toSubmitDate);
+			params.put(DossierTerm.REFERENCE_UID, referenceUid);
 
 			// _log.info("4");
 			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,

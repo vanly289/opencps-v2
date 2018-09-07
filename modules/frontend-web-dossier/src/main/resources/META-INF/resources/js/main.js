@@ -327,7 +327,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			endDate: null,
 			endDateStr: '',
 			endDateMenu: '',
-			dossierIdCTN: '',
+			referenceUid: '',
 			dossierNo: '',
 			serviceInfo: null,
 			applicantIdNo: null,
@@ -894,7 +894,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						searchKeyWord: function () {
 							var vm = this
 							vm.applicantIdNo = '';
-							vm.dossierIdCTN = '';
+							vm.referenceUid = '';
 							vm.dossierStatus = '';
 							vm.startDate = '';
 							vm.endDate = '';
@@ -4082,7 +4082,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								agency: agencies,
 								follow: true,
 								dossierNo: vm.dossierNo,
-								dossierIdCTN: vm.dossierIdCTN,
+								referenceUid: vm.referenceUid,
 								dossierStatus: vm.dossierStatus,
 								start: vm.danhSachHoSoTablepage * 15 - 15,
 								end: vm.danhSachHoSoTablepage * 15,

@@ -1685,7 +1685,8 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 		// _log.info("STATUS_REG Local Search: "+statusReg);
 		Long notStatusReg = GetterUtil.getLong(params.get(DossierTerm.NOT_STATUS_REG));
 		String online = GetterUtil.getString(params.get(DossierTerm.ONLINE));
-
+		String referenceUid = GetterUtil.getString(params.get(DossierTerm.REFERENCE_UID));
+		
 		Indexer<Dossier> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Dossier.class);
 
 		searchContext.addFullQueryEntryClassName(CLASS_NAME);
@@ -2098,6 +2099,14 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
 		}
 
+		if (Validator.isNotNull(referenceUid)) {
+			MultiMatchQuery query = new MultiMatchQuery(referenceUid);
+
+			query.addFields(DossierTerm.REFERENCE_UID);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);
 
 		return IndexSearcherHelperUtil.search(searchContext, booleanQuery);
@@ -2147,7 +2156,8 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 		Long statusReg = GetterUtil.getLong(params.get(DossierTerm.STATUS_REG));
 		Long notStatusReg = GetterUtil.getLong(params.get(DossierTerm.NOT_STATUS_REG));
 		// _log.info("statusReg: "+statusReg);
-
+		String referenceUid = GetterUtil.getString(params.get(DossierTerm.REFERENCE_UID));
+		
 		Indexer<Dossier> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Dossier.class);
 
 		searchContext.addFullQueryEntryClassName(CLASS_NAME);
@@ -2550,6 +2560,14 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
 		}
 
+		if (Validator.isNotNull(referenceUid)) {
+			MultiMatchQuery query = new MultiMatchQuery(referenceUid);
+
+			query.addFields(DossierTerm.REFERENCE_UID);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);
 
 		return IndexSearcherHelperUtil.searchCount(searchContext, booleanQuery);
