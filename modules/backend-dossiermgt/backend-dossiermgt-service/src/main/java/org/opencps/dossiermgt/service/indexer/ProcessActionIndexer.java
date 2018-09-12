@@ -62,15 +62,29 @@ public class ProcessActionIndexer extends BaseIndexer<ProcessAction> {
 		document.addTextSortable(ProcessActionTerm.PRESTEP_NAME, getStepName(object.getGroupId(), object.getPreStepCode(), object.getServiceProcessId()));
 		document.addTextSortable(ProcessActionTerm.POSTSTEP_CODE, object.getPostStepCode());
 		document.addTextSortable(ProcessActionTerm.POSTSTEP_NAME, getStepName(object.getGroupId(), object.getPostStepCode(), object.getServiceProcessId()));
-		document.addTextSortable(ProcessActionTerm.AUTO_EVENT, object.getAutoEvent());
-		document.addTextSortable(ProcessActionTerm.PRE_CONDITION, object.getPreCondition());
+		if (Validator.isNotNull(object.getAutoEvent())) {
+			document.addTextSortable(ProcessActionTerm.AUTO_EVENT, object.getAutoEvent());			
+		}
+		if (Validator.isNotNull(object.getPreCondition())) {
+			document.addTextSortable(ProcessActionTerm.PRE_CONDITION, object.getPreCondition());			
+		}
 		document.addTextSortable(ProcessActionTerm.ACTION_CODE, object.getActionCode());
 		document.addTextSortable(ProcessActionTerm.ACTION_NAME, object.getActionName());
-		document.addTextSortable(ProcessActionTerm.PAYMENT_FEE, object.getPaymentFee());
-		document.addTextSortable(ProcessActionTerm.SYNC_ACTION_CODE, object.getSyncActionCode());
-		document.addTextSortable(ProcessActionTerm.CREATE_DOSSIER_FILES, object.getCreateDossierFiles());
-		document.addTextSortable(ProcessActionTerm.RETURN_DOSSIER_FILES, object.getReturnDossierFiles());
-		document.addTextSortable(ProcessActionTerm.MAKE_BRIEF_NOTE, object.getMakeBriefNote());
+		if (Validator.isNotNull(object.getPaymentFee())) {
+			document.addTextSortable(ProcessActionTerm.PAYMENT_FEE, object.getPaymentFee());			
+		}
+		if (Validator.isNotNull(object.getSyncActionCode())) {
+			document.addTextSortable(ProcessActionTerm.SYNC_ACTION_CODE, object.getSyncActionCode());			
+		}
+		if (Validator.isNotNull(object.getCreateDossierFiles())) {
+			document.addTextSortable(ProcessActionTerm.CREATE_DOSSIER_FILES, object.getCreateDossierFiles());			
+		}
+		if (Validator.isNotNull(object.getReturnDossierFiles())) {
+			document.addTextSortable(ProcessActionTerm.RETURN_DOSSIER_FILES, object.getReturnDossierFiles());			
+		}
+		if (Validator.isNotNull(object.getMakeBriefNote())) {
+			document.addTextSortable(ProcessActionTerm.MAKE_BRIEF_NOTE, object.getMakeBriefNote());			
+		}
 
 		document.addTextSortable(ProcessActionTerm.ALLOW_ASSIGN_USER, Boolean.toString(object.getAllowAssignUser()));
 		document.addTextSortable(ProcessActionTerm.REQUEST_PAYMENT, Boolean.toString(object.getRequestPayment()));
@@ -78,8 +92,12 @@ public class ProcessActionIndexer extends BaseIndexer<ProcessAction> {
 
 		document.addTextSortable(ProcessActionTerm.CREATE_DOSSIER_NO, Boolean.toString(object.getCreateDossierNo()));
 		document.addTextSortable(ProcessActionTerm.ESIGNATURE, Boolean.toString(object.getESignature()));
-		document.addTextSortable(ProcessActionTerm.CONFIG_NOTE, object.getConfigNote());
-		document.addTextSortable("dossierTemplateNo", object.getDossierTemplateNo());
+		if (Validator.isNotNull(object.getConfigNote())) {
+			document.addTextSortable(ProcessActionTerm.CONFIG_NOTE, object.getConfigNote());			
+		}
+		if (Validator.isNotNull(object.getDossierTemplateNo())) {
+			document.addTextSortable("dossierTemplateNo", object.getDossierTemplateNo());			
+		}
 
 		return document;
 

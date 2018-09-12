@@ -13,6 +13,9 @@
 
 <#assign ajax = (Request.ajax)!>
 <#assign api = (Request.api)!>
+<#assign sites = (Request.sites)!>
+<#assign folders = (Request.folders)!>
+<#assign files = (Request.files)!>
 <#assign serviceInfoStatuses = (Request.serviceInfoStatuses)!>
 <#assign serviceInfo = (Request.SERVICE_INFO)!>
 <#assign portletNamespace = (Request.portletNamespace)!>

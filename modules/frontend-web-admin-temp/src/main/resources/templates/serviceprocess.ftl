@@ -184,6 +184,7 @@
 				}
 				$("#service_process_step_listview").data("kendoListView").dataSource.read({serviceProcessId: dataItem.id});
 				
+				$("#service_process_action_listview").data("kendoListView").dataSource.read({serviceProcessId: dataItem.id});
 				try{
 					$("#service_process_action_listview").data("kendoListView").dataSource.page(1);
 				}catch(e){

@@ -170,9 +170,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 
 		}
 
-		processActionPersistence.update(object);
-
-		return object;
+		return processActionPersistence.update(object);
 	}
 
 	@Deprecated
@@ -256,9 +254,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 
 		}
 
-		processActionPersistence.update(object);
-
-		return object;
+		return processActionPersistence.update(object);
 	}
 	
 	@Deprecated
@@ -337,9 +333,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 
 		}
 
-		processActionPersistence.update(object);
-
-		return object;
+		return processActionPersistence.update(object);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -349,9 +343,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 
 		ProcessAction processAction = processActionPersistence.fetchByPrimaryKey(processActionId);
 
-		processActionPersistence.remove(processAction);
-
-		return processAction;
+		return processActionPersistence.remove(processAction);
 	}
 
 	public Hits searchLucene(LinkedHashMap<String, Object> params, Sort[] sorts, int start, int end,
@@ -593,5 +585,17 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 	//LamTV_process
 	public ProcessAction getByServiceProcess(long serviceProcessId, String actionCode) {
 		return processActionPersistence.fetchBySPID_AC(serviceProcessId, actionCode);
+	}
+	
+	public List<ProcessAction> findByGroup(long groupId) {
+		return processActionPersistence.findByGID(groupId);
+	}
+	
+	public List<ProcessAction> findByGroupAndProcess(long groupId, long serviceProcessId, int start, int end) {
+		return processActionPersistence.findByGID_SPID(groupId, serviceProcessId, start, end);
+	}
+	
+	public int countByGroupAndProcess(long groupId, long serviceProcessId) {
+		return processActionPersistence.countByGID_SPID(groupId, serviceProcessId);
 	}
 }

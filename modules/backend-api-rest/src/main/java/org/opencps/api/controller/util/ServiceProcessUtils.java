@@ -24,6 +24,7 @@ import org.opencps.dossiermgt.model.ProcessStepRole;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.model.ServiceProcessRole;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
+import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
 
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -268,6 +269,61 @@ public class ServiceProcessUtils {
 		return outputs;
 	}
 
+	public static List<ProcessActionDataModel> mappingToProcessActionFromList(List<ProcessAction> lstActions) {
+
+		List<ProcessActionDataModel> outputs = new ArrayList<ProcessActionDataModel>();
+
+		for (ProcessAction action : lstActions) {
+			ProcessActionDataModel model = new ProcessActionDataModel();
+			
+			model.setProcessActionId(String.valueOf(action.getProcessActionId()));
+			model.setActionCode(action.getActionCode());
+			model.setActionName(action.getActionName());
+			model.setPreStepCode(action.getPreStepCode());
+			ProcessStep preStep = ProcessStepLocalServiceUtil.fetchBySC_GID(action.getPreStepCode(), action.getGroupId(), action.getServiceProcessId());
+			model.setPreStepName(preStep != null ? preStep.getStepName() : StringPool.BLANK);
+			ProcessStep postStep = ProcessStepLocalServiceUtil.fetchBySC_GID(action.getPostStepCode(), action.getGroupId(), action.getServiceProcessId());
+			model.setPostStepCode(action.getPostStepCode());
+			model.setPostStepName(postStep != null ? postStep.getStepName() : StringPool.BLANK);
+			model.setAutoEvent(action.getAutoEvent());
+			model.setPreCondition(action.getPreCondition());
+			model.setAllowAssignUser(String.valueOf(action.getAllowAssignUser()));
+			model.setAssignUserId(String.valueOf(action.getAssignUserId()));
+			User user = UserLocalServiceUtil.fetchUser(action.getAssignUserId());
+			model.setAssignUserName(user != null ? user.getFullName() : StringPool.BLANK);
+			model.setRequestPayment(String.valueOf(action.getRequestPayment()));
+			model.setPaymentFee(action.getPaymentFee());
+			model.getCreateDossierFiles().addAll(ListUtil.toList(
+					StringUtil.split(action.getCreateDossierFiles().trim(), StringPool.COMMA)));
+			model.getReturnDossierFiles().addAll(ListUtil.toList(
+					StringUtil.split(action.getReturnDossierFiles().trim(), StringPool.COMMA)));
+			model.setMakeBriefNote(action.getMakeBriefNote());
+			model.setSyncActionCode(action.getSyncActionCode());
+			model.setRollbackable(String.valueOf(action.getRollbackable()));
+			model.setCreateDossierNo(Boolean.valueOf(action.getCreateDossierNo()));
+			model.seteSignature(Boolean.valueOf(action.getESignature()));
+			
+			if (Validator.isNull(action.getConfigNote())) {
+				ProcessAction actionE = ProcessActionLocalServiceUtil.fetchProcessAction(GetterUtil.getLong(action.getProcessActionId()));
+				
+				if (Validator.isNotNull(action)) {
+					String configNote = actionE.getConfigNote();
+					
+					model.setConfigNote(configNote);
+
+				}
+			} else {
+				model.setConfigNote(action.getConfigNote());
+
+			}
+			model.setDossierTemplateNo(action.getDossierTemplateNo());
+			
+			outputs.add(model);
+		}
+
+		return outputs;
+	}
+	
 	public static ProcessStepInputModel mapptingToStepPOST(ProcessStep step) {
 
 		ProcessStepInputModel model = new ProcessStepInputModel();

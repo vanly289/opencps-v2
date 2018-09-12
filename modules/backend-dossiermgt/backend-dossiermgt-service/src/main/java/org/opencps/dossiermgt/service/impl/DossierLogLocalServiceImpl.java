@@ -347,5 +347,9 @@ public class DossierLogLocalServiceImpl extends DossierLogLocalServiceBaseImpl {
     public int countByDossierNotificationType(long groupId, long dossierId, String notificationType) {
     	return dossierLogPersistence.countByG_DID_NT(groupId, dossierId, notificationType);
     }
+    
+    public List<DossierLog> findByGroup(long groupId) {
+    	return dossierLogPersistence.findByG(groupId);
+    }
     public static final String CLASS_NAME = DossierLog.class.getName();
 }

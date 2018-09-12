@@ -5,18 +5,12 @@ ConfigurationPath: /configuration
 Include-Resource: configuration=src/main/resources/configuration
 
 -includeresource: \
-@commons-codec-1.10.jar;lib:=true,\
-@commons-collections4-4.1.jar;lib:=true,\
-@commons-logging-1.2.jar;lib:=true,\
-@curvesapi-1.04.jar;lib:=true,\
-@junit-4.12.jar;lib:=true,\
-@log4j-1.2.17.jar;lib:=true,\
-@poi-3.17.jar;lib:=true,\
-@poi-excelant-3.17.jar;lib:=true,\
-@poi-ooxml-3.17.jar;lib:=true,\
-@poi-ooxml-schemas-3.17.jar;lib:=true,\
-@poi-scratchpad-3.17.jar;lib:=true,\
-@xmlbeans-2.6.0.jar;lib:=true
+@commons-collections-3.2.1.jar;lib:=true,\
+@poi-3.10.1.jar;lib:=true,\
+@poi-ooxml-3.10.1.jar;lib:=true,\
+@poi-ooxml-schemas-3.10.1.jar;lib:=true,\
+@xalan-2.7.1.jar;lib:=true,\
+@xmlbeans-2.5.0.jar;lib:=true
 
 Import-Package: *;resolution:=optional
 	

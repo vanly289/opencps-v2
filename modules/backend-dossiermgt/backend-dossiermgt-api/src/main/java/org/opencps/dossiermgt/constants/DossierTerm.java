@@ -69,6 +69,8 @@ public class DossierTerm {
 	public static final String LAST_ACTION_NAME = "lastActionName";
 	public static final String LAST_ACTION_USER = "lastActionUser";
 	public static final String LAST_ACTION_NOTE = "lastActionNote";
+	public static final String LAST_ACTION_USER_EMAIL = "lastActionUserEmail";
+	
 	public static final String STEP_CODE = "stepCode";
 	public static final String STEP_NAME = "stepName";
 	public static final String STEP_DUE_DATE = "stepDuedate";

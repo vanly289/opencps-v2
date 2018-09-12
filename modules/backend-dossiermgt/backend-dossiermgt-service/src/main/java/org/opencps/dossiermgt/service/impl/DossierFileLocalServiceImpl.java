@@ -189,7 +189,15 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		}
 
 		if (Validator.isNotNull(dossierPart.getFormReport())) {
-			object.setFormReport(dossierPart.getFormReport());
+			if (Validator.isNotNull(dossierPart.getDeliverableType()) && dossierPart.getESign()) {
+				DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
+				if (deliverableType != null) {
+					object.setFormReport(deliverableType.getFormReport());
+				}
+			}
+			else {
+				object.setFormReport(dossierPart.getFormReport());
+			}
 		}
 		_log.info("****Start autofill file at:" + new Date());
 
@@ -631,8 +639,15 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				throw new NoSuchDossierPartException();
 			}
 
-			jrxmlTemplate = dossierPart.getFormReport();
-
+			if (Validator.isNotNull(dossierPart.getDeliverableType()) && dossierPart.getESign()) {
+				DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
+				if (deliverableType != null) {
+					jrxmlTemplate = deliverableType.getFormReport();
+				}
+			}
+			else {
+				jrxmlTemplate = dossierPart.getFormReport();
+			}
 			dossierFile.setFormReport(jrxmlTemplate);
 		}
 
@@ -1057,5 +1072,13 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		return dossierFilePersistence.fetchByFILE_ID(fileEntryId);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
+	public DossierFile permanentDeleteDossierFile(long dossierFileId) throws PortalException {
+		return dossierFilePersistence.remove(dossierFileId);
+	}
+	
+	public List<DossierFile> findByGroup(long groupId) {
+		return dossierFilePersistence.findByG(groupId);
+	}
 	public static final String CLASS_NAME = DossierFile.class.getName();
 }

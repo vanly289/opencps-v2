@@ -40,11 +40,13 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -218,6 +220,10 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 					document.addTextSortable(DossierTerm.STEP_NAME, dossierAction.getStepName());					
 				}
 
+				User u = UserLocalServiceUtil.fetchUser(dossierAction.getUserId());
+				if (u !=null) {
+					document.addTextSortable(DossierTerm.LAST_ACTION_USER_EMAIL, u.getEmailAddress());	
+				}
 			if (dossierAction.getActionOverdue() != 0) {
 				document.addTextSortable(DossierTerm.STEP_OVER_DUE, StringPool.TRUE);
 			} else {

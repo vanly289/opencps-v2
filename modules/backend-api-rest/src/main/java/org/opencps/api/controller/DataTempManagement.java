@@ -345,5 +345,5 @@ public interface DataTempManagement {
 	public Response importDictItems(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext,
-			@ApiParam(value = "Attachment files", required = true) @Multipart("file") Attachment file);	
+			@ApiParam(value = "Attachment files", required = true) @Multipart("file") Attachment file, @PathParam("code") String code);	
 }

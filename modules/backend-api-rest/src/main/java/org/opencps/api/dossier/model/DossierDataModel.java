@@ -177,7 +177,8 @@ import javax.xml.bind.annotation.XmlType;
     "statusReg",
     "processBlock",
     "processUnit",
-    "countLogs"
+    "countLogs",
+    "lastActionUserEmail"
 })
 public class DossierDataModel {
 
@@ -256,6 +257,7 @@ public class DossierDataModel {
 	protected String lockState;
 	protected String statusReg;
 	protected int countLogs;
+	protected String lastActionUserEmail;
 
 	public int getProcessBlock() {
 		return processBlock;
@@ -1914,4 +1916,11 @@ public class DossierDataModel {
 //        return this.certNumber;
 //	}
 
+	public String getLastActionUserEmail() {
+		return lastActionUserEmail;
+	}
+	
+	public void setLastActionUserEmail(String value) {
+		this.lastActionUserEmail = value;
+	}
 }

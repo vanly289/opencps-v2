@@ -130,7 +130,7 @@
               </v-flex>
               <v-flex xs12 sm6 class="pl-4">
                 <v-text-field
-                v-model="dossierIdCTN"
+                v-model="referenceUid"
                 label="Mã số hồ sơ"
                 clearable
                 ></v-text-field>

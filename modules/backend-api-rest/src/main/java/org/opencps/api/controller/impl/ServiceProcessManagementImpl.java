@@ -48,11 +48,10 @@ import org.opencps.dossiermgt.model.ProcessStep;
 import org.opencps.dossiermgt.model.ProcessStepRole;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.model.ServiceProcessRole;
-import org.opencps.dossiermgt.service.ProcessPluginLocalServiceUtil;
+import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 
-import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -1001,10 +1000,12 @@ public class ServiceProcessManagementImpl implements ServiceProcessManagement {
 
 			JSONObject jsonData = actions.getProcessActions(user.getUserId(), serviceContext.getCompanyId(), groupId,
 					params, sorts, query.getStart(), query.getEnd(), serviceContext);
-
+//			List<ProcessAction> lstActions = ProcessActionLocalServiceUtil.findByGroupAndProcess(groupId, id, query.getStart(), query.getEnd());
+//			int count = ProcessActionLocalServiceUtil.countByGroupAndProcess(groupId, id);
+			
 			results.setTotal(jsonData.getInt("total"));
 			results.getData()
-					.addAll(ServiceProcessUtils.mappingToProcessActionData((List<Document>) jsonData.get("data")));
+					.addAll(ServiceProcessUtils.mappingToProcessActionData((List<Document>)jsonData.get("data")));
 
 			return Response.status(200).entity(results).build();
 
@@ -1342,10 +1343,6 @@ public class ServiceProcessManagementImpl implements ServiceProcessManagement {
 				throw new UnauthenticationException();
 			}
 
-			List<ProcessPlugin> lstPlugins = ProcessPluginLocalServiceUtil.getProcessPlugins(id, input.getStepCode());
-			if (lstPlugins.size() > 0) {
-				throw new DuplicateCategoryException("Mã bước plugin đã được cấu hình");
-			}
 			ProcessPlugin processPlugin = actions.updateProcessPlugin(
 					groupId, 
 					0l, 
