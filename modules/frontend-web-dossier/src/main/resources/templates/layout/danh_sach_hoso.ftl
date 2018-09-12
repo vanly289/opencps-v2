@@ -20,7 +20,10 @@
 
 	<v-slide-x-transition>
 
-		<div class="layout wrap" jx-bind="danhSachHoSoTable" v-if="!detailPage"></div>
-
+		<div class="layout wrap" jx-bind="danhSachHoSoTable" v-if="!detailPage && !loadingDanhSachHoSoTable"></div>
+		<div v-else-if="loadingDanhSachHoSoTable" class="text-xs-center" style="width: 100%; height: 500px;">
+			<v-progress-circular indeterminate v-bind:size="100" color="purple"></v-progress-circular><br>
+			<span>Đang tải dữ liệu</span>
+		</div>
 	</v-slide-x-transition>
 

@@ -460,8 +460,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							console.log("item status",item);
 							vm.indexListStatus = index
 							vm.reloadCounter();
-
-
 							vm.detailPage = false;
 							vm.detailRegistPage = false;
 							vm.listgroupHoSoFilterselected = item.id;
@@ -736,42 +734,48 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								console.log("Run delete");
 									// call API get file by dossierId
 
-									
-									var urlFiles = "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/resetformdata";
-									
-									$.ajax({
-										url : urlFiles,
-										dataType : "json",
-										type : "PUT",
-										headers : {
-											groupId : themeDisplay.getScopeGroupId()
-										},
-										success : function(result){
-											item.counter = 0;
-										},
-										error : function(xhr){
-											console.log(xhr);
-										}
+									var arrFileDelete = vm.dossierFiles.filter(file => {
+										return file.dossierPartNo === item.partNo
 									});
 
-									/*axios.put(urlFiles, config).then(function (response) {
-										item.counter = 0;
-										
-									})
-									.catch(function (error) {
-										console.log(error);
-										
-									});*/
+									var arrTemps = []
+									if (arrFileDelete) {
+										for (var i = 0; i < arrFileDelete.length; i++) {
+											var temp = new Promise((resolve, reject) => {
+												var urlFileDelete = "/o/rest/v2/dossiers/" + vm.detailModel.dossierId + "/files/" + arrFileDelete[i].referenceUid;
+												axios.delete(urlFileDelete, config).then(function (result) {
+													resolve(result)
+												}).catch(function (xhr) {
+													reject(xhr);
+												})
+											})
+											arrTemps.push(temp);
+										}
+									}
+
+									if (arrTemps.length > 0) {
+										Promise.all(arrTemps).then(result => {
+											item.counter = 0;
+										}).catch(xhr => {
+										})
+									}
 									
-//									axios.put(urlFiles, "", config).then(function (response) {
-//										item.counter = 0;
-//										
-//										
-//									})
-//									.catch(function (error) {
-//										console.log(error);
-//										
-//									});
+									// var urlFiles = "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/resetformdata";
+									
+									// $.ajax({
+									// 	url : urlFiles,
+									// 	dataType : "json",
+									// 	type : "PUT",
+									// 	headers : {
+									// 		groupId : themeDisplay.getScopeGroupId()
+									// 	},
+									// 	success : function(result){
+									// 		item.counter = 0;
+									// 	},
+									// 	error : function(xhr){
+									// 		console.log(xhr);
+									// 	}
+									// });
 									
 									dialog.close();
 									return false; 
