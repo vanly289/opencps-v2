@@ -351,12 +351,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					text: 'Quản lý giấy phép',
 					value: 'tab3',
 					state: 'quan_ly_giay_phep'
-				},
-				{
-					text: 'Quản lý phương tiện',
-					value: 'tab4',
-					state: ''
 				}
+				// {
+				// 	text: 'Quản lý phương tiện',
+				// 	value: 'tab4',
+				// 	state: ''
+				// }
 			],
 			tabActive: 'tab2',
 			listgroupHoSoFilterItems: [],
@@ -368,7 +368,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			indexListStatus: -1,
 			loadingDanhSachHoSoTable: false,
 			listHistoryProcessingItems: [],
-			dialogViewLogs: false
+			dialogViewLogs: false,
+			disabledDossierFile: true
 		},
 		watch: {
 			pageGiayPhepVanTaiQuocTeTable: {
@@ -2027,6 +2028,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 	                        			var fileItem = fileArr[i];
 	                        			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned) && (fileItem.dossierFileId != 0)) {
 	                        				needIntervalRefresh = true;
+	                        				vm.disabledDossierFile = true
 	                        				break;
 	                        			}
 	                        		}
@@ -2035,6 +2037,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         			var fileItem = fileArr;
                         			if (fileItem.counter == 0 && (!fileItem.eform) && (!fileItem.returned) && (fileItem.dossierFileId != 0)) {
                         				needIntervalRefresh = true;
+                        				vm.disabledDossierFile = true
                         			}    								
     							}
                         		$("textarea#processActionNote").val("");
@@ -2064,8 +2067,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         		vm.processAssignUserIdItems = item.toUsers;
                         		console.log("Need interval refresh: " + needIntervalRefresh);
                         		if (needIntervalRefresh) {
+                        			vm.disabledDossierFile = true;
                         		    setTimeout(function () {
                         		        vm.refreshProcess();
+                        		        /*change---------*/
+                        		        vm._inilistDocumentIn(vm.detailModel);
+                        		        vm._inilistDocumentOut(vm.detailModel);
                         		        if(vm.processSteps.length === 1){
                         		        	vm.changeProcessStep(vm.processSteps[0]);
                         		        }
@@ -2079,6 +2086,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         		        	}
                         		        }
                         		      }.bind(this), 3000); 
+                        		} else {
+                        			/*Change-------*/
+                        			vm.disabledDossierFile = false;
                         		}
                         	}else {
                         		vm.maxWidthDialog = '800px';
@@ -2615,11 +2625,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             		var nextactions = serializableNextActionConvert;
                             		var plugins = serializablePluginsConvert;
 
-
+                            		vm.disabledDossierFile = true;
                             		vm.processSteps = $.merge( nextactions, plugins );
-                            		
+                            		vm._inilistDocumentIn(vm.detailModel);
+                            		vm._inilistDocumentOut(vm.detailModel);
                             		var processStepsLength = vm.processSteps.length;
-                            		
                             		var needIntervalRefresh = false;
                             		for (var rc = 0; rc < processStepsLength; rc++) {
                             			var item = vm.processSteps[rc];
@@ -2641,17 +2651,25 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                                 				needIntervalRefresh = true;
                                 			}    								
             							}     
-            							if (needIntervalRefresh) break;
+            							if (needIntervalRefresh) {
+            								 /*change-------------*/
+            								break;
+            							}
                             		}
                             		
                             		if (needIntervalRefresh) {
+                            			vm.disabledDossierFile = true;
                             		    setTimeout(function () {
                             		        vm.refreshProcess();
+                            		        /*change-------------*/
+                            		        vm._inilistDocumentIn(vm.detailModel);
+                            		        vm._inilistDocumentOut(vm.detailModel);
                             		        nOfRetry++;
                             		      }.bind(this), 3000);                             			
                             		}
                             		else {
                                 		vm.stepLoading = false;
+                                		vm.disabledDossierFile = false;
                                 		console.log(vm.processSteps);
 
                                 		//neu processSteps chi co 1, trigger chanProcessStep 
@@ -4369,7 +4387,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							    vm.listDocumentOutItems = listOut;
 								// TEMP
 								vm._initCbxDocumentNewTab(listAll);
-								
+								vm.disabledDossierFile = false;
 								return Promise.reject();
 								
 							})).catch(function (error) {
