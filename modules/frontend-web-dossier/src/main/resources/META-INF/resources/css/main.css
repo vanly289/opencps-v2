@@ -149,3 +149,7 @@ aside.navigation-drawer, .application .theme--light.navigation-drawer {
   display: block !important;
   color: #635d5d !important;
 }
+
+.no__action_event {
+  pointer-events: none;
+}
