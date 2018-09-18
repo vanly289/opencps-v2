@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -78,6 +79,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -90,6 +92,7 @@ public class DossierManagementImpl implements DossierManagement {
 	public static final String RT_CANCELLING = "cancelling";
 	public static final String RT_CORRECTING = "correcting";
 	public static final String RT_SUBMITTING = "submitting";
+	public static final String IMPORTANT_STATUS = "IMPORTANT_STATUS";
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1884,5 +1887,26 @@ public class DossierManagementImpl implements DossierManagement {
 		}
 		
 		return Response.status(200).entity("{}").build();
+	}
+
+	@Override
+	public Response getImportantStatus(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext) {
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		JSONObject importantObj = JSONFactoryUtil.createJSONObject();
+		long userId = user.getUserId();
+		if (userId != 0) {
+			List<Role> roles = RoleLocalServiceUtil.getUserRoles(userId);
+			DictCollection dc = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode(IMPORTANT_STATUS, groupId);
+			for (Role r : roles) {
+				DictItem di = DictItemLocalServiceUtil.fetchByF_dictItemCode(String.valueOf(r.getRoleId()), dc.getDictCollectionId(), groupId);
+				if (di != null) {
+					importantObj.put("type", 2);
+					importantObj.put("status", di.getItemDescription());
+					break;
+				}
+			}
+		}
+		return Response.status(200).entity(importantObj.toJSONString()).build();
 	}
 }

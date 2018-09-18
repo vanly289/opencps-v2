@@ -29,6 +29,7 @@ import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
 import org.opencps.thirdparty.system.nsw.model.IssuingAuthority;
 import org.opencps.thirdparty.system.nsw.model.VLCrossBorderTransportPermit;
+import org.opencps.thirdparty.system.nsw.model.VLCrossBorderTransportPermit.VehicleType;
 import org.opencps.thirdparty.system.util.OutsideSystemConverter;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -179,6 +180,36 @@ public class BGTVT0600005 {
 					}
 					if (formDataObj.has("Model")) {
 						vlCrossBorderTransportPermit.setModel(formDataObj.getString("Model"));
+					}
+					else {
+						vlCrossBorderTransportPermit.setModel("Xe khác");
+					}
+					VehicleType vehicleType = new VehicleType();
+					if (formDataObj.has("VehicleType")) {
+						String vtStr = formDataObj.getString("VehicleType");
+						if (vtStr.equalsIgnoreCase("Others")) {
+							vehicleType.setOthers("1");
+							vlCrossBorderTransportPermit.setModel("Xe khác");
+						}
+						else {
+							vehicleType.setOthers("0");
+						}
+						if (vtStr.equals("Truck")) {
+							vehicleType.setTruck("1");
+							vlCrossBorderTransportPermit.setModel("Xe tải");
+						}
+						else {
+							vehicleType.setTruck("0");
+						}
+						if (vtStr.equals("Bus")) {
+							vehicleType.setBus("1");
+							vlCrossBorderTransportPermit.setModel("Xe khách");
+						}
+						else {
+							vehicleType.setBus("0");
+						}
+						
+						vlCrossBorderTransportPermit.setVehicleType(vehicleType);
 					}
 					if (formDataObj.has("VehicleColor")) {
 						vlCrossBorderTransportPermit.setVehicleColor(formDataObj.getString("VehicleColor"));
