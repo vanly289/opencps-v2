@@ -248,7 +248,7 @@
 				</div>
 				<!-- <div slot="header" class="text-bold"> <span>I. </span>Tài liệu nộp</div> -->
 				<small slot="header" class="text-gray text-right mr-4"> Những thành phần hồ sơ có dấu ( <span style="color: red;"> * </span> ) là thành phần bắt buộc</small>
-				<div class="opencps_list_border_style" jx-bind="listDocumentIn"></div>
+				<div class="opencps_list_border_style" jx-bind="listDocumentIn" :class="{no__action_event: disabledDossierFile}"></div>
 				</v-expansion-panel-content>
 			</v-expansion-panel>
 			<v-expansion-panel expand class="my-0">	
@@ -257,7 +257,7 @@
 					<div class="background-triangle-small">II.</div> <span>Kết quả</span>
 				</div>
 				<!-- <div slot="header" class="text-bold"> <span>II. </span>Kết quả</div> -->
-				<div class="opencps_list_border_style" jx-bind="listDocumentOut"></div> 
+				<div class="opencps_list_border_style" jx-bind="listDocumentOut" :class="{no__action_event: disabledDossierFile}"></div> 
 				</v-expansion-panel-content>
 			</v-expansion-panel>
 			<v-tabs :scrollable="false" v-if="processSteps.length > 0">
