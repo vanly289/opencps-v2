@@ -46,10 +46,10 @@
 				</div>
 				<div class="pb-1">
 					<span>
-						Mã tham chiếu: 
+						Mã tiếp nhận: 
 					</span>
 					<span class="text-bold">
-						{{ detailModel.dossierIdCTN }}
+						{{ detailModel.referenceUid }}
 					</span>
 					
 				</div>

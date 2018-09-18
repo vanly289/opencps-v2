@@ -1,0 +1,5 @@
+Bundle-Name: backend-migrate-vr-service
+Bundle-SymbolicName: com.backend.migrate.vr.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

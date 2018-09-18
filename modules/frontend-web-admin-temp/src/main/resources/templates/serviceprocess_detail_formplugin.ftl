@@ -79,7 +79,7 @@
 				</div>
 				<div class="row MT5">
 					<div class="col-xs-12 col-sm-12">
-						<textarea class="form-control" name="sampleData" id="sampleData" data-bind="value: sampleData" rows="7"></textarea>
+						<textarea class="form-control" name="pluginSampleData" id="pluginSampleData" data-bind="value: sampleData" rows="7"></textarea>
 					</div>
 				</div>
 			</div>
