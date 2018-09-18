@@ -707,11 +707,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							};
 							axios.get(url, configTemp).then(result => {
 								if (result.type === 1) {
-									vm.statusParamFilter = result.status;
+									vm.statusParamFilter = result.data.status;
 								} else {
-									vm.substatusParamFilter = result.status;
+									vm.substatusParamFilter = result.data.status;
 								}
-								vm._initlistgroupHoSoFilter(result.status);
+								vm._initlistgroupHoSoFilter(result.data.status);
 							}).catch(xhr => {
 								vm._initlistgroupHoSoFilter();
 							})
