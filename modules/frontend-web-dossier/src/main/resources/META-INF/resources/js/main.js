@@ -682,12 +682,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}
 
 							if(select){
-								console.log("selected========",select);
+								console.log("selected========", select);
+								var indexTemp = vm.listgroupHoSoFilterItems.findIndex(item => {
+									return item.idSub === select
+								})
+								if (indexTemp !== null && indexTemp !== undefined && indexTemp !== -1) {
+									vm.indexListStatus = indexTemp
+								}
 								vm.listgroupHoSoFilterselected = select;
 							}
-
-
-						})
+							})
 							.catch(function (error) {
 								console.log(error);
 								
@@ -696,19 +700,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						getMenuBestUser: function () {
 							var vm = this;
-							var url = '/o/rest/v2/dictcollections/VR_AUDIT/dictitems';
-							axios.get(url, config).then(result => {
-								if (result.data.data) {
-									var serializable = result.data.data;
-									for (var i = 0; i < serializable.length; i++) {
-										if (serializable[i].itemName === emailAddress) {
-											vm.statusParamFilter = serializable[i].itemCode;
-											vm.substatusParamFilter = serializable[i].itemCode;
-											break;
-										}
-									}
+							var url = '/o/rest/v2/dossiers/importantstatus';
+							var configTemp = {
+								headers: {
+									'groupId': themeDisplay.getScopeGroupId()
 								}
-								vm._initlistgroupHoSoFilter();
+							};
+							axios.get(url, configTemp).then(result => {
+								if (result.type === 1) {
+									vm.statusParamFilter = result.status;
+								} else {
+									vm.substatusParamFilter = result.status;
+								}
+								vm._initlistgroupHoSoFilter(result.status);
 							}).catch(xhr => {
 								vm._initlistgroupHoSoFilter();
 							})
@@ -807,7 +811,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							})
 							.catch(function (error) {
 								console.log(error);
-
 							});
 						},
 						viewDossierFileVersionDialog: function (item) {
@@ -1743,7 +1746,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							promise.then(function(success){
 								callBack();
 							}, function(error){
-
+								callBack();
 							});
 
 							
@@ -2372,6 +2375,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										}, 1000);
 										vm.detailPage = false;
 										vm.actionsSubmitLoading = false;
+										vm._inilistDocumentIn(vm.detailModel);
+										vm._inilistDocumentOut(vm.detailModel);
 
 									},
 									error: function(xhr, textStatus, errorThrown) {
@@ -2669,8 +2674,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             		    setTimeout(function () {
                             		        vm.refreshProcess();
                             		        /*change-------------*/
-                            		        vm._inilistDocumentIn(vm.detailModel);
-                            		        vm._inilistDocumentOut(vm.detailModel);
+                            		        // vm._inilistDocumentIn(vm.detailModel);
+                            		        // vm._inilistDocumentOut(vm.detailModel);
                             		        nOfRetry++;
                             		      }.bind(this), 3000);                             			
                             		}
