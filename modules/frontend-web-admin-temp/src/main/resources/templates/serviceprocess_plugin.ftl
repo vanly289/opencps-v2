@@ -271,7 +271,7 @@
 							pluginName: $("#pluginName").val(),
 							sequenceNo: $("#pluginSequenceNo").val(),
 							pluginForm: $("#pluginForm").val(),
-							sampleData: $("#sampleData").val(),
+							sampleData: $("#pluginSampleData").val(),
 							autoRun: $("#autoRun").prop("checked")
 						},
 						success: function(result) {
@@ -316,7 +316,7 @@
 							pluginName: $("#pluginName").val(),
 							sequenceNo: $("#pluginSequenceNo").val(),
 							pluginForm: $("#pluginForm").val(),
-							sampleData: $("#sampleData").val(),
+							sampleData: $("#pluginSampleData").val(),
 							autoRun: $("#autoRun").prop("checked")
 						},
 						success: function(result) {
@@ -335,7 +335,7 @@
 								"pluginName": $("#pluginName").val(),
 								"sequenceNo" : $("#pluginSequenceNo").val(),
 								"pluginForm": $("#pluginForm").val(),
-								"sampleData" : $("#sampleData").val(),
+								"sampleData" : $("#pluginSampleData").val(),
 								"autoRun": $("#autoRun").prop("checked")
 							});
 

@@ -514,6 +514,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								type : "GET",
 								headers : {
 									'groupId': themeDisplay.getScopeGroupId(),
+									'Cache-Control' : 'no-cache'
 								},
 								data: {
 									service: vm.serviceInfo,
@@ -1764,7 +1765,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								dataType : "json",
 								type : "POST",
 								headers : {
-									"groupId" : themeDisplay.getScopeGroupId()
+									"groupId" : themeDisplay.getScopeGroupId(),
+									'Cache-Control' : 'no-cache'
 								},
 								data : stateModel,
 								success :  function(result){
@@ -1793,7 +1795,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									dataType : "json",
 									type : "DELETE",
 									headers: {
-										"groupId": themeDisplay.getScopeGroupId()
+										"groupId": themeDisplay.getScopeGroupId(),
+										'Cache-Control' : 'no-cache'
 									},
 									success : function(result){
 										vm.snackbartextdossierViewJX = "Xoá dữ liệu thành công!";
@@ -1832,7 +1835,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									type : "PUT",
 									headers: {
 										"groupId": themeDisplay.getScopeGroupId(),
-										"Accept" : "application/json"
+										"Accept" : "application/json",
+										'Cache-Control' : 'no-cache'
 									},
 									data : {
 										formdata: JSON.stringify(formData)
@@ -1883,7 +1887,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									type : "PUT",
 									headers: {
 										"groupId": themeDisplay.getScopeGroupId(),
-										"Accept" : "application/json"
+										"Accept" : "application/json",
+										'Cache-Control' : 'no-cache'
 									},
 									data : {
 										formdata: JSON.stringify(formData)
@@ -2345,7 +2350,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								$.ajax({
 									url: url,
 									headers: {
-										"groupId": themeDisplay.getScopeGroupId()
+										"groupId": themeDisplay.getScopeGroupId(),
+										'Cache-Control' : 'no-cache'
 									},
 									data: {
 										"actionCode": item.actionCode,
@@ -2536,7 +2542,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								async: false,//bat dong bo = fale, dong bo voi client
 								dataType : 'json',
 								headers: {
-									"groupId": themeDisplay.getScopeGroupId()
+									"groupId": themeDisplay.getScopeGroupId(),
+									'Cache-Control' : 'no-cache'
 								},
 								data: {
 									actionCode: paramObj.actionCode,
@@ -2742,7 +2749,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             		url  : url, 
                             		data : data,
                             		dataType: 'json',
-                            		headers: {"groupId": themeDisplay.getScopeGroupId()},
+                            		headers: {"groupId": themeDisplay.getScopeGroupId(), 'Cache-Control' : 'no-cache'},
                             		processData: false,
                             		contentType: false,
                             		cache: false,
@@ -3608,7 +3615,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								$.ajax({
 									url: url,
 									headers: {
-										"groupId": themeDisplay.getScopeGroupId()
+										"groupId": themeDisplay.getScopeGroupId(),
+										'Cache-Control' : 'no-cache'
 									},
 									data: {
 										"applicantName": "",
@@ -3671,7 +3679,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								$.ajax({
 									url: url,
 									headers: {
-										"groupId": themeDisplay.getScopeGroupId()
+										"groupId": themeDisplay.getScopeGroupId(),
+										'Cache-Control' : 'no-cache'
 									},
 									data: {
 										"registrationState": registrationState,
@@ -3883,6 +3892,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							dataType : "json",
 							headers: {
 								'groupId': themeDisplay.getScopeGroupId(),
+								'Cache-Control' : 'no-cache'
 							},
 							data : paramsBuilder,
 							success : function(result){
@@ -3957,6 +3967,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							const config_blob = {
 								headers: {
 									'groupId': themeDisplay.getScopeGroupId(),
+									'Cache-Control' : 'no-cache'
 								},
 								responseType: 'blob'
 							};
@@ -4152,6 +4163,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								params: paramsBuilder,
 								headers: {
 									'groupId': themeDisplay.getScopeGroupId(),
+									'Cache-Control' : 'no-cache'
 								}
 							};
 
@@ -4250,6 +4262,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								type : "GET",
 								headers : {
 									'groupId': themeDisplay.getScopeGroupId(),
+									'Cache-Control' : 'no-cache'
 								},
 								data: {
 									service: vm.serviceInfo,
@@ -4309,6 +4322,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								vm.detailModel = serializable;
 								vm.detailModel.dossierIdCTN = item.dossierIdCTN;
+								vm.detailModel.referenceUid = item.referenceUid;
 								vm.detailPage = true;
 								window.scrollBy(0, -99999);
 								

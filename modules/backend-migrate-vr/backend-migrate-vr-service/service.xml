@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder package-path="com.backend.migrate.vr">
+	<namespace>InLand</namespace>
+	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
+	<entity local-service="true" name="PhuongTien" remote-service="true" uuid="true" data-source="extDataSource" table="phbh_phuongtien">
+		<!-- PK fields -->
+
+		<column name="id" primary="true" type="long" />
+        <column name="bienkiemsoat" type="String"></column>
+        <column name="succhua" type="int"></column>
+        <column name="loaighe_id" type="long"></column>
+        <column name="namsanxuat" type="int"></column>
+        <column name="nuocsanxuat_id" type="long"></column>
+        <column name="tenhieuxe_id" type="long"></column>
+        <column name="mauson_id" type="long"></column>
+        <column name="sokhung" type="String"></column>
+        <column name="somay" type="String"></column>
+        <column name="namhetnienhansudung" type="int"></column>
+        <column name="namcaitao" type="Date"></column>
+        <column name="trongtai" type="int"></column>
+        <column name="loaihinhvantai_id" type="int"></column>
+        <column name="la_xegiuongnam" type="int"></column>
+        <column name="sogiuongnam" type="int"></column>
+        <column name="tennguoisohuu" type="String"></column>
+        <column name="doanhnghiep_id" type="int"></column>
+        <column name="tuyenkhaithac_id" type="int"></column>
+        <column name="web_giamsathanhtrinh" type="String"></column>
+        <column name="tendangnhap_gsht" type="String"></column>
+        <column name="matkhau_gsht" type="String"></column>
+        <column name="ghichu" type="String"></column>
+        <column name="trangthai" type="int"></column>
+        <column name="coquanquanly_id" type="int"></column>
+        <column name="congdan_id" type="long"></column>
+		
+		
+	</entity>
+</service-builder>

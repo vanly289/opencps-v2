@@ -2184,13 +2184,33 @@
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
-			<xsd:element name="RegistrationNumber">
-				<xsd:simpleType>
-					<xsd:restriction base="xsd:string">
-						<xsd:maxLength value="500"></xsd:maxLength>
-					</xsd:restriction>
-				</xsd:simpleType>
-			</xsd:element>
+			<xsd:element name="AllocatedNumber">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Order">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="50"></xsd:maxLength>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="VehicleType">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="500"></xsd:maxLength>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="AllocatedNo">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="500"></xsd:maxLength>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>			
+			</xsd:element>			
 			<xsd:element ref="AttachedFile" minOccurs="1" maxOccurs="unbounded" />
 			<xsd:element ref="IssuingAuthority"></xsd:element>
  		</xsd:sequence>

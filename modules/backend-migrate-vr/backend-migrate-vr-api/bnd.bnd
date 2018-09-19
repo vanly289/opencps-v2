@@ -1,0 +1,9 @@
+Bundle-Name: backend-migrate-vr-api
+Bundle-SymbolicName: com.backend.migrate.vr.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.backend.migrate.vr.exception,\
+	com.backend.migrate.vr.model,\
+	com.backend.migrate.vr.service,\
+	com.backend.migrate.vr.service.persistence
+-includeresource: META-INF/service.xml=../backend-migrate-vr-service/service.xml

@@ -28,6 +28,7 @@ import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
 import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
 import org.opencps.thirdparty.system.nsw.model.GMSInterRoadTransportLicence;
+import org.opencps.thirdparty.system.nsw.model.GMSInterRoadTransportLicence.AllocatedNumber;
 import org.opencps.thirdparty.system.nsw.model.IssuingAuthority;
 import org.opencps.thirdparty.system.util.OutsideSystemConverter;
 
@@ -243,10 +244,16 @@ public class BGTVT0600058 {
 					if (formDataObj.has("PeriodValidityTo")) {
 						gmsInterRoadTransportLicense.setPeriodValidityTo(formDataObj.getString("PeriodValidityTo"));
 					}
-					if (formDataObj.has("RegistrationNumber")) {
-						gmsInterRoadTransportLicense.setRegistrationNumber(formDataObj.getString("RegistrationNumber"));
+					AllocatedNumber allocatedNumber = new AllocatedNumber();
+					if (formDataObj.has("Order")) {
+						allocatedNumber.setOrder(formDataObj.getString("Order"));
 					}
-					
+					if (formDataObj.has("VehicleType")) {
+						allocatedNumber.setVehicleType(formDataObj.getString("VehicleType"));
+					}
+					if (formDataObj.has("AllocatedNo")) {
+						allocatedNumber.setAllocatedNo(formDataObj.getString("AllocatedNo"));
+					}
 					IssuingAuthority issuingAuthority = new IssuingAuthority();
 					if (formDataObj.has("SignName")) {
 						issuingAuthority.setSignName(formDataObj.getString("SignName"));						
