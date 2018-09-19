@@ -241,6 +241,52 @@
 					</v-menu>
 					</v-tabs-bar>
 				</v-tabs>
+				<div v-if="showPrintable" class="px-4 py-3" style="background-color: #fff;">
+					<table class="table table-bordered" border="0" style="width: 600px; height: auto; margin: 0 auto;" v-if="!loadingListPrints">
+						<thead>
+							<tr>
+								<th style="width: 5%;" class="text-xs-center px-2 py-2">
+									TT
+								</th>
+								<th class="text-xs-center px-2 py-2" style="cursor: pointer;">
+									Chọn
+								</th>
+								<th class="text-xs-center px-2 py-2">
+									Số khung
+								</th>
+								<th class="text-xs-center px-2 py-2">
+									Số máy
+								</th>
+								<th class="text-xs-center px-2 py-2">
+									Màu sơn
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="(item, index) in listPrintItems">
+								<td class="text-xs-center py-2">
+									<span>{{index + 1}}</span>
+								</td>
+								<td class="text-xs-center py-2">
+									<v-checkbox class="mt-2" style="max-width: 40px; margin: 0 auto;" v-model="selectedPrints" label="" :value="index"></v-checkbox>
+								</td>
+								<td class="text-xs-center py-2">
+									{{item['so_khung']}}
+								</td>
+								<td class="text-xs-center py-2">
+									{{item['so_may']}}
+								</td>
+								<td class="text-xs-center py-2">
+									{{item['mau_son']}}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div v-else style="width: 100%; height: 200px;" class="text-xs-center">
+						<v-progress-circular indeterminate v-bind:size="100" color="purple"></v-progress-circular> <br>
+						<span>{{statusTextLoadPrint}}</span>
+					</div>
+				</div>
 			<v-expansion-panel expand class="my-0">
 				<v-expansion-panel-content v-bind:value="true" class="pl-0">
 				<div slot="header">
