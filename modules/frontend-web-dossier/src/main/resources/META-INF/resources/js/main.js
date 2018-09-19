@@ -171,8 +171,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 				sortable: true,
 				value: 'thaoTac'
 			}
-
-
 			],
 			giayPhepLienVanTableItems: [],
 			pageGiayPhepLienVanTableLength: 0,
@@ -369,7 +367,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			loadingDanhSachHoSoTable: false,
 			listHistoryProcessingItems: [],
 			dialogViewLogs: false,
-			disabledDossierFile: true
+			disabledDossierFile: true,
+			loadingDocumentListIn: false,
+			loadingDocumentListOut: false
 		},
 		watch: {
 			pageGiayPhepVanTaiQuocTeTable: {
@@ -2362,11 +2362,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.snackbartextdossierViewJX = item.actionName + " thành công!";
 										vm.snackbardossierViewJX = true;
 										
-										
 										setTimeout(function(){ 
 											vm._inidanhSachHoSoTable();
 											vm.reloadCounter();
 										}, 1000);
+										
 										vm.detailPage = false;
 										vm.actionsSubmitLoading = false;
 										vm._inilistDocumentIn(vm.detailModel);
@@ -4011,7 +4011,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									vm.statusParamFilter = dossierStatus;
 									vm.substatusParamFilter = dossierSubStatus;
 								}else {
-									
 									vm.listgroupHoSoFilterselected = dossierSubStatus;
 									vm.statusParamFilter = dossierSubStatus;
 									vm.substatusParamFilter = dossierStatus;
@@ -4346,7 +4345,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 //							vm.listDocumentInItems = [];
 //							vm.listDocumentOutItems = [];
-
+								vm.loadingDocumentListIn = true;
 								var url = "/o/rest/v2/dossiertemplates/"+item.dossierTemplateNo;
 								var urlFiles = "/o/rest/v2/dossiers/"+item.dossierId+"/files";
 
@@ -4393,10 +4392,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								// TEMP
 								vm._initCbxDocumentNewTab(listAll);
 								vm.disabledDossierFile = false;
+								vm.loadingDocumentListIn = false;
 								return Promise.reject();
 								
 							})).catch(function (error) {
 								console.log(error);
+								// vm.loadingDocumentListIn = false;
 
 							});
 							return false;
@@ -4519,7 +4520,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 //							vm.listDocumentInItems = [];
 //							vm.listDocumentOutItems = [];
-
+							vm.loadingDocumentListOut = true
 							var url = "/o/rest/v2/dossiertemplates/"+item.dossierTemplateNo;
 							var urlFiles = "/o/rest/v2/dossiers/"+item.dossierId+"/files";
 
@@ -4569,7 +4570,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							    }
 
 							    vm.listDocumentOutItems = listOut;
-
+							    vm.loadingDocumentListOut = false;
 							    return Promise.reject();
 
 							})).catch(function (error) {

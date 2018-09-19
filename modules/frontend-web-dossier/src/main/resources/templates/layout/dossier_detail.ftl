@@ -248,7 +248,10 @@
 				</div>
 				<!-- <div slot="header" class="text-bold"> <span>I. </span>Tài liệu nộp</div> -->
 				<small slot="header" class="text-gray text-right mr-4"> Những thành phần hồ sơ có dấu ( <span style="color: red;"> * </span> ) là thành phần bắt buộc</small>
-				<div class="opencps_list_border_style" jx-bind="listDocumentIn" :class="{no__action_event: disabledDossierFile}"></div>
+				<div class="opencps_list_border_style" jx-bind="listDocumentIn" :class="{no__action_event: disabledDossierFile}" v-if="!loadingDocumentListIn"></div>
+				<div class="text-xs-center" v-else style="width: 100%; height: 200px;">
+					<v-progress-circular indeterminate v-bind:size="100" color="purple"></v-progress-circular>
+				</div>
 				</v-expansion-panel-content>
 			</v-expansion-panel>
 			<v-expansion-panel expand class="my-0">	
@@ -257,7 +260,10 @@
 					<div class="background-triangle-small">II.</div> <span>Kết quả</span>
 				</div>
 				<!-- <div slot="header" class="text-bold"> <span>II. </span>Kết quả</div> -->
-				<div class="opencps_list_border_style" jx-bind="listDocumentOut" :class="{no__action_event: disabledDossierFile}"></div> 
+				<div class="opencps_list_border_style" jx-bind="listDocumentOut" :class="{no__action_event: disabledDossierFile}" v-if="!loadingDocumentListOut"></div> 
+				<div class="text-xs-center" v-else style="width: 100%; height: 200px;">
+					<v-progress-circular indeterminate v-bind:size="100" color="purple"></v-progress-circular>
+				</div>
 				</v-expansion-panel-content>
 			</v-expansion-panel>
 			<v-tabs :scrollable="false" v-if="processSteps.length > 0">
