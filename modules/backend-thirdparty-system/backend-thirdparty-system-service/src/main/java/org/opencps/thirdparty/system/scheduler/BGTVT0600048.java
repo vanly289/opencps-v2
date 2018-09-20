@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 public class BGTVT0600048 {
 	private static String DUMMY_DATA = "1";
 
-	public static MessageQueueInputModel convertResult(Dossier dossier, ThirdPartyDossierSync dossierSync,
+	public static List<MessageQueueInputModel> convertResult(Dossier dossier, ThirdPartyDossierSync dossierSync,
 			Envelope envelope, String type, String function) throws PortalException {
 		long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
 		String jaxRsPublicUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_PUBLIC_URL);
@@ -51,43 +51,8 @@ public class BGTVT0600048 {
 		AttachedFile attachedFile = new AttachedFile();
 		List<AttachedFile> lstFiles = new ArrayList<>();
 
-		MessageQueueInputModel model = new MessageQueueInputModel();
-		model.setContent("");
-		model.setSender("BGTVT");
-		model.setReceiver("NSW");
-		model.setPersonSignature("");
-		model.setSystemSignature("");
-		model.setStatus(1);
-		model.setMessageId(PortalUUIDUtil.generate());
-		model.setFromName("BGTVT");
-		model.setFromCountryCode("VN");
-		model.setFromMinistryCode("BGTVT");
-		model.setFromOrganizationCode("TCDBVN");
-		model.setFromUnitCode("");
-		model.setFromIdentity("");
-		model.setToName("NSW");
-		model.setToCountryCode("VN");
-		model.setToIdentity("");
-		model.setToMinistryCode("NSW");
-		model.setToOrganizationCode("NSW");
-		model.setToUnitCode("");
-		model.setDocumentType(dossier.getServiceCode());
-		model.setType(type);
-		model.setFunction(function);
-		model.setReference(dossier.getReferenceUid());
-		model.setPreReference(dossier.getReferenceUid());
-		model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-		model.setRetryCount(1);
-		model.setDirection(2);
-		Calendar cal = Calendar.getInstance();
-
-		if (dossier.getReceiveDate() != null) {
-			cal.setTime(dossier.getReceiveDate());
-		} else {
-			cal.setTime(dossier.getCreateDate());
-		}
-		model.setDocumentYear(cal.get(Calendar.YEAR));
-
+		List<MessageQueueInputModel> lstResults = new ArrayList<>();
+		
 		List<DossierFile> dossierFileList = DossierFileLocalServiceUtil.getAllDossierFile(dossier.getDossierId());
 
 		String templateNo = StringPool.BLANK;
@@ -118,6 +83,43 @@ public class BGTVT0600048 {
 			String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
 			for (String returnDossierFile : returnDossierFilesArr) {
 				if (templateNo.equals(returnDossierFile)) {
+					MessageQueueInputModel model = new MessageQueueInputModel();
+					model.setContent("");
+					model.setSender("BGTVT");
+					model.setReceiver("NSW");
+					model.setPersonSignature("");
+					model.setSystemSignature("");
+					model.setStatus(0);
+					model.setMessageId(PortalUUIDUtil.generate());
+					model.setFromName("BGTVT");
+					model.setFromCountryCode("VN");
+					model.setFromMinistryCode("BGTVT");
+					model.setFromOrganizationCode("TCDBVN");
+					model.setFromUnitCode("");
+					model.setFromIdentity("");
+					model.setToName("NSW");
+					model.setToCountryCode("VN");
+					model.setToIdentity("");
+					model.setToMinistryCode("NSW");
+					model.setToOrganizationCode("NSW");
+					model.setToUnitCode("");
+					model.setDocumentType(dossier.getServiceCode());
+					model.setType(type);
+					model.setFunction(function);
+					model.setReference(dossier.getReferenceUid());
+					model.setPreReference(dossier.getReferenceUid());
+					model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
+					model.setRetryCount(0);
+					model.setDirection(2);
+					Calendar cal = Calendar.getInstance();
+
+					if (dossier.getReceiveDate() != null) {
+						cal.setTime(dossier.getReceiveDate());
+					} else {
+						cal.setTime(dossier.getCreateDate());
+					}
+					model.setDocumentYear(cal.get(Calendar.YEAR));
+					
 					attachedFile = new AttachedFile();
 					attachedFile.setAttachedNote("");
 					attachedFile.setAttachedTypeCode(templateNo);
@@ -141,12 +143,12 @@ public class BGTVT0600048 {
 						String manufacturedYearStr = formDataObj.getString("ManufacturedYear");
 						Date manufacturedYear = DateTimeUtils.convertStringToDate(manufacturedYearStr);
 
-						clvCommercialCrossBorderTransportPermit.setManufacturedYear(
+						clvCommercialCrossBorderTransportPermit.setManufacturedyear(
 								DateTimeUtils.convertDateToString(manufacturedYear, DateTimeUtils._NSW_DATE_TIME_FORMAT));
 
 					} else {
 						Date now = new Date();
-						clvCommercialCrossBorderTransportPermit.setManufacturedYear(
+						clvCommercialCrossBorderTransportPermit.setManufacturedyear(
 								DateTimeUtils.convertDateToString(now, DateTimeUtils._NSW_DATE_TIME_FORMAT));
 					}
 					
@@ -206,6 +208,13 @@ public class BGTVT0600048 {
 					if (formDataObj.has("LicenceNo")) {
 						clvCommercialCrossBorderTransportPermit.setLicenceNo(formDataObj.getString("LicenceNo"));
 					}
+					if (formDataObj.has("ManufacturedYear")) {
+						clvCommercialCrossBorderTransportPermit.setManufacturedyear(formDataObj.getString("ManufacturedYear"));						
+					}
+					else {
+						clvCommercialCrossBorderTransportPermit.setManufacturedyear(DUMMY_DATA);
+					}
+					
 					if (formDataObj.has("ExpiredDate")) {
 						String expiredDaterStr = formDataObj.getString("ExpiredDate");
 						Date expiredDate = DateTimeUtils.convertStringToDate(expiredDaterStr);
@@ -267,18 +276,17 @@ public class BGTVT0600048 {
 					}
 					
 					clvCommercialCrossBorderTransportPermit.setIssuingAuthority(issuingAuthority);
+					clvCommercialCrossBorderTransportPermit.getAttachedFile().addAll(lstFiles);
+					envelope.getBody().getContent().setCLVCommercialCrossBorderTransportPermit(clvCommercialCrossBorderTransportPermit);
 					
+					String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
+
+					model.setRawMessage(rawMessage);					
 				}
 			}
 
 		}
-		clvCommercialCrossBorderTransportPermit.getAttachedFile().addAll(lstFiles);
-		envelope.getBody().getContent().setCLVCommercialCrossBorderTransportPermit(clvCommercialCrossBorderTransportPermit);
-		
-		String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 
-		model.setRawMessage(rawMessage);
-
-		return model;
+		return lstResults;
 	}
 }

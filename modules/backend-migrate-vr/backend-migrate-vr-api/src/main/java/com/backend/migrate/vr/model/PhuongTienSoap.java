@@ -23,10 +23,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.backend.migrate.vr.service.http.PhuongTienServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
- * @see com.backend.migrate.vr.service.http.PhuongTienServiceSoap
  * @generated
  */
 @ProviderType

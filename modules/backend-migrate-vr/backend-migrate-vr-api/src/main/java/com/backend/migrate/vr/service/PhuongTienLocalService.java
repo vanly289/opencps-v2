@@ -16,6 +16,7 @@ package com.backend.migrate.vr.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.backend.migrate.vr.exception.NoSuchPhuongTienException;
 import com.backend.migrate.vr.model.PhuongTien;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,6 +72,16 @@ public interface PhuongTienLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public PhuongTien addPhuongTien(PhuongTien phuongTien);
 
+	public PhuongTien addPhuongTien(long id, java.lang.String bienkiemsoat,
+		int succhua, long loaighe_id, int namsanxuat, long nuocsanxuat_id,
+		long tenhieuxe_id, long mauson_id, java.lang.String sokhung,
+		java.lang.String somay, int namhetnienhansudung, Date namcaitao,
+		int trongtai, int loaihinhvantai_id, int la_xegiuongnam,
+		int sogiuongnam, java.lang.String tennguoisohuu, int doanhnghiep_id,
+		int tuyenkhaithac_id, java.lang.String web_giamsathanhtrinh,
+		java.lang.String tendangnhap_gsht, java.lang.String ghichu,
+		int trangthai, int coquanquanly_id, long congdan_id);
+
 	/**
 	* Creates a new phuong tien with the primary key. Does not add the phuong tien to the database.
 	*
@@ -93,12 +105,16 @@ public interface PhuongTienLocalService extends BaseLocalService,
 	* @param id the primary key of the phuong tien
 	* @return the phuong tien that was removed
 	* @throws PortalException if a phuong tien with the primary key could not be found
+	* @throws NoSuchPhuongTienException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public PhuongTien deletePhuongTien(long id) throws PortalException;
+	public PhuongTien deletePhuongTien(long id)
+		throws PortalException, NoSuchPhuongTienException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PhuongTien fetchPhuongTien(long id);
+
+	public PhuongTien findByBKS(java.lang.String bienkiemsoat);
 
 	/**
 	* Returns the phuong tien with the primary key.
@@ -193,6 +209,9 @@ public interface PhuongTienLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PhuongTien> getListGreaterThanId(long id);
+
 	/**
 	* Returns a range of all the phuong tiens.
 	*
@@ -206,6 +225,8 @@ public interface PhuongTienLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PhuongTien> getPhuongTiens(int start, int end);
+
+	public long countAll();
 
 	/**
 	* Returns the number of rows matching the dynamic query.

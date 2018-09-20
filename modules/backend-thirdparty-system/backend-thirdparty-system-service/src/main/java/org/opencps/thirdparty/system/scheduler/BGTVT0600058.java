@@ -59,7 +59,7 @@ public class BGTVT0600058 {
 		model.setReceiver("NSW");
 		model.setPersonSignature("");
 		model.setSystemSignature("");
-		model.setStatus(1);
+		model.setStatus(0);
 		model.setMessageId(PortalUUIDUtil.generate());
 		model.setFromName("BGTVT");
 		model.setFromCountryCode("VN");
@@ -88,7 +88,7 @@ public class BGTVT0600058 {
 		model.setReference(dossier.getReferenceUid());
 		model.setPreReference(dossier.getReferenceUid());
 		model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-		model.setRetryCount(1);
+		model.setRetryCount(0);
 		model.setDirection(2);
 
 		List<DossierFile> dossierFileList = DossierFileLocalServiceUtil

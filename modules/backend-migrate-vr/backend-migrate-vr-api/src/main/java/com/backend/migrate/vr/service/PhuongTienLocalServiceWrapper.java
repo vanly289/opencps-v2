@@ -45,6 +45,25 @@ public class PhuongTienLocalServiceWrapper implements PhuongTienLocalService,
 		return _phuongTienLocalService.addPhuongTien(phuongTien);
 	}
 
+	@Override
+	public com.backend.migrate.vr.model.PhuongTien addPhuongTien(long id,
+		java.lang.String bienkiemsoat, int succhua, long loaighe_id,
+		int namsanxuat, long nuocsanxuat_id, long tenhieuxe_id, long mauson_id,
+		java.lang.String sokhung, java.lang.String somay,
+		int namhetnienhansudung, java.util.Date namcaitao, int trongtai,
+		int loaihinhvantai_id, int la_xegiuongnam, int sogiuongnam,
+		java.lang.String tennguoisohuu, int doanhnghiep_id,
+		int tuyenkhaithac_id, java.lang.String web_giamsathanhtrinh,
+		java.lang.String tendangnhap_gsht, java.lang.String ghichu,
+		int trangthai, int coquanquanly_id, long congdan_id) {
+		return _phuongTienLocalService.addPhuongTien(id, bienkiemsoat, succhua,
+			loaighe_id, namsanxuat, nuocsanxuat_id, tenhieuxe_id, mauson_id,
+			sokhung, somay, namhetnienhansudung, namcaitao, trongtai,
+			loaihinhvantai_id, la_xegiuongnam, sogiuongnam, tennguoisohuu,
+			doanhnghiep_id, tuyenkhaithac_id, web_giamsathanhtrinh,
+			tendangnhap_gsht, ghichu, trangthai, coquanquanly_id, congdan_id);
+	}
+
 	/**
 	* Creates a new phuong tien with the primary key. Does not add the phuong tien to the database.
 	*
@@ -74,16 +93,24 @@ public class PhuongTienLocalServiceWrapper implements PhuongTienLocalService,
 	* @param id the primary key of the phuong tien
 	* @return the phuong tien that was removed
 	* @throws PortalException if a phuong tien with the primary key could not be found
+	* @throws NoSuchPhuongTienException
 	*/
 	@Override
 	public com.backend.migrate.vr.model.PhuongTien deletePhuongTien(long id)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.backend.migrate.vr.exception.NoSuchPhuongTienException,
+			com.liferay.portal.kernel.exception.PortalException {
 		return _phuongTienLocalService.deletePhuongTien(id);
 	}
 
 	@Override
 	public com.backend.migrate.vr.model.PhuongTien fetchPhuongTien(long id) {
 		return _phuongTienLocalService.fetchPhuongTien(id);
+	}
+
+	@Override
+	public com.backend.migrate.vr.model.PhuongTien findByBKS(
+		java.lang.String bienkiemsoat) {
+		return _phuongTienLocalService.findByBKS(bienkiemsoat);
 	}
 
 	/**
@@ -216,6 +243,12 @@ public class PhuongTienLocalServiceWrapper implements PhuongTienLocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.backend.migrate.vr.model.PhuongTien> getListGreaterThanId(
+		long id) {
+		return _phuongTienLocalService.getListGreaterThanId(id);
+	}
+
 	/**
 	* Returns a range of all the phuong tiens.
 	*
@@ -231,6 +264,11 @@ public class PhuongTienLocalServiceWrapper implements PhuongTienLocalService,
 	public java.util.List<com.backend.migrate.vr.model.PhuongTien> getPhuongTiens(
 		int start, int end) {
 		return _phuongTienLocalService.getPhuongTiens(start, end);
+	}
+
+	@Override
+	public long countAll() {
+		return _phuongTienLocalService.countAll();
 	}
 
 	/**

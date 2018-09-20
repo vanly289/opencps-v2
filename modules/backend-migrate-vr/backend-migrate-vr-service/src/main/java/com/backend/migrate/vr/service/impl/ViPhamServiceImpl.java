@@ -16,27 +16,27 @@ package com.backend.migrate.vr.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.backend.migrate.vr.service.base.PhuongTienServiceBaseImpl;
+import com.backend.migrate.vr.service.base.ViPhamServiceBaseImpl;
 
 /**
- * The implementation of the phuong tien remote service.
+ * The implementation of the vi pham remote service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.backend.migrate.vr.service.PhuongTienService} interface.
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.backend.migrate.vr.service.ViPhamService} interface.
  *
  * <p>
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see PhuongTienServiceBaseImpl
- * @see com.backend.migrate.vr.service.PhuongTienServiceUtil
+ * @see ViPhamServiceBaseImpl
+ * @see com.backend.migrate.vr.service.ViPhamServiceUtil
  */
 @ProviderType
-public class PhuongTienServiceImpl extends PhuongTienServiceBaseImpl {
+public class ViPhamServiceImpl extends ViPhamServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link com.backend.migrate.vr.service.PhuongTienServiceUtil} to access the phuong tien remote service.
+	 * Never reference this class directly. Always use {@link com.backend.migrate.vr.service.ViPhamServiceUtil} to access the vi pham remote service.
 	 */
 }

@@ -266,6 +266,198 @@ public class PhuongTienUtil {
 	}
 
 	/**
+	* Returns the phuong tien where bienkiemsoat = &#63; or throws a {@link NoSuchPhuongTienException} if it could not be found.
+	*
+	* @param bienkiemsoat the bienkiemsoat
+	* @return the matching phuong tien
+	* @throws NoSuchPhuongTienException if a matching phuong tien could not be found
+	*/
+	public static PhuongTien findByBKS(java.lang.String bienkiemsoat)
+		throws com.backend.migrate.vr.exception.NoSuchPhuongTienException {
+		return getPersistence().findByBKS(bienkiemsoat);
+	}
+
+	/**
+	* Returns the phuong tien where bienkiemsoat = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param bienkiemsoat the bienkiemsoat
+	* @return the matching phuong tien, or <code>null</code> if a matching phuong tien could not be found
+	*/
+	public static PhuongTien fetchByBKS(java.lang.String bienkiemsoat) {
+		return getPersistence().fetchByBKS(bienkiemsoat);
+	}
+
+	/**
+	* Returns the phuong tien where bienkiemsoat = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param bienkiemsoat the bienkiemsoat
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching phuong tien, or <code>null</code> if a matching phuong tien could not be found
+	*/
+	public static PhuongTien fetchByBKS(java.lang.String bienkiemsoat,
+		boolean retrieveFromCache) {
+		return getPersistence().fetchByBKS(bienkiemsoat, retrieveFromCache);
+	}
+
+	/**
+	* Removes the phuong tien where bienkiemsoat = &#63; from the database.
+	*
+	* @param bienkiemsoat the bienkiemsoat
+	* @return the phuong tien that was removed
+	*/
+	public static PhuongTien removeByBKS(java.lang.String bienkiemsoat)
+		throws com.backend.migrate.vr.exception.NoSuchPhuongTienException {
+		return getPersistence().removeByBKS(bienkiemsoat);
+	}
+
+	/**
+	* Returns the number of phuong tiens where bienkiemsoat = &#63;.
+	*
+	* @param bienkiemsoat the bienkiemsoat
+	* @return the number of matching phuong tiens
+	*/
+	public static int countByBKS(java.lang.String bienkiemsoat) {
+		return getPersistence().countByBKS(bienkiemsoat);
+	}
+
+	/**
+	* Returns all the phuong tiens where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @return the matching phuong tiens
+	*/
+	public static List<PhuongTien> findByGT_ID(long id) {
+		return getPersistence().findByGT_ID(id);
+	}
+
+	/**
+	* Returns a range of all the phuong tiens where id &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PhuongTienModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param id the ID
+	* @param start the lower bound of the range of phuong tiens
+	* @param end the upper bound of the range of phuong tiens (not inclusive)
+	* @return the range of matching phuong tiens
+	*/
+	public static List<PhuongTien> findByGT_ID(long id, int start, int end) {
+		return getPersistence().findByGT_ID(id, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the phuong tiens where id &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PhuongTienModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param id the ID
+	* @param start the lower bound of the range of phuong tiens
+	* @param end the upper bound of the range of phuong tiens (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching phuong tiens
+	*/
+	public static List<PhuongTien> findByGT_ID(long id, int start, int end,
+		OrderByComparator<PhuongTien> orderByComparator) {
+		return getPersistence().findByGT_ID(id, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the phuong tiens where id &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PhuongTienModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param id the ID
+	* @param start the lower bound of the range of phuong tiens
+	* @param end the upper bound of the range of phuong tiens (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching phuong tiens
+	*/
+	public static List<PhuongTien> findByGT_ID(long id, int start, int end,
+		OrderByComparator<PhuongTien> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGT_ID(id, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first phuong tien in the ordered set where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching phuong tien
+	* @throws NoSuchPhuongTienException if a matching phuong tien could not be found
+	*/
+	public static PhuongTien findByGT_ID_First(long id,
+		OrderByComparator<PhuongTien> orderByComparator)
+		throws com.backend.migrate.vr.exception.NoSuchPhuongTienException {
+		return getPersistence().findByGT_ID_First(id, orderByComparator);
+	}
+
+	/**
+	* Returns the first phuong tien in the ordered set where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching phuong tien, or <code>null</code> if a matching phuong tien could not be found
+	*/
+	public static PhuongTien fetchByGT_ID_First(long id,
+		OrderByComparator<PhuongTien> orderByComparator) {
+		return getPersistence().fetchByGT_ID_First(id, orderByComparator);
+	}
+
+	/**
+	* Returns the last phuong tien in the ordered set where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching phuong tien
+	* @throws NoSuchPhuongTienException if a matching phuong tien could not be found
+	*/
+	public static PhuongTien findByGT_ID_Last(long id,
+		OrderByComparator<PhuongTien> orderByComparator)
+		throws com.backend.migrate.vr.exception.NoSuchPhuongTienException {
+		return getPersistence().findByGT_ID_Last(id, orderByComparator);
+	}
+
+	/**
+	* Returns the last phuong tien in the ordered set where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching phuong tien, or <code>null</code> if a matching phuong tien could not be found
+	*/
+	public static PhuongTien fetchByGT_ID_Last(long id,
+		OrderByComparator<PhuongTien> orderByComparator) {
+		return getPersistence().fetchByGT_ID_Last(id, orderByComparator);
+	}
+
+	/**
+	* Removes all the phuong tiens where id &gt; &#63; from the database.
+	*
+	* @param id the ID
+	*/
+	public static void removeByGT_ID(long id) {
+		getPersistence().removeByGT_ID(id);
+	}
+
+	/**
+	* Returns the number of phuong tiens where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @return the number of matching phuong tiens
+	*/
+	public static int countByGT_ID(long id) {
+		return getPersistence().countByGT_ID(id);
+	}
+
+	/**
 	* Caches the phuong tien in the entity cache if it is enabled.
 	*
 	* @param phuongTien the phuong tien

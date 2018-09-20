@@ -16,6 +16,11 @@ package com.backend.migrate.vr.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.Date;
+import java.util.List;
+
+import com.backend.migrate.vr.exception.NoSuchPhuongTienException;
+import com.backend.migrate.vr.model.PhuongTien;
 import com.backend.migrate.vr.service.base.PhuongTienLocalServiceBaseImpl;
 
 /**
@@ -39,4 +44,76 @@ public class PhuongTienLocalServiceImpl extends PhuongTienLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use {@link com.backend.migrate.vr.service.PhuongTienLocalServiceUtil} to access the phuong tien local service.
 	 */
+	public PhuongTien addPhuongTien(
+		long id,
+		String bienkiemsoat,
+		int succhua,
+		long loaighe_id,
+		int namsanxuat,
+		long nuocsanxuat_id,
+		long tenhieuxe_id,
+		long mauson_id,
+		String sokhung,
+		String somay,
+		int namhetnienhansudung,
+		Date namcaitao,
+		int trongtai,
+		int loaihinhvantai_id,
+		int la_xegiuongnam,
+		int sogiuongnam,
+		String tennguoisohuu,
+		int doanhnghiep_id,
+		int tuyenkhaithac_id,
+		String web_giamsathanhtrinh,
+		String tendangnhap_gsht,
+		String ghichu,
+		int trangthai,
+		int coquanquanly_id,
+		long congdan_id
+		) {
+		PhuongTien phuongTien = phuongTienPersistence.create(id);
+		phuongTien.setBienkiemsoat(bienkiemsoat);
+		phuongTien.setSucchua(succhua);
+		phuongTien.setLoaighe_id(loaighe_id);
+		phuongTien.setNamsanxuat(namsanxuat);
+		phuongTien.setNuocsanxuat_id(nuocsanxuat_id);
+		phuongTien.setTenhieuxe_id(tenhieuxe_id);
+		phuongTien.setMauson_id(mauson_id);
+		phuongTien.setSokhung(sokhung);
+		phuongTien.setSomay(somay);
+		phuongTien.setNamhetnienhansudung(namhetnienhansudung);
+		phuongTien.setNamcaitao(namcaitao);
+		phuongTien.setTrongtai(trongtai);
+		phuongTien.setTrongtai(trongtai);
+		phuongTien.setLoaihinhvantai_id(loaihinhvantai_id);
+		phuongTien.setLa_xegiuongnam(la_xegiuongnam);
+		phuongTien.setSogiuongnam(sogiuongnam);
+		phuongTien.setTennguoisohuu(tennguoisohuu);
+		phuongTien.setDoanhnghiep_id(doanhnghiep_id);
+		phuongTien.setTuyenkhaithac_id(tuyenkhaithac_id);
+		phuongTien.setWeb_giamsathanhtrinh(web_giamsathanhtrinh);
+		phuongTien.setTendangnhap_gsht(tendangnhap_gsht);
+		phuongTien.setGhichu(ghichu);
+		phuongTien.setTrangthai(trangthai);
+		phuongTien.setCoquanquanly_id(coquanquanly_id);
+		phuongTien.setCongdan_id(congdan_id);
+		
+		return phuongTienPersistence.update(phuongTien);
+	}
+	
+	public PhuongTien deletePhuongTien(long id) throws NoSuchPhuongTienException {
+		return phuongTienPersistence.remove(id);
+	}
+	
+	public List<PhuongTien> getListGreaterThanId(long id) {
+		return phuongTienPersistence.findByGT_ID(id);
+	}
+	
+	public long countAll() {
+		return phuongTienPersistence.countAll();
+	}
+	
+	public PhuongTien findByBKS(String bienkiemsoat) {
+		return phuongTienPersistence.fetchByBKS(bienkiemsoat);
+	}
 }

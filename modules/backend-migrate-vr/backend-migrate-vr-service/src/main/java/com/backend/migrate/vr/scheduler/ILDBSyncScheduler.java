@@ -9,7 +9,9 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
-import com.backend.migrate.vr.service.PhuongTienService;
+import com.backend.migrate.vr.model.ILPhuongTien;
+import com.backend.migrate.vr.service.ILPhuongTienLocalService;
+import com.backend.migrate.vr.service.PhuongTienLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -27,6 +29,13 @@ public class ILDBSyncScheduler extends BaseSchedulerEntryMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		_log.info("DB sync is starting at  : "
 				+ APIDateTimeUtils.convertDateToString(new Date()));
+		long lastId = 0l;
+		ILPhuongTien ilPt = _ilPhuongTienLocalService.getLastPhuongTien();
+		if (ilPt != null) {
+			lastId = ilPt.getId();
+		}
+		
+		_log.info("Last vehicle id: " + lastId);
 		
 		_log.info("DB sync finished at  : " + APIDateTimeUtils.convertDateToString(new Date()));
 	}
@@ -61,7 +70,10 @@ public class ILDBSyncScheduler extends BaseSchedulerEntryMessageListener {
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference
-	private PhuongTienService _phuongTienLocalService;
+	private PhuongTienLocalService _phuongTienLocalService;
+
+	@Reference
+	private ILPhuongTienLocalService _ilPhuongTienLocalService;
 
 	private Log _log = LogFactoryUtil.getLog(ILDBSyncScheduler.class);	
 }

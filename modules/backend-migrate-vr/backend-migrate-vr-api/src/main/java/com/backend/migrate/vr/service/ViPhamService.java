@@ -26,28 +26,28 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
- * Provides the remote service interface for PhuongTien. Methods of this
+ * Provides the remote service interface for ViPham. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Brian Wing Shun Chan
- * @see PhuongTienServiceUtil
- * @see com.backend.migrate.vr.service.base.PhuongTienServiceBaseImpl
- * @see com.backend.migrate.vr.service.impl.PhuongTienServiceImpl
+ * @see ViPhamServiceUtil
+ * @see com.backend.migrate.vr.service.base.ViPhamServiceBaseImpl
+ * @see com.backend.migrate.vr.service.impl.ViPhamServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
 @OSGiBeanProperties(property =  {
-	"json.web.service.context.name=inland", "json.web.service.context.path=PhuongTien"}, service = PhuongTienService.class)
+	"json.web.service.context.name=inland", "json.web.service.context.path=ViPham"}, service = ViPhamService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface PhuongTienService extends BaseService {
+public interface ViPhamService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link PhuongTienServiceUtil} to access the phuong tien remote service. Add custom service methods to {@link com.backend.migrate.vr.service.impl.PhuongTienServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link ViPhamServiceUtil} to access the vi pham remote service. Add custom service methods to {@link com.backend.migrate.vr.service.impl.ViPhamServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**

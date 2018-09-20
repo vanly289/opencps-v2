@@ -59,7 +59,7 @@ public class BGTVT0600013 {
 		model.setReceiver("NSW");
 		model.setPersonSignature("");
 		model.setSystemSignature("");
-		model.setStatus(1);
+		model.setStatus(0);
 		model.setMessageId(PortalUUIDUtil.generate());
 		model.setFromName("BGTVT");
 		model.setFromCountryCode("VN");
@@ -79,7 +79,7 @@ public class BGTVT0600013 {
 		model.setReference(dossier.getReferenceUid());
 		model.setPreReference(dossier.getReferenceUid());
 		model.setSendDate(APIDateTimeUtils.convertDateToString(new Date()));
-		model.setRetryCount(1);
+		model.setRetryCount(0);
 		model.setDirection(2);
 		Calendar cal = Calendar.getInstance();
 		
@@ -377,10 +377,10 @@ public class BGTVT0600013 {
 								vl.setCapacity(DUMMY_DATA);
 							}
 							if (vehicleObj.has("ManufacturedYear")) {
-								vl.setManufacturedYear(vehicleObj.getString("ManufacturedYear"));
+								vl.setManufacturedyear(vehicleObj.getString("ManufacturedYear"));
 							}
 							else {
-								vl.setManufacturedYear(DUMMY_DATA);
+								vl.setManufacturedyear(DUMMY_DATA);
 							}
 							if (vehicleObj.has("VehicleExpImpGateCode")) {
 								vl.setVehicleExpImpGateCode(vehicleObj.getString("VehicleExpImpGateCode"));

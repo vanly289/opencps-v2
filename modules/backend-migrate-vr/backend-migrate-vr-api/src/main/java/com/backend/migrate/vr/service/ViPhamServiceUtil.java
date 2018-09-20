@@ -21,25 +21,25 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the remote service utility for PhuongTien. This utility wraps
- * {@link com.backend.migrate.vr.service.impl.PhuongTienServiceImpl} and is the
+ * Provides the remote service utility for ViPham. This utility wraps
+ * {@link com.backend.migrate.vr.service.impl.ViPhamServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
  * @author Brian Wing Shun Chan
- * @see PhuongTienService
- * @see com.backend.migrate.vr.service.base.PhuongTienServiceBaseImpl
- * @see com.backend.migrate.vr.service.impl.PhuongTienServiceImpl
+ * @see ViPhamService
+ * @see com.backend.migrate.vr.service.base.ViPhamServiceBaseImpl
+ * @see com.backend.migrate.vr.service.impl.ViPhamServiceImpl
  * @generated
  */
 @ProviderType
-public class PhuongTienServiceUtil {
+public class ViPhamServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.backend.migrate.vr.service.impl.PhuongTienServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.backend.migrate.vr.service.impl.ViPhamServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -51,10 +51,9 @@ public class PhuongTienServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static PhuongTienService getService() {
+	public static ViPhamService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<PhuongTienService, PhuongTienService> _serviceTracker =
-		ServiceTrackerFactory.open(PhuongTienService.class);
+	private static ServiceTracker<ViPhamService, ViPhamService> _serviceTracker = ServiceTrackerFactory.open(ViPhamService.class);
 }

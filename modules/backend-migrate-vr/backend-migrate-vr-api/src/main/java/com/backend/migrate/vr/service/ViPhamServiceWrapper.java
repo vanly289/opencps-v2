@@ -19,17 +19,17 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
- * Provides a wrapper for {@link PhuongTienService}.
+ * Provides a wrapper for {@link ViPhamService}.
  *
  * @author Brian Wing Shun Chan
- * @see PhuongTienService
+ * @see ViPhamService
  * @generated
  */
 @ProviderType
-public class PhuongTienServiceWrapper implements PhuongTienService,
-	ServiceWrapper<PhuongTienService> {
-	public PhuongTienServiceWrapper(PhuongTienService phuongTienService) {
-		_phuongTienService = phuongTienService;
+public class ViPhamServiceWrapper implements ViPhamService,
+	ServiceWrapper<ViPhamService> {
+	public ViPhamServiceWrapper(ViPhamService viPhamService) {
+		_viPhamService = viPhamService;
 	}
 
 	/**
@@ -39,18 +39,18 @@ public class PhuongTienServiceWrapper implements PhuongTienService,
 	*/
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
-		return _phuongTienService.getOSGiServiceIdentifier();
+		return _viPhamService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public PhuongTienService getWrappedService() {
-		return _phuongTienService;
+	public ViPhamService getWrappedService() {
+		return _viPhamService;
 	}
 
 	@Override
-	public void setWrappedService(PhuongTienService phuongTienService) {
-		_phuongTienService = phuongTienService;
+	public void setWrappedService(ViPhamService viPhamService) {
+		_viPhamService = viPhamService;
 	}
 
-	private PhuongTienService _phuongTienService;
+	private ViPhamService _viPhamService;
 }
