@@ -15,11 +15,13 @@
 		var stateWindow = "${(stateWindow)!}";
 		var dossierId = '${(dossierId)!}';
 		var dossierPartNo = "${(dossierPartNo)!}";
-
 		var emailAddress = '${(user.emailAddress)!}';
 		var agencies = '${(agencies)!}';
 		
 		funLoadVue(stateWindow, dossierId, dossierPartNo, emailAddress, agencies);
 	});
-
+	history.pushState(null, document.title, location.href);
+	window.addEventListener('popstate', function (event) {
+		history.pushState(null, document.title, location.href);
+	});
 </script>

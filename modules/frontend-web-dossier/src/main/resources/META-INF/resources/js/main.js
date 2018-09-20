@@ -171,8 +171,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 				sortable: true,
 				value: 'thaoTac'
 			}
-
-
 			],
 			giayPhepLienVanTableItems: [],
 			pageGiayPhepLienVanTableLength: 0,
@@ -369,7 +367,51 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			loadingDanhSachHoSoTable: false,
 			listHistoryProcessingItems: [],
 			dialogViewLogs: false,
-			disabledDossierFile: true
+			disabledDossierFile: true,
+			loadingDocumentListIn: false,
+			loadingDocumentListOut: false,
+			showPrintable: false,
+			listPrintItems: [
+				{
+					select: false,
+					so_khung: '123456',
+					so_may: 'AQ12346',
+					mau_son: 'Đen'
+				},
+				{
+					select: false,
+					so_khung: '123456',
+					so_may: 'AQ12346',
+					mau_son: 'Đen'
+				},
+				{
+					select: false,
+					so_khung: '123456',
+					so_may: 'AQ12346',
+					mau_son: 'Đen'
+				},
+				{
+					select: false,
+					so_khung: '123456',
+					so_may: 'AQ12346',
+					mau_son: 'Đen'
+				},
+				{
+					select: false,
+					so_khung: '123456',
+					so_may: 'AQ12346',
+					mau_son: 'Đen'
+				},
+				{
+					select: false,
+					so_khung: '123456',
+					so_may: 'AQ12346',
+					mau_son: 'Đen'
+				}
+			],
+			loadingListPrints: false,
+			selectedPrints: [],
+			statusTextLoadPrint: 'Đang tải danh sách in...'
 		},
 		watch: {
 			pageGiayPhepVanTaiQuocTeTable: {
@@ -599,6 +641,38 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								// 	$("#activatorTab2").trigger("click");
 								// }
 							}
+						},
+						submitListPrints: function (data) {
+							var vm = this;
+							var url = '/o/rest/v2/dictcollections/' + item.processActionId + '/prints';
+							var formData = new URLSearchParams();
+							formData.append('dossierId', vm.detailModel.dossierId);
+							formData.append('select', vm.selectedPrints.join(','));
+							axios.put(url, formData, config).then(function (response) {
+								vm.snackbartextdossierViewJX = "Xử lý thành công!";
+								vm.snackbardossierViewJX = true;
+							})
+							.catch(function (error) {
+								console.log(error);
+								vm.snackbartextdossierViewJX = "Xử lý không thành công!";
+								vm.snackbarerordossierViewJX = true;
+							});
+						},
+						loadListPrints: function (item) {
+							var vm = this;
+							var url = '/o/rest/v2/dictcollections/' + item.processActionId + '/prints';
+							vm.loadingListPrints = true;
+							vm.statusTextLoadPrint = 'Đang tải danh sách in...';
+							axios.get(url, config).then(function (response) {
+								var serializable = response.data;
+								vm.listPrintItems = serializable.data;
+								vm.loadingListPrints = false;
+							})
+							.catch(function (error) {
+								console.log(error);
+								// vm.loadingListPrints = false;
+								vm.statusTextLoadPrint = 'Tải danh sách bị lỗi, Vui lòng thử lại :(';
+							});
 						},
 						viewDialogLog: function (item) {
 							var vm = this;
@@ -1801,6 +1875,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									success : function(result){
 										vm.snackbartextdossierViewJX = "Xoá dữ liệu thành công!";
 										vm.snackbardossierViewJX = true;
+										vm._inilistDocumentIn(vm.detailModel);
+										vm._inilistDocumentIn(vm.detailModel);
 										// vm.listDocumentOutStepItems.splice(index, 1);
 										// vm.stepModel.createFiles[item.index].counter = vm.stepModel.createFiles[item.index].counter - 1;
 									},
@@ -1861,6 +1937,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										}catch(e){
 
 										}
+										vm._inilistDocumentIn(vm.detailModel);
+										vm._inilistDocumentOut(vm.detailModel);
 									},
 									error : function(result){
 										vm.snackbartextdossierViewJX = "Lưu form thất bại!";
@@ -1911,6 +1989,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										}catch(e){
 
 										}
+										vm._inilistDocumentIn(vm.detailModel);
+										vm._inilistDocumentOut(vm.detailModel);
 									},
 									error : function(result){
 										vm.snackbartextdossierViewJX = "Lưu form thất bại!";
@@ -2368,11 +2448,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.snackbartextdossierViewJX = item.actionName + " thành công!";
 										vm.snackbardossierViewJX = true;
 										
-										
 										setTimeout(function(){ 
 											vm._inidanhSachHoSoTable();
 											vm.reloadCounter();
 										}, 1000);
+										
 										vm.detailPage = false;
 										vm.actionsSubmitLoading = false;
 										vm._inilistDocumentIn(vm.detailModel);
@@ -2641,6 +2721,20 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             		vm.processSteps = $.merge( nextactions, plugins );
                             		vm._inilistDocumentIn(vm.detailModel);
                             		vm._inilistDocumentOut(vm.detailModel);
+                            		/*Check configNote action print */
+                            		for (var i = 0; i < vm.processSteps.length; i++) {
+                            			if (vm.processSteps[i].hasOwnProperty('configNote') && vm.processSteps[i]['configNote'] !== null && vm.processSteps[i]['configNote'] !== undefined && vm.processSteps[i]['configNote'] !== '') {
+                            				let configNoteTmp = vm.processSteps[i]['configNote'];
+                            				if (configNoteTmp.hasOwnProperty('action')) {
+                            					if (configNoteTmp['action'] == 'PRINT') {
+                            						vm.showPrintable = true;
+                            						vm.loadListPrints(vm.processSteps[i]);
+                            						break;
+                            					}
+                            				}
+                            			}
+                            		}
+                            		/*---------------------------------------------*/
                             		var processStepsLength = vm.processSteps.length;
                             		var needIntervalRefresh = false;
                             		for (var rc = 0; rc < processStepsLength; rc++) {
@@ -4022,7 +4116,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									vm.statusParamFilter = dossierStatus;
 									vm.substatusParamFilter = dossierSubStatus;
 								}else {
-									
 									vm.listgroupHoSoFilterselected = dossierSubStatus;
 									vm.statusParamFilter = dossierSubStatus;
 									vm.substatusParamFilter = dossierStatus;
@@ -4360,7 +4453,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 //							vm.listDocumentInItems = [];
 //							vm.listDocumentOutItems = [];
-
+								vm.loadingDocumentListIn = true;
 								var url = "/o/rest/v2/dossiertemplates/"+item.dossierTemplateNo;
 								var urlFiles = "/o/rest/v2/dossiers/"+item.dossierId+"/files";
 
@@ -4407,10 +4500,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								// TEMP
 								vm._initCbxDocumentNewTab(listAll);
 								vm.disabledDossierFile = false;
+								vm.loadingDocumentListIn = false;
 								return Promise.reject();
 								
 							})).catch(function (error) {
 								console.log(error);
+								// vm.loadingDocumentListIn = false;
 
 							});
 							return false;
@@ -4533,7 +4628,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 //							vm.listDocumentInItems = [];
 //							vm.listDocumentOutItems = [];
-
+							vm.loadingDocumentListOut = true
 							var url = "/o/rest/v2/dossiertemplates/"+item.dossierTemplateNo;
 							var urlFiles = "/o/rest/v2/dossiers/"+item.dossierId+"/files";
 
@@ -4583,7 +4678,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							    }
 
 							    vm.listDocumentOutItems = listOut;
-
+							    vm.loadingDocumentListOut = false;
 							    return Promise.reject();
 
 							})).catch(function (error) {
