@@ -261,6 +261,25 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						content.setKetQuaXuLy(ketqua);
 
 						ketqua.setSoGp(StringPool.BLANK);
+						if (dossier.getServiceCode().equals("BGTVT0600042")
+								|| dossier.getServiceCode().equals("BGTVT0600043")
+								|| dossier.getServiceCode().equals("BGTVT0600048")
+								|| dossier.getServiceCode().equals("BGTVT0600049")
+								|| dossier.getServiceCode().equals("BGTVT0600050")
+								|| dossier.getServiceCode().equals("BGTVT0600051")
+								|| dossier.getServiceCode().equals("BGTVT0600052")
+								|| dossier.getServiceCode().equals("BGTVT0600053")
+								|| dossier.getServiceCode().equals("BGTVT0600054")
+								|| dossier.getServiceCode().equals("BGTVT0600055")
+								|| dossier.getServiceCode().equals("BGTVT0600056")
+								|| dossier.getServiceCode().equals("BGTVT0600057")
+								|| dossier.getServiceCode().equals("BGTVT0600058")
+								|| dossier.getServiceCode().equals("BGTVT0600059")
+								|| dossier.getServiceCode().equals("BGTVT0600060")
+								|| dossier.getServiceCode().equals("BGTVT0600061")
+								|| dossier.getServiceCode().equals("BGTVT0600062")) {
+							ketqua.setSoTn(dossier.getDossierNo());
+						}						
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						if (Validator.isNull(ketqua.getNoiDung())) {
 							ketqua.setNoiDung("Hồ sơ bị thiếu cần bổ sung!!");
@@ -373,6 +392,26 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						content.setKetQuaXuLy(ketqua);
 
 						ketqua.setSoGp(StringPool.BLANK);
+						if (dossier.getServiceCode().equals("BGTVT0600042")
+								|| dossier.getServiceCode().equals("BGTVT0600043")
+								|| dossier.getServiceCode().equals("BGTVT0600048")
+								|| dossier.getServiceCode().equals("BGTVT0600049")
+								|| dossier.getServiceCode().equals("BGTVT0600050")
+								|| dossier.getServiceCode().equals("BGTVT0600051")
+								|| dossier.getServiceCode().equals("BGTVT0600052")
+								|| dossier.getServiceCode().equals("BGTVT0600053")
+								|| dossier.getServiceCode().equals("BGTVT0600054")
+								|| dossier.getServiceCode().equals("BGTVT0600055")
+								|| dossier.getServiceCode().equals("BGTVT0600056")
+								|| dossier.getServiceCode().equals("BGTVT0600057")
+								|| dossier.getServiceCode().equals("BGTVT0600058")
+								|| dossier.getServiceCode().equals("BGTVT0600059")
+								|| dossier.getServiceCode().equals("BGTVT0600060")
+								|| dossier.getServiceCode().equals("BGTVT0600061")
+								|| dossier.getServiceCode().equals("BGTVT0600062")) {
+							ketqua.setSoTn(dossier.getDossierNo());
+						}
+						
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
@@ -471,6 +510,26 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						if (Validator.isNull(ketqua.getSoGp())) {
 							ketqua.setSoGp("11");
 						}
+						if (dossier.getServiceCode().equals("BGTVT0600042")
+								|| dossier.getServiceCode().equals("BGTVT0600043")
+								|| dossier.getServiceCode().equals("BGTVT0600048")
+								|| dossier.getServiceCode().equals("BGTVT0600049")
+								|| dossier.getServiceCode().equals("BGTVT0600050")
+								|| dossier.getServiceCode().equals("BGTVT0600051")
+								|| dossier.getServiceCode().equals("BGTVT0600052")
+								|| dossier.getServiceCode().equals("BGTVT0600053")
+								|| dossier.getServiceCode().equals("BGTVT0600054")
+								|| dossier.getServiceCode().equals("BGTVT0600055")
+								|| dossier.getServiceCode().equals("BGTVT0600056")
+								|| dossier.getServiceCode().equals("BGTVT0600057")
+								|| dossier.getServiceCode().equals("BGTVT0600058")
+								|| dossier.getServiceCode().equals("BGTVT0600059")
+								|| dossier.getServiceCode().equals("BGTVT0600060")
+								|| dossier.getServiceCode().equals("BGTVT0600061")
+								|| dossier.getServiceCode().equals("BGTVT0600062")) {
+							ketqua.setSoTn(dossier.getDossierNo());
+						}
+						
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
@@ -913,7 +972,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								}
 							}
 						}
-						else if (dossier.getServiceCode().equals("BGTVT0600044")) {
+						else if (dossier.getServiceCode().equals("BGTVT0600044")
+								|| dossier.getServiceCode().equals("BGTVT0600045")
+								|| dossier.getServiceCode().equals("BGTVT0600046")) {
 							MessageQueueInputModel model = BGTVT0600044.convertResult(dossier, dossierSync, envelope, "18", "15");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);
@@ -1061,7 +1122,25 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						
 						KetQuaXuLy ketqua = new KetQuaXuLy();
 						content.setKetQuaXuLy(ketqua);
-
+						if (dossier.getServiceCode().equals("BGTVT0600042")
+								|| dossier.getServiceCode().equals("BGTVT0600043")
+								|| dossier.getServiceCode().equals("BGTVT0600048")
+								|| dossier.getServiceCode().equals("BGTVT0600049")
+								|| dossier.getServiceCode().equals("BGTVT0600050")
+								|| dossier.getServiceCode().equals("BGTVT0600051")
+								|| dossier.getServiceCode().equals("BGTVT0600052")
+								|| dossier.getServiceCode().equals("BGTVT0600053")
+								|| dossier.getServiceCode().equals("BGTVT0600054")
+								|| dossier.getServiceCode().equals("BGTVT0600055")
+								|| dossier.getServiceCode().equals("BGTVT0600056")
+								|| dossier.getServiceCode().equals("BGTVT0600057")
+								|| dossier.getServiceCode().equals("BGTVT0600058")
+								|| dossier.getServiceCode().equals("BGTVT0600059")
+								|| dossier.getServiceCode().equals("BGTVT0600060")
+								|| dossier.getServiceCode().equals("BGTVT0600061")
+								|| dossier.getServiceCode().equals("BGTVT0600062")) {
+							ketqua.setSoTn(dossier.getDossierNo());
+						}
 						ketqua.setNoiDung(dossierAction.getActionNote());
 						ketqua.setDonViXuLy(dossier.getGovAgencyName());
 						ketqua.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
@@ -1294,7 +1373,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								}
 							}
 						}
-						else if (dossier.getServiceCode().equals("BGTVT0600044")) {
+						else if (dossier.getServiceCode().equals("BGTVT0600044")
+								|| dossier.getServiceCode().equals("BGTVT0600045")
+								|| dossier.getServiceCode().equals("BGTVT0600046")) {
 							MessageQueueInputModel model = BGTVT0600044.convertResult(dossier, dossierSync, envelope, "18", "16");
 
 							MessageQueueDetailModel result = client.postMessageQueue(model);

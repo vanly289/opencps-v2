@@ -62,4 +62,5 @@
 			<finder-column name="dossierId" />
 		</finder>		
 	</entity>
+	
 </service-builder>

@@ -12,31 +12,31 @@
  * details.
  */
 
-package com.backend.migrate.vr.service.impl;
+package org.opencps.thirdparty.system.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.backend.migrate.vr.service.base.ViPhamLocalServiceBaseImpl;
+import org.opencps.thirdparty.system.service.base.ViPhamLocalServiceBaseImpl;
 
 /**
  * The implementation of the vi pham local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.backend.migrate.vr.service.ViPhamLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.opencps.thirdparty.system.service.ViPhamLocalService} interface.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author trungdk
  * @see ViPhamLocalServiceBaseImpl
- * @see com.backend.migrate.vr.service.ViPhamLocalServiceUtil
+ * @see org.opencps.thirdparty.system.service.ViPhamLocalServiceUtil
  */
 @ProviderType
 public class ViPhamLocalServiceImpl extends ViPhamLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link com.backend.migrate.vr.service.ViPhamLocalServiceUtil} to access the vi pham local service.
+	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ViPhamLocalServiceUtil} to access the vi pham local service.
 	 */
 }

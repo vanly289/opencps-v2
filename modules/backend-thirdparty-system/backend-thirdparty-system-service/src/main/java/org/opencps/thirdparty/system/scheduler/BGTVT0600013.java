@@ -377,10 +377,10 @@ public class BGTVT0600013 {
 								vl.setCapacity(DUMMY_DATA);
 							}
 							if (vehicleObj.has("ManufacturedYear")) {
-								vl.setManufacturedyear(vehicleObj.getString("ManufacturedYear"));
+								vl.setManufacturedYear(vehicleObj.getString("ManufacturedYear"));
 							}
 							else {
-								vl.setManufacturedyear(DUMMY_DATA);
+								vl.setManufacturedYear(DUMMY_DATA);
 							}
 							if (vehicleObj.has("VehicleExpImpGateCode")) {
 								vl.setVehicleExpImpGateCode(vehicleObj.getString("VehicleExpImpGateCode"));

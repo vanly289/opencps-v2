@@ -377,6 +377,8 @@ public class BGTVT0600036 {
 					String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 
 					model.setRawMessage(rawMessage);
+					
+					lstResults.add(model);
 				}
 			}
 		}

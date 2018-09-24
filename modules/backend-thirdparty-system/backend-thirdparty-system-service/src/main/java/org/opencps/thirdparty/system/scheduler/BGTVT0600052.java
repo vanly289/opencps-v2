@@ -141,15 +141,10 @@ public class BGTVT0600052 {
 					}
 					if (formDataObj.has("ManufacturedYear")) {
 						String manufacturedYearStr = formDataObj.getString("ManufacturedYear");
-						Date manufacturedYear = DateTimeUtils.convertStringToDate(manufacturedYearStr);
-
-						clvNonCommercialCrossBorderTransportPermit.setManufacturedyear(
-								DateTimeUtils.convertDateToString(manufacturedYear, DateTimeUtils._NSW_DATE_TIME_FORMAT));
+						clvNonCommercialCrossBorderTransportPermit.setManufacturedyear(manufacturedYearStr);
 
 					} else {
-						Date now = new Date();
-						clvNonCommercialCrossBorderTransportPermit.setManufacturedyear(
-								DateTimeUtils.convertDateToString(now, DateTimeUtils._NSW_DATE_TIME_FORMAT));
+						clvNonCommercialCrossBorderTransportPermit.setManufacturedyear(StringPool.BLANK);
 					}
 					
 					if (formDataObj.has("TrademarkCode")) {
@@ -276,6 +271,7 @@ public class BGTVT0600052 {
 
 					model.setRawMessage(rawMessage);
 					
+					lstResults.add(model);
 				}
 			}
 

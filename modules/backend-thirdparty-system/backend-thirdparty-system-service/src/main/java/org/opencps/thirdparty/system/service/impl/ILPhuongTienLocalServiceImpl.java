@@ -12,51 +12,46 @@
  * details.
  */
 
-package com.backend.migrate.vr.service.impl;
+package org.opencps.thirdparty.system.service.impl;
 
 import java.util.Date;
-import java.util.List;
 
-import com.backend.migrate.vr.exception.NoSuchPhuongTienException;
-import com.backend.migrate.vr.model.PhuongTien;
-import com.backend.migrate.vr.service.base.PhuongTienLocalServiceBaseImpl;
+import org.opencps.thirdparty.system.exception.NoSuchILPhuongTienException;
+import org.opencps.thirdparty.system.model.ILPhuongTien;
+import org.opencps.thirdparty.system.service.base.ILPhuongTienLocalServiceBaseImpl;
 
 import aQute.bnd.annotation.ProviderType;
 
+
 /**
- * The implementation of the phuong tien local service.
+ * The implementation of the il phuong tien local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are
- * added, rerun ServiceBuilder to copy their definitions into the
- * {@link com.backend.migrate.vr.service.PhuongTienLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.opencps.thirdparty.system.service.ILPhuongTienLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security
- * checks based on the propagated JAAS credentials because this service can only
- * be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author Brian Wing Shun Chan
- * @see PhuongTienLocalServiceBaseImpl
- * @see com.backend.migrate.vr.service.PhuongTienLocalServiceUtil
+ * @author trungdk
+ * @see ILPhuongTienLocalServiceBaseImpl
+ * @see org.opencps.thirdparty.system.service.ILPhuongTienLocalServiceUtil
  */
 @ProviderType
-public class PhuongTienLocalServiceImpl extends PhuongTienLocalServiceBaseImpl {
+public class ILPhuongTienLocalServiceImpl
+	extends ILPhuongTienLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link
-	 * com.backend.migrate.vr.service.PhuongTienLocalServiceUtil} to access the
-	 * phuong tien local service.
+	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ILPhuongTienLocalServiceUtil} to access the il phuong tien local service.
 	 */
-	public PhuongTien addPhuongTien(long id, String bienkiemsoat, int succhua, long loaighe_id, int namsanxuat,
+	public ILPhuongTien addPhuongTien(long id, String bienkiemsoat, int succhua, long loaighe_id, int namsanxuat,
 			long nuocsanxuat_id, long tenhieuxe_id, long mauson_id, String sokhung, String somay,
 			int namhetnienhansudung, Date namcaitao, int trongtai, int loaihinhvantai_id, int la_xegiuongnam,
 			int sogiuongnam, String tennguoisohuu, int doanhnghiep_id, int tuyenkhaithac_id,
 			String web_giamsathanhtrinh, String tendangnhap_gsht, String ghichu, int trangthai, int coquanquanly_id,
 			long congdan_id) {
-		PhuongTien phuongTien = phuongTienPersistence.create(id);
+		ILPhuongTien phuongTien = ilPhuongTienPersistence.create(id);
 		phuongTien.setBienkiemsoat(bienkiemsoat);
 		phuongTien.setSucchua(succhua);
 		phuongTien.setLoaighe_id(loaighe_id);
@@ -83,22 +78,18 @@ public class PhuongTienLocalServiceImpl extends PhuongTienLocalServiceBaseImpl {
 		phuongTien.setCoquanquanly_id(coquanquanly_id);
 		phuongTien.setCongdan_id(congdan_id);
 
-		return phuongTienPersistence.update(phuongTien);
+		return ilPhuongTienPersistence.update(phuongTien);
 	}
 
-	public PhuongTien deletePhuongTien(long id) throws NoSuchPhuongTienException {
-		return phuongTienPersistence.remove(id);
+	public ILPhuongTien getLastPhuongTien() throws NoSuchILPhuongTienException {
+		return ilPhuongTienPersistence.findByGT_ID_Last(0l, null);
 	}
 
-	public List<PhuongTien> getListGreaterThanId(long id) {
-		return phuongTienPersistence.findByGT_ID(id);
-	}
-
+	public ILPhuongTien deletePhuongTien(long id) throws NoSuchILPhuongTienException {
+		return ilPhuongTienPersistence.remove(id);
+	}	
+	
 	public long countAll() {
-		return phuongTienPersistence.countAll();
-	}
-
-	public PhuongTien findByBKS(String bienkiemsoat) {
-		return phuongTienPersistence.fetchByBKS(bienkiemsoat);
+		return ilPhuongTienPersistence.countAll();
 	}
 }

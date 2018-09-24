@@ -12,31 +12,31 @@
  * details.
  */
 
-package com.backend.migrate.vr.service.impl;
+package org.opencps.thirdparty.system.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.backend.migrate.vr.service.base.ILPhuongTienServiceBaseImpl;
+import org.opencps.thirdparty.system.service.base.ViPhamServiceBaseImpl;
 
 /**
- * The implementation of the il phuong tien remote service.
+ * The implementation of the vi pham remote service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.backend.migrate.vr.service.ILPhuongTienService} interface.
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.opencps.thirdparty.system.service.ViPhamService} interface.
  *
  * <p>
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
- * @author Brian Wing Shun Chan
- * @see ILPhuongTienServiceBaseImpl
- * @see com.backend.migrate.vr.service.ILPhuongTienServiceUtil
+ * @author trungdk
+ * @see ViPhamServiceBaseImpl
+ * @see org.opencps.thirdparty.system.service.ViPhamServiceUtil
  */
 @ProviderType
-public class ILPhuongTienServiceImpl extends ILPhuongTienServiceBaseImpl {
+public class ViPhamServiceImpl extends ViPhamServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link com.backend.migrate.vr.service.ILPhuongTienServiceUtil} to access the il phuong tien remote service.
+	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ViPhamServiceUtil} to access the vi pham remote service.
 	 */
 }

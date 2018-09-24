@@ -648,7 +648,7 @@ public class DossierActionsImpl implements DossierActions {
 													returned = true;
 												}
 
-												if (eForm) {
+												if (eForm || Validator.isNotNull(dossierPart.getSampleData())) {
 													DossierFileActions actions = new DossierFileActionsImpl();
 													DossierFile dossierFile = null;
 													try {
@@ -667,10 +667,18 @@ public class DossierActionsImpl implements DossierActions {
 																dossierPart.getPartName(), StringPool.BLANK, 0L, null,
 																StringPool.BLANK, String.valueOf(false),
 																serviceContext);
+														docFileReferenceUid = dossierFile.getReferenceUid();
+														dossierFileId = dossierFile.getDossierFileId();
+														if (!eForm && Validator.isNotNull(dossierPart.getSampleData())) {
+															actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, formData, serviceContext);
+															dossierFile = DossierFileLocalServiceUtil.fetchDossierFile(dossierFileId);
+														}														
 													}
-
-													docFileReferenceUid = dossierFile.getReferenceUid();
-													dossierFileId = dossierFile.getDossierFileId();
+													
+													if (dossierFile != null) {
+														docFileReferenceUid = dossierFile.getReferenceUid();
+														dossierFileId = dossierFile.getDossierFileId();
+													}
 												}
 
 											}
@@ -775,7 +783,12 @@ public class DossierActionsImpl implements DossierActions {
 																	formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
 																	formData = formDataObj.toJSONString();
 																	dossierFile.setFormData(formData);
-																	DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+																	dossierFile = DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+																	docFileReferenceUid = dossierFile.getReferenceUid();
+																	
+																	actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, formData, serviceContext);
+																	dossierFile = DossierFileLocalServiceUtil.fetchDossierFile(dossierFileId);
+
 																	dossierFilesResult = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_NOT_NULL_FID(
 																						dossierId, fileTemplateNo, 2, 0, false);
 

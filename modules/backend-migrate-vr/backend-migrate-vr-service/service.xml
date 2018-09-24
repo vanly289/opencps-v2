@@ -33,69 +33,19 @@
         <column name="trangthai" type="int"></column>
         <column name="coquanquanly_id" type="int"></column>
         <column name="congdan_id" type="long"></column>
+
+		<order>
+			<order-column name="id" order-by="asc" />
+		</order>
+
         <finder name="BKS" return-type="PhuongTien">
             <finder-column name="bienkiemsoat"></finder-column>
         </finder>
 		
-		<order>
-			<order-column name="id" order-by="asc" />
-		</order>
         <finder name="GT_ID" return-type="Collection">
             <finder-column name="id" comparator="&gt;"></finder-column>
         </finder>
 		
 	</entity>
-	
-	<entity local-service="true" name="ILPhuongTien" remote-service="true" uuid="true" table="phbh_phuongtien">
-		<!-- PK fields -->
-
-		<column name="id" primary="true" type="long" />
-        <column name="bienkiemsoat" type="String"></column>
-        <column name="succhua" type="int"></column>
-        <column name="loaighe_id" type="long"></column>
-        <column name="namsanxuat" type="int"></column>
-        <column name="nuocsanxuat_id" type="long"></column>
-        <column name="tenhieuxe_id" type="long"></column>
-        <column name="mauson_id" type="long"></column>
-        <column name="sokhung" type="String"></column>
-        <column name="somay" type="String"></column>
-        <column name="namhetnienhansudung" type="int"></column>
-        <column name="namcaitao" type="Date"></column>
-        <column name="trongtai" type="int"></column>
-        <column name="loaihinhvantai_id" type="int"></column>
-        <column name="la_xegiuongnam" type="int"></column>
-        <column name="sogiuongnam" type="int"></column>
-        <column name="tennguoisohuu" type="String"></column>
-        <column name="doanhnghiep_id" type="int"></column>
-        <column name="tuyenkhaithac_id" type="int"></column>
-        <column name="web_giamsathanhtrinh" type="String"></column>
-        <column name="tendangnhap_gsht" type="String"></column>
-        <column name="matkhau_gsht" type="String"></column>
-        <column name="ghichu" type="String"></column>
-        <column name="trangthai" type="int"></column>
-        <column name="coquanquanly_id" type="int"></column>
-        <column name="congdan_id" type="long"></column>
-      
-		<order>
-			<order-column name="id" order-by="asc" />
-		</order>
-      
-        <finder name="GT_ID" return-type="Collection">
-            <finder-column name="id" comparator="&gt;="></finder-column>
-        </finder>
 		
-		
-	</entity>	
-	
-	<entity local-service="true" name="ViPham" remote-service="true" uuid="true" data-source="extDataSource" table="phbh_vipham">
-		<!-- PK fields -->
-
-		<column name="id" primary="true" type="long" />
-        <column name="phuongtien_id" type="long"></column>
-        <column name="ngayvipham" type="Date"></column>
-        <column name="loaivipham_id" type="long"></column>
-        <column name="mota" type="String"></column>
-        <column name="url_bienban" type="String"></column>
-		
-	</entity>		
 </service-builder>
