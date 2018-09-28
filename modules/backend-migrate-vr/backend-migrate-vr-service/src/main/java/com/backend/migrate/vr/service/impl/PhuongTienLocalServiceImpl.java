@@ -94,6 +94,10 @@ public class PhuongTienLocalServiceImpl extends PhuongTienLocalServiceBaseImpl {
 		return phuongTienPersistence.findByGT_ID(id);
 	}
 
+	public PhuongTien getFirstGreaterThanId(long id) throws NoSuchPhuongTienException {
+		return phuongTienPersistence.findByGT_ID_First(id, null);
+	}
+	
 	public long countAll() {
 		return phuongTienPersistence.countAll();
 	}

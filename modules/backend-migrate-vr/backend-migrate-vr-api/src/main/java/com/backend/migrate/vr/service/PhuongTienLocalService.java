@@ -116,6 +116,10 @@ public interface PhuongTienLocalService extends BaseLocalService,
 
 	public PhuongTien findByBKS(java.lang.String bienkiemsoat);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PhuongTien getFirstGreaterThanId(long id)
+		throws NoSuchPhuongTienException;
+
 	/**
 	* Returns the phuong tien with the primary key.
 	*

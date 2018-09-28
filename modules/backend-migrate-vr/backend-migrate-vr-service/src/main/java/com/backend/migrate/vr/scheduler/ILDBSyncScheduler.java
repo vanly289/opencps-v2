@@ -1,16 +1,34 @@
 package com.backend.migrate.vr.scheduler;
 
 import java.util.Date;
+import java.util.List;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
+import org.opencps.thirdparty.system.exception.NoSuchILPhuongTienException;
+import org.opencps.thirdparty.system.model.ILDoanhNghiep;
+import org.opencps.thirdparty.system.model.ILPhuHieuBienHieu;
+import org.opencps.thirdparty.system.model.ILPhuongTien;
+import org.opencps.thirdparty.system.model.ILViPham;
+import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ILPhuHieuBienHieuLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILPhuongTienLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ILViPhamLocalServiceUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
+import com.backend.migrate.vr.exception.NoSuchPhuongTienException;
+import com.backend.migrate.vr.model.DoanhNghiep;
+import com.backend.migrate.vr.model.PhuHieuBienHieu;
+import com.backend.migrate.vr.model.PhuongTien;
+import com.backend.migrate.vr.model.ViPham;
+import com.backend.migrate.vr.service.DoanhNghiepLocalServiceUtil;
+import com.backend.migrate.vr.service.PhuHieuBienHieuLocalServiceUtil;
 import com.backend.migrate.vr.service.PhuongTienLocalService;
+import com.backend.migrate.vr.service.PhuongTienLocalServiceUtil;
+import com.backend.migrate.vr.service.ViPhamLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -28,8 +46,138 @@ public class ILDBSyncScheduler extends BaseSchedulerEntryMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		_log.info("DB sync is starting at  : "
 				+ APIDateTimeUtils.convertDateToString(new Date()));
-
-		_log.info("Number of vehicles: " + ILPhuongTienLocalServiceUtil.countAll());
+		long id = 0l;
+		
+		try {
+			try {
+				ILPhuongTien lastPt = ILPhuongTienLocalServiceUtil.getLastPhuongTien();
+				if (lastPt != null) {
+					id = lastPt.getId();
+				}
+			}
+			catch (NoSuchILPhuongTienException e) {
+				
+			}
+			PhuongTien pt = PhuongTienLocalServiceUtil.getFirstGreaterThanId(id);
+			ILPhuongTien ilPt = ILPhuongTienLocalServiceUtil.fetchILPhuongTien(pt.getId());
+			
+			if (pt != null) {
+				List<ViPham> lstViphams = ViPhamLocalServiceUtil.getListByPhuongTien(pt.getId());
+				if (ilPt == null) {
+					ILPhuongTienLocalServiceUtil.addPhuongTien(pt.getId(), 
+							pt.getBienkiemsoat(), 
+							pt.getSucchua(), 
+							pt.getLoaighe_id(), 
+							pt.getNamsanxuat(), 
+							pt.getNuocsanxuat_id(), 
+							pt.getTenhieuxe_id(), 
+							pt.getMauson_id(), 
+							pt.getSokhung(), 
+							pt.getSomay(), 
+							pt.getNamhetnienhansudung(), 
+							pt.getNamcaitao(), 
+							pt.getTrongtai(), 
+							pt.getLoaihinhvantai_id(), 
+							pt.getLa_xegiuongnam(), 
+							pt.getSogiuongnam(), 
+							pt.getTennguoisohuu(), 
+							pt.getDoanhnghiep_id(), 
+							pt.getTuyenkhaithac_id(), 
+							pt.getWeb_giamsathanhtrinh(), 
+							pt.getTendangnhap_gsht(), 
+							pt.getGhichu(), 
+							pt.getTrangthai(), 
+							pt.getCoquanquanly_id(), 
+							pt.getCongdan_id());
+				}
+				for (ViPham vp : lstViphams) {
+					ILViPham ilVp = ILViPhamLocalServiceUtil.fetchILViPham(vp.getId());
+					if (ilVp == null) {
+						ILViPhamLocalServiceUtil.addViPham(vp.getId(), vp.getPhuongtien_id(), vp.getNgayvipham(), vp.getLoaivipham_id(), vp.getMota(), vp.getUrl_bienban());
+					}
+				}
+				
+				List<PhuHieuBienHieu> lstPhbhs = PhuHieuBienHieuLocalServiceUtil.getListByPhuongTien(pt.getId());
+				for (PhuHieuBienHieu phbh : lstPhbhs) {
+					ILPhuHieuBienHieu ilPhbh = ILPhuHieuBienHieuLocalServiceUtil.fetchILPhuHieuBienHieu(phbh.getId());
+					if (ilPhbh != null) {
+						ILPhuHieuBienHieuLocalServiceUtil.addPhuHieuBienHieu(
+								phbh.getId(), 
+								phbh.getSophuhieu(), 
+								phbh.getPhuongtien_id(), 
+								phbh.getLoaihinh_id(), 
+								phbh.getTuyenkhaithac_id(), 
+								phbh.getPhamvi_id(), 
+								phbh.getLoai(), 
+								phbh.getNgaycap(), 
+								phbh.getNgayhethan(), 
+								phbh.getNgaythuhoi(), 
+								phbh.getLydo_thuhoi(), 
+								phbh.getNguoitao(),
+								phbh.getNgaytao(), 
+								phbh.getNguoiky(), 
+								phbh.getNguoiky_id(), 
+								phbh.getNgayky(), 
+								phbh.getGhichu(), 
+								phbh.getTrangthai(), 
+								phbh.getCoquanquanly_id(), 
+								phbh.getLabienhieu());
+					}
+				}
+				
+				DoanhNghiep dn = DoanhNghiepLocalServiceUtil.fetchDoanhNghiep(pt.getDoanhnghiep_id());
+				
+				ILDoanhNghiep ilDn = ILDoanhNghiepLocalServiceUtil.fetchILDoanhNghiep(dn != null ? dn.getId() : 0l);
+				
+				if (ilDn == null) {
+					ILDoanhNghiepLocalServiceUtil.addDoanhNghiep(
+						dn.getId(), 
+						dn.getTen(), 
+						dn.getTen_viettat(), 
+						dn.getTen_tienganh(), 
+						dn.getSogcn_dkkd(), 
+						dn.getNgaycap_dkkd(), 
+						dn.getNgayhethan_dkkd(), 
+						dn.getTen_donvicapphep(), 
+						dn.getMasothue(), 
+						dn.getTen_nguoidaidien(), 
+						dn.getChucvu_nguoidaidien(), 
+						dn.getGioitinh_nguoidaidien(), 
+						dn.getDiachi_nguoidaidien(), 
+						dn.getDiachi_ndd_tinh_id(), 
+						dn.getDiachi_ndd_huyen_id(), 
+						dn.getDiachi_ndd_xa_id(), 
+						dn.getHktt_nguoidaidien(), 
+						dn.getDantoc_nguoidaidien_id(), 
+						dn.getTongiao_nguoidaidien_id(), 
+						dn.getQuoctich_nguoidaidien_id(), 
+						dn.getNgaysinh_nguoidaidien(), 
+						dn.getDienthoai_nguoidaidien(), 
+						dn.getGiayto_canhan_nguoidaidien(), 
+						dn.getGiayto_ngaycap_nguoidaidien(), 
+						dn.getGiayto_noicap_nguoidaidien(), 
+						dn.getLoai_doanhnghiep_id(), 
+						dn.getDiachi_trusochinh(), 
+						dn.getDiachi_truso_tinh_id(), 
+						dn.getDiachi_truso_huyen_id(), 
+						dn.getDiachi_truso_xa_id(), 
+						dn.getDienthoai(), 
+						dn.getFax(), 
+						dn.getEmail(), 
+						dn.getWebsite(), 
+						dn.getVon_dieule(), 
+						dn.getVon_phapdinh(), 
+						dn.getUser_id(), 
+						dn.getDoituongsudung_id(), 
+						dn.getTrangthai(), 
+						dn.getNgaytao(), 
+						dn.getNgaycap_taikhoan());
+				}
+			}
+		}
+		catch (NoSuchPhuongTienException e) {
+			
+		}
 		
 		_log.info("DB sync finished at  : " + APIDateTimeUtils.convertDateToString(new Date()));
 	}

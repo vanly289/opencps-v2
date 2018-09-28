@@ -33,7 +33,6 @@ public class PhuongTienSoap implements Serializable {
 	public static PhuongTienSoap toSoapModel(PhuongTien model) {
 		PhuongTienSoap soapModel = new PhuongTienSoap();
 
-		soapModel.setUuid(model.getUuid());
 		soapModel.setId(model.getId());
 		soapModel.setBienkiemsoat(model.getBienkiemsoat());
 		soapModel.setSucchua(model.getSucchua());
@@ -110,14 +109,6 @@ public class PhuongTienSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setId(pk);
-	}
-
-	public String getUuid() {
-		return _uuid;
-	}
-
-	public void setUuid(String uuid) {
-		_uuid = uuid;
 	}
 
 	public long getId() {
@@ -328,7 +319,6 @@ public class PhuongTienSoap implements Serializable {
 		_congdan_id = congdan_id;
 	}
 
-	private String _uuid;
 	private long _id;
 	private String _bienkiemsoat;
 	private int _succhua;

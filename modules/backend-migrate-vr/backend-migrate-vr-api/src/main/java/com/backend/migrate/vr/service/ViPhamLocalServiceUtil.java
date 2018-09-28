@@ -208,6 +208,11 @@ public class ViPhamLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.backend.migrate.vr.model.ViPham> getListByPhuongTien(
+		long phuongtien_id) {
+		return getService().getListByPhuongTien(phuongtien_id);
+	}
+
 	/**
 	* Returns a range of all the vi phams.
 	*

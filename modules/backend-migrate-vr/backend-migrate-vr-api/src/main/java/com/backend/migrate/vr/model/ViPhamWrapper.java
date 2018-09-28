@@ -57,7 +57,6 @@ public class ViPhamWrapper implements ViPham, ModelWrapper<ViPham> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("id", getId());
 		attributes.put("phuongtien_id", getPhuongtien_id());
 		attributes.put("ngayvipham", getNgayvipham());
@@ -70,12 +69,6 @@ public class ViPhamWrapper implements ViPham, ModelWrapper<ViPham> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long id = (Long)attributes.get("id");
 
 		if (id != null) {
@@ -186,16 +179,6 @@ public class ViPhamWrapper implements ViPham, ModelWrapper<ViPham> {
 	@Override
 	public java.lang.String getUrl_bienban() {
 		return _viPham.getUrl_bienban();
-	}
-
-	/**
-	* Returns the uuid of this vi pham.
-	*
-	* @return the uuid of this vi pham
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _viPham.getUuid();
 	}
 
 	@Override
@@ -362,16 +345,6 @@ public class ViPhamWrapper implements ViPham, ModelWrapper<ViPham> {
 	@Override
 	public void setUrl_bienban(java.lang.String url_bienban) {
 		_viPham.setUrl_bienban(url_bienban);
-	}
-
-	/**
-	* Sets the uuid of this vi pham.
-	*
-	* @param uuid the uuid of this vi pham
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_viPham.setUuid(uuid);
 	}
 
 	@Override

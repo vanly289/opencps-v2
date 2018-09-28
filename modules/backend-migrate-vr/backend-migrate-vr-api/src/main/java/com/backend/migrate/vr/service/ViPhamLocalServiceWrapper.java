@@ -215,6 +215,12 @@ public class ViPhamLocalServiceWrapper implements ViPhamLocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.backend.migrate.vr.model.ViPham> getListByPhuongTien(
+		long phuongtien_id) {
+		return _viPhamLocalService.getListByPhuongTien(phuongtien_id);
+	}
+
 	/**
 	* Returns a range of all the vi phams.
 	*

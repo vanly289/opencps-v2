@@ -4,10 +4,10 @@
 <service-builder package-path="com.backend.migrate.vr">
 	<namespace>InLand</namespace>
 	
-	<entity local-service="true" name="PhuongTien" remote-service="false" uuid="true" data-source="extDataSource" table="phbh_phuongtien">
+	<entity local-service="true" name="PhuongTien" remote-service="false" uuid="false" data-source="extDataSource" table="phbh_phuongtien">
 		<!-- PK fields -->
 
-		<column name="id" primary="true" type="long" />
+		<column name="id" primary="true" type="long" db-name="id"/>
         <column name="bienkiemsoat" type="String"></column>
         <column name="succhua" type="int"></column>
         <column name="loaighe_id" type="long"></column>
@@ -47,5 +47,110 @@
         </finder>
 		
 	</entity>
+	
+	<entity local-service="true" name="ViPham" remote-service="false" uuid="false" data-source="extDataSource" table="phbh_vipham">
+		<!-- PK fields -->
+
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="phuongtien_id" type="long"/>
+        <column name="ngayvipham" type="Date"></column>
+        <column name="loaivipham_id" type="long"></column>
+        <column name="mota" type="String"></column>
+        <column name="url_bienban" type="String"></column>
+
+		<order>
+			<order-column name="id" order-by="asc" />
+		</order>
+        <finder name="PTID" return-type="Collection">
+            <finder-column name="phuongtien_id"></finder-column>
+        </finder>
 		
+	</entity>		
+
+	<entity local-service="true" name="PhuHieuBienHieu" remote-service="false" uuid="false" data-source="extDataSource" table="phbh_phuhieubienhieu">
+		<!-- PK fields -->
+
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="sophuhieu" type="String"></column>
+		<column name="phuongtien_id" type="long"/>
+		<column name="loaihinh_id" type="long"/>
+		<column name="tuyenkhaithac_id" type="long"/>
+		<column name="phamvi_id" type="long"/>
+		<column name="loai" type="int"/>
+        <column name="ngaycap" type="Date"></column>
+        <column name="ngayhethan" type="Date"></column>
+        <column name="ngaythuhoi" type="Date"></column>
+        <column name="lydo_thuhoi" type="String"></column>
+        <column name="nguoitao" type="String"></column>
+        <column name="ngaytao" type="Date"></column>
+        <column name="nguoiky" type="String"></column>
+        <column name="nguoiky_id" type="long"></column>
+        <column name="ngayky" type="Date"></column>
+        <column name="ghichu" type="String"></column>
+        <column name="trangthai" type="int"></column>
+        <column name="coquanquanly_id" type="long"></column>
+        <column name="labienhieu" type="int"></column>
+
+		<order>
+			<order-column name="id" order-by="asc" />
+		</order>
+        <finder name="PTID" return-type="Collection">
+            <finder-column name="phuongtien_id"></finder-column>
+        </finder>
+		
+	</entity>		
+
+	<entity local-service="true" name="DoanhNghiep" remote-service="false" uuid="false" data-source="extDataSource" table="ttnd_doanhnghiep">
+		<!-- PK fields -->
+
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="ten" type="String"></column>
+		<column name="ten_viettat" type="String"></column>
+		<column name="ten_tienganh" type="String"></column>
+		<column name="sogcn_dkkd" type="String"></column>
+		<column name="ngaycap_dkkd" type="Date"></column>
+		<column name="ngayhethan_dkkd" type="Date"></column>
+		<column name="ten_donvicapphep" type="String"></column>
+		<column name="masothue" type="String"></column>
+		<column name="ten_nguoidaidien" type="String"></column>
+		<column name="chucvu_nguoidaidien" type="String"></column>
+		<column name="gioitinh_nguoidaidien" type="long"></column>
+		<column name="diachi_nguoidaidien" type="String"></column>
+		<column name="diachi_ndd_tinh_id" type="long"></column>
+		<column name="diachi_ndd_huyen_id" type="long"></column>
+		<column name="diachi_ndd_xa_id" type="long"></column>
+		<column name="hktt_nguoidaidien" type="String"></column>
+		<column name="dantoc_nguoidaidien_id" type="long"></column>
+		<column name="tongiao_nguoidaidien_id" type="long"></column>
+		<column name="quoctich_nguoidaidien_id" type="long"></column>
+		<column name="ngaysinh_nguoidaidien" type="Date"></column>
+		<column name="dienthoai_nguoidaidien" type="String"></column>
+		<column name="giayto_canhan_nguoidaidien" type="String"></column>
+		<column name="giayto_ngaycap_nguoidaidien" type="Date"></column>
+		<column name="giayto_noicap_nguoidaidien" type="String"></column>
+		<column name="loai_doanhnghiep_id" type="long"></column>
+		<column name="diachi_trusochinh" type="String"></column>
+		<column name="diachi_truso_tinh_id" type="long"></column>
+		<column name="diachi_truso_huyen_id" type="long"></column>
+		<column name="diachi_truso_xa_id" type="long"></column>
+		<column name="dienthoai" type="String"></column>
+		<column name="fax" type="String"></column>
+		<column name="email" type="String"></column>
+		<column name="website" type="String"></column>
+		<column name="von_dieule" type="String"></column>
+		<column name="von_phapdinh" type="String"></column>
+		<column name="user_id" type="long"></column>
+		<column name="doituongsudung_id" type="long"></column>
+		<column name="trangthai" type="int"></column>
+		<column name="ngaytao" type="Date"></column>
+		<column name="ngaycap_taikhoan" type="Date"></column>
+		
+		<order>
+			<order-column name="id" order-by="asc" />
+		</order>
+		
+		<finder name="GT_ID" return-type="Collection">
+            <finder-column name="id" comparator="&gt;"></finder-column>
+        </finder>
+	</entity>
 </service-builder>

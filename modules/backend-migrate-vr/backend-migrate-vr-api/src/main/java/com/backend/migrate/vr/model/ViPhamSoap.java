@@ -23,10 +23,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.backend.migrate.vr.service.http.ViPhamServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
- * @see com.backend.migrate.vr.service.http.ViPhamServiceSoap
  * @generated
  */
 @ProviderType
@@ -34,7 +33,6 @@ public class ViPhamSoap implements Serializable {
 	public static ViPhamSoap toSoapModel(ViPham model) {
 		ViPhamSoap soapModel = new ViPhamSoap();
 
-		soapModel.setUuid(model.getUuid());
 		soapModel.setId(model.getId());
 		soapModel.setPhuongtien_id(model.getPhuongtien_id());
 		soapModel.setNgayvipham(model.getNgayvipham());
@@ -93,14 +91,6 @@ public class ViPhamSoap implements Serializable {
 		setId(pk);
 	}
 
-	public String getUuid() {
-		return _uuid;
-	}
-
-	public void setUuid(String uuid) {
-		_uuid = uuid;
-	}
-
 	public long getId() {
 		return _id;
 	}
@@ -149,7 +139,6 @@ public class ViPhamSoap implements Serializable {
 		_url_bienban = url_bienban;
 	}
 
-	private String _uuid;
 	private long _id;
 	private long _phuongtien_id;
 	private Date _ngayvipham;

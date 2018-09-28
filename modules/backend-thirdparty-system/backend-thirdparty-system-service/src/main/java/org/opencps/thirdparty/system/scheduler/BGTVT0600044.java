@@ -317,9 +317,9 @@ public class BGTVT0600044 {
 								vl.setCapacity(DUMMY_DATA);
 							}
 							if (vehicleObj.has("ManufacturedYear")) {
-								vl.setManufacturedyear(vehicleObj.getString("ManufacturedYear"));
+								vl.setManufacturedYear(vehicleObj.getString("ManufacturedYear"));
 							} else {
-								vl.setManufacturedyear(DUMMY_DATA);
+								vl.setManufacturedYear(DUMMY_DATA);
 							}
 							if (vehicleObj.has("VehicleExpImpGateCode")) {
 								vl.setVehicleExpImpGateCode(vehicleObj.getString("VehicleExpImpGateCode"));
@@ -343,6 +343,14 @@ public class BGTVT0600044 {
 							} else if (dossier.getServiceCode().equals("BGTVT0600031")) {
 								vl.setOperationType("2");
 							} else if (dossier.getServiceCode().equals("BGTVT0600032")) {
+								vl.setOperationType("3");
+							}
+							
+							if (dossier.getServiceCode().equals("BGTVT0600044")) {
+								vl.setOperationType("1");
+							} else if (dossier.getServiceCode().equals("BGTVT0600045")) {
+								vl.setOperationType("2");
+							} else if (dossier.getServiceCode().equals("BGTVT0600046")) {
 								vl.setOperationType("3");
 							}
 

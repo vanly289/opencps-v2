@@ -5,7 +5,7 @@
 </@>
 <#assign isSignedIn = themeDisplay.isSignedIn() />
 
-<#assign userName = themeDisplay.getUser().getFirstName() />
+<#assign userName = themeDisplay.getUser().getFirstName() + " " + themeDisplay.getUser().getMiddleName() + " " + themeDisplay.getUser().getLastName() />
 
 <#assign GetterUtil = objectUtil("com.liferay.portal.kernel.util.GetterUtil") />
 <#assign PortalUtil = objectUtil("com.liferay.portal.kernel.util.PortalUtil") />

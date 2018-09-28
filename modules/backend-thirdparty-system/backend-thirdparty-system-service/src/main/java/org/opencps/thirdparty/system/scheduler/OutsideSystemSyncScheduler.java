@@ -621,7 +621,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600041")
 								|| dossier.getServiceCode().equals("BGTVT0600042")
 								|| dossier.getServiceCode().equals("BGTVT0600043")
-								|| dossier.getServiceCode().equals("BGTVT0600044")) {
+								|| dossier.getServiceCode().equals("BGTVT0600044")
+								|| dossier.getServiceCode().equals("BGTVT0600045")
+								|| dossier.getServiceCode().equals("BGTVT0600046")) {
 							
 							List<DossierRequestUD> lstRequests = DossierRequestUDLocalServiceUtil.getDossierRequestByRT(
 									dossier.getCompanyId(),
@@ -726,7 +728,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600041")
 								|| dossier.getServiceCode().equals("BGTVT0600042")
 								|| dossier.getServiceCode().equals("BGTVT0600043")
-								|| dossier.getServiceCode().equals("BGTVT0600044")) {
+								|| dossier.getServiceCode().equals("BGTVT0600044")
+								|| dossier.getServiceCode().equals("BGTVT0600045")
+								|| dossier.getServiceCode().equals("BGTVT0600046")) {
 							if (lstRequests.size() > 0) {
 								DossierRequestUD dossierRequest = lstRequests.get(0);
 								phanhoi.setSoGp(dossierRequest.getComment());

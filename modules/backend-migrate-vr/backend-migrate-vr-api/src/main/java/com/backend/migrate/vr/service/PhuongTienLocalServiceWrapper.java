@@ -113,6 +113,13 @@ public class PhuongTienLocalServiceWrapper implements PhuongTienLocalService,
 		return _phuongTienLocalService.findByBKS(bienkiemsoat);
 	}
 
+	@Override
+	public com.backend.migrate.vr.model.PhuongTien getFirstGreaterThanId(
+		long id)
+		throws com.backend.migrate.vr.exception.NoSuchPhuongTienException {
+		return _phuongTienLocalService.getFirstGreaterThanId(id);
+	}
+
 	/**
 	* Returns the phuong tien with the primary key.
 	*

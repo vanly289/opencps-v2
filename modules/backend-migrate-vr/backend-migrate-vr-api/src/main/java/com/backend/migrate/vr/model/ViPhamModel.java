@@ -63,21 +63,6 @@ public interface ViPhamModel extends BaseModel<ViPham> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this vi pham.
-	 *
-	 * @return the uuid of this vi pham
-	 */
-	@AutoEscape
-	public String getUuid();
-
-	/**
-	 * Sets the uuid of this vi pham.
-	 *
-	 * @param uuid the uuid of this vi pham
-	 */
-	public void setUuid(String uuid);
-
-	/**
 	 * Returns the ID of this vi pham.
 	 *
 	 * @return the ID of this vi pham

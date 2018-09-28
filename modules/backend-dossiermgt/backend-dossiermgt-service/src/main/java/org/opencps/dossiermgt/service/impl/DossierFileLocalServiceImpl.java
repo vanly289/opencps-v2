@@ -251,6 +251,8 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		// TODO Auto-generated method stub
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		try {
+			Dossier dossier = dossierPersistence.fetchByPrimaryKey(dossierId);
+			
 			result = JSONFactoryUtil.createJSONObject(sampleData);
 
 			String _subjectName = StringPool.BLANK;
@@ -265,11 +267,20 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			String _contactName = StringPool.BLANK;
 			String _contactTelNo = StringPool.BLANK;
 			String _contactEmail = StringPool.BLANK;
-
+			String _govAgencyName = StringPool.BLANK;
+			String _serviceName = StringPool.BLANK;
+			String _referenceUid = StringPool.BLANK;
+			String _dossierNo = StringPool.BLANK;
 			// TODO
 			String _dossierFileNo = StringPool.BLANK;
 			String _dossierFileDate = StringPool.BLANK;
 
+			if (dossier != null) {
+				_dossierNo = dossier.getDossierNo();
+				_govAgencyName = dossier.getGovAgencyName();
+				_serviceName = dossier.getServiceName();
+				_referenceUid = dossier.getReferenceUid();
+			}
 			// get data applicant or employee
 			ApplicantActions applicantActions = new ApplicantActionsImpl();
 
@@ -404,6 +415,15 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				}
 			}
 
+			if (!jsonMap.containsKey("govAgencyName"))
+				jsonMap.put("govAgencyName", _govAgencyName);
+			if (!jsonMap.containsKey("serviceName"))
+				jsonMap.put("serviceName", _serviceName);
+			if (!jsonMap.containsKey("dossierNo"))
+				jsonMap.put("dossierNo", _dossierNo);
+			if (!jsonMap.containsKey("referenceUid"))
+				jsonMap.put("referenceUid", _referenceUid);
+			
 			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
 				if (entry.getValue().getClass().getName().contains("JSONArray")) {
 					result.put(entry.getKey(), (JSONArray) entry.getValue());

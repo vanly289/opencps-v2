@@ -193,6 +193,9 @@ public interface ViPhamLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ViPham> getListByPhuongTien(long phuongtien_id);
+
 	/**
 	* Returns a range of all the vi phams.
 	*

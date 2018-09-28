@@ -119,6 +119,12 @@ public class PhuongTienLocalServiceUtil {
 		return getService().findByBKS(bienkiemsoat);
 	}
 
+	public static com.backend.migrate.vr.model.PhuongTien getFirstGreaterThanId(
+		long id)
+		throws com.backend.migrate.vr.exception.NoSuchPhuongTienException {
+		return getService().getFirstGreaterThanId(id);
+	}
+
 	/**
 	* Returns the phuong tien with the primary key.
 	*

@@ -72,7 +72,10 @@ public class AutoFillFormData {
 			String _applicantIdDate = StringPool.BLANK;
 			String _curDate = StringPool.BLANK;
 			String _representative = StringPool.BLANK;
-
+			String _govAgencyName = StringPool.BLANK;
+			String _serviceName = StringPool.BLANK;
+			String _referenceUid = StringPool.BLANK;
+			
 			SimpleDateFormat sfd = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 			_curDate = sfd.format(new Date());
@@ -82,6 +85,10 @@ public class AutoFillFormData {
 						: StringPool.BLANK;
 				_dossierNo = dossier.getDossierNo();
 
+				_govAgencyName = dossier.getGovAgencyName();
+				_serviceName = dossier.getServiceName();
+				_referenceUid = dossier.getReferenceUid();
+				
 			// get data applicant or employee
 			ApplicantActions applicantActions = new ApplicantActionsImpl();
 
@@ -172,7 +179,7 @@ public class AutoFillFormData {
 			}
 
 			Map<String, Object> jsonMap = jsonToMap(result);
-
+			
 			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
 
 				String value = String.valueOf(entry.getValue());
@@ -326,6 +333,15 @@ public class AutoFillFormData {
 				}
 			}
 
+			if (!jsonMap.containsKey("govAgencyName"))
+				jsonMap.put("govAgencyName", _govAgencyName);
+			if (!jsonMap.containsKey("serviceName"))
+				jsonMap.put("serviceName", _serviceName);
+			if (!jsonMap.containsKey("dossierNo"))
+				jsonMap.put("dossierNo", _dossierNo);
+			if (!jsonMap.containsKey("referenceUid"))
+				jsonMap.put("referenceUid", _referenceUid);
+			
 			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
 				if (entry.getValue().getClass().getName().contains("JSONArray")) {
 					result.put(entry.getKey(), (JSONArray) entry.getValue());

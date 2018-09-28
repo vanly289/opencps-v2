@@ -42,135 +42,135 @@ public interface ViPhamPersistence extends BasePersistence<ViPham> {
 	 */
 
 	/**
-	* Returns all the vi phams where uuid = &#63;.
+	* Returns all the vi phams where phuongtien_id = &#63;.
 	*
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	* @return the matching vi phams
 	*/
-	public java.util.List<ViPham> findByUuid(java.lang.String uuid);
+	public java.util.List<ViPham> findByPTID(long phuongtien_id);
 
 	/**
-	* Returns a range of all the vi phams where uuid = &#63;.
+	* Returns a range of all the vi phams where phuongtien_id = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ViPhamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	* @param start the lower bound of the range of vi phams
 	* @param end the upper bound of the range of vi phams (not inclusive)
 	* @return the range of matching vi phams
 	*/
-	public java.util.List<ViPham> findByUuid(java.lang.String uuid, int start,
+	public java.util.List<ViPham> findByPTID(long phuongtien_id, int start,
 		int end);
 
 	/**
-	* Returns an ordered range of all the vi phams where uuid = &#63;.
+	* Returns an ordered range of all the vi phams where phuongtien_id = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ViPhamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	* @param start the lower bound of the range of vi phams
 	* @param end the upper bound of the range of vi phams (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching vi phams
 	*/
-	public java.util.List<ViPham> findByUuid(java.lang.String uuid, int start,
+	public java.util.List<ViPham> findByPTID(long phuongtien_id, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ViPham> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the vi phams where uuid = &#63;.
+	* Returns an ordered range of all the vi phams where phuongtien_id = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ViPhamModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	* @param start the lower bound of the range of vi phams
 	* @param end the upper bound of the range of vi phams (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching vi phams
 	*/
-	public java.util.List<ViPham> findByUuid(java.lang.String uuid, int start,
+	public java.util.List<ViPham> findByPTID(long phuongtien_id, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ViPham> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first vi pham in the ordered set where uuid = &#63;.
+	* Returns the first vi pham in the ordered set where phuongtien_id = &#63;.
 	*
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching vi pham
 	* @throws NoSuchViPhamException if a matching vi pham could not be found
 	*/
-	public ViPham findByUuid_First(java.lang.String uuid,
+	public ViPham findByPTID_First(long phuongtien_id,
 		com.liferay.portal.kernel.util.OrderByComparator<ViPham> orderByComparator)
 		throws NoSuchViPhamException;
 
 	/**
-	* Returns the first vi pham in the ordered set where uuid = &#63;.
+	* Returns the first vi pham in the ordered set where phuongtien_id = &#63;.
 	*
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching vi pham, or <code>null</code> if a matching vi pham could not be found
 	*/
-	public ViPham fetchByUuid_First(java.lang.String uuid,
+	public ViPham fetchByPTID_First(long phuongtien_id,
 		com.liferay.portal.kernel.util.OrderByComparator<ViPham> orderByComparator);
 
 	/**
-	* Returns the last vi pham in the ordered set where uuid = &#63;.
+	* Returns the last vi pham in the ordered set where phuongtien_id = &#63;.
 	*
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching vi pham
 	* @throws NoSuchViPhamException if a matching vi pham could not be found
 	*/
-	public ViPham findByUuid_Last(java.lang.String uuid,
+	public ViPham findByPTID_Last(long phuongtien_id,
 		com.liferay.portal.kernel.util.OrderByComparator<ViPham> orderByComparator)
 		throws NoSuchViPhamException;
 
 	/**
-	* Returns the last vi pham in the ordered set where uuid = &#63;.
+	* Returns the last vi pham in the ordered set where phuongtien_id = &#63;.
 	*
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching vi pham, or <code>null</code> if a matching vi pham could not be found
 	*/
-	public ViPham fetchByUuid_Last(java.lang.String uuid,
+	public ViPham fetchByPTID_Last(long phuongtien_id,
 		com.liferay.portal.kernel.util.OrderByComparator<ViPham> orderByComparator);
 
 	/**
-	* Returns the vi phams before and after the current vi pham in the ordered set where uuid = &#63;.
+	* Returns the vi phams before and after the current vi pham in the ordered set where phuongtien_id = &#63;.
 	*
 	* @param id the primary key of the current vi pham
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next vi pham
 	* @throws NoSuchViPhamException if a vi pham with the primary key could not be found
 	*/
-	public ViPham[] findByUuid_PrevAndNext(long id, java.lang.String uuid,
+	public ViPham[] findByPTID_PrevAndNext(long id, long phuongtien_id,
 		com.liferay.portal.kernel.util.OrderByComparator<ViPham> orderByComparator)
 		throws NoSuchViPhamException;
 
 	/**
-	* Removes all the vi phams where uuid = &#63; from the database.
+	* Removes all the vi phams where phuongtien_id = &#63; from the database.
 	*
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByPTID(long phuongtien_id);
 
 	/**
-	* Returns the number of vi phams where uuid = &#63;.
+	* Returns the number of vi phams where phuongtien_id = &#63;.
 	*
-	* @param uuid the uuid
+	* @param phuongtien_id the phuongtien_id
 	* @return the number of matching vi phams
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByPTID(long phuongtien_id);
 
 	/**
 	* Caches the vi pham in the entity cache if it is enabled.
@@ -289,7 +289,4 @@ public interface ViPhamPersistence extends BasePersistence<ViPham> {
 	* @return the number of vi phams
 	*/
 	public int countAll();
-
-	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
 }

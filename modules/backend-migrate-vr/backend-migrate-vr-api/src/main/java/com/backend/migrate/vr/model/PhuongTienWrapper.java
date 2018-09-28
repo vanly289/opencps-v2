@@ -57,7 +57,6 @@ public class PhuongTienWrapper implements PhuongTien, ModelWrapper<PhuongTien> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("id", getId());
 		attributes.put("bienkiemsoat", getBienkiemsoat());
 		attributes.put("succhua", getSucchua());
@@ -90,12 +89,6 @@ public class PhuongTienWrapper implements PhuongTien, ModelWrapper<PhuongTien> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long id = (Long)attributes.get("id");
 
 		if (id != null) {
@@ -488,16 +481,6 @@ public class PhuongTienWrapper implements PhuongTien, ModelWrapper<PhuongTien> {
 	@Override
 	public java.lang.String getTennguoisohuu() {
 		return _phuongTien.getTennguoisohuu();
-	}
-
-	/**
-	* Returns the uuid of this phuong tien.
-	*
-	* @return the uuid of this phuong tien
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _phuongTien.getUuid();
 	}
 
 	/**
@@ -894,16 +877,6 @@ public class PhuongTienWrapper implements PhuongTien, ModelWrapper<PhuongTien> {
 	@Override
 	public void setTuyenkhaithac_id(int tuyenkhaithac_id) {
 		_phuongTien.setTuyenkhaithac_id(tuyenkhaithac_id);
-	}
-
-	/**
-	* Sets the uuid of this phuong tien.
-	*
-	* @param uuid the uuid of this phuong tien
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_phuongTien.setUuid(uuid);
 	}
 
 	/**

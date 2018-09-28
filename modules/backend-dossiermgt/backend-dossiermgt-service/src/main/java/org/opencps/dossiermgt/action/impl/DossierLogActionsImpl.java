@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 public class DossierLogActionsImpl implements DossierLogActions {
 	
@@ -61,7 +62,7 @@ public class DossierLogActionsImpl implements DossierLogActions {
 				params.put(Field.USER_ID, serviceContext.getUserId());
 			}
 			
-			Sort[] sorts = new Sort[] { SortFactoryUtil.create(sort + "_sortable", Sort.STRING_TYPE,
+			Sort[] sorts = new Sort[] { SortFactoryUtil.create(Validator.isNull(sort) ? Field.MODIFIED_DATE + "_sortable" : sort + "_sortable", Sort.STRING_TYPE,
 					GetterUtil.getBoolean(order)) };
 
 			Hits hits = DossierLogLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);

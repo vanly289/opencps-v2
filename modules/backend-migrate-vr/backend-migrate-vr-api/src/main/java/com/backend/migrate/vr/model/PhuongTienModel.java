@@ -63,21 +63,6 @@ public interface PhuongTienModel extends BaseModel<PhuongTien> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this phuong tien.
-	 *
-	 * @return the uuid of this phuong tien
-	 */
-	@AutoEscape
-	public String getUuid();
-
-	/**
-	 * Sets the uuid of this phuong tien.
-	 *
-	 * @param uuid the uuid of this phuong tien
-	 */
-	public void setUuid(String uuid);
-
-	/**
 	 * Returns the ID of this phuong tien.
 	 *
 	 * @return the ID of this phuong tien

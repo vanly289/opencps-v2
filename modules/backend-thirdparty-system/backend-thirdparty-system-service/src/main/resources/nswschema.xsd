@@ -1112,7 +1112,7 @@
 								</xsd:restriction>
 							</xsd:simpleType>
 						</xsd:element>
-						<xsd:element name="Manufacturedyear">
+						<xsd:element name="ManufacturedYear">
 							<xsd:simpleType>
 								<xsd:restriction base="xsd:string">
 									<xsd:maxLength value="255"></xsd:maxLength>
