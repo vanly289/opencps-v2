@@ -201,16 +201,23 @@ public class ApplicantLocalServiceImpl extends ApplicantLocalServiceBaseImpl {
 			int month = calendar.get(Calendar.MONTH); // jan = 0, dec = 11
 			int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-			User mappingUser = userLocalService.addUserWithWorkflow(creatorUserId, context.getCompanyId(), autoPassword,
-					password, password, autoScreenName, screenName, contactEmail, 0l, StringPool.BLANK,
-					LocaleUtil.getDefault(), spn.getFirstName(), spn.getMidName(), spn.getLastName(), 0, 0, true, month,
-					dayOfMonth, year, ServiceProps.APPLICANT_JOB_TITLE, groupIds, organizationIds, roleIds,
-					userGroupIds, sendEmail, context);
-
-			mappingUser.setStatus(WorkflowConstants.STATUS_PENDING);
-
-			long mappingUserId = mappingUser.getUserId();
-
+			User user = userLocalService.fetchUserByEmailAddress(context.getCompanyId(), contactEmail);
+			
+			if (user == null) {
+				User mappingUser = userLocalService.addUserWithWorkflow(creatorUserId, context.getCompanyId(), autoPassword,
+						password, password, autoScreenName, screenName, contactEmail, 0l, StringPool.BLANK,
+						LocaleUtil.getDefault(), spn.getFirstName(), spn.getMidName(), spn.getLastName(), 0, 0, true, month,
+						dayOfMonth, year, ServiceProps.APPLICANT_JOB_TITLE, groupIds, organizationIds, roleIds,
+						userGroupIds, sendEmail, context);
+	
+				mappingUser.setStatus(WorkflowConstants.STATUS_PENDING);
+	
+				long mappingUserId = mappingUser.getUserId();
+				applicant.setMappingUserId(mappingUserId);				
+			}
+			else {
+				applicant.setMappingUserId(user.getUserId());				
+			}
 			// Add audit field
 			applicant.setCreateDate(now);
 			applicant.setModifiedDate(now);
@@ -234,7 +241,6 @@ public class ApplicantLocalServiceImpl extends ApplicantLocalServiceBaseImpl {
 			applicant.setContactName(contactName);
 			applicant.setContactTelNo(contactTelNo);
 			applicant.setContactEmail(contactEmail);
-			applicant.setMappingUserId(mappingUserId);
 			applicant.setProfile(profile);
 			applicant.setActivationCode(activationCode);
 			applicant.setTmpPass(password);
@@ -334,13 +340,13 @@ public class ApplicantLocalServiceImpl extends ApplicantLocalServiceBaseImpl {
 
 		applicant = fetchByEmail(email);
 
-		if (Validator.isNotNull(applicant))
-			throw new DuplicateContactEmailException("DuplicateContactEmailException");
-
-		User user = userLocalService.fetchUserByEmailAddress(companyId, email);
-
-		if (Validator.isNotNull(user))
-			throw new DuplicateContactEmailException("DuplicateContactEmailException");
+//		if (Validator.isNotNull(applicant))
+//			throw new DuplicateContactEmailException("DuplicateContactEmailException");
+//
+//		User user = userLocalService.fetchUserByEmailAddress(companyId, email);
+//
+//		if (Validator.isNotNull(user))
+//			throw new DuplicateContactEmailException("DuplicateContactEmailException");
 
 /*		if (Validator.isNotNull(contactTelNo)) {
 
