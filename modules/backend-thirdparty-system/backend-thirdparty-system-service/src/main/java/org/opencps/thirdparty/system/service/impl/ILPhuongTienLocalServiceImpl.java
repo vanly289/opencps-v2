@@ -15,6 +15,7 @@
 package org.opencps.thirdparty.system.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.opencps.thirdparty.system.exception.NoSuchILPhuongTienException;
 import org.opencps.thirdparty.system.model.ILPhuongTien;
@@ -91,5 +92,13 @@ public class ILPhuongTienLocalServiceImpl
 	
 	public long countAll() {
 		return ilPhuongTienPersistence.countAll();
+	}
+	
+	public long countByDoanhNghiep(int doanhNghiepId) {
+		return ilPhuongTienPersistence.countByDN_ID(doanhNghiepId);
+	}
+	
+	public List<ILPhuongTien> getByDoanhNghiep(int doanhNghiepId, int start, int end) {
+		return ilPhuongTienPersistence.findByDN_ID(doanhNghiepId, start, end);
 	}
 }

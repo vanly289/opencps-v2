@@ -14,20 +14,21 @@
 
 package org.opencps.thirdparty.system.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.opencps.thirdparty.system.exception.NoSuchILDoanhNghiepException;
-import org.opencps.thirdparty.system.exception.NoSuchILPhuongTienException;
 import org.opencps.thirdparty.system.model.ILDoanhNghiep;
+import org.opencps.thirdparty.system.model.impl.ILDoanhNghiepImpl;
 import org.opencps.thirdparty.system.service.base.ILDoanhNghiepLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the il doanh nghiep local service.
@@ -145,22 +146,29 @@ public class ILDoanhNghiepLocalServiceImpl
 	}	
 	
 	public List<ILDoanhNghiep> findByKeyword(String keyword, int start, int end) {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ILDoanhNghiep.class);
+		
+		return ilDoanhNghiepPersistence.findAll(start, end);
+		
+		/*DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ILDoanhNghiepImpl.class);
 		dynamicQuery.add(RestrictionsFactoryUtil.like("masothue", keyword));
 		dynamicQuery.add(RestrictionsFactoryUtil.like("ten", keyword));
 		dynamicQuery.add(RestrictionsFactoryUtil.like("sogcn_dkkd", keyword));
 		
 		List<ILDoanhNghiep> results = new ArrayList<>();
 		results.addAll(ilDoanhNghiepPersistence.findWithDynamicQuery(dynamicQuery, start, end));
-		return results;
+		return results; */
 	}
 	
 	public long countByKeyword(String keyword) {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ILDoanhNghiep.class);
+		
+		return ilDoanhNghiepPersistence.countAll();
+		
+		/*
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ILDoanhNghiepImpl.class);
 		dynamicQuery.add(RestrictionsFactoryUtil.like("masothue", keyword));
 		dynamicQuery.add(RestrictionsFactoryUtil.like("ten", keyword));
 		dynamicQuery.add(RestrictionsFactoryUtil.like("sogcn_dkkd", keyword));
 		
-		return ilDoanhNghiepPersistence.countWithDynamicQuery(dynamicQuery);
+		return ilDoanhNghiepPersistence.countWithDynamicQuery(dynamicQuery);*/
 	}	
 }

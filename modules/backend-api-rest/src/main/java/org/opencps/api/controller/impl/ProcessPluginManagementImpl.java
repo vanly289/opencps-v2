@@ -468,6 +468,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 		return false;
 	}
 	
+	private Log _log2 = LogFactoryUtil.getLog(ProcessPluginManagementImpl.class);
+	
 	private String _getFormData(long groupId, String fileTemplateNo, long dossierId, boolean autoRun,
 			String dossierTemplateNo, boolean original, ServiceContext context) {
 
@@ -492,16 +494,24 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 			}
 
 			formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
+			
+			_log.info(StringUtil.shorten(formData, 300));
 
 			DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
 			
 			if (Validator.isNotNull(dossierPart.getDeliverableType())) {
 				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
 				if (dlt != null) {
+					
+					_log.info("DeliverableType is NOT NULL");
+
 					String allowKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
 					String acceptedKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
 					
 					if (original) {
+						
+						_log.info("original is true");
+
 						String mappingData = dlt.getMappingData();
 						JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
 						if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
@@ -509,14 +519,24 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 							if (Validator.isNotNull(dossierFile)) {
 								formData = dossierFile.getFormData();
 							}
+							_log.info("DeliverableTypesTerm.DELIVERABLES_KEY : " + DeliverableTypesTerm.DELIVERABLES_KEY);
 
+							_log.info("mappingDataObj : " + mappingDataObj);
+							
+							_log.info("deliverables : " + deliverables);
+							
 							JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 							JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
 														
 							if (Validator.isNull(deliverables)) {
+								_log.info("deliverables is null");
 							}
 							else {
+								_log.info("deliverables is NOT null");
+
 								if (formDataObj.has(deliverables)) {
+									_log.info("formDataObj has deliverables");
+
 									JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
 
 									for (int i = 0; i < deliverablesArr.length(); i++) {
@@ -557,6 +577,9 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						}
 
 			} else {
+				
+				_log.info("DeliverableType is NULL *****");
+
 				String employeeName = StringPool.BLANK;
 				try {
 					Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(groupId, context.getUserId());
@@ -575,6 +598,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 							String signNameKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_SIGNNAME, dlt);
 							
 							if (Validator.isNull(deliverables)) {
+								_log.info("deliverables is NULL *****");
+
 								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 								
 								formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
@@ -603,6 +628,9 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 								}
 							}
 							else {
+								
+								_log.info("deliverables is NOT NULL *****");
+
 								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 								DossierFileActions actions = new DossierFileActionsImpl();
 										
@@ -693,7 +721,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						}
 						
 
-					}									
+					}
 				}
 			}
 
