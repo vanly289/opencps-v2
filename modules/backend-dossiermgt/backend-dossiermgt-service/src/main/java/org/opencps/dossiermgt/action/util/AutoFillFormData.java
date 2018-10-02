@@ -342,6 +342,29 @@ public class AutoFillFormData {
 			if (!jsonMap.containsKey("referenceUid"))
 				jsonMap.put("referenceUid", _referenceUid);
 			
+			
+			
+			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
+				
+//				_log.info(StringUtil.shorten(entry.getValue().toString(), 2500));
+
+				if (entry.getValue().toString().trim().startsWith("[")) {
+					JSONArray jsonArray = JSONFactoryUtil.createJSONArray(entry.getValue().toString());
+					result.put(entry.getKey(), jsonArray);
+					//_log.info("FFFFFFFF********" + entry.getValue().toString());
+					//result.put(entry.getKey(), (JSONArray) entry.getValue());
+				} else if (entry.getValue().toString().trim().startsWith("{")) {
+					//_log.info("FFFFFFFF********OBJECT");
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(entry.getValue().toString());
+					
+					result.put(entry.getKey(), jsonObject);
+				} else {
+					
+					result.put(entry.getKey(),entry.getValue() + "");
+				}
+			}
+			
+			/*
 			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
 				if (entry.getValue().getClass().getName().contains("JSONArray")) {
 					result.put(entry.getKey(), (JSONArray) entry.getValue());
@@ -351,6 +374,8 @@ public class AutoFillFormData {
 					result.put(entry.getKey(), entry.getValue() + "");
 				}
 			}
+			
+			*/
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

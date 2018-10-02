@@ -160,6 +160,7 @@ public class DossierUtils {
 			
 			model.setProcessBlock(processBlock);
 			model.setProcessUnit(processUnit);
+			model.setLastActionUserEmail(doc.get(DossierTerm.LAST_ACTION_USER_EMAIL));
 
 			ouputs.add(model);
 		}

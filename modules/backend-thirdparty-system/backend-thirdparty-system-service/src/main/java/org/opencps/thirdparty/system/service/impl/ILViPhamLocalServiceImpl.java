@@ -17,6 +17,7 @@ package org.opencps.thirdparty.system.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import java.util.Date;
+import java.util.List;
 
 import org.opencps.thirdparty.system.model.ILViPham;
 import org.opencps.thirdparty.system.service.base.ILViPhamLocalServiceBaseImpl;
@@ -53,5 +54,9 @@ public class ILViPhamLocalServiceImpl extends ILViPhamLocalServiceBaseImpl {
 		viPham.setUrl_bienban(url_bienban);
 		
 		return ilViPhamPersistence.update(viPham);
+	}
+	
+	public List<ILViPham> getByPhuongTien(long phuongtienId) {
+		return ilViPhamPersistence.findByPTID(phuongtienId);
 	}
 }

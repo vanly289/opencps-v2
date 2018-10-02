@@ -96,6 +96,10 @@
         <finder name="GT_ID" return-type="Collection">
             <finder-column name="id" comparator="&gt;"></finder-column>
         </finder>
+        
+        <finder name="DN_ID" return-type="Collection">
+            <finder-column name="doanhnghiep_id"/>
+        </finder>
 	</entity>
 	
 	<entity local-service="true" name="ILViPham" remote-service="false" uuid="false" table="phbh_vipham">
@@ -203,5 +207,155 @@
             <finder-column name="id" comparator="&gt;"></finder-column>
         </finder>
         		
-	</entity>		
+	</entity>
+	
+	<entity local-service="true" name="ILDataItem" remote-service="false" uuid="false" table="data_item">
+		<!-- PK fields -->
+
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="nhom_id" type="long"/>
+		<column name="ma" type="String"/>
+		<column name="ten" type="String"/>
+		<column name="mota" type="String"/>
+		<column name="muc" type="String"/>
+		<column name="cha_id" type="long"/>
+		<column name="thutu_hienthi" type="int"/>
+		<column name="ma_giapha" type="String"/>
+		<column name="trangthai" type="int"/>
+		
+	</entity>
+	
+	<entity local-service="true" name="ILTuyen" remote-service="false" uuid="false" table="tcd_tuyen">
+		<!-- PK fields -->
+
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="coquanquanly_id" type="String"/>
+		<column name="matuyen" type="String"/>
+		<column name="tentuyen" type="String"/>
+		<column name="dvhc_noidi_id" type="String"/>
+		<column name="dvhc_noiden_id" type="String"/>
+		<column name="benxe_noidi_id" type="String"/>
+		<column name="benxe_noiden_id" type="String"/>
+		<column name="hanhtrinh" type="String"/>
+		<column name="culytuyen" type="String"/>
+		<column name="luuluong_quyhoach" type="int"/>
+		<column name="luuluong_bandau" type="int"/>
+		<column name="luuluong_dacap" type="int"/>
+		<column name="ghichu" type="String"/>
+		<column name="diem_dungdo" type="String"/>
+		<column name="loaituyen_id" type="long"/>
+		<column name="loaiquyhoach_id" type="long"/>
+		<column name="cuakhau_id" type="long"/>
+		<column name="socv_chapthuan" type="String"/>
+		<column name="ngay_chapthuan" type="Date"/>
+		<column name="trangthai" type="int"/>
+		
+		<finder name="B_MT" return-type="Collection">
+            <finder-column name="matuyen" />
+        </finder>
+        
+
+	</entity>
+	
+	<entity local-service="true" name="ILTuyenKhaiThach" remote-service="false" uuid="false" table="tcd_tuyen_khaithac">
+		<!-- PK fields -->
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="tuyen_id" type="long"/>
+		<column name="doanhnghiep_id" type="long"/>
+		<column name="hoso_id" type="long"/>
+		<column name="tanxuatthang" type="double"/>
+		<column name="ngay_batdau" type="Date"/>
+		<column name="ngay_dangky" type="Date"/>
+		<column name="ghichu" type="String"/>
+		<column name="ds_tuyenbd_ids" type="String"/>
+		<column name="quyetdinhcapphep" type="String"/>
+		<column name="lydo" type="String"/>
+		<column name="ngay_capphep" type="Date"/>
+		<column name="coquancapphep_id" type="long"/>
+		<column name="urlfile_qdcapphep" type="String"/>
+		<column name="trangthai" type="int"/>
+		<column name="socv_chapthuan" type="String"/>
+		<column name="ngay_chapthuan" type="Date"/>
+		<column name="ngay_ketthuc" type="Date"/>
+		<column name="tanggiam" type="String"/>
+		<column name="ngay_tanggiam" type="Date"/>
+		
+		<finder name="B_DN" return-type="Collection">
+            <finder-column name="doanhnghiep_id" />
+        </finder>
+        		
+	</entity>
+	
+	<entity local-service="true" name="ILGiayPhepVanTai" remote-service="false" uuid="false" table="phbh_giayphepvantai">
+		<!-- PK fields -->
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="coquanquanly_id" type="long"/>
+		<column name="doanhnghiep_id" type="long"/>
+		<column name="sogiayphep" type="String"/>
+		<column name="lancapphep" type="int"/>
+		<column name="ngaycap" type="Date"/>
+		<column name="nguoicap" type="String"/>
+		<column name="ngayhethan" type="Date"/>
+		<column name="nguoidieuhanh" type="String"/>
+		<column name="bangcap" type="String"/>
+		<column name="ngaysinh" type="Date"/>
+		<column name="socmnd" type="String"/>
+		<column name="nguoiky" type="String"/>
+		<column name="nguoiky_id" type="long"/>
+		<column name="ngayky" type="Date"/>
+		<column name="ngay_thuhoi" type="Date"/>
+		<column name="lydo_thuhoi" type="String"/>
+		<column name="ghichu" type="String"/>
+		<column name="trangthai" type="int"/>
+		
+		<finder name="B_DN" return-type="Collection">
+            <finder-column name="doanhnghiep_id" />
+        </finder>
+		
+	</entity>
+	<entity local-service="true" name="ILTuyenKhaiThacXe" remote-service="false" uuid="false" table="tcd_tuyen_khaithac_xe">
+		<!-- PK fields -->
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="tuyen_id" type="long"/>
+		<column name="tuyen_khaithac_id" type="long"/>
+		<column name="phuongtien_id" type="String"/>
+		<column name="bienkiemsoat" type="String"/>
+		<column name="soghe" type="int"/>
+		<column name="chusohuuxe" type="String"/>
+		<column name="nhanhieu_id" type="long"/>
+		<column name="quocgiasx_id" type="long"/>
+		<column name="nam_sanxuat" type="int"/>
+		<column name="tanggiam" type="int"/>
+		<column name="thongtin_tuyen" type="String"/>
+		<column name="thongtin_phuongtien" type="long"/>
+		<column name="xethaythe" type="String"/>
+		<column name="trangthai" type="int"/>
+
+		<finder name="PT_ID" return-type="Collection">
+            <finder-column name="phuongtien_id" />
+        </finder>
+		
+	</entity>
+	
+	<entity local-service="true" name="ILHopDongThue" remote-service="false" uuid="false" table="phbh_hopdongthue">
+		<!-- PK fields -->
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="phuongtien_id" type="long"/>
+		<column name="loaihinhthue_id" type="long"/>
+		<column name="tendoituongchothue" type="String"/>
+		<column name="diachi_doituong_tinh_id" type="long"/>
+		<column name="diachi_doituong_huyen_id" type="long"/>
+		<column name="diachi_doituong_xa_id" type="long"/>
+		<column name="diachi_doituong_chitiet" type="String"/>
+		<column name="ngayky" type="Date"/>
+		<column name="thoihan" type="Date"/>
+		<column name="la_hopdongcuoi" type="int"/>
+		<column name="ghichu" type="String"/>
+		<column name="trangthai" type="int"/>
+
+		<finder name="PT_ID" return-type="Collection">
+            <finder-column name="phuongtien_id" />
+        </finder>
+		
+	</entity>
 </service-builder>

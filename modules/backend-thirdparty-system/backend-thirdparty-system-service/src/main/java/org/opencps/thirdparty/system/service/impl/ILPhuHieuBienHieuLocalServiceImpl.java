@@ -17,6 +17,7 @@ package org.opencps.thirdparty.system.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import java.util.Date;
+import java.util.List;
 
 import org.opencps.thirdparty.system.model.ILPhuHieuBienHieu;
 import org.opencps.thirdparty.system.service.base.ILPhuHieuBienHieuLocalServiceBaseImpl;
@@ -86,5 +87,11 @@ public class ILPhuHieuBienHieuLocalServiceImpl
 		phbh.setCoquanquanly_id(coquanquanly_id);
 		phbh.setLabienhieu(labienhieu);
 		return ilPhuHieuBienHieuPersistence.update(phbh);
+	}
+	
+	public List<ILPhuHieuBienHieu> getByPhuongTien(long phuongtienid) {
+		
+		return ilPhuHieuBienHieuPersistence.findByPTID(phuongtienid);
+		
 	}
 }
