@@ -204,6 +204,9 @@ public class BGTVT0600048 {
 					if (formDataObj.has("LicenceNo")) {
 						clvCommercialCrossBorderTransportPermit.setLicenceNo(formDataObj.getString("LicenceNo"));
 					}
+					else {
+						clvCommercialCrossBorderTransportPermit.setLicenceNo(dossierFile.getDeliverableCode());
+					}
 					if (formDataObj.has("ManufacturedYear")) {
 						clvCommercialCrossBorderTransportPermit.setManufacturedyear(formDataObj.getString("ManufacturedYear"));						
 					}

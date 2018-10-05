@@ -65,6 +65,7 @@ import com.fds.vr.business.model.ILCertificate;
 import com.fds.vr.business.model.ILVehicle;
 import com.fds.vr.business.model.ILVehicleCustomsBorderGuard;
 import com.fds.vr.business.model.VRReport;
+import com.fds.vr.business.service.ILCertificateLocalServiceUtil;
 import com.fds.vr.business.service.ILVehicleCustomsBorderGuardLocalServiceUtil;
 import com.fds.vr.business.service.ILVehicleLocalServiceUtil;
 import com.fds.vr.business.service.VRReportLocalServiceUtil;
@@ -78,6 +79,7 @@ import com.fds.vr.util.ILCertificateUtils;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -690,11 +692,46 @@ public class VRRestApplication extends Application {
 			@FormParam("licenceDate") String licenceDate) {
 		long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
-		Deliverable deliverable = DeliverableLocalServiceUtil.getByCode(licenceNo);
-		if (deliverable != null) {
-			obj.put("valid", true);
-			obj.put("message", StringPool.BLANK);
-		} else {
+		try {
+			ILCertificate ilCertificate = ILCertificateLocalServiceUtil.fetchByLicenceNo(licenceNo);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Date licenceDateTemp = null;
+			try {
+				 licenceDateTemp = sdf.parse(licenceDate);
+			} catch (Exception e) {
+				return null;
+			}
+			
+			if (licenceDateTemp != null) {
+				if (ilCertificate != null) {
+					if (ilCertificate.getValidFrom() != null 
+							&& ilCertificate.getValidFrom().compareTo(licenceDateTemp) == 0) {
+						Date now = new Date();
+						if (ilCertificate.getValidUntil() != null && ilCertificate.getValidUntil().getTime() < now.getTime()) {
+							obj.put("valid", true);
+							obj.put("message", StringPool.BLANK);				
+						}
+						else {
+							obj.put("valid", false);
+							obj.put("message", "Giấy phép đã hết hạn");					
+						}
+					}
+					else {
+						obj.put("valid", false);
+						obj.put("message", "Ngày cấp phép không đúng");											
+					}
+				}
+				else {
+					obj.put("valid", false);
+					obj.put("message", "Số giấy phép không đúng");
+				}
+			}
+			else {
+				obj.put("valid", false);
+				obj.put("message", "Ngày cấp giấy phép không đúng");
+			}
+		}
+		catch (PortalException e) {
 			obj.put("valid", false);
 			obj.put("message", StringPool.BLANK);
 		}
@@ -709,10 +746,16 @@ public class VRRestApplication extends Application {
 		long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
 		PhuongTien phuongTien = PhuongTienLocalServiceUtil.findByBKS(registrationNumber);
 		ILVehicle vehicle = ILVehicleLocalServiceUtil.getByRegistrationNumber(registrationNumber);
+		List<ILViPham> viphams = ILViPhamLocalServiceUtil.getByPhuongTien(phuongTien.getId());
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
 
 		if (vehicle != null && phuongTien != null) {
-			obj.put("vehicleStatus", 2);
+			if (viphams.size() > 0) {
+				obj.put("vehicleStatus", 2);
+			}
+			else {
+				obj.put("vehicleStatus", 3);
+			}
 		} else {
 			obj.put("vehicleStatus", 1);
 		}
