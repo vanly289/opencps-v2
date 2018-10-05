@@ -27,6 +27,7 @@ import org.opencps.thirdparty.system.messagequeue.model.MessageQueueInputModel;
 import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
 import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.CLVCommercialCrossBorderTransportPermit;
+import org.opencps.thirdparty.system.nsw.model.CLVCommercialCrossBorderTransportPermit.VehicleType;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
 import org.opencps.thirdparty.system.nsw.model.IssuingAuthority;
 import org.opencps.thirdparty.system.util.OutsideSystemConverter;
@@ -157,15 +158,33 @@ public class BGTVT0600048 {
 					if (formDataObj.has("Model")) {
 						clvCommercialCrossBorderTransportPermit.setModel(formDataObj.getString("Model"));
 					}
+					VehicleType vehicleType = new VehicleType();
 					
-					if (formDataObj.has("Truck")) {
-						clvCommercialCrossBorderTransportPermit.getVehicleType().setTruck(formDataObj.getString("Truck"));
-					}
-					if (formDataObj.has("Bus")) {
-						clvCommercialCrossBorderTransportPermit.getVehicleType().setBus(formDataObj.getString("Bus"));
-					}
-					if (formDataObj.has("Others")) {
-						clvCommercialCrossBorderTransportPermit.getVehicleType().setOthers(formDataObj.getString("Others"));
+					if (formDataObj.has("VehicleType")) {
+						String vtStr = formDataObj.getString("VehicleType");
+						if (vtStr.equalsIgnoreCase("Others")) {
+							vehicleType.setOthers("1");
+							clvCommercialCrossBorderTransportPermit.setModel("Xe khác");
+						}
+						else {
+							vehicleType.setOthers("0");
+						}
+						if (vtStr.equals("Truck")) {
+							vehicleType.setTruck("1");
+							clvCommercialCrossBorderTransportPermit.setModel("Xe tải");
+						}
+						else {
+							vehicleType.setTruck("0");
+						}
+						if (vtStr.equals("Bus")) {
+							vehicleType.setBus("1");
+							clvCommercialCrossBorderTransportPermit.setModel("Xe khách");
+						}
+						else {
+							vehicleType.setBus("0");
+						}
+						
+						clvCommercialCrossBorderTransportPermit.setVehicleType(vehicleType);
 					}
 					
 					if (formDataObj.has("VehicleColor")) {
