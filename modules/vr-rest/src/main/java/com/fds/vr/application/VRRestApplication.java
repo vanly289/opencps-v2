@@ -824,11 +824,46 @@ public class VRRestApplication extends Application {
 			@FormParam("licenceDate") String licenceDate) {
 		long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
-		Deliverable deliverable = DeliverableLocalServiceUtil.getByCode(licenceNo);
-		if (deliverable != null) {
-			obj.put("valid", true);
-			obj.put("message", StringPool.BLANK);
-		} else {
+		try {
+			ILCertificate ilCertificate = ILCertificateLocalServiceUtil.fetchByLicenceNo(licenceNo);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Date licenceDateTemp = null;
+			try {
+				 licenceDateTemp = sdf.parse(licenceDate);
+			} catch (Exception e) {
+				return null;
+			}
+			
+			if (licenceDateTemp != null) {
+				if (ilCertificate != null) {
+					if (ilCertificate.getValidFrom() != null 
+							&& ilCertificate.getValidFrom().compareTo(licenceDateTemp) == 0) {
+						Date now = new Date();
+						if (ilCertificate.getValidUntil() != null && ilCertificate.getValidUntil().getTime() < now.getTime()) {
+							obj.put("valid", true);
+							obj.put("message", StringPool.BLANK);				
+						}
+						else {
+							obj.put("valid", false);
+							obj.put("message", "Giấy phép đã hết hạn");					
+						}
+					}
+					else {
+						obj.put("valid", false);
+						obj.put("message", "Ngày cấp phép không đúng");											
+					}
+				}
+				else {
+					obj.put("valid", false);
+					obj.put("message", "Số giấy phép không đúng");
+				}
+			}
+			else {
+				obj.put("valid", false);
+				obj.put("message", "Ngày cấp giấy phép không đúng");
+			}
+		}
+		catch (PortalException e) {
 			obj.put("valid", false);
 			obj.put("message", StringPool.BLANK);
 		}
@@ -843,10 +878,16 @@ public class VRRestApplication extends Application {
 		long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
 		PhuongTien phuongTien = PhuongTienLocalServiceUtil.findByBKS(registrationNumber);
 		ILVehicle vehicle = ILVehicleLocalServiceUtil.getByRegistrationNumber(registrationNumber);
+		List<ILViPham> viphams = ILViPhamLocalServiceUtil.getByPhuongTien(phuongTien.getId());
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
 
 		if (vehicle != null && phuongTien != null) {
-			obj.put("vehicleStatus", 2);
+			if (viphams.size() > 0) {
+				obj.put("vehicleStatus", 2);
+			}
+			else {
+				obj.put("vehicleStatus", 3);
+			}
 		} else {
 			obj.put("vehicleStatus", 1);
 		}
