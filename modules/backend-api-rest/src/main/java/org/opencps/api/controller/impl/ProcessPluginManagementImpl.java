@@ -729,6 +729,52 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 			e.printStackTrace();
 			_log.info("Cant get formdata with fileTemplateNo_" + fileTemplateNo);
 		}
+		
+		
+		try {
+			
+			JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
+			
+			JSONArray attachedFileList = formDataObj.getJSONArray("AttachedFile");
+
+			
+			if (Validator.isNotNull(attachedFileList) && attachedFileList.length() != 0) {
+				
+				_log.info("****attachedFileList.length() : " + attachedFileList.length());
+				
+				for (int i = 0; i < attachedFileList.length(); i++) {
+					_log.info("****i : " + i);
+
+					JSONObject elm = attachedFileList.getJSONObject(i);
+					
+					_log.info("elm VALUE : " + elm.toJSONString());
+
+					String maTPHoSo = elm.getString("AttachedTypeCode");
+					
+					if (Validator.isNotNull(maTPHoSo)) {
+						DossierPart dossierPartElm = DossierPartLocalServiceUtil.getByFileTemplateNo(groupId, maTPHoSo);
+						
+						if (Validator.isNotNull(dossierPartElm)) {
+							elm.put("FullFileName", dossierPartElm.getPartName());
+							elm.put("AttachedTypeName", dossierPartElm.getPartName());
+						}
+					}
+					
+					//attachedFileList.put(elm);
+				}
+				
+			} else {
+				_log.info("attachedFileList IS NULL : ");
+
+			}
+			
+			formData = formDataObj.toJSONString();
+			
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		
+
 
 		return formData;
 	}
