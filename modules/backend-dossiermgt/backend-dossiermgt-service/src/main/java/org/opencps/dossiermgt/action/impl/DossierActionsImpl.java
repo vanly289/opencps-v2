@@ -27,6 +27,7 @@ import org.opencps.dossiermgt.constants.DeliverableTypesTerm;
 import org.opencps.dossiermgt.constants.DossierActionTerm;
 import org.opencps.dossiermgt.constants.DossierStatusConstants;
 import org.opencps.dossiermgt.constants.DossierTerm;
+import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.DeliverableType;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
@@ -43,6 +44,7 @@ import org.opencps.dossiermgt.model.ProcessStepRole;
 import org.opencps.dossiermgt.model.ServiceConfig;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.model.ServiceProcessRole;
+import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
 import org.opencps.dossiermgt.service.DeliverableTypeLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionUserLocalServiceUtil;
@@ -3125,5 +3127,27 @@ public class DossierActionsImpl implements DossierActions {
 		dossierFile.setIsNew(false);
 		DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
 		_log.info("&&&EndUpdateDossierFile" + new Date());
+	}
+
+	@Override
+	public List<Deliverable> getDeliverablesByDossier(long groupId, String id) {
+		long dossierId = GetterUtil.getLong(id);
+		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+		if (dossier == null) {
+			dossier = DossierLocalServiceUtil.getByRef(groupId, id);
+		}
+		List<Deliverable> lstDeliverables = new ArrayList<>();
+		
+		List<DossierFile> lstFiles = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT(dossier.getDossierId(), dossier.getDossierTemplateNo(), 2, false);
+		for (DossierFile df : lstFiles) {
+			if (Validator.isNotNull(df.getDeliverableCode())) {
+				Deliverable deliverable = DeliverableLocalServiceUtil.getByCode(df.getDeliverableCode());
+				if (deliverable != null) {
+					lstDeliverables.add(deliverable);
+				}
+			}
+		}
+		
+		return lstDeliverables;
 	}
 }

@@ -2,7 +2,9 @@ package org.opencps.dossiermgt.action;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 
+import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 
@@ -103,4 +105,5 @@ public interface DossierActions {
 	public JSONObject getDossierCountTodoPermission(long userId, long companyId, long groupId,
 			LinkedHashMap<String, Object> params, Object object, ServiceContext serviceContext);
 
+	public List<Deliverable> getDeliverablesByDossier(long groupId, String id);
 }

@@ -12,8 +12,10 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.httpclient.util.HttpURLConnection;
 import org.opencps.api.controller.DossierManagement;
 import org.opencps.api.controller.exception.ErrorMsg;
+import org.opencps.api.controller.util.DeliverableUtils;
 import org.opencps.api.controller.util.DossierMarkUtils;
 import org.opencps.api.controller.util.DossierUtils;
+import org.opencps.api.deliverable.model.DeliverableResultModel;
 import org.opencps.api.dossier.model.DoActionModel;
 import org.opencps.api.dossier.model.DossierDetailModel;
 import org.opencps.api.dossier.model.DossierInputModel;
@@ -33,14 +35,18 @@ import org.opencps.datamgt.model.DictCollection;
 import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
+import org.opencps.dossiermgt.action.DeliverableActions;
 import org.opencps.dossiermgt.action.DossierActions;
 import org.opencps.dossiermgt.action.DossierMarkActions;
+import org.opencps.dossiermgt.action.impl.DeliverableActionsImpl;
 import org.opencps.dossiermgt.action.impl.DossierActionsImpl;
 import org.opencps.dossiermgt.action.impl.DossierMarkActionsImpl;
 import org.opencps.dossiermgt.action.impl.DossierPermission;
 import org.opencps.dossiermgt.action.util.DossierNumberGenerator;
 import org.opencps.dossiermgt.action.util.SpecialCharacterUtils;
+import org.opencps.dossiermgt.constants.DeliverableTerm;
 import org.opencps.dossiermgt.constants.DossierTerm;
+import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierMark;
@@ -1908,5 +1914,32 @@ public class DossierManagementImpl implements DossierManagement {
 			}
 		}
 		return Response.status(200).entity(importantObj.toJSONString()).build();
+	}
+
+	@Override
+	public Response getDeliverablesByDossier(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String id) {
+		BackendAuth auth = new BackendAuthImpl();
+		
+		try {
+			
+			// Check user is login
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+			
+			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+			
+			DossierActions actions = new DossierActionsImpl();
+			DeliverableResultModel results = new DeliverableResultModel();
+			List<Deliverable> lstDeliverables = actions.getDeliverablesByDossier(groupId, id);
+			
+			results.setTotal(lstDeliverables.size());
+			results.getData()
+					.addAll(DeliverableUtils.mappingListToDeliverableResultModel(lstDeliverables));
+			return Response.status(200).entity(results).build();
+		} catch (Exception e) {
+			return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(e).build();
+		}		
 	}
 }
