@@ -13,6 +13,7 @@ import org.opencps.dossiermgt.model.Deliverable;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 public class DeliverableUtils {
@@ -28,6 +29,49 @@ public class DeliverableUtils {
 		return data;
 	}
 
+	public static List<DeliverableModel> mappingListToDeliverableResultModel(List<Deliverable> deliverables) {
+		List<DeliverableModel> data = new ArrayList<DeliverableModel>();
+
+		for (Deliverable db : deliverables) {
+			DeliverableModel model = new DeliverableModel();
+			model.setApplicantIdNo(db.getApplicantIdNo());
+			model.setApplicantName(db.getApplicantName());
+			model.setDeliverableCode(db.getDeliverableCode());
+			model.setDeliverableId(db.getDeliverableId());
+			model.setDeliverableName(db.getDeliverableName());
+			model.setDeliverableState(db.getDeliverableState());
+			model.setDeliverableType(db.getDeliverableType());
+			model.setGovAgencyCode(db.getGovAgencyCode());
+			model.setGovAgencyName(db.getGovAgencyName());
+			model.setSubject(db.getSubject());
+			if (Validator.isNotNull(db.getIssueDate())) {
+		    	Date issueDate = db.getIssueDate();
+				model.setIssueDate(APIDateTimeUtils.convertDateToString(issueDate, APIDateTimeUtils._NORMAL_PARTTERN));
+			} else {
+				model.setIssueDate(StringPool.BLANK);
+			}
+			
+			if (Validator.isNotNull(db.getExpireDate())) {
+		    	Date expireDate = db.getExpireDate();
+				model.setExpireDate(APIDateTimeUtils.convertDateToString(expireDate, APIDateTimeUtils._NORMAL_PARTTERN));
+			} else {
+				model.setExpireDate(StringPool.BLANK);
+			}
+
+			Date revalidate = null;
+			if (Validator.isNotNull(db.getRevalidate())) {
+				revalidate = db.getRevalidate();
+			}
+			model.setRevalidate(revalidate != null
+					? APIDateTimeUtils.convertDateToString(revalidate, APIDateTimeUtils._TIMESTAMP)
+					: StringPool.BLANK);
+			
+			data.add(model);
+		}
+
+		return data;
+	}
+	
 	public static DeliverableModel mappingToDeliverable (Document doc) {
 		DeliverableModel model = new DeliverableModel();
 

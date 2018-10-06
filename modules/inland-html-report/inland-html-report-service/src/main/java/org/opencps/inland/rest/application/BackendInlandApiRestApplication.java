@@ -26,6 +26,8 @@ import org.opencps.auth.api.BackendAuth;
 import org.opencps.auth.api.BackendAuthImpl;
 import org.opencps.auth.api.exception.UnauthenticationException;
 import org.opencps.auth.api.exception.UnauthorizationException;
+import org.opencps.dossiermgt.model.Deliverable;
+import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
 import org.opencps.inland.api.inlandprinttemplate.model.ErrorMsg;
 import org.opencps.inland.api.inlandprinttemplate.model.InlandPrintTemplateInputModel;
 import org.opencps.inland.api.inlandprinttemplate.model.InlandPrintTemplateModel;
@@ -45,6 +47,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 @ApplicationPath("/v2/inland")
@@ -289,6 +293,47 @@ public class BackendInlandApiRestApplication extends Application {
 
 				}
 			}
+		}
+		
+	}
+	
+	@GET
+	@Path("/{id}/{dossierId}/prints")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.TEXT_HTML })
+	public Response getPrintHtmlByDossier(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, 
+			@PathParam("id") String id,
+			@PathParam("dossierId") String dossierId,
+			@QueryParam("deliverables") String deliverables) {
+		
+		BackendAuth auth = new BackendAuthImpl();
+
+		try {
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+			
+			String[] deliverableArr = StringUtil.split(deliverables);
+			for (String deliverableCode : deliverableArr) {
+				Deliverable deliverable = DeliverableLocalServiceUtil.getByCode(deliverableCode);
+				if (deliverable != null) {
+					String formData = deliverable.getFormData();
+					
+				}
+			}
+			String html = "<html><body>";
+			html += "</body></htm>";
+			
+			return Response.status(200).entity(html).build();
+		} catch (Exception e) {
+			ErrorMsg error = new ErrorMsg();
+
+			error.setMessage("Content not found!");
+			error.setCode(404);
+			error.setDescription(e.getMessage());
+
+			return Response.status(404).entity(error).build();
 		}
 		
 	}
