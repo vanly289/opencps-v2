@@ -66,7 +66,10 @@
 					<span>
 						Trạng thái: 
 					</span>
-					<span class="text-bold">
+					<span class="text-bold" v-if="detailModel.dossierSubStatusText">
+						{{detailModel.dossierSubStatusText}}
+					</span>
+					<span class="text-bold" v-else>
 						{{detailModel.dossierStatusText}}
 					</span>
 				</div>				
@@ -135,17 +138,17 @@
 									Tên liên hệ: 
 								</span> 
 								<span class="text-bold">
-									{{detailModel.contactName}}
+									{{detailModel.contactName}} | {{detailModel.contactEmail}}
 								</span>
 							</div>
-							<div class="pb-1">
+							<#-- <div class="pb-1">
 								<span>
 									Địa chỉ email: 
 								</span>
 								<span class="text-bold">
 									{{detailModel.contactEmail}}
 								</span>
-							</div>
+							</div> -->
 							<div class="pb-1">
 								<span>
 									Số điện thoại: 
@@ -241,6 +244,9 @@
 					</v-menu>
 					</v-tabs-bar>
 				</v-tabs>
+				<div id="printGP" style="display: none;">
+					
+				</div>
 				<div v-if="showPrintable" class="px-4 py-3" style="background-color: #fff;">
 					<table class="table table-bordered" border="0" style="width: 600px; height: auto; margin: 0 auto;" v-if="!loadingListPrints">
 						<thead>
@@ -268,7 +274,7 @@
 									<span>{{index + 1}}</span>
 								</td>
 								<td class="text-xs-center py-2">
-									<v-checkbox class="mt-2" style="max-width: 40px; margin: 0 auto;" v-model="selectedPrints" label="" :value="index"></v-checkbox>
+									<v-checkbox class="mt-2" style="max-width: 40px; margin: 0 auto;" v-model="selectedPrints" label="" :value="deliverableCode"></v-checkbox>
 								</td>
 								<td class="text-xs-center py-2">
 									{{item['so_khung']}}
@@ -287,10 +293,34 @@
 						<span>{{statusTextLoadPrint}}</span>
 					</div>
 				</div>
+			<v-expansion-panel expand class="my-0" v-if="showBBKySo">
+				<v-expansion-panel-content v-bind:value="true" class="pl-0">
+				<div slot="header">
+					<div class="background-triangle-small">I.</div> <span>Biên bản thẩm định</span>
+				</div>
+				<!-- <div slot="header" class="text-bold"> <span>I. </span>Tài liệu nộp</div> -->
+				
+				<div v-if="!bbKySoFile['loading']">
+					<object id="dossierPDFView" data style="overflow: hidden;" width="800px" height="100%" v-if="bbKySoFile['type'] === '#preview@pdf' && bbKySoFile['url']">
+						<iframe :src="bbKySoFile['url']" width="100%" height="250px"> </iframe>
+					</object>
+					<div v-else-if="bbKySoFile['type'] === '#preview@pdf' && !bbKySoFile['url']">
+						Không thể hiển thị được tài liệu, xin vui lòng thử lại!
+					</div>
+
+					<div id="viewBBKySoHtml" style="pointer-events: none;">
+						
+					</div>
+				</div>
+				<div class="text-xs-center" v-else style="width: 100%; height: 200px;">
+					<v-progress-circular indeterminate v-bind:size="100" color="purple"></v-progress-circular>
+				</div>
+				</v-expansion-panel-content>
+			</v-expansion-panel>
 			<v-expansion-panel expand class="my-0">
 				<v-expansion-panel-content v-bind:value="true" class="pl-0">
 				<div slot="header">
-					<div class="background-triangle-small">I.</div> <span>Tài liệu nộp</span>
+					<div class="background-triangle-small"><span v-if="!showBBKySo">I.</span> <span v-else>II.</span></div> <span>Tài liệu nộp</span>
 				</div>
 				<!-- <div slot="header" class="text-bold"> <span>I. </span>Tài liệu nộp</div> -->
 				<small slot="header" class="text-gray text-right mr-4"> Những thành phần hồ sơ có dấu ( <span style="color: red;"> * </span> ) là thành phần bắt buộc</small>
@@ -303,7 +333,7 @@
 			<v-expansion-panel expand class="my-0">	
 				<v-expansion-panel-content v-bind:value="true" class="pl-0">
 				<div slot="header">
-					<div class="background-triangle-small">II.</div> <span>Kết quả</span>
+					<div class="background-triangle-small"><span v-if="!showBBKySo">II.</span> <span v-else>III.</span></div> <span>Kết quả</span>
 				</div>
 				<!-- <div slot="header" class="text-bold"> <span>II. </span>Kết quả</div> -->
 				<div class="opencps_list_border_style" jx-bind="listDocumentOut" :class="{no__action_event: disabledDossierFile}" v-if="!loadingDocumentListOut"></div> 
@@ -608,14 +638,14 @@
 					<v-expansion-panel-content v-for="(item,i) in stepModel.createFiles" v-if="!item.eform" :key="item.dossierPartId">
 						<div slot="header" @click.prevent="showAlpacaJSFORM(item)">{{i + 1}}. {{item.partName}} <small v-if="item.eform">( Form trực tuyến )</small> </div>
 						<div slot="header" class="text-right">
-							<v-btn flat icon light class="small-btn-x mx-0 my-0" v-on:click.native.prevent="singleFileUpload(item)">
+							<v-btn flat icon light class="small-btn-x mx-0 my-0" v-on:click.native.prevent="singleFileUpload(item)" v-if="!disableUploadAndDel">
 								<v-icon>file_upload</v-icon>
 							</v-btn>
 							<v-btn color="primary" fab small dark class="small-btn-x mx-0 my-0" @click="viewDossierFileVersionDialog(item, i)" :id="'btn-count-partno'+item.partNo">
 								{{item.counter}}
 							</v-btn>
 
-							<v-btn flat icon light class="small-btn-x mx-0 my-0" v-on:click.native.prevent="deleteDossierFileVersion(item)">
+							<v-btn flat icon light class="small-btn-x mx-0 my-0" v-on:click.native.prevent="deleteDossierFileVersion(item)" v-if="!disableUploadAndDel">
 								<v-icon>delete</v-icon>
 							</v-btn>
 						</div>
