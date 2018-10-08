@@ -1311,21 +1311,33 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 							for (MessageQueueInputModel model : lstResults) {
 								MessageQueueDetailModel result = client.postMessageQueue(model);
-								if (result != null) {
-									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
-											: sync.getMethod());
-	
-									DossierAction foundAction = DossierActionLocalServiceUtil
-											.fetchDossierAction(clientDossierActionId);
-									if (foundAction != null) {
-										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
-									}
-	
-									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-	
-									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-								}
+//								if (result != null) {
+//									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+//											: sync.getMethod());
+//	
+//									DossierAction foundAction = DossierActionLocalServiceUtil
+//											.fetchDossierAction(clientDossierActionId);
+//									if (foundAction != null) {
+//										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+//									}
+//	
+//									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+//	
+//									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+//								}
 							}
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+									: sync.getMethod());
+
+							DossierAction foundAction = DossierActionLocalServiceUtil
+									.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+							}
+
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						else if (dossier.getServiceCode().equals("BGTVT0600013")
 								|| dossier.getServiceCode().equals("BGTVT0600014")
@@ -1406,21 +1418,33 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 							for (MessageQueueInputModel model : lstResults) {
 								MessageQueueDetailModel result = client.postMessageQueue(model);
-								if (result != null) {
-									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
-											: sync.getMethod());
-	
-									DossierAction foundAction = DossierActionLocalServiceUtil
-											.fetchDossierAction(clientDossierActionId);
-									if (foundAction != null) {
-										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
-									}
-	
-									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-	
-									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-								}
+//								if (result != null) {
+//									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+//											: sync.getMethod());
+//	
+//									DossierAction foundAction = DossierActionLocalServiceUtil
+//											.fetchDossierAction(clientDossierActionId);
+//									if (foundAction != null) {
+//										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+//									}
+//	
+//									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+//	
+//									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+//								}
 							}
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+									: sync.getMethod());
+
+							DossierAction foundAction = DossierActionLocalServiceUtil
+									.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+							}
+
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						else if (dossier.getServiceCode().equals("BGTVT0600044")
 								|| dossier.getServiceCode().equals("BGTVT0600045")
@@ -1452,21 +1476,34 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 							for (MessageQueueInputModel model : lstResults) {
 								MessageQueueDetailModel result = client.postMessageQueue(model);
-								if (result != null) {
-									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
-											: sync.getMethod());
-	
-									DossierAction foundAction = DossierActionLocalServiceUtil
-											.fetchDossierAction(clientDossierActionId);
-									if (foundAction != null) {
-										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
-									}
-	
-									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-	
-									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-								}
+//								if (result != null) {
+//									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+//											: sync.getMethod());
+//	
+//									DossierAction foundAction = DossierActionLocalServiceUtil
+//											.fetchDossierAction(clientDossierActionId);
+//									if (foundAction != null) {
+//										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+//									}
+//	
+//									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+//	
+//									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+//								}
 							}
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+									: sync.getMethod());
+
+							DossierAction foundAction = DossierActionLocalServiceUtil
+									.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+							}
+
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+
 						}	
 						else if (dossier.getServiceCode().equals("BGTVT0600052")
 								|| dossier.getServiceCode().equals("BGTVT0600053")
@@ -1476,21 +1513,34 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 							for (MessageQueueInputModel model : lstResults) {
 								MessageQueueDetailModel result = client.postMessageQueue(model);
-								if (result != null) {
-									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
-											: sync.getMethod());
-	
-									DossierAction foundAction = DossierActionLocalServiceUtil
-											.fetchDossierAction(clientDossierActionId);
-									if (foundAction != null) {
-										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
-									}
-	
-									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-	
-									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-								}
+//								if (result != null) {
+//									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+//											: sync.getMethod());
+//	
+//									DossierAction foundAction = DossierActionLocalServiceUtil
+//											.fetchDossierAction(clientDossierActionId);
+//									if (foundAction != null) {
+//										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+//									}
+//	
+//									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+//	
+//									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+//								}
 							}
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+									: sync.getMethod());
+
+							DossierAction foundAction = DossierActionLocalServiceUtil
+									.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+							}
+
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+
 						}	
 						else if (dossier.getServiceCode().equals("BGTVT0600056")) {
 							MessageQueueInputModel model = BGTVT0600056.convertResult(dossier, dossierSync, envelope, "18", "16");
@@ -1540,21 +1590,33 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 							for (MessageQueueInputModel model : lstResults) {
 								MessageQueueDetailModel result = client.postMessageQueue(model);
-								if (result != null) {
-									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
-											: sync.getMethod());
-	
-									DossierAction foundAction = DossierActionLocalServiceUtil
-											.fetchDossierAction(clientDossierActionId);
-									if (foundAction != null) {
-										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
-									}
-	
-									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
-	
-									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
-								}
+//								if (result != null) {
+//									long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+//											: sync.getMethod());
+//	
+//									DossierAction foundAction = DossierActionLocalServiceUtil
+//											.fetchDossierAction(clientDossierActionId);
+//									if (foundAction != null) {
+//										DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+//									}
+//	
+//									_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+//	
+//									_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+//								}
 							}
+							long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+									: sync.getMethod());
+
+							DossierAction foundAction = DossierActionLocalServiceUtil
+									.fetchDossierAction(clientDossierActionId);
+							if (foundAction != null) {
+								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+							}
+
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}	
 					} else {
 						long clientDossierActionId = (dossierSync.getMethod() == 0 ? dossierSync.getClassPK()
