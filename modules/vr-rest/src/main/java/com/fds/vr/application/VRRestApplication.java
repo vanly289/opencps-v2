@@ -3,6 +3,7 @@ package com.fds.vr.application;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -30,10 +31,13 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
 import org.opencps.dossiermgt.model.Deliverable;
+import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.thirdparty.system.model.ILDataItem;
 import org.opencps.thirdparty.system.model.ILDoanhNghiep;
 import org.opencps.thirdparty.system.model.ILGiayPhepVanTai;
+import org.opencps.thirdparty.system.model.ILGiayPhepVanTaiQuocTe;
 import org.opencps.thirdparty.system.model.ILHopDongThue;
 import org.opencps.thirdparty.system.model.ILPhuHieuBienHieu;
 import org.opencps.thirdparty.system.model.ILPhuongTien;
@@ -44,6 +48,7 @@ import org.opencps.thirdparty.system.model.ILViPham;
 import org.opencps.thirdparty.system.service.ILDataItemLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiQuocTeLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILHopDongThueLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILPhuHieuBienHieuLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILPhuongTienLocalServiceUtil;
@@ -78,6 +83,8 @@ import com.fds.vr.ilcertificate.model.ILVehicleModel;
 import com.fds.vr.util.ILCertificateUtils;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -87,8 +94,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -496,6 +508,126 @@ public class VRRestApplication extends Application {
 		}
 
 	}
+	
+	@GET
+	@Path("/giayphepvantaiquocte")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findGiayPhepVanTaiQuocTe(@Context HttpHeaders header, @QueryParam("keyword") String keyword,
+			@QueryParam("start") Integer start, @QueryParam("end") Integer end) {
+		JSONObject obj = JSONFactoryUtil.createJSONObject();
+		
+		JSONArray data = JSONFactoryUtil.createJSONArray();
+		
+		long count = ILCertificateLocalServiceUtil.getAllCertificate().size();
+		
+		obj.put("total", count);
+		
+		if (count > 0) {
+			if (start == null) {
+				start = 0;
+				end = 9;
+			}
+			
+			List<ILCertificate> certificates = ILCertificateLocalServiceUtil.getAllCertificate();
+			
+			for (ILCertificate certificate : certificates) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+				
+				jsonObject.put("sogiayphep", certificate.getLicenceNo());
+				jsonObject.put("noicap", certificate.getGovAgencyName());
+				jsonObject.put("ngaycap", formatDate(certificate.getValidFrom()));
+				jsonObject.put("ngayhethan", formatDate(certificate.getValidFrom()));
+				jsonObject.put("trangthai", "");
+				jsonObject.put("dnvantai", certificate.getApplicantName());
+				jsonObject.put("loaihinhkinhdoanh", certificate.getTransportOperation());
+				jsonObject.put("download", getFileURL(certificate.getDossierFileId()));
+				
+				data.put(jsonObject);
+			}
+			
+			obj.put("data", data);
+		}
+		return Response.status(200).entity(obj.toJSONString()).build();
+	}
+	
+	@GET
+	@Path("/giaypheplienvan")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findGiayPhepLienVan(@Context HttpHeaders header, @QueryParam("keyword") String keyword,
+			@QueryParam("start") Integer start, @QueryParam("end") Integer end) {
+		JSONObject obj = JSONFactoryUtil.createJSONObject();
+		
+		JSONArray data = JSONFactoryUtil.createJSONArray();
+		
+		long count = ILCertificateLocalServiceUtil.getAllCertificate().size();
+		
+		obj.put("total", count);
+		
+		if (count > 0) {
+			if (start == null) {
+				start = 0;
+				end = 9;
+			}
+			
+			List<ILCertificate> certificates = ILCertificateLocalServiceUtil.getAllCertificate();
+			
+			for (ILCertificate certificate : certificates) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+				
+				jsonObject.put("sogiaypheplienvan", certificate.getLicenceNo());
+				jsonObject.put("noicap", certificate.getGovAgencyName());
+				jsonObject.put("ngaycap", formatDate(certificate.getValidFrom()));
+				jsonObject.put("ngayhethan", formatDate(certificate.getExpiredDate()));
+				jsonObject.put("trangthai", "");
+				jsonObject.put("donvikhaithac", certificate.getApplicantName());
+				jsonObject.put("bienkiemsoat", "");
+				jsonObject.put("loaihinhkinhdoanh", certificate.getTransportOperation());
+				jsonObject.put("loaiphuongtien", certificate.getVehicleType());
+				jsonObject.put("download", getFileURL(certificate.getDossierFileId()));
+				
+				data.put(jsonObject);
+			}
+			
+			obj.put("data", data);
+		}
+		return Response.status(200).entity(obj.toJSONString()).build();
+	}
+	
+	private String getFileURL(long dossierFileId)  {
+		
+		String fileURL = "";
+		
+		try {
+			Company company = CompanyLocalServiceUtil.getCompanyByMx(PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+			
+			String portalURL = PortalUtil.getPortalURL(company.getVirtualHostname(), PortalUtil.getPortalServerPort(false), false);
+			
+			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFile(dossierFileId);
+			
+			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(dossierFile.getFileEntryId());
+			
+			fileURL = portalURL + "/c/document_library/get_file?uuid=" + dlFileEntry.getUuid() + "&groupId=" + dlFileEntry.getGroupId();
+			
+		} catch (PortalException e) {
+			
+			_log.error(e);
+		}
+		
+		return fileURL;
+	}
+	
+	private String formatDate(Date date) {
+		String stringDate = "";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
+		
+		if (Validator.isNotNull(date)) {
+			stringDate = sdf.format(date);
+		}
+		
+		return stringDate;
+		
+	}
+	private static final String DATE_TIME_FORMAT = "dd/MM/yyyy hh:mm:ss";
 
 	@GET
 	@Path("/phuongtien/{phuongtienid}/thongtinvipham")
