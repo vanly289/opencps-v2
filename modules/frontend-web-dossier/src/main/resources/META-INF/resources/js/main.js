@@ -1164,7 +1164,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 													}
 												}
 												else {
-													if (item.hasOwnProperty(key)) {
+													if (formData[key].hasOwnProperty("value")) {
+														$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + formData[key].value + '</div>');																																																	
+													}
+													else if (item.hasOwnProperty(key)) {
 														$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');																																			
 													}
 												}
