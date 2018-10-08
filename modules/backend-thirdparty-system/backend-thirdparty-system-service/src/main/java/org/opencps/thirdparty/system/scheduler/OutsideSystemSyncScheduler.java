@@ -1037,6 +1037,10 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							if (foundAction != null) {
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}	
+							
+							_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						else if (dossier.getServiceCode().equals("BGTVT0600052")
 								|| dossier.getServiceCode().equals("BGTVT0600053")
