@@ -8,11 +8,6 @@
 			</span> 
 			<div style="margin-left: 40px;"><span @click="viewDossierFileVersionDialog(item)" style="cursor: pointer;">{{item.partName}}</span> &nbsp; <span v-if="item.required">(<span style="color: red;">*</span>)</span></div>
 		</v-flex>
-		<#-- <v-flex xs1 class="text-right">
-		<v-btn color="primary" fab small dark class="small-btn-x" v-on:click.native="viewDossierFileVersionNewTabOrWindow(item)">
-			{{item.counter}}
-		</v-btn>
-		</v-flex> -->
 	</v-layout>
 </div>
 
