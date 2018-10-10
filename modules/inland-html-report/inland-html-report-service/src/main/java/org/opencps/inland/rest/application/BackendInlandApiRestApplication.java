@@ -2,6 +2,7 @@ package org.opencps.inland.rest.application;
 
 import java.net.HttpURLConnection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
 
@@ -27,7 +28,14 @@ import org.opencps.auth.api.BackendAuthImpl;
 import org.opencps.auth.api.exception.UnauthenticationException;
 import org.opencps.auth.api.exception.UnauthorizationException;
 import org.opencps.dossiermgt.model.Deliverable;
+import org.opencps.dossiermgt.model.Dossier;
+import org.opencps.dossiermgt.model.DossierFile;
+import org.opencps.dossiermgt.model.DossierTemplate;
 import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierTemplateLocalService;
+import org.opencps.dossiermgt.service.DossierTemplateLocalServiceUtil;
 import org.opencps.inland.api.inlandprinttemplate.model.ErrorMsg;
 import org.opencps.inland.api.inlandprinttemplate.model.InlandPrintTemplateInputModel;
 import org.opencps.inland.api.inlandprinttemplate.model.InlandPrintTemplateModel;
@@ -41,6 +49,9 @@ import org.opencps.inland.service.InlandPrintTemplateLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -298,12 +309,11 @@ public class BackendInlandApiRestApplication extends Application {
 	}
 	
 	@GET
-	@Path("/{id}/{dossierId}/prints")
+	@Path("/{dossierId}/prints")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.TEXT_HTML })
 	public Response getPrintHtmlByDossier(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, 
-			@PathParam("id") String id,
 			@PathParam("dossierId") String dossierId,
 			@QueryParam("deliverables") String deliverables) {
 		
@@ -314,16 +324,55 @@ public class BackendInlandApiRestApplication extends Application {
 				throw new UnauthenticationException();
 			}
 			
+			Dossier dossier = DossierLocalServiceUtil.fetchDossier(GetterUtil.getLong(dossierId));
+			String html = "<html><body><div id='printTraCuu'>";
+			
 			String[] deliverableArr = StringUtil.split(deliverables);
 			for (String deliverableCode : deliverableArr) {
 				Deliverable deliverable = DeliverableLocalServiceUtil.getByCode(deliverableCode);
+				DossierFile dossierFile = DossierFileLocalServiceUtil.getByDeliverableCode(deliverableCode);
+				
 				if (deliverable != null) {
 					String formData = deliverable.getFormData();
-					
+					JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
+					String licenceType = StringPool.BLANK;
+					if (formDataObj.has("licenceType")) {
+						licenceType = formDataObj.getString("licenceType");
+					}
+					else {
+						
+					}
+					InlandPrintTemplate printTemplate = null;
+					try {
+						if (Validator.isNull(licenceType)) {
+							printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN(user.getUserId(), dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo());					
+						}
+						else {
+							printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN_LT(user.getUserId(), dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo(), licenceType);					
+						}
+						
+						if (printTemplate != null) {
+							String formTemplate = printTemplate.getFormTemplate();
+							JSONObject formTemplateObj = JSONFactoryUtil.createJSONObject(formTemplate);
+							Iterator<String> keys = formTemplateObj.keys();
+							while (keys.hasNext()) {
+								String key = keys.next();
+								if (formDataObj.has(key)) {
+									JSONObject obj = formDataObj.getJSONObject(key);
+									html += "<div style=\"z-index: 99; font-size: 14px; position:absolute; left :";
+									html += obj.getString("offsetX");
+									html += "px; top : " + obj.getString("offsetY") + "px\">";
+									html += "</div>";
+								}
+							}
+						}
+					}
+					catch (NoSuchInlandPrintTemplateException e) {
+						
+					}
 				}
 			}
-			String html = "<html><body>";
-			html += "</body></htm>";
+			html += "</div></body></htm>";
 			
 			return Response.status(200).entity(html).build();
 		} catch (Exception e) {

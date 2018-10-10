@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<v-tabs>
-			<v-tabs-bar v-model="tabActive" class="cyan" dark>
+		<v-tabs v-model="tabActive">
+			<v-tabs-bar class="cyan" dark>
 				<v-tabs-item v-for="tab in tabs" :key="tab.value"	:href="'#' + tab.value" ripple @click="menuTabChange(tab, $event)">
 					<v-menu offset-y v-if="tab.value === 'tab2'">
 						<span slot="activator">{{tab.text}}</span>

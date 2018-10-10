@@ -15,6 +15,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 	};
 
+	const listServiceCodePrint = ["BGTVT0600001", "BGTVT0600002", "BGTVT0600003", "BGTVT0600004", "BGTVT0600005", "BGTVT0600006", "BGTVT0600007", "BGTVT0600008", "BGTVT0600009", "BGTVT0600010", "BGTVT0600011", "BGTVT0600012", "BGTVT0600013", "BGTVT0600014", "BGTVT0600015", "BGTVT0600016", "BGTVT0600017", "BGTVT0600018", "BGTVT0600019", "BGTVT0600020", "BGTVT0600021", "BGTVT0600022", "BGTVT0600023", "BGTVT0600024", "BGTVT0600025", "BGTVT0600026", "BGTVT0600027", "BGTVT0600028", "BGTVT0600029", "BGTVT0600030", "BGTVT0600031", "BGTVT0600032", "BGTVT0600033", "BGTVT0600034", "BGTVT0600035", "BGTVT0600036", "BGTVT0600037", "BGTVT0600038", "BGTVT0600039", "BGTVT0600040", "BGTVT0600041", "BGTVT0600042", "BGTVT0600043", "BGTVT0600044", "BGTVT0600045", "BGTVT0600046", "BGTVT0600047", "BGTVT0600048", "BGTVT0600049", "BGTVT0600050", "BGTVT0600051", "BGTVT0600052", "BGTVT0600053", "BGTVT0600054", "BGTVT0600055", "BGTVT0600056", "BGTVT0600057", "BGTVT0600058", "BGTVT0600059", "BGTVT0600060", "BGTVT0600061", "BGTVT0600062", "BGTVT0600063", "BGTVT0600064", "BGTVT0600065"];
+	const listSericeCode2Print = ["BGTVT0600005", "BGTVT0600006", "BGTVT0600007", "BGTVT0600008", "BGTVT0600009", "BGTVT0600010", "BGTVT0600011", "BGTVT0600012", "BGTVT0600023", "BGTVT0600024", "BGTVT0600025", "BGTVT0600026", "BGTVT0600027", "BGTVT0600028", "BGTVT0600029", "BGTVT0600036", "BGTVT0600037", "BGTVT0600038", "BGTVT0600039", "BGTVT0600040", "BGTVT0600041", "BGTVT0600042", "BGTVT0600043", "BGTVT0600048", "BGTVT0600049", "BGTVT0600050", "BGTVT0600051", "BGTVT0600052", "BGTVT0600053", "BGTVT0600054", "BGTVT0600055", "BGTVT0600058", "BGTVT0600059", "BGTVT0600060"];
+
 	const MAX_RETRY = 200;
 	var nOfRetry = 0;
 	
@@ -133,7 +136,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			giayPhepVanTaiQuocTeTableItems: [],
 			pageGiayPhepVanTaiQuocTeTableLength: 0,
 			pageGiayPhepVanTaiQuocTeTable: 1,
-
 			giayPhepLienVanTableheaders: [
 			{
 				text: 'STT',
@@ -349,6 +351,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					text: 'Quản lý giấy phép',
 					value: 'tab3',
 					state: 'quan_ly_giay_phep'
+				},
+				{
+					text: 'Quản lý vận tải quốc tế',
+					value: 'tab4',
+					state: 'quan_ly_van_tai_quoc_te'
 				}
 				// {
 				// 	text: 'Quản lý phương tiện',
@@ -411,7 +418,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			],
 			loadingListPrints: false,
 			selectedPrints: [],
-			statusTextLoadPrint: 'Đang tải danh sách in...'
+			statusTextLoadPrint: 'Đang tải danh sách in...',
+			statusFirst: '',
+			showBBKySo: false,
+			bbKySoFile: {
+				loading: true,
+				type: 'pdf',
+				urlFile: ''
+			},
+			disableUploadAndDel: false
 		},
 		watch: {
 			pageGiayPhepVanTaiQuocTeTable: {
@@ -494,7 +509,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									return data.substring(0, indexKey);
 								}
 							} else {
-								return '?';
+								return '';
 							}
 						},
 						groupHoSoFilter: function(item, index){
@@ -544,10 +559,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						reloadCounter : function(){
 							var vm = this;
-
 							vm.stageFilterView = 'danh_sach';
-
-							/*var url = '/o/rest/v2/statistics/dossiers/todo';*/
 							var url = '/o/rest/v2/statistics/dossiers/todo';
 							console.log("Init load");
 							$.ajax({
@@ -631,6 +643,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								});
 								vm._initTuyens();
+							} else if (item.state === 'quan_ly_van_tai_quoc_te') {
+								window.location.href = "/group/cong-xu-ly/quan-ly-van-tai-quoc-te"
+
 							} else {
 								console.log($(event)[0]);
 								console.log($(event)[0].target);
@@ -658,9 +673,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.snackbarerordossierViewJX = true;
 							});
 						},
-						loadListPrints: function (item) {
+						loadListPrints: function () {
 							var vm = this;
-							var url = '/o/rest/v2/dictcollections/' + item.processActionId + '/prints';
+							var url = '/o/rest/v2/dossiers/' + vm.detailModel.dossierId + '/deliverables';
 							vm.loadingListPrints = true;
 							vm.statusTextLoadPrint = 'Đang tải danh sách in...';
 							axios.get(url, config).then(function (response) {
@@ -755,6 +770,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								
 							}
 
+							let itemStatus = vm.listgroupHoSoFilterItems.find(item => {
+								return item.id === vm.statusFirst
+							})
+
+							if (itemStatus !== null && itemStatus !== undefined && itemStatus !== '' && itemStatus !== {}) {
+								vm.hoso_title_table = itemStatus['title']
+							}
+
 							if(select){
 								console.log("selected========", select);
 								var indexTemp = vm.listgroupHoSoFilterItems.findIndex(item => {
@@ -786,6 +809,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								} else {
 									vm.substatusParamFilter = result.data.status;
 								}
+								vm.statusFirst = result.data.status;
 								vm._initlistgroupHoSoFilter(result.data.status);
 							}).catch(xhr => {
 								vm._initlistgroupHoSoFilter();
@@ -798,6 +822,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm._initServiceInfoFilterData();
 							vm._initApplicantNameFilterData();
 							vm._initDossierStatus();
+							vm.setStateOnlyFollow(emailAddress);
 							$("aside").remove();
 						},
 						deleteDossierFileVersion: function (item) {
@@ -881,7 +906,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										}
 									}
 								}
-								
 							})
 							.catch(function (error) {
 								console.log(error);
@@ -1265,7 +1289,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								},
 								responseType: 'blob'
 							};
-
 							axios.get(url, config_blob).then(function (response) {
 								var urlblob = window.URL.createObjectURL(response.data);
 								window.open(urlblob, '_blank')
@@ -2016,8 +2039,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 												item.counter ++;
 												item.hasSubmit = true;
 											}
-
-
 										}catch(e){
 
 										}
@@ -2132,13 +2153,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         			}    								
     							}
                         		$("textarea#processActionNote").val("");
-
                         		if (item.hasOwnProperty('createFiles') && !(item.createFiles instanceof Array)) {
                         			var createFilesTemp = item.createFiles;
                         			item.createFiles = [];
                         			item.createFiles.push(createFilesTemp);
                         		}
-
                         		if (item.autoEvent !== 'submit' && item.autoEvent !== 'timer') {
                         			vm.stepModel = item;
                         			setTimeout(function () {
@@ -2181,7 +2200,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         			/*Change-------*/
                         			vm.disabledDossierFile = false;
                         		}
-                        	}else {
+                        	}else if (item.type === 2) {
                         		vm.maxWidthDialog = '800px';
                         		var urlPluginFormData = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/formdata';
                         		var urlPluginFormScript = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/formscript';
@@ -2208,26 +2227,23 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
                         					var config_blob =  {
                         						headers: {
-                        							'groupId': themeDisplay.getScopeGroupId(),
+                        							'groupId': themeDisplay.getScopeGroupId()
                         						},
                         						responseType: 'blob'
                         					};
-
                         					axios.get(url, config_blob).then(function (response) {
                         						var urlblob = window.URL.createObjectURL(response.data);
                         						item.pdf = true;
                         						item.url = urlblob;
                         						item.no_pdf = '';
                         						vm.stepModel = item;
-                        					})
-                        					.catch(function (error) {
+                        					}).catch(function (error) {
                         						console.log(error);
                         						item.pdf = true;
                         						item.url = '';
                         						item.no_pdf = 'Tài liệu đính kèm không tồn tại!';
                         						vm.stepModel = item;
                         					});
-
                         				}
 
 
@@ -2264,7 +2280,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         						console.log("formData======",formData);
                         						/*var formData = serializable.formData;*/
 
-
                         						formReport.data = formData;
                         						console.log("formReport_____FINAL=======",formReport);
                         						$("#alpacajs_form_plugin").alpaca(formReport);
@@ -2284,18 +2299,84 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         				console.log(error);
 
                         			});
+                        		} else {
+                        			var printTemplateId = vm.getInLand2(item);
+                        			item['printTemplateId'] = printTemplateId
+                        			if (item['print'] === 'PRINT_GPLV') {
+                        				// TODO get inland
+                        				vm.submitPrintGPLV(item)
+                        			} else if (item['print'] === 'PRINT_PH') {
+                        				vm.submitPrintPH(item)
+                        			}
                         		}
-
-
-
                         	},
-                        	refreshProcess : function(){
+                        	getInLand2: function (item) {
+                        		var vm = this;
+                        		console.log(item);
+                        		var url ="/o/il/v2/inland";
+                        		var printTemplateId = '';
+                        		$.ajax({
+                        			url: url,
+                        			headers: {
+                        				groupId: themeDisplay.getScopeGroupId()
+                        			},
+                        			type: 'GET',
+                        			async: false,
+                        			data: {
+                        				serviceCode: item.serviceCode,
+                        				dossierPartNo: item.dossierPartNo,
+                        				fileTemplateNo: item.fileTemplateNo,
+                        				templateNo: item.dossierTemplateNo,
+                        				licenceType: item.licenceType
+                        			},
+                        			success: function (result) {
+                        				printTemplateId = result.printTemplateId
+                        			},
+                        			error: function (result) {
+                        				printTemplateId = ''
+                        			}
+                        		})
+                        		return printTemplateId
+                        	},
+                        	submitPrintGPLV: function (item) {
+                        		var vm = this
+                        		var select = vm.selectedPrints.join(',')
+                        		var url = '/o/il/v2/inland/' + item['printTemplateId'] + '/' + vm.detailModel.dossierId + '/prints?deliverables=' + select
+                        		// var postData = new URLSearchParams();
+                        		// postData.append('dossierId', vm.detailModel.dossierId);
+                        		// postData.append('select', vm.selectedPrints.join(','));
+                        		axios.get(url, config).then(function (response) {
+                        			$("#printGP").html(response.data);
+                        			$("#printGP").printThis();
+                        		}).catch(function (error) {
+                        			console.log(error);
+                        			vm.snackbartextdossierViewJX = item.actionName + " thất bại!";
+                        			vm.snackbarerordossierViewJX = true;
+                        		});
+                        	},
+                        	submitPrintPH: function (item) {
+                        		var vm = this
+                        		var select = vm.selectedPrints.join(',')
+                        		var url = '/o/il/v2/inland/' + item['printTemplateId'] + '/' + vm.detailModel.dossierId + '/prints?deliverables=' + select
+                        		// var postData = new URLSearchParams();
+                        		// postData.append('dossierId', vm.detailModel.dossierId);
+                        		// postData.append('select', vm.selectedPrints.join(','));
+                        		axios.get(url, config).then(function (response) {
+                        			$("#printGP").html(response.data);
+                        			$("#printGP").printThis();
+                        		}).catch(function (error) {
+                        			console.log(error);
+                        			vm.snackbartextdossierViewJX = item.actionName + " thất bại!";
+                        			vm.snackbarerordossierViewJX = true;
+                        		});
+                        	},
+                        	refreshProcess: function() {
                         		var vm = this;
                         		vm._initchangeProcessStep();
                         		vm.stepModel = null;
                         		vm.dialogThuLyHoSo = false
                         	},
-                        	postNextActions2 : function(item){
+                        	postNextActions2: function(item){
                         		console.log("itempostNextActions2============",item);
                         		var vm = this;
                         		var createFiles = item.createFiles;
@@ -2343,33 +2424,30 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         		var fileArr = item.createFiles;
                         		var idArr = [];
                         		var waitingFiles = false;
-							// var dossierFileId
-							if (fileArr) {
-								var length = fileArr.length;
-								for (var i = 0; i < length; i++) {
-									var fileDetail = fileArr[i];
-									if (fileDetail.counter == 0) {
-										waitingFiles = true;
-										break;
-									}
-									var dossierFileId = fileDetail.dossierFileId;
-									var dossierPartId = fileDetail.dossierPartId;
-									if (dossierFileId && dossierPartId) {
-										var strId = dossierFileId + ',' + dossierPartId;
-										idArr.push(strId);
+								if (fileArr) {
+									var length = fileArr.length;
+									for (var i = 0; i < length; i++) {
+										var fileDetail = fileArr[i];
+										if (fileDetail.counter == 0) {
+											waitingFiles = true;
+											break;
+										}
+										var dossierFileId = fileDetail.dossierFileId;
+										var dossierPartId = fileDetail.dossierPartId;
+										if (dossierFileId && dossierPartId) {
+											var strId = dossierFileId + ',' + dossierPartId;
+											idArr.push(strId);
+										}
 									}
 								}
-							}
-
-							if(item.configNote){
-								if(item.configNote.requiredNote && !$("textarea#processActionNote").val()){
-									vm.snackbartextdossierViewJX = "Bạn phải nhập ý kiến trước khi gửi";
-									vm.snackbarerordossierViewJX = true;
-									vm.actionsSubmitLoading = false;
-									return;
+								if(item.configNote){
+									if(item.configNote.requiredNote && !$("textarea#processActionNote").val()){
+										vm.snackbartextdossierViewJX = "Bạn phải nhập ý kiến trước khi gửi";
+										vm.snackbarerordossierViewJX = true;
+										vm.actionsSubmitLoading = false;
+										return;
+									}
 								}
-							}
-
 							console.log(idArr);
 
 							var url = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/actions';
@@ -2719,24 +2797,65 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
                             		var nextactions = serializableNextActionConvert;
                             		var plugins = serializablePluginsConvert;
+                            		var printsaction = [];
+                            		vm.showPrintable = false;
+                            		if (vm.detailModel['dossierSubStatus'] === 'processing_13' || vm.detailModel['dossierSubStatus'] === 'processing_14' || vm.detailModel['dossierSubStatus'] === 'done_3') {
+                            			let index2Print = listSericeCode2Print.findIndex(item => {
+                            				return item === vm.detailModel.serviceCode
+                            			})
 
-                            		vm.disabledDossierFile = true;
-                            		vm.processSteps = $.merge( nextactions, plugins );
-                            		vm._inilistDocumentIn(vm.detailModel);
-                            		vm._inilistDocumentOut(vm.detailModel);
-                            		/*Check configNote action print */
-                            		for (var i = 0; i < vm.processSteps.length; i++) {
-                            			if (vm.processSteps[i].hasOwnProperty('configNote') && vm.processSteps[i]['configNote'] !== null && vm.processSteps[i]['configNote'] !== undefined && vm.processSteps[i]['configNote'] !== '') {
-                            				let configNoteTmp = vm.processSteps[i]['configNote'];
-                            				if (configNoteTmp.hasOwnProperty('action')) {
-                            					if (configNoteTmp['action'] == 'PRINT') {
-                            						vm.showPrintable = true;
-                            						vm.loadListPrints(vm.processSteps[i]);
-                            						break;
-                            					}
+                            			if (index2Print !== -1) {
+                            				printsaction.push({
+                            					type: 3,
+                            					print: 'PRINT_GPLV',
+                            					processActionId: index2Print + 'lv',
+                            					actionName: 'In giấy phép liên vận'
+                            				})
+                            				printsaction.push({
+                            					type: 3,
+                            					print: 'PRINT_PH',
+                            					processActionId: index2Print + 'lv2',
+                            					actionName: 'In phù hiệu'
+                            				})
+                            			} else {
+                            				let indexPrint = listServiceCodePrint.findIndex(item => {
+                            					return item === vm.detailModel.serviceCode
+                            				})
+                            				if (indexPrint !== -1) {
+                            					printsaction.push({
+                            						type: 3,
+                            						print: 'PRINT_GPLV',
+                            						processActionId: indexPrint + 'lv',
+                            						actionName: 'In giấy phép liên vận'
+                            					})
                             				}
                             			}
                             		}
+                            		if (printsaction.length > 0) {
+                            			vm.showPrintable = true;
+                            			vm.loadListPrints();
+                            		}
+                            		vm.disabledDossierFile = true;
+                            		vm.processSteps = $.merge(nextactions, plugins, printsaction);
+                            		vm._inilistDocumentIn(vm.detailModel);
+                            		vm._inilistDocumentOut(vm.detailModel);
+                            		/*Check configNote action print */
+                            		// for (var i = 0; i < vm.processSteps.length; i++) {
+                            		// 	if (vm.processSteps[i].hasOwnProperty('configNote') && vm.processSteps[i]['configNote'] !== null && vm.processSteps[i]['configNote'] !== undefined && vm.processSteps[i]['configNote'] !== '') {
+                            		// 		let configNoteTmp = vm.processSteps[i]['configNote'];
+                            		// 		if (configNoteTmp.hasOwnProperty('action')) {
+                            		// 			if (configNoteTmp['action'] == 'PRINT') {
+                            		// 				vm.showPrintable = true;
+                            		// 				vm.loadListPrints(vm.processSteps[i]);
+                            		// 				break;
+                            		// 			}
+                            		// 		}
+                            		// 	}
+                            		// }
+                            		// if (printsaction.length > 0) {
+                            		// 	vm.showPrintable = true;
+                            		// 	vm.loadListPrints(printsaction[0]);
+                            		// }
                             		/*---------------------------------------------*/
                             		var processStepsLength = vm.processSteps.length;
                             		var needIntervalRefresh = false;
@@ -3883,7 +4002,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								start: vm.traCuuHoSoTablepage * 15 - 15,
 								end: vm.traCuuHoSoTablepage * 15,
 								sort: 'modified',
-								order: 'false'
+								order: 'true'
 							};
 							var loai_chung_chi = vm.advancedFilterServiceInfo.deliverableType;
 							try{
@@ -4198,19 +4317,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						{
 							text: 'Thông tin hồ sơ',
 							align: 'center',
-							sortable: true,
-							value: 'dossierDetail'
+							sortable: false,
+							value: 'serviceName'
 						},
 						{
 							text: 'Trạng thái',
 							align: 'left',
-							sortable: true,
+							sortable: false,
 							value: 'status'
 						},
 						{
 							text: 'Ghi chú',
 							align: 'left',
-							sortable: true,
+							sortable: false,
 							value: 'note'
 						}
 						// {
@@ -4406,12 +4525,65 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							
 							return false; 
 						},
+						getDictItemPartNo () {
+							var vm = this;
+							return new Promise((resolve, reject) => {
+
+								var url = '/o/rest/v2/dictcollections/CONFIG_ESIGN/dictitems';
+
+								axios.get(url, config).then(function (response) {
+									resolve(response.data.data)
+								}).catch(function (error) {
+									console.log(error);
+									reject(error)
+								});
+							})
+						},
+						previewhtmlKySo (dossierId, partNo) {
+							var vm = this;
+							return new Promise((resolve, reject) => {
+								var url = '/o/rest/v2/dossiers/' + dossierId  + '/plugin/previewhtml';
+								let configHeader = {
+									headers: {
+										'groupId': themeDisplay.getScopeGroupId(),
+										'partNo': partNo
+									},
+									dataType : "json"
+								}
+								axios.get(url, configHeader).then(function (response) {
+									resolve(response.data)
+								}).catch(function (error) {
+									console.log(error);
+									reject(error)
+								});
+							})
+						},
+						previewpdfKySo (dossierId, partNo) {
+							var vm = this;
+							return new Promise((resolve, reject) => {
+								var url = '/o/rest/v2/dossiers/' + dossierId  + '/plugin/previewpdf';
+								let configPdf = {
+									headers: {
+										'groupId': themeDisplay.getScopeGroupId(),
+										'partNo': partNo
+									},
+									responseType: 'blob'
+								};
+								axios.get(url, configPdf).then(function (response) {
+									var url = window.URL.createObjectURL(response.data);
+									resolve(url)
+								}).catch(function (error) {
+									console.log(error);
+									reject(error)
+								});
+							})
+						},
 						toDetailHoSo: function (item) {
 							
 							var vm = this;
 							vm.stepModel = null;
 							// call DetailAPI.
-
+							vm.disableUploadAndDel = false;
 							var url = '/o/rest/v2/dossiers/'+item.dossierId;
 							
 							axios.get(url, config).then(function (response) {
@@ -4426,6 +4598,64 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm._inilistDocumentIn(vm.detailModel);
 								vm._inilistDocumentOut(vm.detailModel);
 								vm._initchangeProcessStep();
+
+								if (serializable.dossierSubStatus === 'processing_7') {
+									vm.showBBKySo = true;
+									$("#viewBBKySoHtml").html("");
+									vm.bbKySoFile = {
+										type: '',
+										url: '',
+										html: '',
+										loading: false
+									}
+									vm.disableUploadAndDel = true;
+									vm.getDictItemPartNo().then(result => {
+										console.log('---------------getDictItemPartNo++++++++++++++', result)
+										if (result) {
+											let itemPartNoPrint = result.find(item => {
+												return serializable['dossierTemplateNo'] === item['itemCode']
+											})
+											console.log('---------------itemPartNoPrint++++++++++++++', itemPartNoPrint)
+											if (itemPartNoPrint) {
+												vm.bbKySoFile['type'] = itemPartNoPrint['itemName']
+												vm.bbKySoFile['loading'] = true	
+												if (itemPartNoPrint['itemName'].indexOf('pdf') !== -1) {
+													vm.previewpdfKySo(vm.detailModel.dossierId, itemPartNoPrint.itemNameEN).then(result => {
+														vm.bbKySoFile['loading'] = false
+														vm.bbKySoFile['url'] = result
+													})
+												} else {
+													vm.previewhtmlKySo(vm.detailModel.dossierId, itemPartNoPrint.itemNameEN).then(result => {
+														vm.bbKySoFile['loading'] = false
+														var formReport = eval('(' + result.formReport + ')');
+														var formData = eval('(' + result.formData + ')');
+
+														console.log("formReport======KS", formReport);
+														console.log("formData======KS", formData);
+
+														formReport.data = formData;
+														console.log("formReport_____FINAL=======KS", formReport);
+                        								setTimeout(function () {
+                        									console.log("------------viewBBKySoHtml++++++++++", $("#viewBBKySoHtml"))
+                        									$("#viewBBKySoHtml").alpaca(formReport);
+                        								}, 500)
+													})
+												}
+											}
+										}
+									}).catch(xhr => {
+										vm.bbKySoFile = {
+											type: '#preview@pdf',
+											url: '',
+											html: '',
+											loading: false
+										}
+									})
+									
+								} else {
+									vm.disableUploadAndDel = false;
+									vm.showBBKySo = false;
+								}
 
 							})
 							.catch(function (error) {
@@ -4453,9 +4683,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					'template': 'list_document_in_template',
 					'events': {
 						_inilistDocumentIn: function (item) {
-							var vm = this;
-//							vm.listDocumentInItems = [];
-//							vm.listDocumentOutItems = [];
+							return new Promise((resolve, reject) => {
+								var vm = this;
 								vm.loadingDocumentListIn = true;
 								var url = "/o/rest/v2/dossiertemplates/"+item.dossierTemplateNo;
 								var urlFiles = "/o/rest/v2/dossiers/"+item.dossierId+"/files";
@@ -4465,53 +4694,51 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									axios.get(urlFiles, config)
 									])
 								.then(axios.spread(function (urlRespones, urlFilesRespones) {
-							    // Both requests are now complete
-							    vm.dossierFiles = urlFilesRespones.data.data;
+									vm.dossierFiles = urlFilesRespones.data.data;
 
-							    var serializable = urlRespones.data;
+									var serializable = urlRespones.data;
 
-							    var listIn = [], listOut = [], listAll = [];
+									var listIn = [], listOut = [], listAll = [];
 
-							    for(var key in serializable.dossierParts){
+									for(var key in serializable.dossierParts){
 
-							    	var countData = 0;
-							    	for(var keyFile in vm.dossierFiles){
+										var countData = 0;
+										for(var keyFile in vm.dossierFiles){
 
-							    		if ( vm.dossierFiles[keyFile].dossierPartNo === serializable.dossierParts[key].partNo ) {
-							    			countData = countData + 1;
-							    			serializable.dossierParts[key].referenceUid = vm.dossierFiles[keyFile].referenceUid;
-							    			serializable.dossierParts[key].fileEntryId = vm.dossierFiles[keyFile].fileEntryId;
-							    			serializable.dossierParts[key].displayName = vm.dossierFiles[keyFile].displayName;
+											if ( vm.dossierFiles[keyFile].dossierPartNo === serializable.dossierParts[key].partNo ) {
+												countData = countData + 1;
+												serializable.dossierParts[key].referenceUid = vm.dossierFiles[keyFile].referenceUid;
+												serializable.dossierParts[key].fileEntryId = vm.dossierFiles[keyFile].fileEntryId;
+												serializable.dossierParts[key].displayName = vm.dossierFiles[keyFile].displayName;
 
-							    			listAll.push(serializable.dossierParts[key]);
-							    		}
+												listAll.push(serializable.dossierParts[key]);
+											}
 
-							    	}
+										}
 
-							    	serializable.dossierParts[key].counter = countData;
+										serializable.dossierParts[key].counter = countData;
 
-							    	if ( serializable.dossierParts[key].partType === 2 ) {
-							    		listOut.push(serializable.dossierParts[key]);
-							    	} else {
-							    		listIn.push(serializable.dossierParts[key]);
-							    	}
+										if ( serializable.dossierParts[key].partType === 2 ) {
+											listOut.push(serializable.dossierParts[key]);
+										} else {
+											listIn.push(serializable.dossierParts[key]);
+										}
 
-							    }
+									}
 
-							    vm.listDocumentInItems = listIn;
-							    vm.listDocumentOutItems = listOut;
-								// TEMP
-								vm._initCbxDocumentNewTab(listAll);
-								vm.disabledDossierFile = false;
-								vm.loadingDocumentListIn = false;
-								return Promise.reject();
-								
-							})).catch(function (error) {
-								console.log(error);
-								// vm.loadingDocumentListIn = false;
+									vm.listDocumentInItems = listIn;
+									vm.listDocumentOutItems = listOut;
+									vm._initCbxDocumentNewTab(listAll);
+									vm.disabledDossierFile = false;
+									vm.loadingDocumentListIn = false;
+									resolve(urlFilesRespones.data.data)
+									// return Promise.reject();
 
-							});
-							return false;
+								})).catch(function (error) {
+									console.log(error);
+									reject(error);
+								});
+							})
 						},
 						viewDossierFileVersion: function (item) {
 							var vm = this;
@@ -4714,11 +4941,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 						},
 						selectDossierActionTab(){
-							
 							var vm = this;
-							
 							//var url = "/o/frontendwebdossier/json/dossier_logs.json?t=1";
-							var url = "/o/rest/v2/dossierlogs/"+vm.detailModel.dossierId+"/logs";
+							var url = "/o/rest/v2/dossierlogs/"+vm.detailModel.dossierId+"/logs?sort=modified&order=true";
 							vm.listHistoryProcessingItems = [];
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
