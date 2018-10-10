@@ -623,7 +623,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600043")
 								|| dossier.getServiceCode().equals("BGTVT0600044")
 								|| dossier.getServiceCode().equals("BGTVT0600045")
-								|| dossier.getServiceCode().equals("BGTVT0600046")) {
+								|| dossier.getServiceCode().equals("BGTVT0600046")
+								|| dossier.getServiceCode().equals("BGTVT0600048")
+								|| dossier.getServiceCode().equals("BGTVT0600049")
+								|| dossier.getServiceCode().equals("BGTVT0600050")
+								|| dossier.getServiceCode().equals("BGTVT0600051")
+								|| dossier.getServiceCode().equals("BGTVT0600052")
+								|| dossier.getServiceCode().equals("BGTVT0600053")
+								|| dossier.getServiceCode().equals("BGTVT0600054")
+								|| dossier.getServiceCode().equals("BGTVT0600055")
+								|| dossier.getServiceCode().equals("BGTVT0600056")) {
 							
 							List<DossierRequestUD> lstRequests = DossierRequestUDLocalServiceUtil.getDossierRequestByRT(
 									dossier.getCompanyId(),
