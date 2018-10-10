@@ -34,10 +34,15 @@ import aQute.bnd.annotation.ProviderType;
  * The implementation of the il doanh nghiep local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.opencps.thirdparty.system.service.ILDoanhNghiepLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link org.opencps.thirdparty.system.service.ILDoanhNghiepLocalService}
+ * interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author trungdk
@@ -45,57 +50,25 @@ import aQute.bnd.annotation.ProviderType;
  * @see org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil
  */
 @ProviderType
-public class ILDoanhNghiepLocalServiceImpl
-	extends ILDoanhNghiepLocalServiceBaseImpl {
+public class ILDoanhNghiepLocalServiceImpl extends ILDoanhNghiepLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil} to access the il doanh nghiep local service.
+	 * Never reference this class directly. Always use {@link
+	 * org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil} to
+	 * access the il doanh nghiep local service.
 	 */
-	
-	public ILDoanhNghiep addDoanhNghiep(
-		long id,
-		String ten,
-		String ten_viettat,
-		String ten_tienganh,
-		String sogcn_dkkd,
-		Date ngaycap_dkkd,
-		Date ngayhethan_dkkd,
-		String ten_donvicapphep,
-		String masothue,
-		String ten_nguoidaidien,
-		String chucvu_nguoidaidien,
-		long gioitinh_nguoidaidien,
-		String diachi_nguoidaidien,
-		long diachi_ndd_tinh_id,
-		long diachi_ndd_huyen_id,
-		long diachi_ndd_xa_id,
-		String hktt_nguoidaidien,
-		long dantoc_nguoidaidien_id,
-		long tongiao_nguoidaidien_id,
-		long quoctich_nguoidaidien_id,
-		Date ngaysinh_nguoidaidien,
-		String dienthoai_nguoidaidien,
-		String giayto_canhan_nguoidaidien,
-		Date giayto_ngaycap_nguoidaidien,
-		String giayto_noicap_nguoidaidien,
-		long loaidoanhnghiep_id,
-		String diachi_trusochinh,
-		long diachi_truso_tinh_id,
-		long diachi_truso_huyen_id,
-		long diachi_truso_xa_id,
-		String dienthoai,
-		String fax,
-		String email,
-		String website,
-		String von_dieule,
-		String von_phapdinh,
-		long user_id,
-		long doituongsudung_id,
-		int trangthai,
-		Date ngaytao,
-		Date ngaycap_taikhoan
-			) {
+
+	public ILDoanhNghiep addDoanhNghiep(long id, String ten, String ten_viettat, String ten_tienganh, String sogcn_dkkd,
+			Date ngaycap_dkkd, Date ngayhethan_dkkd, String ten_donvicapphep, String masothue, String ten_nguoidaidien,
+			String chucvu_nguoidaidien, long gioitinh_nguoidaidien, String diachi_nguoidaidien, long diachi_ndd_tinh_id,
+			long diachi_ndd_huyen_id, long diachi_ndd_xa_id, String hktt_nguoidaidien, long dantoc_nguoidaidien_id,
+			long tongiao_nguoidaidien_id, long quoctich_nguoidaidien_id, Date ngaysinh_nguoidaidien,
+			String dienthoai_nguoidaidien, String giayto_canhan_nguoidaidien, Date giayto_ngaycap_nguoidaidien,
+			String giayto_noicap_nguoidaidien, long loaidoanhnghiep_id, String diachi_trusochinh,
+			long diachi_truso_tinh_id, long diachi_truso_huyen_id, long diachi_truso_xa_id, String dienthoai,
+			String fax, String email, String website, String von_dieule, String von_phapdinh, long user_id,
+			long doituongsudung_id, int trangthai, Date ngaytao, Date ngaycap_taikhoan) {
 		ILDoanhNghiep dn = ilDoanhNghiepPersistence.create(id);
 		dn.setTen(ten);
 		dn.setTen_viettat(ten_viettat);
@@ -137,38 +110,45 @@ public class ILDoanhNghiepLocalServiceImpl
 		dn.setTrangthai(trangthai);
 		dn.setNgaytao(ngaytao);
 		dn.setNgaycap_taikhoan(ngaycap_taikhoan);
-		
+
 		return ilDoanhNghiepPersistence.update(dn);
 	}
-	
+
 	public ILDoanhNghiep getLastDoanhNghiep() throws NoSuchILDoanhNghiepException {
 		return ilDoanhNghiepPersistence.findByGT_ID_Last(0l, null);
-	}	
-	
-	public List<ILDoanhNghiep> findByKeyword(String keyword, int start, int end) {
-		
-		return ilDoanhNghiepPersistence.findAll(start, end);
-		
-		/*DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ILDoanhNghiepImpl.class);
-		dynamicQuery.add(RestrictionsFactoryUtil.like("masothue", keyword));
-		dynamicQuery.add(RestrictionsFactoryUtil.like("ten", keyword));
-		dynamicQuery.add(RestrictionsFactoryUtil.like("sogcn_dkkd", keyword));
-		
-		List<ILDoanhNghiep> results = new ArrayList<>();
-		results.addAll(ilDoanhNghiepPersistence.findWithDynamicQuery(dynamicQuery, start, end));
-		return results; */
 	}
-	
-	public long countByKeyword(String keyword) {
-		
-		return ilDoanhNghiepPersistence.countAll();
-		
+
+	public List<ILDoanhNghiep> findByKeyword(String keyword, int start, int end) {
+
+		return ilDoanhNghiepPersistence.findAll(start, end);
+
 		/*
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ILDoanhNghiepImpl.class);
-		dynamicQuery.add(RestrictionsFactoryUtil.like("masothue", keyword));
-		dynamicQuery.add(RestrictionsFactoryUtil.like("ten", keyword));
-		dynamicQuery.add(RestrictionsFactoryUtil.like("sogcn_dkkd", keyword));
-		
-		return ilDoanhNghiepPersistence.countWithDynamicQuery(dynamicQuery);*/
-	}	
+		 * DynamicQuery dynamicQuery =
+		 * DynamicQueryFactoryUtil.forClass(ILDoanhNghiepImpl.class);
+		 * dynamicQuery.add(RestrictionsFactoryUtil.like("masothue", keyword));
+		 * dynamicQuery.add(RestrictionsFactoryUtil.like("ten", keyword));
+		 * dynamicQuery.add(RestrictionsFactoryUtil.like("sogcn_dkkd",
+		 * keyword));
+		 * 
+		 * List<ILDoanhNghiep> results = new ArrayList<>();
+		 * results.addAll(ilDoanhNghiepPersistence.findWithDynamicQuery(
+		 * dynamicQuery, start, end)); return results;
+		 */
+	}
+
+	public long countByKeyword(String keyword) {
+
+		return ilDoanhNghiepPersistence.countAll();
+
+		/*
+		 * DynamicQuery dynamicQuery =
+		 * DynamicQueryFactoryUtil.forClass(ILDoanhNghiepImpl.class);
+		 * dynamicQuery.add(RestrictionsFactoryUtil.like("masothue", keyword));
+		 * dynamicQuery.add(RestrictionsFactoryUtil.like("ten", keyword));
+		 * dynamicQuery.add(RestrictionsFactoryUtil.like("sogcn_dkkd",
+		 * keyword));
+		 * 
+		 * return ilDoanhNghiepPersistence.countWithDynamicQuery(dynamicQuery);
+		 */
+	}
 }

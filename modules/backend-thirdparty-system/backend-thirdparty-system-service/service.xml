@@ -197,7 +197,8 @@
 		<column name="doituongsudung_id" type="long"></column>
 		<column name="trangthai" type="int"></column>
 		<column name="ngaytao" type="Date"></column>
-		<column name="ngaycap_taikhoan" type="Date"></column>
+		<column name="ngaycap_taikhoan" type="Date"/>
+		<column name="applicationNo" type="String"/>
 		
 		<order>
 			<order-column name="id" order-by="asc" />
@@ -205,6 +206,10 @@
 		
         <finder name="GT_ID" return-type="Collection">
             <finder-column name="id" comparator="&gt;"></finder-column>
+        </finder>
+        
+        <finder return-type="ILDoanhNghiep" name="APP_NO">
+        	<finder-column name="applicationNo"/>
         </finder>
         		
 	</entity>
