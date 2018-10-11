@@ -27,6 +27,7 @@ import org.opencps.thirdparty.system.messagequeue.model.MessageQueueInputModel;
 import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
 import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.CLVNonCommercialCrossBorderTransportPermit;
+import org.opencps.thirdparty.system.nsw.model.CLVNonCommercialCrossBorderTransportPermit.VehicleType;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
 import org.opencps.thirdparty.system.nsw.model.IssuingAuthority;
 import org.opencps.thirdparty.system.util.OutsideSystemConverter;
@@ -156,16 +157,19 @@ public class BGTVT0600052 {
 					if (formDataObj.has("Model")) {
 						clvNonCommercialCrossBorderTransportPermit.setModel(formDataObj.getString("Model"));
 					}
+					VehicleType vehicleType = new VehicleType();
 					
 					if (formDataObj.has("Truck")) {
-						clvNonCommercialCrossBorderTransportPermit.getVehicleType().setTruck(formDataObj.getString("Truck"));
+						vehicleType.setTruck(formDataObj.getString("Truck"));
 					}
 					if (formDataObj.has("Bus")) {
-						clvNonCommercialCrossBorderTransportPermit.getVehicleType().setBus(formDataObj.getString("Bus"));
+						vehicleType.setBus(formDataObj.getString("Bus"));
 					}
 					if (formDataObj.has("Others")) {
-						clvNonCommercialCrossBorderTransportPermit.getVehicleType().setOthers(formDataObj.getString("Others"));
+						vehicleType.setOthers(formDataObj.getString("Others"));
 					}
+					
+					clvNonCommercialCrossBorderTransportPermit.setVehicleType(vehicleType);
 					
 					if (formDataObj.has("VehicleColor")) {
 						clvNonCommercialCrossBorderTransportPermit.setVehicleColor(formDataObj.getString("VehicleColor"));
