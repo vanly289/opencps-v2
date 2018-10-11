@@ -21,12 +21,16 @@ import java.util.List;
 import org.opencps.thirdparty.system.exception.NoSuchILDoanhNghiepException;
 import org.opencps.thirdparty.system.model.ILDoanhNghiep;
 import org.opencps.thirdparty.system.model.impl.ILDoanhNghiepImpl;
+import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
 import org.opencps.thirdparty.system.service.base.ILDoanhNghiepLocalServiceBaseImpl;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -113,6 +117,71 @@ public class ILDoanhNghiepLocalServiceImpl extends ILDoanhNghiepLocalServiceBase
 
 		return ilDoanhNghiepPersistence.update(dn);
 	}
+	
+
+	public ILDoanhNghiep updateDoanhNghiep(String applicationNo, long id, String ten, String ten_viettat, String ten_tienganh, String sogcn_dkkd,
+			Date ngaycap_dkkd, Date ngayhethan_dkkd, String ten_donvicapphep, String masothue, String ten_nguoidaidien,
+			String chucvu_nguoidaidien, long gioitinh_nguoidaidien, String diachi_nguoidaidien, long diachi_ndd_tinh_id,
+			long diachi_ndd_huyen_id, long diachi_ndd_xa_id, String hktt_nguoidaidien, long dantoc_nguoidaidien_id,
+			long tongiao_nguoidaidien_id, long quoctich_nguoidaidien_id, Date ngaysinh_nguoidaidien,
+			String dienthoai_nguoidaidien, String giayto_canhan_nguoidaidien, Date giayto_ngaycap_nguoidaidien,
+			String giayto_noicap_nguoidaidien, long loaidoanhnghiep_id, String diachi_trusochinh,
+			long diachi_truso_tinh_id, long diachi_truso_huyen_id, long diachi_truso_xa_id, String dienthoai,
+			String fax, String email, String website, String von_dieule, String von_phapdinh, long user_id,
+			long doituongsudung_id, int trangthai, Date ngaytao, Date ngaycap_taikhoan) {
+		
+		ILDoanhNghiep dn = ilDoanhNghiepPersistence.fetchByAPP_NO(applicationNo);
+		
+		if (Validator.isNull(applicationNo)) {
+			dn = ilDoanhNghiepPersistence.create(CounterLocalServiceUtil.increment(ILDoanhNghiep.class.getName()));
+			dn.setApplicationNo(applicationNo);
+		} 
+		
+		dn.setTen(ten);
+		dn.setTen_viettat(ten_viettat);
+		dn.setTen_tienganh(ten_tienganh);
+		dn.setSogcn_dkkd(sogcn_dkkd);
+		dn.setNgaycap_dkkd(ngaycap_dkkd);
+		dn.setNgayhethan_dkkd(ngayhethan_dkkd);
+		dn.setTen_donvicapphep(ten_donvicapphep);
+		dn.setMasothue(masothue);
+		dn.setTen_nguoidaidien(ten_nguoidaidien);
+		dn.setChucvu_nguoidaidien(chucvu_nguoidaidien);
+		dn.setGioitinh_nguoidaidien(gioitinh_nguoidaidien);
+		dn.setDiachi_nguoidaidien(diachi_nguoidaidien);
+		dn.setDiachi_ndd_tinh_id(diachi_ndd_tinh_id);
+		dn.setDiachi_ndd_huyen_id(diachi_ndd_huyen_id);
+		dn.setDiachi_ndd_xa_id(diachi_ndd_xa_id);
+		dn.setHktt_nguoidaidien(hktt_nguoidaidien);
+		dn.setDantoc_nguoidaidien_id(dantoc_nguoidaidien_id);
+		dn.setTongiao_nguoidaidien_id(tongiao_nguoidaidien_id);
+		dn.setQuoctich_nguoidaidien_id(quoctich_nguoidaidien_id);
+		dn.setNgaysinh_nguoidaidien(ngaysinh_nguoidaidien);
+		dn.setDienthoai_nguoidaidien(dienthoai_nguoidaidien);
+		dn.setGiayto_canhan_nguoidaidien(giayto_canhan_nguoidaidien);
+		dn.setGiayto_ngaycap_nguoidaidien(giayto_ngaycap_nguoidaidien);
+		dn.setGiayto_noicap_nguoidaidien(giayto_noicap_nguoidaidien);
+		dn.setLoai_doanhnghiep_id(loaidoanhnghiep_id);
+		dn.setDiachi_trusochinh(diachi_trusochinh);
+		dn.setDiachi_truso_tinh_id(diachi_truso_tinh_id);
+		dn.setDiachi_truso_huyen_id(diachi_truso_huyen_id);
+		dn.setDiachi_truso_xa_id(diachi_truso_xa_id);
+		dn.setDienthoai(dienthoai);
+		dn.setFax(fax);
+		dn.setEmail(email);
+		dn.setWebsite(website);
+		dn.setVon_dieule(von_dieule);
+		dn.setVon_phapdinh(von_phapdinh);
+		dn.setUser_id(user_id);
+		dn.setDoituongsudung_id(doituongsudung_id);
+		dn.setTrangthai(trangthai);
+		dn.setNgaytao(ngaytao);
+		dn.setNgaycap_taikhoan(ngaycap_taikhoan);
+
+		return ilDoanhNghiepPersistence.update(dn);
+	}
+	
+	
 
 	public ILDoanhNghiep getLastDoanhNghiep() throws NoSuchILDoanhNghiepException {
 		return ilDoanhNghiepPersistence.findByGT_ID_Last(0l, null);

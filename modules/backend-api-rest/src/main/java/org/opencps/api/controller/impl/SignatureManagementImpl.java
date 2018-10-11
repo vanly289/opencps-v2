@@ -341,7 +341,9 @@ public class SignatureManagementImpl implements SignatureManagement{
 					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
 
 				} else {
-
+					
+					_log.error(e);
+					
 					error.setMessage("Internal Server Error");
 					error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
 					error.setDescription(e.getMessage());
