@@ -1,9 +1,12 @@
 package org.opencps.inland.rest.application;
 
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +25,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
 import org.opencps.auth.api.BackendAuth;
 import org.opencps.auth.api.BackendAuthImpl;
@@ -30,12 +35,9 @@ import org.opencps.auth.api.exception.UnauthorizationException;
 import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierFile;
-import org.opencps.dossiermgt.model.DossierTemplate;
 import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
-import org.opencps.dossiermgt.service.DossierTemplateLocalService;
-import org.opencps.dossiermgt.service.DossierTemplateLocalServiceUtil;
 import org.opencps.inland.api.inlandprinttemplate.model.ErrorMsg;
 import org.opencps.inland.api.inlandprinttemplate.model.InlandPrintTemplateInputModel;
 import org.opencps.inland.api.inlandprinttemplate.model.InlandPrintTemplateModel;
@@ -49,7 +51,13 @@ import org.opencps.inland.service.InlandPrintTemplateLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.portal.kernel.json.JSON;
+import com.fds.vr.business.action.ILCertificateActions;
+import com.fds.vr.business.action.impl.ILCertificateActionsImpl;
+import com.fds.vr.business.model.ILCertificate;
+import com.fds.vr.business.service.ILCertificateLocalServiceUtil;
+import com.fds.vr.ilcertificate.model.ILCertificateModel;
+import com.fds.vr.util.ILCertificateUtils;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -333,22 +341,60 @@ public class BackendInlandApiRestApplication extends Application {
 				DossierFile dossierFile = DossierFileLocalServiceUtil.getByDeliverableCode(deliverableCode);
 				
 				if (deliverable != null) {
-					String formData = deliverable.getFormData();
-					JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
-					String licenceType = StringPool.BLANK;
-					if (formDataObj.has("licenceType")) {
-						licenceType = formDataObj.getString("licenceType");
-					}
-					else {
-						
-					}
-					InlandPrintTemplate printTemplate = null;
+					JSONObject formData = JSONFactoryUtil.createJSONObject(deliverable.getFormData());
+					JSONObject formDataObj = null;
+					
 					try {
-						if (Validator.isNull(licenceType)) {
-							printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN(user.getUserId(), dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo());					
+						ILCertificate cert = ILCertificateLocalServiceUtil.fetchByLicenceNo(formData.getString("LicenceNo"));
+
+						if(cert != null) {
+							ILCertificateActions actions = new ILCertificateActionsImpl();
+							ILCertificate certInfo = actions.getDetailCert(cert.getId());
+							ILCertificateModel result = ILCertificateUtils.mappingToDetailCertificate(certInfo);
+							
+							_log.info(JSONFactoryUtil.looseSerialize(result));
+							
+							formDataObj = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(result).toString());
+						}
+
+					} catch (JSONException e) {
+						_log.error(e);
+
+					}
+					
+					if(formDataObj != null) {
+						String licenceType = StringPool.BLANK;
+						if (formDataObj.has("licenceType")) {
+							licenceType = formDataObj.getString("licenceType");
 						}
 						else {
-							printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN_LT(user.getUserId(), dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo(), licenceType);					
+							
+						}
+						InlandPrintTemplate printTemplate = null;
+						try {
+							if (Validator.isNull(licenceType)) {
+								printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN(user.getUserId(), dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo());					
+							}
+							else {
+								printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN_LT(user.getUserId(), dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo(), licenceType);					
+							}
+						}
+						catch (NoSuchInlandPrintTemplateException e) {
+							
+						}
+						
+						if(printTemplate == null) {
+							try {
+								if (Validator.isNull(licenceType)) {
+									printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN(0, dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo());					
+								}
+								else {
+									printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN_LT(0, dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo(), licenceType);					
+								}
+							}
+							catch (NoSuchInlandPrintTemplateException e) {
+								
+							}
 						}
 						
 						if (printTemplate != null) {
@@ -357,25 +403,60 @@ public class BackendInlandApiRestApplication extends Application {
 							Iterator<String> keys = formTemplateObj.keys();
 							while (keys.hasNext()) {
 								String key = keys.next();
-								if (formDataObj.has(key)) {
-									JSONObject obj = formDataObj.getJSONObject(key);
-									html += "<div style=\"z-index: 99; font-size: 14px; position:absolute; left :";
-									html += obj.getString("offsetX");
-									html += "px; top : " + obj.getString("offsetY") + "px\">";
-									html += "</div>";
+								
+								if (key.indexOf("array_") != -1) {
+									String[] newKeyArr = key.split("_");
+									int key1 = GetterUtil.getInteger(newKeyArr[1]);
+									String newKey = newKeyArr[2];
+									if (formDataObj.has(newKey)) {
+										String[] itemDataArr = formDataObj.getString(newKey).split("/");
+										if (itemDataArr.length > key1) {
+											html += "<div id=\"" + key + "\" style=\"z-index: 99; font-size: 14px; position:absolute; left :";
+											html += formTemplateObj.getJSONObject(key).getString("offsetX");
+											html += "px; top : " + formTemplateObj.getJSONObject(key).getString("offsetY") + "px\">";
+											html += itemDataArr[key1];
+											html += "</div>";
+										}
+									}
+								} else if (key.indexOf("_") != -1) {
+									String[] newKeyArr = key.split("_");
+									String newKey = newKeyArr[1];
+									if (formDataObj.has(newKey)) {
+										html += "<div id=\"" + key + "\" style=\"z-index: 99; font-size: 14px; position:absolute; left :";
+										html += formTemplateObj.getJSONObject(key).getString("offsetX");
+										html += "px; top : " + formTemplateObj.getJSONObject(key).getString("offsetY") + "px\">";
+										html += formDataObj.getString(newKey);
+										html += "</div>";
+									}
+								} else {
+									if (formTemplateObj.getJSONObject(key).has("value")) {
+										html += "<div id=\"" + key + "\" style=\"z-index: 99; font-size: 14px; position:absolute; left :";
+										html += formTemplateObj.getJSONObject(key).getString("offsetX");
+										html += "px; top : " + formTemplateObj.getJSONObject(key).getString("offsetY") + "px\">";
+										html += formTemplateObj.getJSONObject(key).getString("value");
+										html += "</div>";
+									} if (formDataObj.has(key)) {
+										html += "<div id=\"" + key + "\" style=\"z-index: 99; font-size: 14px; position:absolute; left :";
+										html += formTemplateObj.getJSONObject(key).getString("offsetX");
+										html += "px; top : " + formTemplateObj.getJSONObject(key).getString("offsetY") + "px\">";
+										html += formDataObj.getString(key);
+										html += "</div>";
+									}
 								}
 							}
+						} else {
+							_log.info("printTemplate is null");
 						}
-					}
-					catch (NoSuchInlandPrintTemplateException e) {
-						
+					} else {
+						_log.info("formData is null");
 					}
 				}
 			}
-			html += "</div></body></htm>";
+			html += "</div></body></html>";
 			
 			return Response.status(200).entity(html).build();
 		} catch (Exception e) {
+			_log.error(e);
 			ErrorMsg error = new ErrorMsg();
 
 			error.setMessage("Content not found!");
