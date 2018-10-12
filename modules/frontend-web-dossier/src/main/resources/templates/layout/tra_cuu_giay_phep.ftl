@@ -359,7 +359,7 @@
 							</td>
 						</template>
 					</v-data-table>
-					<v-pagination :length="pageGiayPhepVanTaiQuocTeTableLength" v-model="pageGiayPhepVanTaiQuocTeTable" class="pt-3"></v-pagination>
+					<v-pagination @input="changePageGPVTQT()" :length="pageGiayPhepVanTaiQuocTeTableLength" v-model="pageGiayPhepVanTaiQuocTeTable" class="pt-3"></v-pagination>
 				</div>
 				
 				<div v-if="stateTraCuuGiayPhep == 'giay_phep_lien_van'">
@@ -404,7 +404,7 @@
 							</td>
 						</template>
 					</v-data-table>
-					<v-pagination :length="pageGiayPhepLienVanTableLength" v-model="pageGiayPhepLienVanTable" class="pt-3"></v-pagination>
+					<v-pagination @input="changePageGPLV()" :length="pageGiayPhepLienVanTableLength" v-model="pageGiayPhepLienVanTable" class="pt-3"></v-pagination>
 				</div>
 
 				<div v-if="stateTraCuuGiayPhep == 'van_ban_chap_thuan'">
@@ -447,7 +447,7 @@
 							</td>
 						</template>
 					</v-data-table>
-					<v-pagination :length="pageChapThuanKhaiThacTableLength" v-model="pageChapThuanKhaiThacTable" class="pt-3"></v-pagination>
+					<v-pagination @input="changePageCTKT()" :length="pageChapThuanKhaiThacTableLength" v-model="pageChapThuanKhaiThacTable" class="pt-3"></v-pagination>
 				</div>
 			</v-flex>
 		</v-layout>

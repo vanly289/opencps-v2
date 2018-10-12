@@ -33,7 +33,9 @@
 </v-expansion-panel> -->
 	
 	<v-card class="pt-2">
-	  	<div class="text-bold primary--text pl-2 pb-2">Thông tin chung hồ sơ</div>
+	  	<div class="text-bold primary--text pl-2 pb-2">
+	  		Thông tin chung hồ sơ: <span >{{detailModel.govAgencyName}} xử lý</span>
+	  	</div>
 		<v-layout wrap class="px-4 pb-3">
 			<v-flex xs12 sm4>
 				<div class="pb-1">
@@ -49,7 +51,7 @@
 						Mã tiếp nhận: 
 					</span>
 					<span class="text-bold">
-						{{ detailModel.referenceUid }}
+						{{ detailModel.dossierNo }}
 					</span>
 					
 				</div>
@@ -58,7 +60,7 @@
 						Mã hồ sơ: 
 					</span>
 					<span class="text-bold">
-						{{ detailModel.dossierNo }}
+						{{ detailModel.referenceUid }}
 					</span>
 				</div>
 
@@ -244,7 +246,7 @@
 					</v-menu>
 					</v-tabs-bar>
 				</v-tabs>
-				<div id="printGP" style="display: none;">
+				<div id="printGP" style="display: block; width: 100%;">
 					
 				</div>
 				<div v-if="showPrintable" class="px-4 py-3" style="background-color: #fff;">
@@ -256,6 +258,9 @@
 								</th>
 								<th class="text-xs-center px-2 py-2" style="cursor: pointer;">
 									Chọn
+								</th>
+								<th class="text-xs-center px-2 py-2">
+									Biển số xe
 								</th>
 								<th class="text-xs-center px-2 py-2">
 									Số khung
@@ -274,16 +279,19 @@
 									<span>{{index + 1}}</span>
 								</td>
 								<td class="text-xs-center py-2">
-									<v-checkbox class="mt-2" style="max-width: 40px; margin: 0 auto;" v-model="selectedPrints" label="" :value="deliverableCode"></v-checkbox>
+									<v-checkbox class="mt-2" style="max-width: 40px; margin: 0 auto;" v-model="selectedPrints" label="" :value="item.deliverableCode"></v-checkbox>
 								</td>
 								<td class="text-xs-center py-2">
-									{{item['so_khung']}}
+									{{item.formData.RegistrationNumber}}
 								</td>
 								<td class="text-xs-center py-2">
-									{{item['so_may']}}
+									{{item.formData.ChassisNumber}}
 								</td>
 								<td class="text-xs-center py-2">
-									{{item['mau_son']}}
+									{{item.formData.EngineNumber}}
+								</td>
+								<td class="text-xs-center py-2">
+									{{item.formData.VehicleColor}}
 								</td>
 							</tr>
 						</tbody>
@@ -591,8 +599,8 @@
 	:max-width="maxWidthDialog"
 	style="overflow: hidden;"
 	transition="dialog-transition">
-	<v-card>
-		<v-card-title class="px-0 py-0" style="height: 50px;">
+	<v-card v-show="!actionsSubmitLoading">
+		<v-card-title class="px-0 py-0">
 			<v-toolbar dark color="primary" height="40">
 				<div class="text-bold" v-if="stepModel !== null && stepModel !== undefined">{{stepModel['actionName']}}</div>
 				<v-spacer></v-spacer>
@@ -627,6 +635,9 @@
 				</div> 
 			</div>
 			<div v-else>
+				
+				<#-- <div style="margin-top: 178px;">
+				</div> -->
 				<v-card-title primary-title class="mx-2 pb-0 px-0 pt-0" v-if="stepModel.createFiles && !checkHasEform(stepModel.createFiles)">
 					<v-layout wrap> 
 						<v-flex xs12 id="labelTPKQ">
@@ -641,7 +652,7 @@
 							<v-btn flat icon light class="small-btn-x mx-0 my-0" v-on:click.native.prevent="singleFileUpload(item)" v-if="!disableUploadAndDel">
 								<v-icon>file_upload</v-icon>
 							</v-btn>
-							<v-btn color="primary" fab small dark class="small-btn-x mx-0 my-0" @click="viewDossierFileVersionDialog(item, i)" :id="'btn-count-partno'+item.partNo">
+							<v-btn color="primary" fab small dark class="small-btn-x mx-0 my-0" @click="viewDossierFileVersionDialog2(item, i)" :id="'btn-count-partno'+item.partNo">
 								{{item.counter}}
 							</v-btn>
 
@@ -679,6 +690,93 @@
 				</div>
 
 				<div v-if="stepModel.configNote">
+					<v-card-title primary-title class="mx-2 py-0 px-0 pt-0">
+						<v-layout wrap> 
+							<v-flex xs12 class="mb-3" v-if="stepModel.allowAssignUser">
+								<div jx-bind="processAssignUserId"></div>
+							</v-flex>
+							<v-flex xs12>
+								<span v-if="stepModel.configNote.displayNote">{{ stepModel.configNote.titleNote }}</span>
+								<v-text-field
+								name="processActionNote"
+								id="processActionNote"
+								multi-line
+								rows="2"
+								v-if="stepModel.configNote.displayNote"></v-text-field>
+							</v-flex>
+						</v-layout>
+					</v-card-title>
+					<v-card-actions class="text-xs-right mt-2">
+						<v-btn color="primary" :id="'btn-save-formalpaca'+item.partNo"
+						v-for="(item, index) in stepModel.createFiles"
+						v-if="stepModel.hasOwnProperty('createFiles') && item.eform"
+						:referenceUid="item.referenceUid"
+						:dossierId="detailModel.dossierId"
+						class="saveForm"
+						:loading="loadingAlpacajsForm"
+						:disabled="loadingAlpacajsForm"
+						small
+						v-on:click.native.prevent.stop="submitAlpacajsForm(item)"> Ghi lại </v-btn>
+
+						<v-btn color="primary"
+						v-for="(item, index) in stepModel.createFiles"
+						v-if="stepModel.hasOwnProperty('createFiles') && item.eform"
+						:loading="loadingAlpacajsForm"
+						:disabled="loadingAlpacajsForm"
+						small
+						v-on:click.native.prevent.stop="deleteDossierPDF(item)"> Hủy biên bản </v-btn>
+
+						<v-btn small color="primary" class="px-0" :loading="actionsSubmitLoading" :disabled="actionsSubmitLoading" v-if="stepModel.configNote.confirmButton"
+						@click.prevent.stop="postNextActions2(stepModel)">{{ stepModel.configNote.confirmButton }}</v-btn>
+
+						<v-btn small :loading="actionsSubmitLoading" class="px-0" @click.prevent.stop="refreshProcess()" v-if="stepModel.configNote.cancelButton">{{ stepModel.configNote.cancelButton }}</v-btn>
+					</v-card-actions>
+				</div>
+
+				<div v-else>
+					<v-card-title primary-title class="mx-2 py-0 px-0 pt-0">
+						<v-layout wrap> 
+							<v-flex xs12 class="mb-3" v-if="stepModel.allowAssignUser">
+								<div jx-bind="processAssignUserId"></div>
+							</v-flex>
+							<v-flex xs12>
+								Nhập ý kiến {{stepModel.actionName}}:
+								<v-text-field
+								name="processActionNote"
+								id="processActionNote"
+								multi-line
+								rows="2"
+								></v-text-field>
+							</v-flex>
+						</v-layout>
+					</v-card-title>
+
+					<v-card-actions class="text-xs-right mt-2">
+						<v-btn color="primary" :id="'btn-save-formalpaca'+item.partNo"
+						v-for="(item, index) in stepModel.createFiles"
+						v-if="stepModel.hasOwnProperty('createFiles') && item.eform"
+						:referenceUid="item.referenceUid"
+						:dossierId="detailModel.dossierId"
+						class="saveForm"
+						:loading="loadingAlpacajsForm"
+						:disabled="loadingAlpacajsForm"
+						small
+						v-on:click.native.prevent.stop="submitAlpacajsForm(item)"> Ghi lại </v-btn>
+
+						<v-btn color="primary"
+						v-for="(item, index) in stepModel.createFiles"
+						v-if="stepModel.hasOwnProperty('createFiles') && item.eform"
+						:loading="loadingAlpacajsForm"
+						:disabled="loadingAlpacajsForm"
+						small
+						v-on:click.native.prevent.stop="deleteDossierPDF(item)"> Hủy biên bản </v-btn>
+
+						<v-btn small color="primary" class="px-0" :loading="actionsSubmitLoading" :disabled="actionsSubmitLoading"
+						@click.prevent.stop="postNextActions2(stepModel)">Xác nhận</v-btn>
+					</v-card-actions>
+				</div>
+
+				<#-- <div v-if="stepModel.configNote">
 					<v-card-title primary-title class="mx-2 py-0 px-0 pt-0">
 						<v-layout wrap> 
 							<v-flex xs12 class="mb-3" v-if="stepModel.allowAssignUser">
@@ -763,13 +861,38 @@
 						<v-btn small color="primary" class="px-0" :loading="actionsSubmitLoading" :disabled="actionsSubmitLoading"
 						@click.prevent.stop="postNextActions2(stepModel)">Xác nhận</v-btn>
 					</v-card-actions>
-				</div>
+				</div> -->
 
 			</div>
 		</v-card-text>
 	</v-card>
+	<v-card v-show="actionsSubmitLoading">
+		<v-card-title class="px-0 py-0" style="height: 50px;">
+			<v-toolbar dark color="primary" height="40">
+				<div class="text-bold" v-if="stepModel !== null && stepModel !== undefined">{{stepModel['actionName']}}</div>
+				<v-spacer></v-spacer>
+				<v-toolbar-items>
+					<v-btn icon dark @click.native="dialogThuLyHoSo = false">
+						<v-icon>close</v-icon>
+					</v-btn>
+				</v-toolbar-items>
+			</v-toolbar>
+		</v-card-title>
+		<v-card-text class="text-xs-center" style="width: 100%; height: 400px;">
+			 <v-progress-circular indeterminate v-bind:size="100" color="purple"></v-progress-circular>
+		</v-card-text>
+	</v-card>
 </v-dialog> 
 </div>
+
+<style>
+	@media print {
+		* {
+			-webkit-print-color-adjust: exact !important; /*Chrome, Safari */
+			color-adjust: exact !important;  /*Firefox*/
+		}
+	}
+</style>
 			
 <script type="text/javascript">
 		

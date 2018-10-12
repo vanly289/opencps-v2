@@ -136,6 +136,20 @@
                 ></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 class="text-xs-right">
+                <v-select
+                class="ml-3"
+                :items="govAgencysItems"
+                v-model="govAgencySearch"
+                item-text="itemName"
+                item-value="itemCode"
+                label="Cơ quan"
+                clearable
+                ></v-select>
+              </v-flex>
+              <v-flex xs12 sm6>
+                
+              </v-flex>
+              <v-flex xs12 sm6 class="text-xs-right">
                 <v-btn color="primary" small class="mt-3" @click.native="searchAdvanceDossier">Tìm kiếm</v-btn>
               </v-flex>
             </v-layout>
