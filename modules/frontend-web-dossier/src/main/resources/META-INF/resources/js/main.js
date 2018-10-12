@@ -1128,12 +1128,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								console.log("Div id: " + id);
 								var xPos = $(this).position().left;
 								var yPos = $(this).position().top;
+
 								formTemplate[id] = {
 									offsetX: xPos,
 									offsetY: yPos,
-									value: $(this).innerText
+									value: $(this).text()
 								};
 							});
+							console.log(formTemplate);
 							var vm = this;
 							var url ="/o/il/v2/inland";
 							
