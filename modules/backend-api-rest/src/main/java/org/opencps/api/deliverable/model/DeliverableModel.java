@@ -68,6 +68,7 @@ import javax.xml.bind.annotation.XmlType;
     "expireDate",
     "revalidate",
     "deliverableState",
+    "formData",
 })
 @XmlRootElement(name = "DeliverableModel")
 public class DeliverableModel {
@@ -88,6 +89,7 @@ public class DeliverableModel {
     protected String expireDate;
     protected String revalidate;
     protected String deliverableState;
+    protected String formData;
 
     /**
      * Gets the value of the createDate property.
@@ -496,6 +498,28 @@ public class DeliverableModel {
 	public void setDeliverableState(String deliverableState) {
 		this.deliverableState = deliverableState;
 	}
+	
+	/**
+     * Gets the value of the formData property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+	public String getFormData() {
+		return formData;
+	}
 
-
+	/**
+     * Sets the value of the formData property.
+     * 
+     * @param deliverableState
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+	public void setFormData(String formData) {
+		this.formData = formData;
+	}
 }

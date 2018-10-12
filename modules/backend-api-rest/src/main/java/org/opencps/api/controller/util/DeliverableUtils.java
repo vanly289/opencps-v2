@@ -66,6 +66,8 @@ public class DeliverableUtils {
 					? APIDateTimeUtils.convertDateToString(revalidate, APIDateTimeUtils._TIMESTAMP)
 					: StringPool.BLANK);
 			
+			model.setFormData(db.getFormData());
+			
 			data.add(model);
 		}
 
