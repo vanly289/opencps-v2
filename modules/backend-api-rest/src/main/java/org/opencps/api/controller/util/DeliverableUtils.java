@@ -67,7 +67,6 @@ public class DeliverableUtils {
 					: StringPool.BLANK);
 			
 			model.setFormData(db.getFormData());
-			
 			data.add(model);
 		}
 

@@ -331,7 +331,6 @@ public class BackendInlandApiRestApplication extends Application {
 			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
-			
 			Dossier dossier = DossierLocalServiceUtil.fetchDossier(GetterUtil.getLong(dossierId));
 			String html = "<html><body><div id='printTraCuu'>";
 			
