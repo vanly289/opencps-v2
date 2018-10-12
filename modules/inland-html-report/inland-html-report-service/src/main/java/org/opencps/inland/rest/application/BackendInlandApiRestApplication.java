@@ -341,11 +341,11 @@ public class BackendInlandApiRestApplication extends Application {
 				DossierFile dossierFile = DossierFileLocalServiceUtil.getByDeliverableCode(deliverableCode);
 				
 				if (deliverable != null) {
-					//String formData = deliverable.getFormData();
+					JSONObject formData = JSONFactoryUtil.createJSONObject(deliverable.getFormData());
 					JSONObject formDataObj = null;
 					
 					try {
-						ILCertificate cert = ILCertificateLocalServiceUtil.fetchByLicenceNo(deliverable.getDeliverableCode());
+						ILCertificate cert = ILCertificateLocalServiceUtil.fetchByLicenceNo(formData.getString("LicenceNo"));
 
 						if(cert != null) {
 							ILCertificateActions actions = new ILCertificateActionsImpl();
