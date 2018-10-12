@@ -20,6 +20,9 @@
 								</v-list-tile-action>
 							</v-list-tile>
 						</v-list>
+						<#-- <div style="width: 250px; height: 220px; background: #fff;" class="center-all" v-else>
+							<v-progress-circular indeterminate v-bind:size="20" color="purple"></v-progress-circular>
+						</div> -->
 					</v-menu>
 					<span v-else>{{tab.text}}</span>
 				</v-tabs-item>
