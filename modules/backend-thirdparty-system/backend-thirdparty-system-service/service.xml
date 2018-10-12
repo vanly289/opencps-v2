@@ -197,7 +197,8 @@
 		<column name="doituongsudung_id" type="long"></column>
 		<column name="trangthai" type="int"></column>
 		<column name="ngaytao" type="Date"></column>
-		<column name="ngaycap_taikhoan" type="Date"></column>
+		<column name="ngaycap_taikhoan" type="Date"/>
+		<column name="applicationNo" type="String"/>
 		
 		<order>
 			<order-column name="id" order-by="asc" />
@@ -205,6 +206,10 @@
 		
         <finder name="GT_ID" return-type="Collection">
             <finder-column name="id" comparator="&gt;"></finder-column>
+        </finder>
+        
+        <finder return-type="ILDoanhNghiep" name="APP_NO">
+        	<finder-column name="applicationNo"/>
         </finder>
         		
 	</entity>
@@ -358,4 +363,76 @@
         </finder>
 		
 	</entity>
+	
+	<entity local-service="true" name="ILGiayPhepVanTaiQuocTe" remote-service="false" uuid="false" table="nsw_giayphepvantai">
+		<!-- PK fields -->
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="coquanquanly_id" type="long"/>
+		<column name="ten_coquancapphep" type="String"/>
+		<column name="doanhnghiep_id" type="long"/>
+		<column name="ten_doanhnghiep" type="String"/>
+		<column name="diachi_doanhnghiep" type="String"/>
+		<column name="dienthoai_doanhnghiep" type="String"/>
+		<column name="fax_doanhnghiep" type="String"/>
+		<column name="email_doanhnghiep" type="String"/>
+		<column name="website_doanhnghiep" type="String"/>
+		<column name="ngay_ky" type="Date"/>
+		<column name="ten_nguoiky" type="String"/>
+		<column name="nguoi_ky_id" type="long"/>
+		<column name="url_file_gpvt" type="String"/>
+		<column name="sogiayphep" type="String"/>
+		<column name="lancapphep" type="int"/>
+		<column name="ngaycap" type="Date"/>
+		<column name="nguoicap" type="String"/>
+		<column name="ngayhethan" type="Date"/>
+		<column name="ngay_thuhoi" type="Date"/>
+		<column name="lydo_thuhoi" type="String"/>
+		<column name="ghichu" type="String"/>
+		<column name="trangthai" type="int"/>
+		<column name="quocgia_id" type="long"/>
+
+		<finder name="PT_ID" return-type="Collection">
+            <finder-column name="doanhnghiep_id" />
+        </finder>
+		
+	</entity>
+	
+	<entity local-service="true" name="ILGiayPhepLienVan" remote-service="false" uuid="false" table="nsw_giaypheplienvan">
+		<!-- PK fields -->
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="so_phuhieu_lienvan" type="String"/>
+		<column name="lancapphep" type="int"/>
+		<column name="phuongtien_id" type="long"/>
+		<column name="bienkiemsoat" type="String"/>
+		<column name="succhua" type="int"/>
+		<column name="namsanxuat" type="int"/>
+		<column name="nhanhieu_id" type="long"/>
+		<column name="sokhung" type="String"/>
+		<column name="somay" type="String"/>
+		<column name="mauson_id" type="long"/>
+		<column name="loaihinh_id" type="long"/>
+		<column name="cuakhau_id" type="long"/>
+		<column name="denghi_captu" type="Date"/>
+		<column name="denghi_capden" type="Date"/>
+		<column name="ngaycap" type="Date"/>
+		<column name="nguoicap" type="String"/>
+		<column name="ngayhethan" type="Date"/>
+		<column name="ngaythuhoi" type="Date"/>
+		<column name="lydo_thuhoi" type="String"/>
+		<column name="ngayky" type="Date"/>
+		<column name="nguoiky" type="String"/>
+		<column name="nguoi_ky_id" type="long"/>
+		<column name="ghichu" type="String"/>
+		<column name="url_file_gplv" type="String"/>
+		<column name="trangthai" type="int"/>
+		<column name="quocgia_id" type="long"/>
+		<column name="tuyen_id" type="long"/>
+		<column name="coquanquanly_id" type="long"/>
+
+		<finder name="PT_ID" return-type="Collection">
+            <finder-column name="phuongtien_id" />
+        </finder>
+		
+	</entity>
+	
 </service-builder>

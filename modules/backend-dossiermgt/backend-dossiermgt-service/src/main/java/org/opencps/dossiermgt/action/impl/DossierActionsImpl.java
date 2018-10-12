@@ -3138,7 +3138,7 @@ public class DossierActionsImpl implements DossierActions {
 		}
 		List<Deliverable> lstDeliverables = new ArrayList<>();
 		
-		List<DossierFile> lstFiles = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT(dossier.getDossierId(), dossier.getDossierTemplateNo(), 2, false);
+		List<DossierFile> lstFiles = DossierFileLocalServiceUtil.getDossierFilesByD_DP(dossier.getDossierId(), 2);
 		for (DossierFile df : lstFiles) {
 			if (Validator.isNotNull(df.getDeliverableCode())) {
 				Deliverable deliverable = DeliverableLocalServiceUtil.getByCode(df.getDeliverableCode());

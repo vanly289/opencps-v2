@@ -467,9 +467,9 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 		}
 		return false;
 	}
-	
+
 	private Log _log2 = LogFactoryUtil.getLog(ProcessPluginManagementImpl.class);
-	
+
 	private String _getFormData(long groupId, String fileTemplateNo, long dossierId, boolean autoRun,
 			String dossierTemplateNo, boolean original, ServiceContext context) {
 
@@ -483,7 +483,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 			List<DossierFile> lstDossierFiles = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO(dossierId,
 					fileTemplateNo, false);
 
-			List<DossierPart> lstParts = DossierPartLocalServiceUtil.getByTemplateNo(groupId, dossier.getDossierTemplateNo());
+			List<DossierPart> lstParts = DossierPartLocalServiceUtil.getByTemplateNo(groupId,
+					dossier.getDossierTemplateNo());
 			DossierPart dossierPart = null;
 
 			for (DossierPart part : lstParts) {
@@ -494,22 +495,23 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 			}
 
 			formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
-			
+
 			_log.info(StringUtil.shorten(formData, 300));
 
 			DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
-			
+
 			if (Validator.isNotNull(dossierPart.getDeliverableType())) {
-				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
+				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(groupId,
+						dossierPart.getDeliverableType());
 				if (dlt != null) {
-					
+
 					_log.info("DeliverableType is NOT NULL");
 
 					String allowKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
 					String acceptedKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ALLOW, dlt);
-					
+
 					if (original) {
-						
+
 						_log.info("original is true");
 
 						String mappingData = dlt.getMappingData();
@@ -519,89 +521,92 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 							if (Validator.isNotNull(dossierFile)) {
 								formData = dossierFile.getFormData();
 							}
-							_log.info("DeliverableTypesTerm.DELIVERABLES_KEY : " + DeliverableTypesTerm.DELIVERABLES_KEY);
+							_log.info(
+									"DeliverableTypesTerm.DELIVERABLES_KEY : " + DeliverableTypesTerm.DELIVERABLES_KEY);
 
 							_log.info("mappingDataObj : " + mappingDataObj);
-							
+
 							_log.info("deliverables : " + deliverables);
-							
+
 							JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 							JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
-														
+
 							if (Validator.isNull(deliverables)) {
 								_log.info("deliverables is null");
-							}
-							else {
+							} else {
 								_log.info("deliverables is NOT null");
 
 								if (formDataObj.has(deliverables)) {
 									_log.info("formDataObj has deliverables");
 
-									JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
+									JSONArray deliverablesArr = JSONFactoryUtil
+											.createJSONArray(formDataObj.getString(deliverables));
 
 									for (int i = 0; i < deliverablesArr.length(); i++) {
 
 										JSONObject deliverableObj = deliverablesArr.getJSONObject(i);
-										
+
 										if (deliverableObj.has(acceptedKey) || deliverableObj.has(allowKey)) {
-											String value = (deliverableObj.has(acceptedKey) ? deliverableObj.getString(acceptedKey) : deliverableObj.getString(allowKey));
+											String value = (deliverableObj.has(acceptedKey)
+													? deliverableObj.getString(acceptedKey)
+													: deliverableObj.getString(allowKey));
 											if ("1".equals(value)) {
 												JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
 
 												Iterator<?> keys = formDataObj.keys();
 
-												while( keys.hasNext() ) {
-												    String key = (String)keys.next();
-												    if (!key.equals(deliverables)) {
-												    	newFormDataObj.put(key, formDataObj.get(key));
-												    }
-												}							
-												
+												while (keys.hasNext()) {
+													String key = (String) keys.next();
+													if (!key.equals(deliverables)) {
+														newFormDataObj.put(key, formDataObj.get(key));
+													}
+												}
+
 												keys = deliverableObj.keys();
 
-												while( keys.hasNext() ) {
-												    String key = (String)keys.next();
-												    newFormDataObj.put(key, deliverableObj.get(key));
-												}																	
-												
+												while (keys.hasNext()) {
+													String key = (String) keys.next();
+													newFormDataObj.put(key, deliverableObj.get(key));
+												}
+
 												deliverableListArr.put(newFormDataObj);
 											}
 										}
 									}
 								}
 								formData = deliverableListArr.toJSONString();
-							}							
-						}
-						else {
-							
+							}
+						} else {
+
 						}
 
-			} else {
-				
-				_log.info("DeliverableType is NULL *****");
+					} else {
 
-				String employeeName = StringPool.BLANK;
-				try {
-					Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(groupId, context.getUserId());
-					employeeName = employee.getFullName();
-				}
-				catch (Exception e) {
-					// TODO: handle exception
-					_log.info(e.getMessage());
-				}
-		
-				String mappingData = dlt.getMappingData();
+						_log.info("DeliverableType is NULL *****");
+
+						String employeeName = StringPool.BLANK;
+						try {
+							Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(groupId,
+									context.getUserId());
+							employeeName = employee.getFullName();
+						} catch (Exception e) {
+							// TODO: handle exception
+							_log.info(e.getMessage());
+						}
+
+						String mappingData = dlt.getMappingData();
 						JSONObject mappingDataObj = JSONFactoryUtil.createJSONObject(mappingData);
 						if (mappingDataObj.has(DeliverableTypesTerm.DELIVERABLES_KEY)) {
 							String deliverables = mappingDataObj.getString(DeliverableTypesTerm.DELIVERABLES_KEY);
-							String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dlt);
+							String deliverableCodeKey = dtAction
+									.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dlt);
 							String signNameKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_SIGNNAME, dlt);
-							
+
 							if (Validator.isNull(deliverables)) {
 								_log.info("deliverables is NULL *****");
 
 								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
-								
+
 								formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
 								formData = formDataObj.toJSONString();
 								DossierFileActions actions = new DossierFileActionsImpl();
@@ -610,12 +615,13 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 									if (autoRun) {
 										// create DossierFile
 
-										dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
-												dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
-												StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
+										dossierFile = actions.addDossierFile(groupId, dossierId,
+												PortalUUIDUtil.generate(), dossierTemplateNo, dossierPart.getPartNo(),
+												fileTemplateNo, dossierPart.getPartName(), StringPool.BLANK, 0L, null,
+												StringPool.BLANK, String.valueOf(false), context);
 
-										actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
-												context);
+										actions.updateDossierFileFormData(groupId, dossierId,
+												dossierFile.getReferenceUid(), formData, context);
 
 									} else {
 										// add temp File
@@ -623,71 +629,78 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 								} else {
 									// formData = dossierFile.getFormData();
-									actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
-											context);
+									actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(),
+											formData, context);
 								}
-							}
-							else {
-								
+							} else {
+
 								_log.info("deliverables is NOT NULL *****");
 
 								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 								DossierFileActions actions = new DossierFileActionsImpl();
-										
-								JSONArray deliverablesArr = JSONFactoryUtil.createJSONArray(formDataObj.getString(deliverables));
+
+								JSONArray deliverablesArr = JSONFactoryUtil
+										.createJSONArray(formDataObj.getString(deliverables));
 								JSONArray deliverableListArr = JSONFactoryUtil.createJSONArray();
-								
+
 								for (int i = 0; i < deliverablesArr.length(); i++) {
 
 									JSONObject deliverableObj = deliverablesArr.getJSONObject(i);
-									
+
 									if (deliverableObj.has(acceptedKey) || deliverableObj.has(allowKey)) {
-										String value = (deliverableObj.has(acceptedKey) ? deliverableObj.getString(acceptedKey) : deliverableObj.getString(allowKey));
+										String value = (deliverableObj.has(acceptedKey)
+												? deliverableObj.getString(acceptedKey)
+												: deliverableObj.getString(allowKey));
 										if ("1".equals(value)) {
 											JSONObject newFormDataObj = JSONFactoryUtil.createJSONObject();
 
 											Iterator<?> keys = formDataObj.keys();
 
-											while( keys.hasNext() ) {
-											    String key = (String)keys.next();
-											    if (!key.equals(deliverables)) {
-											    	newFormDataObj.put(key, formDataObj.get(key));
-											    }
-											}							
-											
+											while (keys.hasNext()) {
+												String key = (String) keys.next();
+												if (!key.equals(deliverables)) {
+													newFormDataObj.put(key, formDataObj.get(key));
+												}
+											}
+
 											keys = deliverableObj.keys();
 
-											while( keys.hasNext() ) {
-											    String key = (String)keys.next();
-											    newFormDataObj.put(key, deliverableObj.get(key));
-											}																	
-											
+											while (keys.hasNext()) {
+												String key = (String) keys.next();
+												newFormDataObj.put(key, deliverableObj.get(key));
+											}
+
 											deliverableListArr.put(newFormDataObj);
 											boolean flag = false;
 											DossierFile foundFile = null;
 											for (DossierFile tmpFile : lstDossierFiles) {
-												if (equalsFormData(tmpFile.getFormData(), newFormDataObj.toJSONString())) {
+												if (equalsFormData(tmpFile.getFormData(),
+														newFormDataObj.toJSONString())) {
 													flag = true;
 													foundFile = tmpFile;
 													break;
 												}
 											}
-											
+
 											if (!flag) {
 
 												if (autoRun) {
 													// create DossierFile
 
-													dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
-															dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
-															StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
+													dossierFile = actions.addDossierFile(groupId, dossierId,
+															PortalUUIDUtil.generate(), dossierTemplateNo,
+															dossierPart.getPartNo(), fileTemplateNo,
+															dossierPart.getPartName(), StringPool.BLANK, 0L, null,
+															StringPool.BLANK, String.valueOf(false), context);
 
 													if (Validator.isNotNull(dossierFile.getDeliverableCode())) {
-														newFormDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());														
+														newFormDataObj.put(deliverableCodeKey,
+																dossierFile.getDeliverableCode());
 													}
 
-													actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), newFormDataObj.toJSONString(),
-															context);
+													actions.updateDossierFileFormData(groupId, dossierId,
+															dossierFile.getReferenceUid(),
+															newFormDataObj.toJSONString(), context);
 
 												} else {
 													// add temp File
@@ -697,10 +710,12 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 											} else {
 												if (autoRun) {
 													if (Validator.isNotNull(foundFile.getDeliverableCode())) {
-														newFormDataObj.put(deliverableCodeKey, foundFile.getDeliverableCode());														
+														newFormDataObj.put(deliverableCodeKey,
+																foundFile.getDeliverableCode());
 													}
 
-													actions.updateDossierFileFormData(groupId, dossierId, foundFile.getReferenceUid(), newFormDataObj.toJSONString(),
+													actions.updateDossierFileFormData(groupId, dossierId,
+															foundFile.getReferenceUid(), newFormDataObj.toJSONString(),
 															context);
 
 												} else {
@@ -709,17 +724,17 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 												}
 
 											}
-											
+
 										}
 									}
 								}
 
-//								formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
-//								formDataObj.put(signNameKey, employeeName);
+								// formDataObj.put(deliverableCodeKey,
+								// dossierFile.getDeliverableCode());
+								// formDataObj.put(signNameKey, employeeName);
 								formData = deliverableListArr.toJSONString();
 							}
 						}
-						
 
 					}
 				}
@@ -728,6 +743,48 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 		} catch (Exception e) {
 			e.printStackTrace();
 			_log.info("Cant get formdata with fileTemplateNo_" + fileTemplateNo);
+		}
+
+		try {
+
+			JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
+
+			JSONArray attachedFileList = formDataObj.getJSONArray("AttachedFile");
+
+			if (Validator.isNotNull(attachedFileList) && attachedFileList.length() != 0) {
+
+				_log.info("****attachedFileList.length() : " + attachedFileList.length());
+
+				for (int i = 0; i < attachedFileList.length(); i++) {
+					_log.info("****i : " + i);
+
+					JSONObject elm = attachedFileList.getJSONObject(i);
+
+					_log.info("elm VALUE : " + elm.toJSONString());
+
+					String maTPHoSo = elm.getString("AttachedTypeCode");
+
+					if (Validator.isNotNull(maTPHoSo)) {
+						DossierPart dossierPartElm = DossierPartLocalServiceUtil.getByFileTemplateNo(groupId, maTPHoSo);
+
+						if (Validator.isNotNull(dossierPartElm)) {
+							elm.put("FullFileName", dossierPartElm.getPartName());
+							elm.put("AttachedTypeName", dossierPartElm.getPartName());
+						}
+					}
+
+					// attachedFileList.put(elm);
+				}
+
+			} else {
+				_log.info("attachedFileList IS NULL : ");
+
+			}
+
+			formData = formDataObj.toJSONString();
+
+		} catch (Exception e) {
+			_log.error(e);
 		}
 
 		return formData;
@@ -742,7 +799,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 			Dossier dossier = DossierLocalServiceUtil.getDossier(dossierId);
 
-			List<DossierPart> lstParts = DossierPartLocalServiceUtil.getByTemplateNo(dossier.getGroupId(), dossier.getDossierTemplateNo());
+			List<DossierPart> lstParts = DossierPartLocalServiceUtil.getByTemplateNo(dossier.getGroupId(),
+					dossier.getDossierTemplateNo());
 			DossierPart part = null;
 			for (DossierPart temppart : lstParts) {
 				if (temppart.getFileTemplateNo().equals(fileTemplateNo)) {
@@ -750,14 +808,16 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 					break;
 				}
 			}
-//			DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossier.getGroupId(), fileTemplateNo);
+			// DossierPart part =
+			// DossierPartLocalServiceUtil.getByFileTemplateNo(dossier.getGroupId(),
+			// fileTemplateNo);
 			if (part != null) {
-				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(part.getGroupId(), part.getDeliverableType());
+				DeliverableType dlt = DeliverableTypeLocalServiceUtil.getByCode(part.getGroupId(),
+						part.getDeliverableType());
 				if (dlt != null) {
 					formData = dlt.getFormReport();
-				}
-				else {
-					formData = part.getFormReport();									
+				} else {
+					formData = part.getFormReport();
 				}
 			}
 
@@ -855,11 +915,11 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 					if (Validator.isNotNull(dossierFile)) {
 						dossierFileId = dossierFile.getDossierFileId();
 					}
-					
+
 					if (Validator.isNotNull(dossierPart)) {
 						partNo = dossierPart.getPartNo();
 					}
-					
+
 					result.put("partNo", partNo);
 					result.put("dossierFileId", dossierFileId);
 					result.put("formReport", formReport);
@@ -906,6 +966,169 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 				}
 			}
 		}
+	}
+
+	@Override
+	public Response getPreviewHtmlInstance(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String id) {
+
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		String partNo = GetterUtil.getString(header.getHeaderString("partNo"));
+
+		try {
+
+			Dossier dossier = getDossier(id, groupId);
+
+			if (Validator.isNotNull(dossier)) {
+				JSONObject result = JSONFactoryUtil.createJSONObject();
+
+				DossierPart dossierPart = DossierPartLocalServiceUtil.fetchByTemplatePartNo(groupId,
+						dossier.getDossierTemplateNo(), partNo);
+
+				DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(
+						dossier.getDossierId(), dossierPart.getFileTemplateNo(), false,
+						new DossierFileComparator(false, "createDate", Date.class));
+
+				long dossierFileId = 0;
+
+				if (Validator.isNotNull(dossierFile)) {
+					dossierFileId = dossierFile.getDossierFileId();
+				}
+
+				if (Validator.isNotNull(dossierPart)) {
+					partNo = dossierPart.getPartNo();
+				}
+
+				result.put("partNo", partNo);
+				result.put("dossierFileId", dossierFileId);
+				result.put("formReport", dossierFile.getFormScript());
+				result.put("formData", dossierFile.getFormData());
+
+				return Response.status(HttpURLConnection.HTTP_OK).entity(JSONFactoryUtil.looseSerialize(result))
+						.build();
+
+			} else {
+				throw new Exception("Cant get dossier with id_" + id);
+			}
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					error.setMessage("Internal Server Error");
+					error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
+					error.setDescription(e.getMessage());
+
+					return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+
+				}
+			}
+		}
+	}
+
+	@Override
+	public Response getPreviewPdfInstance(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String id, long pluginid) {
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		String partNo = GetterUtil.getString(header.getHeaderString("partNo"));
+
+		try {
+			Dossier dossier = getDossier(id, groupId);
+
+			if (Validator.isNotNull(dossier)) {
+
+				DossierPart dossierPart = DossierPartLocalServiceUtil.fetchByTemplatePartNo(groupId,
+						dossier.getDossierTemplateNo(), partNo);
+
+				DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(
+						dossier.getDossierId(), dossierPart.getFileTemplateNo(), false,
+						new DossierFileComparator(false, "createDate", Date.class));
+
+				Message message = new Message();
+
+				message.put("formReport", dossierPart.getFormReport());
+
+				message.put("formData", dossierFile.getFormData());
+
+				message.setResponseId(String.valueOf(dossier.getPrimaryKeyObj()));
+				message.setResponseDestinationName("jasper/engine/preview/callback");
+
+				try {
+					String previewResponse = (String) MessageBusUtil
+							.sendSynchronousMessage("jasper/engine/preview/destination", message, 10000);
+
+					if (Validator.isNotNull(previewResponse)) {
+						// jsonObject =
+					}
+
+					// String fileDes = jsonObject.getString("fileDes");
+
+					File file = new File(previewResponse);
+
+					ResponseBuilder responseBuilder = Response.ok((Object) file);
+
+					responseBuilder.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+					responseBuilder.header("Content-Type", "application/pdf");
+
+					return responseBuilder.build();
+
+				} catch (MessageBusException e) {
+					throw new Exception("Preview rendering not avariable");
+				}
+
+			} else {
+				throw new Exception("Cant get dossier with id_" + id);
+			}
+
+		} catch (Exception e) {
+
+			_log.error(e);
+
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					error.setMessage("Internal Server Error");
+					error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
+					error.setDescription(e.getMessage());
+
+					return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+
+				}
+			}
+		}
+
 	}
 
 }
