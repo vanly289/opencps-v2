@@ -367,8 +367,21 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 					String formReport = StringPool.BLANK;
 
 					if (formCode.startsWith("#")) {
-						formData = _getFormData(groupId, formCode, dossier.getDossierId(), autoRun,
-								dossier.getDossierTemplateNo(), original, serviceContext);
+
+						if (original) {
+
+							String strFileTemplateNo = StringUtil.replaceFirst(formCode, "#", StringPool.BLANK);
+
+							DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(
+									dossier.getDossierId(), strFileTemplateNo, false,
+									new DossierFileComparator(false, "createDate", Date.class));
+
+							formData = dossierFile.getFormData();
+
+						} else {
+							formData = _getFormData(groupId, formCode, dossier.getDossierId(), autoRun,
+									dossier.getDossierTemplateNo(), original, serviceContext);
+						}
 
 						formReport = _getFormScript(formCode, dossier.getDossierId());
 					}
@@ -772,6 +785,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 							elm.put("AttachedTypeName", dossierPartElm.getPartName());
 						}
 					}
+					
+					
 
 					// attachedFileList.put(elm);
 				}

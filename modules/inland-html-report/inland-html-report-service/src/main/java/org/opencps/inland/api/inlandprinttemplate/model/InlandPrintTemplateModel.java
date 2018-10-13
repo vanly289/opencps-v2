@@ -59,7 +59,8 @@ import javax.xml.bind.annotation.XmlType;
     "formTemplate",
     "defaultCss",
     "originalDocumentURL",
-    "licenceType"
+    "licenceType",
+    "formData"
 })
 @XmlRootElement(name = "InlandPrintTemplateModel")
 public class InlandPrintTemplateModel {
@@ -77,6 +78,7 @@ public class InlandPrintTemplateModel {
     protected String defaultCss;
     protected String originalDocumentURL;
     protected String licenceType;
+    protected String formData;
 
     /**
      * Gets the value of the printTemplateId property.
@@ -389,5 +391,13 @@ public class InlandPrintTemplateModel {
     public void setLicenceType(String value) {
         this.licenceType = value;
     }
+
+	public String getFormData() {
+		return formData;
+	}
+
+	public void setFormData(String formData) {
+		this.formData = formData;
+	}
 
 }
