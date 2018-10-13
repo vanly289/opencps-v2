@@ -21,6 +21,8 @@ import org.opencps.thirdparty.system.exception.NoSuchILPhuongTienException;
 import org.opencps.thirdparty.system.model.ILPhuongTien;
 import org.opencps.thirdparty.system.service.base.ILPhuongTienLocalServiceBaseImpl;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import aQute.bnd.annotation.ProviderType;
 
 
@@ -81,6 +83,12 @@ public class ILPhuongTienLocalServiceImpl
 
 		return ilPhuongTienPersistence.update(phuongTien);
 	}
+	
+	public ILPhuongTien searchByBienKiemSoat(String bienkiemsoat) {
+		
+			return ilPhuongTienPersistence.fetchByF_B_N(bienkiemsoat);
+
+	}
 
 	public ILPhuongTien getLastPhuongTien() throws NoSuchILPhuongTienException {
 		return ilPhuongTienPersistence.findByGT_ID_Last(0l, null);
@@ -101,4 +109,5 @@ public class ILPhuongTienLocalServiceImpl
 	public List<ILPhuongTien> getByDoanhNghiep(int doanhNghiepId, int start, int end) {
 		return ilPhuongTienPersistence.findByDN_ID(doanhNghiepId, start, end);
 	}
+	
 }

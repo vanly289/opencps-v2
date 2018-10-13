@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -128,15 +129,17 @@ public class VRRestApplication extends Application {
 	public Response findDoanhNghiep(@Context HttpHeaders header, @QueryParam("keyword") String keyword,
 			@QueryParam("start") Integer start, @QueryParam("end") Integer end) {
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
-		long count = ILDoanhNghiepLocalServiceUtil.countByKeyword(keyword);
-		obj.put("total", count);
-		if (count > 0) {
+		
+		List<ILDoanhNghiep> lstDns = ILDoanhNghiepLocalServiceUtil.findByKeyword(keyword, start, end);
+		obj.put("total", lstDns.size());
+
+		if (lstDns.size() > 0) {
 			if (start == null) {
 				start = QueryUtil.ALL_POS;
 				end = QueryUtil.ALL_POS;
 			}
 
-			List<ILDoanhNghiep> lstDns = ILDoanhNghiepLocalServiceUtil.findByKeyword(keyword, start, end);
+			
 
 			obj.put("data", JSONFactoryUtil.looseSerialize(lstDns));
 		}
@@ -304,7 +307,7 @@ public class VRRestApplication extends Application {
 	@GET
 	@Path("/phuongtien")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findPhuongTien(@Context HttpHeaders header, @QueryParam("start") Integer start,
+	public Response findPhuongTien(@Context HttpHeaders header,@QueryParam("keyword") String keyword, @QueryParam("start") Integer start,
 			@QueryParam("end") Integer end) {
 
 		JSONObject result = JSONFactoryUtil.createJSONObject();
@@ -315,10 +318,27 @@ public class VRRestApplication extends Application {
 		}
 
 		JSONArray data = JSONFactoryUtil.createJSONArray();
+		
+		long count = 0;
+		
+		List<ILPhuongTien> ilPhuongTiens = new ArrayList<ILPhuongTien>();
+		
+		if (Validator.isNotNull(keyword)) {
+			
+			ILPhuongTien ilPhuongTien = ILPhuongTienLocalServiceUtil.searchByBienKiemSoat(keyword);
+			
+			if (Validator.isNotNull(ilPhuongTien)) {
+				count = 1;
+				ilPhuongTiens.add(ilPhuongTien);
+			}
 
-		long count = ILPhuongTienLocalServiceUtil.countAll();
+		} else {
+			count = ILPhuongTienLocalServiceUtil.countAll();
 
-		List<ILPhuongTien> ilPhuongTiens = ILPhuongTienLocalServiceUtil.getILPhuongTiens(start, end);
+			ilPhuongTiens = ILPhuongTienLocalServiceUtil.getILPhuongTiens(start, end);
+
+		}
+
 
 		for (ILPhuongTien ilPhuongTien : ilPhuongTiens) {
 
@@ -552,7 +572,7 @@ public class VRRestApplication extends Application {
 
 		JSONArray data = JSONFactoryUtil.createJSONArray();
 
-		long count = ILCertificateLocalServiceUtil.getAllCertificate().size();
+		long count = ILCertificateLocalServiceUtil.searchGiayPhep(keyword, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
 
 		obj.put("total", count);
 
@@ -562,7 +582,7 @@ public class VRRestApplication extends Application {
 				end = 9;
 			}
 
-			List<ILCertificate> certificates = ILCertificateLocalServiceUtil.getAllCertificate();
+			List<ILCertificate> certificates = ILCertificateLocalServiceUtil.searchGiayPhep(keyword, start, end);
 
 			for (ILCertificate certificate : certificates) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -593,7 +613,7 @@ public class VRRestApplication extends Application {
 
 		JSONArray data = JSONFactoryUtil.createJSONArray();
 
-		long count = ILCertificateLocalServiceUtil.getAllCertificate().size();
+		long count = ILCertificateLocalServiceUtil.searchLienVan(keyword, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
 
 		obj.put("total", count);
 
@@ -603,7 +623,7 @@ public class VRRestApplication extends Application {
 				end = 9;
 			}
 
-			List<ILCertificate> certificates = ILCertificateLocalServiceUtil.getAllCertificate();
+			List<ILCertificate> certificates = ILCertificateLocalServiceUtil.searchLienVan(keyword, start, end);
 
 			for (ILCertificate certificate : certificates) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -646,7 +666,7 @@ public class VRRestApplication extends Application {
 
 		} catch (PortalException e) {
 
-			_log.error(e);
+			//_log.error(e);
 		}
 
 		return fileURL;
