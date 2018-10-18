@@ -46,6 +46,7 @@ import org.opencps.thirdparty.system.model.ILTuyen;
 import org.opencps.thirdparty.system.model.ILTuyenKhaiThacXe;
 import org.opencps.thirdparty.system.model.ILTuyenKhaiThach;
 import org.opencps.thirdparty.system.model.ILViPham;
+import org.opencps.thirdparty.system.model.ViewGiayPhepVanTai;
 import org.opencps.thirdparty.system.service.ILDataItemLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiLocalServiceUtil;
@@ -57,6 +58,7 @@ import org.opencps.thirdparty.system.service.ILTuyenKhaiThacXeLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILTuyenKhaiThachLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILTuyenLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILViPhamLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ViewGiayPhepVanTaiLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 import com.backend.migrate.vr.model.PhuongTien;
@@ -217,14 +219,19 @@ public class VRRestApplication extends Application {
 		ILDoanhNghiep doanhnghiep = ILDoanhNghiepLocalServiceUtil.fetchILDoanhNghiep(doanhnghiepid);
 
 		if (Validator.isNotNull(doanhnghiep)) {
-
+			/*
 			long count = ILGiayPhepVanTaiLocalServiceUtil.countByDoanhNghiep(doanhnghiep.getId());
 
 			List<ILGiayPhepVanTai> giayphepvantais = ILGiayPhepVanTaiLocalServiceUtil
 					.getByDoanhNghiep(doanhnghiep.getId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
+			 */
+			
+			List<ViewGiayPhepVanTai> giaypheps = ViewGiayPhepVanTaiLocalServiceUtil.searchGiayPhepVanTai(doanhnghiepid);
+			
+			long count = giaypheps.size();
+			
 			result.put("total", count);
-			result.put("data", JSONFactoryUtil.looseSerialize(giayphepvantais));
+			result.put("data", JSONFactoryUtil.looseSerialize(giaypheps));
 
 			return Response.status(200).entity(result.toJSONString()).build();
 		} else {
@@ -333,7 +340,7 @@ public class VRRestApplication extends Application {
 			}
 
 		} else {
-			count = ILPhuongTienLocalServiceUtil.countAll();
+			count = ILPhuongTienLocalServiceUtil.getILPhuongTiens(QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
 
 			ilPhuongTiens = ILPhuongTienLocalServiceUtil.getILPhuongTiens(start, end);
 
