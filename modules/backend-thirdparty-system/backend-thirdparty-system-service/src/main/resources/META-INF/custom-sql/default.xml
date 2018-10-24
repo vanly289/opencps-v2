@@ -11,5 +11,111 @@
 		]]>
 	</sql>
 	
+	<sql id="org.opencps.thirdparty.system.service.persistence.ViewGiayPhepVanTaiFinder.searchByGiayPhep">
+		<![CDATA[
+			SELECT
+				* 
+			FROM
+				(
+				SELECT
+					@ROW /*'*/
+					:= /*'*/
+					@ROW + 1 AS id,
+					view_giayphepvantai.* 
+				FROM
+					(
+						(
+						SELECT
+							coquanquanly_id,
+							doanhnghiep_id,
+							sogiayphep,
+							lancapphep,
+							ngaycap,
+							nguoicap,
+							ngayhethan,
+							nguoidieuhanh,
+							bangcap,
+							ngaysinh,
+							socmnd,
+							nguoiky,
+							nguoiky_id,
+							ngayky,
+							ngay_thuhoi,
+							lydo_thuhoi,
+							ghichu,
+							trangthai,
+							'TN' AS typeCode,
+							'Trong nước' AS typeName 
+						FROM
+							phbh_giayphepvantai 
+						ORDER BY
+							ngayhethan DESC 
+						) UNION
+						(
+						SELECT
+							coquanquanly_id AS coquanquanly_id,
+							doanhnghiep_id AS doanhnghiep_id,
+							sogiayphep AS sogiayphep,
+							lancapphep AS lancapphep,
+							ngaycap AS ngaycap,
+							nguoicap AS nguoicap,
+							ngayhethan AS ngayhethan,
+							NULL AS nguoidieuhanh,
+							NULL AS bangcap,
+							NULL AS ngaysinh,
+							NULL AS socmnd,
+							ten_nguoiky AS nguoiky,
+							nguoi_ky_id AS nguoiky_id,
+							ngay_ky AS ngayky,
+							ngay_thuhoi AS ngay_thuhoi,
+							lydo_thuhoi AS lydo_thuhoi,
+							ghichu AS ghichu,
+							trangthai AS trangthai,
+							'QT' AS typeCode,
+							'Quốc tế' AS typeName 
+						FROM
+							nsw_giayphepvantai 
+						ORDER BY
+							ngayhethan DESC 
+						) UNION
+						(
+						SELECT
+							0 AS coquanquanly_id,
+						CASE
+								ISNULL( doanhnghiepid ) 
+								WHEN 1 THEN
+								( SELECT id FROM ttnd_doanhnghiep WHERE ttnd_doanhnghiep.ten = il_certificate.applicantName LIMIT 1 ) ELSE doanhnghiepid 
+							END AS doanhnghiep_id,
+							licenceNo AS sogiayphep,
+							1 AS lancapphep,
+							validFrom AS ngaycap,
+							govAgencyName AS nguoicap,
+							validUntil AS ngayhethan,
+							NULL AS nguoidieuhanh,
+							NULL AS bangcap,
+							NULL AS ngaysinh,
+							NULL AS socmnd,
+							NULL AS nguoiky,
+							1 AS nguoiky_id,
+							NULL AS ngayky,
+							NULL AS ngay_thuhoi,
+							NULL AS lydo_thuhoi,
+							OtherRemarks AS ghichu,
+							1 AS trangthai,
+							fileTemplateNo AS typeCode,
+							licenceName AS typeName 
+						FROM
+							il_certificate 
+						WHERE
+							fileTemplateNo IN ( 'KQ_GPVTDBQT_VL', 'KQ_GPVTDB_VC', 'KQ_CTKTT_VL', 'KQ_CTBS_PTKTT_VL', 'KQ_CTTT_PTKTT_VL', 'KQ_CTNKT_VL', 'CTKTT_VT', 'CTKTT_CLV', 'KQ_CTKTTCD_VC', 'KQ_CTBSPT_KTTCD_VC', 'KQ_CTTTPT_KTTCD_VC', 'KQ_CTNKT_TCD_VC', 'KQ_VBCT_DCTXTCD_VC', 'KQ_GPVTDBQT_GMS' ) 
+						ORDER BY
+							ngayhethan DESC 
+						) 
+					) AS view_giayphepvantai,
+				( SELECT @ROW /*'*/ := /*'*/ 0 ) AS foo 
+				) AS view_giayphepvantai WHERE doanhnghiep_id = ?
+		]]>
+	</sql>
+	
 
 </custom-sql>

@@ -62,6 +62,28 @@ public class ILDoanhNghiepLocalServiceImpl extends ILDoanhNghiepLocalServiceBase
 	 * org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil} to
 	 * access the il doanh nghiep local service.
 	 */
+	
+	public ILDoanhNghiep capNhatDoanhNghiep(String ten, String sogcnDkkd, Date ngayCap, String donviCapPhep,
+			String diaChi, String dienThoai, String fax, String email) {
+		
+		ILDoanhNghiep doanhNghiep = ilDoanhNghiepPersistence.fetchBySCNDKKD(sogcnDkkd);
+		
+		if (Validator.isNull(doanhNghiep)) {
+			doanhNghiep = ilDoanhNghiepPersistence.create(CounterLocalServiceUtil.increment(ILDoanhNghiep.class.getName()));
+		} 
+		
+		doanhNghiep.setTen(ten);
+		doanhNghiep.setSogcn_dkkd(sogcnDkkd);
+		doanhNghiep.setNgaycap_dkkd(ngayCap);
+		doanhNghiep.setTen_donvicapphep(donviCapPhep);
+		doanhNghiep.setDiachi_trusochinh(diaChi);
+		doanhNghiep.setDienthoai(dienThoai);
+		doanhNghiep.setFax(fax);
+		doanhNghiep.setEmail(email);
+		
+		return ilDoanhNghiepPersistence.update(doanhNghiep);
+		
+	}
 
 	public ILDoanhNghiep addDoanhNghiep(long id, String ten, String ten_viettat, String ten_tienganh, String sogcn_dkkd,
 			Date ngaycap_dkkd, Date ngayhethan_dkkd, String ten_donvicapphep, String masothue, String ten_nguoidaidien,
