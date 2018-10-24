@@ -133,15 +133,13 @@ public class VRRestApplication extends Application {
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
 		
 		List<ILDoanhNghiep> lstDns = ILDoanhNghiepLocalServiceUtil.findByKeyword(keyword, start, end);
-		obj.put("total", lstDns.size());
+		obj.put("total", ILDoanhNghiepLocalServiceUtil.countByKeyword(keyword));
 
 		if (lstDns.size() > 0) {
 			if (start == null) {
 				start = QueryUtil.ALL_POS;
 				end = QueryUtil.ALL_POS;
 			}
-
-			
 
 			obj.put("data", JSONFactoryUtil.looseSerialize(lstDns));
 		}
@@ -207,7 +205,7 @@ public class VRRestApplication extends Application {
 	}
 
 	@GET
-	@Path("/doanhnghiep/{doanhnghiepid}/giayphepvantai")
+	@Path("/doanhnghiep/{doanhnghiepid}/giayphepkinhdoanhvantai")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findGiayPhepVanTaiByDoanhNghiep(@Context HttpHeaders header,
 			@PathParam("doanhnghiepid") long doanhnghiepid, @QueryParam("start") Integer start,
@@ -332,6 +330,8 @@ public class VRRestApplication extends Application {
 		
 		if (Validator.isNotNull(keyword)) {
 			
+			_log.info("***Keyword");
+			
 			ILPhuongTien ilPhuongTien = ILPhuongTienLocalServiceUtil.searchByBienKiemSoat(keyword);
 			
 			if (Validator.isNotNull(ilPhuongTien)) {
@@ -340,7 +340,7 @@ public class VRRestApplication extends Application {
 			}
 
 		} else {
-			count = ILPhuongTienLocalServiceUtil.getILPhuongTiens(QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+			count = ILPhuongTienLocalServiceUtil.countAll();
 
 			ilPhuongTiens = ILPhuongTienLocalServiceUtil.getILPhuongTiens(start, end);
 
