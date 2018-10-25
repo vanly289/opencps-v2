@@ -44,6 +44,16 @@ public class ILGiayPhepVanTaiLocalServiceImpl
 	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ILGiayPhepVanTaiLocalServiceUtil} to access the il giay phep van tai local service.
 	 */
 	
+	public ILGiayPhepVanTai getLastest() {
+		List<ILGiayPhepVanTai> ls = ilGiayPhepVanTaiPersistence.findAll(0, 1);
+		
+		if (ls.isEmpty()) {
+			return null;
+		} else {
+			return ls.get(0);
+		}
+	}
+	
 	public List<ILGiayPhepVanTai> getByDoanhNghiep(long doanhnghiep_id, int start, int end) {
 		return ilGiayPhepVanTaiPersistence.findByB_DN(doanhnghiep_id, start, end);
 	}

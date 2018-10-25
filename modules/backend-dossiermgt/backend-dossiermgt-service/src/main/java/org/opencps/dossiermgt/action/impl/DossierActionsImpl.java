@@ -595,7 +595,12 @@ public class DossierActionsImpl implements DossierActions {
 							if (dossierParts != null) {
 								for (DossierPart dossierPart : dossierParts) {
 									String fileTemplateNo = dossierPart.getFileTemplateNo();
+									
 									if (dossierFileTemplateNos.contains(fileTemplateNo)) {
+										
+										_log.info("***DOSSIERFILETEMPLATENOS " + dossierFileTemplateNos.toString());
+										_log.info("***fileTemplateNo " + fileTemplateNo);
+										
 										JSONObject createFile = JSONFactoryUtil.createJSONObject();
 										createFile.put("dossierPartId", dossierPart.getDossierPartId());
 										createFile.put("partNo", dossierPart.getPartNo());
@@ -618,11 +623,19 @@ public class DossierActionsImpl implements DossierActions {
 													.getDossierFileByDID_FTNO_DPT(dossierId, fileTemplateNo, 2, false,
 															QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 															new DossierFileComparator(false, "createDate", Date.class));
+											
+											if (dossierFilesResult != null) {
+												for (DossierFile dossierFile : dossierFilesResult) {
+													_log.info("******* : " + dossierFile.getDisplayName() + dossierFile.getFileTemplateNo());
+												}
+											}
 
 											if (dossierFilesResult != null && !dossierFilesResult.isEmpty()) {
 												df: for (DossierFile dossierFile : dossierFilesResult) {
 													if (dossierFile.getDossierPartNo()
 															.equals(dossierPart.getPartNo())) {
+														_log.info("****** FORMDATA = dossierFile.getFormData();");
+
 														eForm = dossierFile.getEForm();
 														formData = dossierFile.getFormData();
 														formScript = dossierFile.getFormScript();
@@ -640,9 +653,12 @@ public class DossierActionsImpl implements DossierActions {
 												}
 											} else {
 												eForm = Validator.isNotNull(dossierPart.getFormScript()) ? true : false;
-
+												
+												_log.info("****** FORMDATA = AutoFillFormData.sampleDataBinding" + fileTemplateNo);
+												
 												formData = AutoFillFormData.sampleDataBinding(
 														dossierPart.getSampleData(), dossierId, serviceContext);
+												
 												formScript = dossierPart.getFormScript();
 
 												if (returnDossierFileTemplateNos
@@ -674,7 +690,7 @@ public class DossierActionsImpl implements DossierActions {
 														if (!eForm && Validator.isNotNull(dossierPart.getSampleData())) {
 															actions.updateDossierFileFormData(groupId, dossierId, docFileReferenceUid, formData, serviceContext);
 															dossierFile = DossierFileLocalServiceUtil.fetchDossierFile(dossierFileId);
-														}														
+														}
 													}
 													
 													if (dossierFile != null) {
