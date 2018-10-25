@@ -6,7 +6,7 @@
 				<v-icon v-else style="font-size: 10px;">fiber_manual_record</v-icon> &nbsp;&nbsp;
 				{{index + 1}}.
 			</span>
-			<div style="margin-left: 40px;"><span @click="viewDossierFileVersionDialog(item)" style="cursor: pointer;">{{item.partName}}</span> &nbsp; <span v-if="item.required">(<span style="color: red;">*</span>)</span></div>
+			<div style="margin-left: 40px;"><span @click="viewDossierFileVersionDialog(item, 'OUT')" style="cursor: pointer;">{{item.partName}}</span> &nbsp; <span v-if="item.required">(<span style="color: red;">*</span>)</span></div>
 		</v-flex>
 	</v-layout>
 </div>
