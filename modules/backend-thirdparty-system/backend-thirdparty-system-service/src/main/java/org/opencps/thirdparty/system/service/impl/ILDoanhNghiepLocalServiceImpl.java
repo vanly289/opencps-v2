@@ -62,6 +62,28 @@ public class ILDoanhNghiepLocalServiceImpl extends ILDoanhNghiepLocalServiceBase
 	 * org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil} to
 	 * access the il doanh nghiep local service.
 	 */
+	
+	public ILDoanhNghiep capNhatDoanhNghiep(String ten, String sogcnDkkd, Date ngayCap, String donviCapPhep,
+			String diaChi, String dienThoai, String fax, String email) {
+		
+		ILDoanhNghiep doanhNghiep = ilDoanhNghiepPersistence.fetchBySCNDKKD(sogcnDkkd);
+		
+		if (Validator.isNull(doanhNghiep)) {
+			doanhNghiep = ilDoanhNghiepPersistence.create(CounterLocalServiceUtil.increment(ILDoanhNghiep.class.getName()));
+		} 
+		
+		doanhNghiep.setTen(ten);
+		doanhNghiep.setSogcn_dkkd(sogcnDkkd);
+		doanhNghiep.setNgaycap_dkkd(ngayCap);
+		doanhNghiep.setTen_donvicapphep(donviCapPhep);
+		doanhNghiep.setDiachi_trusochinh(diaChi);
+		doanhNghiep.setDienthoai(dienThoai);
+		doanhNghiep.setFax(fax);
+		doanhNghiep.setEmail(email);
+		
+		return ilDoanhNghiepPersistence.update(doanhNghiep);
+		
+	}
 
 	public ILDoanhNghiep addDoanhNghiep(long id, String ten, String ten_viettat, String ten_tienganh, String sogcn_dkkd,
 			Date ngaycap_dkkd, Date ngayhethan_dkkd, String ten_donvicapphep, String masothue, String ten_nguoidaidien,
@@ -117,6 +139,8 @@ public class ILDoanhNghiepLocalServiceImpl extends ILDoanhNghiepLocalServiceBase
 
 		return ilDoanhNghiepPersistence.update(dn);
 	}
+	
+	
 	
 
 	public ILDoanhNghiep updateDoanhNghiep(String applicationNo, long id, String ten, String ten_viettat, String ten_tienganh, String sogcn_dkkd,
@@ -188,36 +212,21 @@ public class ILDoanhNghiepLocalServiceImpl extends ILDoanhNghiepLocalServiceBase
 	}
 
 	public List<ILDoanhNghiep> findByKeyword(String keyword, int start, int end) {
+		
+		if (Validator.isNotNull(keyword)) { 
+			return ilDoanhNghiepFinder.searchDoanhNghiep(keyword, start, end);
+		} else {
+			return ilDoanhNghiepPersistence.findAll(start, end);
+		}
 
-		return ilDoanhNghiepPersistence.findAll(start, end);
-
-		/*
-		 * DynamicQuery dynamicQuery =
-		 * DynamicQueryFactoryUtil.forClass(ILDoanhNghiepImpl.class);
-		 * dynamicQuery.add(RestrictionsFactoryUtil.like("masothue", keyword));
-		 * dynamicQuery.add(RestrictionsFactoryUtil.like("ten", keyword));
-		 * dynamicQuery.add(RestrictionsFactoryUtil.like("sogcn_dkkd",
-		 * keyword));
-		 * 
-		 * List<ILDoanhNghiep> results = new ArrayList<>();
-		 * results.addAll(ilDoanhNghiepPersistence.findWithDynamicQuery(
-		 * dynamicQuery, start, end)); return results;
-		 */
 	}
 
 	public long countByKeyword(String keyword) {
 
-		return ilDoanhNghiepPersistence.countAll();
-
-		/*
-		 * DynamicQuery dynamicQuery =
-		 * DynamicQueryFactoryUtil.forClass(ILDoanhNghiepImpl.class);
-		 * dynamicQuery.add(RestrictionsFactoryUtil.like("masothue", keyword));
-		 * dynamicQuery.add(RestrictionsFactoryUtil.like("ten", keyword));
-		 * dynamicQuery.add(RestrictionsFactoryUtil.like("sogcn_dkkd",
-		 * keyword));
-		 * 
-		 * return ilDoanhNghiepPersistence.countWithDynamicQuery(dynamicQuery);
-		 */
+		if (Validator.isNotNull(keyword)) { 
+			return ilDoanhNghiepFinder.searchDoanhNghiep(keyword, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+		} else {
+			return ilDoanhNghiepPersistence.countAll();
+		}
 	}
 }

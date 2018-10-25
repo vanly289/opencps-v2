@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -45,6 +46,7 @@ import org.opencps.thirdparty.system.model.ILTuyen;
 import org.opencps.thirdparty.system.model.ILTuyenKhaiThacXe;
 import org.opencps.thirdparty.system.model.ILTuyenKhaiThach;
 import org.opencps.thirdparty.system.model.ILViPham;
+import org.opencps.thirdparty.system.model.ViewGiayPhepVanTai;
 import org.opencps.thirdparty.system.service.ILDataItemLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiLocalServiceUtil;
@@ -56,6 +58,7 @@ import org.opencps.thirdparty.system.service.ILTuyenKhaiThacXeLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILTuyenKhaiThachLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILTuyenLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILViPhamLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ViewGiayPhepVanTaiLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 import com.backend.migrate.vr.model.PhuongTien;
@@ -128,15 +131,15 @@ public class VRRestApplication extends Application {
 	public Response findDoanhNghiep(@Context HttpHeaders header, @QueryParam("keyword") String keyword,
 			@QueryParam("start") Integer start, @QueryParam("end") Integer end) {
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
-		long count = ILDoanhNghiepLocalServiceUtil.countByKeyword(keyword);
-		obj.put("total", count);
-		if (count > 0) {
+		
+		List<ILDoanhNghiep> lstDns = ILDoanhNghiepLocalServiceUtil.findByKeyword(keyword, start, end);
+		obj.put("total", ILDoanhNghiepLocalServiceUtil.countByKeyword(keyword));
+
+		if (lstDns.size() > 0) {
 			if (start == null) {
 				start = QueryUtil.ALL_POS;
 				end = QueryUtil.ALL_POS;
 			}
-
-			List<ILDoanhNghiep> lstDns = ILDoanhNghiepLocalServiceUtil.findByKeyword(keyword, start, end);
 
 			obj.put("data", JSONFactoryUtil.looseSerialize(lstDns));
 		}
@@ -202,7 +205,7 @@ public class VRRestApplication extends Application {
 	}
 
 	@GET
-	@Path("/doanhnghiep/{doanhnghiepid}/giayphepvantai")
+	@Path("/doanhnghiep/{doanhnghiepid}/giayphepkinhdoanhvantai")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findGiayPhepVanTaiByDoanhNghiep(@Context HttpHeaders header,
 			@PathParam("doanhnghiepid") long doanhnghiepid, @QueryParam("start") Integer start,
@@ -214,14 +217,19 @@ public class VRRestApplication extends Application {
 		ILDoanhNghiep doanhnghiep = ILDoanhNghiepLocalServiceUtil.fetchILDoanhNghiep(doanhnghiepid);
 
 		if (Validator.isNotNull(doanhnghiep)) {
-
+			/*
 			long count = ILGiayPhepVanTaiLocalServiceUtil.countByDoanhNghiep(doanhnghiep.getId());
 
 			List<ILGiayPhepVanTai> giayphepvantais = ILGiayPhepVanTaiLocalServiceUtil
 					.getByDoanhNghiep(doanhnghiep.getId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
+			 */
+			
+			List<ViewGiayPhepVanTai> giaypheps = ViewGiayPhepVanTaiLocalServiceUtil.searchGiayPhepVanTai(doanhnghiepid);
+			
+			long count = giaypheps.size();
+			
 			result.put("total", count);
-			result.put("data", JSONFactoryUtil.looseSerialize(giayphepvantais));
+			result.put("data", JSONFactoryUtil.looseSerialize(giaypheps));
 
 			return Response.status(200).entity(result.toJSONString()).build();
 		} else {
@@ -304,7 +312,7 @@ public class VRRestApplication extends Application {
 	@GET
 	@Path("/phuongtien")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findPhuongTien(@Context HttpHeaders header, @QueryParam("start") Integer start,
+	public Response findPhuongTien(@Context HttpHeaders header,@QueryParam("keyword") String keyword, @QueryParam("start") Integer start,
 			@QueryParam("end") Integer end) {
 
 		JSONObject result = JSONFactoryUtil.createJSONObject();
@@ -315,10 +323,29 @@ public class VRRestApplication extends Application {
 		}
 
 		JSONArray data = JSONFactoryUtil.createJSONArray();
+		
+		long count = 0;
+		
+		List<ILPhuongTien> ilPhuongTiens = new ArrayList<ILPhuongTien>();
+		
+		if (Validator.isNotNull(keyword)) {
+			
+			_log.info("***Keyword");
+			
+			ILPhuongTien ilPhuongTien = ILPhuongTienLocalServiceUtil.searchByBienKiemSoat(keyword);
+			
+			if (Validator.isNotNull(ilPhuongTien)) {
+				count = 1;
+				ilPhuongTiens.add(ilPhuongTien);
+			}
 
-		long count = ILPhuongTienLocalServiceUtil.countAll();
+		} else {
+			count = ILPhuongTienLocalServiceUtil.countAll();
 
-		List<ILPhuongTien> ilPhuongTiens = ILPhuongTienLocalServiceUtil.getILPhuongTiens(start, end);
+			ilPhuongTiens = ILPhuongTienLocalServiceUtil.getILPhuongTiens(start, end);
+
+		}
+
 
 		for (ILPhuongTien ilPhuongTien : ilPhuongTiens) {
 
@@ -552,7 +579,7 @@ public class VRRestApplication extends Application {
 
 		JSONArray data = JSONFactoryUtil.createJSONArray();
 
-		long count = ILCertificateLocalServiceUtil.getAllCertificate().size();
+		long count = ILCertificateLocalServiceUtil.searchGiayPhep(keyword, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
 
 		obj.put("total", count);
 
@@ -562,7 +589,7 @@ public class VRRestApplication extends Application {
 				end = 9;
 			}
 
-			List<ILCertificate> certificates = ILCertificateLocalServiceUtil.getAllCertificate();
+			List<ILCertificate> certificates = ILCertificateLocalServiceUtil.searchGiayPhep(keyword, start, end);
 
 			for (ILCertificate certificate : certificates) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -593,7 +620,7 @@ public class VRRestApplication extends Application {
 
 		JSONArray data = JSONFactoryUtil.createJSONArray();
 
-		long count = ILCertificateLocalServiceUtil.getAllCertificate().size();
+		long count = ILCertificateLocalServiceUtil.searchLienVan(keyword, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
 
 		obj.put("total", count);
 
@@ -603,7 +630,7 @@ public class VRRestApplication extends Application {
 				end = 9;
 			}
 
-			List<ILCertificate> certificates = ILCertificateLocalServiceUtil.getAllCertificate();
+			List<ILCertificate> certificates = ILCertificateLocalServiceUtil.searchLienVan(keyword, start, end);
 
 			for (ILCertificate certificate : certificates) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -646,7 +673,7 @@ public class VRRestApplication extends Application {
 
 		} catch (PortalException e) {
 
-			_log.error(e);
+			//_log.error(e);
 		}
 
 		return fileURL;
