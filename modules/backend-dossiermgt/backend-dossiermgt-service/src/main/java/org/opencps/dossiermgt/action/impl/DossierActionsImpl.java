@@ -1094,7 +1094,8 @@ public class DossierActionsImpl implements DossierActions {
 																									dossierFileId = dossierFile.getDossierFileId();
 																									DeliverableType dt = DeliverableTypeLocalServiceUtil.getByCode(dossierPart.getGroupId(), dossierPart.getDeliverableType());
 																									String deliverableCodeKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_DELIVERABLE_CODE, dt);
-																									if (Validator.isNull(dossierFile.getDeliverableCode())) {
+																									if (Validator.isNull(dossierFile.getDeliverableCode())
+																											&& !newFormDataObj.has(deliverableCodeKey)) {
 																										newFormDataObj.put(deliverableCodeKey, DeliverableNumberGenerator.generateDeliverableNumber(groupId, companyId, dlt.getDeliverableTypeId()));
 																									}
 																									else {
