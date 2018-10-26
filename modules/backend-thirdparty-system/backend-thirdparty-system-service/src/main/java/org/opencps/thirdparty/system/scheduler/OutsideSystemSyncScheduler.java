@@ -171,21 +171,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setSoGp(StringPool.BLANK);
 						if (dossier.getServiceCode().equals("BGTVT0600042")
 								|| dossier.getServiceCode().equals("BGTVT0600043")
-								|| dossier.getServiceCode().equals("BGTVT0600048")
-								|| dossier.getServiceCode().equals("BGTVT0600049")
-								|| dossier.getServiceCode().equals("BGTVT0600050")
-								|| dossier.getServiceCode().equals("BGTVT0600051")
-								|| dossier.getServiceCode().equals("BGTVT0600052")
-								|| dossier.getServiceCode().equals("BGTVT0600053")
-								|| dossier.getServiceCode().equals("BGTVT0600054")
-								|| dossier.getServiceCode().equals("BGTVT0600055")
-								|| dossier.getServiceCode().equals("BGTVT0600056")
-								|| dossier.getServiceCode().equals("BGTVT0600057")
-								|| dossier.getServiceCode().equals("BGTVT0600058")
-								|| dossier.getServiceCode().equals("BGTVT0600059")
-								|| dossier.getServiceCode().equals("BGTVT0600060")
-								|| dossier.getServiceCode().equals("BGTVT0600061")
-								|| dossier.getServiceCode().equals("BGTVT0600062")) {
+								) {
 							ketqua.setSoTn(dossier.getDossierNo());
 						}
 						
@@ -263,21 +249,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setSoGp(StringPool.BLANK);
 						if (dossier.getServiceCode().equals("BGTVT0600042")
 								|| dossier.getServiceCode().equals("BGTVT0600043")
-								|| dossier.getServiceCode().equals("BGTVT0600048")
-								|| dossier.getServiceCode().equals("BGTVT0600049")
-								|| dossier.getServiceCode().equals("BGTVT0600050")
-								|| dossier.getServiceCode().equals("BGTVT0600051")
-								|| dossier.getServiceCode().equals("BGTVT0600052")
-								|| dossier.getServiceCode().equals("BGTVT0600053")
-								|| dossier.getServiceCode().equals("BGTVT0600054")
-								|| dossier.getServiceCode().equals("BGTVT0600055")
-								|| dossier.getServiceCode().equals("BGTVT0600056")
-								|| dossier.getServiceCode().equals("BGTVT0600057")
-								|| dossier.getServiceCode().equals("BGTVT0600058")
-								|| dossier.getServiceCode().equals("BGTVT0600059")
-								|| dossier.getServiceCode().equals("BGTVT0600060")
-								|| dossier.getServiceCode().equals("BGTVT0600061")
-								|| dossier.getServiceCode().equals("BGTVT0600062")) {
+								) {
 							ketqua.setSoTn(dossier.getDossierNo());
 						}						
 						ketqua.setNoiDung(dossierAction.getActionNote());

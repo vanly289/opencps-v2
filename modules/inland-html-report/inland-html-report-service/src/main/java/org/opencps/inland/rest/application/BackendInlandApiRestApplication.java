@@ -337,7 +337,6 @@ public class BackendInlandApiRestApplication extends Application {
 			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
-			
 			Dossier dossier = DossierLocalServiceUtil.fetchDossier(GetterUtil.getLong(dossierId));
 			String html = "<html><body>";
 			
@@ -518,7 +517,7 @@ public class BackendInlandApiRestApplication extends Application {
 					width = image.getWidth();
 				}
 				
-				style = "background-image: url(\"" + imageURL +"\"); background-size: " + width +"px " + height +"px; width: " + width +"px; height: " + height +"px;position: relative;margin-bottom: 5px";
+				style = "background-image: url(\"" + imageURL +"\"); background-size: " + width +"px " + height +"px; width: " + width +"px; height: " + height +"px;position: relative;";
 			}
 		} catch(Exception e) {
 			_log.error(e);
