@@ -1099,7 +1099,9 @@ public class DossierActionsImpl implements DossierActions {
 																										newFormDataObj.put(deliverableCodeKey, DeliverableNumberGenerator.generateDeliverableNumber(groupId, companyId, dlt.getDeliverableTypeId()));
 																									}
 																									else {
-																										newFormDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
+																										if (!newFormDataObj.has(deliverableCodeKey) &&
+																												Validator.isNotNull(dossierFile.getDeliverableCode()))
+																											newFormDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
 																									}
 																									DossierFileLocalServiceUtil.updateFormData(
 																										groupId, dossierId, docFileReferenceUid, newFormDataObj.toJSONString(), serviceContext);
