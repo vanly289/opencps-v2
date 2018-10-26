@@ -942,6 +942,7 @@ public class VRRestApplication extends Application {
 		ILVehicle vehicle = ILVehicleLocalServiceUtil.getByRegistrationNumber(registrationNumber);
 		List<ILViPham> viphams = ILViPhamLocalServiceUtil.getByPhuongTien(phuongTien.getId());
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
+		JSONObject error = JSONFactoryUtil.createJSONObject();
 
 		if (vehicle != null && phuongTien != null) {
 			if (viphams.size() > 0) {
