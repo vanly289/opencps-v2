@@ -172,7 +172,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						if (dossier.getServiceCode().equals("BGTVT0600042")
 								|| dossier.getServiceCode().equals("BGTVT0600043")
 								) {
-//							ketqua.setSoTn(dossier.getDossierNo());
+							ketqua.setSoTn(dossier.getDossierNo());
 						}
 						
 						ketqua.setNoiDung(dossierAction.getActionNote());
