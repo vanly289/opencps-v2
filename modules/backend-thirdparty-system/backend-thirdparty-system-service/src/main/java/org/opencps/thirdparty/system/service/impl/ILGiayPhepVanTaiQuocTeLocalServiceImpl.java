@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.util.List;
 
+import org.opencps.thirdparty.system.model.ILGiayPhepVanTai;
 import org.opencps.thirdparty.system.model.ILGiayPhepVanTaiQuocTe;
 import org.opencps.thirdparty.system.service.base.ILGiayPhepVanTaiQuocTeLocalServiceBaseImpl;
 
@@ -50,7 +51,17 @@ public class ILGiayPhepVanTaiQuocTeLocalServiceImpl extends ILGiayPhepVanTaiQuoc
 	 * ILGiayPhepVanTaiQuocTeLocalServiceUtil} to access the il giay phep van
 	 * tai quoc te local service.
 	 */
-
+	
+	
+	public ILGiayPhepVanTaiQuocTe getLastest() {
+		List<ILGiayPhepVanTaiQuocTe> ls = ilGiayPhepVanTaiQuocTePersistence.findAll(0, 1);
+		
+		if (ls.isEmpty()) {
+			return null;
+		} else {
+			return ls.get(0);
+		}
+	}
 	public List<ILGiayPhepVanTaiQuocTe> getGiayPhep(int start, int end) {
 		return ilGiayPhepVanTaiQuocTePersistence.findAll(start, end);
 	}

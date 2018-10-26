@@ -444,7 +444,7 @@
         </finder>
 		
 	</entity>	
-	
+
 	<entity local-service="true" name="ViewGiayPhepVanTai" remote-service="false" uuid="false" table="view_giayphepvantai">
 		<!-- PK fields -->
 		<column name="id" primary="true" type="long" db-name="id"/>

@@ -1,5 +1,7 @@
 package com.backend.migrate.vr.scheduler;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -8,14 +10,16 @@ import org.opencps.thirdparty.system.exception.NoSuchILPhuongTienException;
 import org.opencps.thirdparty.system.model.ILDoanhNghiep;
 import org.opencps.thirdparty.system.model.ILGiayPhepLienVan;
 import org.opencps.thirdparty.system.model.ILGiayPhepVanTai;
+import org.opencps.thirdparty.system.model.ILGiayPhepVanTaiQuocTe;
 import org.opencps.thirdparty.system.model.ILPhuHieuBienHieu;
 import org.opencps.thirdparty.system.model.ILPhuongTien;
 import org.opencps.thirdparty.system.model.ILViPham;
 import org.opencps.thirdparty.system.model.impl.ILGiayPhepLienVanImpl;
 import org.opencps.thirdparty.system.model.impl.ILGiayPhepVanTaiImpl;
+import org.opencps.thirdparty.system.model.impl.ILGiayPhepVanTaiQuocTeImpl;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILGiayPhepLienVanLocalServiceUtil;
-import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiQuocTeLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILPhuHieuBienHieuLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILPhuongTienLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILViPhamLocalServiceUtil;
@@ -55,11 +59,12 @@ import com.liferay.portal.kernel.util.Validator;
 public class ILDBSyncScheduler extends BaseSchedulerEntryMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		_log.info("DB SYNC IS STARTING AT  : " + LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE));
 		 
 		syncGiayPhepLienVan();
-
-		_log.info("DB sync is starting at  : "
-				+ APIDateTimeUtils.convertDateToString(new Date()));
+		
+		syncGiayPhepVanTai();
+		
 		long id = 0l;
 		
 		try {
@@ -198,7 +203,7 @@ public class ILDBSyncScheduler extends BaseSchedulerEntryMessageListener {
 	
 	private void syncGiayPhepVanTai() {
 		
-		ILGiayPhepVanTai giayPhepVanTai = ILGiayPhepVanTaiLocalServiceUtil.getLastest();
+		ILGiayPhepVanTaiQuocTe giayPhepVanTai = ILGiayPhepVanTaiQuocTeLocalServiceUtil.getLastest();
 		
 		if (Validator.isNotNull(giayPhepVanTai)) {
 			List<SRCGiayPhepVanTai> giayPhepVanTais = SRCGiayPhepVanTaiLocalServiceUtil.getLastest(giayPhepVanTai.getId());
@@ -206,78 +211,40 @@ public class ILDBSyncScheduler extends BaseSchedulerEntryMessageListener {
 			_log.info("********* ROW NEED UPDATE - GPVT ** +++ ^-^" + giayPhepVanTais.size());
 
 			for (SRCGiayPhepVanTai src : giayPhepVanTais) {
-				ILGiayPhepVanTai elm = new ILGiayPhepVanTaiImpl();
+				ILGiayPhepVanTaiQuocTe elm = new ILGiayPhepVanTaiQuocTeImpl();
 				
+				elm.setId(src.getId());
+				elm.setCoquanquanly_id(src.getCoquanquanly_id());
+				elm.setTen_coquancapphep(src.getTen_coquancapphep());
+				elm.setDoanhnghiep_id(src.getDoanhnghiep_id());
+				elm.setTen_doanhnghiep(src.getTen_doanhnghiep());
+				elm.setDiachi_doanhnghiep(src.getDiachi_doanhnghiep());
+				elm.setDienthoai_doanhnghiep(src.getDienthoai_doanhnghiep());
+				elm.setFax_doanhnghiep(src.getFax_doanhnghiep());
+				elm.setEmail_doanhnghiep(src.getEmail_doanhnghiep());
+				elm.setWebsite_doanhnghiep(src.getWebsite_doanhnghiep());
+				elm.setNgay_ky(src.getNgay_ky());
+				elm.setTen_nguoiky(src.getTen_nguoiky());
+				elm.setNguoi_ky_id(src.getNguoi_ky_id());
+				elm.setUrl_file_gpvt(src.getUrl_file_gpvt());
 				
+				elm.setSogiayphep(src.getSogiayphep());
+				elm.setLancapphep(src.getLancapphep());
+				elm.setNgaycap(src.getNgaycap());
+				elm.setNguoicap(src.getNguoicap());
+				elm.setNgayhethan(src.getNgayhethan());
+				elm.setNgay_thuhoi(src.getNgay_thuhoi());
+				elm.setLydo_thuhoi(src.getLydo_thuhoi());
+				elm.setGhichu(src.getGhichu());
+				elm.setTrangthai(src.getTrangthai());
+				elm.setQuocgia_id(src.getQuocgia_id());
 				
+				ILGiayPhepVanTaiQuocTeLocalServiceUtil.addILGiayPhepVanTaiQuocTe(elm);
 			}
-			/*
-			<column name="id" primary="true" type="long" db-name="id"/>
-			<column name="coquanquanly_id" type="long"/>
-			<column name="doanhnghiep_id" type="long"/>
-			<column name="sogiayphep" type="String"/>
-			<column name="lancapphep" type="int"/>
-			<column name="ngaycap" type="Date"/>
-			<column name="nguoicap" type="String"/>
-			<column name="ngayhethan" type="Date"/>
-			<column name="nguoidieuhanh" type="String"/>
-			<column name="bangcap" type="String"/>
-			<column name="ngaysinh" type="Date"/>
-			<column name="socmnd" type="String"/>
-			<column name="nguoiky" type="String"/>
-			<column name="nguoiky_id" type="long"/>
-			<column name="ngayky" type="Date"/>
-			<column name="ngay_thuhoi" type="Date"/>
-			<column name="lydo_thuhoi" type="String"/>
-			<column name="ghichu" type="String"/>
-			<column name="trangthai" type="int"/>
-			*/
-		}
-		
-		ILGiayPhepLienVan giayPhepLienVan = ILGiayPhepLienVanLocalServiceUtil.getLastest();
-		
-		if (Validator.isNotNull(giayPhepLienVan)) {
-			
-			List<SRCGiayPhepLienVan> giayPhepLienVans = SRCGiayPhepLienVanLocalServiceUtil.getLastest(giayPhepLienVan.getId());
-			
-			_log.info("********* ROW NEED UPDATE ** +++ ^-^" + giayPhepLienVans.size());
-			
-			for (SRCGiayPhepLienVan src : giayPhepLienVans) {
-				ILGiayPhepLienVan elmGiayPhepLienVan = new ILGiayPhepLienVanImpl();
-				
-				elmGiayPhepLienVan.setId(src.getId());
-				elmGiayPhepLienVan.setSo_phuhieu_lienvan(src.getSo_phuhieu_lienvan());
-				elmGiayPhepLienVan.setLancapphep(src.getLancapphep());
-				elmGiayPhepLienVan.setPhuongtien_id(src.getPhuongtien_id());
-				elmGiayPhepLienVan.setBienkiemsoat(src.getBienkiemsoat());
-				elmGiayPhepLienVan.setSucchua(src.getSucchua());
-				elmGiayPhepLienVan.setNamsanxuat(src.getNamsanxuat());
-				elmGiayPhepLienVan.setNhanhieu_id(src.getNhanhieu_id());
-				elmGiayPhepLienVan.setSokhung(src.getSokhung());
-				elmGiayPhepLienVan.setSomay(src.getSomay());
-				elmGiayPhepLienVan.setMauson_id(src.getMauson_id());
-				elmGiayPhepLienVan.setLoaihinh_id(src.getLoaihinh_id());
-				elmGiayPhepLienVan.setCuakhau_id(src.getCuakhau_id());
-				elmGiayPhepLienVan.setDenghi_capden(src.getDenghi_capden());
-				elmGiayPhepLienVan.setDenghi_captu(src.getDenghi_captu());
-				elmGiayPhepLienVan.setNgaycap(src.getNgaycap());
-				elmGiayPhepLienVan.setNguoicap(src.getNguoicap());
-				elmGiayPhepLienVan.setNgayhethan(src.getNgayhethan());
-				elmGiayPhepLienVan.setNgaythuhoi(src.getNgaythuhoi());
-				elmGiayPhepLienVan.setLydo_thuhoi(src.getLydo_thuhoi());
-				elmGiayPhepLienVan.setNgayky(src.getNgayky());
-				elmGiayPhepLienVan.setNguoi_ky_id(src.getNguoi_ky_id());
-				elmGiayPhepLienVan.setNguoiky(src.getNguoiky());
-				elmGiayPhepLienVan.setGhichu(src.getGhichu());
-				elmGiayPhepLienVan.setUrl_file_gplv(src.getUrl_file_gplv());
-				//elmGiayPhepLienVan.setTrangthai(src.getTrangthai());
-				elmGiayPhepLienVan.setQuocgia_id(src.getQuocgia_id());
-				elmGiayPhepLienVan.setTuyen_id(src.getQuocgia_id());
-				elmGiayPhepLienVan.setCoquanquanly_id(src.getCoquanquanly_id());
 
-				ILGiayPhepLienVanLocalServiceUtil.addILGiayPhepLienVan(elmGiayPhepLienVan);
-			}
 		}
+		
+
 	}
 	
 
