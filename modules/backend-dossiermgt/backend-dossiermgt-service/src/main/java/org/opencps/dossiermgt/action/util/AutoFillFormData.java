@@ -31,12 +31,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 public class AutoFillFormData {
 
 	public static String sampleDataBinding(String sampleData, long dossierId, ServiceContext serviceContext) {
 		// TODO Auto-generated method stub
+		
+		//_log.info("SAMPLE_DATA*********** " + sampleData);
+		
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		try {
 
@@ -342,11 +346,9 @@ public class AutoFillFormData {
 			if (!jsonMap.containsKey("referenceUid"))
 				jsonMap.put("referenceUid", _referenceUid);
 			
-			
-			
 			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
 				
-//				_log.info(StringUtil.shorten(entry.getValue().toString(), 2500));
+				_log.info(StringUtil.shorten(entry.getValue().toString(), 2500));
 
 				if (entry.getValue().toString().trim().startsWith("[")) {
 					JSONArray jsonArray = JSONFactoryUtil.createJSONArray(entry.getValue().toString());
@@ -379,6 +381,7 @@ public class AutoFillFormData {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		//_log.info("FORM_DATA *********** " + result.toJSONString());
 
 		return result.toJSONString();
 	}

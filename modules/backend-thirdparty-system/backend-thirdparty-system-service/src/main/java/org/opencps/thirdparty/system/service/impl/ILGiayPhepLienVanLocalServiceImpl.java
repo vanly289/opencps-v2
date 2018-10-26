@@ -16,7 +16,12 @@ package org.opencps.thirdparty.system.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.List;
+
+import org.opencps.thirdparty.system.model.ILGiayPhepLienVan;
 import org.opencps.thirdparty.system.service.base.ILGiayPhepLienVanLocalServiceBaseImpl;
+
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * The implementation of the il giay phep lien van local service.
@@ -40,4 +45,16 @@ public class ILGiayPhepLienVanLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ILGiayPhepLienVanLocalServiceUtil} to access the il giay phep lien van local service.
 	 */
+	
+	
+	public ILGiayPhepLienVan getLastest() {
+		List<ILGiayPhepLienVan> lsGiayPhepLienVan = ilGiayPhepLienVanPersistence.findAll(0, 1);
+
+		if (lsGiayPhepLienVan.size() > 0) {
+			return lsGiayPhepLienVan.get(0);
+		} else {
+			return null;
+		}
+	}
+
 }

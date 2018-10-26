@@ -435,6 +435,10 @@
 		<column name="ghichu" type="String"/>
 		<column name="trangthai" type="int"/>
 		
+		<order>
+			<order-column name="id" order-by="desc" />
+		</order>	
+		
 		<finder name="B_DN" return-type="Collection">
             <finder-column name="doanhnghiep_id" />
         </finder>
@@ -549,10 +553,13 @@
 		<column name="trangthai" type="int"/>
 		<column name="quocgia_id" type="long"/>
 
+		<order>
+			<order-column name="id" order-by="desc" />
+		</order>	
+
 		<finder name="PT_ID" return-type="Collection">
             <finder-column name="doanhnghiep_id" />
         </finder>
-		
 	</entity>
 	
 	<entity local-service="true" name="ILGiayPhepLienVan" remote-service="false" uuid="false" table="nsw_giaypheplienvan">
@@ -587,10 +594,18 @@
 		<column name="tuyen_id" type="long"/>
 		<column name="coquanquanly_id" type="long"/>
 
+		<order>
+			<order-column name="id" order-by="desc" />
+		</order>		
+
 		<finder name="PT_ID" return-type="Collection">
             <finder-column name="phuongtien_id" />
         </finder>
-		
+        
+        <finder name="GT_ID" return-type="Collection">
+            <finder-column name="id" comparator="&gt;"/>
+        </finder>
+
 	</entity>
 	
 </service-builder>
