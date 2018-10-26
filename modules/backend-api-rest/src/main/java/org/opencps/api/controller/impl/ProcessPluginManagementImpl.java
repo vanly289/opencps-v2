@@ -375,9 +375,12 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 							DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(
 									dossier.getDossierId(), strFileTemplateNo, false,
 									new DossierFileComparator(false, "createDate", Date.class));
-
-							formData = dossierFile.getFormData();
-
+							
+							if (Validator.isNotNull(dossierFile)) {
+								formData = dossierFile.getFormData();
+							} else {
+								_log.info("DOSSIER_FILE_IS_NULL***** ");
+							}
 						} else {
 							formData = _getFormData(groupId, formCode, dossier.getDossierId(), autoRun,
 									dossier.getDossierTemplateNo(), original, serviceContext);
