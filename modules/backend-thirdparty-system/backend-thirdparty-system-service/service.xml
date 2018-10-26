@@ -435,6 +435,10 @@
 		<column name="ghichu" type="String"/>
 		<column name="trangthai" type="int"/>
 		
+		<order>
+			<order-column name="id" order-by="desc" />
+		</order>	
+		
 		<finder name="B_DN" return-type="Collection">
             <finder-column name="doanhnghiep_id" />
         </finder>

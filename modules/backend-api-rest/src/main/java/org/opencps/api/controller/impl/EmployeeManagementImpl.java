@@ -40,16 +40,19 @@ import org.opencps.usermgt.utils.DateTimeUtils;
 
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -89,17 +92,17 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 			params.put(EmployeeTerm.JOB_POS_ID, query.getJobpos());
 			params.put(EmployeeTerm.WORKING_STATUS, query.getStatus());
 
-			if(Validator.isNotNull(query.getActive())){
+			if (Validator.isNotNull(query.getActive())) {
 				params.put(EmployeeTerm.ACTIVE,
 						query.getActive().equals(Boolean.TRUE.toString())
 								? String.valueOf(WorkflowConstants.STATUS_APPROVED)
 								: String.valueOf(WorkflowConstants.STATUS_DENIED));
 			}
-			
+
 			params.put(EmployeeTerm.MONTH, query.getMonth());
 
-			_log.info("EmployeeManagementImpl.getEmployees()"+params);
-			
+			_log.info("EmployeeManagementImpl.getEmployees()" + params);
+
 			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
 					Boolean.valueOf(query.getOrder())) };
 
@@ -399,8 +402,8 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 			File file = actions.getEmployeePhoto(id, serviceContext);
 
 			FileEntry fileEntry = actions.getFileEntry(id, serviceContext);
-			
-			if(file != null && fileEntry != null){
+
+			if (file != null && fileEntry != null) {
 				String fileName = fileEntry.getFileName();
 
 				ResponseBuilder responseBuilder = Response.ok((Object) file);
@@ -409,7 +412,7 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 						.header("Content-Type", fileEntry.getMimeType());
 
 				return responseBuilder.build();
-			}else{
+			} else {
 				ErrorMsg error = new ErrorMsg();
 				error.setMessage("file not found!");
 				error.setCode(404);
@@ -921,54 +924,54 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 	@Override
 	public Response getEmployeesByRole(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, long roleId, DataSearchModel query) {
-			EmployeeInterface actions = new EmployeeActions();
-			EmployeeResults result = new EmployeeResults();
-			try {
+		EmployeeInterface actions = new EmployeeActions();
+		EmployeeResults result = new EmployeeResults();
+		try {
 
-				long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
-				
-				List<User> users = UserLocalServiceUtil.getRoleUsers(roleId);
-				StringBuilder strUserIdList = new StringBuilder();
-				if (users != null && users.size() > 0) {
-					int length = users.size();
-					for (int i = 0; i < length; i++) {
-						User userDetail = users.get(i);
-						long userId = userDetail.getUserId();
-						if (Validator.isNotNull(userId) && userId > 0) {
-							if (i == length - 1) {
-								strUserIdList.append(userId);
-							} else {
-								strUserIdList.append(userId);
-								strUserIdList.append(StringPool.COMMA);
-							}
+			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+
+			List<User> users = UserLocalServiceUtil.getRoleUsers(roleId);
+			StringBuilder strUserIdList = new StringBuilder();
+			if (users != null && users.size() > 0) {
+				int length = users.size();
+				for (int i = 0; i < length; i++) {
+					User userDetail = users.get(i);
+					long userId = userDetail.getUserId();
+					if (Validator.isNotNull(userId) && userId > 0) {
+						if (i == length - 1) {
+							strUserIdList.append(userId);
+						} else {
+							strUserIdList.append(userId);
+							strUserIdList.append(StringPool.COMMA);
 						}
 					}
 				}
+			}
 
-				if (query.getEnd() == 0) {
+			if (query.getEnd() == 0) {
 
-					query.setStart(-1);
+				query.setStart(-1);
 
-					query.setEnd(-1);
+				query.setEnd(-1);
 
-				}
+			}
 
-				LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
-				params.put("groupId", String.valueOf(groupId));
-				params.put("keywords", query.getKeywords());
-				params.put("userIdList", strUserIdList.toString());
+			params.put("groupId", String.valueOf(groupId));
+			params.put("keywords", query.getKeywords());
+			params.put("userIdList", strUserIdList.toString());
 
-				Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
-						Boolean.valueOf(query.getOrder())) };
+			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
+					Boolean.valueOf(query.getOrder())) };
 
-				JSONObject jsonData = actions.getEmployees(user.getUserId(), company.getCompanyId(), groupId, params, sorts,
-						query.getStart(), query.getEnd(), serviceContext);
+			JSONObject jsonData = actions.getEmployees(user.getUserId(), company.getCompanyId(), groupId, params, sorts,
+					query.getStart(), query.getEnd(), serviceContext);
 
-				result.setTotal(jsonData.getLong("total"));
-				result.getEmployeeModel().addAll(EmployeeUtils.mapperEmployeeList((List<Document>) jsonData.get("data")));
+			result.setTotal(jsonData.getLong("total"));
+			result.getEmployeeModel().addAll(EmployeeUtils.mapperEmployeeList((List<Document>) jsonData.get("data")));
 
-				return Response.status(200).entity(result).build();
+			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
 			_log.error(e);
@@ -979,6 +982,143 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 			error.setDescription("not found!");
 
 			return Response.status(404).entity(error).build();
+		}
+	}
+
+	@Override
+	public Response changePass(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, long employeeId) {
+
+		List<Role> roles = RoleLocalServiceUtil.getUserRoles(user.getUserId());
+		
+		String password = header.getHeaderString("password");
+
+		JSONObject error = JSONFactoryUtil.createJSONObject();
+		JSONObject success = JSONFactoryUtil.createJSONObject();
+
+		boolean isPowerUser = false;
+
+		for (Role role : roles) {
+			if (role.getName().equals("Power User") || role.getName().equals("Administrator")) {
+				isPowerUser = true;
+			}
+		}
+
+		if (isPowerUser) {
+			// change password
+
+			Employee employee = EmployeeLocalServiceUtil.fetchEmployee(employeeId);
+
+			if (Validator.isNull(employee)) {
+				error.put("code", 404);
+				error.put("message", "Not found");
+				error.put("description", "Not found employee with employeeId was provided");
+
+				return Response.status(404).entity(error.toJSONString()).build();
+			}
+
+			User employeeUser = UserLocalServiceUtil.fetchUser(employee.getMappingUserId());
+
+			if (Validator.isNull(employeeUser)) {
+				error.put("code", 404);
+				error.put("message", "Not found");
+				error.put("description", "Not found user mapping with employeeId was provided");
+				return Response.status(404).entity(error.toJSONString()).build();
+			}
+			
+			try {
+				UserLocalServiceUtil.updatePassword(employeeUser.getUserId(), password, password, false, true);
+				
+				success.put("code", 200);
+				success.put("message", "Susscess");
+				success.put("description", "User password just updated");
+				return Response.status(200).entity(success.toJSONString()).build();
+
+			} catch (PortalException e) {
+				error.put("code", 500);
+				error.put("message", "Internal Server Error");
+				error.put("description", e.getMessage());
+				return Response.status(500).entity(error.toJSONString()).build();
+			}
+
+		} else {
+			// not permission
+
+			error.put("code", 401);
+			error.put("message", "Unauthorized");
+			error.put("description", "Please contact with administrator to get permit");
+
+			return Response.status(401).entity(error.toJSONString()).build();
+
+		}
+
+	}
+
+	@Override
+	public Response checkStatus(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, long employeeId) {
+		List<Role> roles = RoleLocalServiceUtil.getUserRoles(user.getUserId());
+		
+		//String password = header.getHeaderString("password");
+
+		JSONObject error = JSONFactoryUtil.createJSONObject();
+		JSONObject success = JSONFactoryUtil.createJSONObject();
+
+		boolean isPowerUser = false;
+
+		for (Role role : roles) {
+			if (role.getName().equals("Power User") || role.getName().equals("Administrator")) {
+				isPowerUser = true;
+			}
+		}
+
+		if (isPowerUser) {
+			// change password
+
+			Employee employee = EmployeeLocalServiceUtil.fetchEmployee(employeeId);
+
+			if (Validator.isNull(employee)) {
+				error.put("code", 404);
+				error.put("message", "Not found");
+				error.put("description", "Not found employee with employeeId was provided");
+
+				return Response.status(404).entity(error.toJSONString()).build();
+			}
+			
+			//UserLocalServiceUtil.
+
+			User employeeUser = UserLocalServiceUtil.fetchUser(employee.getMappingUserId());
+
+			if (Validator.isNull(employeeUser)) {
+				error.put("code", 404);
+				error.put("message", "Not found");
+				error.put("description", "Not found user mapping with employeeId was provided");
+				return Response.status(404).entity(error.toJSONString()).build();
+			}
+			
+			boolean isSetupComplete = employeeUser.isSetupComplete();
+			
+			if (isSetupComplete) {
+				success.put("code", 200);
+				success.put("isSetupComplete", true);
+				success.put("description", "Setup is completed");
+				return Response.status(200).entity(success.toJSONString()).build();
+			} else {
+				success.put("code", 200);
+				success.put("isSetupComplete", false);
+				success.put("description", "Setup is NOT completed");
+				return Response.status(200).entity(success.toJSONString()).build();
+			}
+			
+		} else {
+			// not permission
+
+			error.put("code", 401);
+			error.put("message", "Unauthorized");
+			error.put("description", "Please contact with administrator to get permit");
+
+			return Response.status(401).entity(error.toJSONString()).build();
+
 		}
 	}
 }
