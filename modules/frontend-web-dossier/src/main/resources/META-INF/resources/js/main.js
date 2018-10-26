@@ -1224,13 +1224,17 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 																			
 										for (var key in formData) {
 											if (!document.getElementById(key)) {
+												String cssDiv = '';
+												if (formData[key].hasOwnProperty("css")) {
+													cssDiv = formData[key].css;
+												}
 												if (key.indexOf("array_") != -1) {
 													var newKeyArr = key.split("_");
 													var newKey = newKeyArr[2];
 													if (item.hasOwnProperty(newKey)) {
 														var itemDataArr = item[newKey].split("/");
 														if (itemDataArr.length > newKeyArr[1]) {
-															$("#printTraCuu").append('<div id='+key+' title='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + itemDataArr[newKeyArr[1]] + '</div>');																																																				
+															$("#printTraCuu").append('<div id='+key+' title='+key+' style="' + cssDiv + 'z-index: 99; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + itemDataArr[newKeyArr[1]] + '</div>');																																																				
 														}
 													}													
 												}
@@ -1239,15 +1243,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 													var newKeyArr = key.split("_");
 													var newKey = newKeyArr[1];
 													if (item.hasOwnProperty(newKey)) {
-														$("#printTraCuu").append('<div id='+key+' title='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[newKey] + '</div>');																																					
+														$("#printTraCuu").append('<div id='+key+' title='+key+' style="' + cssDiv + 'z-index: 99; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[newKey] + '</div>');																																					
 													}
 												}
 												else {
 													if (key.toLowerCase().indexOf("text") !== -1 && formData[key].hasOwnProperty("value")) {
-														$("#printTraCuu").append('<div id='+key+' title='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + formData[key].value + '</div>');																																																	
+														$("#printTraCuu").append('<div id='+key+' title='+key+' style="' + cssDiv + 'z-index: 99; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + formData[key].value + '</div>');																																																	
 													}
 													else if (item.hasOwnProperty(key)) {
-														$("#printTraCuu").append('<div id='+key+' title='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');																																			
+														$("#printTraCuu").append('<div id='+key+' title='+key+' style="' + cssDiv + 'z-index: 99; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');																																			
 													}
 												}
 												$('#' + key).draggable({

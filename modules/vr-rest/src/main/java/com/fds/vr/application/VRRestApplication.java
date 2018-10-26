@@ -938,12 +938,13 @@ public class VRRestApplication extends Application {
 	public Response checkVehicle(@Context HttpHeaders header,
 			@PathParam("registrationNumber") String registrationNumber) {
 		long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
+		JSONObject obj = JSONFactoryUtil.createJSONObject();
 		PhuongTien phuongTien = PhuongTienLocalServiceUtil.findByBKS(registrationNumber);
 		ILVehicle vehicle = ILVehicleLocalServiceUtil.getByRegistrationNumber(registrationNumber);
-		List<ILViPham> viphams = ILViPhamLocalServiceUtil.getByPhuongTien(phuongTien.getId());
-		JSONObject obj = JSONFactoryUtil.createJSONObject();
+		
+		List<ILViPham> viphams = ILViPhamLocalServiceUtil.getByPhuongTien(phuongTien != null ? phuongTien.getId() : (vehicle != null ? vehicle.getId() : 0));
 
-		if (vehicle != null && phuongTien != null) {
+		if (vehicle != null || phuongTien != null) {
 			if (viphams.size() > 0) {
 				obj.put("vehicleStatus", 2);
 			} else {
