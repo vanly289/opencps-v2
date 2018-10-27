@@ -1106,11 +1106,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								var xPos = $(this).position().left;
 								var yPos = $(this).position().top;
 
-								formTemplate[id] = {
-									offsetX: xPos,
-									offsetY: yPos,
-									value: $(this).text()
-								};
+								if (id.startsWith("text")) {
+									formTemplate[id] = {
+										offsetX: xPos,
+										offsetY: yPos,
+										value: $(this).text()
+									};									
+								}
+								else {
+									formTemplate[id] = {
+										offsetX: xPos,
+										offsetY: yPos
+									};									
+								}
 							});
 							console.log(formTemplate);
 							var vm = this;

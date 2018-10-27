@@ -49,14 +49,7 @@ import org.opencps.inland.service.InlandPrintTemplateLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.fds.vr.business.action.ILCertificateActions;
-import com.fds.vr.business.action.impl.ILCertificateActionsImpl;
-import com.fds.vr.business.model.ILCertificate;
-import com.fds.vr.business.service.ILCertificateLocalServiceUtil;
-import com.fds.vr.ilcertificate.model.ILCertificateModel;
-import com.fds.vr.util.ILCertificateUtils;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
