@@ -390,7 +390,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						formReport = _getFormScript(formCode, dossier.getDossierId());
 					}
 
-					_log.info("Form data to preview: " + formData + ", auto run: " + autoRun);
+					_log.info("Form data to preview: " + formData + ", auto run: " + autoRun + ", form report: " + formReport);
 					Message message = new Message();
 
 					message.put("formReport", formReport);
@@ -623,8 +623,9 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 								_log.info("deliverables is NULL *****");
 
 								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
-
-								formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
+								if (dossierFile != null) {
+									formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());									
+								}
 								formData = formDataObj.toJSONString();
 								DossierFileActions actions = new DossierFileActionsImpl();
 

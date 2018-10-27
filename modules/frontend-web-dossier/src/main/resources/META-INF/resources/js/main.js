@@ -1232,7 +1232,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 																			
 										for (var key in formData) {
 											if (!document.getElementById(key)) {
-												String cssDiv = '';
+												var cssDiv = '';
 												if (formData[key].hasOwnProperty("css")) {
 													cssDiv = formData[key].css;
 												}
