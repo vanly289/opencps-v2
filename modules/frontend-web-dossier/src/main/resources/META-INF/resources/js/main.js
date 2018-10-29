@@ -1,6 +1,6 @@
 
 
-var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, emailAddress, agencies){
+var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, emailAddress, agencies, isAdminUser){
 	const config = {
 		headers: {
 			'groupId': themeDisplay.getScopeGroupId()
@@ -9,9 +9,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 	const configPage = {
 		pageSize: 15,
-		serviceinfosQuocTe: 'BGTVT0600001,BGTVT0600002,BGTVT0600003,BGTVT0600004,BGTVT0600019,BGTVT0600020,BGTVT0600021,BGTVT0600022',
-		serviceinfosLienVan: 'BGTVT0600005,BGTVT0600006,BGTVT0600007,BGTVT0600008,BGTVT0600009,BGTVT0600010,BGTVT0600011,BGTVT0600012,BGTVT0600023,BGTVT0600024,BGTVT0600025,BGTVT0600026,BGTVT0600027,BGTVT0600028,BGTVT0600029,BGTVT0600030,BGTVT0600031,BGTVT0600032,BGTVT0600033,BGTVT0600034,BGTVT0600035,BGTVT0600036,BGTVT0600037,BGTVT0600038,BGTVT0600039,BGTVT0600040,BGTVT0600041,BGTVT0600042,BGTVT0600043,BGTVT0600044',
-		serviceinfosChapThuan: 'BGTVT0600013,BGTVT0600014,BGTVT0600015,BGTVT0600016,BGTVT0600017,BGTVT0600030,BGTVT0600031,BGTVT0600032,BGTVT0600033,BGTVT0600034'
+		serviceinfosQuocTe: 'BGTVT0600001,BGTVT0600002,BGTVT0600003,BGTVT0600004,BGTVT0600019,BGTVT0600020,BGTVT0600021,BGTVT0600022,BGTVT0600058,BGTVT0600059,BGTVT0600060',
+		serviceinfosLienVan: 'BGTVT0600005,BGTVT0600006,BGTVT0600007,BGTVT0600008,BGTVT0600009,BGTVT0600010,BGTVT0600011,BGTVT0600012,BGTVT0600023,BGTVT0600024,BGTVT0600025,BGTVT0600026,BGTVT0600027,BGTVT0600028,BGTVT0600029,BGTVT0600036,BGTVT0600037,BGTVT0600038,BGTVT0600039,BGTVT0600040,BGTVT0600041,BGTVT0600042,BGTVT0600043,BGTVT0600018,BGTVT0600035,BGTVT0600047,BGTVT0600048,BGTVT0600049,BGTVT0600050,BGTVT0600051,BGTVT0600052,BGTVT0600053,BGTVT0600054,BGTVT0600055,BGTVT0600057,BGTVT0600061,BGTVT0600062,BGTVT0600063,BGTVT0600064,BGTVT0600065',
+		serviceinfosChapThuan: 'BGTVT0600013,BGTVT0600014,BGTVT0600015,BGTVT0600016,BGTVT0600017,BGTVT0600030,BGTVT0600031,BGTVT0600032,BGTVT0600033,BGTVT0600034,BGTVT0600044,BGTVT0600045,BGTVT0600046,BGTVT0600056'
 
 	};
 
@@ -429,7 +429,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			disableUploadAndDel: false,
 			govAgencysItems: [],
 			govAgencySearch: '',
-			loadingMenuList: false
+			loadingMenuList: false,
+			isAdminUser: false
 		},
 		watch: {
 			pageGiayPhepVanTaiQuocTeTable: {
@@ -636,8 +637,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								});
 								vm._initTuyens();
 							} else if (item.state === 'quan_ly_van_tai_quoc_te') {
-								window.location.href = "/group/cong-xu-ly/quan-ly-van-tai-quoc-te"
-
+								window.location.href = "/group/cong-xu-ly/quan-ly-van-tai-quoc-te";
+							} else if (item === 'qltk') {
+								window.location.href = "/group/cong-xu-ly/quan-ly-tai-khoan";
 							} else {
 								console.log($(event)[0]);
 								console.log($(event)[0].target);
@@ -854,6 +856,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm._initDossierStatus();
 							vm._initGovAgencysFilter();
 							vm.setStateOnlyFollow(emailAddress);
+							console.log('----------------isAdminUser+++++++++++++++', isAdminUser)
+							if (isAdminUser) {
+								vm.isAdminUser = isAdminUser;
+							}
 							$("aside").remove();
 						},
 						deleteDossierFileVersion: function (item) {
@@ -1224,7 +1230,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 																			
 										for (var key in formData) {
 											if (!document.getElementById(key)) {
-												String cssDiv = '';
+												var cssDiv = '';
 												if (formData[key].hasOwnProperty("css")) {
 													cssDiv = formData[key].css;
 												}
@@ -2488,7 +2494,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         			}catch(e){
 
                         			}*/
-
                         		
                         	},
                         	postNextActions: function (item){
@@ -2664,7 +2669,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									/*var jsonData = JSON.parse(result);*/
 									var msgs = result.msg;
 									if (msgs !== 'fileEntryId') {
+										console.log('not fileEntryId')
 										var hashComputers = result.hashComputers;
+										console.log('result.hashComputers++++++++++', result.hashComputers)
 										var signFieldNames = result.signFieldNames;
 										var fileNames = result.fileNames;
 										var fileEntryIds = result.fileEntryId;
@@ -2676,14 +2683,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										var signs = [];
 										
 										if(plugin().valid) {
-											
+											console.log('valid plugin!')
 											for ( var i = 0; i < hashComputers.length; i++) {
 
 												var hashComputer = hashComputers[i];
 												var code = plugin().Sign(hashComputer);
 												
-												if(code === 0 || code === 7){			
+												if(code === 0 || code === 7){
+													console.log('code ok');		
 													var sign = plugin().Signature;
+													console.log('plugin().Signature+++++++', plugin().Signature);
 													var signFieldName = signFieldNames[i];
 													var fileName = fileNames[i];
 													console.log("sign: "+sign);
@@ -2702,7 +2711,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 //													}else{
 //														alert(msg);
 //													}	
-												}else{
+												}else{		
 													alert(plugin().ErrorMessage);
 												}
 											}
