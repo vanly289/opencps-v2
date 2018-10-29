@@ -1,14 +1,11 @@
 package org.opencps.inland.rest.application;
 
-import java.awt.image.BufferedImage;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.BeanParam;
@@ -49,14 +46,7 @@ import org.opencps.inland.service.InlandPrintTemplateLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.fds.vr.business.action.ILCertificateActions;
-import com.fds.vr.business.action.impl.ILCertificateActionsImpl;
-import com.fds.vr.business.model.ILCertificate;
-import com.fds.vr.business.service.ILCertificateLocalServiceUtil;
-import com.fds.vr.ilcertificate.model.ILCertificateModel;
-import com.fds.vr.util.ILCertificateUtils;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
