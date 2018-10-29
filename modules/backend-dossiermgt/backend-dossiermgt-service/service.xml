@@ -910,6 +910,9 @@
 		<finder return-type="Collection" name="P_S_ID">
 			<finder-column name="processStepId" />
 		</finder>
+		<finder return-type="Collection" name="P_RID">
+			<finder-column name="roleId" />
+		</finder>
 
 	</entity>
 	

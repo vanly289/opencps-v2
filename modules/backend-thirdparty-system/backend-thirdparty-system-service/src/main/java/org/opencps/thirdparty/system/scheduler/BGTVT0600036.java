@@ -48,8 +48,6 @@ public class BGTVT0600036 {
 		String jaxRsPublicUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_PUBLIC_URL);
 
 		VTOfficialTransportPermit vtOfficialTransportPermit = new VTOfficialTransportPermit();
-		AttachedFile attachedFile = new AttachedFile();
-		List<AttachedFile> lstFiles = new ArrayList<>();
 
 		List<MessageQueueInputModel> lstResults = new ArrayList<>();
 		
@@ -86,6 +84,9 @@ public class BGTVT0600036 {
 			String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
 			for (String returnDossierFile : returnDossierFilesArr) {
 				if (templateNo.equals(returnDossierFile)) {
+					AttachedFile attachedFile = new AttachedFile();
+					List<AttachedFile> lstFiles = new ArrayList<>();
+
 					MessageQueueInputModel model = new MessageQueueInputModel();
 					model.setContent("");
 					model.setSender("BGTVT");
