@@ -49,14 +49,7 @@ import org.opencps.inland.service.InlandPrintTemplateLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.fds.vr.business.action.ILCertificateActions;
-import com.fds.vr.business.action.impl.ILCertificateActionsImpl;
-import com.fds.vr.business.model.ILCertificate;
-import com.fds.vr.business.service.ILCertificateLocalServiceUtil;
-import com.fds.vr.ilcertificate.model.ILCertificateModel;
-import com.fds.vr.util.ILCertificateUtils;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -412,7 +405,10 @@ public class BackendInlandApiRestApplication extends Application {
 							Iterator<String> keys = formTemplateObj.keys();
 							while (keys.hasNext()) {
 								String key = keys.next();
-								
+								String cssDiv = StringPool.BLANK;
+								if (formDataObj.has("css")) {
+									cssDiv = formDataObj.getString("css");
+								}
 								if (key.indexOf("array_") != -1) {
 									String[] newKeyArr = key.split("_");
 									int key1 = GetterUtil.getInteger(newKeyArr[1]);
@@ -420,7 +416,7 @@ public class BackendInlandApiRestApplication extends Application {
 									if (formDataObj.has(newKey)) {
 										String[] itemDataArr = formDataObj.getString(newKey).split("/");
 										if (itemDataArr.length > key1) {
-											html += "<div class=\"" + key + "\" style=\"z-index: 99; font-size: 14px; position:absolute; left :";
+											html += "<div class=\"" + key + "\" style=\"" + cssDiv + ";z-index: 99; font-size: 14px; position:absolute; left :";
 											html += formTemplateObj.getJSONObject(key).getString("offsetX");
 											html += "px; top : " + formTemplateObj.getJSONObject(key).getString("offsetY") + "px\">";
 											html += itemDataArr[key1];
@@ -431,7 +427,7 @@ public class BackendInlandApiRestApplication extends Application {
 									String[] newKeyArr = key.split("_");
 									String newKey = newKeyArr[1];
 									if (formDataObj.has(newKey)) {
-										html += "<div class=\"" + key + "\" style=\"z-index: 99; font-size: 14px; position:absolute; left :";
+										html += "<div class=\"" + key + "\" style=\"" + cssDiv + ";z-index: 99; font-size: 14px; position:absolute; left :";
 										html += formTemplateObj.getJSONObject(key).getString("offsetX");
 										html += "px; top : " + formTemplateObj.getJSONObject(key).getString("offsetY") + "px\">";
 										html += formDataObj.getString(newKey);
@@ -439,13 +435,13 @@ public class BackendInlandApiRestApplication extends Application {
 									}
 								} else {
 									if (key.toLowerCase().indexOf("text") > -1 && formTemplateObj.getJSONObject(key).has("value")) {
-										html += "<div class=\"" + key + "\" style=\"z-index: 99; font-size: 14px; position:absolute; left :";
+										html += "<div class=\"" + key + "\" style=\"" + cssDiv + ";z-index: 99; font-size: 14px; position:absolute; left :";
 										html += formTemplateObj.getJSONObject(key).getString("offsetX");
 										html += "px; top : " + formTemplateObj.getJSONObject(key).getString("offsetY") + "px\">";
 										html += formTemplateObj.getJSONObject(key).getString("value");
 										html += "</div>";
 									} else if (formDataObj.has(key)) {
-										html += "<div class=\"" + key + "\" style=\"z-index: 99; font-size: 14px; position:absolute; left :";
+										html += "<div class=\"" + key + "\" style=\"" + cssDiv + ";z-index: 99; font-size: 14px; position:absolute; left :";
 										html += formTemplateObj.getJSONObject(key).getString("offsetX");
 										html += "px; top : " + formTemplateObj.getJSONObject(key).getString("offsetY") + "px\">";
 										html += formDataObj.getString(key);

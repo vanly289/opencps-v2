@@ -382,6 +382,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 								_log.info("DOSSIER_FILE_IS_NULL***** ");
 							}
 						} else {
+							_log.info("Preview not original");
 							formData = _getFormData(groupId, formCode, dossier.getDossierId(), autoRun,
 									dossier.getDossierTemplateNo(), original, serviceContext);
 						}
@@ -491,7 +492,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 		String formData = StringPool.BLANK;
 		fileTemplateNo = StringUtil.replaceFirst(fileTemplateNo, "#", StringPool.BLANK);
-
+		_log.info("Get form data to preview: " + fileTemplateNo);
 		try {
 			Dossier dossier = DossierLocalServiceUtil.getDossier(dossierId);
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
@@ -622,8 +623,9 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 								_log.info("deliverables is NULL *****");
 
 								JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
-
-								formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
+								if (dossierFile != null) {
+									formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());									
+								}
 								formData = formDataObj.toJSONString();
 								DossierFileActions actions = new DossierFileActionsImpl();
 
