@@ -29,6 +29,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import org.apache.http.HttpStatus;
 import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
 import org.opencps.dossiermgt.model.Deliverable;
@@ -84,6 +85,7 @@ import com.fds.vr.ilcertificate.model.ILCertificateResultModel;
 import com.fds.vr.ilcertificate.model.ILCertificateSearchModel;
 import com.fds.vr.ilcertificate.model.ILVehicleModel;
 import com.fds.vr.util.ILCertificateUtils;
+import com.google.gson.JsonObject;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -406,35 +408,131 @@ public class VRRestApplication extends Application {
 	}
 
 	@GET
-	@Path("/phuongtien/{phuongtienid}/refer/{sogiayphep}")
+	@Path("/phuongtien/{biensoxe}/refer")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findPhuongTien(@Context HttpHeaders header, @PathParam("phuongtienid") long phuongtienid,
-			@PathParam("sogiayphep") String sogiayphep, @QueryParam("start") Integer start,
+	public Response findChungChi(@Context HttpHeaders header,
+			@PathParam("biensoxe") String biensoxe, @QueryParam("start") Integer start,
 			@QueryParam("end") Integer end) {
 
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		JSONObject error = JSONFactoryUtil.createJSONObject();
 		
 		try {
-			ILCertificate certificate = ILCertificateLocalServiceUtil.fetchByLicenceNo(sogiayphep);
+			ILCertificate certificate = ILCertificateLocalServiceUtil.searchByRegNumbber(biensoxe);
 			
-			result.put("TrademarkName", certificate.getTrademarkName());
-			result.put("TrademarkCode", certificate.getTrademarkCode());
-			result.put("PermitedFrom", certificate.getValidFrom());
-			result.put("Capacity", certificate.getCapacity());
-			result.put("ProposedStops", certificate.getDestination());
-			result.put("PermitedTo", certificate.getValidUntil());
-			result.put("TransportType", certificate.getVehicleType());
-			result.put("RouteCode", certificate.getRouteDescription());
-			result.put("Accepted", "");
-			
-			result.put("Reason", "");
-			
-			return Response.status(200).entity(result.toJSONString()).build();
+			if (Validator.isNotNull(certificate)) {
+				
+				result.put("TrademarkCode", certificate.getTrademarkCode());
+				result.put("PermitedFrom", certificate.getValidFrom());
+				result.put("Capacity", certificate.getCapacity());
+				result.put("ProposedStops", certificate.getStops());
+				result.put("RegistrationNumber", certificate.getRegistrationNumber());
+				result.put("PermitedTo", certificate.getValidUntil());
+				result.put("TransportType", certificate.getVehicleType());
+				result.put("RouteCode", certificate.getRouteCode());
+				
+				/*TrademarkCode
+				PermitedFrom
+				Capacity
+				ProposedStops
+				RegistrationNumber
+				PermitedTo
+				TransportType
+				RouteCode
+				bienSoXe
+				
+				mucDich
+				soKhung
+				soMay
+				mauSon
+				nhanHieu
+				trongTai
+				loaiHangHoa
+				soHanhKhach
+				diemDungDo
+				diemDungTrenDuong
+				hinhThuc
+				hanhTrinh
+				ngayCap
+				ngayHetHan
+				tinhDi
+				tinhDen
+				benDi
+				benDen
+				cuaKhau
+				*/
+				
+				return Response.status(200).entity(JSONFactoryUtil.looseSerialize(certificate)).build();
 
-		} catch (PortalException e) {
-			error.put("code", "404");
-			error.put("message", "GIAY_PHEP_NOT_FOUND");
+			} else {
+				error.put("code", "404");
+				error.put("message", "GIAY_PHEP_NOT_FOUND");
+				return Response.status(404).entity(error.toJSONString()).build();
+			}
+			
+			
+
+		} catch (Exception e) {
+			error.put("code", "500");
+			error.put("message", "Internal Error");
+			return Response.status(404).entity(error.toJSONString()).build();
+		}
+	}
+
+	
+	@POST
+	@Path("/phuongtien/{sogiayphep}/update")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addCertificate(@Context HttpHeaders header,
+			@PathParam("sogiayphep") String sogiayphep, String body) {
+
+		JSONObject error = JSONFactoryUtil.createJSONObject();
+		
+		
+		
+		try {
+			
+			
+			ILCertificate ilCertificate = ILCertificateLocalServiceUtil.fetchByLicenceNo(sogiayphep);
+			
+			if (Validator.isNotNull(ilCertificate)) {
+				
+				long id = CounterLocalServiceUtil.increment(ILCertificate.class.getName());
+				
+				ilCertificate.setId(id);
+				
+				if (Validator.isNotNull(body)) {
+
+					
+					JSONObject jsonBody = JSONFactoryUtil.createJSONObject(body);
+					
+					//TODO Update key here
+					
+					String licenceNo = jsonBody.getString("licenceNo");
+					
+					
+					String strValidUtil = jsonBody.getString("validUntil");
+					
+					String strValidFrom = jsonBody.getString("validFrom");
+				}
+				
+				ILCertificate updateCertificate = ILCertificateLocalServiceUtil.addILCertificate(ilCertificate);
+				
+				
+				
+				return Response.status(200).entity(JSONFactoryUtil.looseSerialize(updateCertificate)).build();
+
+				
+			} else {
+				error.put("code", "404");
+				error.put("message", "GIAY_PHEP_NOT_FOUND");
+				return Response.status(404).entity(error.toJSONString()).build();
+
+			}
+
+		} catch (Exception e) {
+			error.put("code", "500");
+			error.put("message", "Internal Error");
 			return Response.status(404).entity(error.toJSONString()).build();
 		}
 	}
@@ -567,9 +665,37 @@ public class VRRestApplication extends Application {
 
 			return Response.status(404).entity(error.toJSONString()).build();
 		}
-
 	}
+	
+	
 
+	@GET
+	@Path("/phuongtien/{biensoxe}/giayphepphuongtien")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findPhuongTienGiayPhep(@Context HttpHeaders header,
+			@PathParam("biensoxe") String biensoxe) {
+
+		JSONObject error = JSONFactoryUtil.createJSONObject();
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		
+		List<ILCertificate> lsCertificates = ILCertificateLocalServiceUtil.searchListByRegistionNumber(biensoxe);
+		
+		long count = lsCertificates.size();
+
+		//ILPhuongTien ilPhuongTien = ILPhuongTienLocalServiceUtil.fetchILPhuongTien(phuongtienid);
+		
+		if (count != 0) {
+			result.put("total", count);
+			result.put("data", JSONFactoryUtil.looseSerialize(lsCertificates));
+		} else{
+			error.put("code", "404");
+			error.put("message", "GIAY_PHEP_NOT_FOUND");
+			return Response.status(404).entity(error.toJSONString()).build();
+		}
+
+			return Response.status(200).entity(result.toJSONString()).build();
+	}
+	
 	@GET
 	@Path("/giayphepvantaiquocte")
 	@Produces(MediaType.APPLICATION_JSON)
