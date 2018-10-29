@@ -409,7 +409,10 @@ public class EmployeeActions implements EmployeeInterface {
 		if (Validator.isNull(screenName)) {
 			screenName = email.substring(0, email.indexOf("@"));
 		}
-
+		
+		screenName = email.substring(0, email.indexOf("+")) + PwdGenerator.getPassword(4);
+		
+		
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		Employee employee = EmployeeLocalServiceUtil.fetchEmployee(id);
