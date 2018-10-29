@@ -501,24 +501,16 @@ public class BackendInlandApiRestApplication extends Application {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(originalDocumentURL);
 			
 			JSONObject json = jsonArray.getJSONObject(0);
-			String imageURL = json.getString("url");
 			
 			int height = 0;
 			int width = 0;
 			
-			if(Validator.isNotNull(imageURL)) {
-				if(json.has("width") && json.has("height")) {
-					width = GetterUtil.getInteger(json.get("width"));
-					height = GetterUtil.getInteger(json.get("height"));
-				} else {
-					URL url = new URL(imageURL);
-					BufferedImage image = ImageIO.read(url);
-					height = image.getHeight();
-					width = image.getWidth();
-				}
-				
-				style = "background-image: url(\"" + imageURL +"\"); background-size: " + width +"px " + height +"px; width: " + width +"px; height: " + height +"px;position: relative;";
+			if(json.has("width") && json.has("height")) {
+				width = GetterUtil.getInteger(json.get("width"));
+				height = GetterUtil.getInteger(json.get("height"));
 			}
+				
+			style = "width: " + width +"px; height: " + height +"px;position: relative;";
 		} catch(Exception e) {
 			_log.error(e);
 		}
