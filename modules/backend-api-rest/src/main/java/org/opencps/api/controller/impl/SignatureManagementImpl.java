@@ -477,6 +477,9 @@ public class SignatureManagementImpl implements SignatureManagement{
 		boolean signOk = true;
 		
 		for (int i = 0; i < fileEntryIdArr.length; i++) {
+			_log.info("**** i = " + i);
+			_log.info("**** fileNameArr = " + fileNameArr);
+			
 			long fileEntryId = Long.valueOf(fileEntryIdArr[i]);
 			if (fileEntryId > 0) {
 				String sign = signArr[i];
@@ -489,7 +492,7 @@ public class SignatureManagementImpl implements SignatureManagement{
 //				_log.info("actionUser: "+actionUser);
 //				_log.info("actionNote: "+actionNote);
 //				_log.info("assignUserId: "+assignUserId);
-//				_log.info("subUsers: "+subUsers);
+//				_log.info("subUsers: "+ subUsers);
 		
 				JSONObject signatureCompleted = callSignatureSync(groupId, user, id, sign, signFieldName, fileName,
 						serviceContext);

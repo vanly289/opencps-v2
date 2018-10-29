@@ -35,6 +35,7 @@ import org.opencps.usermgt.exception.DuplicateEmployeeEmailException;
 import org.opencps.usermgt.exception.DuplicateEmployeeNoException;
 import org.opencps.usermgt.model.Employee;
 import org.opencps.usermgt.model.EmployeeJobPos;
+import org.opencps.usermgt.service.EmployeeJobPosLocalServiceUtil;
 import org.opencps.usermgt.service.EmployeeLocalServiceUtil;
 import org.opencps.usermgt.utils.DateTimeUtils;
 
@@ -91,6 +92,31 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 			params.put(EmployeeTerm.WORKING_UNIT_ID, query.getWorkingunit());
 			params.put(EmployeeTerm.JOB_POS_ID, query.getJobpos());
 			params.put(EmployeeTerm.WORKING_STATUS, query.getStatus());
+			
+			if (Validator.isNull(query.getWorkingunit())) {
+				
+				long mappingUserId = user.getUserId();
+				
+				Employee employee =EmployeeLocalServiceUtil.fetchByF_mappingUserId(groupId, mappingUserId);
+				
+				if (Validator.isNotNull(employee)) {
+					
+					List<EmployeeJobPos> employeeJobPos = EmployeeJobPosLocalServiceUtil.findByF_EmployeeId(employee.getEmployeeId());
+					
+					long userWorkingUnitId = 0;
+					
+					if (Validator.isNotNull(employeeJobPos) && employeeJobPos.size() != 0){
+						userWorkingUnitId = employeeJobPos.get(0).getWorkingUnitId();
+					}
+					
+					if (userWorkingUnitId != 0) {
+						params.put(EmployeeTerm.WORKING_UNIT_ID, userWorkingUnitId);
+					}
+					
+				}
+				
+			}
+			
 
 			if (Validator.isNotNull(query.getActive())) {
 				params.put(EmployeeTerm.ACTIVE,
