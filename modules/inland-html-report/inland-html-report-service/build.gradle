@@ -15,6 +15,9 @@ dependencies {
 	compileOnly project(":modules:backend-auth")	
 	compileOnly project(":modules:backend-dossiermgt:backend-dossiermgt-service")
 	compileOnly project(":modules:backend-dossiermgt:backend-dossiermgt-api")
+	compileOnly project(":modules:vr-business:vr-business-api")
+	compileOnly project(":modules:vr-business:vr-business-service")
+	compileOnly project(":modules:vr-rest")
 }
 
 buildService {
