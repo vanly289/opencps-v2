@@ -184,7 +184,7 @@
                   </v-btn>
                 </v-toolbar-items>
               </v-toolbar> -->
-              <v-card-text class="pt-0 px-0">
+              <v-card-text class="pt-0 px-0" style="overflow: hidden;">
                 <#-- <v-carousel hide-delimiters v-if="listBlobSrc.length > 0" id="carouselFiles">
                   <v-carousel-item v-for="(item, i) in listBlobSrc" v-bind:src="item" :key="i + 'file'">
                     <div v-if="!item" class="text-xs-center">Tài liệu không tồn tại!</div>
@@ -193,21 +193,25 @@
                     </object>
                   </v-carousel-item>
                 </v-carousel> -->
-                <div v-if="blobFileSrc !== '' && blobFileSrc !== null" style="display:  inline-flex; align-items: center; width: 100%;">
-                  <div class="prevFile">
+                <div v-if="blobFileSrc !== '' && blobFileSrc !== null" style="/*display:  inline-flex; align-items: center;*/ width: 100%;">
+                  <#-- <div class="prevFile">
                     <v-btn :disabled="indexFile === 0" class="mx-0 my-0" flat icon light v-on:click.native.prevent="prevFile()">
                       <v-icon style="font-size: 25px;">arrow_back</v-icon>
                     </v-btn>
+                  </div> -->
+                  <div class="text-xs-center mb-2" style="width: 100%;">
+                    <v-btn :disabled="indexFile === 0" color="primary" small @click="prevFile()"><v-icon style="font-size: 16px;">arrow_back</v-icon> Sau</v-btn>
+                    <v-btn :disabled="indexFile === dossierFilesView.length - 1" color="primary" class="ml-2" small @click="nextFile()">Tiếp <v-icon style="font-size: 16px;">arrow_forward</v-icon></v-btn>
                   </div>
-                  <object id="dossierPDFView" data style="overflow: hidden;" width="800px" height="100%" v-if="blobFileSrc">
-                    <iframe :src="blobFileSrc" width="800px" height="100%"> </iframe>
+                  <object id="dossierPDFView" data style="width: 100%;" height="100%" v-if="blobFileSrc">
+                    <iframe :src="blobFileSrc" style="width: 100%; padding-left: 0;" height="100%"> </iframe>
                   </object>
                   <div v-else style="height: 500px; width: 100%; text-align: center;">Tài liệu không có trong hệ thống</div>
-                  <div class="nextFile">
+                  <#-- <div class="nextFile">
                     <v-btn :disabled="indexFile === dossierFilesView.length - 1" flat icon light v-on:click.native.prevent="nextFile()">
                       <v-icon style="font-size: 25px;">arrow_forward</v-icon>
                     </v-btn>
-                  </div>
+                  </div> -->
                 </div>
                 <div v-else class="text-xs-center center-all" style="height: 500px; width: 100%;">
                   <v-progress-circular indeterminate v-bind:size="100" color="purple"></v-progress-circular>

@@ -477,9 +477,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
-
 								vm.applicantNameFilterItems = serializable.data;
-								
 							})
 							.catch(function (error) {
 								console.log(error);
@@ -489,21 +487,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						_initServiceInfoFilterData: function(){
 							var vm = this;
-							
 							var url = '/o/rest/v2/serviceinfos';
-							
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
-
 								vm.serviceInfoFilterItems = serializable.data;
-
 							})
 							.catch(function (error) {
 								console.log(error);
-
 							});
-							return false; 
-							
+							return false;
 						},
 						subLastActionUserName: function (data) {
 							var vm = this;
@@ -520,17 +512,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						groupHoSoFilter: function(item, index){
 							var vm = this;
-
 							console.log("item status",item);
-							vm.indexListStatus = index
+							vm.indexListStatus = index;
 							vm.reloadCounter();
 							vm.detailPage = false;
 							vm.detailRegistPage = false;
 							vm.listgroupHoSoFilterselected = item.id;
 							vm.danhSachHoSoTablepage = 1;
-
 							vm.listgroupHoSoFilterselectedIndex = item.index - 1;
-
 							if ( item.id !== 'tra_cuu' ){
 								vm.stageFilterView = item.id;
 								vm.hoso_title_table = item.title;
@@ -541,9 +530,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									vm.statusParamFilter = item.id;
 									vm.substatusParamFilter = item.idSub;
 								}
-
-							} 
-
+							}
 							if (item.id == 'tra_cuu_hoso') {
 								vm._initraCuuHoSoTable(false);
 							} else if (item.id == 'tra_cuu_phuong_tien') {
@@ -555,11 +542,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm._inidanhSachHoSoTable(false);
 							}
 							vm.onScrollTop();
-
 						},
 						parseDate2: function (date) {
 							if (!date) return null
-
 								const [month, day, year] = date.split('/')
 							return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
 						},
@@ -884,11 +869,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							.then((dialog) => {
 								console.log("Run delete");
 									// call API get file by dossierId
-
 									var arrFileDelete = vm.dossierFiles.filter(file => {
 										return file.dossierPartNo === item.partNo
 									});
-
 									var arrTemps = []
 									if (arrFileDelete) {
 										for (var i = 0; i < arrFileDelete.length; i++) {
@@ -903,7 +886,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 											arrTemps.push(temp);
 										}
 									}
-
 									if (arrTemps.length > 0) {
 										Promise.all(arrTemps).then(result => {
 											item.counter = 0;
@@ -938,15 +920,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						setStateOnlyFollow : function(emailAddress){
 							var vm = this;
 							var url = '/o/rest/v2/dictcollections/VR_AUDIT/dictitems';
-							
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
 								console.log("emailAddress======",emailAddress);
 								if(serializable){
 									for (var i = 0; i < serializable.data.length; i++) {
 										var model = serializable.data[i];
-										if(emailAddress && emailAddress	=== model.itemName){
-
+										if (emailAddress && emailAddress	=== model.itemName) {
 											vm.stateOnlyFollow = true;
 											break;
 										}
@@ -957,7 +937,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								console.log(error);
 							});
 						},
-						viewDossierFileVersionDialog: function (item) {
+						viewDossierFileVersionDialog: function (item, type) {
 							var vm = this;
 							var vm = this;
 							if (item['counter'] <= 0) {
@@ -979,24 +959,21 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									vm.dossierFilesView = []
 								}
 							}
-							
 							if (vm.dossierFilesView.length > 0) {
-								// let arrTemp = []
-								// for (var i = 0; i < vm.dossierFilesView.length; i++) {
-								// 	arrTemp.push(vm.getBlobFile(vm.dossierFilesView[i]));
-								// }
-								// Promise.all(arrTemp).then(resultsFiles => {
-								// 	console.log('resultsFiles-----', resultsFiles)
-								// 	vm.listBlobSrc = resultsFiles
-								// }).catch(rejectErr => {
-								// })
-								var url = "/o/rest/v2/dossiers/" + vm.detailModel.dossierId + "/files/" + vm.dossierFilesView[0].referenceUid ;
-								console.log("Preview dossier PDF");
-								vm.getBlobFile(vm.dossierFilesView[0]).then(resolve => {
-									console.log('resolve-----', resolve)
-									vm.blobFileSrc = resolve
-								})
-								vm.dialogViewFile = !vm.dialogViewFile
+								if (vm.dossierFilesView.length === 1 && type === 'IN') {
+									vm.getBlobFile(vm.dossierFilesView[0]).then(resolve => {
+										console.log('resolve-----', resolve)
+										window.open(resolve);
+									});
+								} else {
+									var url = "/o/rest/v2/dossiers/" + vm.detailModel.dossierId + "/files/" + vm.dossierFilesView[0].referenceUid ;
+									console.log("Preview dossier PDF");
+									vm.getBlobFile(vm.dossierFilesView[0]).then(resolve => {
+										console.log('resolve-----', resolve)
+										vm.blobFileSrc = resolve
+									})	
+									vm.dialogViewFile = !vm.dialogViewFile
+								}
 							}
 						},
 						viewDossierFileVersionDialog2: function (item) {
@@ -1129,11 +1106,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								var xPos = $(this).position().left;
 								var yPos = $(this).position().top;
 
-								formTemplate[id] = {
-									offsetX: xPos,
-									offsetY: yPos,
-									value: $(this).text()
-								};
+								if (id.startsWith("text")) {
+									formTemplate[id] = {
+										offsetX: xPos,
+										offsetY: yPos,
+										value: $(this).text()
+									};									
+								}
+								else {
+									formTemplate[id] = {
+										offsetX: xPos,
+										offsetY: yPos
+									};									
+								}
 							});
 							console.log(formTemplate);
 							var vm = this;
@@ -1247,13 +1232,17 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 																			
 										for (var key in formData) {
 											if (!document.getElementById(key)) {
+												var cssDiv = '';
+												if (formData[key].hasOwnProperty("css")) {
+													cssDiv = formData[key].css;
+												}
 												if (key.indexOf("array_") != -1) {
 													var newKeyArr = key.split("_");
 													var newKey = newKeyArr[2];
 													if (item.hasOwnProperty(newKey)) {
 														var itemDataArr = item[newKey].split("/");
 														if (itemDataArr.length > newKeyArr[1]) {
-															$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + itemDataArr[newKeyArr[1]] + '</div>');																																																				
+															$("#printTraCuu").append('<div id='+key+' title='+key+' style="' + cssDiv + ';z-index: 99; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + itemDataArr[newKeyArr[1]] + '</div>');																																																				
 														}
 													}													
 												}
@@ -1262,15 +1251,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 													var newKeyArr = key.split("_");
 													var newKey = newKeyArr[1];
 													if (item.hasOwnProperty(newKey)) {
-														$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[newKey] + '</div>');																																					
+														$("#printTraCuu").append('<div id='+key+' title='+key+' style="' + cssDiv + ';z-index: 99; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[newKey] + '</div>');																																					
 													}
 												}
 												else {
-													if (formData[key].hasOwnProperty("value")) {
-														$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + formData[key].value + '</div>');																																																	
+													if (key.toLowerCase().indexOf("text") !== -1 && formData[key].hasOwnProperty("value")) {
+														$("#printTraCuu").append('<div id='+key+' title='+key+' style="' + cssDiv + ';z-index: 99; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + formData[key].value + '</div>');																																																	
 													}
 													else if (item.hasOwnProperty(key)) {
-														$("#printTraCuu").append('<div id='+key+' style="z-index: 99; font-size: 14px; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');																																			
+														$("#printTraCuu").append('<div id='+key+' title='+key+' style="' + cssDiv + ';z-index: 99; position:absolute; left : '+formData[key].offsetX+'px; top : '+formData[key].offsetY+'px">' + item[key] + '</div>');																																			
 													}
 												}
 												$('#' + key).draggable({

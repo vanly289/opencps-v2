@@ -46,6 +46,7 @@ import org.opencps.thirdparty.system.model.ILTuyen;
 import org.opencps.thirdparty.system.model.ILTuyenKhaiThacXe;
 import org.opencps.thirdparty.system.model.ILTuyenKhaiThach;
 import org.opencps.thirdparty.system.model.ILViPham;
+import org.opencps.thirdparty.system.model.ViewGiayPhepVanTai;
 import org.opencps.thirdparty.system.service.ILDataItemLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiLocalServiceUtil;
@@ -57,6 +58,7 @@ import org.opencps.thirdparty.system.service.ILTuyenKhaiThacXeLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILTuyenKhaiThachLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILTuyenLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILViPhamLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ViewGiayPhepVanTaiLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 import com.backend.migrate.vr.model.PhuongTien;
@@ -131,15 +133,13 @@ public class VRRestApplication extends Application {
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
 		
 		List<ILDoanhNghiep> lstDns = ILDoanhNghiepLocalServiceUtil.findByKeyword(keyword, start, end);
-		obj.put("total", lstDns.size());
+		obj.put("total", ILDoanhNghiepLocalServiceUtil.countByKeyword(keyword));
 
 		if (lstDns.size() > 0) {
 			if (start == null) {
 				start = QueryUtil.ALL_POS;
 				end = QueryUtil.ALL_POS;
 			}
-
-			
 
 			obj.put("data", JSONFactoryUtil.looseSerialize(lstDns));
 		}
@@ -205,7 +205,7 @@ public class VRRestApplication extends Application {
 	}
 
 	@GET
-	@Path("/doanhnghiep/{doanhnghiepid}/giayphepvantai")
+	@Path("/doanhnghiep/{doanhnghiepid}/giayphepkinhdoanhvantai")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findGiayPhepVanTaiByDoanhNghiep(@Context HttpHeaders header,
 			@PathParam("doanhnghiepid") long doanhnghiepid, @QueryParam("start") Integer start,
@@ -217,14 +217,19 @@ public class VRRestApplication extends Application {
 		ILDoanhNghiep doanhnghiep = ILDoanhNghiepLocalServiceUtil.fetchILDoanhNghiep(doanhnghiepid);
 
 		if (Validator.isNotNull(doanhnghiep)) {
-
+			/*
 			long count = ILGiayPhepVanTaiLocalServiceUtil.countByDoanhNghiep(doanhnghiep.getId());
 
 			List<ILGiayPhepVanTai> giayphepvantais = ILGiayPhepVanTaiLocalServiceUtil
 					.getByDoanhNghiep(doanhnghiep.getId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
+			 */
+			
+			List<ViewGiayPhepVanTai> giaypheps = ViewGiayPhepVanTaiLocalServiceUtil.searchGiayPhepVanTai(doanhnghiepid);
+			
+			long count = giaypheps.size();
+			
 			result.put("total", count);
-			result.put("data", JSONFactoryUtil.looseSerialize(giayphepvantais));
+			result.put("data", JSONFactoryUtil.looseSerialize(giaypheps));
 
 			return Response.status(200).entity(result.toJSONString()).build();
 		} else {
@@ -324,6 +329,8 @@ public class VRRestApplication extends Application {
 		List<ILPhuongTien> ilPhuongTiens = new ArrayList<ILPhuongTien>();
 		
 		if (Validator.isNotNull(keyword)) {
+			
+			_log.info("***Keyword");
 			
 			ILPhuongTien ilPhuongTien = ILPhuongTienLocalServiceUtil.searchByBienKiemSoat(keyword);
 			
@@ -931,12 +938,13 @@ public class VRRestApplication extends Application {
 	public Response checkVehicle(@Context HttpHeaders header,
 			@PathParam("registrationNumber") String registrationNumber) {
 		long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
+		JSONObject obj = JSONFactoryUtil.createJSONObject();
 		PhuongTien phuongTien = PhuongTienLocalServiceUtil.findByBKS(registrationNumber);
 		ILVehicle vehicle = ILVehicleLocalServiceUtil.getByRegistrationNumber(registrationNumber);
-		List<ILViPham> viphams = ILViPhamLocalServiceUtil.getByPhuongTien(phuongTien.getId());
-		JSONObject obj = JSONFactoryUtil.createJSONObject();
+		
+		List<ILViPham> viphams = ILViPhamLocalServiceUtil.getByPhuongTien(phuongTien != null ? phuongTien.getId() : (vehicle != null ? vehicle.getId() : 0));
 
-		if (vehicle != null && phuongTien != null) {
+		if (vehicle != null || phuongTien != null) {
 			if (viphams.size() > 0) {
 				obj.put("vehicleStatus", 2);
 			} else {

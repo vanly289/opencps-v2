@@ -219,29 +219,32 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		
 		_log.info("Dossier part ESign: " + dossierPart.getESign());
 		
-		if (Validator.isNotNull(dossierPart.getDeliverableType()) && dossierPart.getESign()) {
-			DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
-			
-			if (Validator.isNull(object.getDeliverableCode())) {
-				deliverableCode = DeliverableNumberGenerator.generateDeliverableNumber(groupId, serviceContext.getCompanyId(), deliverableType.getDeliverableTypeId());
-				object.setDeliverableCode(deliverableCode);
-			}
-			else {
-				deliverableCode = object.getDeliverableCode();
-			}
-			_log.info("Deliverable code when add dossier file: " + deliverableCode);
-		}
-
 		if (Validator.isNotNull(dossierPart.getSampleData())) {
 			String formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, serviceContext);
 			JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 			if (!formDataObj.has("LicenceNo") || Validator.isNull(formDataObj.getString("LicenceNo"))) {
-				if (Validator.isNotNull(deliverableCode)) {
-					formDataObj.put("LicenceNo", deliverableCode);				
-				}
-				else {
-					formDataObj.put("LicenceNo", StringPool.BLANK);
-				}
+//				if (Validator.isNotNull(dossierPart.getDeliverableType()) && dossierPart.getESign()) {
+//					DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
+//					
+//					if (Validator.isNull(object.getDeliverableCode())) {
+//						deliverableCode = DeliverableNumberGenerator.generateDeliverableNumber(groupId, serviceContext.getCompanyId(), deliverableType.getDeliverableTypeId());
+//						object.setDeliverableCode(deliverableCode);
+//					}
+//					else {
+//						deliverableCode = object.getDeliverableCode();
+//					}
+//					_log.info("Deliverable code when add dossier file: " + deliverableCode);
+//				}
+//
+//				if (Validator.isNotNull(deliverableCode)) {
+//					formDataObj.put("LicenceNo", deliverableCode);				
+//				}
+//				else {
+//					formDataObj.put("LicenceNo", StringPool.BLANK);
+//				}
+			}
+			else {
+				object.setDeliverableCode(formDataObj.getString("LicenceNo"));
 			}
 			formData = formDataObj.toJSONString();
 			_log.info("Form data before update form data: " + formData);
@@ -676,12 +679,21 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			}
 			dossierFile.setFormReport(jrxmlTemplate);
 		}
-
+		try {
+			JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
+			if (formDataObj.has("LicenceNo")) {
+				dossierFile.setDeliverableCode(formDataObj.getString("LicenceNo"));
+			}
+		}
+		catch (JSONException e) {
+			e.printStackTrace();
+		}
 		dossierFile.setFormData(formData);
 		dossierFile.setIsNew(true);
 
 		// Binhth add message bus to processing jasper file
-		_log.info("IN DOSSIER FILE UPDATE FORM DATA");
+		_log.info("IN DOSSIER FILE UPDATE FORM DATA: " + formData);
+		_log.info("IN DOSSIER FILE UPDATE FORM DATA DELIVERABLE CODE: " + dossierFile.getDeliverableCode());
 		Message message = new Message();
 
 		JSONObject msgData = JSONFactoryUtil.createJSONObject();
