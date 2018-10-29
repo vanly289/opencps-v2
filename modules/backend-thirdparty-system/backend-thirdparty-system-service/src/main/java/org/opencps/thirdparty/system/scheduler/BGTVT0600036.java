@@ -47,8 +47,6 @@ public class BGTVT0600036 {
 		long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
 		String jaxRsPublicUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_PUBLIC_URL);
 
-		VTOfficialTransportPermit vtOfficialTransportPermit = new VTOfficialTransportPermit();
-
 		List<MessageQueueInputModel> lstResults = new ArrayList<>();
 		
 		List<DossierFile> dossierFileList = DossierFileLocalServiceUtil
@@ -84,6 +82,8 @@ public class BGTVT0600036 {
 			String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
 			for (String returnDossierFile : returnDossierFilesArr) {
 				if (templateNo.equals(returnDossierFile)) {
+					VTOfficialTransportPermit vtOfficialTransportPermit = new VTOfficialTransportPermit();
+
 					AttachedFile attachedFile = new AttachedFile();
 					List<AttachedFile> lstFiles = new ArrayList<>();
 
