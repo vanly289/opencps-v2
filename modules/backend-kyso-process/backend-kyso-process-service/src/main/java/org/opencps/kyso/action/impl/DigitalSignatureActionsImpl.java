@@ -179,6 +179,14 @@ public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 					inHash = signer.computeHash(new Rectangle(llx + 10, lly - 115, urx + 90, ury-95), 1);
 					_log.info("inHash_Dongdau: "+inHash);
 				}
+				
+				if (TYPE_KYSO.contains(typeSignature)) {
+					inHash = signer.computeHash(new Rectangle(llx + 10, lly - 15, urx + 90, ury),textLocation.getPageSize());
+					_log.info("inHash_Kyso: "+inHash);
+				} else if (TYPE_DONGDAU.contains(typeSignature)) {
+					inHash = signer.computeHash(new Rectangle(llx + 10, lly - 115, urx + 90, ury-95), textLocation.getPageSize());
+					_log.info("inHash_Dongdau: "+inHash);
+				}
 //			inHash = signer.computeHash(new Rectangle(llx + 10, lly - 15, urx + 90, ury), 1);
 				
 				_log.info("********************************* llx " + llx);
