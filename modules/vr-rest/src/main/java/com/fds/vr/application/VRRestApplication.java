@@ -370,17 +370,18 @@ public class VRRestApplication extends Application {
 
 			// add sample
 			JSONObject sample = JSONFactoryUtil.createJSONObject();
+			
 
-			sample.put("thoidiemxuatcan", new Date());
-			sample.put("thoidiemnhapcanh", new Date());
+			sample.put("thoidiemxuatcan",  formatDate(new Date()));
+			sample.put("thoidiemnhapcanh", formatDate(new Date()));
 
 			xuanhapcanh.put(sample);
 
 			for (ILVehicleCustomsBorderGuard borderGuard : borderGuards) {
 				JSONObject jsonObjectBorderGuard = JSONFactoryUtil.createJSONObject();
 
-				jsonObjectBorderGuard.put("thoidiemxuatcan", borderGuard.getBorderGuardsArrivalDate());
-				jsonObjectBorderGuard.put("thoidiemnhapcanh", borderGuard.getBorderGuardsDepartureDate());
+				jsonObjectBorderGuard.put("thoidiemxuatcan", formatDate(borderGuard.getBorderGuardsArrivalDate()));
+				jsonObjectBorderGuard.put("thoidiemnhapcanh", formatDate(borderGuard.getBorderGuardsDepartureDate()));
 
 				xuanhapcanh.put(jsonObjectBorderGuard);
 			}
@@ -397,6 +398,8 @@ public class VRRestApplication extends Application {
 		return Response.status(200).entity(result.toJSONString()).build();
 
 	}
+	
+
 
 	@GET
 	@Path("/phuongtien/{biensoxe}/refer")
@@ -770,10 +773,10 @@ public class VRRestApplication extends Application {
 				jsonObject.put("sogiaypheplienvan", certificate.getLicenceNo());
 				jsonObject.put("noicap", certificate.getGovAgencyName());
 				jsonObject.put("ngaycap", formatDate(certificate.getValidFrom()));
-				jsonObject.put("ngayhethan", formatDate(certificate.getExpiredDate()));
+				jsonObject.put("ngayhethan", formatDate(certificate.getValidUntil()));
 				jsonObject.put("trangthai", "");
 				jsonObject.put("donvikhaithac", certificate.getApplicantName());
-				jsonObject.put("bienkiemsoat", "");
+				jsonObject.put("bienkiemsoat", certificate.getRegistrationNumber());
 				jsonObject.put("loaihinhkinhdoanh", certificate.getTransportOperation());
 				jsonObject.put("loaiphuongtien", certificate.getVehicleType());
 				jsonObject.put("download", getFileURL(certificate.getDossierFileId()));
