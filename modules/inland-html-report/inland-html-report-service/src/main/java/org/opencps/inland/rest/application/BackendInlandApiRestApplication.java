@@ -369,11 +369,16 @@ public class BackendInlandApiRestApplication extends Application {
 						
 						if(printTemplate == null) {
 							try {
-								if (Validator.isNull(licenceType)) {
-									printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN(0, dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo());					
+								if (printType == null || printType.equals("DELIVERABLE")) {
+									if (Validator.isNull(licenceType)) {
+										printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN(0, dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo());					
+									}
+									else {
+										printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN_LT(0, dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo(), licenceType);					
+									}
 								}
 								else {
-									printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN_LT(0, dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), dossierFile.getFileTemplateNo(), licenceType);					
+									printTemplate = InlandPrintTemplateLocalServiceUtil.findBySC_TN_PN_FTN_LT(0, dossier.getServiceCode(), dossier.getDossierTemplateNo(), dossierFile.getDossierPartNo(), ph, licenceType);													
 								}
 							}
 							catch (NoSuchInlandPrintTemplateException e) {
