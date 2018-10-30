@@ -244,7 +244,9 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 //				}
 			}
 			else {
-				object.setDeliverableCode(formDataObj.getString("LicenceNo"));
+				if (dossierPart.getESign()) {
+					object.setDeliverableCode(formDataObj.getString("LicenceNo"));
+				}
 			}
 			formData = formDataObj.toJSONString();
 			_log.info("Form data before update form data: " + formData);
@@ -678,15 +680,17 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				jrxmlTemplate = dossierPart.getFormReport();
 			}
 			dossierFile.setFormReport(jrxmlTemplate);
-		}
-		try {
-			JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
-			if (formDataObj.has("LicenceNo")) {
-				dossierFile.setDeliverableCode(formDataObj.getString("LicenceNo"));
+			if (dossierPart.getESign()) {
+				try {
+					JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
+					if (formDataObj.has("LicenceNo")) {
+						dossierFile.setDeliverableCode(formDataObj.getString("LicenceNo"));
+					}
+				}
+				catch (JSONException e) {
+					e.printStackTrace();
+				}
 			}
-		}
-		catch (JSONException e) {
-			e.printStackTrace();
 		}
 		dossierFile.setFormData(formData);
 		dossierFile.setIsNew(true);
