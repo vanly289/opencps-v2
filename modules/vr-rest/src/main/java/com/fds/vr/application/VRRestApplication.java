@@ -42,6 +42,7 @@ import org.opencps.thirdparty.system.model.ILTuyenKhaiThacXe;
 import org.opencps.thirdparty.system.model.ILTuyenKhaiThach;
 import org.opencps.thirdparty.system.model.ILViPham;
 import org.opencps.thirdparty.system.model.ViewGiayPhepVanTai;
+import org.opencps.thirdparty.system.model.impl.ILPhuongTienImpl;
 import org.opencps.thirdparty.system.service.ILDataItemLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILHopDongThueLocalServiceUtil;
@@ -323,19 +324,43 @@ public class VRRestApplication extends Application {
 		
 		if (Validator.isNotNull(keyword)) {
 			
+			
 			_log.info("***Keyword");
 			
+			ILVehicle ilVehicle = ILVehicleLocalServiceUtil.getByRegistrationNumber(keyword);
+			ILPhuongTien ilPhuongTienx = new ILPhuongTienImpl();
+
 			ILPhuongTien ilPhuongTien = ILPhuongTienLocalServiceUtil.searchByBienKiemSoat(keyword);
 			
 			if (Validator.isNotNull(ilPhuongTien)) {
 				count = 1;
 				ilPhuongTiens.add(ilPhuongTien);
+			} else {
+				if (Validator.isNotNull(ilVehicle)) {
+					count = 1;
+
+					ilPhuongTienx.setId(ilVehicle.getId());
+					ilPhuongTienx.setBienkiemsoat(ilVehicle.getRegistrationNumber());
+					ilPhuongTienx.setGhichu("XXX@"+ilVehicle.getTrademarkName() + "@" + ilVehicle.getOperationType());
+					ilPhuongTienx.setTennguoisohuu(ilVehicle.getNameOfCompany());
+					ilPhuongTienx.setSokhung(ilVehicle.getChassisNumber());
+					ilPhuongTienx.setSomay(ilVehicle.getEngineNumber());
+					
+					//ilPhuongTiens.add(ilPhuongTienx);
+				}
 			}
 
+			
 		} else {
 			count = ILPhuongTienLocalServiceUtil.countAll();
+			
+			count = count + ILVehicleLocalServiceUtil.getILVehiclesCount();
 
 			ilPhuongTiens = ILPhuongTienLocalServiceUtil.getILPhuongTiens(start, end);
+			
+			List<ILVehicle> lsVehicles = ILVehicleLocalServiceUtil.getILVehicles(start, end);
+			
+			//ilPhuongTiens.addAll(convertIlVehicleToPhuongTien(lsVehicles));
 
 		}
 
@@ -348,19 +373,32 @@ public class VRRestApplication extends Application {
 
 			jsonObject.put("bienkiemsoat", ilPhuongTien.getBienkiemsoat());
 
-			ILDataItem nhanhieu = ILDataItemLocalServiceUtil.fetchILDataItem(ilPhuongTien.getTenhieuxe_id());
 
-			if (Validator.isNotNull(nhanhieu)) {
-				jsonObject.put("nhanhieu", nhanhieu.getTen());
-			}
 			jsonObject.put("tendangky", ilPhuongTien.getTennguoisohuu());
 			jsonObject.put("sokhung", ilPhuongTien.getSokhung());
 			jsonObject.put("somay", ilPhuongTien.getSomay());
+			
+			if (Validator.isNotNull(ilPhuongTien.getGhichu()) && ilPhuongTien.getGhichu().contains("XXX")) {
+				
+				String [] elmData = StringUtil.split(ilPhuongTien.getGhichu(), StringPool.AT);
+				
+				if (elmData.length == 3) {
+					jsonObject.put("nhanhieu", elmData[1]);
+					jsonObject.put("loaiphuongtien", elmData[2]);
+				}
+				
+			} else {
 
-			ILDataItem loaiphuongtien = ILDataItemLocalServiceUtil.fetchILDataItem(ilPhuongTien.getLoaihinhvantai_id());
+				ILDataItem nhanhieu = ILDataItemLocalServiceUtil.fetchILDataItem(ilPhuongTien.getTenhieuxe_id());
+				if (Validator.isNotNull(nhanhieu)) {
+					jsonObject.put("nhanhieu", nhanhieu.getTen());
+				}
+				ILDataItem loaiphuongtien = ILDataItemLocalServiceUtil
+						.fetchILDataItem(ilPhuongTien.getLoaihinhvantai_id());
 
-			if (Validator.isNotNull(loaiphuongtien)) {
-				jsonObject.put("loaiphuongtien", loaiphuongtien.getTen());
+				if (Validator.isNotNull(loaiphuongtien)) {
+					jsonObject.put("loaiphuongtien", loaiphuongtien.getTen());
+				}
 			}
 
 			JSONArray xuanhapcanh = JSONFactoryUtil.createJSONArray();
@@ -371,7 +409,6 @@ public class VRRestApplication extends Application {
 			// add sample
 			JSONObject sample = JSONFactoryUtil.createJSONObject();
 			
-
 			sample.put("thoidiemxuatcan",  formatDate(new Date()));
 			sample.put("thoidiemnhapcanh", formatDate(new Date()));
 
@@ -397,6 +434,27 @@ public class VRRestApplication extends Application {
 
 		return Response.status(200).entity(result.toJSONString()).build();
 
+	}
+	
+	private List<ILPhuongTien> convertIlVehicleToPhuongTien(List<ILVehicle> lsIlVehicles) {
+		
+		List<ILPhuongTien> ilPhuongTiens = new ArrayList<>();
+		
+		
+		for (ILVehicle ilVehicle : lsIlVehicles) {
+			ILPhuongTien ilPhuongTienx = new ILPhuongTienImpl();
+			
+			ilPhuongTienx.setId(ilVehicle.getId());
+			ilPhuongTienx.setBienkiemsoat(ilVehicle.getRegistrationNumber());
+			ilPhuongTienx.setGhichu("XXX@"+ilVehicle.getTrademarkName() + "@" + ilVehicle.getOperationType());
+			ilPhuongTienx.setTennguoisohuu(ilVehicle.getNameOfCompany());
+			ilPhuongTienx.setSokhung(ilVehicle.getChassisNumber());
+			ilPhuongTienx.setSomay(ilVehicle.getEngineNumber());
+			
+			ilPhuongTiens.add(ilPhuongTienx);
+		}
+		
+		return ilPhuongTiens;
 	}
 	
 
