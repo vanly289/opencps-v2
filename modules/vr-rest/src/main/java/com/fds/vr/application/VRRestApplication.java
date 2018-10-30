@@ -3,7 +3,6 @@ package com.fds.vr.application;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -29,17 +28,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-import org.apache.http.HttpStatus;
 import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
-import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.DossierFile;
-import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.thirdparty.system.model.ILDataItem;
 import org.opencps.thirdparty.system.model.ILDoanhNghiep;
-import org.opencps.thirdparty.system.model.ILGiayPhepVanTai;
-import org.opencps.thirdparty.system.model.ILGiayPhepVanTaiQuocTe;
 import org.opencps.thirdparty.system.model.ILHopDongThue;
 import org.opencps.thirdparty.system.model.ILPhuHieuBienHieu;
 import org.opencps.thirdparty.system.model.ILPhuongTien;
@@ -50,8 +44,6 @@ import org.opencps.thirdparty.system.model.ILViPham;
 import org.opencps.thirdparty.system.model.ViewGiayPhepVanTai;
 import org.opencps.thirdparty.system.service.ILDataItemLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
-import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiLocalServiceUtil;
-import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiQuocTeLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILHopDongThueLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILPhuHieuBienHieuLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILPhuongTienLocalServiceUtil;
@@ -85,7 +77,6 @@ import com.fds.vr.ilcertificate.model.ILCertificateResultModel;
 import com.fds.vr.ilcertificate.model.ILCertificateSearchModel;
 import com.fds.vr.ilcertificate.model.ILVehicleModel;
 import com.fds.vr.util.ILCertificateUtils;
-import com.google.gson.JsonObject;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -488,10 +479,7 @@ public class VRRestApplication extends Application {
 
 		JSONObject error = JSONFactoryUtil.createJSONObject();
 		
-		
-		
 		try {
-			
 			
 			ILCertificate ilCertificate = ILCertificateLocalServiceUtil.fetchByLicenceNo(sogiayphep);
 			
@@ -501,8 +489,9 @@ public class VRRestApplication extends Application {
 				
 				ilCertificate.setId(id);
 				
+				_log.info("****body****" + body);
+				
 				if (Validator.isNotNull(body)) {
-
 					
 					JSONObject jsonBody = JSONFactoryUtil.createJSONObject(body);
 					
@@ -510,24 +499,41 @@ public class VRRestApplication extends Application {
 					
 					String licenceNo = jsonBody.getString("licenceNo");
 					
-					
-					String strValidUtil = jsonBody.getString("validUntil");
+					String strValidUntil = jsonBody.getString("validUntil");
 					
 					String strValidFrom = jsonBody.getString("validFrom");
+					
+					_log.info("licenceNo" + licenceNo);
+					_log.info("strValidUtil" + strValidUntil);
+					_log.info("strValidFrom" + strValidFrom);
+					
+					ilCertificate.setLicenceNo(licenceNo);
+
+					SimpleDateFormat dateFormat = new SimpleDateFormat("DD/MM/YYYY");
+					
+					if (Validator.isNotNull(strValidUntil)) {
+						
+						try {
+							Date validUntil = dateFormat.parse(strValidUntil);
+							Date validFrom = dateFormat.parse(strValidFrom);
+							
+							ilCertificate.setValidUntil(validUntil);
+							ilCertificate.setValidFrom(validFrom);
+							
+						} catch (Exception e) {
+							_log.info("__DateFormatFail****");
+						}
+					}
 				}
 				
 				ILCertificate updateCertificate = ILCertificateLocalServiceUtil.addILCertificate(ilCertificate);
 				
-				
-				
 				return Response.status(200).entity(JSONFactoryUtil.looseSerialize(updateCertificate)).build();
-
 				
 			} else {
 				error.put("code", "404");
 				error.put("message", "GIAY_PHEP_NOT_FOUND");
 				return Response.status(404).entity(error.toJSONString()).build();
-
 			}
 
 		} catch (Exception e) {
