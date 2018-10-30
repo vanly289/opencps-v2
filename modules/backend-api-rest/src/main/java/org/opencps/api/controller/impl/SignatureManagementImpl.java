@@ -62,7 +62,7 @@ public class SignatureManagementImpl implements SignatureManagement{
 
 	Log _log = LogFactoryUtil.getLog(SignatureManagementImpl.class.getName());
 	private static final String TYPE_KYSO = "1032,1050";
-	private static final String TYPE_DONGDAU = "1035,1053";
+	private static final String TYPE_DONGDAU = "1035,1053,1054";
 
 	@Override
 	public Response updateDossierFileBySignature(HttpServletRequest request, HttpHeaders header, Company company,
