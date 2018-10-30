@@ -566,7 +566,22 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						phanhoi.setDonViXuLy(dossier.getGovAgencyName());
 						phanhoi.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
 
-						if (dossier.getServiceCode().equals("BGTVT0600036")
+						if (dossier.getServiceCode().equals("BGTVT0600005")
+								|| dossier.getServiceCode().equals("BGTVT0600006")
+								|| dossier.getServiceCode().equals("BGTVT0600007")
+								|| dossier.getServiceCode().equals("BGTVT0600008")
+								|| dossier.getServiceCode().equals("BGTVT0600009")
+								|| dossier.getServiceCode().equals("BGTVT0600010")
+								|| dossier.getServiceCode().equals("BGTVT0600011")
+								|| dossier.getServiceCode().equals("BGTVT0600012")
+								|| dossier.getServiceCode().equals("BGTVT0600023")
+								|| dossier.getServiceCode().equals("BGTVT0600024")
+								|| dossier.getServiceCode().equals("BGTVT0600025")
+								|| dossier.getServiceCode().equals("BGTVT0600026")
+								|| dossier.getServiceCode().equals("BGTVT0600027")
+								|| dossier.getServiceCode().equals("BGTVT0600028")
+								|| dossier.getServiceCode().equals("BGTVT0600029")
+								|| dossier.getServiceCode().equals("BGTVT0600036")
 								|| dossier.getServiceCode().equals("BGTVT0600037")
 								|| dossier.getServiceCode().equals("BGTVT0600038")
 								|| dossier.getServiceCode().equals("BGTVT0600039")
@@ -585,7 +600,10 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600053")
 								|| dossier.getServiceCode().equals("BGTVT0600054")
 								|| dossier.getServiceCode().equals("BGTVT0600055")
-								|| dossier.getServiceCode().equals("BGTVT0600056")) {
+								|| dossier.getServiceCode().equals("BGTVT0600061")
+								|| dossier.getServiceCode().equals("BGTVT0600062")
+								|| dossier.getServiceCode().equals("BGTVT0600063")
+								|| dossier.getServiceCode().equals("BGTVT0600064")) {
 							
 							List<DossierRequestUD> lstRequests = DossierRequestUDLocalServiceUtil.getDossierRequestByRT(
 									dossier.getCompanyId(),
@@ -682,7 +700,22 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						phanhoi.setDonViXuLy(dossier.getGovAgencyName());
 						phanhoi.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
 
-						if (dossier.getServiceCode().equals("BGTVT0600036")
+						if (dossier.getServiceCode().equals("BGTVT0600005")
+								|| dossier.getServiceCode().equals("BGTVT0600006")
+								|| dossier.getServiceCode().equals("BGTVT0600007")
+								|| dossier.getServiceCode().equals("BGTVT0600008")
+								|| dossier.getServiceCode().equals("BGTVT0600009")
+								|| dossier.getServiceCode().equals("BGTVT0600010")
+								|| dossier.getServiceCode().equals("BGTVT0600011")
+								|| dossier.getServiceCode().equals("BGTVT0600012")
+								|| dossier.getServiceCode().equals("BGTVT0600023")
+								|| dossier.getServiceCode().equals("BGTVT0600024")
+								|| dossier.getServiceCode().equals("BGTVT0600025")
+								|| dossier.getServiceCode().equals("BGTVT0600026")
+								|| dossier.getServiceCode().equals("BGTVT0600027")
+								|| dossier.getServiceCode().equals("BGTVT0600028")
+								|| dossier.getServiceCode().equals("BGTVT0600029")
+								|| dossier.getServiceCode().equals("BGTVT0600036")
 								|| dossier.getServiceCode().equals("BGTVT0600037")
 								|| dossier.getServiceCode().equals("BGTVT0600038")
 								|| dossier.getServiceCode().equals("BGTVT0600039")
@@ -692,7 +725,19 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600043")
 								|| dossier.getServiceCode().equals("BGTVT0600044")
 								|| dossier.getServiceCode().equals("BGTVT0600045")
-								|| dossier.getServiceCode().equals("BGTVT0600046")) {
+								|| dossier.getServiceCode().equals("BGTVT0600046")
+								|| dossier.getServiceCode().equals("BGTVT0600048")
+								|| dossier.getServiceCode().equals("BGTVT0600049")
+								|| dossier.getServiceCode().equals("BGTVT0600050")
+								|| dossier.getServiceCode().equals("BGTVT0600051")
+								|| dossier.getServiceCode().equals("BGTVT0600052")
+								|| dossier.getServiceCode().equals("BGTVT0600053")
+								|| dossier.getServiceCode().equals("BGTVT0600054")
+								|| dossier.getServiceCode().equals("BGTVT0600055")
+								|| dossier.getServiceCode().equals("BGTVT0600061")
+								|| dossier.getServiceCode().equals("BGTVT0600062")
+								|| dossier.getServiceCode().equals("BGTVT0600063")
+								|| dossier.getServiceCode().equals("BGTVT0600064")) {
 							if (lstRequests.size() > 0) {
 								DossierRequestUD dossierRequest = lstRequests.get(0);
 								phanhoi.setSoGp(dossierRequest.getComment());

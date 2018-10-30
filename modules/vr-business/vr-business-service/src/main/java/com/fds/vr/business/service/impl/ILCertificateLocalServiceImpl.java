@@ -25,6 +25,7 @@ import com.fds.vr.business.action.impl.TransportOperationUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.ILCertificate;
 import com.fds.vr.business.service.base.ILCertificateLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -59,7 +60,20 @@ public class ILCertificateLocalServiceImpl
 
 	private Log _log = LogFactoryUtil.getLog(ILCertificateLocalServiceImpl.class);
 	
+	public ILCertificate searchByRegNumbber(String keyword) {
+		List<ILCertificate> lsCertificates = ilCertificateFinder.searchByRegNumber(keyword, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		
+		if (lsCertificates.size() != 0) {
+			return lsCertificates.get(0);
+		} else {
+			return null;
+		}
+	}
 	
+	public List<ILCertificate> searchListByRegistionNumber(String keyword) {
+		return ilCertificateFinder.searchByRegNumber(keyword, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+	}
 	
 	public List<ILCertificate> searchLienVan(String keyword, int start, int end) {
 		
