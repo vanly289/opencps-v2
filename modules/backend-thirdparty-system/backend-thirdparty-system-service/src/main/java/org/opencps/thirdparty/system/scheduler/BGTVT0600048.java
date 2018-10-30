@@ -50,7 +50,6 @@ public class BGTVT0600048 {
 		long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
 		String jaxRsPublicUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_PUBLIC_URL);
 
-		CLVCommercialCrossBorderTransportPermit clvCommercialCrossBorderTransportPermit = new CLVCommercialCrossBorderTransportPermit();
 
 		List<MessageQueueInputModel> lstResults = new ArrayList<>();
 		
@@ -84,6 +83,8 @@ public class BGTVT0600048 {
 			String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
 			for (String returnDossierFile : returnDossierFilesArr) {
 				if (templateNo.equals(returnDossierFile)) {
+					CLVCommercialCrossBorderTransportPermit clvCommercialCrossBorderTransportPermit = new CLVCommercialCrossBorderTransportPermit();
+
 					AttachedFile attachedFile = new AttachedFile();
 					List<AttachedFile> lstFiles = new ArrayList<>();
 

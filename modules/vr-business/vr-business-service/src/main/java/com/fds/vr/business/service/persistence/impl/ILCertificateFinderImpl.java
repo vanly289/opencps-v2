@@ -2,10 +2,6 @@ package com.fds.vr.business.service.persistence.impl;
 
 import java.util.List;
 
-import org.opencps.thirdparty.system.model.ILDoanhNghiep;
-import org.opencps.thirdparty.system.model.impl.ILDoanhNghiepImpl;
-import org.opencps.thirdparty.system.service.persistence.ILDoanhNghiepFinder;
-
 import com.fds.vr.business.model.ILCertificate;
 import com.fds.vr.business.model.impl.ILCertificateImpl;
 import com.fds.vr.business.service.persistence.ILCertificateFinder;
@@ -18,7 +14,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl implements ILCertificateFinder {
@@ -27,7 +22,43 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 
 	private static final String SEARCH_LIENVAN = ILCertificateFinder.class.getName() + ".searchLienVan";
 	private static final String SEARCH_GIAYPHEP = ILCertificateFinder.class.getName() + ".searhGiayPhep";
+	private static final String SEARCH_BY_REG_NUMBER = ILCertificateFinder.class.getName() + ".searchCertificateByRegNumber";
+	
+	@SuppressWarnings("unchecked")
+	public List<ILCertificate> searchByRegNumber(String keyword, int start, int end) {
 
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(getClass(), SEARCH_BY_REG_NUMBER);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.setCacheable(false);
+			q.addEntity("ILCertificate", ILCertificateImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(keyword);
+
+			return (List<ILCertificate>) QueryUtil.list(q, getDialect(), start, end);
+
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+
+		return null;
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<ILCertificate> searchLienVan(String keyword, int start, int end) {
 
@@ -85,8 +116,6 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			q.addEntity("ILCertificate", ILCertificateImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
-
-			keyword = StringPool.PERCENT + keyword + StringPool.PERCENT;
 
 			qPos.add(keyword);
 

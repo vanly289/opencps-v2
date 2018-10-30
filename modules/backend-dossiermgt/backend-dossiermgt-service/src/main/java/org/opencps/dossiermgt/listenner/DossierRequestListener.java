@@ -85,7 +85,12 @@ public class DossierRequestListener extends BaseModelListener<DossierRequestUD>{
 			if (!flagRequestType) {
 
 				String content = model.getComment();
-
+				if (requestType.toLowerCase().contentEquals("reject_submitting")) {
+					content = "Đề nghị trả giấy phép " + model.getComment();
+				}
+				else {
+					content = "Đề nghị sửa giấy phép " + model.getComment();
+				}
 
 				JSONObject payload = JSONFactoryUtil.createJSONObject();
 
