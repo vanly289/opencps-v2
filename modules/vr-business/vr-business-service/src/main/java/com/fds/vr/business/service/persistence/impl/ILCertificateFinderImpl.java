@@ -117,8 +117,6 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			keyword = StringPool.PERCENT + keyword + StringPool.PERCENT;
-
 			qPos.add(keyword);
 
 			qPos.add(keyword);
