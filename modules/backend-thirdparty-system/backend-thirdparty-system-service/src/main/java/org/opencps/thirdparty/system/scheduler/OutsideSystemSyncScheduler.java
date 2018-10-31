@@ -472,9 +472,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							templateNo = dossierFile.getFileTemplateNo();
 							partNo = dossierFile.getDossierPartNo();
 
-							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossierFile.getGroupId(), templateNo);
+//							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossierFile.getGroupId(), templateNo);
 							
-							if (part.getPartType() == 2) {
+							if (dossierFile.getDossierPartType() == 2) {
 								ketqua.setSoGp(dossierFile.getDeliverableCode());
 							}
 							if (Validator.isNull(ketqua.getSoGp())) {
