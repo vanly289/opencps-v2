@@ -175,7 +175,7 @@
 							chassisNumber AS sokhung,
 							engineNumber AS somay,
 							0 AS namhetnienhansudung,
-							0 AS namcaitao,
+							NULL AS namcaitao,
 							0 AS trongtai,
 							0 AS loaihinhvantai_id,
 							0 AS la_xegiuongnam,

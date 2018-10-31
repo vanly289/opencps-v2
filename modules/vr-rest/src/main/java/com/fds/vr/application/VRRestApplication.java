@@ -554,6 +554,8 @@ public class VRRestApplication extends Application {
 			ViewPhuongTien ilPhuongTien = phuongTiens.get(0);
 			
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject.put("id", ilPhuongTien.getId());
 
 			jsonObject.put("bienkiemsoat", ilPhuongTien.getBienkiemsoat());
 
