@@ -1977,13 +1977,13 @@ public class DossierActionsImpl implements DossierActions {
 		try {
 			JSONObject oldObj = JSONFactoryUtil.createJSONObject(oldFormData);
 			JSONObject newObj = JSONFactoryUtil.createJSONObject(newFormData);
-//			if (oldObj.has("RegistrationNumber") && newObj.has("RegistrationNumber")) {
-//				if (oldObj.getString("RegistrationNumber").equals(newObj.getString("RegistrationNumber"))) {
-//					return true;
-//				}
-//			}
 			if (oldObj.has("LicenceNo") && newObj.has("LicenceNo")) {
 				if (oldObj.getString("LicenceNo").equals(newObj.getString("LicenceNo"))) {
+					return true;
+				}
+			}
+			if (oldObj.has("RegistrationNumber") && newObj.has("RegistrationNumber")) {
+				if (oldObj.getString("RegistrationNumber").equals(newObj.getString("RegistrationNumber"))) {
 					return true;
 				}
 			}
