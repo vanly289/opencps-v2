@@ -1982,6 +1982,11 @@ public class DossierActionsImpl implements DossierActions {
 					return true;
 				}
 			}
+			if (oldObj.has("LicenceNo") && newObj.has("LicenceNo")) {
+				if (oldObj.getString("LicenceNo").equals(newObj.getString("LicenceNo"))) {
+					return true;
+				}
+			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
