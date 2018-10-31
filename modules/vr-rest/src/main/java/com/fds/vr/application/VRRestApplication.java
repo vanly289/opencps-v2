@@ -3,7 +3,6 @@ package com.fds.vr.application;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -42,7 +41,7 @@ import org.opencps.thirdparty.system.model.ILTuyenKhaiThacXe;
 import org.opencps.thirdparty.system.model.ILTuyenKhaiThach;
 import org.opencps.thirdparty.system.model.ILViPham;
 import org.opencps.thirdparty.system.model.ViewGiayPhepVanTai;
-import org.opencps.thirdparty.system.model.impl.ILPhuongTienImpl;
+import org.opencps.thirdparty.system.model.ViewPhuongTien;
 import org.opencps.thirdparty.system.service.ILDataItemLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILHopDongThueLocalServiceUtil;
@@ -53,6 +52,7 @@ import org.opencps.thirdparty.system.service.ILTuyenKhaiThachLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILTuyenLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILViPhamLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ViewGiayPhepVanTaiLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ViewPhuongTienLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 import com.backend.migrate.vr.model.PhuongTien;
@@ -318,54 +318,12 @@ public class VRRestApplication extends Application {
 
 		JSONArray data = JSONFactoryUtil.createJSONArray();
 		
-		long count = 0;
+		long count = ViewPhuongTienLocalServiceUtil.countPhuongTien(keyword);
 		
-		List<ILPhuongTien> ilPhuongTiens = new ArrayList<ILPhuongTien>();
-		
-		if (Validator.isNotNull(keyword)) {
-			
-			
-			_log.info("***Keyword");
-			
-			ILVehicle ilVehicle = ILVehicleLocalServiceUtil.getByRegistrationNumber(keyword);
-			ILPhuongTien ilPhuongTienx = new ILPhuongTienImpl();
-
-			ILPhuongTien ilPhuongTien = ILPhuongTienLocalServiceUtil.searchByBienKiemSoat(keyword);
-			
-			if (Validator.isNotNull(ilPhuongTien)) {
-				count = 1;
-				ilPhuongTiens.add(ilPhuongTien);
-			} else {
-				if (Validator.isNotNull(ilVehicle)) {
-					count = 1;
-
-					ilPhuongTienx.setId(ilVehicle.getId());
-					ilPhuongTienx.setBienkiemsoat(ilVehicle.getRegistrationNumber());
-					ilPhuongTienx.setGhichu("XXX@"+ilVehicle.getTrademarkName() + "@" + ilVehicle.getOperationType());
-					ilPhuongTienx.setTennguoisohuu(ilVehicle.getNameOfCompany());
-					ilPhuongTienx.setSokhung(ilVehicle.getChassisNumber());
-					ilPhuongTienx.setSomay(ilVehicle.getEngineNumber());
-					
-					//ilPhuongTiens.add(ilPhuongTienx);
-				}
-			}
-
-			
-		} else {
-			count = ILPhuongTienLocalServiceUtil.countAll();
-			
-			count = count + ILVehicleLocalServiceUtil.getILVehiclesCount();
-
-			ilPhuongTiens = ILPhuongTienLocalServiceUtil.getILPhuongTiens(start, end);
-			
-			List<ILVehicle> lsVehicles = ILVehicleLocalServiceUtil.getILVehicles(start, end);
-			
-			//ilPhuongTiens.addAll(convertIlVehicleToPhuongTien(lsVehicles));
-
-		}
+		List<ViewPhuongTien> phuongTiens = ViewPhuongTienLocalServiceUtil.searchPhuongTien(keyword, start, end);
 
 
-		for (ILPhuongTien ilPhuongTien : ilPhuongTiens) {
+		for (ViewPhuongTien ilPhuongTien : phuongTiens) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -434,27 +392,6 @@ public class VRRestApplication extends Application {
 
 		return Response.status(200).entity(result.toJSONString()).build();
 
-	}
-	
-	private List<ILPhuongTien> convertIlVehicleToPhuongTien(List<ILVehicle> lsIlVehicles) {
-		
-		List<ILPhuongTien> ilPhuongTiens = new ArrayList<>();
-		
-		
-		for (ILVehicle ilVehicle : lsIlVehicles) {
-			ILPhuongTien ilPhuongTienx = new ILPhuongTienImpl();
-			
-			ilPhuongTienx.setId(ilVehicle.getId());
-			ilPhuongTienx.setBienkiemsoat(ilVehicle.getRegistrationNumber());
-			ilPhuongTienx.setGhichu("XXX@"+ilVehicle.getTrademarkName() + "@" + ilVehicle.getOperationType());
-			ilPhuongTienx.setTennguoisohuu(ilVehicle.getNameOfCompany());
-			ilPhuongTienx.setSokhung(ilVehicle.getChassisNumber());
-			ilPhuongTienx.setSomay(ilVehicle.getEngineNumber());
-			
-			ilPhuongTiens.add(ilPhuongTienx);
-		}
-		
-		return ilPhuongTiens;
 	}
 	
 
@@ -607,14 +544,15 @@ public class VRRestApplication extends Application {
 	@GET
 	@Path("/phuongtien/{phuongtienid}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findPhuongTienDetail(@Context HttpHeaders header, @PathParam("phuongtienid") long phuongtienid) {
+	public Response findPhuongTienDetail(@Context HttpHeaders header, @PathParam("phuongtienid") String phuongtienid) {
 
 		JSONObject error = JSONFactoryUtil.createJSONObject();
-
-		ILPhuongTien ilPhuongTien = ILPhuongTienLocalServiceUtil.fetchILPhuongTien(phuongtienid);
-
-		if (Validator.isNotNull(ilPhuongTien)) {
-
+		
+		List<ViewPhuongTien> phuongTiens = ViewPhuongTienLocalServiceUtil.searchPhuongTien(phuongtienid, 0, 1);
+		
+		if (phuongTiens.size() != 0) {
+			ViewPhuongTien ilPhuongTien = phuongTiens.get(0);
+			
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put("bienkiemsoat", ilPhuongTien.getBienkiemsoat());
@@ -659,6 +597,7 @@ public class VRRestApplication extends Application {
 			jsonObject.put("xuanhapcanh", xuanhapcanh);
 
 			return Response.status(200).entity(jsonObject.toJSONString()).build();
+			
 		} else {
 			error.put("code", "404");
 			error.put("message", "PHUONG_TIEN_NOT_FOUND");

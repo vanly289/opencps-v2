@@ -117,5 +117,115 @@
 		]]>
 	</sql>
 	
-
+	
+	<sql id="org.opencps.thirdparty.system.service.persistence.ViewPhuongTienFinder.searchByPhuongTien">
+		<![CDATA[
+			SELECT
+				* 
+			FROM
+				(
+				SELECT
+					@ROW /*'*/
+					:= /*'*/
+					@ROW + 1 AS id,
+					view_phuongtien.* 
+				FROM
+					(
+						(
+						SELECT
+							bienkiemsoat,
+							succhua,
+							loaighe_id,
+							namsanxuat,
+							nuocsanxuat_id,
+							tenhieuxe_id,
+							mauson_id,
+							sokhung,
+							somay,
+							namhetnienhansudung,
+							namcaitao,
+							trongtai,
+							loaihinhvantai_id,
+							la_xegiuongnam,
+							sogiuongnam,
+							tennguoisohuu,
+							doanhnghiep_id,
+							tuyenkhaithac_id,
+							web_giamsathanhtrinh,
+							tendangnhap_gsht,
+							matkhau_gsht,
+							ghichu,
+							trangthai,
+							coquanquanly_id,
+							congdan_id,
+							'TN' AS typeCode,
+							'Trong nước' AS typeName 
+						FROM
+							phbh_phuongtien 
+						) UNION
+						(
+						SELECT
+							registrationNumber AS bienkiemsoat,
+							0 AS succhua,
+							0 AS loaighe_id,
+							manufacturedYear AS namsanxuat,
+							0 AS nuocsanxuat_id,
+							trademarkCode AS tenhieuxe_id,
+							0 AS mauson_id,
+							chassisNumber AS sokhung,
+							engineNumber AS somay,
+							0 AS namhetnienhansudung,
+							0 AS namcaitao,
+							0 AS trongtai,
+							0 AS loaihinhvantai_id,
+							0 AS la_xegiuongnam,
+							0 AS sogiuongnam,
+							VehicleOwner AS tennguoisohuu,
+						CASE
+								ISNULL( doanhnghiepid ) 
+								WHEN 1 THEN
+								( SELECT id FROM ttnd_doanhnghiep WHERE ttnd_doanhnghiep.ten = il_vehicle.NameOfCompany LIMIT 1 ) ELSE doanhnghiepid 
+							END AS doanhnghiep_id,
+							0 AS tuyenkhaithac_id,
+							0 AS web_giamsathanhtrinh,
+							0 AS tendangnhap_gsht,
+							0 AS matkhau_gsht,
+							CONCAT(
+								'Trọng tải/ Số chỗ ngồi: ',
+								capacity,
+								'\n',
+								'Nhãn hiệu: ',
+								trademarkName,
+								'\n',
+								'Màu sơn: ',
+								vehicleColor,
+								'\n',
+								'Kiểu loại: ',
+							CASE
+									ISNULL( vehicleModelCode ) 
+									WHEN 1 THEN
+									'---' ELSE vehicleModelCode 
+								END,
+							CASE
+									ISNULL( vehicleModelName ) 
+									WHEN 1 THEN
+									'---' ELSE vehicleModelName 
+								END,
+								'\n' 
+							) AS ghichu,
+							1 AS trangthai,
+							0 AS coquanquanly_id,
+							0 AS congdan_id,
+							'LV' AS typeCode,
+							'Liên vận' AS typeName 
+						FROM
+							il_vehicle 
+						) 
+					) AS view_phuongtien,
+				( SELECT @ROW /*'*/ := /*'*/ 0 ) AS foo 
+				) AS view_phuongtien WHERE bienkiemsoat = ?
+		]]>
+	</sql>
+	
+	
 </custom-sql>

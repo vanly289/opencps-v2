@@ -16,6 +16,9 @@ package org.opencps.thirdparty.system.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.List;
+
+import org.opencps.thirdparty.system.model.ViewPhuongTien;
 import org.opencps.thirdparty.system.service.base.ViewPhuongTienLocalServiceBaseImpl;
 
 /**
@@ -40,4 +43,14 @@ public class ViewPhuongTienLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ViewPhuongTienLocalServiceUtil} to access the view phuong tien local service.
 	 */
+	
+	public List<ViewPhuongTien> searchPhuongTien(String keyword, int start, int end) {
+		
+		return viewPhuongTienFinder.searchPhuongTien(keyword, start, end);
+	}
+	
+	public int countPhuongTien(String keyword) {
+		
+		return viewPhuongTienFinder.countPhuongTien(keyword);
+	}
 }
