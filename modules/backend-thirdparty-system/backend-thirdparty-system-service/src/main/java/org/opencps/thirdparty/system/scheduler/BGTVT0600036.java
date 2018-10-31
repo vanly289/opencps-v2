@@ -396,17 +396,18 @@ public class BGTVT0600036 {
 					String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 
 					model.setRawMessage(rawMessage);
+					lstResults.add(model);						
 					
-					if (lstLicenceNos.isEmpty()) {
-						lstResults.add(model);						
-					}
-					else {
-						if (formDataObj.has("LicenceNo") && Validator.isNotNull(formDataObj.getString("LicenceNo"))) {
-							if (lstLicenceNos.contains(formDataObj.getString("LicenceNo"))) {
-								lstResults.add(model);
-							}
-						}
-					}
+//					if (lstLicenceNos.isEmpty()) {
+//						lstResults.add(model);						
+//					}
+//					else {
+//						if (formDataObj.has("LicenceNo") && Validator.isNotNull(formDataObj.getString("LicenceNo"))) {
+//							if (lstLicenceNos.contains(formDataObj.getString("LicenceNo"))) {
+//								lstResults.add(model);
+//							}
+//						}
+//					}
 				}
 			}
 		}
