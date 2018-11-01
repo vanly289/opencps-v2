@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl implements ILCertificateFinder {
@@ -64,12 +65,14 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 
 		Session session = null;
 
-		keyword = StringPool.PERCENT + keyword + StringPool.PERCENT;
-
 		try {
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(getClass(), SEARCH_LIENVAN);
+			
+			if (Validator.isNull(keyword)) {
+				sql = StringUtil.replace(sql, "(licenceNo = ? OR registrationNumber = ?) AND", StringPool.BLANK);
+			}
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -77,14 +80,13 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			q.addEntity("ILCertificate", ILCertificateImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+			
+			if (Validator.isNotNull(keyword)) {
+				qPos.add(keyword);
 
-
-			keyword = StringPool.PERCENT + keyword + StringPool.PERCENT;
-
-			qPos.add(keyword);
-
-			qPos.add(keyword);
-
+				qPos.add(keyword);
+			}
+			
 			return (List<ILCertificate>) QueryUtil.list(q, getDialect(), start, end);
 
 		} catch (Exception e) {
@@ -116,6 +118,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			q.addEntity("ILCertificate", ILCertificateImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+			keyword = StringPool.PERCENT + keyword + StringPool.PERCENT;
 
 			qPos.add(keyword);
 

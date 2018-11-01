@@ -37,7 +37,6 @@ public class ILDoanhNghiepFinderImpl extends ILDoanhNghiepFinderBaseImpl impleme
 
 			QueryPos qPos = QueryPos.getInstance(q);
 			
-
 			qPos.add(keyword);
 
 			qPos.add(keyword);

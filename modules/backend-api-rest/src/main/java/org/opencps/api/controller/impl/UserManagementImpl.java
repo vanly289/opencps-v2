@@ -889,6 +889,7 @@ public class UserManagementImpl implements UserManagement {
 				return Response.status(409).entity(error).build();
 
 			} else {
+				_log.error("/ @GET: " + e);
 
 				ErrorMsg error = new ErrorMsg();
 

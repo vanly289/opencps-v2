@@ -321,7 +321,12 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		// String[] advFilterOptions = (String[])
 		// params.get("advFilterOptions");
 		String isAccount = (String) params.get("isAccount");
-		String workingUnitId = (String) params.get(EmployeeTerm.WORKING_UNIT_ID);
+		String workingUnitId = "";
+		
+		if (Validator.isNotNull(params.get(EmployeeTerm.WORKING_UNIT_ID))) {
+			workingUnitId = params.get(EmployeeTerm.WORKING_UNIT_ID).toString();
+		}
+		
 		String jobPostId = (String) params.get(EmployeeTerm.JOB_POS_ID);
 		String status = (String) params.get(EmployeeTerm.WORKING_STATUS);
 		String active = (String) params.get(EmployeeTerm.ACTIVE);
@@ -487,7 +492,7 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		// String[] advFilterOptions = (String[])
 		// params.get("advFilterOptions");
 		String isAccount = (String) params.get("isAccount");
-		String workingUnitId = (String) params.get(EmployeeTerm.WORKING_UNIT_ID);
+		String workingUnitId = params.get(EmployeeTerm.WORKING_UNIT_ID).toString();
 		String jobPostId = (String) params.get(EmployeeTerm.JOB_POS_ID);
 		String status = (String) params.get(EmployeeTerm.WORKING_STATUS);
 		String active = (String) params.get(EmployeeTerm.ACTIVE);
