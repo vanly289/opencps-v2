@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
 import org.opencps.datamgt.utils.DateTimeUtils;
@@ -95,7 +96,8 @@ public class BGTVT0600048 {
 					model.setPersonSignature("");
 					model.setSystemSignature("");
 					model.setStatus(0);
-					model.setMessageId(PortalUUIDUtil.generate());
+//					model.setMessageId(PortalUUIDUtil.generate());
+					model.setMessageId(UUID.randomUUID().toString());
 					model.setFromName("BGTVT");
 					model.setFromCountryCode("VN");
 					model.setFromMinistryCode("BGTVT");
