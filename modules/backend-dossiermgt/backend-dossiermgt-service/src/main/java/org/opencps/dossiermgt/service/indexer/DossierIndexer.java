@@ -337,7 +337,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 				}
 			}
 		}
-		_log.info("Mapping user:"+sb.toString());
+		//_log.info("Mapping user:"+sb.toString());
 		document.addTextSortable(DossierTerm.ACTION_MAPPING_USERID, sb.toString());
 		
 //		 Indexing DossierActionUsers
@@ -362,7 +362,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 			_log.error("Can not get list dossierActions by dossierId " + dossierId, e);
 		}
 
-		_log.info("Action user:"+StringUtil.merge(actionUserIds, StringPool.SPACE));
+		//_log.info("Action user:"+StringUtil.merge(actionUserIds, StringPool.SPACE));
 		document.addTextSortable(DossierTerm.ACTION_USERIDS, StringUtil.merge(actionUserIds, StringPool.SPACE));
 		
 		//binhth index dossierId CTN

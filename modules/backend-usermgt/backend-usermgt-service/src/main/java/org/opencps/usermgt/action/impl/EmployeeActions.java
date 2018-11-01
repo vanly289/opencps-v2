@@ -405,12 +405,21 @@ public class EmployeeActions implements EmployeeInterface {
 		UnauthenticationException, UnauthorizationException,
 		DuplicateEmployeeEmailException, DuplicateEmployeeNoException,
 		PortalException {
-
+		
 		if (Validator.isNull(screenName)) {
-			screenName = email.substring(0, email.indexOf("@"));
+			
+			_log.info("***EMAIL***" + email);
+			
+			if (Validator.isNotNull(email) && email.contains("@")) {
+				screenName = email.substring(0, email.indexOf("@"));
+			}
+			
+			if (Validator.isNotNull(screenName) && screenName.contains("+")) {
+				screenName = email.substring(0, email.indexOf("+")) + PwdGenerator.getPassword(4);
+			}
+			
 		}
 		
-		screenName = email.substring(0, email.indexOf("+")) + PwdGenerator.getPassword(4);
 		
 		
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -593,6 +602,8 @@ public class EmployeeActions implements EmployeeInterface {
 
 				}
 				catch (Exception e) {
+					_log.error(e);
+					
 					jsonObject.put("screenName", user.getScreenName());
 					jsonObject.put("email", user.getEmailAddress());
 					jsonObject.put("exist", Boolean.TRUE);
