@@ -215,6 +215,8 @@ public class BGTVT0600005 {
 						vlCrossBorderTransportPermit.setVehicleType(vehicleType);
 					}
 					else {
+						vehicleType.setTruck("0");
+						vehicleType.setBus("0");
 						vehicleType.setOthers("1");
 						vlCrossBorderTransportPermit.setModel("Xe khác");
 					}

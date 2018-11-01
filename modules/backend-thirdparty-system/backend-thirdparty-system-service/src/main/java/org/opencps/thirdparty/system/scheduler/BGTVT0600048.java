@@ -191,6 +191,8 @@ public class BGTVT0600048 {
 						clvCommercialCrossBorderTransportPermit.setVehicleType(vehicleType);
 					}
 					else {
+						vehicleType.setTruck("0");
+						vehicleType.setBus("0");
 						vehicleType.setOthers("1");
 						clvCommercialCrossBorderTransportPermit.setModel("Xe khác");
 					}
