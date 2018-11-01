@@ -190,6 +190,10 @@ public class BGTVT0600048 {
 						
 						clvCommercialCrossBorderTransportPermit.setVehicleType(vehicleType);
 					}
+					else {
+						vehicleType.setOthers("1");
+						clvCommercialCrossBorderTransportPermit.setModel("Xe khác");
+					}
 					
 					if (formDataObj.has("VehicleColor")) {
 						clvCommercialCrossBorderTransportPermit.setVehicleColor(formDataObj.getString("VehicleColor"));

@@ -214,6 +214,10 @@ public class BGTVT0600005 {
 						
 						vlCrossBorderTransportPermit.setVehicleType(vehicleType);
 					}
+					else {
+						vehicleType.setOthers("1");
+						vlCrossBorderTransportPermit.setModel("Xe khác");
+					}
 					if (formDataObj.has("VehicleColor")) {
 						vlCrossBorderTransportPermit.setVehicleColor(formDataObj.getString("VehicleColor"));
 					}
@@ -327,6 +331,9 @@ public class BGTVT0600005 {
 					
 					if (formDataObj.has("TravelingArea")) {
 						vlCrossBorderTransportPermit.setTravelingArea(formDataObj.getString("TravelingArea"));
+					}
+					else {
+						vlCrossBorderTransportPermit.setTravelingArea("---");
 					}
 
 					if (formDataObj.has("Destination")) {

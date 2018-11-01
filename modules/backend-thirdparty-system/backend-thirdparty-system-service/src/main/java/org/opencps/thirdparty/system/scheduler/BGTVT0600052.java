@@ -161,14 +161,35 @@ public class BGTVT0600052 {
 					}
 					VehicleType vehicleType = new VehicleType();
 					
-					if (formDataObj.has("Truck")) {
-						vehicleType.setTruck(formDataObj.getString("Truck"));
+					if (formDataObj.has("VehicleType")) {
+						String vtStr = formDataObj.getString("VehicleType");
+						if (vtStr.equalsIgnoreCase("Others")) {
+							vehicleType.setOthers("1");
+							clvNonCommercialCrossBorderTransportPermit.setModel("Xe khác");
+						}
+						else {
+							vehicleType.setOthers("0");
+						}
+						if (vtStr.equals("Truck")) {
+							vehicleType.setTruck("1");
+							clvNonCommercialCrossBorderTransportPermit.setModel("Xe tải");
+						}
+						else {
+							vehicleType.setTruck("0");
+						}
+						if (vtStr.equals("Bus")) {
+							vehicleType.setBus("1");
+							clvNonCommercialCrossBorderTransportPermit.setModel("Xe khách");
+						}
+						else {
+							vehicleType.setBus("0");
+						}
+						
+						clvNonCommercialCrossBorderTransportPermit.setVehicleType(vehicleType);
 					}
-					if (formDataObj.has("Bus")) {
-						vehicleType.setBus(formDataObj.getString("Bus"));
-					}
-					if (formDataObj.has("Others")) {
-						vehicleType.setOthers(formDataObj.getString("Others"));
+					else {
+						vehicleType.setOthers("1");
+						clvNonCommercialCrossBorderTransportPermit.setModel("Xe khác");
 					}
 					
 					clvNonCommercialCrossBorderTransportPermit.setVehicleType(vehicleType);
@@ -229,6 +250,9 @@ public class BGTVT0600052 {
 					}
 					if (formDataObj.has("TravelingArea")) {
 						clvNonCommercialCrossBorderTransportPermit.setTravelingArea(formDataObj.getString("TravelingArea"));
+					}
+					else {
+						clvNonCommercialCrossBorderTransportPermit.setTravelingArea("---");
 					}
 					if (formDataObj.has("Routes")) {
 						clvNonCommercialCrossBorderTransportPermit.setRoutes(formDataObj.getString("Routes"));
