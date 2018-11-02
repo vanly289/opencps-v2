@@ -376,12 +376,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600055")
 								|| dossier.getServiceCode().equals("BGTVT0600056")
 								|| dossier.getServiceCode().equals("BGTVT0600057")
+								) {
+							ketqua.setSoTn(dossier.getDossierNo());
+						}
+						if (dossier.getServiceCode().equals("BGTVT0600057")
 								|| dossier.getServiceCode().equals("BGTVT0600058")
 								|| dossier.getServiceCode().equals("BGTVT0600059")
 								|| dossier.getServiceCode().equals("BGTVT0600060")
 								|| dossier.getServiceCode().equals("BGTVT0600061")
 								|| dossier.getServiceCode().equals("BGTVT0600062")) {
-							ketqua.setSoTn(dossier.getDossierNo());
+							ketqua.setSoGp(StringPool.BLANK);
 						}
 						
 						ketqua.setNoiDung(dossierAction.getActionNote());
@@ -472,9 +476,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							templateNo = dossierFile.getFileTemplateNo();
 							partNo = dossierFile.getDossierPartNo();
 
-							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossierFile.getGroupId(), templateNo);
+//							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossierFile.getGroupId(), templateNo);
 							
-							if (part.getPartType() == 2) {
+							if (dossierFile.getDossierPartType() == 2) {
 								ketqua.setSoGp(dossierFile.getDeliverableCode());
 							}
 							if (Validator.isNull(ketqua.getSoGp())) {

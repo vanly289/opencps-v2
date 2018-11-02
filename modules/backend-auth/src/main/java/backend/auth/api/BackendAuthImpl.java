@@ -33,7 +33,7 @@ public class BackendAuthImpl implements BackendAuth {
 		try {
 			for (Role role : roles) {
 
-				if (role.getName().equals("Administrator")) {
+				if (role.getName().equals("Administrator") || role.getName().equals("Power User")) {
 
 					hasPermission = true;
 					break;

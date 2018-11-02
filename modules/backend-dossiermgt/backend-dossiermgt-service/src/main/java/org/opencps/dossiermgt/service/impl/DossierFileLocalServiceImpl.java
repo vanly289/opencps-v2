@@ -680,18 +680,27 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				jrxmlTemplate = dossierPart.getFormReport();
 			}
 			dossierFile.setFormReport(jrxmlTemplate);
-			if (dossierPart.getESign()) {
-				try {
-					JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
-					if (formDataObj.has("LicenceNo")) {
-						dossierFile.setDeliverableCode(formDataObj.getString("LicenceNo"));
-					}
-				}
-				catch (JSONException e) {
-					e.printStackTrace();
+		}
+		
+		DossierPart dossierPart = dossierPartLocalService.fetchByTemplatePartNo(groupId,
+				dossierFile.getDossierTemplateNo(), dossierFile.getDossierPartNo());
+
+		if (dossierPart == null) {
+			throw new NoSuchDossierPartException();
+		}
+		
+		if (dossierPart.getESign()) {
+			try {
+				JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
+				if (formDataObj.has("LicenceNo")) {
+					dossierFile.setDeliverableCode(formDataObj.getString("LicenceNo"));
 				}
 			}
+			catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
+		
 		dossierFile.setFormData(formData);
 		dossierFile.setIsNew(true);
 

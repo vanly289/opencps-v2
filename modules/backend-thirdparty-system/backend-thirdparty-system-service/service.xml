@@ -158,6 +158,7 @@
         	<finder-column name="bienkiemsoat"/>
         </finder>
 	</entity>
+	
 	<entity local-service="true" name="ILViPham" remote-service="false" uuid="false" table="phbh_vipham">
 		<!-- PK fields -->
 

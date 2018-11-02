@@ -1,15 +1,18 @@
 package org.opencps.thirdparty.system.scheduler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
 import org.opencps.datamgt.utils.DateTimeUtils;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
+import org.opencps.dossiermgt.model.DossierRequestUD;
 import org.opencps.dossiermgt.model.ProcessAction;
 import org.opencps.dossiermgt.model.ProcessOption;
 import org.opencps.dossiermgt.model.ServiceConfig;
@@ -17,6 +20,7 @@ import org.opencps.dossiermgt.model.ServiceInfo;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
@@ -74,6 +78,21 @@ public class BGTVT0600036 {
 		ProcessAction processAction = ProcessActionLocalServiceUtil.fetchBySPID_AC(
 				serviceProcess.getServiceProcessId(), dossierAction.getActionCode());
 
+		List<DossierRequestUD> lstRequests = DossierRequestUDLocalServiceUtil.getDossierRequestByRT(
+				dossier.getCompanyId(),
+				dossier.getGroupId(),
+				dossier.getDossierId(), 
+				"correcting");
+		List<String> lstLicenceNos = new ArrayList<>();
+		
+		if (!lstRequests.isEmpty()) {
+			DossierRequestUD dossierRequest = lstRequests.get(0);
+			String[] temps = StringUtil.split(dossierRequest.getComment());
+			if (temps.length > 0) {
+				lstLicenceNos.addAll(Arrays.asList(temps));
+			}
+		}
+		
 		for (DossierFile dossierFile : dossierFileList) {
 			templateNo = dossierFile.getFileTemplateNo();
 			partNo = dossierFile.getDossierPartNo();
@@ -94,7 +113,8 @@ public class BGTVT0600036 {
 					model.setPersonSignature("");
 					model.setSystemSignature("");
 					model.setStatus(0);
-					model.setMessageId(PortalUUIDUtil.generate());
+//					model.setMessageId(PortalUUIDUtil.generate());
+					model.setMessageId(UUID.randomUUID().toString());
 					model.setFromName("BGTVT");
 					model.setFromCountryCode("VN");
 					model.setFromMinistryCode("BGTVT");
@@ -378,8 +398,18 @@ public class BGTVT0600036 {
 					String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
 
 					model.setRawMessage(rawMessage);
+					lstResults.add(model);						
 					
-					lstResults.add(model);
+//					if (lstLicenceNos.isEmpty()) {
+//						lstResults.add(model);						
+//					}
+//					else {
+//						if (formDataObj.has("LicenceNo") && Validator.isNotNull(formDataObj.getString("LicenceNo"))) {
+//							if (lstLicenceNos.contains(formDataObj.getString("LicenceNo"))) {
+//								lstResults.add(model);
+//							}
+//						}
+//					}
 				}
 			}
 		}

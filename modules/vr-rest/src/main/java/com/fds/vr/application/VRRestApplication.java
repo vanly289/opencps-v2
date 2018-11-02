@@ -3,7 +3,6 @@ package com.fds.vr.application;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -42,6 +41,7 @@ import org.opencps.thirdparty.system.model.ILTuyenKhaiThacXe;
 import org.opencps.thirdparty.system.model.ILTuyenKhaiThach;
 import org.opencps.thirdparty.system.model.ILViPham;
 import org.opencps.thirdparty.system.model.ViewGiayPhepVanTai;
+import org.opencps.thirdparty.system.model.ViewPhuongTien;
 import org.opencps.thirdparty.system.service.ILDataItemLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILHopDongThueLocalServiceUtil;
@@ -52,6 +52,7 @@ import org.opencps.thirdparty.system.service.ILTuyenKhaiThachLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILTuyenLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILViPhamLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ViewGiayPhepVanTaiLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ViewPhuongTienLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 import com.backend.migrate.vr.model.PhuongTien;
@@ -317,30 +318,12 @@ public class VRRestApplication extends Application {
 
 		JSONArray data = JSONFactoryUtil.createJSONArray();
 		
-		long count = 0;
+		long count = ViewPhuongTienLocalServiceUtil.countPhuongTien(keyword);
 		
-		List<ILPhuongTien> ilPhuongTiens = new ArrayList<ILPhuongTien>();
-		
-		if (Validator.isNotNull(keyword)) {
-			
-			_log.info("***Keyword");
-			
-			ILPhuongTien ilPhuongTien = ILPhuongTienLocalServiceUtil.searchByBienKiemSoat(keyword);
-			
-			if (Validator.isNotNull(ilPhuongTien)) {
-				count = 1;
-				ilPhuongTiens.add(ilPhuongTien);
-			}
-
-		} else {
-			count = ILPhuongTienLocalServiceUtil.countAll();
-
-			ilPhuongTiens = ILPhuongTienLocalServiceUtil.getILPhuongTiens(start, end);
-
-		}
+		List<ViewPhuongTien> phuongTiens = ViewPhuongTienLocalServiceUtil.searchPhuongTien(keyword, start, end);
 
 
-		for (ILPhuongTien ilPhuongTien : ilPhuongTiens) {
+		for (ViewPhuongTien ilPhuongTien : phuongTiens) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -348,19 +331,32 @@ public class VRRestApplication extends Application {
 
 			jsonObject.put("bienkiemsoat", ilPhuongTien.getBienkiemsoat());
 
-			ILDataItem nhanhieu = ILDataItemLocalServiceUtil.fetchILDataItem(ilPhuongTien.getTenhieuxe_id());
 
-			if (Validator.isNotNull(nhanhieu)) {
-				jsonObject.put("nhanhieu", nhanhieu.getTen());
-			}
 			jsonObject.put("tendangky", ilPhuongTien.getTennguoisohuu());
 			jsonObject.put("sokhung", ilPhuongTien.getSokhung());
 			jsonObject.put("somay", ilPhuongTien.getSomay());
+			
+			if (Validator.isNotNull(ilPhuongTien.getGhichu()) && ilPhuongTien.getGhichu().contains("XXX")) {
+				
+				String [] elmData = StringUtil.split(ilPhuongTien.getGhichu(), StringPool.AT);
+				
+				if (elmData.length == 3) {
+					jsonObject.put("nhanhieu", elmData[1]);
+					jsonObject.put("loaiphuongtien", elmData[2]);
+				}
+				
+			} else {
 
-			ILDataItem loaiphuongtien = ILDataItemLocalServiceUtil.fetchILDataItem(ilPhuongTien.getLoaihinhvantai_id());
+				ILDataItem nhanhieu = ILDataItemLocalServiceUtil.fetchILDataItem(ilPhuongTien.getTenhieuxe_id());
+				if (Validator.isNotNull(nhanhieu)) {
+					jsonObject.put("nhanhieu", nhanhieu.getTen());
+				}
+				ILDataItem loaiphuongtien = ILDataItemLocalServiceUtil
+						.fetchILDataItem(ilPhuongTien.getLoaihinhvantai_id());
 
-			if (Validator.isNotNull(loaiphuongtien)) {
-				jsonObject.put("loaiphuongtien", loaiphuongtien.getTen());
+				if (Validator.isNotNull(loaiphuongtien)) {
+					jsonObject.put("loaiphuongtien", loaiphuongtien.getTen());
+				}
 			}
 
 			JSONArray xuanhapcanh = JSONFactoryUtil.createJSONArray();
@@ -370,17 +366,17 @@ public class VRRestApplication extends Application {
 
 			// add sample
 			JSONObject sample = JSONFactoryUtil.createJSONObject();
-
-			sample.put("thoidiemxuatcan", new Date());
-			sample.put("thoidiemnhapcanh", new Date());
+			
+			sample.put("thoidiemxuatcan",  formatDate(new Date()));
+			sample.put("thoidiemnhapcanh", formatDate(new Date()));
 
 			xuanhapcanh.put(sample);
 
 			for (ILVehicleCustomsBorderGuard borderGuard : borderGuards) {
 				JSONObject jsonObjectBorderGuard = JSONFactoryUtil.createJSONObject();
 
-				jsonObjectBorderGuard.put("thoidiemxuatcan", borderGuard.getBorderGuardsArrivalDate());
-				jsonObjectBorderGuard.put("thoidiemnhapcanh", borderGuard.getBorderGuardsDepartureDate());
+				jsonObjectBorderGuard.put("thoidiemxuatcan", formatDate(borderGuard.getBorderGuardsArrivalDate()));
+				jsonObjectBorderGuard.put("thoidiemnhapcanh", formatDate(borderGuard.getBorderGuardsDepartureDate()));
 
 				xuanhapcanh.put(jsonObjectBorderGuard);
 			}
@@ -397,6 +393,8 @@ public class VRRestApplication extends Application {
 		return Response.status(200).entity(result.toJSONString()).build();
 
 	}
+	
+
 
 	@GET
 	@Path("/phuongtien/{biensoxe}/refer")
@@ -546,15 +544,18 @@ public class VRRestApplication extends Application {
 	@GET
 	@Path("/phuongtien/{phuongtienid}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findPhuongTienDetail(@Context HttpHeaders header, @PathParam("phuongtienid") long phuongtienid) {
+	public Response findPhuongTienDetail(@Context HttpHeaders header, @PathParam("phuongtienid") String phuongtienid) {
 
 		JSONObject error = JSONFactoryUtil.createJSONObject();
-
-		ILPhuongTien ilPhuongTien = ILPhuongTienLocalServiceUtil.fetchILPhuongTien(phuongtienid);
-
-		if (Validator.isNotNull(ilPhuongTien)) {
-
+		
+		List<ViewPhuongTien> phuongTiens = ViewPhuongTienLocalServiceUtil.searchPhuongTien(phuongtienid, 0, 1);
+		
+		if (phuongTiens.size() != 0) {
+			ViewPhuongTien ilPhuongTien = phuongTiens.get(0);
+			
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject.put("id", ilPhuongTien.getId());
 
 			jsonObject.put("bienkiemsoat", ilPhuongTien.getBienkiemsoat());
 
@@ -598,6 +599,7 @@ public class VRRestApplication extends Application {
 			jsonObject.put("xuanhapcanh", xuanhapcanh);
 
 			return Response.status(200).entity(jsonObject.toJSONString()).build();
+			
 		} else {
 			error.put("code", "404");
 			error.put("message", "PHUONG_TIEN_NOT_FOUND");
@@ -770,10 +772,10 @@ public class VRRestApplication extends Application {
 				jsonObject.put("sogiaypheplienvan", certificate.getLicenceNo());
 				jsonObject.put("noicap", certificate.getGovAgencyName());
 				jsonObject.put("ngaycap", formatDate(certificate.getValidFrom()));
-				jsonObject.put("ngayhethan", formatDate(certificate.getExpiredDate()));
+				jsonObject.put("ngayhethan", formatDate(certificate.getValidUntil()));
 				jsonObject.put("trangthai", "");
 				jsonObject.put("donvikhaithac", certificate.getApplicantName());
-				jsonObject.put("bienkiemsoat", "");
+				jsonObject.put("bienkiemsoat", certificate.getRegistrationNumber());
 				jsonObject.put("loaihinhkinhdoanh", certificate.getTransportOperation());
 				jsonObject.put("loaiphuongtien", certificate.getVehicleType());
 				jsonObject.put("download", getFileURL(certificate.getDossierFileId()));

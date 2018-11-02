@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
 import org.opencps.datamgt.utils.DateTimeUtils;
@@ -94,7 +95,8 @@ public class BGTVT0600005 {
 					model.setPersonSignature("");
 					model.setSystemSignature("");
 					model.setStatus(0);
-					model.setMessageId(PortalUUIDUtil.generate());
+//					model.setMessageId(PortalUUIDUtil.generate());
+					model.setMessageId(UUID.randomUUID().toString());
 					model.setFromName("BGTVT");
 					model.setFromCountryCode("VN");
 					model.setFromMinistryCode("BGTVT");
@@ -214,6 +216,12 @@ public class BGTVT0600005 {
 						
 						vlCrossBorderTransportPermit.setVehicleType(vehicleType);
 					}
+					else {
+						vehicleType.setTruck("0");
+						vehicleType.setBus("0");
+						vehicleType.setOthers("1");
+						vlCrossBorderTransportPermit.setModel("Xe khác");
+					}
 					if (formDataObj.has("VehicleColor")) {
 						vlCrossBorderTransportPermit.setVehicleColor(formDataObj.getString("VehicleColor"));
 					}
@@ -327,6 +335,9 @@ public class BGTVT0600005 {
 					
 					if (formDataObj.has("TravelingArea")) {
 						vlCrossBorderTransportPermit.setTravelingArea(formDataObj.getString("TravelingArea"));
+					}
+					else {
+						vlCrossBorderTransportPermit.setTravelingArea("---");
 					}
 
 					if (formDataObj.has("Destination")) {

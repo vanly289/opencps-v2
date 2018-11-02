@@ -588,16 +588,17 @@ public class DossierActionsImpl implements DossierActions {
 						List<String> returnDossierFileTemplateNos = ListUtil
 								.toList(StringUtil.split(returnDossierFiles));
 						JSONArray createFiles = JSONFactoryUtil.createJSONArray();
+						_log.info("***CREATE DOSSIER FILES***" + dossierFileTemplateNos + ", " + createDossierFiles);
 						if (dossierFileTemplateNos != null && !dossierFileTemplateNos.isEmpty()) {
 							DossierTemplate dossierTemplate = DossierTemplateLocalServiceUtil.getByTemplateNo(groupId,
 									dossier.getDossierTemplateNo());
+							_log.info("***CREATE DOSSIER FILES***DOSSIER TEMPLATE***" + dossierTemplate.getTemplateNo() + "," + groupId + "," + dossier.getDossierTemplateNo());
 							List<DossierPart> dossierParts = DossierPartLocalServiceUtil.getByTemplateNo(groupId,
 									dossierTemplate.getTemplateNo());
-
 							if (dossierParts != null) {
 								for (DossierPart dossierPart : dossierParts) {
 									String fileTemplateNo = dossierPart.getFileTemplateNo();
-									
+									_log.info("***CREATE DOSSIER FILES***" + fileTemplateNo + "," + dossierFileTemplateNos);
 									if (dossierFileTemplateNos.contains(fileTemplateNo)) {
 										
 										_log.info("***DOSSIERFILETEMPLATENOS " + dossierFileTemplateNos.toString());
@@ -1977,6 +1978,11 @@ public class DossierActionsImpl implements DossierActions {
 		try {
 			JSONObject oldObj = JSONFactoryUtil.createJSONObject(oldFormData);
 			JSONObject newObj = JSONFactoryUtil.createJSONObject(newFormData);
+			if (oldObj.has("LicenceNo") && newObj.has("LicenceNo")) {
+				if (oldObj.getString("LicenceNo").equals(newObj.getString("LicenceNo"))) {
+					return true;
+				}
+			}
 			if (oldObj.has("RegistrationNumber") && newObj.has("RegistrationNumber")) {
 				if (oldObj.getString("RegistrationNumber").equals(newObj.getString("RegistrationNumber"))) {
 					return true;
