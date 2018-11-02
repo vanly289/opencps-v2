@@ -171,6 +171,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setSoGp(StringPool.BLANK);
 						if (dossier.getServiceCode().equals("BGTVT0600042")
 								|| dossier.getServiceCode().equals("BGTVT0600043")
+								|| dossier.getServiceCode().equals("BGTVT0600018")
+								|| dossier.getServiceCode().equals("BGTVT0600035")
+								|| dossier.getServiceCode().equals("BGTVT0600057")
+								|| dossier.getServiceCode().equals("BGTVT0600065")
+								|| dossier.getServiceCode().equals("BGTVT0600047")
 								) {
 							ketqua.setSoTn(dossier.getDossierNo());
 						}
@@ -249,6 +254,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setSoGp(StringPool.BLANK);
 						if (dossier.getServiceCode().equals("BGTVT0600042")
 								|| dossier.getServiceCode().equals("BGTVT0600043")
+								|| dossier.getServiceCode().equals("BGTVT0600018")
+								|| dossier.getServiceCode().equals("BGTVT0600035")
+								|| dossier.getServiceCode().equals("BGTVT0600057")
+								|| dossier.getServiceCode().equals("BGTVT0600065")
+								|| dossier.getServiceCode().equals("BGTVT0600047")
 								) {
 							ketqua.setSoTn(dossier.getDossierNo());
 						}						
@@ -485,7 +495,12 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								ketqua.setSoGp("11");
 							}
 							if (dossier.getServiceCode().equals("BGTVT0600042")
-									|| dossier.getServiceCode().equals("BGTVT0600043")) {
+									|| dossier.getServiceCode().equals("BGTVT0600043")
+									|| dossier.getServiceCode().equals("BGTVT0600018")
+									|| dossier.getServiceCode().equals("BGTVT0600035")
+									|| dossier.getServiceCode().equals("BGTVT0600057")
+									|| dossier.getServiceCode().equals("BGTVT0600065")
+									|| dossier.getServiceCode().equals("BGTVT0600047")) {
 								ketqua.setSoTn(dossier.getDossierNo());
 							}
 							
@@ -1167,6 +1182,30 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 
 						}
+						else if (dossier.getServiceCode().equals("BGTVT0600018")
+								|| dossier.getServiceCode().equals("BGTVT0600035")
+								|| dossier.getServiceCode().equals("BGTVT0600057")
+								|| dossier.getServiceCode().equals("BGTVT0600065")
+								) {
+							MessageQueueInputModel model = BGTVT0600018.convertResult(dossier, dossierSync, envelope, "18", "15");
+
+							MessageQueueDetailModel result = client.postMessageQueue(model);
+							if (result != null) {
+								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+										: sync.getMethod());
+
+								DossierAction foundAction = DossierActionLocalServiceUtil
+										.fetchDossierAction(clientDossierActionId);
+								if (foundAction != null) {
+									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+								}
+
+								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							}
+							
+						}
 					} else if (dossierAction.getSyncActionCode().equals("1613")) {
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						subject.setDocumentType(dossier.getServiceCode());
@@ -1629,6 +1668,30 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}	
+						else if (dossier.getServiceCode().equals("BGTVT0600018")
+								|| dossier.getServiceCode().equals("BGTVT0600035")
+								|| dossier.getServiceCode().equals("BGTVT0600057")
+								|| dossier.getServiceCode().equals("BGTVT0600065")
+								) {
+							MessageQueueInputModel model = BGTVT0600018.convertResult(dossier, dossierSync, envelope, "18", "16");
+
+							MessageQueueDetailModel result = client.postMessageQueue(model);
+							if (result != null) {
+								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+										: sync.getMethod());
+
+								DossierAction foundAction = DossierActionLocalServiceUtil
+										.fetchDossierAction(clientDossierActionId);
+								if (foundAction != null) {
+									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+								}
+
+								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							}
+							
+						}
 					} else {
 						long clientDossierActionId = (dossierSync.getMethod() == 0 ? dossierSync.getClassPK()
 								: dossierSync.getMethod());
