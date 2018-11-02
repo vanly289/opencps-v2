@@ -12,4 +12,12 @@ public class OutsideSystemConverter {
 	public static String convertToNSWXML(Envelope envelope) {
 		return SOAPConverter.convertNSWRequest(envelope);
 	}
+	
+	public static String convertToNSWXMLVT(org.opencps.thirdparty.system.nsw.vt.model.NSWRequest nswRequest) {
+		return "<officeCode>" + nswRequest.getOfficeCode() + "</officeCode>\n<documentType>" + nswRequest.getDocumentType() + "</documentType>\n" + SOAPConverter.convertNSWRequestVT(nswRequest.getRequestPayload());
+	}
+	
+	public static String convertToNSWXMLVT(org.opencps.thirdparty.system.nsw.vt.model.Envelope envelope) {
+		return SOAPConverter.convertNSWRequestVT(envelope);
+	}	
 }

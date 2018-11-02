@@ -197,8 +197,8 @@ public class BGTVT0600058 {
 					
 					TypeofPermit typeOfPermit = new TypeofPermit();
 					
-					if (formDataObj.has("TypeOfPermit")) {
-						String vtStr = formDataObj.getString("TypeOfPermit");
+					if (formDataObj.has("TypeofPermit")) {
+						String vtStr = formDataObj.getString("TypeofPermit");
 						if (vtStr.equalsIgnoreCase("ScheduledPassenger")) {
 							typeOfPermit.setScheduledPassenger("1");
 						}
