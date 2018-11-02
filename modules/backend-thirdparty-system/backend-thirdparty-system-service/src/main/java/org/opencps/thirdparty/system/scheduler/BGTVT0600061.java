@@ -265,16 +265,6 @@ public class BGTVT0600061 {
 						gmsCrossBorderTransportPermit.setTransportOperation(formDataObj.getString("TransportOperation"));
 					}
 					
-					if (formDataObj.has("ExpiredDate")) {
-						String expiredDateStr = formDataObj.getString("ExpiredDate");
-						Date expiredDate = DateTimeUtils.convertStringToDate(expiredDateStr);
-						
-						gmsCrossBorderTransportPermit.setExpiredDate(DateTimeUtils.convertDateToString(expiredDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-					}
-					else {
-						gmsCrossBorderTransportPermit.setExpiredDate(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-					}
-					
 					if (formDataObj.has("ValidFrom")) {
 						String validFromStr = formDataObj.getString("ValidFrom");
 						Date validFromDate = DateTimeUtils.convertStringToDate(validFromStr);
