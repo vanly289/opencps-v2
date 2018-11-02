@@ -248,8 +248,8 @@ public class BGTVT0600058 {
 					if (formDataObj.has("LicenceNumber")) {
 						gmsInterRoadTransportLicense.setLicenceNumber(formDataObj.getString("LicenceNumber"));
 					}
-					if (formDataObj.has("FrequencyOperations ")) {
-						gmsInterRoadTransportLicense.setFrequencyOperations(formDataObj.getString("FrequencyOperations "));
+					if (formDataObj.has("FrequencyOperations")) {
+						gmsInterRoadTransportLicense.setFrequencyOperations(formDataObj.getString("FrequencyOperations"));
 					}
 					if (formDataObj.has("MaximumCapacity")) {
 						gmsInterRoadTransportLicense.setMaximumCapacity(formDataObj.getString("MaximumCapacity"));
@@ -258,12 +258,27 @@ public class BGTVT0600058 {
 						gmsInterRoadTransportLicense.setOtherRestrictions(formDataObj.getString("OtherRestrictions"));
 					}
 					if (formDataObj.has("PeriodValidityFrom")) {
-						gmsInterRoadTransportLicense.setPeriodValidityFrom(formDataObj.getString("PeriodValidityFrom"));
+						String validUntilStr = formDataObj.getString("PeriodValidityFrom");
+						Date validUntilDate = DateTimeUtils.convertStringToDate(validUntilStr);
+
+						gmsInterRoadTransportLicense.setPeriodValidityFrom(DateTimeUtils.convertDateToString(validUntilDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));
+						
 					}
-					if (formDataObj.has("PeriodValidityTo")) {
-						gmsInterRoadTransportLicense.setPeriodValidityTo(formDataObj.getString("PeriodValidityTo"));
+					else {
+						gmsInterRoadTransportLicense.setPeriodValidityFrom(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
 					}
 					
+					if (formDataObj.has("PeriodValidityTo")) {
+						String validUntilStr = formDataObj.getString("PeriodValidityTo");
+						Date validUntilDate = DateTimeUtils.convertStringToDate(validUntilStr);
+
+						gmsInterRoadTransportLicense.setPeriodValidityTo(DateTimeUtils.convertDateToString(validUntilDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));
+						
+					}
+					else {
+						gmsInterRoadTransportLicense.setPeriodValidityFrom(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+
 					if (formDataObj.has("AllocatedNumber")) {
 						JSONArray allocatedNumberArr = JSONFactoryUtil.createJSONArray(formDataObj.getString("AllocatedNumber"));
 						
