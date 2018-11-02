@@ -588,16 +588,17 @@ public class DossierActionsImpl implements DossierActions {
 						List<String> returnDossierFileTemplateNos = ListUtil
 								.toList(StringUtil.split(returnDossierFiles));
 						JSONArray createFiles = JSONFactoryUtil.createJSONArray();
+						_log.info("***CREATE DOSSIER FILES***" + dossierFileTemplateNos + ", " + createDossierFiles);
 						if (dossierFileTemplateNos != null && !dossierFileTemplateNos.isEmpty()) {
 							DossierTemplate dossierTemplate = DossierTemplateLocalServiceUtil.getByTemplateNo(groupId,
 									dossier.getDossierTemplateNo());
+							_log.info("***CREATE DOSSIER FILES***DOSSIER TEMPLATE***" + dossierTemplate.getTemplateNo() + "," + groupId + "," + dossier.getDossierTemplateNo());
 							List<DossierPart> dossierParts = DossierPartLocalServiceUtil.getByTemplateNo(groupId,
 									dossierTemplate.getTemplateNo());
-
 							if (dossierParts != null) {
 								for (DossierPart dossierPart : dossierParts) {
 									String fileTemplateNo = dossierPart.getFileTemplateNo();
-									
+									_log.info("***CREATE DOSSIER FILES***" + fileTemplateNo + "," + dossierFileTemplateNos);
 									if (dossierFileTemplateNos.contains(fileTemplateNo)) {
 										
 										_log.info("***DOSSIERFILETEMPLATENOS " + dossierFileTemplateNos.toString());

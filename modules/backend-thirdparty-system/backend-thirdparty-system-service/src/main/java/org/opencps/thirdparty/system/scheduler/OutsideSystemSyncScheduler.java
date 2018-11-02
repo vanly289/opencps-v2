@@ -376,12 +376,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600055")
 								|| dossier.getServiceCode().equals("BGTVT0600056")
 								|| dossier.getServiceCode().equals("BGTVT0600057")
+								) {
+							ketqua.setSoTn(dossier.getDossierNo());
+						}
+						if (dossier.getServiceCode().equals("BGTVT0600057")
 								|| dossier.getServiceCode().equals("BGTVT0600058")
 								|| dossier.getServiceCode().equals("BGTVT0600059")
 								|| dossier.getServiceCode().equals("BGTVT0600060")
 								|| dossier.getServiceCode().equals("BGTVT0600061")
 								|| dossier.getServiceCode().equals("BGTVT0600062")) {
-							ketqua.setSoTn(dossier.getDossierNo());
+							ketqua.setSoGp(StringPool.BLANK);
 						}
 						
 						ketqua.setNoiDung(dossierAction.getActionNote());

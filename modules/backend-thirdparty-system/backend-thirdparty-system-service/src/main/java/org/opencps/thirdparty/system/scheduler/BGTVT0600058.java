@@ -174,12 +174,6 @@ public class BGTVT0600058 {
 					else {
 						gmsInterRoadTransportLicense.setItinerary(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
 					}
-					if (formDataObj.has("PermitNo")) {
-						gmsInterRoadTransportLicense.setPermitNo(formDataObj.getString("PermitNo"));						
-					}
-					else {
-						gmsInterRoadTransportLicense.setPermitNo(formDataObj.getString("PermitNo"));						
-					}
 					if (formDataObj.has("CountryCode")) {
 						gmsInterRoadTransportLicense.setCountryCode(formDataObj.getString("CountryCode"));						
 					}
