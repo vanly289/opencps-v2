@@ -619,6 +619,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600053")
 								|| dossier.getServiceCode().equals("BGTVT0600054")
 								|| dossier.getServiceCode().equals("BGTVT0600055")
+								|| dossier.getServiceCode().equals("BGTVT0600058")
+								|| dossier.getServiceCode().equals("BGTVT0600059")
+								|| dossier.getServiceCode().equals("BGTVT0600060")
 								|| dossier.getServiceCode().equals("BGTVT0600061")
 								|| dossier.getServiceCode().equals("BGTVT0600062")
 								|| dossier.getServiceCode().equals("BGTVT0600063")
@@ -718,7 +721,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						phanhoi.setNoiDung(dossierAction.getActionNote());
 						phanhoi.setDonViXuLy(dossier.getGovAgencyName());
 						phanhoi.setNgayXuLy(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));
-
+						_log.info("1410: " + dossier.getServiceCode() + "," + lstRequests.size());
+						
 						if (dossier.getServiceCode().equals("BGTVT0600005")
 								|| dossier.getServiceCode().equals("BGTVT0600006")
 								|| dossier.getServiceCode().equals("BGTVT0600007")
@@ -753,12 +757,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600053")
 								|| dossier.getServiceCode().equals("BGTVT0600054")
 								|| dossier.getServiceCode().equals("BGTVT0600055")
+								|| dossier.getServiceCode().equals("BGTVT0600058")
+								|| dossier.getServiceCode().equals("BGTVT0600059")
+								|| dossier.getServiceCode().equals("BGTVT0600060")
 								|| dossier.getServiceCode().equals("BGTVT0600061")
 								|| dossier.getServiceCode().equals("BGTVT0600062")
 								|| dossier.getServiceCode().equals("BGTVT0600063")
 								|| dossier.getServiceCode().equals("BGTVT0600064")) {
 							if (lstRequests.size() > 0) {
 								DossierRequestUD dossierRequest = lstRequests.get(0);
+								_log.info("1410 request: " + dossierRequest.getComment());
 								phanhoi.setSoGp(dossierRequest.getComment());
 							}
 						}
