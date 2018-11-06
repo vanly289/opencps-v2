@@ -61,6 +61,12 @@
 		<order>
 			<order-column name="id" order-by="asc" />
 		</order>
+		
+		 <finder name="GT_ID" return-type="Collection">
+            <finder-column name="id" comparator="&gt;"></finder-column>
+        </finder>
+		
+		
         <finder name="PTID" return-type="Collection">
             <finder-column name="phuongtien_id"></finder-column>
         </finder>
@@ -94,6 +100,11 @@
 		<order>
 			<order-column name="id" order-by="asc" />
 		</order>
+		
+		<finder name="GT_ID" return-type="Collection">
+            <finder-column name="id" comparator="&gt;"></finder-column>
+        </finder>
+        
         <finder name="PTID" return-type="Collection">
             <finder-column name="phuongtien_id"></finder-column>
         </finder>
@@ -233,4 +244,60 @@
         </finder>
 	</entity>
 	
+	
+	<entity local-service="true" name="SRCPHBHGiayPhepVanTai" remote-service="false" data-source="extDataSource"  uuid="false" table="phbh_giayphepvantai">
+		<!-- PK fields -->
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="coquanquanly_id" type="long"/>
+		<column name="doanhnghiep_id" type="long"/>
+		<column name="sogiayphep" type="String"/>
+		<column name="lancapphep" type="int"/>
+		<column name="ngaycap" type="Date"/>
+		<column name="nguoicap" type="String"/>
+		<column name="ngayhethan" type="Date"/>
+		<column name="nguoidieuhanh" type="String"/>
+		<column name="bangcap" type="String"/>
+		<column name="ngaysinh" type="Date"/>
+		<column name="socmnd" type="String"/>
+		<column name="nguoiky" type="String"/>
+		<column name="nguoiky_id" type="long"/>
+		<column name="ngayky" type="Date"/>
+		<column name="ngay_thuhoi" type="Date"/>
+		<column name="lydo_thuhoi" type="String"/>
+		<column name="ghichu" type="String"/>
+		<column name="trangthai" type="int"/>
+		
+		<order>
+			<order-column name="id" order-by="asc" />
+		</order>
+		
+		<finder name="GT_ID" return-type="Collection">
+            <finder-column name="id" comparator="&gt;"/>
+        </finder>
+	</entity>	
+	
+	<entity local-service="true" name="SRCILHopDongThue" remote-service="false" data-source="extDataSource" uuid="false" table="phbh_hopdongthue">
+		<!-- PK fields -->
+		<column name="id" primary="true" type="long" db-name="id"/>
+		<column name="phuongtien_id" type="long"/>
+		<column name="loaihinhthue_id" type="long"/>
+		<column name="tendoituongchothue" type="String"/>
+		<column name="diachi_doituong_tinh_id" type="long"/>
+		<column name="diachi_doituong_huyen_id" type="long"/>
+		<column name="diachi_doituong_xa_id" type="long"/>
+		<column name="diachi_doituong_chitiet" type="String"/>
+		<column name="ngayky" type="Date"/>
+		<column name="thoihan" type="Date"/>
+		<column name="la_hopdongcuoi" type="int"/>
+		<column name="ghichu" type="String"/>
+		<column name="trangthai" type="int"/>
+
+		<order>
+			<order-column name="id" order-by="asc" />
+		</order>
+		
+		<finder name="GT_ID" return-type="Collection">
+            <finder-column name="id" comparator="&gt;"/>
+        </finder>
+	</entity>
 </service-builder>

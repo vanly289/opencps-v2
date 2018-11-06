@@ -216,6 +216,12 @@ public class ViPhamLocalServiceWrapper implements ViPhamLocalService,
 	}
 
 	@Override
+	public java.util.List<com.backend.migrate.vr.model.ViPham> getLastest(
+		long id) {
+		return _viPhamLocalService.getLastest(id);
+	}
+
+	@Override
 	public java.util.List<com.backend.migrate.vr.model.ViPham> getListByPhuongTien(
 		long phuongtien_id) {
 		return _viPhamLocalService.getListByPhuongTien(phuongtien_id);

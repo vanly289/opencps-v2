@@ -536,20 +536,30 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 		try {
 
 			if (query.getEnd() == 0) {
-
 				query.setStart(-1);
-
 				query.setEnd(-1);
-
 			}
+			
+			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+			long emUserid = GetterUtil.getLong(header.getHeaderString("userId"));
+			
+			if (Validator.isNotNull(emUserid)) {
+				
+				_log.info("**USER_ID*** " + emUserid);
+				
+				Employee em = EmployeeLocalServiceUtil.fetchByF_mappingUserId(groupId, emUserid);
+				params.put(EmployeeJobPosTerm.EMPLOYEE_ID, String.valueOf(em.getEmployeeId()));
+				
+				id = em.getEmployeeId();
+			} else {
+				params.put(EmployeeJobPosTerm.EMPLOYEE_ID, String.valueOf(id));
+			}
 
-			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
 			params.put("groupId", String.valueOf(groupId));
 			params.put("keywords", query.getKeywords());
-			params.put(EmployeeJobPosTerm.EMPLOYEE_ID, String.valueOf(id));
 
 			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
 					Boolean.valueOf(query.getOrder())) };

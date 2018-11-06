@@ -364,13 +364,6 @@ public class VRRestApplication extends Application {
 			List<ILVehicleCustomsBorderGuard> borderGuards = ILVehicleCustomsBorderGuardLocalServiceUtil
 					.getBorderGuardList(ilPhuongTien.getBienkiemsoat());
 
-			// add sample
-			JSONObject sample = JSONFactoryUtil.createJSONObject();
-			
-			sample.put("thoidiemxuatcan",  formatDate(new Date()));
-			sample.put("thoidiemnhapcanh", formatDate(new Date()));
-
-			xuanhapcanh.put(sample);
 
 			for (ILVehicleCustomsBorderGuard borderGuard : borderGuards) {
 				JSONObject jsonObjectBorderGuard = JSONFactoryUtil.createJSONObject();

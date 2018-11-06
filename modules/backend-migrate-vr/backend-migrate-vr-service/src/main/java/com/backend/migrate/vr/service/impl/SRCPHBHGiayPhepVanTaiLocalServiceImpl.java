@@ -18,36 +18,33 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.util.List;
 
-import com.backend.migrate.vr.model.ViPham;
-import com.backend.migrate.vr.service.base.ViPhamLocalServiceBaseImpl;
+import com.backend.migrate.vr.model.SRCPHBHGiayPhepVanTai;
+import com.backend.migrate.vr.service.base.SRCPHBHGiayPhepVanTaiLocalServiceBaseImpl;
 
 /**
- * The implementation of the vi pham local service.
+ * The implementation of the srcphbh giay phep van tai local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.backend.migrate.vr.service.ViPhamLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.backend.migrate.vr.service.SRCPHBHGiayPhepVanTaiLocalService} interface.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see ViPhamLocalServiceBaseImpl
- * @see com.backend.migrate.vr.service.ViPhamLocalServiceUtil
+ * @see SRCPHBHGiayPhepVanTaiLocalServiceBaseImpl
+ * @see com.backend.migrate.vr.service.SRCPHBHGiayPhepVanTaiLocalServiceUtil
  */
 @ProviderType
-public class ViPhamLocalServiceImpl extends ViPhamLocalServiceBaseImpl {
+public class SRCPHBHGiayPhepVanTaiLocalServiceImpl
+	extends SRCPHBHGiayPhepVanTaiLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link com.backend.migrate.vr.service.ViPhamLocalServiceUtil} to access the vi pham local service.
+	 * Never reference this class directly. Always use {@link com.backend.migrate.vr.service.SRCPHBHGiayPhepVanTaiLocalServiceUtil} to access the srcphbh giay phep van tai local service.
 	 */
 	
-	public List<ViPham> getLastest(long id) {
-		return viPhamPersistence.findByGT_ID(id);
-	}
-	
-	public List<ViPham> getListByPhuongTien(long phuongtien_id) {
-		return viPhamPersistence.findByPTID(phuongtien_id);
+	public List<SRCPHBHGiayPhepVanTai> getLastest(long id) {
+		return srcphbhGiayPhepVanTaiPersistence.findByGT_ID(id);
 	}
 }

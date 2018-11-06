@@ -221,6 +221,12 @@ public class PhuHieuBienHieuLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.backend.migrate.vr.model.PhuHieuBienHieu> getLastest(
+		long id) {
+		return _phuHieuBienHieuLocalService.getLastest(id);
+	}
+
+	@Override
 	public java.util.List<com.backend.migrate.vr.model.PhuHieuBienHieu> getListByPhuongTien(
 		long phuongtien_id) {
 		return _phuHieuBienHieuLocalService.getListByPhuongTien(phuongtien_id);
