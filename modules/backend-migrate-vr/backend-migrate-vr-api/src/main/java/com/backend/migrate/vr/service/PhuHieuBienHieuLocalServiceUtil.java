@@ -210,6 +210,11 @@ public class PhuHieuBienHieuLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.backend.migrate.vr.model.PhuHieuBienHieu> getLastest(
+		long id) {
+		return getService().getLastest(id);
+	}
+
 	public static java.util.List<com.backend.migrate.vr.model.PhuHieuBienHieu> getListByPhuongTien(
 		long phuongtien_id) {
 		return getService().getListByPhuongTien(phuongtien_id);

@@ -44,6 +44,15 @@ public class ILViPhamLocalServiceImpl extends ILViPhamLocalServiceBaseImpl {
 	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ILViPhamLocalServiceUtil} to access the il vi pham local service.
 	 */
 	
+	public ILViPham getLastest() {
+		List<ILViPham> ilViPhams = ilViPhamPersistence.findAll(0, 1);
+		
+		if (ilViPhams.isEmpty())
+			return null;
+		else
+			return ilViPhams.get(0);
+	}
+	
 	public ILViPham addViPham(long id, long phuongtien_id, Date ngayvipham, long loaivipham_id, String mota, String url_bienban) {
 		ILViPham viPham = ilViPhamPersistence.create(id);
 		

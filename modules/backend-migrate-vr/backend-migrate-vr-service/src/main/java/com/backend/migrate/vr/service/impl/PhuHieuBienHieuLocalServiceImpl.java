@@ -47,4 +47,8 @@ public class PhuHieuBienHieuLocalServiceImpl
 	public List<PhuHieuBienHieu> getListByPhuongTien(long phuongtien_id) {
 		return phuHieuBienHieuPersistence.findByPTID(phuongtien_id);
 	}
+	
+	public List<PhuHieuBienHieu> getLastest(long id) {
+		return phuHieuBienHieuPersistence.findByGT_ID(id);
+	}
 }

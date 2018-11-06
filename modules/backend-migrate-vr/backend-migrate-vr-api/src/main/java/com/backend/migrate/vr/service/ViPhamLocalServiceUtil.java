@@ -208,6 +208,11 @@ public class ViPhamLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.backend.migrate.vr.model.ViPham> getLastest(
+		long id) {
+		return getService().getLastest(id);
+	}
+
 	public static java.util.List<com.backend.migrate.vr.model.ViPham> getListByPhuongTien(
 		long phuongtien_id) {
 		return getService().getListByPhuongTien(phuongtien_id);
