@@ -93,6 +93,10 @@
         <column name="coquanquanly_id" type="int"></column>
         <column name="congdan_id" type="long"></column>		
 		
+		<order>
+			<order-column name="id" order-by="desc" />
+		</order>
+		
         <finder name="GT_ID" return-type="Collection">
             <finder-column name="id" comparator="&gt;"></finder-column>
         </finder>
@@ -170,7 +174,7 @@
         <column name="url_bienban" type="String"></column>
 
 		<order>
-			<order-column name="id" order-by="asc" />
+			<order-column name="id" order-by="desc" />
 		</order>
         <finder name="PTID" return-type="Collection">
             <finder-column name="phuongtien_id"></finder-column>
@@ -203,8 +207,9 @@
         <column name="labienhieu" type="int"></column>
 
 		<order>
-			<order-column name="id" order-by="asc" />
+			<order-column name="id" order-by="desc" />
 		</order>
+		
         <finder name="PTID" return-type="Collection">
             <finder-column name="phuongtien_id"></finder-column>
         </finder>
@@ -520,7 +525,11 @@
 		<column name="la_hopdongcuoi" type="int"/>
 		<column name="ghichu" type="String"/>
 		<column name="trangthai" type="int"/>
-
+		
+		<order>
+			<order-column name="id" order-by="desc" />
+		</order>	
+		
 		<finder name="PT_ID" return-type="Collection">
             <finder-column name="phuongtien_id" />
         </finder>

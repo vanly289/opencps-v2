@@ -198,6 +198,9 @@ public interface PhuHieuBienHieuLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PhuHieuBienHieu> getLastest(long id);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PhuHieuBienHieu> getListByPhuongTien(long phuongtien_id);
 
 	/**

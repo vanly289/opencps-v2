@@ -44,6 +44,16 @@ public class ILHopDongThueLocalServiceImpl
 	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ILHopDongThueLocalServiceUtil} to access the il hop dong thue local service.
 	 */
 	
+	public ILHopDongThue getLastest() {
+		List<ILHopDongThue> ls = ilHopDongThuePersistence.findAll(0, 1);
+		
+		if (ls.isEmpty()) {
+			return null;
+		} else {
+			return ls.get(0);
+		}
+	}
+	
 	public List<ILHopDongThue> getByPhuongTien(long phuongtienId) {
 		return ilHopDongThuePersistence.findByPT_ID(phuongtienId);
 	}
