@@ -1,5 +1,6 @@
 package org.opencps.dossiermgt.listenner;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.opencps.dossiermgt.model.DossierAction;
@@ -18,6 +19,8 @@ import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 import org.opencps.usermgt.service.EmployeeLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import backend.utils.APIDateTimeUtils;
@@ -77,39 +81,70 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 				JSONArray files = JSONFactoryUtil.createJSONArray();
 
 				if (dossierId > 0) {
+					
+					ProcessAction processAction = ProcessActionLocalServiceUtil.fetchBySPID_AC(model.getServiceProcessId(), model.getActionCode());
+					
+					String returnFileCode =  processAction.getReturnDossierFiles();
+					
+					if (Validator.isNotNull(returnFileCode)) {
+						
+						String [] returnFiles = StringUtil.split(returnFileCode);
 
-					List<DossierLog> dossierLogs = DossierLogLocalServiceUtil.getByDossierAndType(dossierId,
-							DossierFileListenerMessageKeys.DOSSIER_LOG_CREATE_TYPE, QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS);
+						List<DossierLog> dossierLogs = DossierLogLocalServiceUtil.getByDossierAndType(dossierId,
+								DossierFileListenerMessageKeys.DOSSIER_LOG_CREATE_TYPE, QueryUtil.ALL_POS,
+								QueryUtil.ALL_POS);
 
-					for (DossierLog log : dossierLogs) {
-						long dossierFileId = 0;
+						for (DossierLog log : dossierLogs) {
+							long dossierFileId = 0;
 
-						try {
-							JSONObject payloadFile = JSONFactoryUtil.createJSONObject(log.getPayload());
+							try {
+								JSONObject payloadFile = JSONFactoryUtil.createJSONObject(log.getPayload());
 
-							dossierFileId = GetterUtil.getLong(payloadFile.get("dossierFileId"));
-						} catch (Exception e) {
+								dossierFileId = GetterUtil.getLong(payloadFile.get("dossierFileId"));
+							} catch (Exception e) {
 
-						}
-
-						if (dossierFileId != 0) {
-							DossierFile dossierFile = DossierFileLocalServiceUtil.fetchDossierFile(dossierFileId);
-
-							if (Validator.isNotNull(dossierFile)) {
-								JSONObject file = JSONFactoryUtil.createJSONObject();
-
-								file.put("dossierFileId", dossierFile.getDossierFileId());
-								file.put("fileName", dossierFile.getDisplayName());
-								file.put("createDate", APIDateTimeUtils.convertDateToString(dossierFile.getCreateDate(),
-										APIDateTimeUtils._TIMESTAMP));
-								files.put(file);
 							}
+
+							if (dossierFileId != 0) {
+								
+								DossierFile dossierFile = DossierFileLocalServiceUtil.fetchDossierFile(dossierFileId);
+								
+								//only add return file
+								
+								boolean contains = false;
+								
+								if (model.getActionCode().equals("1000")) {
+									contains = true;
+								} else {
+									contains = Arrays.stream(returnFiles).anyMatch(dossierFile.getFileTemplateNo()::equals);
+								}
+								
+								if (Validator.isNotNull(dossierFile) && contains) {
+									
+									JSONObject file = JSONFactoryUtil.createJSONObject();
+									
+									try {
+										DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(dossierFile.getFileEntryId());
+										
+										file.put("fileName", dossierFile.getDisplayName() + " (" + dlFileEntry.getFileName() +")");
+										
+									} catch (Exception e) {
+										file.put("fileName", dossierFile.getDisplayName());
+									}
+
+									file.put("dossierFileId", dossierFile.getDossierFileId());
+									file.put("createDate", APIDateTimeUtils.convertDateToString(dossierFile.getCreateDate(),
+											APIDateTimeUtils._TIMESTAMP));
+									files.put(file);
+								}
+							}
+
+							DossierLogLocalServiceUtil.deleteDossierLog(log);
+
 						}
-
-						DossierLogLocalServiceUtil.deleteDossierLog(log);
-
 					}
+					
+
 
 				}
 
