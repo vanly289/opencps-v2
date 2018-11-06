@@ -29,6 +29,7 @@ import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
 import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
 import org.opencps.thirdparty.system.nsw.model.GMSCrossBorderTransportPermit;
+import org.opencps.thirdparty.system.nsw.model.GMSCrossBorderTransportPermit.Extension;
 import org.opencps.thirdparty.system.nsw.model.IssuingAuthority;
 import org.opencps.thirdparty.system.util.OutsideSystemConverter;
 
@@ -306,6 +307,12 @@ public class BGTVT0600061 {
 					else {
 						gmsCrossBorderTransportPermit.setExpireDateGMS(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
 					}
+			
+					Extension extension = new Extension();
+					extension.setExtendedUntil(StringPool.BLANK);
+					extension.setNoticesOfExtension(StringPool.BLANK);
+					
+					gmsCrossBorderTransportPermit.setExtension(extension);
 					
 					IssuingAuthority issuingAuthority = new IssuingAuthority();
 					if (formDataObj.has("SignName")) {
