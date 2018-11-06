@@ -319,12 +319,12 @@ public class BGTVT0600061 {
 						gmsCrossBorderTransportPermit.setDestination(formDataObj.getString("Destination"));
 					}
 
-					if (formDataObj.has("LicenceNoGMS ")) {
-						gmsCrossBorderTransportPermit.setLicenceNoGMS(formDataObj.getString("LicenceNoGMS "));
+					if (formDataObj.has("LicenceNoGMS")) {
+						gmsCrossBorderTransportPermit.setLicenceNoGMS(formDataObj.getString("LicenceNoGMS"));
 					}
 
-					if (formDataObj.has("ExpireDateGMS ")) {
-						String expireDateGMSStr = formDataObj.getString("ExpireDateGMS ");
+					if (formDataObj.has("ExpireDateGMS")) {
+						String expireDateGMSStr = formDataObj.getString("ExpireDateGMS");
 						Date expireDateGMSDate = DateTimeUtils.convertStringToDate(expireDateGMSStr);
 						
 						gmsCrossBorderTransportPermit.setExpireDateGMS(DateTimeUtils.convertDateToString(expireDateGMSDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
