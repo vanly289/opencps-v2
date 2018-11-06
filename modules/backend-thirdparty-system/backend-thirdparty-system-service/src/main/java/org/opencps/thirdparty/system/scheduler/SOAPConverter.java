@@ -51,4 +51,46 @@ public class SOAPConverter {
 		}
         return xmlString;
 	}
+	
+	public static String convertNSWRequestVT(org.opencps.thirdparty.system.nsw.vt.model.RequestPayload request) {
+		JAXBContext context;
+		String xmlString = "";
+		
+		try {
+			context = JAXBContext.newInstance(org.opencps.thirdparty.system.nsw.vt.model.RequestPayload.class);
+	        Marshaller m = context.createMarshaller();
+
+	        m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+	        StringWriter sw = new StringWriter();
+	        m.marshal(request, sw);
+	        xmlString = sw.toString();		
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return xmlString;
+	}
+
+	public static String convertNSWRequestVT(org.opencps.thirdparty.system.nsw.vt.model.Envelope envelope) {
+		JAXBContext context;
+		String xmlString = "";
+		
+		try {
+			context = JAXBContext.newInstance(org.opencps.thirdparty.system.nsw.vt.model.Envelope.class);
+	        Marshaller m = context.createMarshaller();
+
+	        m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+	        StringWriter sw = new StringWriter();
+	        m.marshal(envelope, sw);
+	        xmlString = sw.toString();		
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return xmlString;
+	}	
 }

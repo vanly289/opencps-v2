@@ -29,10 +29,12 @@ import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
 import org.opencps.thirdparty.system.nsw.model.GMSInterRoadTransportLicence;
 import org.opencps.thirdparty.system.nsw.model.GMSInterRoadTransportLicence.AllocatedNumber;
+import org.opencps.thirdparty.system.nsw.model.GMSInterRoadTransportLicence.TypeofPermit;
 import org.opencps.thirdparty.system.nsw.model.IssuingAuthority;
 import org.opencps.thirdparty.system.util.OutsideSystemConverter;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -122,9 +124,10 @@ public class BGTVT0600058 {
 
 			String returnDossierFiles = processAction.getReturnDossierFiles();
 			String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
+			_log.info("****BGTVT0600058****" + templateNo + "," + returnDossierFilesArr);
 			for (String returnDossierFile : returnDossierFilesArr) {
-				
-				if (templateNo.equals(returnDossierFile)) {
+				_log.info("****BGTVT0600058****" + templateNo + "," + returnDossierFile);
+				if (templateNo.equals(returnDossierFile)) {			
 					attachedFile = new AttachedFile();
 					attachedFile.setAttachedNote("");
 					attachedFile.setAttachedTypeCode(templateNo);
@@ -167,18 +170,11 @@ public class BGTVT0600058 {
 					
 					if (formDataObj.has("Itinerary")) {
 						String itineraryStr = formDataObj.getString("Itinerary");
-						Date itineraryDate = DateTimeUtils.convertStringToDate(itineraryStr);
 						
-						gmsInterRoadTransportLicense.setItinerary(DateTimeUtils.convertDateToString(itineraryDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+						gmsInterRoadTransportLicense.setItinerary(itineraryStr);						
 					}
 					else {
 						gmsInterRoadTransportLicense.setItinerary(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-					}
-					if (formDataObj.has("PermitNo")) {
-						gmsInterRoadTransportLicense.setPermitNo(formDataObj.getString("PermitNo"));						
-					}
-					else {
-						gmsInterRoadTransportLicense.setPermitNo(formDataObj.getString("PermitNo"));						
 					}
 					if (formDataObj.has("CountryCode")) {
 						gmsInterRoadTransportLicense.setCountryCode(formDataObj.getString("CountryCode"));						
@@ -199,15 +195,38 @@ public class BGTVT0600058 {
 						gmsInterRoadTransportLicense.setBarCode(formDataObj.getString("BarCode"));						
 					}
 					
-					if (formDataObj.has("ScheduledPassenger")) {
-						gmsInterRoadTransportLicense.getTypeOfPermit().setScheduledPassenger(formDataObj.getString("ScheduledPassenger"));
+					TypeofPermit typeOfPermit = new TypeofPermit();
+					
+					if (formDataObj.has("TypeofPermit")) {
+						String vtStr = formDataObj.getString("TypeofPermit");
+						if (vtStr.equalsIgnoreCase("ScheduledPassenger")) {
+							typeOfPermit.setScheduledPassenger("1");
+						}
+						else {
+							typeOfPermit.setScheduledPassenger("0");
+						}
+						if (vtStr.equals("NonScheduledPassenger")) {
+							typeOfPermit.setNonScheduledPassenger("1");
+						}
+						else {
+							typeOfPermit.setNonScheduledPassenger("0");
+						}
+						if (vtStr.equals("Cargo")) {
+							typeOfPermit.setCargo("1");
+						}
+						else {
+							typeOfPermit.setCargo("0");
+						}
+						
+						gmsInterRoadTransportLicense.setTypeofPermit(typeOfPermit);
 					}
-					if (formDataObj.has("NonScheduledPassenger")) {
-						gmsInterRoadTransportLicense.getTypeOfPermit().setNonScheduledPassenger(formDataObj.getString("NonScheduledPassenger"));
+					else {
+						typeOfPermit.setScheduledPassenger("0");
+						typeOfPermit.setNonScheduledPassenger("0");
+						typeOfPermit.setCargo("0");
+						gmsInterRoadTransportLicense.setTypeofPermit(typeOfPermit);
 					}
-					if (formDataObj.has("Cargo")) {
-						gmsInterRoadTransportLicense.getTypeOfPermit().setCargo(formDataObj.getString("Cargo"));
-					}
+					
 					if (formDataObj.has("IssuingAuthorityName")) {
 						gmsInterRoadTransportLicense.setIssuingAuthorityName(formDataObj.getString("IssuingAuthorityName"));
 					}
@@ -229,8 +248,8 @@ public class BGTVT0600058 {
 					if (formDataObj.has("LicenceNumber")) {
 						gmsInterRoadTransportLicense.setLicenceNumber(formDataObj.getString("LicenceNumber"));
 					}
-					if (formDataObj.has("FrequencyOperations ")) {
-						gmsInterRoadTransportLicense.setFrequencyOperations(formDataObj.getString("FrequencyOperations "));
+					if (formDataObj.has("FrequencyOperations")) {
+						gmsInterRoadTransportLicense.setFrequencyOperations(formDataObj.getString("FrequencyOperations"));
 					}
 					if (formDataObj.has("MaximumCapacity")) {
 						gmsInterRoadTransportLicense.setMaximumCapacity(formDataObj.getString("MaximumCapacity"));
@@ -239,21 +258,46 @@ public class BGTVT0600058 {
 						gmsInterRoadTransportLicense.setOtherRestrictions(formDataObj.getString("OtherRestrictions"));
 					}
 					if (formDataObj.has("PeriodValidityFrom")) {
-						gmsInterRoadTransportLicense.setPeriodValidityFrom(formDataObj.getString("PeriodValidityFrom"));
+						String validUntilStr = formDataObj.getString("PeriodValidityFrom");
+						Date validUntilDate = DateTimeUtils.convertStringToDate(validUntilStr);
+
+						gmsInterRoadTransportLicense.setPeriodValidityFrom(DateTimeUtils.convertDateToString(validUntilDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));
+						
 					}
+					else {
+						gmsInterRoadTransportLicense.setPeriodValidityFrom(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+					}
+					
 					if (formDataObj.has("PeriodValidityTo")) {
-						gmsInterRoadTransportLicense.setPeriodValidityTo(formDataObj.getString("PeriodValidityTo"));
+						String validUntilStr = formDataObj.getString("PeriodValidityTo");
+						Date validUntilDate = DateTimeUtils.convertStringToDate(validUntilStr);
+
+						gmsInterRoadTransportLicense.setPeriodValidityTo(DateTimeUtils.convertDateToString(validUntilDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));
+						
 					}
-					AllocatedNumber allocatedNumber = new AllocatedNumber();
-					if (formDataObj.has("Order")) {
-						allocatedNumber.setOrder(formDataObj.getString("Order"));
+					else {
+						gmsInterRoadTransportLicense.setPeriodValidityFrom(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
 					}
-					if (formDataObj.has("VehicleType")) {
-						allocatedNumber.setVehicleType(formDataObj.getString("VehicleType"));
+
+					if (formDataObj.has("AllocatedNumber")) {
+						JSONArray allocatedNumberArr = JSONFactoryUtil.createJSONArray(formDataObj.getString("AllocatedNumber"));
+						
+						List<AllocatedNumber> lstAllocatedNumber = new ArrayList<>();
+						
+						
+						for (int i = 0; i < allocatedNumberArr.length(); i++) {
+							JSONObject allocatedNumberObj = allocatedNumberArr.getJSONObject(i);
+							AllocatedNumber allocatedNumber = new AllocatedNumber();
+							allocatedNumber.setOrder(String.valueOf(i));
+							allocatedNumber.setAllocatedNo(allocatedNumberObj.getString("AllocatedNo"));
+							allocatedNumber.setVehicleType(allocatedNumberObj.getString("VehicleType"));
+							
+							lstAllocatedNumber.add(allocatedNumber);
+						}
+	
+						gmsInterRoadTransportLicense.getAllocatedNumber().addAll(lstAllocatedNumber);
 					}
-					if (formDataObj.has("AllocatedNo")) {
-						allocatedNumber.setAllocatedNo(formDataObj.getString("AllocatedNo"));
-					}
+					
 					IssuingAuthority issuingAuthority = new IssuingAuthority();
 					if (formDataObj.has("SignName")) {
 						issuingAuthority.setSignName(formDataObj.getString("SignName"));						

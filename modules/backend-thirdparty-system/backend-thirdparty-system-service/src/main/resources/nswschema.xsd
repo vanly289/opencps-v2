@@ -142,6 +142,7 @@
 			<xsd:element ref="ApprovalOfCLVFixRoadTransport" minOccurs="0"></xsd:element>
 			<xsd:element ref="GMSInterRoadTransportLicence" minOccurs="0"></xsd:element>
 			<xsd:element ref="GMSCrossBorderTransportPermit" minOccurs="0"></xsd:element>
+			<xsd:element ref="ResultOfExtending" minOccurs="0"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -2043,13 +2044,6 @@
 	<xsd:element name="GMSInterRoadTransportLicence" type="GMSInterRoadTransportLicence" />
 	<xsd:complexType name="GMSInterRoadTransportLicence">
 		<xsd:sequence>
-			<xsd:element name="PermitNo">
-				<xsd:simpleType>
-					<xsd:restriction base="xsd:string">
-						<xsd:maxLength value="255"></xsd:maxLength>
-					</xsd:restriction>
-				</xsd:simpleType>
-			</xsd:element>
 			<xsd:element name="CountryCode">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">
@@ -2071,7 +2065,7 @@
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
-			<xsd:element name="TypeOfPermit">
+			<xsd:element name="TypeofPermit">
 				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="ScheduledPassenger">
@@ -2191,7 +2185,7 @@
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
-			<xsd:element name="AllocatedNumber">
+			<xsd:element name="AllocatedNumber" maxOccurs="unbounded">
 				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="Order">
@@ -2351,14 +2345,6 @@
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
-			<xsd:element name="ExpiredDate">
-				<xsd:simpleType>
-					<xsd:restriction base="xsd:string">
-						<xsd:pattern
-							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />
-					</xsd:restriction>
-				</xsd:simpleType>
-			</xsd:element>
 			<xsd:element name="ValidFrom">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">
@@ -2444,6 +2430,216 @@
  		</xsd:sequence>
 	</xsd:complexType>
 	
+	<xsd:element name="ResultOfExtending" type="ResultOfExtending" />
+	<xsd:complexType name="ResultOfExtending">
+		<xsd:sequence>
+			<xsd:element name="NameOfCompany">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Address">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Tel">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Fax" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Email" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Website" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="LicenceType">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="BizCertificationNo">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="BizCertificationDate">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="BizCertificationIssuedBy" minOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="BizCertificationExpiredDate">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="RegistrationNumber" minOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>			
+			<xsd:element name="ImportDate">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="LicenceNo" minOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>			
+			<xsd:element name="ValidFrom" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ValidUntil" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern
+							value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Remarks" minOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="2000"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>	
+			<xsd:element name="TypeOfExtending">	
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="TransportPermit">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="1"></xsd:maxLength>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="Itinerary">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="1"></xsd:maxLength>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>		
+				</xsd:complexType>	
+			</xsd:element>	
+			<xsd:element name="TransportPermitExtending">	
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Extend">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="255"></xsd:maxLength>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="ExtendFrom" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:pattern
+										value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="ExtendUntil" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:pattern
+										value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>						
+					</xsd:sequence>		
+				</xsd:complexType>	
+			</xsd:element>	
+			<xsd:element name="ItineraryExtending">	
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Extend">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="255"></xsd:maxLength>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="ExtendFrom" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:pattern
+										value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="ExtendUntil" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:pattern
+										value="[0-9]{4}-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-6][0-9]" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>												
+					</xsd:sequence>		
+				</xsd:complexType>	
+			</xsd:element>	
+			<xsd:element ref="AttachedFile" minOccurs="1" maxOccurs="unbounded" />
+			<xsd:element ref="IssuingAuthority" minOccurs="1"></xsd:element>
+ 		</xsd:sequence>
+	</xsd:complexType>	
+		
 	<xsd:element name="Body" type="Body" />
 	<xsd:complexType name="Body">
 		<xsd:sequence>
