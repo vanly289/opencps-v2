@@ -333,6 +333,14 @@ public class BGTVT0600061 {
 						gmsCrossBorderTransportPermit.setExpireDateGMS(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
 					}
 			
+					if (formDataObj.has("ExpImpGateCode")) {
+						gmsCrossBorderTransportPermit.setExpImpGateCode(formDataObj.getString("ExpImpGateCode"));
+					}
+					
+					if (formDataObj.has("ExpImpGate")) {
+						gmsCrossBorderTransportPermit.setExpImpGate(formDataObj.getString("ExpImpGate"));
+					}
+					
 					Extension extension = new Extension();
 					extension.setExtendedUntil(StringPool.BLANK);
 					extension.setNoticesOfExtension(StringPool.BLANK);
