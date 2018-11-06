@@ -30,6 +30,7 @@ import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
 import org.opencps.thirdparty.system.nsw.model.GMSCrossBorderTransportPermit;
 import org.opencps.thirdparty.system.nsw.model.GMSCrossBorderTransportPermit.Extension;
+import org.opencps.thirdparty.system.nsw.model.GMSCrossBorderTransportPermit.VehicleType;
 import org.opencps.thirdparty.system.nsw.model.IssuingAuthority;
 import org.opencps.thirdparty.system.util.OutsideSystemConverter;
 
@@ -180,14 +181,38 @@ public class BGTVT0600061 {
 					if (formDataObj.has("Model")) {
 						gmsCrossBorderTransportPermit.setModel(formDataObj.getString("Model"));
 					}
-					if (formDataObj.has("Truck")) {
-						gmsCrossBorderTransportPermit.getVehicleType().setTruck(formDataObj.getString("Truck"));
+					VehicleType vehicleType = new VehicleType();
+					if (formDataObj.has("VehicleType")) {
+						String vtStr = formDataObj.getString("VehicleType");
+						if (vtStr.equalsIgnoreCase("Others")) {
+							vehicleType.setOthers("1");
+							gmsCrossBorderTransportPermit.setModel("Xe khác");
+						}
+						else {
+							vehicleType.setOthers("0");
+						}
+						if (vtStr.equals("Truck")) {
+							vehicleType.setTruck("1");
+							gmsCrossBorderTransportPermit.setModel("Xe tải");
+						}
+						else {
+							vehicleType.setTruck("0");
+						}
+						if (vtStr.equals("Bus")) {
+							vehicleType.setBus("1");
+							gmsCrossBorderTransportPermit.setModel("Xe khách");
+						}
+						else {
+							vehicleType.setBus("0");
+						}
+						
+						gmsCrossBorderTransportPermit.setVehicleType(vehicleType);
 					}
-					if (formDataObj.has("Bus")) {
-						gmsCrossBorderTransportPermit.getVehicleType().setBus(formDataObj.getString("Bus"));
-					}
-					if (formDataObj.has("Others")) {
-						gmsCrossBorderTransportPermit.getVehicleType().setOthers(formDataObj.getString("Others"));
+					else {
+						vehicleType.setTruck("0");
+						vehicleType.setBus("0");
+						vehicleType.setOthers("1");
+						gmsCrossBorderTransportPermit.setModel("Xe khác");
 					}
 					if (formDataObj.has("VehicleColor")) {
 						gmsCrossBorderTransportPermit.setVehicleColor(formDataObj.getString("VehicleColor"));
