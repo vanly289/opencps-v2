@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 public class BGTVT0600061 {
@@ -325,9 +326,14 @@ public class BGTVT0600061 {
 
 					if (formDataObj.has("ExpireDateGMS")) {
 						String expireDateGMSStr = formDataObj.getString("ExpireDateGMS");
-						Date expireDateGMSDate = DateTimeUtils.convertStringToDate(expireDateGMSStr);
-						
-						gmsCrossBorderTransportPermit.setExpireDateGMS(DateTimeUtils.convertDateToString(expireDateGMSDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
+						if (Validator.isNotNull(expireDateGMSStr)) {
+							Date expireDateGMSDate = DateTimeUtils.convertStringToDate(expireDateGMSStr);
+							
+							gmsCrossBorderTransportPermit.setExpireDateGMS(DateTimeUtils.convertDateToString(expireDateGMSDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));	
+						}
+						else {
+							gmsCrossBorderTransportPermit.setExpireDateGMS(StringPool.BLANK);
+						}
 					}
 					else {
 						gmsCrossBorderTransportPermit.setExpireDateGMS(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						

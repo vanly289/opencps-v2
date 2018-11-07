@@ -2533,7 +2533,14 @@
 						<xsd:maxLength value="255"></xsd:maxLength>
 					</xsd:restriction>
 				</xsd:simpleType>
-			</xsd:element>			
+			</xsd:element>	
+			<xsd:element name="SignIssuingAuthority">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"></xsd:maxLength>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>		
 			<xsd:element name="ValidFrom" minOccurs="0">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">

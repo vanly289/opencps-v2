@@ -284,10 +284,12 @@ public class BGTVT0600018 {
 						issuingAuthority.setSignDate(DateTimeUtils.convertDateToString(now, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
 					}
 					if (formDataObj.has("SignPlace")) {
-						issuingAuthority.setSignPlace(formDataObj.getString("SignPlace"));						
+						issuingAuthority.setSignPlace(formDataObj.getString("SignPlace"));	
+						resultOfExtending.setSignIssuingAuthority(formDataObj.getString("SignPlace"));
 					}
 					else {
-						issuingAuthority.setSignPlace("Hà Nội");						
+						issuingAuthority.setSignPlace("Hà Nội");
+						resultOfExtending.setSignIssuingAuthority("Hà Nội");
 					}
 					if (formDataObj.has("SignTitle")) {
 						issuingAuthority.setSignTitle(formDataObj.getString("SignTitle"));						
