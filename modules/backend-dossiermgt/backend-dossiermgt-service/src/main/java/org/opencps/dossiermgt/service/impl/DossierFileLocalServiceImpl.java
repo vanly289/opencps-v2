@@ -244,7 +244,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 //				}
 			}
 			else {
-				if (dossierPart.getESign()) {
+				if (dossierPart.getESign() && Validator.isNotNull(dossierPart.getDeliverableType())) {
 					object.setDeliverableCode(formDataObj.getString("LicenceNo"));
 				}
 			}
@@ -689,7 +689,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			throw new NoSuchDossierPartException();
 		}
 		
-		if (dossierPart.getESign()) {
+		if (dossierPart.getESign() && Validator.isNotNull(dossierPart.getDeliverableType())) {
 			try {
 				JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 				if (formDataObj.has("LicenceNo")) {
