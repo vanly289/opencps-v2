@@ -235,5 +235,6 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 		return userName;
 	}
 
+
 	private Log _log = LogFactoryUtil.getLog(DossierActionListenner.class.getName());
 }
