@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 public class ViewPhuongTienFinderImpl extends ViewPhuongTienFinderBaseImpl implements ViewPhuongTienFinder{
 	
 	private static final String SEARCH_PHUONGTIEN = ViewPhuongTienFinder.class.getName() + ".searchByPhuongTien";
+	private static final String COUNT_PHUONGTIEN = ViewPhuongTienFinder.class.getName() + ".countByPhuongTien";
 	
 	@SuppressWarnings("unchecked")
 	public List<ViewPhuongTien> searchPhuongTien(String keyword, int start, int end) {
@@ -72,10 +73,9 @@ public class ViewPhuongTienFinderImpl extends ViewPhuongTienFinderBaseImpl imple
 		
 		try {
 			
-			
 			session = openSession();
 
-			String sql = "SELECT COUNT(*) AS COUNT_VALUE FROM view_phuongtien WHERE bienkiemsoat = ?";
+			String sql = CustomSQLUtil.get(getClass(), COUNT_PHUONGTIEN);
 			
 			if (Validator.isNull(keyword)) {
 				sql = StringUtil.replace(sql, "WHERE bienkiemsoat = ?", StringPool.BLANK);
