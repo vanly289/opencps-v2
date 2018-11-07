@@ -154,6 +154,64 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 				DossierAction dossierAction = _dossierActionLocalService.fetchDossierAction(dossierActionId);
 				
+				org.opencps.thirdparty.system.nsw.vt.model.NSWRequest nswRequest2 = new org.opencps.thirdparty.system.nsw.vt.model.NSWRequest();
+				org.opencps.thirdparty.system.nsw.vt.model.RequestPayload requestPayload2 = new org.opencps.thirdparty.system.nsw.vt.model.RequestPayload();
+
+				nswRequest2.setRequestPayload(requestPayload2);
+
+				nswRequest2.setOfficeCode("BGTVT");
+				org.opencps.thirdparty.system.nsw.vt.model.Envelope envelope2 = new org.opencps.thirdparty.system.nsw.vt.model.Envelope();
+				org.opencps.thirdparty.system.nsw.vt.model.Header header2 = new org.opencps.thirdparty.system.nsw.vt.model.Header();
+				envelope2.setHeader(header2);
+				requestPayload2.setEnvelope(envelope2);
+				org.opencps.thirdparty.system.nsw.vt.model.From from2 = new org.opencps.thirdparty.system.nsw.vt.model.From();
+				from2.setName("Bộ giao thông vận tải");
+				from2.setCountryCode("VN");
+				from2.setIdentity("BGTVT");
+				from2.setMinistryCode("BGTVT");
+				from2.setOrganizationCode("TCDBVN");
+				if (!dossier.getGovAgencyCode().equals("TCDBVN")) {
+					from2.setUnitCode(dossier.getGovAgencyCode());					
+				}
+				else {
+					from2.setUnitCode(StringPool.BLANK);
+				}
+				header2.setFrom(from2);
+				org.opencps.thirdparty.system.nsw.vt.model.To to2 = new org.opencps.thirdparty.system.nsw.vt.model.To();
+				to2.setName(dossier.getApplicantName());
+				to2.setIdentity(dossier.getApplicantIdNo());
+				to2.setMinistryCode("BTC");
+				to2.setOrganizationCode("BTC");
+				to2.setUnitCode("BTC");
+				to2.setCountryCode("VN");
+				
+				header2.setTo(to2);
+				org.opencps.thirdparty.system.nsw.vt.model.Reference reference2 = new org.opencps.thirdparty.system.nsw.vt.model.Reference();
+
+				reference2.setVersion("1");
+				reference2.setMessageId(PortalUUIDUtil.generate());
+
+				header2.setReference(reference2);
+
+				org.opencps.thirdparty.system.nsw.vt.model.Subject subject2 = new org.opencps.thirdparty.system.nsw.vt.model.Subject();
+				subject.setDocumentType(dossier.getServiceCode());
+
+				header2.setSubject(subject2);
+				subject2.setReference(dossier.getReferenceUid());
+				subject2.setPreReference(dossier.getReferenceUid());
+
+				if (dossier.getReceiveDate() != null) {
+					cal.setTime(dossier.getReceiveDate());
+					subject2.setDocumentYear(cal.get(Calendar.YEAR));
+				} else {
+					cal.setTime(dossier.getCreateDate());
+					subject2.setDocumentYear(cal.get(Calendar.YEAR));
+				}
+				org.opencps.thirdparty.system.nsw.vt.model.Body body2 = new org.opencps.thirdparty.system.nsw.vt.model.Body();
+				envelope2.setBody(body2);
+				org.opencps.thirdparty.system.nsw.vt.model.Content content2 = new org.opencps.thirdparty.system.nsw.vt.model.Content();
+				body2.setContent(content2);
+				
 				if (dossierAction != null) {
 					if (dossierAction.getSyncActionCode().equals("1105")) {
 						nswRequest.setDocumentType(dossier.getServiceCode());
@@ -851,6 +909,26 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							subject.setDocumentYear(cal.get(Calendar.YEAR));
 						}
 						
+						nswRequest2.setDocumentType(dossier.getServiceCode());
+						subject2.setDocumentType(dossier.getServiceCode());
+						subject2.setType("18");
+						subject2.setFunction("15");
+						subject2.setReference(dossier.getReferenceUid());
+						subject2.setPreReference(dossier.getReferenceUid());
+						subject2.setSendDate(
+								APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+
+						body2.setPersonSignature("");
+						envelope2.setSystemSignature("");
+						
+						if (dossier.getReceiveDate() != null) {
+							cal.setTime(dossier.getReceiveDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						} else {
+							cal.setTime(dossier.getCreateDate());
+							subject.setDocumentYear(cal.get(Calendar.YEAR));
+						}
+						
 						if (dossier.getServiceCode().equals("BGTVT0600001")
 								|| dossier.getServiceCode().equals("BGTVT0600002")
 								|| dossier.getServiceCode().equals("BGTVT0600003")
@@ -1214,6 +1292,27 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							}
 							
 						}
+						else if (dossier.getServiceCode().equals("BGTVT0600047")
+								) {
+							MessageQueueInputModel model = BGTVT0600047.convertResult(dossier, dossierSync, envelope2, "18", "15");
+
+							MessageQueueDetailModel result = client.postMessageQueue(model);
+							if (result != null) {
+								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+										: sync.getMethod());
+
+								DossierAction foundAction = DossierActionLocalServiceUtil
+										.fetchDossierAction(clientDossierActionId);
+								if (foundAction != null) {
+									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+								}
+
+								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							}
+							
+						}						
 					} else if (dossierAction.getSyncActionCode().equals("1613")) {
 						nswRequest.setDocumentType(dossier.getServiceCode());
 						subject.setDocumentType(dossier.getServiceCode());
@@ -1321,6 +1420,18 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
+						
+						nswRequest2.setDocumentType(dossier.getServiceCode());
+						subject2.setDocumentType(dossier.getServiceCode());
+						subject2.setType("18");
+						subject2.setFunction("16");
+						subject2.setReference(dossier.getReferenceUid());
+						subject2.setPreReference(dossier.getReferenceUid());
+						subject2.setSendDate(
+								APIDateTimeUtils.convertDateToString(new Date(), APIDateTimeUtils._NSW_PATTERN));
+
+						body2.setPersonSignature("");
+						envelope2.setSystemSignature("");
 						
 						if (dossier.getServiceCode().equals("BGTVT0600001")
 								|| dossier.getServiceCode().equals("BGTVT0600002")
@@ -1700,6 +1811,28 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							}
 							
 						}
+						else if (dossier.getServiceCode().equals("BGTVT0600047")
+								
+								) {
+							MessageQueueInputModel model = BGTVT0600047.convertResult(dossier, dossierSync, envelope2, "18", "16");
+
+							MessageQueueDetailModel result = client.postMessageQueue(model);
+							if (result != null) {
+								long clientDossierActionId = (sync.getMethod() == 0 ? sync.getClassPK()
+										: sync.getMethod());
+
+								DossierAction foundAction = DossierActionLocalServiceUtil
+										.fetchDossierAction(clientDossierActionId);
+								if (foundAction != null) {
+									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+								}
+
+								_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+
+								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							}
+							
+						}						
 					} else {
 						long clientDossierActionId = (dossierSync.getMethod() == 0 ? dossierSync.getClassPK()
 								: dossierSync.getMethod());

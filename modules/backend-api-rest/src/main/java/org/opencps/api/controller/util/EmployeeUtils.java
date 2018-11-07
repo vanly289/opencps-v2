@@ -125,10 +125,16 @@ public class EmployeeUtils {
 				
 				boolean isMain = false;
 				
-				if(Long.valueOf(document.get(EmployeeJobPosTerm.JOBPOST_ID)) == employee.getMainJobPostId() && employee.getMainJobPostId() > 0){
+				if (Validator.isNotNull(document.get(EmployeeJobPosTerm.JOBPOST_ID))
+						&& Validator.isNotNull(employee.getMainJobPostId())) {
 					
-					isMain = true;
-					
+					if (Validator.isNotNull(document.get(EmployeeJobPosTerm.JOBPOST_ID))
+							&& Long.valueOf(document.get(EmployeeJobPosTerm.JOBPOST_ID)) == employee.getMainJobPostId()
+							&& employee.getMainJobPostId() > 0) {
+
+						isMain = true;
+
+					}
 				}
 				
 				ett.setMainJobPos(isMain);

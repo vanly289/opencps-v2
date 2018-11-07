@@ -112,6 +112,143 @@ public class PhuHieuBienHieuUtil {
 	}
 
 	/**
+	* Returns all the phu hieu bien hieus where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @return the matching phu hieu bien hieus
+	*/
+	public static List<PhuHieuBienHieu> findByGT_ID(long id) {
+		return getPersistence().findByGT_ID(id);
+	}
+
+	/**
+	* Returns a range of all the phu hieu bien hieus where id &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PhuHieuBienHieuModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param id the ID
+	* @param start the lower bound of the range of phu hieu bien hieus
+	* @param end the upper bound of the range of phu hieu bien hieus (not inclusive)
+	* @return the range of matching phu hieu bien hieus
+	*/
+	public static List<PhuHieuBienHieu> findByGT_ID(long id, int start, int end) {
+		return getPersistence().findByGT_ID(id, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the phu hieu bien hieus where id &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PhuHieuBienHieuModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param id the ID
+	* @param start the lower bound of the range of phu hieu bien hieus
+	* @param end the upper bound of the range of phu hieu bien hieus (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching phu hieu bien hieus
+	*/
+	public static List<PhuHieuBienHieu> findByGT_ID(long id, int start,
+		int end, OrderByComparator<PhuHieuBienHieu> orderByComparator) {
+		return getPersistence().findByGT_ID(id, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the phu hieu bien hieus where id &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PhuHieuBienHieuModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param id the ID
+	* @param start the lower bound of the range of phu hieu bien hieus
+	* @param end the upper bound of the range of phu hieu bien hieus (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching phu hieu bien hieus
+	*/
+	public static List<PhuHieuBienHieu> findByGT_ID(long id, int start,
+		int end, OrderByComparator<PhuHieuBienHieu> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGT_ID(id, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first phu hieu bien hieu in the ordered set where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching phu hieu bien hieu
+	* @throws NoSuchPhuHieuBienHieuException if a matching phu hieu bien hieu could not be found
+	*/
+	public static PhuHieuBienHieu findByGT_ID_First(long id,
+		OrderByComparator<PhuHieuBienHieu> orderByComparator)
+		throws com.backend.migrate.vr.exception.NoSuchPhuHieuBienHieuException {
+		return getPersistence().findByGT_ID_First(id, orderByComparator);
+	}
+
+	/**
+	* Returns the first phu hieu bien hieu in the ordered set where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching phu hieu bien hieu, or <code>null</code> if a matching phu hieu bien hieu could not be found
+	*/
+	public static PhuHieuBienHieu fetchByGT_ID_First(long id,
+		OrderByComparator<PhuHieuBienHieu> orderByComparator) {
+		return getPersistence().fetchByGT_ID_First(id, orderByComparator);
+	}
+
+	/**
+	* Returns the last phu hieu bien hieu in the ordered set where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching phu hieu bien hieu
+	* @throws NoSuchPhuHieuBienHieuException if a matching phu hieu bien hieu could not be found
+	*/
+	public static PhuHieuBienHieu findByGT_ID_Last(long id,
+		OrderByComparator<PhuHieuBienHieu> orderByComparator)
+		throws com.backend.migrate.vr.exception.NoSuchPhuHieuBienHieuException {
+		return getPersistence().findByGT_ID_Last(id, orderByComparator);
+	}
+
+	/**
+	* Returns the last phu hieu bien hieu in the ordered set where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching phu hieu bien hieu, or <code>null</code> if a matching phu hieu bien hieu could not be found
+	*/
+	public static PhuHieuBienHieu fetchByGT_ID_Last(long id,
+		OrderByComparator<PhuHieuBienHieu> orderByComparator) {
+		return getPersistence().fetchByGT_ID_Last(id, orderByComparator);
+	}
+
+	/**
+	* Removes all the phu hieu bien hieus where id &gt; &#63; from the database.
+	*
+	* @param id the ID
+	*/
+	public static void removeByGT_ID(long id) {
+		getPersistence().removeByGT_ID(id);
+	}
+
+	/**
+	* Returns the number of phu hieu bien hieus where id &gt; &#63;.
+	*
+	* @param id the ID
+	* @return the number of matching phu hieu bien hieus
+	*/
+	public static int countByGT_ID(long id) {
+		return getPersistence().countByGT_ID(id);
+	}
+
+	/**
 	* Returns all the phu hieu bien hieus where phuongtien_id = &#63;.
 	*
 	* @param phuongtien_id the phuongtien_id

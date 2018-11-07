@@ -43,6 +43,10 @@ public class ViPhamLocalServiceImpl extends ViPhamLocalServiceBaseImpl {
 	 * Never reference this class directly. Always use {@link com.backend.migrate.vr.service.ViPhamLocalServiceUtil} to access the vi pham local service.
 	 */
 	
+	public List<ViPham> getLastest(long id) {
+		return viPhamPersistence.findByGT_ID(id);
+	}
+	
 	public List<ViPham> getListByPhuongTien(long phuongtien_id) {
 		return viPhamPersistence.findByPTID(phuongtien_id);
 	}

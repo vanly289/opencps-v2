@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.opencps.thirdparty.system.model.ILPhuHieuBienHieu;
+import org.opencps.thirdparty.system.service.ILPhuHieuBienHieuLocalServiceUtil;
 import org.opencps.thirdparty.system.service.base.ILPhuHieuBienHieuLocalServiceBaseImpl;
 
 /**
@@ -44,6 +45,15 @@ public class ILPhuHieuBienHieuLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ILPhuHieuBienHieuLocalServiceUtil} to access the il phu hieu bien hieu local service.
 	 */
+	
+	public ILPhuHieuBienHieu getLastest() {
+		List<ILPhuHieuBienHieu> ls = ilPhuHieuBienHieuPersistence.findAll(0, 1);
+
+		if (ls.isEmpty())
+			return null;
+		else
+			return ls.get(0);
+	}
 	
 	public ILPhuHieuBienHieu addPhuHieuBienHieu(
 			long id,

@@ -11,15 +11,22 @@ import org.opencps.thirdparty.system.model.ILDoanhNghiep;
 import org.opencps.thirdparty.system.model.ILGiayPhepLienVan;
 import org.opencps.thirdparty.system.model.ILGiayPhepVanTai;
 import org.opencps.thirdparty.system.model.ILGiayPhepVanTaiQuocTe;
+import org.opencps.thirdparty.system.model.ILHopDongThue;
 import org.opencps.thirdparty.system.model.ILPhuHieuBienHieu;
 import org.opencps.thirdparty.system.model.ILPhuongTien;
 import org.opencps.thirdparty.system.model.ILViPham;
 import org.opencps.thirdparty.system.model.impl.ILGiayPhepLienVanImpl;
 import org.opencps.thirdparty.system.model.impl.ILGiayPhepVanTaiImpl;
 import org.opencps.thirdparty.system.model.impl.ILGiayPhepVanTaiQuocTeImpl;
+import org.opencps.thirdparty.system.model.impl.ILHopDongThueImpl;
+import org.opencps.thirdparty.system.model.impl.ILPhuHieuBienHieuImpl;
+import org.opencps.thirdparty.system.model.impl.ILPhuongTienImpl;
+import org.opencps.thirdparty.system.model.impl.ILViPhamImpl;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILGiayPhepLienVanLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILGiayPhepVanTaiQuocTeLocalServiceUtil;
+import org.opencps.thirdparty.system.service.ILHopDongThueLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILPhuHieuBienHieuLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILPhuongTienLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ILViPhamLocalServiceUtil;
@@ -35,6 +42,8 @@ import com.backend.migrate.vr.model.PhuHieuBienHieu;
 import com.backend.migrate.vr.model.PhuongTien;
 import com.backend.migrate.vr.model.SRCGiayPhepLienVan;
 import com.backend.migrate.vr.model.SRCGiayPhepVanTai;
+import com.backend.migrate.vr.model.SRCILHopDongThue;
+import com.backend.migrate.vr.model.SRCPHBHGiayPhepVanTai;
 import com.backend.migrate.vr.model.ViPham;
 import com.backend.migrate.vr.service.DoanhNghiepLocalServiceUtil;
 import com.backend.migrate.vr.service.PhuHieuBienHieuLocalServiceUtil;
@@ -42,6 +51,8 @@ import com.backend.migrate.vr.service.PhuongTienLocalService;
 import com.backend.migrate.vr.service.PhuongTienLocalServiceUtil;
 import com.backend.migrate.vr.service.SRCGiayPhepLienVanLocalServiceUtil;
 import com.backend.migrate.vr.service.SRCGiayPhepVanTaiLocalServiceUtil;
+import com.backend.migrate.vr.service.SRCILHopDongThueLocalServiceUtil;
+import com.backend.migrate.vr.service.SRCPHBHGiayPhepVanTaiLocalServiceUtil;
 import com.backend.migrate.vr.service.ViPhamLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -65,6 +76,16 @@ public class ILDBSyncScheduler extends BaseSchedulerEntryMessageListener {
 		
 		syncGiayPhepVanTai();
 		
+		syncPhBHGiayPhepVanTai();
+		
+		syncHopDongThue();
+		
+		syncPhuHieuBienHieu();
+		
+		syncPhuongTien();
+		
+		syncVipham();
+		
 		long id = 0l;
 		
 		try {
@@ -78,72 +99,9 @@ public class ILDBSyncScheduler extends BaseSchedulerEntryMessageListener {
 				
 			}
 			PhuongTien pt = PhuongTienLocalServiceUtil.getFirstGreaterThanId(id);
-			ILPhuongTien ilPt = ILPhuongTienLocalServiceUtil.fetchILPhuongTien(pt.getId());
 			
 			if (pt != null) {
-				List<ViPham> lstViphams = ViPhamLocalServiceUtil.getListByPhuongTien(pt.getId());
-				if (ilPt == null) {
-					ILPhuongTienLocalServiceUtil.addPhuongTien(pt.getId(), 
-							pt.getBienkiemsoat(), 
-							pt.getSucchua(), 
-							pt.getLoaighe_id(), 
-							pt.getNamsanxuat(), 
-							pt.getNuocsanxuat_id(), 
-							pt.getTenhieuxe_id(), 
-							pt.getMauson_id(), 
-							pt.getSokhung(), 
-							pt.getSomay(), 
-							pt.getNamhetnienhansudung(), 
-							pt.getNamcaitao(), 
-							pt.getTrongtai(), 
-							pt.getLoaihinhvantai_id(), 
-							pt.getLa_xegiuongnam(), 
-							pt.getSogiuongnam(), 
-							pt.getTennguoisohuu(), 
-							pt.getDoanhnghiep_id(), 
-							pt.getTuyenkhaithac_id(), 
-							pt.getWeb_giamsathanhtrinh(), 
-							pt.getTendangnhap_gsht(), 
-							pt.getGhichu(), 
-							pt.getTrangthai(), 
-							pt.getCoquanquanly_id(), 
-							pt.getCongdan_id());
-				}
-				for (ViPham vp : lstViphams) {
-					ILViPham ilVp = ILViPhamLocalServiceUtil.fetchILViPham(vp.getId());
-					if (ilVp == null) {
-						ILViPhamLocalServiceUtil.addViPham(vp.getId(), vp.getPhuongtien_id(), vp.getNgayvipham(), vp.getLoaivipham_id(), vp.getMota(), vp.getUrl_bienban());
-					}
-				}
-				
-				List<PhuHieuBienHieu> lstPhbhs = PhuHieuBienHieuLocalServiceUtil.getListByPhuongTien(pt.getId());
-				for (PhuHieuBienHieu phbh : lstPhbhs) {
-					ILPhuHieuBienHieu ilPhbh = ILPhuHieuBienHieuLocalServiceUtil.fetchILPhuHieuBienHieu(phbh.getId());
-					if (ilPhbh != null) {
-						ILPhuHieuBienHieuLocalServiceUtil.addPhuHieuBienHieu(
-								phbh.getId(), 
-								phbh.getSophuhieu(), 
-								phbh.getPhuongtien_id(), 
-								phbh.getLoaihinh_id(), 
-								phbh.getTuyenkhaithac_id(), 
-								phbh.getPhamvi_id(), 
-								phbh.getLoai(), 
-								phbh.getNgaycap(), 
-								phbh.getNgayhethan(), 
-								phbh.getNgaythuhoi(), 
-								phbh.getLydo_thuhoi(), 
-								phbh.getNguoitao(),
-								phbh.getNgaytao(), 
-								phbh.getNguoiky(), 
-								phbh.getNguoiky_id(), 
-								phbh.getNgayky(), 
-								phbh.getGhichu(), 
-								phbh.getTrangthai(), 
-								phbh.getCoquanquanly_id(), 
-								phbh.getLabienhieu());
-					}
-				}
-				
+
 				DoanhNghiep dn = DoanhNghiepLocalServiceUtil.fetchDoanhNghiep(pt.getDoanhnghiep_id());
 				
 				ILDoanhNghiep ilDn = ILDoanhNghiepLocalServiceUtil.fetchILDoanhNghiep(dn != null ? dn.getId() : 0l);
@@ -200,6 +158,195 @@ public class ILDBSyncScheduler extends BaseSchedulerEntryMessageListener {
 		
 		_log.info("DB sync finished at  : " + APIDateTimeUtils.convertDateToString(new Date()));
 	}
+	
+	private void syncVipham() {
+		
+		ILViPham viPham = ILViPhamLocalServiceUtil.getLastest();
+		
+		if (Validator.isNotNull(viPham)) {
+			
+			List<ViPham> viphams = ViPhamLocalServiceUtil.getLastest(viPham.getId());
+			
+			_log.info("********* ROW NEED UPDATE - VIPHAM ** +++ ^-^" + viphams.size());
+
+			for (ViPham src : viphams) {
+				ILViPham elm = new ILViPhamImpl();
+				
+				elm.setId(src.getId());
+				elm.setPhuongtien_id(src.getPhuongtien_id());
+				elm.setNgayvipham(src.getNgayvipham());
+				elm.setLoaivipham_id(src.getLoaivipham_id());
+				elm.setMota(src.getMota());
+				elm.setUrl_bienban(src.getUrl_bienban());
+				
+				ILViPhamLocalServiceUtil.addILViPham(elm);
+			}
+		}
+	}	
+	
+	private void syncPhuongTien() {
+		
+		ILPhuongTien phuongtien = ILPhuongTienLocalServiceUtil.getLastest();
+		
+		if (Validator.isNotNull(phuongtien)) {
+			
+			List<PhuongTien> phuongtiens = PhuongTienLocalServiceUtil.getListGreaterThanId(phuongtien.getId());
+			
+			
+			_log.info("********* ROW NEED UPDATE - PHUONG TIEN ** +++ ^-^" + phuongtiens.size());
+
+			for (PhuongTien src : phuongtiens) {
+				ILPhuongTien elm = new ILPhuongTienImpl();
+				
+				elm.setId(src.getId());
+				elm.setCoquanquanly_id(src.getCoquanquanly_id());
+				elm.setDoanhnghiep_id(src.getDoanhnghiep_id());
+				elm.setBienkiemsoat(src.getBienkiemsoat());
+				elm.setSucchua(src.getSucchua());
+				elm.setLoaighe_id(src.getLoaighe_id());
+				elm.setNamsanxuat(src.getNamsanxuat());
+				elm.setNuocsanxuat_id(src.getNuocsanxuat_id());
+				elm.setTenhieuxe_id(src.getTenhieuxe_id());
+				elm.setMauson_id(src.getMauson_id());
+				elm.setSokhung(src.getSokhung());
+				elm.setSomay(src.getSomay());
+				elm.setNamhetnienhansudung(src.getNamhetnienhansudung());
+				elm.setNamcaitao(src.getNamcaitao());
+				elm.setTrongtai(src.getTrongtai());
+				elm.setLoaihinhvantai_id(src.getLoaihinhvantai_id());
+				elm.setLa_xegiuongnam(src.getLa_xegiuongnam());
+				elm.setSogiuongnam(src.getSogiuongnam());
+				elm.setTennguoisohuu(src.getTennguoisohuu());
+				elm.setDoanhnghiep_id(src.getDoanhnghiep_id());
+				elm.setTuyenkhaithac_id(src.getTuyenkhaithac_id());
+				elm.setWeb_giamsathanhtrinh(src.getWeb_giamsathanhtrinh());
+				elm.setTendangnhap_gsht(src.getTendangnhap_gsht());
+				elm.setMatkhau_gsht(src.getMatkhau_gsht());
+				elm.setCongdan_id(src.getCongdan_id());
+				elm.setGhichu(src.getGhichu());
+				elm.setTrangthai(src.getTrangthai());
+				
+				ILPhuongTienLocalServiceUtil.addILPhuongTien(elm);
+			}
+		}
+	}	
+	
+	
+	
+	
+	private void syncPhBHGiayPhepVanTai() {
+		
+		ILGiayPhepVanTai giayPhepVanTai = ILGiayPhepVanTaiLocalServiceUtil.getLastest();
+		
+		if (Validator.isNotNull(giayPhepVanTai)) {
+			
+			List<SRCPHBHGiayPhepVanTai> giayPhepVanTais = SRCPHBHGiayPhepVanTaiLocalServiceUtil.getLastest(giayPhepVanTai.getId());
+			
+			
+			_log.info("********* ROW NEED UPDATE - PHBH GPVT ** +++ ^-^" + giayPhepVanTais.size());
+
+			for (SRCPHBHGiayPhepVanTai src : giayPhepVanTais) {
+				ILGiayPhepVanTai elm = new ILGiayPhepVanTaiImpl();
+				
+				elm.setId(src.getId());
+				elm.setCoquanquanly_id(src.getCoquanquanly_id());
+				elm.setDoanhnghiep_id(src.getDoanhnghiep_id());
+				
+				elm.setSogiayphep(src.getSogiayphep());
+				elm.setLancapphep(src.getLancapphep());
+				elm.setNgaycap(src.getNgaycap());
+				elm.setNguoicap(src.getNguoicap());
+				elm.setNgayhethan(src.getNgayhethan());
+				elm.setNguoidieuhanh(src.getNguoidieuhanh());
+				elm.setBangcap(src.getBangcap());
+				elm.setNgaysinh(src.getNgaysinh());
+				elm.setSocmnd(src.getSocmnd());
+				elm.setNguoiky(src.getNguoiky());
+				elm.setNguoiky_id(src.getNguoiky_id());
+				elm.setNgayky(src.getNgayky());
+				elm.setNgay_thuhoi(src.getNgay_thuhoi());
+				elm.setLydo_thuhoi(src.getLydo_thuhoi());
+				elm.setGhichu(src.getGhichu());
+				elm.setTrangthai(src.getTrangthai());
+				
+				ILGiayPhepVanTaiLocalServiceUtil.addILGiayPhepVanTai(elm);
+			}
+		}
+	}	
+	
+	private void syncPhuHieuBienHieu() {
+		
+		ILPhuHieuBienHieu bienHieu = ILPhuHieuBienHieuLocalServiceUtil.getLastest();
+		
+
+		if (Validator.isNotNull(bienHieu)) {
+			
+			List<PhuHieuBienHieu> phuHieuBienHieus = PhuHieuBienHieuLocalServiceUtil.getLastest(bienHieu.getId());
+			
+			
+			_log.info("********* ROW NEED UPDATE - PHU HIEU BIEN HIEU ** +++ ^-^" + phuHieuBienHieus.size());
+
+			for (PhuHieuBienHieu src : phuHieuBienHieus) {
+				ILPhuHieuBienHieu elm = new ILPhuHieuBienHieuImpl();
+				
+				elm.setId(src.getId());
+				elm.setSophuhieu(src.getSophuhieu());
+				elm.setPhuongtien_id(src.getPhuongtien_id());
+				elm.setLoaihinh_id(src.getLoaihinh_id());
+				elm.setTuyenkhaithac_id(src.getTuyenkhaithac_id());
+				elm.setPhamvi_id(src.getPhamvi_id());
+				elm.setLoai(src.getLoai());
+				elm.setNgaycap(src.getNgaycap());
+				elm.setNgayhethan(src.getNgayhethan());
+				elm.setNgaythuhoi(src.getNgaythuhoi());
+				elm.setLydo_thuhoi(src.getLydo_thuhoi());
+				elm.setNguoitao(src.getNguoitao());
+				elm.setNgaytao(src.getNgaytao());
+				elm.setNguoiky(src.getNguoiky());
+				elm.setNguoiky_id(src.getNguoiky_id());
+				elm.setNgayky(src.getNgayky());
+				elm.setGhichu(src.getGhichu());
+				elm.setTrangthai(src.getTrangthai());
+				
+				ILPhuHieuBienHieuLocalServiceUtil.addILPhuHieuBienHieu(elm);
+				
+			}
+		}
+	}
+	
+	
+	private void syncHopDongThue() {
+		
+		ILHopDongThue hopDongThue = ILHopDongThueLocalServiceUtil.getLastest();
+
+		if (Validator.isNotNull(hopDongThue)) {
+			
+			List<SRCILHopDongThue> hopDongThues = SRCILHopDongThueLocalServiceUtil.getLastest(hopDongThue.getId());
+			
+			_log.info("********* ROW NEED UPDATE - HOP DONG THUE ** +++ ^-^" + hopDongThues.size());
+
+			for (SRCILHopDongThue src : hopDongThues) {
+				ILHopDongThue elm = new ILHopDongThueImpl();
+				elm.setId(src.getId());
+				elm.setPhuongtien_id(src.getPhuongtien_id());
+				elm.setLoaihinhthue_id(src.getLoaihinhthue_id());
+				elm.setTendoituongchothue(src.getTendoituongchothue());
+				elm.setDiachi_doituong_tinh_id(src.getDiachi_doituong_tinh_id());
+				elm.setDiachi_doituong_huyen_id(src.getDiachi_doituong_huyen_id());
+				elm.setDiachi_doituong_xa_id(src.getDiachi_doituong_xa_id());
+				elm.setDiachi_doituong_chitiet(src.getDiachi_doituong_chitiet());
+				elm.setNgayky(src.getNgayky());
+				elm.setThoihan(src.getThoihan());
+				elm.setLa_hopdongcuoi(src.getLa_hopdongcuoi());
+				elm.setGhichu(src.getGhichu());
+				elm.setTrangthai(src.getTrangthai());
+				
+				ILHopDongThueLocalServiceUtil.addILHopDongThue(elm);
+				
+			}
+		}
+	}
+	
 	
 	private void syncGiayPhepVanTai() {
 		

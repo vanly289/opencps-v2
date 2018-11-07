@@ -48,6 +48,16 @@ public class ILPhuongTienLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link org.opencps.thirdparty.system.service.ILPhuongTienLocalServiceUtil} to access the il phuong tien local service.
 	 */
+	
+	public ILPhuongTien getLastest() {
+		List<ILPhuongTien> phuongtien = ilPhuongTienPersistence.findAll(0, 1);
+		
+		if (phuongtien.isEmpty()) {
+			return null;
+		} else 
+			return phuongtien.get(0);
+	}
+	
 	public ILPhuongTien addPhuongTien(long id, String bienkiemsoat, int succhua, long loaighe_id, int namsanxuat,
 			long nuocsanxuat_id, long tenhieuxe_id, long mauson_id, String sokhung, String somay,
 			int namhetnienhansudung, Date namcaitao, int trongtai, int loaihinhvantai_id, int la_xegiuongnam,
