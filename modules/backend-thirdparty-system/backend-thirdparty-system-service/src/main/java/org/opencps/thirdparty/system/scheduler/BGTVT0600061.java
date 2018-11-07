@@ -29,7 +29,6 @@ import org.opencps.thirdparty.system.model.ThirdPartyDossierSync;
 import org.opencps.thirdparty.system.nsw.model.AttachedFile;
 import org.opencps.thirdparty.system.nsw.model.Envelope;
 import org.opencps.thirdparty.system.nsw.model.GMSCrossBorderTransportPermit;
-import org.opencps.thirdparty.system.nsw.model.GMSCrossBorderTransportPermit.Extension;
 import org.opencps.thirdparty.system.nsw.model.GMSCrossBorderTransportPermit.VehicleType;
 import org.opencps.thirdparty.system.nsw.model.IssuingAuthority;
 import org.opencps.thirdparty.system.util.OutsideSystemConverter;
@@ -347,11 +346,10 @@ public class BGTVT0600061 {
 						gmsCrossBorderTransportPermit.setExpImpGate(formDataObj.getString("ExpImpGate"));
 					}
 					
-					Extension extension = new Extension();
-					extension.setExtendedUntil(StringPool.BLANK);
-					extension.setNoticesOfExtension(StringPool.BLANK);
 					
-					gmsCrossBorderTransportPermit.setExtension(extension);
+					gmsCrossBorderTransportPermit.setExtension(StringPool.BLANK);
+					gmsCrossBorderTransportPermit.setExtendedUntil(StringPool.BLANK);
+					gmsCrossBorderTransportPermit.setNoticesOfExtension(StringPool.BLANK);
 					
 					IssuingAuthority issuingAuthority = new IssuingAuthority();
 					if (formDataObj.has("SignName")) {
