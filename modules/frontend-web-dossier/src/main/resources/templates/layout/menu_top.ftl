@@ -26,10 +26,16 @@
 					</v-menu>
 					<span v-else>{{tab.text}}</span>
 				</v-tabs-item>
+				<v-tabs-item v-if="isAdminUser === 'true'" key="qltk"	href="#quanlytaikhoan" ripple @click="menuTabChange('qltk', $event)">
+					<span>Quản lý tài khoản</span>
+				</v-tabs-item>
 				<v-tabs-slider color="blue"></v-tabs-slider>
 			</v-tabs-bar>
 			<v-tabs-items>
 				<v-tabs-content v-for="tab in tabs"	:key="tab.value" :id="tab.value">
+					<div></div>
+				</v-tabs-content>
+				<v-tabs-content v-if="isAdminUser === 'true'"	key="qltk" id="quanlytaikhoan">
 					<div></div>
 				</v-tabs-content>
 			</v-tabs-items>

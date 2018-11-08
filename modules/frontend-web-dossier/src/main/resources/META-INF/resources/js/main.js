@@ -12,11 +12,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 		serviceinfosQuocTe: 'BGTVT0600001,BGTVT0600002,BGTVT0600003,BGTVT0600004,BGTVT0600019,BGTVT0600020,BGTVT0600021,BGTVT0600022,BGTVT0600058,BGTVT0600059,BGTVT0600060',
 		serviceinfosLienVan: 'BGTVT0600005,BGTVT0600006,BGTVT0600007,BGTVT0600008,BGTVT0600009,BGTVT0600010,BGTVT0600011,BGTVT0600012,BGTVT0600023,BGTVT0600024,BGTVT0600025,BGTVT0600026,BGTVT0600027,BGTVT0600028,BGTVT0600029,BGTVT0600036,BGTVT0600037,BGTVT0600038,BGTVT0600039,BGTVT0600040,BGTVT0600041,BGTVT0600042,BGTVT0600043,BGTVT0600018,BGTVT0600035,BGTVT0600047,BGTVT0600048,BGTVT0600049,BGTVT0600050,BGTVT0600051,BGTVT0600052,BGTVT0600053,BGTVT0600054,BGTVT0600055,BGTVT0600057,BGTVT0600061,BGTVT0600062,BGTVT0600063,BGTVT0600064,BGTVT0600065',
 		serviceinfosChapThuan: 'BGTVT0600013,BGTVT0600014,BGTVT0600015,BGTVT0600016,BGTVT0600017,BGTVT0600030,BGTVT0600031,BGTVT0600032,BGTVT0600033,BGTVT0600034,BGTVT0600044,BGTVT0600045,BGTVT0600046,BGTVT0600056'
-
 	};
 
 	const listServiceCodePrint = ["BGTVT0600001", "BGTVT0600002", "BGTVT0600003", "BGTVT0600004", "BGTVT0600005", "BGTVT0600006", "BGTVT0600007", "BGTVT0600008", "BGTVT0600009", "BGTVT0600010", "BGTVT0600011", "BGTVT0600012", "BGTVT0600013", "BGTVT0600014", "BGTVT0600015", "BGTVT0600016", "BGTVT0600017", "BGTVT0600018", "BGTVT0600019", "BGTVT0600020", "BGTVT0600021", "BGTVT0600022", "BGTVT0600023", "BGTVT0600024", "BGTVT0600025", "BGTVT0600026", "BGTVT0600027", "BGTVT0600028", "BGTVT0600029", "BGTVT0600030", "BGTVT0600031", "BGTVT0600032", "BGTVT0600033", "BGTVT0600034", "BGTVT0600035", "BGTVT0600036", "BGTVT0600037", "BGTVT0600038", "BGTVT0600039", "BGTVT0600040", "BGTVT0600041", "BGTVT0600042", "BGTVT0600043", "BGTVT0600044", "BGTVT0600045", "BGTVT0600046", "BGTVT0600047", "BGTVT0600048", "BGTVT0600049", "BGTVT0600050", "BGTVT0600051", "BGTVT0600052", "BGTVT0600053", "BGTVT0600054", "BGTVT0600055", "BGTVT0600056", "BGTVT0600057", "BGTVT0600058", "BGTVT0600059", "BGTVT0600060", "BGTVT0600061", "BGTVT0600062", "BGTVT0600063", "BGTVT0600064", "BGTVT0600065"];
-	const listSericeCode2Print = ["BGTVT0600005", "BGTVT0600006", "BGTVT0600007", "BGTVT0600008", "BGTVT0600009", "BGTVT0600010", "BGTVT0600011", "BGTVT0600012", "BGTVT0600023", "BGTVT0600024", "BGTVT0600025", "BGTVT0600026", "BGTVT0600027", "BGTVT0600028", "BGTVT0600029", "BGTVT0600036", "BGTVT0600037", "BGTVT0600038", "BGTVT0600039", "BGTVT0600040", "BGTVT0600041", "BGTVT0600042", "BGTVT0600043", "BGTVT0600048", "BGTVT0600049", "BGTVT0600050", "BGTVT0600051", "BGTVT0600052", "BGTVT0600053", "BGTVT0600054", "BGTVT0600055", "BGTVT0600058", "BGTVT0600059", "BGTVT0600060"];
+	const listSericeCode2Print = ["BGTVT0600005", "BGTVT0600006", "BGTVT0600007", "BGTVT0600008", "BGTVT0600009", "BGTVT0600010", "BGTVT0600011", "BGTVT0600012", "BGTVT0600023", "BGTVT0600024", "BGTVT0600025", "BGTVT0600026", "BGTVT0600027", "BGTVT0600028", "BGTVT0600029", "BGTVT0600048", "BGTVT0600049", "BGTVT0600050", "BGTVT0600051", "BGTVT0600052", "BGTVT0600053", "BGTVT0600054", "BGTVT0600055"];
+	const listChinaSericeCodePrint = ["BGTVT0600036", "BGTVT0600037", "BGTVT0600038", "BGTVT0600039", "BGTVT0600040", "BGTVT0600041", "BGTVT0600042", "BGTVT0600043"];
 
 	const MAX_RETRY = 200;
 	var nOfRetry = 0;
@@ -430,24 +430,26 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			govAgencysItems: [],
 			govAgencySearch: '',
 			loadingMenuList: false,
-			isAdminUser: false
+			isAdminUser: false,
+			showTemplatePrint: false,
+			listCodePH: []
 		},
 		watch: {
 			pageGiayPhepVanTaiQuocTeTable: {
 				handler () {
-					console.log('cccc1')
+					// console.log('cccc1')
                     this._inigiayPhepVanTaiQuocTeTable()
                 }
 			},
 			pageGiayPhepLienVanTable: {
 				handler () {
-					console.log('cccc2')
+					// console.log('cccc2')
                     this._inigiayPhepLienVanTable()
                 }
 			},
 			pageChapThuanKhaiThacTable: {
 				handler () {
-					console.log('cccc2')
+					// console.log('cccc2')
                     this._inichapThuanKhaiThacTable()
                 }
 			},
@@ -481,7 +483,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.applicantNameFilterItems = serializable.data;
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 							return false; 
@@ -494,13 +496,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.serviceInfoFilterItems = serializable.data;
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 							});
 							return false;
 						},
 						subLastActionUserName: function (data) {
 							var vm = this;
 							if (data) {
+								if (data.indexOf('test@liferay') !== -1) {
+									return 'QLVT'
+								}
 								var indexKey = data.indexOf('@');
 								if (indexKey === -1) {
 									return data;
@@ -513,7 +518,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						groupHoSoFilter: function(item, index){
 							var vm = this;
-							console.log("item status",item);
+							// console.log("item status",item);
 							vm.indexListStatus = index;
 							vm.reloadCounter();
 							vm.detailPage = false;
@@ -549,11 +554,20 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								const [month, day, year] = date.split('/')
 							return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
 						},
+						loadListCodePh: function () {
+							var vm = this;
+							var url = '/o/rest/v2/dictcollections/PHU_HIEU/dictitems';
+							axios.get(url, config).then(function (response) {
+								var serializable = response.data;
+								vm.listCodePH = serializable.data;
+							}).catch(function (error) {
+								// console.log(error);
+							});
+						},
 						reloadCounter : function(){
 							var vm = this;
-							vm.stageFilterView = 'danh_sach';
 							var url = '/o/rest/v2/statistics/dossiers/todo';
-							console.log("Init load");
+							// console.log("Init load");
 							vm.loadingMenuList = true;
 							$.ajax({
 								url : url,
@@ -569,11 +583,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								},								
 								success : function(result){
 									var serializable = result;
-
 									var indexTree = -1;
 									var index = 0;
-									//console.log("listgroupHoSoFilterItems=======FISRT",vm.listgroupHoSoFilterItems);
-									//console.log("serializable=======",serializable.data);
+									//// console.log("listgroupHoSoFilterItems=======FISRT",vm.listgroupHoSoFilterItems);
+									//// console.log("serializable=======",serializable.data);
 									for (var key in serializable.data) {
 										for(var i in vm.listgroupHoSoFilterItems){
 											if ( serializable.data[key].level === 0) {
@@ -598,7 +611,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}
 
 								}
-								//console.log("listgroupHoSoFilterItems=======LAST",vm.listgroupHoSoFilterItems);
+								//// console.log("listgroupHoSoFilterItems=======LAST",vm.listgroupHoSoFilterItems);
 								vm.loadingMenuList = false;
 							},
 							error : function(result){
@@ -615,7 +628,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.detailRegistPage = false;
 								vm.listgroupHoSoFilterselected = item.id;
 								vm.danhSachHoSoTablepage = 1;
-
+								vm.hoso_title_table = 'Danh sách hồ sơ'
 								vm.listgroupHoSoFilterselectedIndex = item.index - 1;
 
 								vm.statusParamFilter = '';
@@ -641,8 +654,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							} else if (item === 'qltk') {
 								window.location.href = "/group/cong-xu-ly/quan-ly-tai-khoan";
 							} else {
-								console.log($(event)[0]);
-								console.log($(event)[0].target);
+								// console.log($(event)[0]);
+								// console.log($(event)[0].target);
 								vm.detailRegistPage = false;
 								vm.detailPage = false;
 								vm.stageFilterView = 'danh_sach';
@@ -662,7 +675,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.snackbardossierViewJX = true;
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 								vm.snackbartextdossierViewJX = "Xử lý không thành công!";
 								vm.snackbarerordossierViewJX = true;
 							});
@@ -676,15 +689,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								var serializable = response.data;
 								if (serializable.data) {
 									for (var i = 0; i < serializable.data.length; i++) {
-										let formData = JSON.parse(serializable.data[i].formData)
-										serializable.data[i].formData = formData
+										var formData = JSON.parse(serializable.data[i].formData);
+										serializable.data[i].formData = formData;
 									}
 								}
 								vm.listPrintItems = serializable.data;
 								vm.loadingListPrints = false;
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 								// vm.loadingListPrints = false;
 								vm.statusTextLoadPrint = 'Tải danh sách bị lỗi, Vui lòng thử lại :(';
 							});
@@ -717,7 +730,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.dossierStatusItems = serializable.data;
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 							});
 						},
 						_initGovAgencysFilter: function (data) {
@@ -729,22 +742,22 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.govAgencysItems = serializable.data;
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 							});
 						},
 						_initlistgroupHoSoFilter: function(select){
 							var vm = this;
-
+							vm._inidanhSachHoSoTable(false);
 							// vm.newTabOrNewWindown();
 							// vm.setStateOnlyFollow(emailAddress);
-							vm.getLastedStateUserInfo(function(){
-								vm._inidanhSachHoSoTable(false);
-							});
+							// vm.getLastedStateUserInfo(function(){
+							// 	vm._inidanhSachHoSoTable(false);
+							// });
 
 							vm.stageFilterView = 'danh_sach';
 							vm.loadingMenuList = true;
 							vm.listgroupHoSoFilterItems = [];
-							let configlistGroup = {
+							var configlistGroup = {
 								headers: {
 									groupId: themeDisplay.getScopeGroupId()
 								},
@@ -755,7 +768,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}
 							/*var url = '/o/rest/v2/statistics/dossiers/todo';*/
 							var url = '/o/rest/v2/statistics/dossiers/todo';
-							console.log("Init load 2");
+							// console.log("Init load 2");
 							axios.get(url, configlistGroup).then(function (response) {
 								var serializable = response.data;
 
@@ -802,7 +815,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								
 							}
 							vm.loadingMenuList = false;
-							let itemStatus = vm.listgroupHoSoFilterItems.find(item => {
+							var itemStatus = vm.listgroupHoSoFilterItems.find(item => {
 								return item.id === vm.statusFirst
 							})
 
@@ -811,7 +824,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}
 
 							if(select){
-								console.log("selected========", select);
+								// // console.log("selected========", select);
 								var indexTemp = vm.listgroupHoSoFilterItems.findIndex(item => {
 									return item.idSub === select
 								})
@@ -822,7 +835,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}
 							})
 							.catch(function (error) {
-								console.log(error);
+								// // console.log(error);
 								vm.loadingMenuList = false;
 							});
 							return false; 
@@ -847,18 +860,60 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm._initlistgroupHoSoFilter();
 							})
 						},
+						getUrlVars: function () {
+							var vars = {};
+							var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+								vars[key] = value;
+							});
+							return vars;
+						},
 						initData: function () {
 							var vm = this
-							vm.getMenuBestUser();
 							// vm._initlistgroupHoSoFilter();
 							vm._initServiceInfoFilterData();
 							vm._initApplicantNameFilterData();
 							vm._initDossierStatus();
 							vm._initGovAgencysFilter();
 							vm.setStateOnlyFollow(emailAddress);
-							console.log('----------------isAdminUser+++++++++++++++', isAdminUser)
+							vm.loadListCodePh();
+							// // console.log('----------------isAdminUser+++++++++++++++', isAdminUser)
 							if (isAdminUser) {
 								vm.isAdminUser = isAdminUser;
+							}
+							var params = vm.getUrlVars();
+							console.log(params);
+							if (params !== null && params !== undefined && params.hasOwnProperty('view')) {
+								if (params.hasOwnProperty('view')) {
+									var selectView = params['view'];
+									if (selectView === 'tra_cuu_ho_so') {
+										vm.stageFilterView = 'danh_sach'
+										vm.detailPage = false;
+										vm.detailRegistPage = false;
+										vm.danhSachHoSoTablepage = 1;
+										vm.statusParamFilter = '';
+										vm.substatusParamFilter = '';
+										vm._initlistgroupHoSoFilter();
+										vm.tabActive = 'tab1';
+										// vm._inidanhSachHoSoTable(false);
+										vm.onScrollTop();
+									} else if (selectView === 'quan_ly_giay_phep') {
+										vm.stageFilterView = 'tra_cuu_giay_phep'
+										vm.detailRegistPage = false;
+										vm.detailPage = false;
+										vm.tabActive = 'tab3';
+										vm.reloadCounter();
+										vm._inigiayPhepVanTaiQuocTeTable(false);
+										vm._initServiceInfos({
+											serviceCode: configPage.serviceinfosQuocTe
+										});
+										vm._initGovAgencys({
+										});
+										vm._initTuyens();
+										vm.onScrollTop();
+									}
+								}
+							} else {
+								vm.getMenuBestUser();
 							}
 							$("aside").remove();
 						},
@@ -873,7 +928,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								animation: 'fade'
 							})
 							.then((dialog) => {
-								console.log("Run delete");
+								// // console.log("Run delete");
 									// call API get file by dossierId
 									var arrFileDelete = vm.dossierFiles.filter(file => {
 										return file.dossierPartNo === item.partNo
@@ -912,7 +967,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									// 		item.counter = 0;
 									// 	},
 									// 	error : function(xhr){
-									// 		console.log(xhr);
+									// 		// console.log(xhr);
 									// 	}
 									// });
 									
@@ -920,7 +975,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									return false; 
 								})
 							.catch((e) => {
-								console.log(e)
+								// // console.log(e)
 							})
 						},
 						setStateOnlyFollow : function(emailAddress){
@@ -928,7 +983,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var url = '/o/rest/v2/dictcollections/VR_AUDIT/dictitems';
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
-								console.log("emailAddress======",emailAddress);
+								// // console.log("emailAddress======",emailAddress);
 								if(serializable){
 									for (var i = 0; i < serializable.data.length; i++) {
 										var model = serializable.data[i];
@@ -940,7 +995,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}
 							})
 							.catch(function (error) {
-								console.log(error);
+								// // console.log(error);
 							});
 						},
 						viewDossierFileVersionDialog: function (item, type) {
@@ -950,12 +1005,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								return
 							}
 							vm.dossierViewJXTitle = item.displayName;
-							let arrFileViews = []
+							var arrFileViews = []
 							vm.indexFile = 0;
 							vm.blobFileSrc = '';
 							if (vm.dossierFiles.length > 0) {
-								console.log('dossierFiles--------', vm.dossierFiles);
-								console.log('item--------', item);
+								// // console.log('dossierFiles--------', vm.dossierFiles);
+								// // console.log('item--------', item);
 								arrFileViews = vm.dossierFiles.filter(file => {
 									return file.dossierPartNo === item.partNo
 								})
@@ -968,14 +1023,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							if (vm.dossierFilesView.length > 0) {
 								if (vm.dossierFilesView.length === 1 && type === 'IN') {
 									vm.getBlobFile(vm.dossierFilesView[0]).then(resolve => {
-										console.log('resolve-----', resolve)
+										// console.log('resolve-----', resolve)
 										window.open(resolve);
 									});
 								} else {
 									var url = "/o/rest/v2/dossiers/" + vm.detailModel.dossierId + "/files/" + vm.dossierFilesView[0].referenceUid ;
-									console.log("Preview dossier PDF");
+									// console.log("Preview dossier PDF");
 									vm.getBlobFile(vm.dossierFilesView[0]).then(resolve => {
-										console.log('resolve-----', resolve)
+										// console.log('resolve-----', resolve)
 										vm.blobFileSrc = resolve
 									})	
 									vm.dialogViewFile = !vm.dialogViewFile
@@ -989,12 +1044,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								return
 							}
 							vm.dossierViewJXTitle = item.displayName;
-							let arrFileViews = []
+							var arrFileViews = []
 							vm.indexFile = 0;
 							vm.blobFileSrc = '';
 							if (vm.dossierFiles.length > 0) {
-								console.log('dossierFiles--------', vm.dossierFiles);
-								console.log('item--------', item);
+								// console.log('dossierFiles--------', vm.dossierFiles);
+								// console.log('item--------', item);
 								arrFileViews = vm.dossierFiles.filter(file => {
 									return file.dossierPartNo === item.partNo && item.dossierFileId === file.dossierFileId
 								})
@@ -1011,14 +1066,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								// 	arrTemp.push(vm.getBlobFile(vm.dossierFilesView[i]));
 								// }
 								// Promise.all(arrTemp).then(resultsFiles => {
-								// 	console.log('resultsFiles-----', resultsFiles)
+								// 	// console.log('resultsFiles-----', resultsFiles)
 								// 	vm.listBlobSrc = resultsFiles
 								// }).catch(rejectErr => {
 								// })
 								var url = "/o/rest/v2/dossiers/" + vm.detailModel.dossierId + "/files/" + vm.dossierFilesView[0].referenceUid ;
-								console.log("Preview dossier PDF");
+								// console.log("Preview dossier PDF");
 								vm.getBlobFile(vm.dossierFilesView[0]).then(resolve => {
-									console.log('resolve-----', resolve)
+									// console.log('resolve-----', resolve)
 									vm.blobFileSrc = resolve
 								})
 								vm.dialogViewFile = !vm.dialogViewFile
@@ -1031,7 +1086,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}
 							vm.blobFileSrc = ''
 							vm.getBlobFile(vm.dossierFilesView[vm.indexFile]).then(resolve => {
-								console.log('resolve-----', resolve)
+								// console.log('resolve-----', resolve)
 								vm.blobFileSrc = resolve
 							})
 						},
@@ -1042,7 +1097,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}
 							vm.blobFileSrc = ''
 							vm.getBlobFile(vm.dossierFilesView[vm.indexFile]).then(resolve => {
-								console.log('resolve-----', resolve)
+								// console.log('resolve-----', resolve)
 								vm.blobFileSrc = resolve
 							})
 						},
@@ -1068,14 +1123,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}
 								})
 								.catch(function (error) {
-									console.log(error);
+									// console.log(error);
 									reject(false)
 								});
 							})
 						},
 						printDeliverable: function() {						    
 							$('#printTraCuu').printThis();
-							console.log("Print deliverable");
+							// console.log("Print deliverable");
 						},
 						searchAdvanceDossier() {
 							var vm = this
@@ -1086,8 +1141,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm._inithongTinDoanhNghiepTable(false);
 								vm.detailRegistPage = false;
 							} else {
-								vm.substatusParamFilter = '';
-								vm.statusParamFilter = '';
+								// vm.substatusParamFilter = '';
+								// vm.statusParamFilter = '';
 								vm._inidanhSachHoSoTable(false);
 							}
 							vm.dialogSearch = false;
@@ -1108,7 +1163,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							
 							$("#printTraCuu > div").each(function(){
 								var id = $(this).attr('id');
-								console.log("Div id: " + id);
+								// console.log("Div id: " + id);
 								var xPos = $(this).position().left;
 								var yPos = $(this).position().top;
 
@@ -1126,14 +1181,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									};									
 								}
 							});
-							console.log(formTemplate);
+							// console.log(formTemplate);
 							var vm = this;
 							var url ="/o/il/v2/inland";
 							
 							vm.currentPrintTemplate.formTemplate = JSON.stringify(formTemplate);
 							vm.currentPrintTemplate.employeeId = 0;
 							
-							console.log(formTemplate);
+							// console.log(formTemplate);
 					        if (vm.currentPrintTemplate.createUserId == 0) {
 					        	axios.post(url, $.param(vm.currentPrintTemplate), {
 									headers: {
@@ -1143,10 +1198,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					        	})
 					        	.then(function (response) {
 									vm.popUpPrintTraCuu = !vm.popUpPrintTraCuu;
-					        	    console.log(response);
+					        	    // console.log(response);
 					        	})
 					        	.catch(function (error) {
-					        	    console.log(error);
+					        	    // console.log(error);
 					        	});	
 					        }
 					        else {
@@ -1157,16 +1212,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}												        		
 					        	})
 					        	.then(function (response) {
-					        	    console.log(response);
+					        	    // console.log(response);
 					        	})
 					        	.catch(function (error) {
-					        	    console.log(error);
+					        	    // console.log(error);
 					        	});	
 					        }							
 						},
 						getInLand: function(items){
 							var vm = this;
-							console.log(items);
+							// console.log(items);
 							var url ="/o/il/v2/inland";
 							var configInland = {
 								params: {
@@ -1200,13 +1255,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							        	};
 							        	$('#printTraCuu').empty();
 							        	var item;
-							        	console.log(response.data.formData)
+							        	// console.log(response.data.formData)
 							        	if (!response.data.formData) {
 							        		item = items;
 							        	} else {
-							        		console.log('hasForm!')
+							        		// console.log('hasForm!')
 							        		item = JSON.parse(response.data.formData);
-							        		console.log(item)
+							        		// console.log(item)
 							        	}
 							        	var originalDocumentArr = JSON.parse(response.data.originalDocumentURL);
 							        	var originalDocumentObj = originalDocumentArr[0];
@@ -1253,7 +1308,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 													}													
 												}
 												else if (key.indexOf("_") != -1) {
-													console.log("Key contain _: " + key);
+													// console.log("Key contain _: " + key);
 													var newKeyArr = key.split("_");
 													var newKey = newKeyArr[1];
 													if (item.hasOwnProperty(newKey)) {
@@ -1298,10 +1353,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 																}												        		
 												        	})
 												        	.then(function (response) {
-												        	    console.log(response);
+												        	    // console.log(response);
 												        	})
 												        	.catch(function (error) {
-												        	    console.log(error);
+												        	    // console.log(error);
 												        	});	
 												        }
 												        else {
@@ -1352,10 +1407,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 																	}												        		
 													        	})
 													        	.then(function (response) {
-													        	    console.log(response);
+													        	    // console.log(response);
 													        	})
 													        	.catch(function (error) {
-													        	    console.log(error);
+													        	    // console.log(error);
 													        	});	
 													        }
 													    }
@@ -1373,7 +1428,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 							});
 						},
 						toDetailGiayPhep: function(item){
@@ -1391,7 +1446,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								window.open(urlblob, '_blank')
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 							});
 						},
 						printGiayPhep: function(item) {
@@ -1441,7 +1496,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										}
 										else if (k == 'manufaturedYear') {
 											name = 'Năm sản xuất';
-										}
+										}	
 										else if (k == 'capacity') {
 											name = 'Số ghế';
 										}
@@ -1471,16 +1526,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									vm.popUpThongTinXe  = !vm.popUpThongTinXe;
 								})
 								.catch(function (error) {
-									console.log(error);
+									// console.log(error);
 								});
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 							});
 						},
 						addThongTinXe: function(append){
 							var vm = this;
-							console.log('addThongTinXe')
+							// console.log('addThongTinXe')
 							var urlHistorys = '/o/rest/vr-app/certDoc/borderGuard/'+append.registrationNumber;
 							var formData = new URLSearchParams();
 							var registrationDate = vm.parseDate(vm.thongTinXeDate)
@@ -1505,11 +1560,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									vm.giay_phep_lai_xe = '';
 								})
 								.catch(function (error) {
-									console.log(error);
+									// console.log(error);
 								});
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 							});
 						},
 						_inigiayPhepVanTaiQuocTeTable: function (append) {
@@ -1533,7 +1588,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								start: vm.pageGiayPhepVanTaiQuocTeTable * 15 - 15,
 								limit: 15
 							};
-
 							const config_dossiers = {
 								params: paramsBuilder,
 								headers: {
@@ -1550,19 +1604,22 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								if (append) {
 									vm.giayPhepVanTaiQuocTeTableItems.push.apply(vm.giayPhepVanTaiQuocTeTableItems, serializable.data);
 								} else if(serializable.data){
-
-									vm.giayPhepVanTaiQuocTeTableItems = serializable.data;
+									if (Array.isArray(serializable.data)) {
+										vm.giayPhepVanTaiQuocTeTableItems = serializable.data;
+									} else {
+										vm.giayPhepVanTaiQuocTeTableItems = [serializable.data];
+									}
 
 								}else {
 									vm.giayPhepVanTaiQuocTeTableItems = [];
 								}
 								var page = Math.ceil(serializable.total / 15);
 								vm.pageGiayPhepVanTaiQuocTeTableLength = page;
-								console.log(vm.giayPhepVanTaiQuocTeTableItems);
+								// console.log(vm.giayPhepVanTaiQuocTeTableItems);
 								$("#tableGiayPhepVanTaiQuocTe").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 								vm.giayPhepVanTaiQuocTeTableItems = [
 								{
 									giay_phep: 'abc123',
@@ -1631,7 +1688,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								if (append) {
 									vm.giayPhepLienVanTableItems.push.apply(vm.giayPhepLienVanTableItems, serializable.data);
 								} else if(serializable.data){
-									vm.giayPhepLienVanTableItems = serializable.data;
+									if (Array.isArray(serializable.data)) {
+										vm.giayPhepLienVanTableItems = serializable.data;
+									} else {
+										vm.giayPhepLienVanTableItems = [serializable.data];
+									}
 								}else {
 									vm.giayPhepLienVanTableItems = [];
 								}
@@ -1639,10 +1700,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.pageGiayPhepLienVanTableLength = page;
 								$("#tableGiayPhepLienVan").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
 								$("#tableGiayPhepLienVan").find('table > thead > tr > th:nth-child(3)').html("Số đăng ký phương tiện <br> Đơn vị khai thác")
-								console.log(vm.giayPhepLienVanTableItems);
+								// console.log(vm.giayPhepLienVanTableItems);
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 								vm.giayPhepLienVanTableItems = [
 								{
 									giay_phep: 'asdfgh',
@@ -1721,20 +1782,23 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								if (append) {
 									vm.chapThuanKhaiThacTableItems.push.apply(vm.chapThuanKhaiThacTableItems, serializable.data);
 								} else if(serializable.data){
-
-									vm.chapThuanKhaiThacTableItems = serializable.data;
+									if (Array.isArray(serializable.data)) {
+										vm.chapThuanKhaiThacTableItems = serializable.data;
+									} else {
+										vm.chapThuanKhaiThacTableItems = [serializable.data];
+									}
 
 								}else {
 									vm.chapThuanKhaiThacTableItems = [];
 								}
 								var page = Math.ceil(serializable.total / 15);
 								vm.pageChapThuanKhaiThacTableLength = page;
-								console.log(vm.chapThuanKhaiThacTableItems);
+								// console.log(vm.chapThuanKhaiThacTableItems);
 								$("#tableChapThuanKhaiThac").find('table > thead > tr > th:nth-child(2)').html("Tên giấy phép <br> Gíây phép - Số giấy phép")
 								$("#tableChapThuanKhaiThac").find('table > thead > tr > th:nth-child(6)').html("Số xe tham gia <br> Hiệu lực khai thác")
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 								vm.chapThuanKhaiThacTableItems = [
 									{
 										giay_phep: 'ccccc',
@@ -1798,7 +1862,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 						},
@@ -1819,7 +1883,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 						},
@@ -1832,7 +1896,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 						},
@@ -1844,7 +1908,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.cuaKhaus = serializable.data;
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 						},
@@ -1875,7 +1939,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								});
 								$("#listTraCuuGiayPhep > li:nth-child(3)").addClass("active");
 							}
-							console.log('vm.stateTraCuuGiayPhep=========',vm.stateTraCuuGiayPhep);
+							// console.log('vm.stateTraCuuGiayPhep=========',vm.stateTraCuuGiayPhep);
 						},
 						searchTraCuuGiayPhep: function(){
 							var vm = this;
@@ -1907,15 +1971,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								axios.get(url, config).then(function (response) {
 									var serializable = response.data;
 
-									console.log("serializable========",serializable);
+									// console.log("serializable========",serializable);
 
 									var serviceCode = serializable.serviceInfo;
 									var applicantIdNo = serializable.applicant;
 									var dossierNo = serializable.dossierNo;
 
-									console.log("serviceCode========",serviceCode);
-									console.log("applicantIdNo========",applicantIdNo);
-									console.log("dossierNo========",dossierNo);
+									// console.log("serviceCode========",serviceCode);
+									// console.log("applicantIdNo========",applicantIdNo);
+									// console.log("dossierNo========",dossierNo);
 									if(serviceCode){
 										vm.serviceInfoFilter = {
 											serviceCode : serviceCode,
@@ -1937,7 +2001,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								})
 								.catch(function (error) {
-									console.log(error);
+									// console.log(error);
 									reject(false);
 								});
 							});
@@ -2014,7 +2078,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								dialog.close();
 							})
 							.catch((e) => {
-								console.log(e)
+								// console.log(e)
 							})
 						},
 						submitAlpacajsForm: function (item) {
@@ -2022,15 +2086,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.loadingAlpacajsForm = true;
 							vm.actionsSubmitLoading = true;
 							try{
-								console.log("$('#alpacajs_form_'+item.partNo + ' .formType').val()============",$("#alpacajs_form_"+item.partNo + " .formType").val());
+								// console.log("$('#alpacajs_form_'+item.partNo + ' .formType').val()============",$("#alpacajs_form_"+item.partNo + " .formType").val());
 								if( $("#alpacajs_form_"+item.partNo + " .formType").val() == null || 
 									$("#alpacajs_form_"+item.partNo + " .formType").val() == 'undefined' ) {
-									console.log("formType 1");
+									// console.log("formType 1");
 								vm.loadingAlpacajsForm = true;
 
 								var control = $("#alpacajs_form_"+item.partNo).alpaca("get");
 								var formData = control.getValue();
-								console.log("Form data: " + JSON.stringify(formData));
+								// console.log("Form data: " + JSON.stringify(formData));
 
 								$.ajax({
 									url : "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/formdata",
@@ -2077,7 +2141,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							} else if( $("#alpacajs_form_"+item.partNo + " .formType").val() != null && 
 								$("#alpacajs_form_"+item.partNo + " .formType").val() === 'assign' ) {
-								console.log("formType 2");
+								// console.log("formType 2");
 								vm.loadingAlpacajsForm = true;
 
 								var control = $("#alpacajs_form_"+item.partNo).alpaca("get");
@@ -2160,7 +2224,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							//alapcajs Form
 							var alpacajsForm = document.getElementById("alpacajs_form_"+item.partNo);
 							if (alpacajsForm.innerHTML == '' && item.eform) {
-								console.log(item);
+								// console.log(item);
 								var alapcaJS = eval('('+item.formScript+')');
 								alapcaJS['data'] = item.formData;
 								
@@ -2171,10 +2235,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						viewOnNewTab : function(item){
 							var vm = this;
 							if(item.counter > 0){
-								console.log("vm.detailModel========",vm.detailModel);
+								// console.log("vm.detailModel========",vm.detailModel);
 								var url = "/group/cong-xu-ly/xu-ly-ho-so?stateWindow=stateWindow&dossierId="+vm.detailModel.dossierId+
 								"&dossierPartNo="+item.partNo;
-								console.log("url============",url);
+								// console.log("url============",url);
 								window.open(url, "_blank");
 							}
 						},
@@ -2200,13 +2264,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
                             		})
                             		.catch(function (error) {
-                            			console.log(error);
+                            			// console.log(error);
 
                             		});
 
                             	})
                             .catch(function (error) {
-                            	console.log(error);
+                            	// console.log(error);
                             	vm.stepLoading = false;
 
                             });
@@ -2224,9 +2288,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         },
                         changeProcessStep: function (item){
                         	var vm = this;
-                        	console.log("Change process step");
+                        	// console.log("Change process step");
                         	vm.dialogThuLyHoSo = true;
-                        	console.log(item);
+                        	// console.log(item);
                         	var status = vm.statusParamFilter;
                         	var subStatus = vm.substatusParamFilter;
                         	vm.stepModel = null;
@@ -2281,7 +2345,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         		}
 
                         		vm.processAssignUserIdItems = item.toUsers;
-                        		console.log("Need interval refresh: " + needIntervalRefresh);
+                        		// console.log("Need interval refresh: " + needIntervalRefresh);
                         		if (needIntervalRefresh) {
                         			vm.disabledDossierFile = true;
                         		    setTimeout(function () {
@@ -2307,7 +2371,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         			vm.disabledDossierFile = false;
                         		}
                         	}else if (item.type === 2) {
-                        		vm.maxWidthDialog = '800px';
+                        		vm.maxWidthDialog = '950px';
                         		var urlPluginFormData = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/formdata';
                         		var urlPluginFormScript = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/formscript';
                         		var config_plugins = {
@@ -2324,11 +2388,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         				var responseScript = urlResponesFormScript.data;
                         				var responseData = urlResponesFormData.data;
 
-                        				console.log("responseScript==============",responseScript);
+                        				// console.log("responseScript==============",responseScript);
                         				item.plugin = true;
 
                         				if(responseScript.indexOf("#preview@pdf") !== -1){
-                        					console.log("view pdf");
+                        					// console.log("view pdf");
                         					var url ="/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/plugins/"+item.processActionId+"/preview" ;
 
                         					var config_blob =  {
@@ -2344,7 +2408,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         						item.no_pdf = '';
                         						vm.stepModel = item;
                         					}).catch(function (error) {
-                        						console.log(error);
+                        						// console.log(error);
                         						item.pdf = true;
                         						item.url = '';
                         						item.no_pdf = 'Tài liệu đính kèm không tồn tại!';
@@ -2353,7 +2417,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         				}
 
                         				if(responseScript.indexOf("#preview@html") !== -1){
-                        					console.log("view html");
+                        					// console.log("view html");
+                        					$("#alpacajs_form_plugin").html("");
                         					var config_view = {
                         						headers: {
                         							'groupId': themeDisplay.getScopeGroupId(),
@@ -2370,7 +2435,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         						vm.stepModel = item;
 
                         						var serializable = response.data ;
-
                         						var partNo = serializable.partNo;
                         						var dossierFileId = serializable.dossierFileId;
 
@@ -2381,18 +2445,18 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         						var formReport = eval('('+serializable.formReport+')');
                         						var formData = eval('('+serializable.formData+')');
 
-                        						console.log("formReport======",formReport);
-                        						console.log("formData======",formData);
+                        						// console.log("formReport======",formReport);
+                        						// console.log("formData======",formData);
                         						/*var formData = serializable.formData;*/
 
                         						formReport.data = formData;
-                        						console.log("formReport_____FINAL=======",formReport);
+                        						// console.log("formReport_____FINAL=======",formReport);
                         						$("#alpacajs_form_plugin").alpaca(formReport);
                         						
 
                         					})
                         					.catch(function (error) {
-                        						console.log(error);
+                        						// console.log(error);
                         						item.html = true;
                         						item.no_html = "Tài liệu đính kèm không tồn tại!";
                         						vm.stepModel = item;
@@ -2401,7 +2465,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
                         			}))
                         			.catch(function (error) {
-                        				console.log(error);
+                        				// console.log(error);
 
                         			});
                         		} else {
@@ -2413,7 +2477,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         	},
                         	getInLand2: function (item) {
                         		var vm = this;
-                        		console.log(item);
+                        		// console.log(item);
                         		var url ="/o/il/v2/inland";
                         		var printTemplateId = '';
                         		$.ajax({
@@ -2442,34 +2506,56 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         	submitPrints: function (item) {
                         		var vm = this
                         		var select = vm.selectedPrints.join(',')
-                        		var url = '/o/il/v2/inland/' + vm.detailModel.dossierId + '/prints?deliverables=' + select
-                        		// var postData = new URLSearchParams();
-                        		// postData.append('dossierId', vm.detailModel.dossierId);
-                        		// postData.append('select', vm.selectedPrints.join(','));
-                        		axios.get(url, config).then(function (response) {
+                        		var configHeader = {
+                        			headers: {
+                        				groupId: themeDisplay.getScopeGroupId()
+                        			},
+                        			params: {
+                        				deliverables: select
+                        			}
+                        		}
+                        		if (item.print === 'PRINT_GPLV') {
+                        			configHeader.params['printType'] = 'DELIVERABLE'
+                        		} else {
+                        			configHeader.params['printType'] = 'PH'
+                        			var codePh = '';
+                        			if (vm.listCodePH.length > 0) {
+                        				for (var i = 0; i < vm.listCodePH.length; i++) {
+                        					if (vm.listCodePH[i].itemCode === vm.detailModel.serviceCode) {
+                        						codePh = vm.listCodePH[i].itemName;
+                        						break;
+                        					}
+                        				}
+                        			}
+                        			if (!codePh) {
+                        				// console.log('ko tìm thấy mã ph!');
+                        			}
+                        			configHeader.params['ph'] = codePh
+                        		}
+                        		var url = '/o/il/v2/inland/' + vm.detailModel.dossierId + '/prints';
+                        		axios.get(url, configHeader).then(function (response) {
                         			$("#printGP").html(response.data);
                         			$("#printGP").printThis();
-
                         			setTimeout(function () {
-                        				$("#printGP").html("")
+                        				$("#printGP").html("");
                         			}, 500)
                         		}).catch(function (error) {
-                        			console.log(error);
+                        			// console.log(error);
                         			vm.snackbartextdossierViewJX = item.actionName + " thất bại!";
                         			vm.snackbarerordossierViewJX = true;
                         		});
                         	},
-                        	refreshProcess: function() {
+                        	refreshProcess: function () {
                         		var vm = this;
                         		vm._initchangeProcessStep();
                         		vm.stepModel = null;
                         		vm.dialogThuLyHoSo = false
                         	},
                         	postNextActions2: function(item){
-                        		console.log("itempostNextActions2============",item);
+                        		// console.log("itempostNextActions2============",item);
                         		var vm = this;
                         		var createFiles = item.createFiles;
-                        		console.log("createFiles============",createFiles);
+                        		// console.log("createFiles============",createFiles);
                         		vm.dialogThuLyHoSo = false;
                         		var submitAlpacajsFns = new Array();
 
@@ -2489,14 +2575,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         				}
                         			});
 
-
                         			promise.then(function(success){
                         				vm.postNextActions(item);
                         			}, function(error){
 
                         			});
 
-                        			//console.log("submitAlpacajsFns============",submitAlpacajsFns);
+                        			//// console.log("submitAlpacajsFns============",submitAlpacajsFns);
                         			/*try{
                         				await Promise.all(submitAlpacajsFns);
                         			}catch(e){
@@ -2506,7 +2591,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                         	},
                         	postNextActions: function (item){
 
-                        		console.log(item);
+                        		// console.log(item);
                         		var vm = this;
                         		vm.actionsSubmitLoading = true;
                         		var fileArr = item.createFiles;
@@ -2536,7 +2621,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										return;
 									}
 								}
-							console.log(idArr);
+							// console.log(idArr);
 
 							var url = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/actions';
 
@@ -2556,7 +2641,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							
 							var isKyOk = item.eSignature;
-							//console.log("plugin().valid ==============>",plugin().valid);
+							//// console.log("plugin().valid ==============>",plugin().valid);
 							// TODO
 							/*if (isKyOk && !plugin().valid) {
 								alert("Plugin is not working :(");
@@ -2567,10 +2652,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								isKyOk = true;
 							} else if(){
 								var x = plugin().Sign('tGp5xOELB59zprQeqh2ks89BgWE=');
-								console.log(x);
+								// console.log(x);
 								isKyOk = true;
 							}*/
-//							console.log("Plugin: " + plugin());
+//							// console.log("Plugin: " + plugin());
 							if (isKyOk) {
 								if (!plugin().valid) {
 									alert("Plugin is not working :(");
@@ -2591,7 +2676,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 				                return;
 				            } else {
 				                var x = plugin().Sign('tGp5xOELB59zprQeqh2ks89BgWE=');
-								console.log(x);
+								// console.log(x);
 								isKyOk = true;
 							}*/
 														
@@ -2619,13 +2704,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										
 										setTimeout(function(){ 
 											vm._inidanhSachHoSoTable();
-											vm.reloadCounter();
+											// vm.reloadCounter();
 										}, 1000);
 										
 										vm.detailPage = false;
 										vm.actionsSubmitLoading = false;
 										vm._inilistDocumentIn(vm.detailModel);
 										vm._inilistDocumentOut(vm.detailModel);
+										vm._initlistgroupHoSoFilter();
 
 									},
 									error: function(xhr, textStatus, errorThrown) {
@@ -2644,25 +2730,22 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									paramObj.assignUserId = assignUserId;
 									paramObj.subUsers = subUsers;
 									paramObj.postStepCode = item.postStepCode;
-
 									var strIdArr = idArr.join(";");
 									var actionName = item.actionName;
-									console.log(strIdArr);
+									// console.log(strIdArr);
 									vm.kyDuyetYCGiamDinh(strIdArr,paramObj, actionName);
 								}
 							}
 
 						},
 						kyDuyetYCGiamDinh: function(strIdArr,paramObj, actionName) {
-
 							var vm = this;
 							var url = '/o/rest/v2/digitalSignature/'+vm.detailModel.dossierId+'/hashComputed';
-							console.log(vm.detailModel.dossierId);
-							
+							// console.log(vm.detailModel.dossierId);
 							$.ajax({
 								type : 'POST',
 								url : url,
-								async: false,//bat dong bo = fale, dong bo voi client
+								// async: false,//bat dong bo = fale, dong bo voi client
 								dataType: 'json',
 								data : {
 									// type: 'kyDuyetYCGiamDinh',
@@ -2673,48 +2756,48 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									/*id : controlRequirementId*/
 								},
 								success : function(result) {
-									console.log(result);
+									// console.log(result);
 									/*var jsonData = JSON.parse(result);*/
 									var msgs = result.msg;
 									if (msgs !== 'fileEntryId') {
-										console.log('not fileEntryId')
+										// console.log('not fileEntryId')
 										var hashComputers = result.hashComputers;
-										console.log('result.hashComputers++++++++++', result.hashComputers)
+										// console.log('result.hashComputers++++++++++', result.hashComputers)
 										var signFieldNames = result.signFieldNames;
 										var fileNames = result.fileNames;
 										var fileEntryIds = result.fileEntryId;
-										console.log("hashComputers: "+hashComputers);
-										console.log("signFieldNames: "+signFieldNames);
-										console.log("fileNames: "+fileNames);
-										console.log("msgs: "+msgs);			
+										// console.log("hashComputers: "+hashComputers);
+										// console.log("signFieldNames: "+signFieldNames);
+										// console.log("fileNames: "+fileNames);
+										// console.log("msgs: "+msgs);			
 										vm.actionsSubmitLoading = false;
 										var signs = [];
 										
 										if(plugin().valid) {
-											console.log('valid plugin!')
+											// console.log('valid plugin!')
 											for ( var i = 0; i < hashComputers.length; i++) {
 
 												var hashComputer = hashComputers[i];
 												var code = plugin().Sign(hashComputer);
 												
 												if(code === 0 || code === 7){
-													console.log('code ok');		
+													// console.log('code ok');		
 													var sign = plugin().Signature;
-													console.log('plugin().Signature+++++++', plugin().Signature);
+													// console.log('plugin().Signature+++++++', plugin().Signature);
 													var signFieldName = signFieldNames[i];
 													var fileName = fileNames[i];
-													console.log("sign: "+sign);
-													console.log("signFieldName: "+signFieldName);
-													console.log("fileName: "+fileName);
+													// console.log("sign: "+sign);
+													// console.log("signFieldName: "+signFieldName);
+													// console.log("fileName: "+fileName);
 													signs.push(sign);
 //													var msg = msgs[i];
 //													if(msg == 'success') {
 //														try {
-//															console.log('Complete sign');
+//															// console.log('Complete sign');
 //															vm.completeKyDuyetYCGiamDinh(sign, signFieldName, fileName, fileEntryId, paramObj, actionName);
 //														}
 //														catch(err) {
-//															console.log(err);
+//															// console.log(err);
 //														}
 //													}else{
 //														alert(msg);
@@ -2739,11 +2822,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						completeKyDuyetManyYCGiamDinh: function(signs, signFieldNames, fileNames, fileEntryIds,paramObj, actionName) {
 							var vm = this;
-							var url = '/o/rest/v2/digitalSignature/'+vm.detailModel.dossierId+'/dossierFiles';
+							var url = '/o/rest/v2/digitalSignature/' + vm.detailModel.dossierId + '/dossierFiles';
 							$.ajax({
 								type : 'PUT',
 								url : url,
-								async: false,//bat dong bo = fale, dong bo voi client
+								// async: false,//bat dong bo = fale, dong bo voi client
 								dataType : 'json',
 								headers: {
 									"groupId": themeDisplay.getScopeGroupId()
@@ -2760,8 +2843,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									fileName: fileNames,
 									fileEntryId: fileEntryIds
 								},
-								success : function(result) {
-									console.log(result);
+								success: function (result) {
+									// console.log(result);
 
 									var msg = result.msg;
 									if(msg == 'success'){
@@ -2769,10 +2852,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.snackbardossierViewJX = true;
 
 										vm._inidanhSachHoSoTable();
+										// vm._initlistgroupHoSoFilter();
 										setTimeout(function(){ 
 											vm._initlistgroupHoSoFilter();
 										}, 1000);
-
 										vm.detailPage = false;
 										vm.actionsSubmitLoading = false;
 									} else if (msg == 'fileEntryId') {
@@ -2781,18 +2864,18 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										alert(msg);
 									}									
 								},
-								error: function(){
+								error: function () {
 									alert('ky so false');
 								}
 							})
 						},						
 						completeKyDuyetYCGiamDinh: function(sign, signFieldName, fileName, fileEntryId,paramObj, actionName) {
 							var vm = this;
-							var url = '/o/rest/v2/digitalSignature/'+vm.detailModel.dossierId+'/dossierFile';
+							var url = '/o/rest/v2/digitalSignature/' + vm.detailModel.dossierId + '/dossierFile';
 							$.ajax({
-								type : 'PUT',
-								url : url,
-								async: false,//bat dong bo = fale, dong bo voi client
+								type: 'PUT',
+								url: url,
+								// async: false,//bat dong bo = fale, dong bo voi client
 								dataType : 'json',
 								headers: {
 									"groupId": themeDisplay.getScopeGroupId(),
@@ -2810,21 +2893,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									fileName: fileName,
 									fileEntryId: fileEntryId
 								},
-								success : function(result) {
-									console.log(result);
+								success: function (result) {
+									// console.log(result);
 									/*var jsonData = JSON.parse(result);*/
 									var msg = result.msg;
 									if(msg == 'success'){
 //										alert('ký số thành công!');
 										vm.snackbartextdossierViewJX = actionName + " thành công!";
 										vm.snackbardossierViewJX = true;
-
 										vm._inidanhSachHoSoTable();
 										setTimeout(function(){ 
 //											alert('Next action signature');
 											vm._initlistgroupHoSoFilter();
 										}, 1000);
-
 										vm.detailPage = false;
 										vm.actionsSubmitLoading = false;
 									} else if (msg == 'fileEntryId') {
@@ -2833,12 +2914,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										alert(msg);
 									}
 								},
-								error: function(){
+								error: function () {
 									alert('ky so false');
 								}
 							})
 						},
-						_initchangeProcessStep: function (){
+						_initchangeProcessStep: function () {
 							var vm = this;
 							vm.stepLoading = true;
 							var timestamp = new Date().getTime();
@@ -2892,10 +2973,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             		var printsaction = [];
                             		vm.showPrintable = false;
                             		if (vm.detailModel['dossierSubStatus'] === 'processing_13' || vm.detailModel['dossierSubStatus'] === 'processing_14' || vm.detailModel['dossierSubStatus'] === 'done_3') {
-                            			let index2Print = listSericeCode2Print.findIndex(item => {
+                            			var index2Print = listSericeCode2Print.findIndex(item => {
                             				return item === vm.detailModel.serviceCode
                             			})
-
                             			if (index2Print !== -1) {
                             				printsaction.push({
                             					type: 3,
@@ -2910,7 +2990,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             					actionName: 'In phù hiệu'
                             				})
                             			} else {
-                            				let indexPrint = listServiceCodePrint.findIndex(item => {
+                            				var indexPrint = listServiceCodePrint.findIndex(item => {
                             					return item === vm.detailModel.serviceCode
                             				})
                             				if (indexPrint !== -1) {
@@ -2918,42 +2998,30 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             						type: 3,
                             						print: 'PRINT_GPLV',
                             						processActionId: indexPrint + 'lv',
-                            						actionName: 'In giấy phép liên vận'
+                            						actionName: 'In giấy phép'
                             					})
                             				}
+                            			}
+                            			var indexChinaPrint = listChinaSericeCodePrint.findIndex(item => {
+                            				return item === vm.detailModel.serviceCode
+                            			})
+                            			if (indexChinaPrint !== -1) {
+                            				vm.showTemplatePrint = true
                             			}
                             		}
                             		if (printsaction.length > 0) {
                             			vm.showPrintable = true;
                             			vm.loadListPrints();
                             		}
-                            		console.log(printsaction)
+                            		// console.log(printsaction)
                             		vm.disabledDossierFile = true;
                             		vm.processSteps = $.merge(nextactions, plugins);
                             		for (var i = 0; i < printsaction.length; i++) {
                             			vm.processSteps.push(printsaction[i])
                             		}
-                            		console.log(vm.processSteps)
+                            		// console.log(vm.processSteps)
                             		vm._inilistDocumentIn(vm.detailModel);
                             		vm._inilistDocumentOut(vm.detailModel);
-                            		/*Check configNote action print */
-                            		// for (var i = 0; i < vm.processSteps.length; i++) {
-                            		// 	if (vm.processSteps[i].hasOwnProperty('configNote') && vm.processSteps[i]['configNote'] !== null && vm.processSteps[i]['configNote'] !== undefined && vm.processSteps[i]['configNote'] !== '') {
-                            		// 		let configNoteTmp = vm.processSteps[i]['configNote'];
-                            		// 		if (configNoteTmp.hasOwnProperty('action')) {
-                            		// 			if (configNoteTmp['action'] == 'PRINT') {
-                            		// 				vm.showPrintable = true;
-                            		// 				vm.loadListPrints(vm.processSteps[i]);
-                            		// 				break;
-                            		// 			}
-                            		// 		}
-                            		// 	}
-                            		// }
-                            		// if (printsaction.length > 0) {
-                            		// 	vm.showPrintable = true;
-                            		// 	vm.loadListPrints(printsaction[0]);
-                            		// }
-                            		/*---------------------------------------------*/
                             		var processStepsLength = vm.processSteps.length;
                             		var needIntervalRefresh = false;
                             		for (var rc = 0; rc < processStepsLength; rc++) {
@@ -2995,7 +3063,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             		else {
                                 		vm.stepLoading = false;
                                 		vm.disabledDossierFile = false;
-                                		console.log(vm.processSteps);
+                                		// console.log(vm.processSteps);
 
                                 		//neu processSteps chi co 1, trigger chanProcessStep 
                                 		if(vm.processSteps.length === 1){
@@ -3005,7 +3073,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
                             	}))
                             	.catch(function (error) {
-                            		console.log(error);
+                            		// console.log(error);
                             		vm.stepLoading = false;
 
                             	});
@@ -3091,7 +3159,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
                             })
                                 .catch(function (error) {
-                                    console.log(error);
+                                    // console.log(error);
 									vm.snackbartextdossierViewJX = item.actionName + " thất bại!";
                       				vm.snackbarerordossierViewJX = true;
                                 });
@@ -3133,7 +3201,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             newTabOrNewWindown : function(){
                             	var vm = this;
 
-                            	console.log("===============run newTabOrNewWindown============");
+                            	// console.log("===============run newTabOrNewWindown============");
 
                             	if(stateWindowParam === "stateWindow"){
 
@@ -3182,13 +3250,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             					/*return Promise.reject();*/
 
                             				})).catch(function (error) {
-                            					console.log(error);
+                            					// console.log(error);
 
                             				});
 
                             			})
                             			.catch(function (error) {
-                            				console.log(error);
+                            				// console.log(error);
 
                             			});
 
@@ -3212,7 +3280,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
       //               		groupHoSoFilter: function(item){
       //               			var vm = this;
 
-      //               			console.log("item status",item);
+      //               			// console.log("item status",item);
 
       //               			vm.reloadCounter();
                     			
@@ -3259,7 +3327,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 						// 	/*var url = '/o/rest/v2/statistics/dossiers/todo';*/
 						// 	var url = '/o/rest/v2/statistics/dossiers/todo';
-						// 	console.log("Init load");
+						// 	// console.log("Init load");
 						// 	$.ajax({
 						// 		url : url,
 						// 		dataType : "json",
@@ -3276,8 +3344,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 						// 			var indexTree = -1;
 						// 			var index = 0;
-						// 			//console.log("listgroupHoSoFilterItems=======FISRT",vm.listgroupHoSoFilterItems);
-						// 			//console.log("serializable=======",serializable.data);
+						// 			//// console.log("listgroupHoSoFilterItems=======FISRT",vm.listgroupHoSoFilterItems);
+						// 			//// console.log("serializable=======",serializable.data);
 						// 			for (var key in serializable.data) {
 						// 				for(var i in vm.listgroupHoSoFilterItems){
 						// 					if ( serializable.data[key].level === 0) {
@@ -3302,7 +3370,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						// 			}
 
 						// 		}
-						// 		//console.log("listgroupHoSoFilterItems=======LAST",vm.listgroupHoSoFilterItems);
+						// 		//// console.log("listgroupHoSoFilterItems=======LAST",vm.listgroupHoSoFilterItems);
 
 						// 	},
 						// 	error : function(result){
@@ -3326,7 +3394,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 						// 	/*var url = '/o/rest/v2/statistics/dossiers/todo';*/
 						// 	var url = '/o/rest/v2/statistics/dossiers/todo';
-						// 	console.log("Init load 2");
+						// 	// console.log("Init load 2");
 						// 	axios.get(url, config).then(function (response) {
 						// 		var serializable = response.data;
 
@@ -3374,14 +3442,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						// 	}
 
 						// 	if(select){
-						// 		console.log("selected========",select);
+						// 		// console.log("selected========",select);
 						// 		vm.listgroupHoSoFilterselected = select;
 						// 	}
 
 
 						// })
 						// 	.catch(function (error) {
-						// 		console.log(error);
+						// 		// console.log(error);
 								
 						// 	});
 						// 	return false; 
@@ -3417,7 +3485,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 				// 				vm._initAdvanced_filter_dossierStatus();
 								
 				// 			} else if (item.id == 'tra_cuu_giay_phep') {
-				// 				console.log("GO------------")
+				// 				// console.log("GO------------")
 				// 				vm._inigiayPhepVanTaiQuocTeTable(false);
 				// 				vm._initServiceInfos({
 				// 					serviceCode: configPage.serviceinfosQuocTe
@@ -3634,7 +3702,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 						// 	})
 						// 	.catch(function (error) {
-						// 		console.log(error);
+						// 		// console.log(error);
 
 						// 	});
 						// 	return false; 
@@ -3692,7 +3760,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								
 						// 	})
 						// 	.catch(function (error) {
-						// 		console.log(error);
+						// 		// console.log(error);
 
 						// 	});
 						// 	return false; 
@@ -3833,7 +3901,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 								vm.thongTinDoanhNghiepTableItems = [];
 
 							});
@@ -3867,7 +3935,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 							return false; 
@@ -3893,7 +3961,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 							return false; 
@@ -3952,7 +4020,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 									success: function(data, textStatus, xhr) {
 										vm.detailRegistModel = data.data;
-										console.log(vm.detailRegistModel);
+										// console.log(vm.detailRegistModel);
 									},
 									error: function(xhr, textStatus, errorThrown) {
 										vm.detailRegistModel = {};
@@ -3963,7 +4031,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								return false; 
 							})
 							.catch((e) => {
-								console.log(e)
+								// console.log(e)
 							})
 						},
 						registrationPheDuyet: function(registrationState) {
@@ -4003,7 +4071,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 									success: function(data, textStatus, xhr) {
 										vm.detailRegistModel = data;
-										console.log(vm.detailRegistModel);
+										// console.log(vm.detailRegistModel);
 										vm.snackbartextdossierViewJX = "Yêu cầu xử lý thành công thành công!";
 										vm.snackbardossierViewJX = true;
 										vm.stateButtonregistration = false;
@@ -4021,7 +4089,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								return false; 
 							})
 							.catch((e) => {
-								console.log(e);
+								// console.log(e);
 								vm.stateButtonregistration = true;
 							})
 						}
@@ -4238,7 +4306,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									if(resData){
 										for (var i = 0; i < resData.length; i++) {
 											var deliverableId = resData[i].deliverableId;
-											console.log("deliverableId======",deliverableId);
+											// console.log("deliverableId======",deliverableId);
 											if(deliverableId){
 												$.ajax({
 													url : "/o/rest/v2/deliverables/"+deliverableId+"/formdata",
@@ -4264,7 +4332,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}*/
 								},
 								error : function(result){
-									console.log(result);
+									// console.log(result);
 									vm.traCuuHoSoTableItems = [];
 								}
 							});
@@ -4291,17 +4359,17 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								axios.get(urlGetFile, config_blob).then(function (response) {
 									var url = window.URL.createObjectURL(response.data);
-									//console.log("url===========>",url);
+									//// console.log("url===========>",url);
 									window.open(url , '_blank');
 								})
 								.catch(function (error) {
-									console.log(error);
+									// console.log(error);
 
 								});
 
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 
@@ -4313,7 +4381,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						var vm = this;
 						vm.stepModel = null;
 							// call DetailAPI.
-						
+						vm.selectedPrints = [];
 						var ma_ho_so = item.ma_ho_so;
 						var urlDossierId = '/o/rest/v2/dossiers/number/'+ma_ho_so;
 
@@ -4349,13 +4417,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 
 						})
 						.catch(function (error) {
-							console.log(error);
+							// console.log(error);
 
 						});
 
@@ -4519,7 +4587,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}
 								
 								if (vm.listgroupHoSoFilterselectedIndex >= 0) {
-									console.log('reindex counting ...');
+									// console.log('reindex counting ...');
 									vm.listgroupHoSoFilterItems[vm.listgroupHoSoFilterselectedIndex]['count'] = serializable.total;
 								}
 								
@@ -4530,7 +4598,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.viewmore = false;
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 								vm.danhSachHoSoTableItems = [];
 								vm.loadingDanhSachHoSoTable = false;
 
@@ -4597,7 +4665,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								axios.get(url, config).then(function (response) {
 									resolve(response.data.data)
 								}).catch(function (error) {
-									console.log(error);
+									// console.log(error);
 									reject(error)
 								});
 							})
@@ -4606,7 +4674,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 							return new Promise((resolve, reject) => {
 								var url = '/o/rest/v2/dossiers/' + dossierId  + '/plugin/previewhtml';
-								let configHeader = {
+								var configHeader = {
 									headers: {
 										'groupId': themeDisplay.getScopeGroupId(),
 										'partNo': partNo
@@ -4616,7 +4684,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								axios.get(url, configHeader).then(function (response) {
 									resolve(response.data)
 								}).catch(function (error) {
-									console.log(error);
+									// console.log(error);
 									reject(error)
 								});
 							})
@@ -4625,7 +4693,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 							return new Promise((resolve, reject) => {
 								var url = '/o/rest/v2/dossiers/' + dossierId  + '/plugin/previewpdf';
-								let configPdf = {
+								var configPdf = {
 									headers: {
 										'groupId': themeDisplay.getScopeGroupId(),
 										'partNo': partNo
@@ -4636,7 +4704,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									var url = window.URL.createObjectURL(response.data);
 									resolve(url)
 								}).catch(function (error) {
-									console.log(error);
+									// console.log(error);
 									reject(error)
 								});
 							})
@@ -4646,6 +4714,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 							vm.stepModel = null;
 							// call DetailAPI.
+							vm.selectedPrints = [];
 							vm.disableUploadAndDel = false;
 							var url = '/o/rest/v2/dossiers/'+item.dossierId;
 							vm.listPrintItems = [];
@@ -4673,12 +4742,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}
 									vm.disableUploadAndDel = true;
 									vm.getDictItemPartNo().then(result => {
-										console.log('---------------getDictItemPartNo++++++++++++++', result)
+										// console.log('---------------getDictItemPartNo++++++++++++++', result)
 										if (result) {
-											let itemPartNoPrint = result.find(item => {
+											var itemPartNoPrint = result.find(item => {
 												return serializable['dossierTemplateNo'] === item['itemCode']
 											})
-											console.log('---------------itemPartNoPrint++++++++++++++', itemPartNoPrint)
+											// console.log('---------------itemPartNoPrint++++++++++++++', itemPartNoPrint)
 											if (itemPartNoPrint) {
 												vm.bbKySoFile['type'] = itemPartNoPrint['itemName']
 												vm.bbKySoFile['loading'] = true	
@@ -4693,13 +4762,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 														var formReport = eval('(' + result.formReport + ')');
 														var formData = eval('(' + result.formData + ')');
 
-														console.log("formReport======KS", formReport);
-														console.log("formData======KS", formData);
+														// console.log("formReport======KS", formReport);
+														// console.log("formData======KS", formData);
 
 														formReport.data = formData;
-														console.log("formReport_____FINAL=======KS", formReport);
+														// console.log("formReport_____FINAL=======KS", formReport);
                         								setTimeout(function () {
-                        									console.log("------------viewBBKySoHtml++++++++++", $("#viewBBKySoHtml"))
+                        									// console.log("------------viewBBKySoHtml++++++++++", $("#viewBBKySoHtml"))
                         									$("#viewBBKySoHtml").alpaca(formReport);
                         								}, 500)
 													})
@@ -4722,7 +4791,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 							return false; 
@@ -4798,7 +4867,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									// return Promise.reject();
 
 								})).catch(function (error) {
-									console.log(error);
+									// console.log(error);
 									reject(error);
 								});
 							})
@@ -4825,7 +4894,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						viewDossierFileVersionNewTabOrWindow: function (item) {
 							var vm = this;
 							if(item.counter > 0){
-								console.log("vm.detailModel========",vm.detailModel);
+								// console.log("vm.detailModel========",vm.detailModel);
 
 								var url = "/group/cong-xu-ly/xu-ly-ho-so?stateWindow=stateWindow&dossierId="+vm.detailModel.dossierId+
 								"&dossierPartNo="+item.partNo;
@@ -4838,7 +4907,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									animation: 'fade'
 								})
 								.then((dialog) => {
-									//console.log("dialog============",dialog);
+									//// console.log("dialog============",dialog);
 
 									window.open(url, "_blank", "ccc");
 
@@ -4846,7 +4915,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									return false; 
 								})
 								.catch((e) => {
-									console.log(e);
+									// console.log(e);
 									window.open(url, "_blank");
 								})
 							}
@@ -4873,7 +4942,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									
 								})
 								.catch(function (error) {
-									console.log(error);
+									// console.log(error);
 									
 								});
 							}
@@ -4908,11 +4977,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							
 							axios.get(url, config_blob).then(function (response) {
 								var url = window.URL.createObjectURL(response.data);
-								//console.log(url);
+								//// console.log(url);
 								window.open(url);
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 							return false; 
@@ -4975,7 +5044,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							    return Promise.reject();
 
 							})).catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 							return false;
@@ -5040,7 +5109,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 								
 							});
 							return false; 
@@ -5060,7 +5129,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								window.open(url);
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 							return false; 
@@ -5122,7 +5191,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					"template": "popUpViewDossierFileTemplate",
 					"events": {
 						popUpViewDossierFileClose: function () {
-							console.log("close popup");
+							// console.log("close popup");
 							var iFrame = document.getElementById("dossierPDFView");
 							var dossierPDFViewNotFound = document.getElementById("dossierPDFViewNotFound");
 							iFrame.innerHTML = '';
@@ -5130,7 +5199,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							this.popupResultFile = false;
 						},
 						popUpViewDossierFileSave: function () {
-							console.log("save popup");
+							// console.log("save popup");
 							var vm = this;
 							var iFrame = document.getElementById("dossierPDFView");
 							iFrame.innerHTML = '';
@@ -5144,7 +5213,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							// TODO: call API lay file
 							var url ="/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid ;
 							// var url = "/o/rest/v2/dossiers/14203/files/a148ee9b-b1a7-b2e7-ca0e-e6503a65b8eb";
-							console.log("Preview dossier PDF");
+							// console.log("Preview dossier PDF");
 							vm._showFile({
 								config : {
 									headers: {
@@ -5161,7 +5230,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var iFrame = document.getElementById("dossierPDFView");
 							var dossierPDFViewNotFound = document.getElementById("dossierPDFViewNotFound1");
 							axios.get(options.url, options.config).then(function (response) {
-								console.log(response)
+								// console.log(response)
 								var url = window.URL.createObjectURL(response.data);
 								iFrame.className = "";
 								iFrame.innerHTML = '<iframe src="'+url+'" width="100%" height="100%"> </iframe>';
@@ -5172,7 +5241,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 								dossierPDFViewNotFound.innerHTML = 'Tài liệu đính kèm không tồn tại!';
 
 							});
@@ -5195,7 +5264,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								window.open(url);
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 							return false; 
@@ -5235,11 +5304,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							
 							axios.get(url, config_blob).then(function (response) {
 								var url = window.URL.createObjectURL(response.data);
-								//console.log(url);
+								//// console.log(url);
 								window.open(url);
 							})
 							.catch(function (error) {
-								console.log(error);
+								// console.log(error);
 
 							});
 							return false; 
@@ -5269,10 +5338,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                 			axios.get(url, config).then(function (response) {
                 				var serializable = response.data;
                 				vm.advanced_filter_serviceInfoItems = serializable.data;
-                				console.log(vm.advanced_filter_serviceInfoItems);
+                				// console.log(vm.advanced_filter_serviceInfoItems);
                 			})
                 			.catch(function (error) {
-                				console.log(error);
+                				// console.log(error);
 
                 			});
                 		},
@@ -5325,17 +5394,17 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                 			if (!vm.advanced_filter_dossierStatusItems) {
 
                 				var url = '/o/rest/v2/statistics/dossiers/todo';
-                				console.log("Init load 3");
+                				// console.log("Init load 3");
                 				axios.get(url, config).then(function (response) {
                 					var serializable = response.data;
 
                 					var serializable = response.data;
                 					vm.advanced_filter_dossierStatusItems = serializable.data;
-                					console.log(vm.advanced_filter_dossierStatusItems);
+                					// console.log(vm.advanced_filter_dossierStatusItems);
 
                 				})
                 				.catch(function (error) {
-                					console.log(error);
+                					// console.log(error);
 
                 				});
                 			}
@@ -5371,10 +5440,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                 				axios.get(url, config).then(function (response) {
                 					var serializable = response.data;
                 					vm.advanced_filter_loaiSanPhamItems = serializable.data;
-                					console.log(vm.advanced_filter_loaiSanPhamItems);
+                					// console.log(vm.advanced_filter_loaiSanPhamItems);
                 				})
                 				.catch(function (error) {
-                					console.log(error);
+                					// console.log(error);
 
                 				});
                 			}
@@ -5412,7 +5481,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                 					vm.advanced_filter_nhanHieuItems = serializable.data;
                 				})
                 				.catch(function (error) {
-                					console.log(error);
+                					// console.log(error);
 
                 				});
                 			}

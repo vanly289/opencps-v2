@@ -17,8 +17,11 @@
 		var dossierPartNo = "${(dossierPartNo)!}";
 		var emailAddress = '${(user.emailAddress)!}';
 		var agencies = '${(agencies)!}';
+		var isAdminUser = '${(isAdminUser)!}';
+
+		console.log('isAdminUser++++++++++', isAdminUser);
 		
-		funLoadVue(stateWindow, dossierId, dossierPartNo, emailAddress, agencies);
+		funLoadVue(stateWindow, dossierId, dossierPartNo, emailAddress, agencies, isAdminUser);
 	});
 	history.pushState(null, document.title, location.href);
 	window.addEventListener('popstate', function (event) {

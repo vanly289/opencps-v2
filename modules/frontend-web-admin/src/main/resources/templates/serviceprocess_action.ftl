@@ -522,6 +522,13 @@
 			}
 
 			function validateProcessAction(){
+				if ($("#configNote").val()) {
+					try {
+						JSON.parse($("#configNote").val())
+					} catch (e) {
+
+					}
+				}
 				if (!$("#actionCode").val()){
 					notification.show({
 						message: "Mời nhập mã thao tác"

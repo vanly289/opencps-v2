@@ -1,7 +1,9 @@
 package frontend.web.dossier.portlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -25,7 +27,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -69,25 +73,32 @@ public class FrontendWebDossierPortlet extends FreeMarkerPortlet {
 		try {
 			Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
 			List<EmployeeJobPos> lstEmJobPos = EmployeeJobPosLocalServiceUtil.findByF_EmployeeId(employee.getEmployeeId());
-			StringBuilder agencies = new StringBuilder();
-			
+			List<String> arrAgencies = new ArrayList<>();
+			_log.info("------------------lstEmJobPos+++++++++++++++"+ lstEmJobPos.toString());
 			for (EmployeeJobPos ejp : lstEmJobPos) {
 				WorkingUnit wu = WorkingUnitLocalServiceUtil.fetchWorkingUnit(ejp.getWorkingUnitId());
+				_log.info("------------------wuEm+++++++++++++++"+ wu.getGovAgencyCode());
 				if (wu != null) {
-					if (agencies.toString().isEmpty()) {
-						agencies.append(wu.getGovAgencyCode());
-					}
-					else {
-						agencies.append(",");
-						agencies.append(wu.getGovAgencyCode());
+//					if (agencies.toString().isEmpty()) {
+//						agencies.append(wu.getGovAgencyCode());
+//					}
+//					else if (agencies.indexOf(wu.getGovAgencyCode()) == -1) {
+//						agencies.append(",");
+//						agencies.append(wu.getGovAgencyCode());
+//					}
+					if (arrAgencies.size() == 0) {
+						arrAgencies.add(wu.getGovAgencyCode());
+					} else if (!arrAgencies.contains(wu.getGovAgencyCode())) {
+						arrAgencies.add(wu.getGovAgencyCode());
 					}
 				}
 			}
 			String employeeStr = JSONFactoryUtil.looseSerialize(employee);
 			JSONObject employeeStrObj = JSONFactoryUtil.createJSONObject(employeeStr);
+			String agencies = arrAgencies.stream().map(Object::toString).collect(Collectors.joining(","));
 			if (employeeStrObj != null) {
 				renderRequest.setAttribute("employee", employeeStrObj);
-				renderRequest.setAttribute("agencies", agencies.toString());
+				renderRequest.setAttribute("agencies", agencies);
 			}
 			
 		}
@@ -109,6 +120,17 @@ public class FrontendWebDossierPortlet extends FreeMarkerPortlet {
 			_log.info(e.getMessage());
 		}
 		
+		List<Role> rolesUser = RoleLocalServiceUtil.getUserRoles(themeDisplay.getUserId());
+		boolean isPowerUser = false;
+		_log.info("-----------------------rolesUser.toString()++++++++++++++++" + rolesUser.toString());
+		for (Role role : rolesUser) {
+			
+		   if (role.getName().equals("Power User") || role.getName().equals("Administrator")) {
+		    isPowerUser = true;
+		   }
+		}
+		  
+		renderRequest.setAttribute("isAdminUser", String.valueOf(isPowerUser));
 		
 		String dossierPartNo = PortalUtil.getOriginalServletRequest(httpRequest).getParameter("dossierPartNo");
 		String stateWindow = PortalUtil.getOriginalServletRequest(httpRequest).getParameter("stateWindow");

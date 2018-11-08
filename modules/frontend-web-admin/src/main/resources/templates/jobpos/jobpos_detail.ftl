@@ -97,29 +97,25 @@
 		}
 		
 		var _jobposDetail_BaseUrl = "${(url.adminJobPosPortlet.jobpos_edit_action)!}";
-		var permissions = $("#_jobposDetail_permissions").data("kendoMultiSelect").dataItems();
+		// var permissions = $("#_jobposDetail_permissions").data("kendoMultiSelect").dataItems();
 		var works = $("#_jobposDetail_works").data("kendoMultiSelect").dataItems();
 
-		permissions = (permissions != null && permissions !="" && permissions.length > 0)?JSON.stringify(permissions):"";
+		// permissions = (permissions != null && permissions !="" && permissions.length > 0)?JSON.stringify(permissions):"";
 		works = (works != null && works !="" && works.length > 0)?JSON.stringify(works):"";
 
 		var _jobposDetail_jobPosId = ($(this).attr("data-pk")!="" && $(this).attr("data-pk")!=null)?$(this).attr("data-pk"):0;
 
 		if (_jobposDetail_jobPosId!=0) {
-
 			// update jobpos
-			
 			$.ajax({
 				type: 'POST',
 				url: _jobposDetail_BaseUrl +"&${portletNamespace}jobPosId="+ _jobposDetail_jobPosId,
 				data: {
-
 					${portletNamespace}title: $( "#_jobposDetail_title" ).val().trim(),
 					${portletNamespace}leader: $( "#_jobposDetail_leader" ).val().trim(),
 					${portletNamespace}description: $( "#_jobposDetail_description" ).val().trim(),
-					${portletNamespace}permissions: permissions,
+					// ${portletNamespace}permissions: permissions,
 					${portletNamespace}works: works
-
 				},
 				dataType: 'json',
 				beforeSend: function( xhr ) {

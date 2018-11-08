@@ -262,7 +262,6 @@
                 <div v-else class="text-xs-center center-all" style="height: 500px; width: 100%;">
                   <v-progress-circular indeterminate v-bind:size="100" color="purple"></v-progress-circular>
                 </div>
-                
               </v-card-text>
             </v-card>
           </v-dialog>

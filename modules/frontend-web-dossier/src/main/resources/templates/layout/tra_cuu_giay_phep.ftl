@@ -16,19 +16,20 @@
 						<v-container grid-list-md>
 							<v-layout wrap>
 								<v-flex xs12 sm12>
-									<v-data-table :headers="vehicleHeaders"
-									               :items="vehicleItems"
-									               item-key="name"
-									               hide-actions
-									               expand
-									               class="elevation-1">
+									<v-data-table 
+										:headers="vehicleHeaders"
+									    :items="vehicleItems"
+									    item-key="name"
+									    hide-actions
+									    expand
+									    class="elevation-1">
 									  <template slot="items" scope="props">
 									    <tr @click="props.expanded = !props.expanded">
 									      <td class="text-xs-left">{{ props.item.name }}</td>
 									      <td class="text-xs-left">{{ props.item.value }}</td>
 									    </tr>
-									  </template>	
-									</v-data-table>  							
+									  </template>
+									</v-data-table>
 								</v-flex>
 								<v-flex xs12 sm12>
 									<v-layout row wrap>
@@ -140,7 +141,6 @@
 									<#-- <v-list two-line subheader v-for="item in modelLienVan.data" key="thongTinXeHistorys">
 										<v-list-tile>
 											<v-list-tile-content>
-												
 												<div>
 													 &nbsp;&nbsp;&nbsp; <span>Cửa khẩu : </span> {{item.expImpGate}} &nbsp;&nbsp;&nbsp; {{item.registrationDate}}
 													<p>Thông tin lái xe : {{item.driverName}}</p>
@@ -160,8 +160,8 @@
 				</v-card>
 			</v-dialog>
 		</v-layout>
-		<v-layout row wrap>
-			<v-flex sm3 class="pr-0" id="tracuugiayphep">
+		<v-layout row>
+			<v-flex sm3 class="" id="tracuugiayphep">
 				<v-card>
 					<v-list id="listTraCuuGiayPhep">
 						<v-list-tile key="giay_phep_van_tai_quoc_te" avatar @click="changeStateTraCuuGiayPhep('giay_phep_van_tai_quoc_te')">
@@ -205,9 +205,9 @@
 					</v-btn>
 				</v-card> -->
 			</v-flex>
-			<v-flex sm9 class="pl-0">
+			<v-flex sm9 class="">
 				<v-card style="padding-bottom: 10px;">
-					<v-layout row wrap style="margin-top:8px;">
+					<v-layout row style="margin-top:8px;">
 						<!-- <v-flex sm2 xs12 class="pt-2">
 							<v-subheader>Tìm theo thủ tục</v-subheader>
 						</v-flex> -->
