@@ -1234,7 +1234,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							
 						}
 						else if (dossier.getServiceCode().equals("BGTVT0600061")
-								|| dossier.getServiceCode().equals("BGTVT0600062")) {
+								|| dossier.getServiceCode().equals("BGTVT0600062")
+								|| dossier.getServiceCode().equals("BGTVT0600063")
+								|| dossier.getServiceCode().equals("BGTVT0600064")) {
 							List<MessageQueueInputModel> lstResults = BGTVT0600061.convertResult(dossier, dossierSync, envelope, "18", "15");
 
 							for (MessageQueueInputModel model : lstResults) {
@@ -1754,7 +1756,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							
 						}	
 						else if (dossier.getServiceCode().equals("BGTVT0600061")
-								|| dossier.getServiceCode().equals("BGTVT0600062")) {
+								|| dossier.getServiceCode().equals("BGTVT0600062")
+								|| dossier.getServiceCode().equals("BGTVT0600063")
+								|| dossier.getServiceCode().equals("BGTVT0600064")) {
 							List<MessageQueueInputModel> lstResults = BGTVT0600061.convertResult(dossier, dossierSync, envelope, "18", "16");
 
 							for (MessageQueueInputModel model : lstResults) {
