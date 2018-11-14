@@ -4759,7 +4759,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										var countData = 0;
 										for(var keyFile in vm.dossierFiles){
 
-											if ( vm.dossierFiles[keyFile].dossierPartNo === serializable.dossierParts[key].partNo ) {
+											if ( vm.dossierFiles[keyFile].dossierPartNo === serializable.dossierParts[key].partNo && vm.dossierFiles[keyFile].fileSize > 0) {
 												countData = countData + 1;
 												serializable.dossierParts[key].referenceUid = vm.dossierFiles[keyFile].referenceUid;
 												serializable.dossierParts[key].fileEntryId = vm.dossierFiles[keyFile].fileEntryId;
