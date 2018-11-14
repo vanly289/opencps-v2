@@ -26,6 +26,7 @@
 	<#assign stateWindow = (Request.stateWindow)!>
 	<#assign employee = (Request.employee)!>
 	<#assign agencies = (Request.agencies)!>	
+	<#assign isAdminUser = (Request.isAdminUser)!>
 	
 	<#assign RequestParameters = (Request.RequestParameters)!>
 	

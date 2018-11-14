@@ -31,36 +31,33 @@
 		<div class="row">
 			<div class="col-sm-11 PR0 service-config-item" data-pk="#:id#">
 				<p class="" data-pk="#:id#">
-					<#-- #if(serviceName.length>40){#
-					# var dcontent = serviceName.substring(0,38)+"..."; #
-					#:kendo.toString(dcontent)#
-					#}else{#
-					#:serviceName#
-					#}# -->
 					#:serviceName#
 				</p>
 			</div>
 			<div class="col-sm-1 PL0 PR0">
-				<a class="item-serviceconfig-delete" href="javascript:;" data-pk="#:id#"><i class="fa fa-trash"></i></a>
+				<a class="item-serviceconfig-delete" href="javascript:;" data-pk="#:id#">
+					<i class="fa fa-trash"></i>
+				</a>
 			</div>
 			<div class="col-sm-12 service-config-item" data-pk="#:id#">
-				<i class="fa fa-university"></i> <span class="ML5 service-config-item" data-pk="#:id#">#:govAgencyName#</span>
+				<i class="fa fa-university"></i> 
+				<span class="ML5 service-config-item" data-pk="#:id#">#:govAgencyName#</span>
 			</div>
 			<div class="col-sm-12 service-config-item" data-pk="#:id#">
 				#var lbl = "text-link";
-				if(serviceLevel == 1){
-				lbl = "text-link";
-			} else if(serviceLevel == 2){
-			lbl = "text-link";
-		} else if(serviceLevel == 3){
-		lbl = "text-orange";
-	} else {
-	lbl = "text-danger";
-}#
-<span class="#:lbl#" data-pk="#:id#">Mức độ <span>#:serviceLevel#</span></span>
-</div>
-</div>
-</li>
+				if (serviceLevel == 1) {
+					lbl = "text-link";
+				} else if (serviceLevel == 2) {
+					lbl = "text-link";
+				} else if (serviceLevel == 3) {
+					lbl = "text-orange";
+				} else {
+					lbl = "text-danger";
+				}#
+				<span class="#:lbl#" data-pk="#:id#">Mức độ <span>#:serviceLevel#</span></span>
+			</div>
+		</div>
+	</li>
 </script>
 
 <input type="hidden" name="itemServiceConfigId" id="itemServiceConfigId">

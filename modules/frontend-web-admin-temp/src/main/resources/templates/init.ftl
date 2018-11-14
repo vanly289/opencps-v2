@@ -22,6 +22,7 @@
 
 <#assign groupId = themeDisplay.getScopeGroupId() />
 <#assign userId = themeDisplay.getUserId() />
+<#assign userEmployee = (Request.userEmployee)! />
 <#assign currentURL = themeDisplay.getURLCurrent() />
 <#assign request = themeDisplay.getRequest() />
 <#assign portalURL = (themeDisplay.getPortalURL())!>
