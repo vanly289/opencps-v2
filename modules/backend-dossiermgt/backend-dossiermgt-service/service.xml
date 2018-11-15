@@ -997,6 +997,10 @@
 		<column name="configNote" type="String"/>
 		<column name="dossierTemplateNo" type="String"/>
 		
+		<order by="ASC">
+			<order-column name="createDate"/>
+		</order>
+		
 		<finder return-type="Collection" name="S_P_ID">
 			<finder-column name="serviceProcessId" />
 		</finder>
@@ -1092,6 +1096,8 @@
 		<column name="nextActionId" type="long" />
 		<column name="payload" type="String" />
 		<column name="stepInstruction" type="String" />
+		
+
 
 		<finder return-type="DossierAction" name="DID_DPG">
 			<finder-column name="dossierId" />

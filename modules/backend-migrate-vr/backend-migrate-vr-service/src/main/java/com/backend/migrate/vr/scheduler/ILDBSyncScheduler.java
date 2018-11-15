@@ -323,7 +323,7 @@ public class ILDBSyncScheduler extends BaseSchedulerEntryMessageListener {
 			
 			List<SRCILHopDongThue> hopDongThues = SRCILHopDongThueLocalServiceUtil.getLastest(hopDongThue.getId());
 			
-			_log.info("********* ROW NEED UPDATE - HOP DONG THUE ** +++ ^-^" + hopDongThues.size());
+			_log.info("********* ROW NEED UPDATE - HOP DONG THUE ** +++ ^-^ LASTEST_ID" + hopDongThue.getId());
 
 			for (SRCILHopDongThue src : hopDongThues) {
 				ILHopDongThue elm = new ILHopDongThueImpl();
