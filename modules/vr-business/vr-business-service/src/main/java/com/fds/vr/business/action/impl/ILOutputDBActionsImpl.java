@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -53,17 +54,32 @@ public class ILOutputDBActionsImpl implements ILOutputDBActions {
 
 	private static final String DATE_TIME = "yyyy-MM-dd HH:mm:ss";
 	private Log _log = LogFactoryUtil.getLog(ILOutputDBActionsImpl.class);
+	
+	public static void main(String[] args) {
+		
+		Calendar calendar = Calendar.getInstance();
+		
+		calendar.set(2018, 9, 31);
+		
+		System.out.println(calendar.getTime());
+	}
 
 	@Override
 	public boolean processOutputDB() throws ParseException, SearchException, JSONException {
 
 		Date syncDate = ILSyncDateLocalServiceUtil.getSyncDate();
+		
+		Calendar calendar = Calendar.getInstance();
+		
+		calendar.set(2018, 9, 31);
 
 		_log.info("synsDate: "+syncDate);
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME);
 		String strSyncDate = sdf.format(syncDate);
+		//String strSyncDate = sdf.format(calendar.getTime());
 
-		List<Deliverable> deliverableList = DeliverableLocalServiceUtil.findDeliverableByDateAndState(strSyncDate, 2);
+		List<Deliverable> deliverableList = DeliverableLocalServiceUtil.findDeliverableByDateAndState(strSyncDate, 0);
+		//List<Deliverable> deliverableList = DeliverableLocalServiceUtil.findDeliverableByDateAndState(strSyncDate, 0);
 		_log.info("deliverableList: "+deliverableList.size());
 
 		if (deliverableList != null && deliverableList.size() > 0) {

@@ -508,7 +508,6 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 					issueDate = formDataContent.getString("issueDate");
 					expireDate = formDataContent.getString("expireDate");
 					revalidate = formDataContent.getString("revalidate");
-
 				}
 
 				_log.info("Deliverable info: revalidate " + revalidate);

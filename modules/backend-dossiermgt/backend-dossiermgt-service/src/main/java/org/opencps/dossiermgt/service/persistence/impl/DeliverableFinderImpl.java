@@ -146,6 +146,7 @@ public class DeliverableFinderImpl extends DeliverableFinderBaseImpl
 	     + " deli.modifiedDate > :syncDate AND"
 	     + " deli.deliverableState =:deliverableState"
 	     + " ORDER BY modifiedDate ASC LIMIT 20");
+	     //+ " ORDER BY modifiedDate ASC");
 	   q.setCacheable(false);
 	   q.setString("syncDate", syncDate);
 	   q.setLong("deliverableState", deliverableState);
