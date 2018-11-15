@@ -118,7 +118,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				header.setFrom(from);
 				To to = new To();
 				to.setName(dossier.getApplicantName());
-				to.setIdentity(dossier.getApplicantIdNo());
+				to.setIdentity("BGTVT");
 				to.setMinistryCode("BTC");
 				to.setOrganizationCode("BTC");
 				to.setUnitCode("BTC");
@@ -179,7 +179,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				header2.setFrom(from2);
 				org.opencps.thirdparty.system.nsw.vt.model.To to2 = new org.opencps.thirdparty.system.nsw.vt.model.To();
 				to2.setName(dossier.getApplicantName());
-				to2.setIdentity(dossier.getApplicantIdNo());
+				to2.setIdentity("BGTVT");
 				to2.setMinistryCode("BTC");
 				to2.setOrganizationCode("BTC");
 				to2.setUnitCode("BTC");

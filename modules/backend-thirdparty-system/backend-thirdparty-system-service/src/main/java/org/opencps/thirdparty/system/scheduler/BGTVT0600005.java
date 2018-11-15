@@ -221,6 +221,7 @@ public class BGTVT0600005 {
 						vehicleType.setBus("0");
 						vehicleType.setOthers("1");
 						vlCrossBorderTransportPermit.setModel("Xe khác");
+						vlCrossBorderTransportPermit.setVehicleType(vehicleType);
 					}
 					if (formDataObj.has("VehicleColor")) {
 						vlCrossBorderTransportPermit.setVehicleColor(formDataObj.getString("VehicleColor"));
