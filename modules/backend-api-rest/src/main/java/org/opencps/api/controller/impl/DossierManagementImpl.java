@@ -49,6 +49,7 @@ import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
+import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierMark;
 import org.opencps.dossiermgt.model.DossierTemplate;
 import org.opencps.dossiermgt.model.ProcessAction;
@@ -57,7 +58,9 @@ import org.opencps.dossiermgt.model.ProcessStep;
 import org.opencps.dossiermgt.model.ServiceConfig;
 import org.opencps.dossiermgt.model.ServiceInfo;
 import org.opencps.dossiermgt.model.ServiceProcess;
+import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierTemplateLocalServiceUtil;
@@ -857,6 +860,10 @@ public class DossierManagementImpl implements DossierManagement {
 				DossierAction dossierAction = actions.doAction(groupId, dossier.getDossierId(),
 						dossier.getReferenceUid(), input.getActionCode(), 0l, input.getActionUser(),
 						input.getActionNote(), input.getAssignUserId(), 0l, subUsers, serviceContext);
+				
+				//update Deliverable
+				
+				updateDeliverable(input.getActionCode(), Long.getLong(id), groupId);
 
 				return Response.status(200).entity(JSONFactoryUtil.looseSerializeDeep(dossierAction)).build();
 
@@ -894,6 +901,30 @@ public class DossierManagementImpl implements DossierManagement {
 		} catch (Exception e) {
 			_log.info(e);
 			return processException(e);
+		}
+	}
+	
+	private void updateDeliverable(String actionCode, long dossierId, long groupId) throws PortalException {
+		if (actionCode.equals("1056") || actionCode.equals("1057")) {
+			
+			List<DossierFile> dossierFiles = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
+			
+			for (DossierFile dossierFile : dossierFiles) {
+				String deliverableCode = dossierFile.getDeliverableCode();
+				
+				if (Validator.isNotNull(deliverableCode)) {
+					Deliverable deliverable = DeliverableLocalServiceUtil.getByCode(deliverableCode);
+					
+					if (Validator.isNotNull(deliverable) && deliverable.getDeliverableState().equals("0")) {
+						deliverable.setDeliverableState("2");
+						
+						DeliverableLocalServiceUtil.updateDeliverable(deliverable);
+						
+						_log.info("****UPDATE DELIVERABLE: " + deliverable.getDeliverableName());
+					}
+				}
+			}
+
 		}
 	}
 
