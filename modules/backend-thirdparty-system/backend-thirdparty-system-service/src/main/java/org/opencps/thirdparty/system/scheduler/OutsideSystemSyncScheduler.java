@@ -90,8 +90,10 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				Dossier dossier = _dossierLocalService.fetchDossier(sync.getDossierId());
 				ThirdPartyDossierSync dossierSync = _thirdPartyDossierSyncLocalService
 						.fetchThirdPartyDossierSync(sync.getDossierSyncId());
-
+				
 				long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
+				
+				_log.info("===sync===" + sync.getDossierId() + "="+ dossierSync.getMethod() + "=" + dossierSync.getClassPK());
 
 				NSWRequest nswRequest = new NSWRequest();
 				RequestPayload requestPayload = new RequestPayload();
