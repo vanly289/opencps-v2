@@ -343,8 +343,8 @@ public class BackendInlandApiRestApplication extends Application {
 					
 					if(formDataObj != null) {
 						String licenceType = StringPool.BLANK;
-						if (formDataObj.has("licenceType")) {
-							licenceType = formDataObj.getString("licenceType");
+						if (formDataObj.has("LicenceType")) {
+							licenceType = formDataObj.getString("LicenceType");
 						}
 						else {
 							

@@ -5,6 +5,7 @@ import java.util.List;
 import org.opencps.communication.model.ServerConfig;
 import org.opencps.communication.service.ServerConfigLocalService;
 import org.opencps.dossiermgt.model.DossierSync;
+import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.thirdparty.system.constants.SyncServerTerm;
 import org.opencps.thirdparty.system.service.ThirdPartyDossierSyncLocalService;
 import org.osgi.service.component.annotations.Component;

@@ -90,8 +90,10 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				Dossier dossier = _dossierLocalService.fetchDossier(sync.getDossierId());
 				ThirdPartyDossierSync dossierSync = _thirdPartyDossierSyncLocalService
 						.fetchThirdPartyDossierSync(sync.getDossierSyncId());
-
+				
 				long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
+				
+				_log.info("===sync===" + sync.getDossierId() + "="+ dossierSync.getMethod() + "=" + dossierSync.getClassPK());
 
 				NSWRequest nswRequest = new NSWRequest();
 				RequestPayload requestPayload = new RequestPayload();
@@ -677,6 +679,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600053")
 								|| dossier.getServiceCode().equals("BGTVT0600054")
 								|| dossier.getServiceCode().equals("BGTVT0600055")
+								|| dossier.getServiceCode().equals("BGTVT0600056")
 								|| dossier.getServiceCode().equals("BGTVT0600058")
 								|| dossier.getServiceCode().equals("BGTVT0600059")
 								|| dossier.getServiceCode().equals("BGTVT0600060")
@@ -815,6 +818,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								|| dossier.getServiceCode().equals("BGTVT0600053")
 								|| dossier.getServiceCode().equals("BGTVT0600054")
 								|| dossier.getServiceCode().equals("BGTVT0600055")
+								|| dossier.getServiceCode().equals("BGTVT0600056")
 								|| dossier.getServiceCode().equals("BGTVT0600058")
 								|| dossier.getServiceCode().equals("BGTVT0600059")
 								|| dossier.getServiceCode().equals("BGTVT0600060")
