@@ -42,12 +42,197 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 			currentCounter : 0,
 			currentCounterTemp : 0,
 			listgroupHoSoFilterselectedIndex: -1,
-			advancedFilterServiceInfo : {}, 
+			advancedFilterServiceInfo : {},
 			advancedFilterLoaiSanPham : {},
 			advancedFilterNhanHieu : {},
 			advancedFilterDossierStatus : {},
 			stateOnlyFollow : false,
-			stateButtonregistration : true
+			stateButtonregistration : true,
+			follow : true,
+			doiPhongItems: [],
+			searchDoiPhong: '',
+			soSerial: '',
+			mauPhoiItems: [],
+			searchMauPhoi: '',
+			namItems: [
+				2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023
+			],
+			searchNam: '',
+			headersPxx: [
+				{
+	         text: 'STT',
+	         align: 'center',
+	         sortable: false,
+	         value: 'stt'
+	      },
+				{
+	         text: 'Kiểm kê',
+	         align: 'center',
+	         sortable: false,
+	         value: 'kiemke'
+	      },
+				{
+	         text: 'Mẫu phôi',
+	         align: 'center',
+	         sortable: false,
+	         value: 'mauphoi'
+	      },
+				{
+	         text: 'Năm',
+	         align: 'center',
+	         sortable: false,
+	         value: 'nam'
+	      },
+				{
+	         text: 'Số seri',
+	         align: 'center',
+	         sortable: false,
+	         value: 'soseri'
+	      },
+				{
+	         text: 'Từ số',
+	         align: 'center',
+	         sortable: false,
+	         value: 'tuso'
+	      },
+				{
+	         text: 'Đến số',
+	         align: 'center',
+	         sortable: false,
+	         value: 'denso'
+	      },
+				{
+	         text: 'Nhập kho',
+	         align: 'center',
+	         sortable: false,
+	         value: 'nhapkho'
+	      },
+				{
+	         text: 'Xuất kho',
+	         align: 'center',
+	         sortable: false,
+	         value: 'xuatkho'
+	      },
+				{
+	         text: 'Tồn trên số',
+	         align: 'center',
+	         sortable: false,
+	         value: 'tontrenso'
+	      },
+				{
+	         text: 'Kiểm kê',
+	         align: 'center',
+	         sortable: false,
+	         value: 'kiemke2'
+	      },
+				{
+	         text: 'Chênh lệc tăng',
+	         align: 'center',
+	         sortable: false,
+	         value: 'chenhlechtang'
+	      },
+				{
+	         text: 'Chênh lệch giảm',
+	         align: 'center',
+	         sortable: false,
+	         value: 'chenhlechgiam'
+	      },
+				{
+	         text: 'Ngày kiểm kê/ nguyên nhân',
+	         align: 'center',
+	         sortable: false,
+	         value: 'ngaykiemke,nguyennhan'
+	      }
+			],
+			itemsPxx: [],
+			lengthPxx: 0,
+			pagePxx: 1,
+			chiTietKiemKeItems: [],
+			chiTietKiemKeModel: {
+				theoSoKeToan: 0,
+				theoKiemKe: 0,
+				chenhLech: 0
+			},
+			headersDSSP: [
+				{
+	         text: 'Mã NVL',
+	         align: 'center',
+	         sortable: false,
+	         value: 'manvl'
+	      },
+				{
+	         text: 'Nguyên vật liệu',
+	         align: 'center',
+	         sortable: false,
+	         value: 'nguyenvatlieu'
+	      },
+				{
+	         text: 'Kho',
+	         align: 'center',
+	         sortable: false,
+	         value: 'kho'
+	      },
+				{
+	         text: 'Đơn vị tính',
+	         align: 'center',
+	         sortable: false,
+	         value: 'donvitinh'
+	      },
+				{
+	         text: 'Số lượng',
+	         align: 'center',
+	         sortable: false,
+	         value: 'soluong'
+	      },
+				{
+	         text: 'Đơn giá',
+	         align: 'center',
+	         sortable: false,
+	         value: 'dongia'
+	      },
+				{
+	         text: 'Nhập kho',
+	         align: 'center',
+	         sortable: false,
+	         value: 'nhapkho'
+	      },
+				{
+	         text: 'Thành tiền',
+	         align: 'center',
+	         sortable: false,
+	         value: 'thanhtien'
+	      },
+				{
+	         text: 'Hạn sử dụng',
+	         align: 'center',
+	         sortable: false,
+	         value: 'hansudung'
+	      }
+			],
+			dsspItems: [],
+			selected: [],
+			dieuChuyenItems: [],
+			dieuChuyen: '',
+			doiTuongItems: [],
+			doiTuong: '',
+			doiTuong1: '',
+			nguoiGiao: '',
+			dienGiai: '',
+			soPhieuNhap: '',
+			ngayNhap: '',
+			tongTien: '',
+			stateAddVatTu: 'dieu_chuyen',
+			maVatTu_add: '',
+			tenVatTu_add: '',
+			kho_add: '',
+			donViTinh_add: '',
+			soluong_add: '',
+			donGia_add: '',
+			hanSuDung_add: '',
+			popUpAddVatTu: false,
+			popUpDieuCHuyen: false,
+			loadingPxx: false,
+			detailVatTu: {}
 		},
 		onScroll: 'onScroll',
 		schema: {
@@ -62,55 +247,40 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					'events': {
 						deleteDossierFileVersion: function (item) {
 							var vm = this;
-							
+
 							vm.$dialog.confirm('Bạn có muốn xóa file toàn bộ file của thành phần này!', {
 								html: true,
 								loader: true,
 								okText: 'Xác nhận',
 								cancelText: 'Quay lại',
 								animation: 'fade'
-							})
-							.then((dialog) => {
+							}).then((dialog) => {
 								console.log("Run delete");
-									// call API get file by dossierId
-
-									var urlFiles = "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/resetformdata";
-									
-									$.ajax({
-										url : urlFiles,
-										dataType : "json",
-										type : "PUT",
-										headers : {
-											groupId : themeDisplay.getScopeGroupId()
-										},
-										success : function(result){
-											item.counter = 0;
-										},
-										error : function(xhr){
-											console.log(xhr);
-										}
-									});
-
-									/*axios.put(urlFiles, config).then(function (response) {
+								var urlFiles = "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/resetformdata";
+								$.ajax({
+									url : urlFiles,
+									dataType : "json",
+									type : "PUT",
+									headers : {
+										groupId : themeDisplay.getScopeGroupId()
+									},
+									success : function(result){
 										item.counter = 0;
-										
-									})
-									.catch(function (error) {
-										console.log(error);
-										
-									});*/
-									
-									dialog.close();
-									return false; 
-								})
-							.catch((e) => {
+									},
+									error : function(xhr){
+										console.log(xhr);
+									}
+								});
+								dialog.close();
+								return false;
+							}).catch((e) => {
 								console.log(e)
 							})
 						},
 						setStateOnlyFollow : function(emailAddress){
 							var vm = this;
 							var url = '/o/rest/v2/dictcollections/VR_AUDIT/dictitems';
-							
+
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
 								console.log("emailAddress======",emailAddress);
@@ -118,22 +288,17 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									for (var i = 0; i < serializable.data.length; i++) {
 										var model = serializable.data[i];
 										if(emailAddress && emailAddress	=== model.itemName){
-
 											vm.stateOnlyFollow = true;
 											break;
 										}
 									}
 								}
-								
-							})
-							.catch(function (error) {
+							}).catch(function (error) {
 								console.log(error);
-
 							});
 						},
 						getLastedStateUserInfo : function(callBack){
 							var vm = this;
-
 							var promise = new Promise(function(resolve, reject){
 								var url = '/o/rest/v2/userInfologs';
 
@@ -155,44 +320,340 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 											serviceName : ""
 										}
 									}
-
 									if(applicantIdNo){
 										vm.applicantNameFilter = {
 											applicantIdNo : applicantIdNo,
 											applicantName : ""
 										}
 									}
-
 									if(dossierNo){
 										vm.dossierNoFilter = dossierNo
 									}
 									resolve(true);
-
-								})
-								.catch(function (error) {
+								}).catch(function (error) {
 									console.log(error);
 									reject(false);
 								});
 							});
-
-
 							promise.then(function(success){
 								callBack();
 							}, function(error){
 
 							});
-
-							
 						},
-						putStateUserInfo : function(){
+						changeQuanLyPhieuXX: function () {
+							var vm = this;
+							vm.stageFilterView = "quan_ly_pxx";
+							vm.detailPage = "";
+							vm.detailRegistPage = "";
+							vm.loadPhieuXX();
+							vm.loadDoiPhong();
+							vm.loadMauPhoi();
+							vm.loadDoiTuong();
+						},
+						loadDoiPhong: function () {
+							var vm = this;
+							var url = "/o/rest/v2/dictcollections/DOIPHONG/dictitems?sort=sibling";
+							axios.get(url, config).then(function (response) {
+								vm.doiPhongItems = response.data.data;
+							}).catch(function (xhr) {
+								console.log(xhr);
+							})
+						},
+						loadMauPhoi: function () {
+							var vm = this;
+							var url = "/o/rest/v2/dictcollections/MAUPHOI/dictitems?sort=sibling";
+							axios.get(url, config).then(function (response) {
+								vm.mauPhoiItems = response.data.data;
+							}).catch(function (xhr) {
+								console.log(xhr);
+							})
+						},
+						loadDoiTuong: function () {
+							var vm = this;
+							var url = "/o/rest/v2/dictcollections/MAUPHOI/dictitems?sort=sibling";
+							axios.get(url, config).then(function (response) {
+								vm.doiTuongItems = response.data.data;
+							}).catch(function (xhr) {
+								console.log(xhr);
+							})
+						},
+						nhapKhoAction: function () {
+							var vm = this;
+							vm.stateAddVatTu = 'nhap_kho';
+							vm.popUpDieuCHuyen = !vm.popUpDieuCHuyen;
+						},
+						xuatKhoAction: function () {
+							var vm = this;
+							vm.stateAddVatTu = 'xuat_kho';
+							vm.popUpDieuCHuyen = !vm.popUpDieuCHuyen;
+						},
+						dieuChuyenAction: function () {
+							var vm = this;
+							vm.stateAddVatTu = 'dieu_chuyen';
+							vm.popUpDieuCHuyen = !vm.popUpDieuCHuyen;
+						},
+						changeDoiPhong: function () {
+							var vm = this;
+							vm.pagePxx = 1;
+							vm.soSerial = "";
+							vm.searchMauPhoi = "";
+							vm.searchNam = "";
+							vm.loadPhieuXX();
+						},
+						loadPhieuXX: function () {
+							var vm = this;
+							vm.loadingPxx = true;
+							var url = "";
+							var start = (pagePxx - 1) * 15;
+							var end = (pagePxx - 1) * 15 + 15;
+							let configPXX = {
+								headers: {
+									groupId: themeDisplay.getScopeGroupId()
+								},
+								params: {
+									start: start,
+									end: end,
+									searchDoiPhong: vm.searchDoiPhong,
+									soSerial: vm.soSerial,
+									searchMauPhoi: vm.searchMauPhoi,
+									searchNam: vm.searchNam
+								}
+							}
+							axios.get(url, configPXX).then(function (response) {
+								var data = response.data.data;
+								var total = response.data.total;
+								if (data) {
+									vm.itemsPxx = data;
+								} else {
+									 vm.itemsPxx = [];
+								}
+								vm.lengthPxx = Math.ceil(total / 15);
+								vm.loadingPxx = false;
+							}).catch(function (xhr) {
+								vm.itemsPxx = [];
+								vm.loadingPxx = false;
+							})
+						},
+						xemPhieuXX: function () {
+							var vm = this;
+							vm.pagePxx = 1;
+							vm.loadPhieuXX();
+						},
+						xuatExel: function () {
 							var vm = this;
 
+						},
+						kiemKeAction: function () {
+							var vm = this;
+							vm.popUpChiTietKiemKe = true;
+							var url = "";
+							axios.get(url, config).then(function (response) {
+								if (response.data.data) {
+									vm.chiTietKiemKeItems = response.data.data;
+									var totalTheoSoKeToan = 0;
+									var totalTheoKiemKe = 0;
+									var totalChenhLech = 0;
+									for (var i = 0; i < vm.chiTietKiemKeItems.length; i++) {
+										totalTheoSoKeToan += vm.chiTietKiemKeItems[i].theoSoKeToan;
+										totalTheoKiemKe += vm.chiTietKiemKeItems[i].theoKiemKe;
+										totalChenhLech += vm.chiTietKiemKeItems[i].chenhLech;
+									}
+									vm.chiTietKiemKeModel = {
+										theoSoKeToan: totalTheoSoKeToan,
+										theoKiemKe: totalTheoKiemKe,
+										chenhLech: totalChenhLech
+									}
+								} else {
+									vm.chiTietKiemKeModel = {
+										theoSoKeToan: 0,
+										theoKiemKe: 0,
+										chenhLech: 0
+									}
+									vm.chiTietKiemKeItems = [];
+								}
+							}).catch(function (xhr) {
+								vm.chiTietKiemKeItems = [];
+								vm.chiTietKiemKeModel = {
+									theoSoKeToan: 0,
+									theoKiemKe: 0,
+									chenhLech: 0
+								}
+							})
+						},
+						suaVatTu: function (item) {
+							var vm = this;
+							vm.detailVatTu = item;
+						},
+						deleteVatTuSelect: function () {
+							var vm = this;
+							if (vm.selected.length === 0) {
+								vm.snackbartextdossierViewJX = "Bạn chưa chọn dòng nào để xóa!";
+								vm.snackbarerordossierViewJX = true;
+								return;
+							} else {
+								vm.$dialog.confirm('Bạn có chắc chắn muốn xóa!', {
+									html: true,
+									loader: true,
+									okText: 'Xác nhận',
+									cancelText: 'Hủy bỏ',
+									animation: 'fade'
+								}).then((dialog) => {
+									var arrAction = [];
+									for (var i = 0; i < vm.selected.length; i++) {
+										arrAction.push(vm.deleteItemVatTu(vm.selected[i]));
+									}
+									Promise.all(arrAction).then(function (results) {
+										vm.snackbartextdossierViewJX = "Xoá dữ liệu thành công!";
+										vm.snackbardossierViewJX = true;
+									}).catch(function (xhr) {
+										vm.snackbartextdossierViewJX = "Xoá dữ liệu thất bại!";
+										vm.snackbarerordossierViewJX = true;
+									})
+								}).catch(function (xhr) {
+									console.log(xhr);
+								})
+							}
+						},
+						deleteItemVatTu: function (item) {
+							return new Promise(function (resolve, reject) {
+								$.ajax({
+									url : "/o/rest/v2/delete/" + item.id,
+									dataType : "json",
+									type : "DELETE",
+									headers : {
+										"groupId" : themeDisplay.getScopeGroupId()
+									},
+									success :  function(result){
+										resolve(result);
+									},
+									error : function(result){
+										reject(result);
+									}
+								});
+							})
+						},
+						luuPhieu: function () {
+							var vm = this
+							var vm = this
+							var url = "";
+							$.ajax({
+								url: url,
+								dataType: "json",
+								type: "POST",
+								data: {
+									doiTuong: vm.doiTuong,
+									nguoiGiao: vm.nguoiGiao,
+									dienGiai: vm.dienGiai,
+									soPhieuNhap: vm.soPhieuNhap,
+									ngayNhap: vm.ngayNhap
+								},
+								headers: {
+									groupId: themeDisplay.getScopeGroupId()
+								},
+								success: function (result) {
+									vm.dsspItems.push(result);
+									vm.snackbartextdossierViewJX = "Thêm thành công!";
+									vm.snackbardossierViewJX = true;
+									vm.popUpDieuCHuyen = false;
+								},
+								error: function (result) {
+									vm.snackbartextdossierViewJX = "Thêm thất bại, Vui lòng thử lại!";
+									vm.snackbarerordossierViewJX = true;
+								}
+							})
+						},
+						chonChungTu: function () {
+							var vm = this;
+							var url = "";
+							$.ajax({
+								url: url,
+								dataType: "json",
+								type: "GET",
+								data: {
+								},
+								headers: {
+									groupId: themeDisplay.getScopeGroupId()
+								},
+								success: function (result) {
+									vm.dsspItems.push(result);
+									vm.snackbartextdossierViewJX = "Thêm thành công!";
+									vm.snackbardossierViewJX = true;
+									vm.popUpAddVatTu = false;
+								},
+								error: function (result) {
+									vm.snackbartextdossierViewJX = "Thêm thất bại, Vui lòng thử lại!";
+									vm.snackbarerordossierViewJX = true;
+								}
+							})
+						},
+						monDaBan: function () {
+							var vm = this;
+							var url = "";
+							$.ajax({
+								url: url,
+								dataType: "json",
+								type: "GET",
+								data: {
+								},
+								headers: {
+									groupId: themeDisplay.getScopeGroupId()
+								},
+								success: function (result) {
+									vm.dsspItems.push(result);
+									vm.snackbartextdossierViewJX = "Thêm thành công!";
+									vm.snackbardossierViewJX = true;
+									vm.popUpAddVatTu = false;
+								},
+								error: function (result) {
+									vm.snackbartextdossierViewJX = "Thêm thất bại, Vui lòng thử lại!";
+									vm.snackbarerordossierViewJX = true;
+								}
+							})
+						},
+						addVatTu: function () {
+							var vm = this;
+							vm.detailVatTu = {};
+							vm.popUpAddVatTu = !vm.popUpAddVatTu;
+						},
+						addRowVatTu: function () {
+							var vm = this
+							var url = "";
+							$.ajax({
+								url: url,
+								dataType: "json",
+								type: "POST",
+								data: {
+									maVatTu_add: vm.detailVatTu.maVatTu_add ? vm.detailVatTu.maVatTu_add : "",
+									tenVatTu_add: vm.detailVatTu.tenVatTu_add ? vm.detailVatTu.tenVatTu_add : "",
+									kho_add: vm.detailVatTu.kho_add ? vm.detailVatTu.kho_add : "",
+									donViTinh_add: vm.detailVatTu.donViTinh_add ? vm.detailVatTu.donViTinh_add : "",
+									soluong_add: vm.detailVatTu.soluong_add ? vm.detailVatTu.soluong_add : "",
+									donGia_add: vm.detailVatTu.donGia_add ? vm.detailVatTu.donGia_add : "",
+									hanSuDung_add: vm.detailVatTu.hanSuDung_add ? vm.detailVatTu.hanSuDung_add : ""
+								},
+								headers: {
+									groupId: themeDisplay.getScopeGroupId()
+								},
+								success: function (result) {
+									vm.dsspItems.push(result);
+									vm.snackbartextdossierViewJX = "Thêm thành công!";
+									vm.snackbardossierViewJX = true;
+									vm.popUpAddVatTu = false;
+								},
+								error: function (result) {
+									vm.snackbartextdossierViewJX = "Thêm thất bại, Vui lòng thử lại!";
+									vm.snackbarerordossierViewJX = true;
+								}
+							})
+						},
+						putStateUserInfo: function () {
+							var vm = this;
 							var stateModel = {
 								"serviceInfo" : vm.serviceInfoFilter.serviceCode,
 								"applicant" : vm.applicantNameFilter.applicantIdNo,
 								"dossierNo" : vm.dossierNoFilter
 							}
-
 							$.ajax({
 								url : "/o/rest/v2/userInfologs",
 								dataType : "json",
@@ -208,20 +669,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								}
 							});
-
-
 						},
 						deleteDossierPDF: function(item, index) {
 							var vm = this;
-
 							vm.$dialog.confirm('Bạn có muốn xóa tài liệu này!', {
 								html: true,
 								loader: true,
 								okText: 'Xác nhận',
 								cancelText: 'Quay lại',
 								animation: 'fade'
-							})
-							.then((dialog) => {
+							}).then((dialog) => {
 								$.ajax({
 									url : "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid,
 									dataType : "json",
@@ -241,26 +698,26 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}
 								});
 								dialog.close();
-							})
-							.catch((e) => {
+							}).catch((e) => {
 								console.log(e)
 							})
 						},
 						submitAlpacajsForm: function (item) {
 							var vm = this;
+							console.log('run submitApacal');
 							vm.loadingAlpacajsForm = true;
 							try{
-								console.log("$('#alpacajs_form_'+item.partNo + ' .formType').val()============",$("#alpacajs_form_"+item.partNo + " .formType").val());
-								if( $("#alpacajs_form_"+item.partNo + " .formType").val() == null || 
-									$("#alpacajs_form_"+item.partNo + " .formType").val() == 'undefined' ) {
+								console.log("$('#alpacajs_form_' + item.partNo + ' .formType').val()============",$("#alpacajs_form_" + item.partNo + " .formType").val());
+								if( $("#alpacajs_form_" + item.partNo + " .formType").val() == null ||
+									$("#alpacajs_form_" + item.partNo + " .formType").val() == 'undefined' ) {
 									console.log("formType 1");
 								vm.loadingAlpacajsForm = true;
 
-								var control = $("#alpacajs_form_"+item.partNo).alpaca("get");
+								var control = $("#alpacajs_form_" + item.partNo).alpaca("get");
 								var formData = control.getValue();
 
 								$.ajax({
-									url : "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/formdata",
+									url : "/o/rest/v2/dossiers/" + vm.detailModel.dossierId + "/files/" + item.referenceUid + "/formdata",
 									dataType : "json",
 									type : "PUT",
 									headers: {
@@ -274,9 +731,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.snackbartextdossierViewJX = "Lưu form thành công!";
 										vm.snackbardossierViewJX = true;
 										vm.loadingAlpacajsForm = false;
-
+										$("#validCreateFile" + item.partNo).val("1")
 										try{
-											
+
 											if(item.hasSubmit){
 
 											}else {
@@ -297,18 +754,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}
 								});
 
-							} else if( $("#alpacajs_form_"+item.partNo + " .formType").val() != null && 
-								$("#alpacajs_form_"+item.partNo + " .formType").val() === 'assign' ) {
+							} else if( $("#alpacajs_form_" + item.partNo + " .formType").val() != null &&
+								$("#alpacajs_form_" + item.partNo + " .formType").val() === 'assign' ) {
 								console.log("formType 2");
 								vm.loadingAlpacajsForm = true;
 
-								var control = $("#alpacajs_form_"+item.partNo).alpaca("get");
+								var control = $("#alpacajs_form_" + item.partNo).alpaca("get");
 								var formData = control.getValue();
-
-
 								vm.subUsers = formData['subUsers'];
 								vm.alpacaAssignUserId = formData['userAction'];
-
 								$.ajax({
 									url : "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid+"/formdata",
 									dataType : "json",
@@ -324,18 +778,17 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.snackbartextdossierViewJX = "Lưu form thành công!";
 										vm.snackbardossierViewJX = true;
 										vm.loadingAlpacajsForm = false;
-
+										$("#validCreateFile" + item.partNo).val("1")
 										try{
-											if(item.hasSubmit){
+											if (item.hasSubmit) {
 
-											}else {
+											} else {
 
 												item.counter ++;
 												item.hasSubmit = true;
 											}
 
-
-										}catch(e){
+										} catch (e) {
 
 										}
 									},
@@ -350,7 +803,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							} else {
 								vm.loadingAlpacajsForm = true;
 								setTimeout(
-									function(){ 
+									function(){
 										try{
 											vm.loadingAlpacajsForm = false;
 											if(item.hasSubmit){
@@ -360,270 +813,301 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 												item.counter ++;
 												item.hasSubmit = true;
 											}
-
-
 										}catch(e){
 
 										}
-										
-									}, 
+
+									},
 									3000);
 							}
-						}catch(e){
+						} catch (e) {
 							vm.loadingAlpacajsForm = false;
 						}
 					},
 					showAlpacaJSFORM: function (item) {
-							//alapcajs Form
-							var alpacajsForm = document.getElementById("alpacajs_form_"+item.partNo);
-							if (alpacajsForm.innerHTML == '' && item.eform) {
-								console.log(item);
-								var alapcaJS = eval('('+item.formScript+')');
-								alapcaJS['data'] = item.formData;
-								
-								$("#alpacajs_form_"+item.partNo).alpaca(alapcaJS);
+						var vm = this;
+						var alpacajsForm = document.getElementById("alpacajs_form_" + item.partNo);
+						if (alpacajsForm.innerHTML == '' && item.eform) {
+							console.log(item);
+							var alapcaJS = eval('('+item.formScript+')');
+							alapcaJS['data'] = item.formData;
+
+							$("#alpacajs_form_" + item.partNo).alpaca(alapcaJS);
+						}
+					},
+					viewOnNewTab : function(item){
+						var vm = this;
+						if(item.counter > 0){
+							if (item.counter === 1) {
+								let configBob = {
+									headers: {
+										groupId: themeDisplay.getScopeGroupId()
+									},
+									responseType: 'blob'
+								}
+								var url = '/o/rest/v2/dossiers/' + vm.detailModel.dossierId + '/files/' + item.referenceUid;
+								axios.get(url, configBob).then(function (response) {
+									var url = window.URL.createObjectURL(response.data);
+									window.open(url);
+								})
+								.catch(function (error) {
+									console.log(error);
+								});
+								return;
 							}
-							
-						},
-						viewOnNewTab : function(item){
-							var vm = this;
-							if(item.counter > 0){
-								console.log("vm.detailModel========",vm.detailModel);
+							console.log("vm.detailModel========", vm.detailModel);
 
-								var url = "/group/cong-xu-ly/xu-ly-ho-so?stateWindow=stateWindow&dossierId="+vm.detailModel.dossierId+
-								"&dossierPartNo="+item.partNo;
+							var url = "/group/cong-xu-ly/xu-ly-ho-so?stateWindow=stateWindow&dossierId=" + vm.detailModel.dossierId +
+							"&dossierPartNo=" + item.partNo;
 
-								console.log("url============",url);
+							console.log("url============", url);
 
-								window.open(url, "_blank");
+							window.open(url, "_blank");
 
+						}
+
+					},
+					parseDateUtc : function(date){
+						return moment(String(date)).utc().format('DD/MM/YYYY HH:mm:ss');
+					},
+					showAlpacaJSFORMRegist: function (item) {
+						var vm = this;
+						var url = '/o/rest/v2/registrations/'+vm.detailRegistModel.registrationId+'/forms/' + item.referenceUid +"/formscript";
+						vm.alapcaJSRei = {};
+						axios.get(url, config).then(function (response) {
+							var serializable = response.data;
+
+							vm.alapcaJSRei = eval('('+serializable+')');
+
+							axios.get('/o/rest/v2/registrations/'+vm.detailRegistModel.registrationId+'/forms/' + item.referenceUid +"/formdata", config).then(function (responseFormData) {
+								vm.alapcaJSRei['data'] = responseFormData.data;
+								$("#regist_form_"+item.referenceUid).alpaca(vm.alapcaJSRei);
+							}).catch(function (error) {
+								console.log(error);
+							});
+						}).catch(function (error) {
+							console.log(error);
+							vm.stepLoading = false;
+						});
+						return false;
+
+					},
+					changeProcessStep: function (item){
+						var vm = this;
+						console.log(item);
+						var status = vm.statusParamFilter;
+						var subStatus = vm.substatusParamFilter;
+						$("#alpacajs_form_plugin").empty();
+						if(item.type === 1){
+							if (item.autoEvent !== 'submit' && item.autoEvent !== 'timer') {
+								vm.stepModel = item;
+							} else {
+								vm.stepModel = null;
 							}
+							vm.processAssignUserIdItems = item.toUsers;
+							$("textarea#processActionNote").val("");
+							console.log('run apacalForm')
+							if (vm.stepModel.hasOwnProperty('createFiles')) {
+								if (!(vm.stepModel.createFiles instanceof Array)) {
+									var createFilesTemp = vm.stepModel.createFiles;
+									vm.stepLoading = true;
+									vm.stepModel.createFiles = [];
+									vm.stepModel.createFiles.push(createFilesTemp);
+								}
+								$(vm.stepModel.createFiles).each(function(index,createFileItems) {
+									createFileItems['save'] = false;
+									console.log('run apacalForm')
+									var formScriptNew;
+									var formDataNew;
+									var urlFormData = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/files/'+createFileItems.referenceUid+'/formdata';
+									var urlFormScript = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/files/'+createFileItems.referenceUid+'/formscript';
+									var config_plugins = {
+										headers: {
+											'groupId': themeDisplay.getScopeGroupId()
+										}
+									};
+									axios.all([
+										axios.get(urlFormScript, config_plugins),
+										axios.get(urlFormData, config_plugins)
+										]).then( axios.spread(function (responesFormScript, responesFormData) {
+											console.log('responesFormScript', responesFormScript)
+											console.log('responesFormData', responesFormData)
+											formScriptNew = responesFormScript.data;
+											formDataNew = responesFormData.data;
+											console.log('createFileItems', createFileItems)
+											console.log('formScriptNew', formScriptNew)
+											console.log('vm.stepModel.createFiles', vm.stepModel.createFiles)
+											createFileItems.formScript = formScriptNew
+											createFileItems.formData = formDataNew
+											console.log('vm.stepModel', vm.stepModel)
+											vm.stepLoading = false;
+										}))
+										.catch(function (error) {
+											console.log(error);
+											vm.stepLoading = false;
+										});
+									})
+								console.log('++++++++++++++createFiles--------------', vm.stepModel.createFiles)
+							}
+						} else {
 
+							var urlPluginFormData = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/formdata';
+							var urlPluginFormScript = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/formscript';
+							var config_plugins = {
+								headers: {
+									'groupId': themeDisplay.getScopeGroupId()
+								},
+								dataType : "text"
+							};
+							axios.all([
+								axios.get(urlPluginFormScript, config_plugins),
+								axios.get(urlPluginFormData, config_plugins)
+								]).then( axios.spread(function (urlResponesFormScript, urlResponesFormData) {
+									var responseScript = urlResponesFormScript.data;
+									var responseData = urlResponesFormData.data;
+
+									console.log("responseScript==============",responseScript);
+									item.plugin = true;
+
+									if(responseScript.indexOf("#preview@pdf") !== -1){
+										console.log("view pdf");
+										var url ="/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/plugins/"+item.processActionId+"/preview" ;
+
+										var config_blob =  {
+											headers: {
+												'groupId': themeDisplay.getScopeGroupId(),
+											},
+											responseType: 'blob'
+										};
+										vm.stepLoading = true;
+										axios.get(url, config_blob).then(function (response) {
+											var urlblob = window.URL.createObjectURL(response.data);
+											item.pdf = true;
+											item.url = urlblob;
+											item.no_pdf = '';
+											vm.stepModel = item;
+											vm.stepLoading = false;
+										})
+										.catch(function (error) {
+											console.log(error);
+											item.pdf = true;
+											item.url = '';
+											item.no_pdf = 'Tài liệu đính kèm không tồn tại!';
+											vm.stepModel = item;
+											vm.stepLoading = false;
+										});
+
+									}
+
+
+									if(responseScript.indexOf("#preview@html") !== -1){
+										console.log("view html");
+										var config_view = {
+											headers: {
+												'groupId': themeDisplay.getScopeGroupId(),
+											},
+											dataType : "json"
+										};
+										item.html = true;
+										item.no_html = "";
+										vm.stepModel = item;
+
+										var url = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/previewhtml';
+										axios.get(url, config_view).then(function (response) {
+											item.no_html = "";
+											vm.stepModel = item;
+
+											var serializable = response.data ;
+
+											var partNo = serializable.partNo;
+											var dossierFileId = serializable.dossierFileId;
+
+											$(".dossierFilePartNo").val("");
+											$(".dossierFilePartNo").attr('id','dossierFileId'+partNo);
+											$(".dossierFilePartNo").val(dossierFileId);
+
+											var formReport = eval('('+serializable.formReport+')');
+											var formData = eval('('+serializable.formData+')');
+
+											console.log("formReport======",formReport);
+											console.log("formData======",formData);
+											/*var formData = serializable.formData;*/
+
+
+											formReport.data = formData;
+											console.log("formReport_____FINAL=======",formReport);
+											$("#alpacajs_form_plugin").alpaca(formReport);
+										})
+										.catch(function (error) {
+											console.log(error);
+											item.html = true;
+											item.no_html = "Tài liệu đính kèm không tồn tại!";
+											vm.stepModel = item;
+										});
+									}
+
+								})).catch(function (error) {
+									console.log(error);
+								});
+							}
 						},
-						parseDateUtc : function(date){
-							return moment(String(date)).utc().format('DD/MM/YYYY HH:mm:ss');
-						},
-						showAlpacaJSFORMRegist: function (item) {
+						refreshProcess : function () {
 							var vm = this;
-							//alapcajs Form
-							var url = '/o/rest/v2/registrations/'+vm.detailRegistModel.registrationId+'/forms/' + item.referenceUid +"/formscript";
-                            // var url = '/o/frontendwebdossier/json/steps.json';
-                            vm.alapcaJSRei = {};
-                            axios.get(url, config).then(function (response) {
-                            	var serializable = response.data;
-
-                            	vm.alapcaJSRei = eval('('+serializable+')');
-
-                            	axios.get('/o/rest/v2/registrations/'+vm.detailRegistModel.registrationId+'/forms/' + item.referenceUid +"/formdata", 
-                            		config).then(function (responseFormData) {
-
-                            			vm.alapcaJSRei['data'] = responseFormData.data;
-                            			$("#regist_form_"+item.referenceUid).alpaca(vm.alapcaJSRei);
-
-                            		})
-                            		.catch(function (error) {
-                            			console.log(error);
-
-                            		});
-
-                            	})
-                            .catch(function (error) {
-                            	console.log(error);
-                            	vm.stepLoading = false;
-
-                            });
-                            return false; 
-
-                        },
-                        changeProcessStep: function (item){
-                        	var vm = this;
-                        	console.log(item);
-                        	var status = vm.statusParamFilter;
-                        	var subStatus = vm.substatusParamFilter;
-                        	vm.stepModel = null;
-                        	$("#alpacajs_form_plugin").empty();
-                        	
-                        	/*if(status === "waiting" && subStatus === "watting_1"){
-                        		$("#labelTPKQ").html("File đính kèm");
-                        	}*/
-
-                        	if(item.type === 1){
-                        		$("textarea#processActionNote").val("");
-
-                        		if (item.hasOwnProperty('createFiles') && !(item.createFiles instanceof Array)) {
-                        			var createFilesTemp = item.createFiles;
-                        			item.createFiles = [];
-                        			item.createFiles.push(createFilesTemp);
-                        		}
-
-                        		if (item.autoEvent !== 'submit' && item.autoEvent !== 'timer') {
-                        			vm.stepModel = item;
-                        		} else {
-                        			vm.stepModel = null;
-                        		}
-
-                        		vm.processAssignUserIdItems = item.toUsers;
-
-                        	}else {
-
-                        		var urlPluginFormData = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/formdata';
-                        		var urlPluginFormScript = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/formscript';
-                        		var config_plugins = {
-                        			headers: {
-                        				'groupId': themeDisplay.getScopeGroupId()
-                        			},
-                        			dataType : "text"
-                        		};
-
-                        		axios.all([
-                        			axios.get(urlPluginFormScript, config_plugins),
-                        			axios.get(urlPluginFormData, config_plugins)
-                        			]).then( axios.spread(function (urlResponesFormScript, urlResponesFormData) {
-                        				var responseScript = urlResponesFormScript.data;
-                        				var responseData = urlResponesFormData.data;
-
-                        				console.log("responseScript==============",responseScript);
-                        				item.plugin = true;
-
-                        				if(responseScript.indexOf("#preview@pdf") !== -1){
-                        					console.log("view pdf");
-                        					var url ="/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/plugins/"+item.processActionId+"/preview" ;
-
-                        					var config_blob =  {
-                        						headers: {
-                        							'groupId': themeDisplay.getScopeGroupId(),
-                        						},
-                        						responseType: 'blob'
-                        					};
-
-                        					axios.get(url, config_blob).then(function (response) {
-                        						var urlblob = window.URL.createObjectURL(response.data);
-                        						item.pdf = true;
-                        						item.url = urlblob;
-                        						item.no_pdf = '';
-                        						vm.stepModel = item;
-                        					})
-                        					.catch(function (error) {
-                        						console.log(error);
-                        						item.pdf = true;
-                        						item.url = '';
-                        						item.no_pdf = 'Tài liệu đính kèm không tồn tại!';
-                        						vm.stepModel = item;
-                        					});
-
-                        				}
+							vm._initchangeProcessStep();
+							vm.stepModel = null;
+						},
+						postNextActions2 : function(item){
+							console.log("itempostNextActions2============", item);
+							var vm = this;
+							var createFiles = item.createFiles;
+							console.log("createFiles============", createFiles);
+							var valid = {
+								partNo: 0,
+								isValid: true
+							};
+							if ($('.validCreateFile').length > 0) {
+								$('.validCreateFile').each(function (item) {
+									if ($(this).val() === "0") {
+										valid.isValid = false;
+										valid.partNo = $(this).attr("data-pk");
+										return;
+									}
+								})
+							}
+							if (!valid.isValid && createFiles) {
+								let itemFile = createFiles.find(item => {
+									return item['partNo'] === valid['partNo']
+								})
+								if (itemFile) {
+									vm.snackbartextdossierViewJX = "Thành phần " + itemFile.partName + " là thành phần bắt buộc!";
+									vm.snackbarerordossierViewJX = true;
+								}
+								return;
+							}
+							var submitAlpacajsFns = new Array();
+							var promise = new Promise(function(resolve, reject){
+								try{
+									vm.actionsSubmitLoading = true;
+									$(".saveForm").click();
+									resolve(true);
+								}catch(e){
+									resolve(false);
+								}
+							});
 
 
-                        				if(responseScript.indexOf("#preview@html") !== -1){
-                        					console.log("view html");
-                        					var config_view = {
-                        						headers: {
-                        							'groupId': themeDisplay.getScopeGroupId(),
-                        						},
-                        						dataType : "json"
-                        					};
-                        					item.html = true;
-                        					item.no_html = "";
-                        					vm.stepModel = item;
+							promise.then(function(success){
+								vm.postNextActions(item);
+							}, function(error){
 
-                        					var url = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins/'+item.processActionId+'/previewhtml';
-                        					axios.get(url, config_view).then(function (response) {
-                        						item.no_html = "";
-                        						vm.stepModel = item;
-
-                        						var serializable = response.data ;
-
-                        						var partNo = serializable.partNo;
-                        						var dossierFileId = serializable.dossierFileId;
-
-                        						$(".dossierFilePartNo").val("");
-                        						$(".dossierFilePartNo").attr('id','dossierFileId'+partNo);
-                        						$(".dossierFilePartNo").val(dossierFileId);
-
-                        						var formReport = eval('('+serializable.formReport+')');
-                        						var formData = eval('('+serializable.formData+')');
-
-                        						console.log("formReport======",formReport);
-                        						console.log("formData======",formData);
-                        						/*var formData = serializable.formData;*/
-
-
-                        						formReport.data = formData;
-                        						console.log("formReport_____FINAL=======",formReport);
-                        						$("#alpacajs_form_plugin").alpaca(formReport);
-                        						
-
-                        					})
-                        					.catch(function (error) {
-                        						console.log(error);
-                        						item.html = true;
-                        						item.no_html = "Tài liệu đính kèm không tồn tại!";
-                        						vm.stepModel = item;
-                        					});
-                        				}
-
-                        			}))
-                        			.catch(function (error) {
-                        				console.log(error);
-
-                        			});
-                        		}
-
-
-
-                        	},
-                        	refreshProcess : function(){
-                        		var vm = this;
-                        		vm._initchangeProcessStep();
-                        		vm.stepModel = null;
-                        	},
-                        	postNextActions2 : function(item){
-                        		console.log("itempostNextActions2============",item);
-                        		var vm = this;
-                        		var createFiles = item.createFiles;
-                        		console.log("createFiles============",createFiles);
-                        		var submitAlpacajsFns = new Array();
-
-                        			/*for (var i = 0; i < createFiles.length; i++) {
-                        				if(createFiles[i].eform){
-                        					submitAlpacajsFns.push(vm.submitAlpacajsForm(createFiles[i]));
-                        				}
-                        				
-                        			}*/
-                        			var promise = new Promise(function(resolve, reject){
-                        				try{
-                        					vm.actionsSubmitLoading = true;
-                        					$(".saveForm").click();
-                        					resolve(true);
-                        				}catch(e){
-                        					resolve(false);
-                        				}
-                        			});
-
-
-                        			promise.then(function(success){
-                        				vm.postNextActions(item);
-                        			}, function(error){
-
-                        			});
-
-                        			//console.log("submitAlpacajsFns============",submitAlpacajsFns);
-                        			/*try{
-                        				await Promise.all(submitAlpacajsFns);
-                        			}catch(e){
-
-                        			}*/
-
-                        		
-                        	},
-                        	postNextActions: function (item){
-
-                        		console.log(item);
-                        		var vm = this;
-                        		vm.actionsSubmitLoading = true;
-                        		var fileArr = item.createFiles;
-                        		var idArr = [];
-							// var dossierFileId
+							});
+						},
+						postNextActions: function (item) {
+							console.log(item);
+							var vm = this;
+							vm.actionsSubmitLoading = true;
+							var fileArr = item.createFiles;
+							var idArr = [];
 							if (fileArr) {
 								var length = fileArr.length;
 								for (var i = 0; i < length; i++) {
@@ -653,34 +1137,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							var assignUserId = 0;
 							var subUsers = '';
-							
+
 							if (vm.alpacaAssignUserId != 0) {
-								
 								assignUserId = vm.alpacaAssignUserId;
 								subUsers = JSON.stringify(vm.subUsers);
-								
 							} else if (vm.processAssignUserId.userId > 0) {
-								
 								assignUserId = vm.processAssignUserId.userId;
-								
 							}
-
-							
 							var isKyOk = item.eSignature;
-							//console.log("plugin().valid ==============>",plugin().valid);
-							// TODO
-							/*if (isKyOk && !plugin().valid) {
-								alert("Plugin is not working :(");
-				                vm.actionsSubmitLoading = false;
-				                isKyOk = false;
-				                return;
-							} else if (!isKyOk) {
-								isKyOk = true;
-							} else if(){
-								var x = plugin().Sign('tGp5xOELB59zprQeqh2ks89BgWE=');
-								console.log(x);
-								isKyOk = true;
-							}*/
 							if (isKyOk) {
 								if (!plugin().valid) {
 									alert("Plugin is not working :(");
@@ -689,17 +1153,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									return;
 								}
 							}
-						/*	if(!plugin().valid === 0){
-				                alert("Plugin is not working :(");
-				                vm.actionsSubmitLoading = false;
-				                isKyOk = false;
-				                return;
-				            } else {
-				                var x = plugin().Sign('tGp5xOELB59zprQeqh2ks89BgWE=');
-								console.log(x);
-								isKyOk = true;
-							}*/
-							
 							if (!isKyOk) {
 								$.ajax({
 									url: url,
@@ -717,12 +1170,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									dataType: 'json',
 									contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 									success: function(data, textStatus, xhr) {
-
 										vm.snackbartextdossierViewJX = item.actionName + " thành công!";
 										vm.snackbardossierViewJX = true;
-										
-										
-										setTimeout(function(){ 
+
+
+										setTimeout(function(){
 											vm._inidanhSachHoSoTable();
 											vm.reloadCounter();
 										}, 1000);
@@ -760,7 +1212,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var vm = this;
 							var url = '/o/rest/v2/digitalSignature/'+vm.detailModel.dossierId+'/hashComputed';
 							console.log(vm.detailModel.dossierId);
-							
+
 							$.ajax({
 								type : 'POST',
 								url : url,
@@ -786,16 +1238,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										console.log("hashComputers: "+hashComputers);
 										console.log("signFieldNames: "+signFieldNames);
 										console.log("fileNames: "+fileNames);
-										console.log("msgs: "+msgs);			
+										console.log("msgs: "+msgs);
 										vm.actionsSubmitLoading = false;
 										if(plugin().valid) {
-											
+
 											for ( var i = 0; i < hashComputers.length; i++) {
 
 												var hashComputer = hashComputers[i];
 												var code = plugin().Sign(hashComputer);
-												
-												if(code === 0 || code === 7){			
+
+												if(code === 0 || code === 7){
 													var sign = plugin().Signature;
 													var signFieldName = signFieldNames[i];
 													var fileName = fileNames[i];
@@ -812,7 +1264,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 														}
 													}else{
 														alert(msg);
-													}	
+													}
 												}else{
 													alert(plugin().ErrorMessage);
 												}
@@ -862,7 +1314,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.snackbardossierViewJX = true;
 
 										vm._inidanhSachHoSoTable();
-										setTimeout(function(){ 
+										setTimeout(function(){
 											vm._initlistgroupHoSoFilter();
 										}, 1000);
 
@@ -886,7 +1338,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var url = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/nextactions';
 							var urlPlugin = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/plugins';
                             // var url = '/o/frontendwebdossier/json/steps.json';
-                            
+
                             axios.all([
                             	axios.get(url, config),
                             	axios.get(urlPlugin, config)
@@ -908,13 +1360,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             					}
                             					serializableNextActionConvert.push(serializable[i]);
                             				}
-                            				
+
                             			}
                             		}else {
                             			serializable = [];
                             			serializableNextActionConvert = [];
                             		}
-
 
                             		if(serializablePlugins){
                             			for (var i = 0; i < serializablePlugins.length; i++) {
@@ -926,28 +1377,22 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             				serializablePluginsConvert.push(plugin);
                             			}
                             		}
-
-
                             		var nextactions = serializableNextActionConvert;
                             		var plugins = serializablePluginsConvert;
-
-
                             		vm.processSteps = $.merge( nextactions, plugins );
                             		vm.stepLoading = false;
                             		console.log(vm.processSteps);
 
-                            		//neu processSteps chi co 1, trigger chanProcessStep 
                             		if(vm.processSteps.length === 1){
                             			vm.changeProcessStep(vm.processSteps[0]);
                             		}
 
-                            	}))
-                            	.catch(function (error) {
+                            	})).catch(function (error) {
                             		console.log(error);
                             		vm.stepLoading = false;
 
                             	});
-                            	return false; 
+                            	return false;
                             },
                             filterAllDossierWithOutStatus: function () {
                             	this.stageFilterView = 'danh_sach';
@@ -965,7 +1410,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             	vm.actionsSubmitLoading = true;
 
                             	document.getElementById('inputfile_'+item.dossierPartId).click();
-                            	setTimeout(function(){ 
+                            	setTimeout(function(){
                             		vm.actionsSubmitLoading = false;
                             	}, 4000);
                             },
@@ -996,48 +1441,32 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             	data.append( 'formData', '' );
 
                             	$.ajax({
-                            		type : 'POST', 
-                            		url  : url, 
+                            		type : 'POST',
+                            		url  : url,
                             		data : data,
                             		headers: {"groupId": themeDisplay.getScopeGroupId()},
                             		processData: false,
                             		contentType: false,
                             		cache: false,
                             		async : false,
-                            		success :  function(result){ 
+                            		success :  function(result){
                             			vm.actionsSubmitLoading = false;
                             			vm.snackbartextdossierViewJX = " Tải file thành công!";
                             			vm.snackbardossierViewJX = true;
-                            			
-									//vm._initchangeProcessStep();
-									vm.stepModel.createFiles[index].counter = vm.stepModel.createFiles[index].counter + 1;
-									
-								},
-								error:function(result){
-									vm.actionsSubmitLoading = false;
-									vm.snackbartextdossierViewJX = "Tải file thất bại!";
-									vm.snackbarerordossierViewJX = true;
-								}
-							});
-							/**
-                            axios.post(url, postData, config).then(function (response) {
-                                var serializable = response.data;
+                            			vm.stepModel.createFiles[index].counter = vm.stepModel.createFiles[index].counter + 1;
 
-								vm._initchangeProcessStep();
-
-                            })
-                                .catch(function (error) {
-                                    console.log(error);
-									vm.snackbartextdossierViewJX = item.actionName + " thất bại!";
-                      				vm.snackbarerordossierViewJX = true;
-                                });
-                                */
+                            		},
+                            		error:function(result){
+                            			vm.actionsSubmitLoading = false;
+                            			vm.snackbartextdossierViewJX = "Tải file thất bại!";
+                            			vm.snackbarerordossierViewJX = true;
+                            		}
+                            	});
                             },
                             undoDetailPage: function () {
 
                             	this.detailPage = !this.detailPage;
-                            	setTimeout(function(){ 
-								// temp fix header
+                            	setTimeout(function(){
 								$('.danhSachHoSoTable__class th[role="columnheader"]').each(function( index ) {
 									if ($( this ).attr('aria-label').indexOf("Activate") > 0) {
 										$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\./g,"<br/>") + ' <i aria-hidden="true" class="material-icons icon">arrow_upward</i>');
@@ -1049,16 +1478,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             },
                             undoDetailRegistPage: function () {
                             	this.detailRegistPage = !this.detailRegistPage;
-                            	setTimeout(function(){ 
-								// temp fix header
-								$('.thongTinDoanhNghiepTable__class th[role="columnheader"]').each(function( index ) {
-									if ($( this ).attr('aria-label').indexOf("Activate") > 0) {
-										$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\./g,"<br/>") + ' <i aria-hidden="true" class="material-icons icon">arrow_upward</i>');
-									} else {
-										$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\./g,"<br/>"));
-									}
-								});
-							}, 300);
+                            	setTimeout(function(){
+                            		$('.thongTinDoanhNghiepTable__class th[role="columnheader"]').each(function( index ) {
+                            			if ($( this ).attr('aria-label').indexOf("Activate") > 0) {
+                            				$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\./g,"<br/>") + ' <i aria-hidden="true" class="material-icons icon">arrow_upward</i>');
+                            			} else {
+                            				$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\./g,"<br/>"));
+                            			}
+                            		});
+                            	}, 300);
                             },
                             onScroll(e) {
                             	this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
@@ -1070,7 +1498,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             	var vm = this;
 
                             	console.log("===============run newTabOrNewWindown============");
-
+                            	console.log("=============stateWindow==========", stateWindowParam)
                             	if(stateWindowParam === "stateWindow"){
 
                             		if(dossierIdParam){
@@ -1106,24 +1534,21 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                             							if(serializableFiles[key].fileSize > 0){
                             								listFilesUpload.push(serializableFiles[key]);
                             							}
-                            							
+
                             						}
                             					}
                             					vm.listDocumentInPartNoItems = listFilesUpload;
-                            					
+
                             					vm.popUpViewDossierFile = !vm.popUpViewDossierFile;
 
                             					vm._initCbxDocumentNewTab(listFilesUpload);
-
-                            					/*return Promise.reject();*/
 
                             				})).catch(function (error) {
                             					console.log(error);
 
                             				});
 
-                            			})
-                            			.catch(function (error) {
+                            			}).catch(function (error) {
                             				console.log(error);
 
                             			});
@@ -1151,8 +1576,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                     			console.log("item status",item);
 
                     			vm.reloadCounter();
-                    			
-                    			
+
+
                     			vm.detailPage = false;
                     			vm.detailRegistPage = false;
                     			vm.listgroupHoSoFilterselected = item.id;
@@ -1171,229 +1596,214 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                     					vm.substatusParamFilter = item.idSub;
                     				}
 
-                    			} 
-
-
-
+                    			}
                     			if (item.id == 'tra_cuu_hoso') {
                     				vm._initraCuuHoSoTable(false);
                     			} else if (item.id == 'tra_cuu_phuong_tien') {
-								// TODO vm._inidanhSachHoSoTable(false);
-							} else if (item.id == 'tra_cuu_thong_tin_doanh_nghiep') {
-								vm._inithongTinDoanhNghiepTable(false);
-								vm.detailRegistPage = false;
-							} else {
-								vm._inidanhSachHoSoTable(false);
-							}
-							
-							vm.onScrollTop();
+                    			} else if (item.id == 'tra_cuu_thong_tin_doanh_nghiep') {
+                    				vm._inithongTinDoanhNghiepTable(false);
+                    				vm.detailRegistPage = false;
+                    			} else {
+                    				vm._inidanhSachHoSoTable(false);
+                    			}
 
-						},
-						reloadCounter : function(){
-							var vm = this;
+                    			vm.onScrollTop();
 
-							vm.stageFilterView = 'danh_sach';
+                    		},
+                    		reloadCounter: function () {
+                    			var vm = this;
+                    			vm.stageFilterView = 'danh_sach';
+                    			var url = '/o/rest/v2/statistics/dossiers/todo';
+                    			$.ajax({
+                    				url : url,
+                    				dataType : "json",
+                    				type : "GET",
+                    				headers : {
+                    					'groupId': themeDisplay.getScopeGroupId(),
+                    				},
+                    				success: function (result) {
+                    					var serializable = result;
 
-							/*var url = '/o/rest/v2/statistics/dossiers/todo';*/
-							var url = '/o/rest/v2/statistics/dossiers/todo';
-							$.ajax({
-								url : url,
-								dataType : "json",
-								type : "GET",
-								headers : {
-									'groupId': themeDisplay.getScopeGroupId(),
-								},
-								success : function(result){
-									var serializable = result;
+                    					var indexTree = -1;
+                    					var index = 0;
+                    					console.log("listgroupHoSoFilterItems=======FISRT",vm.listgroupHoSoFilterItems);
+                    					console.log("serializable=======",serializable.data);
+                    					for (var key in serializable.data) {
+                    						for(var i in vm.listgroupHoSoFilterItems){
+                    							if ( serializable.data[key].level === 0) {
 
-									var indexTree = -1;
-									var index = 0;
-									console.log("listgroupHoSoFilterItems=======FISRT",vm.listgroupHoSoFilterItems);
-									console.log("serializable=======",serializable.data);
-									for (var key in serializable.data) {
-										for(var i in vm.listgroupHoSoFilterItems){
-											if ( serializable.data[key].level === 0) {
+                    								if (serializable.data[key].dossierStatus === 'cancelling' || serializable.data[key].dossierStatus === 'cancelled' || serializable.data[key].dossierStatus === 'processing' || serializable.data[key].dossierStatus === 'paid') {
+                    									serializable.data[key].items = [];
 
-												if (serializable.data[key].dossierStatus === 'cancelling' ||
-													serializable.data[key].dossierStatus === 'cancelled' ||
-													serializable.data[key].dossierStatus === 'processing' ||
-													serializable.data[key].dossierStatus === 'paid') {
-													serializable.data[key].items = [];
+                    									if(serializable.data[key].dossierStatus === vm.listgroupHoSoFilterItems[i].id){
+                    										vm.listgroupHoSoFilterItems[i].count = serializable.data[key].count;
+                    									}
+                    								}
 
-												if(serializable.data[key].dossierStatus === vm.listgroupHoSoFilterItems[i].id){
-													vm.listgroupHoSoFilterItems[i].count = serializable.data[key].count;
-												}
-											}
+                    							} else {
 
-										} else {
+                    								if(serializable.data[key].dossierSubStatus === vm.listgroupHoSoFilterItems[i].id){
+                    									vm.listgroupHoSoFilterItems[i].count = serializable.data[key].count;
+                    								}
+                    							}
+                    						}
 
-											if(serializable.data[key].dossierSubStatus === vm.listgroupHoSoFilterItems[i].id){
-												vm.listgroupHoSoFilterItems[i].count = serializable.data[key].count;
-											}
-										}
-									}
+                    					}
+                    					console.log("listgroupHoSoFilterItems=======LAST",vm.listgroupHoSoFilterItems);
 
-								}
-								console.log("listgroupHoSoFilterItems=======LAST",vm.listgroupHoSoFilterItems);
+                    				},
+                    				error : function(result){
 
-							},
-							error : function(result){
+                    				}
+                    			});
 
-							}
-						});	
-							
-						},
-						_initlistgroupHoSoFilter: function(select){
-							var vm = this;
+                    		},
+                    		_initlistgroupHoSoFilter: function (select) {
+                    			var vm = this;
 
-							vm.newTabOrNewWindown();
-							vm.setStateOnlyFollow(emailAddress);
-							vm.getLastedStateUserInfo(function(){
-								vm._inidanhSachHoSoTable(false);
-							});
+                    			vm.newTabOrNewWindown();
+                    			vm.setStateOnlyFollow(emailAddress);
+                    			vm.getLastedStateUserInfo(function(){
+                    				vm._inidanhSachHoSoTable(false);
+                    			});
 
-							vm.stageFilterView = 'danh_sach';
+                    			vm.stageFilterView = 'danh_sach';
 
-							vm.listgroupHoSoFilterItems = [];
+                    			vm.listgroupHoSoFilterItems = [];
 
-							/*var url = '/o/rest/v2/statistics/dossiers/todo';*/
-							var url = '/o/rest/v2/statistics/dossiers/todo';
-							
-							axios.get(url, config).then(function (response) {
-								var serializable = response.data;
+                    			var url = '/o/rest/v2/statistics/dossiers/todo';
 
-								var indexTree = -1;
-								var index = 0;
-								for (var key in serializable.data) {
-									
-									if ( serializable.data[key].level === 0) {
-										
-										if (serializable.data[key].dossierStatus === 'cancelling' ||
-											serializable.data[key].dossierStatus === 'cancelled' ||
-											serializable.data[key].dossierStatus === 'processing' ||
-											serializable.data[key].dossierStatus === 'paid') {
-											serializable.data[key].items = [];
+                    			axios.get(url, config).then(function (response) {
+                    				var serializable = response.data;
 
-										vm.listgroupHoSoFilterItems.push({
-											id: serializable.data[key].dossierStatus,
-											idSub: serializable.data[key].dossierSubStatus,
-											title: serializable.data[key].statusName,
-											level: serializable.data[key].level,
-											count: serializable.data[key].count,
+                    				var indexTree = -1;
+                    				var index = 0;
+                    				for (var key in serializable.data) {
 
-											action: 'folder',
-											action_active: 'folder_open',
-											items: [],
-											index: index
-										});
-									}
+                    					if ( serializable.data[key].level === 0) {
 
-								} else {
-									
-									vm.listgroupHoSoFilterItems.push({
-										id: serializable.data[key].dossierSubStatus,
-										idSub: serializable.data[key].dossierStatus,
-										title: serializable.data[key].statusName,
-										level: serializable.data[key].level,
-										count: serializable.data[key].count,
-										action: 'folder',
-										action_active: 'folder_open',
-										items: [],
-										index: index
-									});
-								}
-								
-							}
+                    						if (serializable.data[key].dossierStatus === 'cancelling' || serializable.data[key].dossierStatus === 'cancelled' || serializable.data[key].dossierStatus === 'processing' || serializable.data[key].dossierStatus === 'paid') {
+                    							serializable.data[key].items = [];
 
-							if(select){
-								console.log("selected========",select);
-								vm.listgroupHoSoFilterselected = select;
-							}
+                    							vm.listgroupHoSoFilterItems.push({
+                    								id: serializable.data[key].dossierStatus,
+                    								idSub: serializable.data[key].dossierSubStatus,
+                    								title: serializable.data[key].statusName,
+                    								level: serializable.data[key].level,
+                    								count: serializable.data[key].count,
+
+                    								action: 'folder',
+                    								action_active: 'folder_open',
+                    								items: [],
+                    								index: index
+                    							});
+                    						}
+
+                    					} else {
+
+                    						vm.listgroupHoSoFilterItems.push({
+                    							id: serializable.data[key].dossierSubStatus,
+                    							idSub: serializable.data[key].dossierStatus,
+                    							title: serializable.data[key].statusName,
+                    							level: serializable.data[key].level,
+                    							count: serializable.data[key].count,
+                    							action: 'folder',
+                    							action_active: 'folder_open',
+                    							items: [],
+                    							index: index
+                    						});
+                    					}
+
+                    				}
+
+                    				if(select){
+                    					console.log("selected========",select);
+                    					vm.listgroupHoSoFilterselected = select;
+                    				}
 
 
-						})
-							.catch(function (error) {
-								console.log(error);
-								
-							});
-							return false; 
-						}
-					}
-				},
-				'listgroupTraCuuFilter': {
-					'id': 'listgroupTraCuuFilter',
-					'name': 'listgroupTraCuuFilter',
-					"type": "listgroup",
-					'cssClass': 'pb-5',
-					"child_items": "items",
-					"data_title": "title",
-					"data_value": "id",
-					"onLoad": "_initlistgroupTraCuuFilter",
-					"onClick": "filterChange",
-					"events": {
-						filterChange: function(item){
-							var vm = this;
-							vm.detailPage = false;
-							vm.detailRegistPage = false;
-							vm.listgroupTraCuuFilterselected = item.id;
-							if ( item.id !== 'tra_cuu' ){
-								vm.stageFilterView = item.id;
-								vm.hoso_title_table = item.title;
-							}
-							
-							if (item.id == 'tra_cuu_hoso') {
-								vm._initraCuuHoSoTable(false);
-								vm._initAdvanced_filter_serviceInfo();
-								vm._initAdvanced_filter_loaiSanPham();
-								vm._initAdvanced_filter_nhanHieu();
-								vm._initAdvanced_filter_dossierStatus();
-								
-							} else if (item.id == 'tra_cuu_phuong_tien') {
-								// TODO vm._inidanhSachHoSoTable(false);
-							} else if (item.id == 'tra_cuu_thong_tin_doanh_nghiep') {
-								vm._inithongTinDoanhNghiepTable(false);
-							}else if(item.id === 'tat_ca_hoso'){
+                    			}).catch(function (error) {
+                    				console.log(error);
+                    			});
+                    			return false;
+                    		}
+                    	}
+                    },
+                    'listgroupTraCuuFilter': {
+                    	'id': 'listgroupTraCuuFilter',
+                    	'name': 'listgroupTraCuuFilter',
+                    	"type": "listgroup",
+                    	'cssClass': 'pb-5',
+                    	"child_items": "items",
+                    	"data_title": "title",
+                    	"data_value": "id",
+                    	"onLoad": "_initlistgroupTraCuuFilter",
+                    	"onClick": "filterChange",
+                    	"events": {
+                    		filterChange: function(item){
+                    			var vm = this;
+                    			vm.detailPage = false;
+                    			vm.detailRegistPage = false;
+                    			vm.listgroupTraCuuFilterselected = item.id;
+                    			if ( item.id !== 'tra_cuu' ){
+                    				vm.stageFilterView = item.id;
+                    				vm.hoso_title_table = item.title;
+                    			}
 
-								vm.detailPage = false;
-								vm.detailRegistPage = false;
-								vm.listgroupHoSoFilterselected = item.id;
-								vm.danhSachHoSoTablepage = 1;
+                    			if (item.id == 'tra_cuu_hoso') {
+                    				vm._initraCuuHoSoTable(false);
+                    				vm._initAdvanced_filter_serviceInfo();
+                    				vm._initAdvanced_filter_loaiSanPham();
+                    				vm._initAdvanced_filter_nhanHieu();
+                    				vm._initAdvanced_filter_dossierStatus();
 
-								vm.listgroupHoSoFilterselectedIndex = item.index - 1;
+                    			} else if (item.id == 'tra_cuu_phuong_tien') {
+                    			} else if (item.id == 'tra_cuu_thong_tin_doanh_nghiep') {
+                    				vm._inithongTinDoanhNghiepTable(false);
+                    			}else if(item.id === 'tat_ca_hoso'){
 
-								vm.statusParamFilter = '';
-								vm.substatusParamFilter = '';
+                    				vm.detailPage = false;
+                    				vm.detailRegistPage = false;
+                    				vm.listgroupHoSoFilterselected = item.id;
+                    				vm.danhSachHoSoTablepage = 1;
 
-								vm._inidanhSachHoSoTable(false);
+                    				vm.listgroupHoSoFilterselectedIndex = item.index - 1;
 
-								vm.onScrollTop();
-							}
-							
-						},
-						_initlistgroupTraCuuFilter: function(){
-							var vm = this;
+                    				vm.statusParamFilter = '';
+                    				vm.substatusParamFilter = '';
 
-							vm.listgroupTraCuuFilterItems = [
-							{
-								id: 'tat_ca_hoso',
-								title: 'Tất cả hồ sơ'
-							},
-							{
-								id: 'tra_cuu_hoso',
-								title: 'Tra cứu kết quả'
-							},
-							{
-								id: 'tra_cuu_phuong_tien',
-								title: 'Phương tiện sản xuất lắp ráp'
-							},
-							{
-								id: 'tra_cuu_thong_tin_doanh_nghiep',
-								title: 'Thông tin doanh nghiệp'
-							}
-							];
-							
-						}
-					}
+                    				vm.follow = false;
+
+                    				vm._inidanhSachHoSoTable(false);
+
+                    				vm.onScrollTop();
+                    			}
+
+                    		},
+                    		_initlistgroupTraCuuFilter: function(){
+                    			var vm = this;
+
+                    			vm.listgroupTraCuuFilterItems = [
+                    			{
+                    				id: 'tat_ca_hoso',
+                    				title: 'Tất cả hồ sơ'
+                    			},
+                    			{
+                    				id: 'tra_cuu_hoso',
+                    				title: 'Tra cứu kết quả'
+                    			},
+                    			{
+                    				id: 'tra_cuu_phuong_tien',
+                    				title: 'Phương tiện sản xuất lắp ráp'
+                    			},
+                    			{
+                    				id: 'tra_cuu_thong_tin_doanh_nghiep',
+                    				title: 'Thông tin doanh nghiệp'
+                    			}
+                    			];
+
+                    		}
+                    	}
 				},
 				'listgroupBaoCaoFilter': {
 					'id': 'listgroupBaoCaoFilter',
@@ -1414,19 +1824,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.stageFilterView = item.id;
 								vm.hoso_title_table = item.title;
 							}
-							
+
 							if (item.id == 'tra_cuu_hoso') {
 								vm._initraCuuHoSoTable(false);
 								vm._initAdvanced_filter_serviceInfo();
 								vm._initAdvanced_filter_loaiSanPham();
 								vm._initAdvanced_filter_nhanHieu();
-								
+
 							} else if (item.id == 'tra_cuu_phuong_tien') {
 								// TODO vm._inidanhSachHoSoTable(false);
 							} else if (item.id == 'tra_cuu_thong_tin_doanh_nghiep') {
 								vm._inithongTinDoanhNghiepTable(false);
 							}*/
-							
+
 						},
 						_initlistgroupBaoCaoFilter: function(){
 							var vm = this;
@@ -1445,7 +1855,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								title: 'Đánh giá COP'
 							}
 							];
-							
+
 						}
 					}
 				},
@@ -1481,7 +1891,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						filterTraCuuPhuongTienKeywords: function (event) {
 							var vm = this;
 							if (event.keyCode === 13 || vm.keywordsSearchTraCuuPhuongTien.length > 3 || vm.keywordsSearchTraCuuPhuongTien.length === 0) {
-								
+
 							}
 
 						}
@@ -1548,10 +1958,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					"events": {
 						_initServiceInfoFilterData: function(){
 							var vm = this;
-							
+
 							//TODO: API
 							var url = '/o/rest/v2/serviceinfos';
-							
+
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
 
@@ -1562,8 +1972,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								console.log(error);
 
 							});
-							return false; 
-							
+							return false;
+
 						},
 						_filterDanhSachHoSoOnchange: function(data){
 							var vm = this;
@@ -1606,21 +2016,21 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					"events": {
 						_initApplicantNameFilterData: function(){
 							var vm = this;
-							
+
 							//TODO: API
 							var url = '/o/rest/v2/applicants';
-							
+
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
 
 								vm.applicantNameFilterItems = serializable.data;
-								
+
 							})
 							.catch(function (error) {
 								console.log(error);
 
 							});
-							return false; 
+							return false;
 						},
 						_applicantFilterDanhSachHoSoOnchange: function(data){
 							var vm = this;
@@ -1667,7 +2077,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					'previous': '_previousThongTinDoanhNghiepTable',
 					'events': {
 						_inithongTinDoanhNghiepTable: function (append) {
-							
+
 							var vm = this;
 							vm.traCuuFilter = true;
 							vm.viewmore = true;
@@ -1721,7 +2131,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								start: vm.thongTinDoanhNghiepTablepage * 15 - 15,
 								end: vm.thongTinDoanhNghiepTablepage * 15,
 							};
-							
+
 							//TODO
 							const config_registrations = {
 								params: paramsBuilder,
@@ -1731,7 +2141,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							};
 
 							var url = '/o/rest/v2/registrations';
-							
+
 							axios.get(url, config_registrations).then(function (response) {
 								var serializable = response.data;
 								var arrResult = [];
@@ -1746,7 +2156,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								vm.thongTinDoanhNghiepTableItems = arrResult;
 								vm.thongTinDoanhNghiepTableTotal = Math.ceil(serializable.total / 15);
-								
+
 								// temp fix header
 								$('.thongTinDoanhNghiepTable__class th[role="columnheader"]').each(function( index ) {
 									if ($( this ).attr('aria-label').indexOf("Activate") > 0) {
@@ -1755,32 +2165,32 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										$( this ).html($( this ).attr('aria-label').substring(0, $( this ).attr('aria-label').indexOf(":")).replace(/\./g,"<br/>"));
 									}
 								});
-								
+
 							})
 							.catch(function (error) {
 								console.log(error);
 								vm.thongTinDoanhNghiepTableItems = [];
 
 							});
-							return false; 
+							return false;
 						},
 						_paggingThongTinDoanhNghiepTable: function() {
-							
+
 							this._inithongTinDoanhNghiepTable(false);
 						},
 						_nextThongTinDoanhNghiepTable: function() {
-							
+
 						},
 						_previousThongTinDoanhNghiepTable: function() {
-							
+
 						},
 						toDetailHoSoDoanhNghiep: function (item) {
-							
+
 							var vm = this;
 							// call DetailAPI.
 
 							var url = '/o/rest/v2/registrations/'+item.registrationId;
-							
+
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
 
@@ -1795,14 +2205,14 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								console.log(error);
 
 							});
-							return false; 
+							return false;
 						},
 						_getListForms: function () {
 							var vm = this;
 							// call DetailAPI.
 
 							var url = '/o/rest/v2/registrations/'+vm.detailRegistModel.registrationId+'/forms';
-							
+
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
 								var arrFormnotRemmove = [];
@@ -1815,13 +2225,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								}
 								vm.registForms = arrFormnotRemmove;
 								vm.detailRegistPage = true;
-								
+
 							})
 							.catch(function (error) {
 								console.log(error);
 
 							});
-							return false; 
+							return false;
 						},
 						formatDate (date) {
 							if (!date) {
@@ -1851,7 +2261,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								// call API get file by dossierId
 								var url = "/o/rest/v2/registrations";
-								
+
 								$.ajax({
 									url: url,
 									headers: {
@@ -1884,9 +2294,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.detailRegistModel = {};
 									}
 								});
-								
+
 								dialog.close();
-								return false; 
+								return false;
 							})
 							.catch((e) => {
 								console.log(e)
@@ -1894,15 +2304,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						},
 						registrationPheDuyet: function(registrationState) {
 
-							
+
 							var vm = this;
 							vm.stateButtonregistration = false;
 							var defaultMessage = 'Đồng ý phê duyệt hồ sơ doanh nghiệp này?';
-							
+
 							if (registrationState === 3) {
 								defaultMessage = 'Gửi thông báo yêu cầu bổ sung thông tin doanh nghiệp?';
 							}
-							
+
 							vm.$dialog.confirm(defaultMessage, {
 								html: true,
 								loader: true,
@@ -1914,7 +2324,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								// call API get file by dossierId
 								var url = "/o/rest/v2/registrations/"+vm.detailRegistModel.registrationId;
-								
+
 								$.ajax({
 									url: url,
 									headers: {
@@ -1932,7 +2342,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.snackbartextdossierViewJX = "Yêu cầu xử lý thành công thành công!";
 										vm.snackbardossierViewJX = true;
 										vm.stateButtonregistration = false;
-										
+
 									},
 									error: function(xhr, textStatus, errorThrown) {
 										vm.detailRegistModel = {};
@@ -1941,11 +2351,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.stateButtonregistration = true;
 									}
 								});
-								
+
 								dialog.close();
-								return false; 
-							})
-							.catch((e) => {
+								return false;
+							}).catch((e) => {
 								console.log(e);
 								vm.stateButtonregistration = true;
 							})
@@ -2019,17 +2428,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var method = "GET";
 
 							var paramsBuilder = {
-								
 								start: vm.traCuuHoSoTablepage * 15 - 15,
 								end: vm.traCuuHoSoTablepage * 15,
 								sort: 'modified',
-								order: 'false'
+								order: 'false',
+								state: 2
 							};
 							var loai_chung_chi = vm.advancedFilterServiceInfo.deliverableType;
 							try{
 								if(vm.advanced_filter){
-
-									
 									var ten_doanh_nghiep = vm.advanced_filter_applicantName;
 									var so_ho_so = vm.advanced_filter_dossierIdCTN;
 									var so_chung_chi = vm.advanced_filter_dossierNo;
@@ -2038,14 +2445,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									var ten_thuong_mai = vm.advanced_filter_tenThuongMai;
 									var ma_kieu_loai = vm.advanced_filter_maKieuLoai;
 
-									if(!loai_chung_chi && !ten_doanh_nghiep && !so_ho_so && !so_chung_chi && !loai_san_pham && !nhan_hieu && 
+									if(!loai_chung_chi && !ten_doanh_nghiep && !so_ho_so && !so_chung_chi && !loai_san_pham && !nhan_hieu &&
 										!ten_thuong_mai && !ma_kieu_loai){
 										paramsBuilder.keyword = vm.keywordsSearchTraCuuHoSo;
 								}else {
 									var queryKey = '"query": "';
 									var queryValue = '"values": "';
 									var queryType = '"type": "';
-
 									var queryKeyArr = new Array();
 									var queryValueArr = new Array();
 									var queryTypeArr = new Array();
@@ -2073,12 +2479,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}
 
 									if(loai_san_pham){
-
 										queryKeyArr.push('(loai_san_pham = ?)');
 										queryValueArr.push(loai_san_pham);
 										queryTypeArr.push('String');
 									}
-
 									if(nhan_hieu){
 
 										queryKeyArr.push('(nhan_hieu = ?)');
@@ -2104,8 +2508,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									paramsBuilder.keyword = query;
 									url = "/o/rest/v2/deliverables/agency/BGTVTCDKVN/type/"+loai_chung_chi;
 									method = "POST";
-
-
 								}
 
 							}else {
@@ -2193,7 +2595,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							});
 
 
-						return false; 
+						return false;
 					},
 					toViewDelivableFile : function(item){
 						var deliverableCode = item.deliverableCode;
@@ -2234,8 +2636,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 						var vm = this;
 						vm.stepModel = null;
-							// call DetailAPI.
-						
+
 						var ma_ho_so = item.ma_ho_so;
 						var urlDossierId = '/o/rest/v2/dossiers/number/'+ma_ho_so;
 
@@ -2249,15 +2650,15 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								var dossierStatus = serializable.dossierStatus;
 								var dossierSubStatus = serializable.dossierSubStatus;
 
-								if (dossierStatus === 'cancelling' || 
-									dossierStatus === 'cancelled' || 
-									dossierStatus === 'processing' || 
+								if (dossierStatus === 'cancelling' ||
+									dossierStatus === 'cancelled' ||
+									dossierStatus === 'processing' ||
 									dossierStatus === 'paid') {
 									vm.listgroupHoSoFilterselected = dossierStatus;
 									vm.statusParamFilter = dossierStatus;
 									vm.substatusParamFilter = dossierSubStatus;
 								}else {
-									
+
 									vm.listgroupHoSoFilterselected = dossierSubStatus;
 									vm.statusParamFilter = dossierSubStatus;
 									vm.substatusParamFilter = dossierStatus;
@@ -2270,19 +2671,17 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm._inilistDocumentIn(vm.detailModel);
 								vm._inilistDocumentOut(vm.detailModel);
 
-							})
-							.catch(function (error) {
+							}).catch(function (error) {
 								console.log(error);
 
 							});
 
-						})
-						.catch(function (error) {
+						}).catch(function (error) {
 							console.log(error);
 
 						});
 
-						return false; 
+						return false;
 					},
 					advanced_filter_btn_click : function(){
 						var vm = this;
@@ -2323,7 +2722,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						this.danhSachHoSoTableheaders = [
 						{
 							text: 'STT',
-							align: 'left',
+							align: 'center',
 							sortable: false,
 							value: 'stt'
 						},
@@ -2377,7 +2776,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								keyword: vm.keywordsSearch,
 								owner: vm.applicantNameFilter.applicantIdNo,
 								service: vm.serviceInfoFilter.serviceCode,
-								follow: true,
+								follow: vm.follow,
 								dossierNo: vm.dossierNoFilter,
 								start: vm.danhSachHoSoTablepage * 15 - 15,
 								end: vm.danhSachHoSoTablepage * 15,
@@ -2387,8 +2786,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								order: 'false'
 							};
 
-							
-							
+
 							if ( vm.keywordFilter != null ) {
 								paramsBuilder['keyword'] = vm.keywordFilter;
 							} else {
@@ -2400,19 +2798,23 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									'groupId': themeDisplay.getScopeGroupId(),
 								}
 							};
-
 							var url = '/o/rest/v2/dossiers/dossiersTest';
-							//var url = "http://hanoi.fds.vn:2281/api/dossiers";
-							
+
+							if (vm.follow) {
+								url = '/o/rest/v2/dossiers/dossiersTest';
+							} else {
+								url = '/o/rest/v2/dossiers';
+							}
 							axios.get(url, config_dossiers).then(function (response) {
 								var serializable = response.data;
-								
+
+								vm.follow = true;
 
 								if (append) {
 									vm.danhSachHoSoTableItems.push.apply(vm.danhSachHoSoTableItems, serializable.data);
 								} else if(serializable.data){
 									/*for (var i = 0; i < serializable.data.length; i++) {
-										
+
 										if(serializable.data[i].certNumber){
 											if(serializable.data[i].certNumber.length){
 
@@ -2440,24 +2842,24 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									vm.danhSachHoSoTableItems = serializable.data;
 
 									vm.danhSachHoSoTableTotal = Math.ceil(serializable.total / 15);
-									
+
 								}else {
 									vm.danhSachHoSoTableItems = [];
 
 									vm.danhSachHoSoTableTotal = 0;
 								}
-								
+
 								if (vm.listgroupHoSoFilterselectedIndex >= 0) {
 									console.log('reindex counting ...');
 									vm.listgroupHoSoFilterItems[vm.listgroupHoSoFilterselectedIndex]['count'] = serializable.total;
 								}
-								
+
 								vm.xem_them = 'Xem thêm 8+ bản ghi';
 								if (!serializable.data) {
 									vm.xem_them = 'Tổng số ( ' + serializable.total + ' ) bản ghi'
 								}
 								vm.viewmore = false;
-								
+
 								// temp fix header
 								$('.danhSachHoSoTable__class th[role="columnheader"]').each(function( index ) {
 									if ($( this ).attr('aria-label').indexOf("Activate") > 0) {
@@ -2467,22 +2869,21 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}
 								});
 								console.log(vm.danhSachHoSoTableItems);
-							})
-							.catch(function (error) {
+							}).catch(function (error) {
 								console.log(error);
 								vm.danhSachHoSoTableItems = [];
 
 							});
-							return false; 
+							return false;
 						},
 						toDetailHoSo: function (item) {
-							
+
 							var vm = this;
 							vm.stepModel = null;
 							// call DetailAPI.
 
 							var url = '/o/rest/v2/dossiers/'+item.dossierId;
-							
+
 							axios.get(url, config).then(function (response) {
 								var serializable = response.data;
 
@@ -2490,25 +2891,24 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.detailModel.dossierIdCTN = item.dossierIdCTN;
 								vm.detailPage = true;
 								window.scrollBy(0, -99999);
-								
+
 								vm._inilistDocumentIn(vm.detailModel);
 								vm._inilistDocumentOut(vm.detailModel);
 
-							})
-							.catch(function (error) {
+							}).catch(function (error) {
 								console.log(error);
 
 							});
-							return false; 
+							return false;
 						},
 						_paggingDanhSachHoSo: function() {
 							this._inidanhSachHoSoTable(false);
 						},
 						_nextDanhSachHoSo: function() {
-							
+
 						},
 						_previousDanhSachHoSo: function() {
-							
+
 						}
 					}
 				},
@@ -2527,12 +2927,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								var url = "/o/rest/v2/dossiertemplates/"+item.dossierTemplateNo;
 								var urlFiles = "/o/rest/v2/dossiers/"+item.dossierId+"/files";
 
-								axios.all([
-									axios.get(url, config),
-									axios.get(urlFiles, config)
-									])
-								.then(axios.spread(function (urlRespones, urlFilesRespones) {
-							    // Both requests are now complete
+								axios.all([axios.get(url, config), axios.get(urlFiles, config)]).then(axios.spread(function (urlRespones, urlFilesRespones) {
 							    vm.dossierFiles = urlFilesRespones.data.data;
 
 							    var serializable = urlRespones.data;
@@ -2567,11 +2962,10 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							    vm.listDocumentInItems = listIn;
 							    vm.listDocumentOutItems = listOut;
-								// TEMP
 								vm._initCbxDocumentNewTab(listAll);
-								
+
 								return Promise.reject();
-								
+
 							})).catch(function (error) {
 								console.log(error);
 
@@ -2588,18 +2982,34 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									if(vm.dossierFiles[key].fileSize > 0){
 										listFilesUpload.push(vm.dossierFiles[key]);
 									}
-									
+
 								}
 							}
 							vm.listDocumentInPartNoItems = listFilesUpload;
 							if (item.counter > 0){
 								vm.popUpViewDossierFile = !vm.popUpViewDossierFile;
 							}
-							
+
 						},
 						viewDossierFileVersionNewTabOrWindow: function (item) {
 							var vm = this;
 							if(item.counter > 0){
+								if (item.counter === 1) {
+									let configBob = {
+										headers: {
+											groupId: themeDisplay.getScopeGroupId()
+										},
+										responseType: 'blob'
+									}
+									var url = '/o/rest/v2/dossiers/' + vm.detailModel.dossierId + '/files/' + item.referenceUid;
+									axios.get(url, configBob).then(function (response) {
+										var url = window.URL.createObjectURL(response.data);
+										window.open(url);
+									}).catch(function (error) {
+										console.log(error);
+									});
+									return;
+								}
 								console.log("vm.detailModel========",vm.detailModel);
 
 								var url = "/group/cong-xu-ly/xu-ly-ho-so?stateWindow=stateWindow&dossierId="+vm.detailModel.dossierId+
@@ -2611,21 +3021,19 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									okText: 'Cửa sổ mới',
 									cancelText: 'Tab mới',
 									animation: 'fade'
-								})
-								.then((dialog) => {
+								}).then((dialog) => {
 									console.log("dialog============",dialog);
 
 									window.open(url, "_blank", "ccc");
 
 									dialog.close();
-									return false; 
-								})
-								.catch((e) => {
+									return false;
+								}).catch((e) => {
 									console.log(e);
 									window.open(url, "_blank");
 								})
 							}
-							
+
 						},
 						viewDossierFileResult: function (item, index) {
 							var vm = this;
@@ -2633,7 +3041,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								vm.popupResultFile = true;
 								// call API get file by dossierId
 								var urlFiles = "/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files";
-								
+
 								axios.get(urlFiles, config).then(function (response) {
 									var serializable = response.data;
 									var resultsFiles = [];
@@ -2645,14 +3053,13 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									}
 									vm.listDocumentOutStepItems = resultsFiles;
 									vm.popUpViewDossierFile = !vm.popUpViewDossierFile;
-									
-								})
-								.catch(function (error) {
+
+								}).catch(function (error) {
 									console.log(error);
-									
+
 								});
 							}
-							return false; 
+							return false;
 						}
 					}
 				},
@@ -2669,7 +3076,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					'template': 'list_document_out_template',
 					'events': {
 						downloadReferenceFile: function (item) {
-							// call DownloadFile.
 							var vm = this;
 							const config_blob = {
 								headers: {
@@ -2679,17 +3085,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							};
 
 							var url = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/files/'+item.referenceUid;
-							
+
 							axios.get(url, config_blob).then(function (response) {
 								var url = window.URL.createObjectURL(response.data);
 								console.log(url);
 								window.open(url);
-							})
-							.catch(function (error) {
+							}).catch(function (error) {
 								console.log(error);
 
 							});
-							return false; 
+							return false;
 						},
 						_inilistDocumentOut: function (item) {
 							var vm = this;
@@ -2699,12 +3104,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							var url = "/o/rest/v2/dossiertemplates/"+item.dossierTemplateNo;
 							var urlFiles = "/o/rest/v2/dossiers/"+item.dossierId+"/files";
 
-							axios.all([
-								axios.get(url, config),
-								axios.get(urlFiles, config)
-								])
-							.then(axios.spread(function (urlRespones, urlFilesRespones) {
-							    // Both requests are now complete
+							axios.all([axios.get(url, config), axios.get(urlFiles, config)]).then(axios.spread(function (urlRespones, urlFilesRespones) {
 							    vm.dossierFiles = urlFilesRespones.data.data;
 
 							    var serializable = urlRespones.data;
@@ -2723,24 +3123,24 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							    			serializable.dossierParts[key].displayName = vm.dossierFiles[keyFile].displayName;
 
 							    			if(vm.dossierFiles[keyFile].fileSize <= 0){
-							    				
+
 							    				countData = countData -1;
-							    				
+
 							    			}
 
 							    		}
 
 							    	}
 
-							    	serializable.dossierParts[key].counter = countData;					
+							    	serializable.dossierParts[key].counter = countData;
 
 							    	if ( serializable.dossierParts[key].partType === 2 ) {
 							    		if(serializable.dossierParts[key].partNo.indexOf("KQ") !== -1){
-							    			
+
 							    			listOut.push(serializable.dossierParts[key]);
 							    		}
 
-							    	} 
+							    	}
 
 							    }
 
@@ -2777,11 +3177,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							vm.listHistoryProcessingItems = [];
 
 						},
-						selectDossierActionTab(){
-							
+						selectDossierActionTab () {
 							var vm = this;
-							
-							//var url = "/o/frontendwebdossier/json/dossier_logs.json?t=1";
 							var url = "/o/rest/v2/dossierlogs/"+vm.detailModel.dossierId+"/logs";
 							vm.listHistoryProcessingItems = [];
 							axios.get(url, config).then(function (response) {
@@ -2814,12 +3211,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 										vm.listHistoryProcessingItems.push(serializable.data[key]);
 									}
 								}
-							})
-							.catch(function (error) {
+							}).catch(function (error) {
 								console.log(error);
-								
+
 							});
-							return false; 
+							return false;
 						},
 						downloadFile( fileAttachId){
 							var vm = this;
@@ -2833,12 +3229,11 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							axios.get(url, config_blob).then(function (response) {
 								var url = window.URL.createObjectURL(response.data);
 								window.open(url);
-							})
-							.catch(function (error) {
+							}).catch(function (error) {
 								console.log(error);
 
 							});
-							return false; 
+							return false;
 						}
 					}
 				},
@@ -2925,9 +3320,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 						previewDossierPDF: function (item) {
 							var vm = this;
 							vm.dossierViewJXTitle = item.displayName;
-							// TODO: call API lay file
 							var url ="/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid ;
-							// var url = "/o/rest/v2/dossiers/14203/files/a148ee9b-b1a7-b2e7-ca0e-e6503a65b8eb";
 							vm._showFile({
 								config : {
 									headers: {
@@ -2947,34 +3340,32 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								iFrame.className = "";
 								iFrame.innerHTML = '<iframe src="'+url+'" width="100%" height="100%"> </iframe>';
 								dossierPDFViewNotFound.innerHTML = '';
-							})
-							.catch(function (error) {
+							}).catch(function (error) {
 								console.log(error);
 								dossierPDFViewNotFound.innerHTML = 'Tài liệu đính kèm không tồn tại!';
 
 							});
-							return false; 
+							return false;
 						},
 						previewDossierPDFNewTab: function (item) {
 							var vm = this;
 							var url ="/o/rest/v2/dossiers/"+vm.detailModel.dossierId+"/files/"+item.referenceUid ;
-							
+
 							const config_blob = {
 								headers: {
 									'groupId': themeDisplay.getScopeGroupId(),
 								},
 								responseType: 'blob'
 							};
-							
+
 							axios.get(url, config_blob).then(function (response) {
 								var url = window.URL.createObjectURL(response.data);
 								window.open(url);
-							})
-							.catch(function (error) {
+							}).catch(function (error) {
 								console.log(error);
 
 							});
-							return false; 
+							return false;
 						}
 					}
 				},
@@ -2994,7 +3385,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 					"events": {
 						_initCbxDocumentNewTab: function(listAll){
 							var vm = this;
-							
+
 							vm.cbxDocumentNewTabItems = listAll;
 						},
 						_newTabCbxDocumentNewTab: function(data) {
@@ -3007,17 +3398,16 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							};
 
 							var url = '/o/rest/v2/dossiers/'+vm.detailModel.dossierId+'/files/'+data.referenceUid;
-							
+
 							axios.get(url, config_blob).then(function (response) {
 								var url = window.URL.createObjectURL(response.data);
 								console.log(url);
 								window.open(url);
-							})
-							.catch(function (error) {
+							}).catch(function (error) {
 								console.log(error);
 
 							});
-							return false; 
+							return false;
 						}
 
 					}
@@ -3045,8 +3435,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                 				var serializable = response.data;
                 				vm.advanced_filter_serviceInfoItems = serializable.data;
                 				console.log(vm.advanced_filter_serviceInfoItems);
-                			})
-                			.catch(function (error) {
+                			}).catch(function (error) {
                 				console.log(error);
 
                 			});
@@ -3069,12 +3458,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                 	"type": "text",
                 	'label': 'Số hồ sơ'
                 },
-/*                "advanced_filter_dossierNo": {
-                	'id': 'advanced_filter_dossierNo',
-                	'name': 'advanced_filter_dossierNo',
-                	"type": "text",
-                	'label': 'Số chứng chỉ '
-                },*/
                 "advanced_filter_startDate" : {
                 	'id' : 'advanced_filter_startDate',
                 	'name' : 'advanced_filter_startDate',
@@ -3114,13 +3497,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                 					vm.advanced_filter_dossierStatusItems = serializable.data;
                 					console.log(vm.advanced_filter_dossierStatusItems);
 
-                				})
-                				.catch(function (error) {
+                				}).catch(function (error) {
                 					console.log(error);
 
                 				});
                 			}
-                			return false; 
+                			return false;
                 		},
                 		_filterAdvancedDossierStatusOnchange : function(data){
                 			var vm = this;
@@ -3153,13 +3535,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                 					var serializable = response.data;
                 					vm.advanced_filter_loaiSanPhamItems = serializable.data;
                 					console.log(vm.advanced_filter_loaiSanPhamItems);
-                				})
-                				.catch(function (error) {
+                				}).catch(function (error) {
                 					console.log(error);
 
                 				});
                 			}
-                			return false; 
+                			return false;
                 		},
                 		_filterAdvancedLoaiSanPhamOnchange : function(data){
                 			var vm = this;
@@ -3191,13 +3572,12 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                 				axios.get(url, config).then(function (response) {
                 					var serializable = response.data;
                 					vm.advanced_filter_nhanHieuItems = serializable.data;
-                				})
-                				.catch(function (error) {
+                				}).catch(function (error) {
                 					console.log(error);
 
                 				});
                 			}
-                			return false; 
+                			return false;
                 		},
                 		_filterAdvancedNhanHieuOnchange : function(data){
                 			var vm = this;
@@ -3220,7 +3600,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
             }
         });
 
-dossierViewJX._builder('dossierViewJX');
+	dossierViewJX._builder('dossierViewJX');
 }
 
 
