@@ -127,6 +127,9 @@ public class DossierActionsImpl implements DossierActions {
 			long total = DossierLocalServiceUtil.countLucene(params, searchContext);
 
 			result.put("total", total);
+			
+		User user = UserLocalServiceUtil.getUser(1);
+		user.getFullName();
 
 		} catch (Exception e) {
 			_log.error(e);
@@ -789,7 +792,9 @@ public class DossierActionsImpl implements DossierActions {
 												+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 
 										JSONObject createFile = JSONFactoryUtil.createJSONObject();
+										
 										createFile.put("dossierPartId", dossierPart.getDossierPartId());
+										createFile.put("required", dossierPart.getRequired());
 										createFile.put("partNo", dossierPart.getPartNo());
 										createFile.put("partName", dossierPart.getPartName());
 										createFile.put("partTip", dossierPart.getPartTip());
@@ -2586,31 +2591,6 @@ public class DossierActionsImpl implements DossierActions {
 			} else {
 				List<DictItem> dictItems = DictItemLocalServiceUtil
 						.findByF_dictCollectionId(dictCollection.getDictCollectionId());
-
-				// Get list dossierActionId
-				// List<DossierActionUser> dauList =
-				// DossierActionUserLocalServiceUtil.getListUserByUserId(userId);
-				// long dossierActionId = 0;
-				// StringBuilder sb = null;
-				// if (dauList != null && dauList.size() > 0) {
-				// sb = new StringBuilder();
-				// int length = dauList.size();
-				// DossierActionUser dau = null;
-				// for (int i = 0; i < length; i++) {
-				// dau = dauList.get(i);
-				// dossierActionId = dau.getDossierActionId();
-				// // StringBuilder sb = new StringBuilder();
-				// if (dossierActionId > 0) {
-				//
-				// if (i == 0) {
-				// sb.append(dossierActionId);
-				// } else {
-				// sb.append(StringPool.COMMA);
-				// sb.append(dossierActionId);
-				// }
-				// }
-				// }
-				// }
 
 				for (DictItem dictItem : dictItems) {
 					String metaData = dictItem.getMetaData();

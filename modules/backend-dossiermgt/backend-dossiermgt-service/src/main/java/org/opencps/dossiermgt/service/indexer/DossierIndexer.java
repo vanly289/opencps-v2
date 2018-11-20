@@ -25,6 +25,8 @@ import org.opencps.dossiermgt.model.DossierActionUser;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
 import org.opencps.dossiermgt.model.DossierRequestUD;
+import org.opencps.dossiermgt.model.ProcessStep;
+import org.opencps.dossiermgt.model.ProcessStepRole;
 import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionUserLocalServiceUtil;
@@ -32,6 +34,8 @@ import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
+import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
+import org.opencps.dossiermgt.service.ProcessStepRoleLocalServiceUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -41,11 +45,13 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -237,43 +243,58 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 
 			// Get list DossierAction
 
-			Optional<List<DossierAction>> listDossierAction = Optional
-					.ofNullable(DossierActionLocalServiceUtil.getDossierActionById(dossierId));
-
-			listDossierAction.ifPresent(source -> {
+			_log.info("TEST GET NEW CODE");
+		
+				Optional<List<DossierActionUser>> listDossierActionUser = Optional.ofNullable(
+						DossierActionUserLocalServiceUtil.getListUser(object.getDossierActionId()));
 				
-				_log.info("TEST GET NEW CODE");
 				
-				if (source.size() != 0) {
-
-					for (DossierAction dossierAction : source) {
-
-						Optional<List<DossierActionUser>> listDossierActionUser = Optional.ofNullable(
-								DossierActionUserLocalServiceUtil.getListUser(dossierAction.getDossierActionId()));
-
-						listDossierActionUser.ifPresent(source_2 -> {
+				listDossierActionUser.ifPresent(source_2 -> {
+					
+					if (source_2.size() != 0) {
+						for (DossierActionUser dossierActionUser : source_2) {
+								sb.append(StringPool.SPACE);
+								sb.append(dossierActionUser.getUserId());
 							
-							if (source_2.size() != 0) {
-								for (DossierActionUser dossierActionUser : source_2) {
-
-									sb.append(StringPool.SPACE);
-									sb.append(dossierActionUser.getUserId());
-								}
-
-							}
-						});
+						}
 
 					}
-
-				}
+				});
 				
-				document.addTextSortable(DossierTerm.ACTION_MAPPING_USERID, sb.toString());
+				DossierAction currDossierAction = DossierActionLocalServiceUtil.fetchDossierAction(object.getDossierActionId());
+				
+				if (Validator.isNotNull(currDossierAction)) {
+					ProcessStep processStep = ProcessStepLocalServiceUtil.fetchBySC_GID(currDossierAction.getStepCode(),
+							object.getGroupId(), currDossierAction.getServiceProcessId());
+					
+					if (Validator.isNotNull(processStep)) {
+						List<ProcessStepRole> processStepRoles = ProcessStepRoleLocalServiceUtil.findByP_S_ID(processStep.getProcessStepId());
+						
+						for (ProcessStepRole processStepRole : processStepRoles) {
+							
+							if (!processStepRole.getModerator()) {
+								
+								long roleId = processStepRole.getRoleId();
+								
+								List<User> users = UserLocalServiceUtil.getRoleUsers(roleId);
+								
+								for (User user : users) {
+									sb.append(StringPool.SPACE);
+									sb.append(user.getUserId());
+								}
+								
+							}
+							
+						}
+					}
+				}
 
-			});
-
-
-			_log.info("Mapping user:" + sb.toString());
 			document.addTextSortable(DossierTerm.ACTION_MAPPING_USERID, sb.toString());
+			
+			
+
+			_log.info("Mapping user***:" + document.get(DossierTerm.ACTION_MAPPING_USERID));
+			//document.addTextSortable(DossierTerm.ACTION_MAPPING_USERID, sb.toString());
 
 			// Indexing DossierActionUsers
 			List<Long> actionUserIds = new ArrayList<>();

@@ -1,5 +1,6 @@
 package org.opencps.api.controller.impl;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -42,6 +43,7 @@ import org.opencps.dossiermgt.action.util.SpecialCharacterUtils;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
+import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierMark;
 import org.opencps.dossiermgt.model.DossierTemplate;
 import org.opencps.dossiermgt.model.ProcessAction;
@@ -51,6 +53,7 @@ import org.opencps.dossiermgt.model.ServiceConfig;
 import org.opencps.dossiermgt.model.ServiceInfo;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierTemplateLocalServiceUtil;
@@ -1804,5 +1807,157 @@ public class DossierManagementImpl implements DossierManagement {
 		
 		return Response.status(200).entity("{}").build();
 	}
+	
+	@Override
+	public Response reindexDossier(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long dossierId) {
+
+		Indexer<Dossier> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Dossier.class);
+		
+		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+		
+		
+		try {
+			indexer.reindex(dossier);
+		} catch (Exception e) {
+			return Response.status(404).entity("{error}").build();
+		}
+		
+		
+		return Response.status(200).entity("{}").build();
+	}
+	
+	@Override
+	public Response delAndReindexDossier(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long dossierId) {
+
+		Indexer<Dossier> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Dossier.class);
+		
+		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+		
+		try {
+			
+			if (Validator.isNotNull(dossier)) {
+				
+				//remove dossier
+				
+				DossierLocalServiceUtil.deleteDossier(dossier);
+				
+				
+				//remove index
+				
+				indexer.delete(dossier);
+			}
+		} catch (Exception e) {
+			return Response.status(404).entity("{error}").build();
+		}
+		
+		
+		return Response.status(200).entity("{}").build();
+	}
+	
+	
+	@Override
+	public Response resetDossier(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long dossierId) {
+
+		Indexer<Dossier> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Dossier.class);
+		
+		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+		
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+
+		
+		try {
+			
+			if (Validator.isNotNull(dossier)) {
+				
+				DictCollection dc = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode(DOSSIER_SATUS_DC_CODE, groupId);
+
+				if (Validator.isNotNull(dc)) {
+					DictItem it = DictItemLocalServiceUtil.fetchByF_dictItemCode("new", dc.getPrimaryKey(), groupId);
+					
+					dossier.setSubmitting(true);
+					dossier.setDossierStatus(it.getItemCode());
+					dossier.setDossierStatusText(it.getItemName());
+
+				}
+				
+				
+				//update dossier
+				
+				DossierLocalServiceUtil.updateDossier(dossier);
+				
+				List<DossierFile> lsDossierFiles = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
+				
+				for (DossierFile dossierFile : lsDossierFiles) {
+					dossierFile.setIsNew(true);
+					
+					DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+				}
+				
+				//update index
+				
+				indexer.reindex(dossier);
+			}
+		} catch (Exception e) {
+			return Response.status(404).entity("{error}").build();
+		}
+		
+		
+		return Response.status(200).entity("{" + dossierId + "groupId" + groupId + "}").build();
+	}
+	
+	
+	@Override
+	public Response correctingDossier(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long dossierId) {
+
+		Indexer<Dossier> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Dossier.class);
+		
+		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+		
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		
+		try {
+			
+			if (Validator.isNotNull(dossier)) {
+				
+				dossier.setSubmitting(true);
+				
+				dossier.setModifiedDate(new Date());
+				
+				dossier.setLockState(LOCK_ALL);
+				
+				//update dossier
+				
+				DossierLocalServiceUtil.updateDossier(dossier);
+				
+				List<DossierFile> lsDossierFiles = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
+				
+				for (DossierFile dossierFile : lsDossierFiles) {
+					dossierFile.setIsNew(true);
+					
+					DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+				}
+				
+				//update index
+				
+				indexer.reindex(dossier);
+			}
+		} catch (Exception e) {
+			return Response.status(404).entity("{error}").build();
+		}
+		
+		
+		return Response.status(200).entity("{" + dossierId + "groupId" + groupId + "}").build();
+	}
+	public static final String DOSSIER_SATUS_DC_CODE = "DOSSIER_STATUS";
+	
+	private static final String LOCK_ALL = "LOCK ALL";
 
 }

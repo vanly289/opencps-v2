@@ -939,6 +939,10 @@
 		<column name="configNote" type="String"/>
 		<column name="dossierTemplateNo" type="String"/>
 		
+		<order by="ASC">
+			<order-column name="createDate"/>
+		</order>
+		
 		<finder return-type="Collection" name="S_P_ID">
 			<finder-column name="serviceProcessId" />
 		</finder>

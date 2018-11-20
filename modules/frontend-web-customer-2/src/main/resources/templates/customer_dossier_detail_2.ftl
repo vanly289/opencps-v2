@@ -54,7 +54,7 @@
 			</div>
 		</div>
 
-		<div class="guide-section PB0">
+		<div class="guide-section PB0" style="clear: both;">
 			<div class="head-part slide-toggle">
 				<div class="background-triangle-small">
 					<i class="fa fa-star"></i>
@@ -392,7 +392,7 @@
 
 
 <script type="text/javascript">
-
+	console.log("VLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL2222222222222222222");
 	$("#step2").addClass("done");
 	$("#step3").addClass("done");
 	var arrIsChangeForm = [];
