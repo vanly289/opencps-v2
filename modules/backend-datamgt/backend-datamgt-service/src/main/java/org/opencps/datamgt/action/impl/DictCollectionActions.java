@@ -520,6 +520,7 @@ public class DictCollectionActions implements DictcollectionInterface {
 		}
 		return flag;
 	}
+	
 
 	public DictItemGroup addDictgroupsDictItems(
 		long userId, long groupId, String code, String groupCode,
@@ -530,12 +531,20 @@ public class DictCollectionActions implements DictcollectionInterface {
 		DictItemGroup dictItemGroup = null;
 		DictGroup dictGroup = null;
 		DictItem dictItem = null;
+		
+		System.out.println(":::::::DICT_COLLECTION CODE:::" + code);
 
 		DictCollection dictCollection =
 			DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode(
 				code, groupId);
-
+		
 		if (dictCollection != null) {
+			
+			System.out.println(":::::::DICT_COLLECTION _IS NOT NULL:::");
+			System.out.println(":::::::DICT_COLLECTION _ITEMCODE:::" + itemCode);
+			System.out.println(":::::::DICT_COLLECTION _DICTCOLLECTION_ID:::" + dictCollection.getDictCollectionId());
+			System.out.println(":::::::DICT_COLLECTION _GROUPID:::" + groupId);
+			
 			dictGroup = DictGroupLocalServiceUtil.getByGC_GI_DCI(
 				groupCode, groupId, dictCollection.getDictCollectionId());
 			dictItem = DictItemLocalServiceUtil.fetchByF_dictItemCode(

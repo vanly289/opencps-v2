@@ -22,6 +22,7 @@ import org.opencps.datamgt.constants.DataMGTConstants;
 import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
 import org.opencps.datamgt.utils.DictCollectionUtils;
+import org.opencps.dossiermgt.constants.PaymentFileTerm;
 import org.opencps.dossiermgt.constants.ServiceInfoTerm;
 import org.opencps.dossiermgt.exception.DuplicateServiceCodeException;
 import org.opencps.dossiermgt.exception.RequiredAdministrationCodeException;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -349,6 +351,7 @@ public class ServiceInfoLocalServiceImpl extends ServiceInfoLocalServiceBaseImpl
 		String administration = GetterUtil.getString(params.get(ServiceInfoTerm.ADMINISTRATION_CODE));
 		String domain = GetterUtil.getString(params.get(ServiceInfoTerm.DOMAIN_CODE));
 		String level = String.valueOf((params.get(ServiceInfoTerm.MAX_LEVEL)));
+		String serviceCode = String.valueOf((params.get(ServiceInfoTerm.SERVICE_CODE)));
 
 		if (Validator.isNotNull(administration)) {
 			MultiMatchQuery query = new MultiMatchQuery(administration);
@@ -372,6 +375,29 @@ public class ServiceInfoLocalServiceImpl extends ServiceInfoLocalServiceBaseImpl
 			query.addFields(ServiceInfoTerm.MAX_LEVEL);
 
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+
+		if (Validator.isNotNull(serviceCode)) {
+			String[] sliptService = serviceCode.split(StringPool.COMMA);
+			if (sliptService != null && sliptService.length > 0) {
+			BooleanQuery subQuery = new BooleanQueryImpl();
+				for (String strService : sliptService) {
+					if (Validator.isNotNull(strService)) {
+	
+						MultiMatchQuery query = new MultiMatchQuery(strService);
+	
+						query.addFields(ServiceInfoTerm.SERVICE_CODE);
+						subQuery.add(query, BooleanClauseOccur.SHOULD);
+					}
+				}
+				booleanQuery.add(subQuery, BooleanClauseOccur.MUST);
+			} else {
+				MultiMatchQuery query = new MultiMatchQuery(serviceCode);
+
+				query.addFields(ServiceInfoTerm.SERVICE_CODE);
+
+				booleanQuery.add(query, BooleanClauseOccur.MUST);
+			}
 		}
 
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);
@@ -429,6 +455,7 @@ public class ServiceInfoLocalServiceImpl extends ServiceInfoLocalServiceBaseImpl
 		String administration = GetterUtil.getString(params.get(ServiceInfoTerm.ADMINISTRATION_CODE));
 		String domain = GetterUtil.getString(params.get(ServiceInfoTerm.DOMAIN_CODE));
 		String level = String.valueOf((params.get(ServiceInfoTerm.MAX_LEVEL)));
+		String serviceCode = String.valueOf((params.get(ServiceInfoTerm.SERVICE_CODE)));
 
 		if (Validator.isNotNull(administration)) {
 			MultiMatchQuery query = new MultiMatchQuery(administration);
@@ -452,6 +479,29 @@ public class ServiceInfoLocalServiceImpl extends ServiceInfoLocalServiceBaseImpl
 			query.addFields(ServiceInfoTerm.MAX_LEVEL);
 
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+
+		if (Validator.isNotNull(serviceCode)) {
+			String[] sliptService = serviceCode.split(StringPool.COMMA);
+			if (sliptService != null && sliptService.length > 0) {
+			BooleanQuery subQuery = new BooleanQueryImpl();
+				for (String strService : sliptService) {
+					if (Validator.isNotNull(strService)) {
+	
+						MultiMatchQuery query = new MultiMatchQuery(strService);
+	
+						query.addFields(PaymentFileTerm.SERVICE_CODE);
+						subQuery.add(query, BooleanClauseOccur.SHOULD);
+					}
+				}
+				booleanQuery.add(subQuery, BooleanClauseOccur.MUST);
+			} else {
+				MultiMatchQuery query = new MultiMatchQuery(serviceCode);
+
+				query.addFields(PaymentFileTerm.SERVICE_CODE);
+
+				booleanQuery.add(query, BooleanClauseOccur.MUST);
+			}
 		}
 
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);

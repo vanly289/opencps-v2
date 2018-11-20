@@ -181,8 +181,8 @@
 		
 		<!-- Order -->
 		<order by="asc">
-			<order-column name="modifiedDate" />
 			<order-column name="priority"/>
+			<order-column name="modifiedDate" />
 		</order>
 		
         <finder name="F_className_Method" return-type="Collection">

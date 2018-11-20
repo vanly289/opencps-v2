@@ -796,7 +796,10 @@
 		<column name="editable" type="boolean" />
 		<column name="restrictDossier" type="String" />
 		<column name="lockState" type="String" />
-
+		
+		<order by="asc">
+			<order-column name="sequenceNo" order-by="asc"/>
+		</order>
 		<finder return-type="Collection" name="S_P_ID">
 			<finder-column name="serviceProcessId" />
 		</finder>
@@ -936,6 +939,10 @@
 		<column name="configNote" type="String"/>
 		<column name="dossierTemplateNo" type="String"/>
 		
+		<order by="ASC">
+			<order-column name="createDate"/>
+		</order>
+		
 		<finder return-type="Collection" name="S_P_ID">
 			<finder-column name="serviceProcessId" />
 		</finder>
@@ -991,7 +998,12 @@
 			<finder-column name="actionCode" />
 			<finder-column name="actionName" />
 		</finder>
-
+		
+		<finder return-type="ProcessAction" name="S_A_P">
+			<finder-column name="serviceProcessId" />
+			<finder-column name="actionCode" />
+			<finder-column name="postStepCode" />
+		</finder>
 	</entity>
 
 	<entity local-service="true" name="DossierAction"

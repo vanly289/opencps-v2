@@ -1,5 +1,6 @@
 package org.opencps.api.controller.impl;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -42,6 +43,7 @@ import org.opencps.dossiermgt.action.util.SpecialCharacterUtils;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
+import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierMark;
 import org.opencps.dossiermgt.model.DossierTemplate;
 import org.opencps.dossiermgt.model.ProcessAction;
@@ -51,6 +53,7 @@ import org.opencps.dossiermgt.model.ServiceConfig;
 import org.opencps.dossiermgt.model.ServiceInfo;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierTemplateLocalServiceUtil;
@@ -61,7 +64,9 @@ import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceInfoLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -70,6 +75,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -119,7 +127,13 @@ public class DossierManagementImpl implements DossierManagement {
 
 			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 			params.put(Field.GROUP_ID, String.valueOf(groupId));
-			params.put(Field.KEYWORD_SEARCH, query.getKeyword());
+			// LamTV_Process search LIKE
+			String keywordSearch = query.getKeyword();
+			String keySearch = StringPool.BLANK;
+			if (Validator.isNotNull(keywordSearch)) {
+				keySearch = SpecialCharacterUtils.splitSpecial(keywordSearch);
+			}
+			params.put(Field.KEYWORD_SEARCH, keySearch);
 
 			String status = query.getStatus();
 			String substatus = query.getSubstatus();
@@ -270,7 +284,6 @@ public class DossierManagementImpl implements DossierManagement {
 			dossierPermission.hasGetDossiers(groupId, user.getUserId(), query.getSecetKey());
 
 			// _log.info("31" + query.getEnd());
-
 			if (query.getEnd() == 0) {
 
 				query.setStart(-1);
@@ -282,7 +295,13 @@ public class DossierManagementImpl implements DossierManagement {
 			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
 			params.put(Field.GROUP_ID, String.valueOf(groupId));
-			params.put(Field.KEYWORD_SEARCH, query.getKeyword());
+			// LamTV_Process search LIKE
+			String keywordSearch = query.getKeyword();
+			String keySearch = StringPool.BLANK;
+			if (Validator.isNotNull(keywordSearch)) {
+				keySearch = SpecialCharacterUtils.splitSpecial(keywordSearch);
+			}
+			params.put(Field.KEYWORD_SEARCH, keySearch);
 
 			String status = query.getStatus();
 			String substatus = query.getSubstatus();
@@ -323,12 +342,6 @@ public class DossierManagementImpl implements DossierManagement {
 			String dossierIdCTN = query.getDossierIdCTN();
 			String fromSubmitDate = APIDateTimeUtils.convertNormalDateToLuceneDate(query.getFromSubmitDate());
 			String toSubmitDate = APIDateTimeUtils.convertNormalDateToLuceneDate(query.getToSubmitDate());
-			//Add keyword Search
-			String keywordSearchLike = query.getKeywordSearchLike();
-			String keySearch = StringPool.BLANK;
-			if (Validator.isNotNull(keywordSearchLike)) {
-				keySearch = SpecialCharacterUtils.splitSpecial(keywordSearchLike);
-			}
 
 			params.put(DossierTerm.STATUS, status);
 			params.put(DossierTerm.SUBSTATUS, substatus);
@@ -354,7 +367,6 @@ public class DossierManagementImpl implements DossierManagement {
 			params.put(DossierTerm.DOSSIER_ID_CTN, dossierIdCTN);
 			params.put(DossierTerm.FROM_SUBMIT_DATE, fromSubmitDate);
 			params.put(DossierTerm.TO_SUBMIT_DATE, toSubmitDate);
-			params.put(DossierTerm.KEYWORD_SEARCH_LIKE, keySearch);
 
 			// _log.info("4");
 			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
@@ -1751,5 +1763,201 @@ public class DossierManagementImpl implements DossierManagement {
 			return processException(e);
 		}
 	}
+	
+	@Override
+	public Response resolveConflictDossier(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext) {
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		long userId = user.getUserId();
+		DossierActions actions = new DossierActionsImpl();
+		Indexer<Dossier> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Dossier.class);
+		
+		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+		params.put(Field.GROUP_ID, String.valueOf(groupId));
+
+		DossierResultsModel results = new DossierResultsModel();
+
+		JSONObject jsonData = actions.getDossiers(user.getUserId(), company.getCompanyId(), groupId, params, null,
+					-1, -1, serviceContext);
+		
+		List<Dossier> lstInDbs = DossierLocalServiceUtil.getDossiers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		
+		long total = jsonData.getLong("total");
+		JSONArray dossierArr = JSONFactoryUtil.createJSONArray();
+		
+		if (total > 0) {
+			List<Document> lstDocuments = (List<Document>) jsonData.get("data");	
+			for (Document document : lstDocuments) {
+				long dossierId = GetterUtil.getLong(document.get(DossierTerm.DOSSIER_ID));
+				long companyId = GetterUtil.getLong(document.get(Field.COMPANY_ID));
+				String uid = document.get(Field.UID);
+				Dossier oldDossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+				if (oldDossier == null) {
+					try {
+						indexer.delete(companyId, uid);
+					} catch (SearchException e) {
+					}
+				}
+			}
+		}
+		else {
+			
+		}
+		
+		return Response.status(200).entity("{}").build();
+	}
+	
+	@Override
+	public Response reindexDossier(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long dossierId) {
+
+		Indexer<Dossier> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Dossier.class);
+		
+		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+		
+		
+		try {
+			indexer.reindex(dossier);
+		} catch (Exception e) {
+			return Response.status(404).entity("{error}").build();
+		}
+		
+		
+		return Response.status(200).entity("{}").build();
+	}
+	
+	@Override
+	public Response delAndReindexDossier(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long dossierId) {
+
+		Indexer<Dossier> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Dossier.class);
+		
+		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+		
+		try {
+			
+			if (Validator.isNotNull(dossier)) {
+				
+				//remove dossier
+				
+				DossierLocalServiceUtil.deleteDossier(dossier);
+				
+				
+				//remove index
+				
+				indexer.delete(dossier);
+			}
+		} catch (Exception e) {
+			return Response.status(404).entity("{error}").build();
+		}
+		
+		
+		return Response.status(200).entity("{}").build();
+	}
+	
+	
+	@Override
+	public Response resetDossier(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long dossierId) {
+
+		Indexer<Dossier> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Dossier.class);
+		
+		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+		
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+
+		
+		try {
+			
+			if (Validator.isNotNull(dossier)) {
+				
+				DictCollection dc = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode(DOSSIER_SATUS_DC_CODE, groupId);
+
+				if (Validator.isNotNull(dc)) {
+					DictItem it = DictItemLocalServiceUtil.fetchByF_dictItemCode("new", dc.getPrimaryKey(), groupId);
+					
+					dossier.setSubmitting(true);
+					dossier.setDossierStatus(it.getItemCode());
+					dossier.setDossierStatusText(it.getItemName());
+
+				}
+				
+				
+				//update dossier
+				
+				DossierLocalServiceUtil.updateDossier(dossier);
+				
+				List<DossierFile> lsDossierFiles = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
+				
+				for (DossierFile dossierFile : lsDossierFiles) {
+					dossierFile.setIsNew(true);
+					
+					DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+				}
+				
+				//update index
+				
+				indexer.reindex(dossier);
+			}
+		} catch (Exception e) {
+			return Response.status(404).entity("{error}").build();
+		}
+		
+		
+		return Response.status(200).entity("{" + dossierId + "groupId" + groupId + "}").build();
+	}
+	
+	
+	@Override
+	public Response correctingDossier(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long dossierId) {
+
+		Indexer<Dossier> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Dossier.class);
+		
+		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+		
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		
+		try {
+			
+			if (Validator.isNotNull(dossier)) {
+				
+				dossier.setSubmitting(true);
+				
+				dossier.setModifiedDate(new Date());
+				
+				dossier.setLockState(LOCK_ALL);
+				
+				//update dossier
+				
+				DossierLocalServiceUtil.updateDossier(dossier);
+				
+				List<DossierFile> lsDossierFiles = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
+				
+				for (DossierFile dossierFile : lsDossierFiles) {
+					dossierFile.setIsNew(true);
+					
+					DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+				}
+				
+				//update index
+				
+				indexer.reindex(dossier);
+			}
+		} catch (Exception e) {
+			return Response.status(404).entity("{error}").build();
+		}
+		
+		
+		return Response.status(200).entity("{" + dossierId + "groupId" + groupId + "}").build();
+	}
+	public static final String DOSSIER_SATUS_DC_CODE = "DOSSIER_STATUS";
+	
+	private static final String LOCK_ALL = "LOCK ALL";
 
 }

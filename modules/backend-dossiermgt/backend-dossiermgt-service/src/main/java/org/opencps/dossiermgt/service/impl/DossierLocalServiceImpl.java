@@ -55,12 +55,11 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
+import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
-import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
+import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -1118,8 +1117,6 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 //		_log.info("STATUS_REG Local Search: "+statusReg);
 		Long notStatusReg = GetterUtil.getLong(params.get(DossierTerm.NOT_STATUS_REG));
 //		_log.info("notStatusReg_REG Local Search: "+notStatusReg);
-		String keySearch = GetterUtil.getString(params.get(DossierTerm.KEYWORD_SEARCH_LIKE));
-		_log.info("keySearch Local Search: "+keySearch); 
 
 		Indexer<Dossier> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Dossier.class);
 
@@ -1142,38 +1139,37 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 		if (Validator.isNotNull(keywords)) {
 
-			BooleanQuery query = new BooleanQueryImpl(); 
-			//BooleanQueryFactoryUtil.create(searchContext);
-			
-//			StringQuery sque = new StringQuery(keywords);
-			
-			
-//			BooleanQuery qee = new BooleanQuery();
-			_log.info("keywords Search: "+keywords);
-
+			BooleanQuery queryBool = new BooleanQueryImpl();
 			String[] subQuerieArr = new String[] { DossierTerm.SERVICE_NAME, DossierTerm.APPLICANT_NAME,
-					DossierTerm.DOSSIER_NO_SEARCH, DossierTerm.DOSSIER_ID, DossierTerm.DOSSIER_ID_CTN,
-					DossierTerm.BRIEF_NOTE };
+					DossierTerm.DOSSIER_NO_SEARCH, DossierTerm.DOSSIER_ID_CTN, DossierTerm.BRIEF_NOTE };
 
-			query.addTerms(subQuerieArr, keywords, true);
-
-			booleanQuery.add(query, BooleanClauseOccur.MUST);
+//			query.addTerms(subQuerieArr, keywords.toLowerCase(), true);
+//			booleanQuery.add(query, BooleanClauseOccur.MUST);
+			String[] keywordArr = keywords.split(StringPool.SPACE);
+			for (String fieldSearch : subQuerieArr) {
+				BooleanQuery query = new BooleanQueryImpl();
+				for (String key : keywordArr) {
+					WildcardQuery wildQuery = new WildcardQueryImpl(fieldSearch,
+							StringPool.STAR + key.toLowerCase() + StringPool.STAR);
+				query.add(wildQuery, BooleanClauseOccur.MUST);
+				}
+				queryBool.add(query, BooleanClauseOccur.SHOULD);
+			}
 			
-			
+			booleanQuery.add(queryBool, BooleanClauseOccur.MUST);
+//			query.addTerms(subQuerieArr, keywords.toLowerCase(), true);
+//			booleanQuery.add(query, BooleanClauseOccur.MUST);
 //			TermQuery termQuery = TermQueryFactoryUtil.create(searchContext, Field.TITLE, "%"+keywords);
 //			String[] keyword = keywords.split(StringPool.SPACE);
-//
 //			for (String string : keyword) {
-//
 //				MultiMatchQuery query = new MultiMatchQuery(string);
-//
 //				query.addFields(
 //						new String[] { DossierTerm.DOSSIER_ID, DossierTerm.SERVICE_NAME, DossierTerm.DOSSIER_NO_SEARCH, "dossierIdCTN"});
-//
 //				booleanQuery.add(query, BooleanClauseOccur.MUST);
 //
 //			}
 		}
+
 		if (!(Validator.isNotNull(secetKey) && secetKey.contentEquals("OPENCPSV2"))) {
 			if (Validator.isNotNull(groupId)) {
 				MultiMatchQuery query = new MultiMatchQuery(groupId);
@@ -1541,18 +1537,6 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
 		}
 
-		if (Validator.isNotNull(keySearch)) {
-			BooleanQuery query = new BooleanQueryImpl();
-
-			String[] subQuerieArr = new String[] { DossierTerm.SERVICE_NAME, DossierTerm.APPLICANT_NAME,
-					DossierTerm.DOSSIER_NO_SEARCH, DossierTerm.DOSSIER_ID, DossierTerm.DOSSIER_ID_CTN,
-					DossierTerm.BRIEF_NOTE };
-
-			query.addTerms(subQuerieArr, keySearch.toLowerCase(), true);
-
-			booleanQuery.add(query, BooleanClauseOccur.MUST);
-		}
-
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);
 
 		return IndexSearcherHelperUtil.search(searchContext, booleanQuery);
@@ -1601,9 +1585,6 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 		Long statusReg = GetterUtil.getLong(params.get(DossierTerm.STATUS_REG));
 		Long notStatusReg = GetterUtil.getLong(params.get(DossierTerm.NOT_STATUS_REG));
 //		_log.info("statusReg: "+statusReg);
-//		_log.info("notStatusReg: "+notStatusReg);
-		String keySearch = GetterUtil.getString(params.get(DossierTerm.KEYWORD_SEARCH_LIKE));
-		_log.info("keySearch Local Search: "+keySearch);
 
 		Indexer<Dossier> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Dossier.class);
 
@@ -1623,15 +1604,24 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 		if (Validator.isNotNull(keywords)) {
 
-			BooleanQuery query = new BooleanQueryImpl();
-
+			BooleanQuery queryBool = new BooleanQueryImpl();
 			String[] subQuerieArr = new String[] { DossierTerm.SERVICE_NAME, DossierTerm.APPLICANT_NAME,
-					DossierTerm.DOSSIER_NO_SEARCH, DossierTerm.DOSSIER_ID, DossierTerm.DOSSIER_ID_CTN,
-					DossierTerm.BRIEF_NOTE };
+					DossierTerm.DOSSIER_NO_SEARCH, DossierTerm.DOSSIER_ID_CTN, DossierTerm.BRIEF_NOTE };
 
-			query.addTerms(subQuerieArr, keywords, true);
-
-			booleanQuery.add(query, BooleanClauseOccur.MUST);
+//			query.addTerms(subQuerieArr, keywords.toLowerCase(), true);
+//			booleanQuery.add(query, BooleanClauseOccur.MUST);
+			String[] keywordArr = keywords.split(StringPool.SPACE);
+			for (String fieldSearch : subQuerieArr) {
+				BooleanQuery query = new BooleanQueryImpl();
+				for (String key : keywordArr) {
+					WildcardQuery wildQuery = new WildcardQueryImpl(fieldSearch,
+							StringPool.STAR + key.toLowerCase() + StringPool.STAR);
+				query.add(wildQuery, BooleanClauseOccur.MUST);
+				}
+				queryBool.add(query, BooleanClauseOccur.SHOULD);
+			}
+			
+			booleanQuery.add(queryBool, BooleanClauseOccur.MUST);
 		}
 
 		if (!(Validator.isNotNull(secetKey) && secetKey.contentEquals("OPENCPSV2"))) {
@@ -1999,18 +1989,6 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			query.addField(DossierTerm.STATUS_REG);
 
 			booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
-		}
-		
-		if (Validator.isNotNull(keySearch)) {
-			BooleanQuery query = new BooleanQueryImpl();
-
-			String[] subQuerieArr = new String[] { DossierTerm.SERVICE_NAME, DossierTerm.APPLICANT_NAME,
-					DossierTerm.DOSSIER_NO_SEARCH, DossierTerm.DOSSIER_ID, DossierTerm.DOSSIER_ID_CTN,
-					DossierTerm.BRIEF_NOTE };
-
-			query.addTerms(subQuerieArr, keySearch.toLowerCase(), true);
-
-			booleanQuery.add(query, BooleanClauseOccur.MUST);
 		}
 
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);

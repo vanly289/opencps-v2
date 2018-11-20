@@ -1,3 +1,4 @@
+**/modules/vr-rest/**
 **/!bnd.bnd
 **/!build.gradle
 **/indexes.sql
