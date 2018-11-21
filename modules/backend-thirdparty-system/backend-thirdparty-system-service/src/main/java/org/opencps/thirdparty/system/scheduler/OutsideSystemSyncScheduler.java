@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -249,6 +250,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						body.setPersonSignature("");
 						envelope.setSystemSignature("");
 						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
+						
+						// hack for thu tuc gia han 18,25,57,65,47
+						String[] nhomGiaHan = new String[]{"BGTVT0600018","BGTVT0600035","BGTVT0600057","BGTVT0600065","BGTVT0600047"};
+						if(ArrayUtil.contains(nhomGiaHan, dossier.getServiceCode())) {
+							rawMessage = OutsideSystemConverter.removeTag(rawMessage, "KetQuaXuLy", "so_gp");
+						}
+						
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
 						model.setContent("");
@@ -369,9 +377,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							}
 						}
 
-//						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
-
 						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
+						// hack for thu tuc gia han 18,25,57,65,47
+						String[] nhomGiaHan = new String[]{"BGTVT0600018","BGTVT0600035","BGTVT0600057","BGTVT0600065","BGTVT0600047"};
+						if(ArrayUtil.contains(nhomGiaHan, dossier.getServiceCode())) {
+							rawMessage = OutsideSystemConverter.removeTag(rawMessage, "KetQuaXuLy", "so_gp");
+						}
+						
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
 						model.setContent("");
@@ -574,6 +586,12 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 //							String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 							String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
+							
+							// hack for thu tuc gia han 18,25,57,65,47
+							String[] nhomGiaHan = new String[]{"BGTVT0600018","BGTVT0600035","BGTVT0600057","BGTVT0600065","BGTVT0600047"};
+							if(ArrayUtil.contains(nhomGiaHan, dossier.getServiceCode())) {
+								rawMessage = OutsideSystemConverter.removeTag(rawMessage, "KetQuaXuLy", "so_gp");
+							}
 
 							MessageQueueInputModel model = new MessageQueueInputModel();
 							model.setRawMessage(rawMessage);
