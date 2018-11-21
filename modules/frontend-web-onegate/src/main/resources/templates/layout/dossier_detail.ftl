@@ -291,7 +291,6 @@
                                 <v-btn flat icon light class="small-btn-x mx-0 my-0" v-on:click.native.prevent="singleFileUpload(item)">
                                     <v-icon>file_upload</v-icon>
                                 </v-btn>
-                                <input type="hidden" value="0" :id="'validCreateFile' + item.partNo" :data-pk="item.partNo" class="validCreateFile" v-if="item['required']">
                                 <v-btn color="primary" fab small dark class="small-btn-x mx-0 my-0" v-on:click.native.prevent="viewDossierFileResult(item, i)" :id="'btn-count-partno'+item.partNo">
                                     {{item.counter}}
                                 </v-btn>
@@ -300,7 +299,7 @@
                                     <v-icon>delete</v-icon>
                                 </v-btn>
                             </div>
-							
+
                             <input type="file" :id="'inputfile_'+item.dossierPartId" style="display:none" v-on:change="singleFileUploadInput($event, item, i)"/>
                             <div class="alert alert--outline success--text mx-4 hidden" :id="'message_success_'+item.referenceUid" >
                             	<i aria-hidden="true" class="material-icons icon alert__icon">check_circle</i>
@@ -359,6 +358,7 @@
                         					<!-- <div jx-bind="processActionNote" v-if="stepModel.configNote.displayNote">
                         						
                         					</div> -->
+
                         					<v-text-field
                         					name="processActionNote"
                         					id="processActionNote"
@@ -446,7 +446,7 @@
 					},
 					success : function(result){
 						console.log(result);
-						$("#validCreateFile" + item.partNo).val("1")
+					
 						$('#message_success_'+referentUid).removeClass('hidden');
 						setTimeout(
 							function(){ 
@@ -651,7 +651,8 @@
                         }
                     });
                 },
-                putComment: function(data, onSuccess, onError) { 
+                putComment: function(data, onSuccess, onError) {
+                    
                     $.ajax({
                         url: '/o/rest/v2/comments/' + data.commentId,
                         type: 'PUT',
@@ -668,15 +669,16 @@
                             content: data.content,
                             upvoteCount: data.upvoteCount
                         },
-                        success: function (comment) {
+                        success: function(comment) {
                             onSuccess(formatComment(comment, users));
                         },
-                        error: function (xhr) {
+                        error: function(xhr){
                             onError();
                         }
                     });
                 },
                 deleteComment: function(data, onSuccess, onError) {
+                   
                    	$.ajax({
                         url: '/o/rest/v2/comments/' + data.commentId,
                         type: 'DELETE',
@@ -736,20 +738,26 @@
                             }
                         });
                     }
+    
                 },
                 uploadAttachments: function(comments, onSuccess, onError) {
                     var responses = 0;
                     var successfulUploads = [];
-                    var serverResponded = function () {
+    
+                    var serverResponded = function() {
                         responses++;
+    
                         if(responses == comments.length) {
+                            
                             if(successfulUploads.length == 0) {
-                                onError()
+                                onError();
+    
                             } else {
                                 onSuccess(successfulUploads)
                             }
                         }
                     }
+    
                     $(comments).each(function(index, comment) {
                         var formData = new FormData();
                         

@@ -787,7 +787,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 												item.counter ++;
 												item.hasSubmit = true;
 											}
-
 										} catch (e) {
 
 										}
@@ -1096,10 +1095,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							});
 
 
-							promise.then(function(success){
+							promise.then(function (success) {
 								vm.postNextActions(item);
-							}, function(error){
-
+							}).catch(function (error) {
 							});
 						},
 						postNextActions: function (item) {
@@ -1656,11 +1654,9 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
                     				}
                     			});
-
                     		},
                     		_initlistgroupHoSoFilter: function (select) {
                     			var vm = this;
-
                     			vm.newTabOrNewWindown();
                     			vm.setStateOnlyFollow(emailAddress);
                     			vm.getLastedStateUserInfo(function(){
@@ -1672,10 +1668,8 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                     			vm.listgroupHoSoFilterItems = [];
 
                     			var url = '/o/rest/v2/statistics/dossiers/todo';
-
                     			axios.get(url, config).then(function (response) {
                     				var serializable = response.data;
-
                     				var indexTree = -1;
                     				var index = 0;
                     				for (var key in serializable.data) {
@@ -1766,7 +1760,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
                     				vm.detailRegistPage = false;
                     				vm.listgroupHoSoFilterselected = item.id;
                     				vm.danhSachHoSoTablepage = 1;
-
                     				vm.listgroupHoSoFilterselectedIndex = item.index - 1;
 
                     				vm.statusParamFilter = '';
@@ -2615,7 +2608,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 								axios.get(urlGetFile, config_blob).then(function (response) {
 									var url = window.URL.createObjectURL(response.data);
-									console.log("url===========>",url);
+									//console.log("url===========>",url);
 									window.open(url , '_blank');
 								})
 								.catch(function (error) {
@@ -2785,8 +2778,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 								sort: 'modified',
 								order: 'false'
 							};
-
-
 							if ( vm.keywordFilter != null ) {
 								paramsBuilder['keyword'] = vm.keywordFilter;
 							} else {
@@ -2807,7 +2798,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 							}
 							axios.get(url, config_dossiers).then(function (response) {
 								var serializable = response.data;
-
 								vm.follow = true;
 
 								if (append) {
@@ -3023,7 +3013,6 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 									animation: 'fade'
 								}).then((dialog) => {
 									console.log("dialog============",dialog);
-
 									window.open(url, "_blank", "ccc");
 
 									dialog.close();
@@ -3088,7 +3077,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							axios.get(url, config_blob).then(function (response) {
 								var url = window.URL.createObjectURL(response.data);
-								console.log(url);
+								//console.log(url);
 								window.open(url);
 							}).catch(function (error) {
 								console.log(error);
@@ -3401,7 +3390,7 @@ var funLoadVue = function(stateWindowParam, dossierIdParam, dossierPartNo, email
 
 							axios.get(url, config_blob).then(function (response) {
 								var url = window.URL.createObjectURL(response.data);
-								console.log(url);
+								//console.log(url);
 								window.open(url);
 							}).catch(function (error) {
 								console.log(error);
