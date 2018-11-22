@@ -236,6 +236,7 @@ public class BGTVT0600018 {
 					TypeOfExtending typeOfExtending = new TypeOfExtending();
 					if (formDataObj.has("TransportPermit") && formDataObj.getInt("TransportPermit") == 1) {
 						typeOfExtending.setTransportPermit(formDataObj.getString("TransportPermit"));
+						typeOfExtending.setItinerary("0");
 						
 						TransportPermitExtending tpe = new TransportPermitExtending();
 						tpe.setExtend(extend);
@@ -246,6 +247,7 @@ public class BGTVT0600018 {
 					
 					if (formDataObj.has("Itinerary") && formDataObj.getInt("Itinerary") == 1) {
 						typeOfExtending.setItinerary(formDataObj.getString("Itinerary"));
+						typeOfExtending.setTransportPermit("0");
 						
 						ItineraryExtending tpe = new ItineraryExtending();
 						tpe.setExtend(extend);
