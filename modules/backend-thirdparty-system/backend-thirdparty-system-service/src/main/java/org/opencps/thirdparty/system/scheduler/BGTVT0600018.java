@@ -205,66 +205,56 @@ public class BGTVT0600018 {
 						resultOfExtending.setRemarks(formDataObj.getString("Remarks"));						
 					}	
 					
-					JSONObject typeOfExtendingObj = formDataObj.getJSONObject("TypeOfExtending");
+					//JSONObject typeOfExtendingObj = formDataObj.getJSONObject("TypeOfExtending");
+					String extend = "";
+					String extendFrom = "";
+					String extendUntil = "";
+					if (formDataObj.has("Extend")) {
+						extend = formDataObj.getString("Extend");
+					}
+					
+					if (formDataObj.has("ExtendFrom")) {
+						String expiredDateStr = formDataObj.getString("ExtendFrom");
+						Date expiredDate = DateTimeUtils.convertStringToDate(expiredDateStr);
+						
+						extendFrom = DateTimeUtils.convertDateToString(expiredDate, DateTimeUtils._NSW_DATE_TIME_FORMAT);						
+					}
+					else {
+						extendFrom = DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT);
+					}	
+					
+					if (formDataObj.has("ExtendUntil")) {
+						String expiredDateStr = formDataObj.getString("ExtendUntil");
+						Date expiredDate = DateTimeUtils.convertStringToDate(expiredDateStr);
+						
+						extendUntil = DateTimeUtils.convertDateToString(expiredDate, DateTimeUtils._NSW_DATE_TIME_FORMAT);						
+					}
+					else {
+						extendUntil = DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT);						
+					}
+					
 					TypeOfExtending typeOfExtending = new TypeOfExtending();
-					if (typeOfExtendingObj.has("TransportPermit")) {
-						typeOfExtending.setTransportPermit(typeOfExtendingObj.getString("TransportPermit"));
-					}
-					if (typeOfExtendingObj.has("Itinerary")) {
-						typeOfExtending.setItinerary(typeOfExtendingObj.getString("Itinerary"));
-					}
-					if (formDataObj.has("TransportPermitExtending")) {
+					if (formDataObj.has("TransportPermit") && formDataObj.getInt("TransportPermit") == 1) {
+						typeOfExtending.setTransportPermit(formDataObj.getString("TransportPermit"));
+						
 						TransportPermitExtending tpe = new TransportPermitExtending();
-						JSONObject transportPermitExtendingObj = formDataObj.getJSONObject("TransportPermitExtending");
-						if (transportPermitExtendingObj.has("Extend")) {
-							tpe.setExtend(transportPermitExtendingObj.getString("Extend"));
-						}
-						if (transportPermitExtendingObj.has("ExtendFrom")) {
-							String expiredDateStr = formDataObj.getString("ExtendFrom");
-							Date expiredDate = DateTimeUtils.convertStringToDate(expiredDateStr);
-							
-							tpe.setExtendFrom(DateTimeUtils.convertDateToString(expiredDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-						}
-						else {
-							tpe.setExtendFrom(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-						}	
-						if (transportPermitExtendingObj.has("ExtendUntil")) {
-							String expiredDateStr = formDataObj.getString("ExtendUntil");
-							Date expiredDate = DateTimeUtils.convertStringToDate(expiredDateStr);
-							
-							tpe.setExtendUntil(DateTimeUtils.convertDateToString(expiredDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-						}
-						else {
-							tpe.setExtendUntil(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-						}
+						tpe.setExtend(extend);
+						tpe.setExtendFrom(extendFrom);
+						tpe.setExtendUntil(extendUntil);
 						resultOfExtending.setTransportPermitExtending(tpe);
 					}
-					if (formDataObj.has("ItineraryExtending")) {
+					
+					if (formDataObj.has("Itinerary") && formDataObj.getInt("Itinerary") == 1) {
+						typeOfExtending.setItinerary(formDataObj.getString("Itinerary"));
+						
 						ItineraryExtending tpe = new ItineraryExtending();
-						JSONObject itineraryExtendingObj = formDataObj.getJSONObject("ItineraryExtending");
-						if (itineraryExtendingObj.has("Extend")) {
-							tpe.setExtend(itineraryExtendingObj.getString("Extend"));
-						}
-						if (itineraryExtendingObj.has("ExtendFrom")) {
-							String expiredDateStr = formDataObj.getString("ExtendFrom");
-							Date expiredDate = DateTimeUtils.convertStringToDate(expiredDateStr);
-							
-							tpe.setExtendFrom(DateTimeUtils.convertDateToString(expiredDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-						}
-						else {
-							tpe.setExtendFrom(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-						}	
-						if (itineraryExtendingObj.has("ExtendUntil")) {
-							String expiredDateStr = formDataObj.getString("ExtendUntil");
-							Date expiredDate = DateTimeUtils.convertStringToDate(expiredDateStr);
-							
-							tpe.setExtendUntil(DateTimeUtils.convertDateToString(expiredDate, DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-						}
-						else {
-							tpe.setExtendUntil(DateTimeUtils.convertDateToString(new Date(), DateTimeUtils._NSW_DATE_TIME_FORMAT));						
-						}
+						tpe.setExtend(extend);
+						tpe.setExtendFrom(extendFrom);
+						tpe.setExtendUntil(extendUntil);
 						resultOfExtending.setItineraryExtending(tpe);
 					}
+					resultOfExtending.setTypeOfExtending(typeOfExtending);
+					
 					IssuingAuthority issuingAuthority = new IssuingAuthority();
 					Date now = new Date();
 					
