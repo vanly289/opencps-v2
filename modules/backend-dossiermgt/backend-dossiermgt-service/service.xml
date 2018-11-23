@@ -429,7 +429,7 @@
 			<finder-column name="dossierId" />
 		</finder>
 		
-		<finder return-type="Dossier" name="ReferenceUid">
+		<finder return-type="Collection" name="ReferenceUid">
 			<finder-column name="referenceUid" />
 		</finder>
 
