@@ -2766,4 +2766,8 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 	public List<Dossier> findDossierByGroup(long groupId) {
 		return dossierPersistence.findByG(groupId);
 	}
+	
+	public int countByReferenceUid(String referenceUid) {
+		return dossierPersistence.countByReferenceUid(referenceUid);
+	}
 }
