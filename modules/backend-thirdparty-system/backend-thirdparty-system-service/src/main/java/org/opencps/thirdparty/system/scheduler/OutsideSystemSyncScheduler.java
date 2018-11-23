@@ -239,7 +239,12 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 					KetQuaXuLy ketqua = new KetQuaXuLy();
 					content.setKetQuaXuLy(ketqua);
-					ketqua.setSoGp(StringPool.BLANK);
+					
+					String[] nhomGiaHan = new String[]{"BGTVT0600018","BGTVT0600035","BGTVT0600057","BGTVT0600065","BGTVT0600047"};
+					if(!ArrayUtil.contains(nhomGiaHan, dossier.getServiceCode())) {
+						ketqua.setSoGp(StringPool.BLANK);
+					}
+					
 					if (dossier.getServiceCode().equals("BGTVT0600042")
 							|| dossier.getServiceCode().equals("BGTVT0600043")
 							|| dossier.getServiceCode().equals("BGTVT0600018")
@@ -260,12 +265,6 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 					body.setPersonSignature("");
 					envelope.setSystemSignature("");
 					String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
-					
-					// hack for thu tuc gia han 18,25,57,65,47
-					String[] nhomGiaHan = new String[]{"BGTVT0600018","BGTVT0600035","BGTVT0600057","BGTVT0600065","BGTVT0600047"};
-					if(ArrayUtil.contains(nhomGiaHan, dossier.getServiceCode())) {
-						rawMessage = OutsideSystemConverter.removeTag(rawMessage, "KetQuaXuLy", "so_gp");
-					}
 					
 					MessageQueueInputModel model = new MessageQueueInputModel();
 					model.setRawMessage(rawMessage);
@@ -329,7 +328,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 					KetQuaXuLy ketqua = new KetQuaXuLy();
 					content.setKetQuaXuLy(ketqua);
 
-					ketqua.setSoGp(StringPool.BLANK);
+					String[] nhomGiaHan = new String[]{"BGTVT0600018","BGTVT0600035","BGTVT0600057","BGTVT0600065","BGTVT0600047"};
+					if(!ArrayUtil.contains(nhomGiaHan, dossier.getServiceCode())) {
+						ketqua.setSoGp(StringPool.BLANK);
+					}
+					
 					if (dossier.getServiceCode().equals("BGTVT0600042")
 							|| dossier.getServiceCode().equals("BGTVT0600043")
 							|| dossier.getServiceCode().equals("BGTVT0600018")
@@ -388,11 +391,6 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 					}
 
 					String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
-					// hack for thu tuc gia han 18,25,57,65,47
-					String[] nhomGiaHan = new String[]{"BGTVT0600018","BGTVT0600035","BGTVT0600057","BGTVT0600065","BGTVT0600047"};
-					if(ArrayUtil.contains(nhomGiaHan, dossier.getServiceCode())) {
-						rawMessage = OutsideSystemConverter.removeTag(rawMessage, "KetQuaXuLy", "so_gp");
-					}
 					
 					MessageQueueInputModel model = new MessageQueueInputModel();
 					model.setRawMessage(rawMessage);
@@ -455,7 +453,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 					KetQuaXuLy ketqua = new KetQuaXuLy();
 					content.setKetQuaXuLy(ketqua);
 
-					ketqua.setSoGp(StringPool.BLANK);
+					/*String[] nhomGiaHan = new String[]{"BGTVT0600018","BGTVT0600035","BGTVT0600057","BGTVT0600065","BGTVT0600047"};
+					if(!ArrayUtil.contains(nhomGiaHan, dossier.getServiceCode())) {
+						ketqua.setSoGp(StringPool.BLANK);
+					}*/
+					
 					if (dossier.getServiceCode().equals("BGTVT0600042")
 							|| dossier.getServiceCode().equals("BGTVT0600043")
 							|| dossier.getServiceCode().equals("BGTVT0600048")
@@ -471,8 +473,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							) {
 						ketqua.setSoTn(dossier.getDossierNo());
 					}
-					if (dossier.getServiceCode().equals("BGTVT0600057")
-							|| dossier.getServiceCode().equals("BGTVT0600058")
+					if (dossier.getServiceCode().equals("BGTVT0600058")
 							|| dossier.getServiceCode().equals("BGTVT0600059")
 							|| dossier.getServiceCode().equals("BGTVT0600060")
 							|| dossier.getServiceCode().equals("BGTVT0600061")
@@ -491,6 +492,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 					envelope.setSystemSignature("");
 
 					String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
+					
 					MessageQueueInputModel model = new MessageQueueInputModel();
 					model.setRawMessage(rawMessage);
 					model.setContent("");
@@ -570,12 +572,16 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 //						DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossierFile.getGroupId(), templateNo);
 						
-						if (dossierFile.getDossierPartType() == 2) {
-							ketqua.setSoGp(dossierFile.getDeliverableCode());
+						String[] nhomGiaHan = new String[]{"BGTVT0600018","BGTVT0600035","BGTVT0600057","BGTVT0600065","BGTVT0600047"};
+						if(!ArrayUtil.contains(nhomGiaHan, dossier.getServiceCode())) {
+							if (dossierFile.getDossierPartType() == 2) {
+								ketqua.setSoGp(dossierFile.getDeliverableCode());
+							}
+							if (Validator.isNull(ketqua.getSoGp())) {
+								ketqua.setSoGp("11");
+							}
 						}
-						if (Validator.isNull(ketqua.getSoGp())) {
-							ketqua.setSoGp("11");
-						}
+						
 						if (dossier.getServiceCode().equals("BGTVT0600042")
 								|| dossier.getServiceCode().equals("BGTVT0600043")
 								|| dossier.getServiceCode().equals("BGTVT0600018")
@@ -596,12 +602,6 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 //						String rawMessage = OutsideSystemConverter.convertToNSWXML(nswRequest);
 						String rawMessage = OutsideSystemConverter.convertToNSWXML(envelope);
-						
-						// hack for thu tuc gia han 18,25,57,65,47
-						String[] nhomGiaHan = new String[]{"BGTVT0600018","BGTVT0600035","BGTVT0600057","BGTVT0600065","BGTVT0600047"};
-						if(ArrayUtil.contains(nhomGiaHan, dossier.getServiceCode())) {
-							rawMessage = OutsideSystemConverter.removeTag(rawMessage, "KetQuaXuLy", "so_gp");
-						}
 
 						MessageQueueInputModel model = new MessageQueueInputModel();
 						model.setRawMessage(rawMessage);
