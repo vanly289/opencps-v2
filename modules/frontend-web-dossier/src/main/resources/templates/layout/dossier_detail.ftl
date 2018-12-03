@@ -59,8 +59,11 @@
 					<span>
 						Mã hồ sơ: 
 					</span>
-					<span class="text-bold">
+					<span class="text-bold" v-if="detailModel.online">
 						{{ detailModel.referenceUid }}
+					</span>
+					<span class="text-bold" v-else>
+						{{ detailModel.dossierIdCTN }}
 					</span>
 				</div>
 
@@ -221,7 +224,7 @@
                         <v-btn
                             :loading="true"
                             :disabled="true"
-                            v-if="stepLoading"
+                            v-if="stepLoading || step['pending']"
                             small
                         >
                             <span slot="loader">Loading...</span>
@@ -368,7 +371,7 @@
                         <v-btn
                             :loading="true"
                             :disabled="true"
-                            v-if="stepLoading"
+                            v-if="stepLoading || step['pending']"
                             small
                         >
                             <span slot="loader">Loading...</span>

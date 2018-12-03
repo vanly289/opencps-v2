@@ -129,7 +129,7 @@ public class FrontendWebDossierPortlet extends FreeMarkerPortlet {
 		    isPowerUser = true;
 		   }
 		}
-		  
+		_log.info("isAdminUser============" + String.valueOf(isPowerUser));
 		renderRequest.setAttribute("isAdminUser", String.valueOf(isPowerUser));
 		
 		String dossierPartNo = PortalUtil.getOriginalServletRequest(httpRequest).getParameter("dossierPartNo");
