@@ -21,7 +21,7 @@
                 <#-- <v-btn v-if="navigationFilterview" v-on:click.native.prevent.stop="navigationFilterview = !navigationFilterview" flat icon class="mr-3 my-0 hidden-sm-and-down"><v-icon>fullscreen</v-icon></v-btn>
 
                 <v-btn v-if="!navigationFilterview" v-on:click.native.prevent.stop="navigationFilterview = !navigationFilterview" flat icon class="mr-3 my-0 hidden-sm-and-down"><v-icon>fullscreen_exit</v-icon></v-btn>
- -->
+ 				-->
 			</div>
 	
 		</div>
@@ -59,8 +59,11 @@
 					<span>
 						Mã hồ sơ: 
 					</span>
-					<span class="text-bold">
+					<span class="text-bold" v-if="detailModel.online">
 						{{ detailModel.referenceUid }}
+					</span>
+					<span class="text-bold" v-else>
+						{{ detailModel.dossierIdCTN }}
 					</span>
 				</div>
 
@@ -140,7 +143,7 @@
 									Tên liên hệ: 
 								</span> 
 								<span class="text-bold">
-									{{detailModel.contactName}} | {{detailModel.contactEmail}}
+									{{detailModel.contactName}} <span v-if="detailModel.contactEmail && detailModel['contactEmail'].indexOf('@test.vn') === -1">| {{detailModel.contactEmail}}</span>
 								</span>
 							</div>
 							<#-- <div class="pb-1">
@@ -221,7 +224,7 @@
                         <v-btn
                             :loading="true"
                             :disabled="true"
-                            v-if="stepLoading"
+                            v-if="stepLoading || step['pending']"
                             small
                         >
                             <span slot="loader">Loading...</span>
@@ -271,6 +274,9 @@
 								<th class="text-xs-center px-2 py-2">
 									Màu sơn
 								</th>
+								<th class="text-xs-center px-2 py-2" v-if="showTemplatePrint">
+									Mẫu
+								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -292,6 +298,9 @@
 								</td>
 								<td class="text-xs-center py-2">
 									{{item.formData.VehicleColor}}
+								</td>
+								<td class="text-xs-center py-2" v-if="showTemplatePrint">
+									<span v-if="item.formData.hasOwnProperty('LicenceType')">{{item.formData.LicenceType}}</span>
 								</td>
 							</tr>
 						</tbody>
@@ -362,7 +371,7 @@
                         <v-btn
                             :loading="true"
                             :disabled="true"
-                            v-if="stepLoading"
+                            v-if="stepLoading || step['pending']"
                             small
                         >
                             <span slot="loader">Loading...</span>
@@ -896,7 +905,7 @@
 			
 <script type="text/javascript">
 		
-		function plugin0() {
+		function plugin0 () {
             return document.getElementById('plugin0');
         }
         var plugin = plugin0;
@@ -946,7 +955,7 @@
 		
 	     var users = [];
 	     
-	     var getContacts = function(){
+	     var getContacts = function () {
 	     var dossierIdComment = $('#comments-container-pk').text().trim();
 			 $.ajax({
 	            url: '/o/rest/v2/dossiers/'+dossierIdComment+'/contacts',
@@ -986,7 +995,7 @@
 
 		};
 		
-		function renderComment(users){
+		function renderComment (users) {
 
 			var dossierId = $('#comments-container-pk').text().trim();
 			var groupId = themeDisplay.getScopeGroupId();
@@ -1058,12 +1067,11 @@
                     return '';
                 },
                 
-                getUsers: function(onSuccess, onError) {
+                getUsers: function (onSuccess, onError) {
                    onSuccess(users);
                    onError();
                 },
-                
-                getComments: function(onSuccess, onError) {
+                getComments: function (onSuccess, onError) {
                     $.ajax({
                         url: '/o/rest/v2/comments/org.opencps.dossiermgt.model.Dossier/'+ dossierId,
                         type: 'GET',
@@ -1076,24 +1084,21 @@
                             
                         },
                         success: function(comments) {
-                         
                             var data = [];
-
                             if (comments.hasOwnProperty('data')) {
                                 $.each(comments.data, function(index, comment){
                                     data.push(formatComment(comment, users));
                                 });
                                 onSuccess(data);
                             }
-                            
                         },
-                        error: function(xhr){
+                        error: function (xhr) {
                             onSuccess([]);
                             onError();
                         }
                     });
                 },
-                postComment: function(data, onSuccess, onError) {
+                postComment: function (data, onSuccess, onError) {
                     var strPings = data.pings.join();
                     $.ajax({
                         url: '/o/rest/v2/comments',
@@ -1124,7 +1129,7 @@
                         }
                     });
                 },
-                putComment: function(data, onSuccess, onError) {
+                putComment: function (data, onSuccess, onError) {
                     
                     $.ajax({
                         url: '/o/rest/v2/comments/' + data.commentId,
@@ -1145,12 +1150,12 @@
                         success: function(comment) {
                             onSuccess(formatComment(comment, users));
                         },
-                        error: function(xhr){
+                        error: function (xhr) {
                             onError();
                         }
                     });
                 },
-                deleteComment: function(data, onSuccess, onError) {
+                deleteComment: function (data, onSuccess, onError) {
                    
                    	$.ajax({
                         url: '/o/rest/v2/comments/' + data.commentId,
@@ -1166,7 +1171,7 @@
                         }
                     });
                 },
-                upvoteComment: function(data, onSuccess, onError) {
+                upvoteComment: function (data, onSuccess, onError) {
                     
                     if(data.userHasUpvoted){
                         $.ajax({
@@ -1213,7 +1218,7 @@
                     }
     
                 },
-                uploadAttachments: function(comments, onSuccess, onError) {
+                uploadAttachments: function (comments, onSuccess, onError) {
                     var responses = 0;
                     var successfulUploads = [];
     
@@ -1231,7 +1236,7 @@
                         }
                     }
     
-                    $(comments).each(function(index, comment) {
+                    $(comments).each(function (index, comment) {
                         var formData = new FormData();
                         
                         $(Object.keys(comment)).each(function(index, key) {
@@ -1282,7 +1287,7 @@
             });
         }
 		
-		function formatComment(comment, users){
+		function formatComment (comment, users) {
 			
 			if(comment.parent == 0){
 				comment.parent = null;

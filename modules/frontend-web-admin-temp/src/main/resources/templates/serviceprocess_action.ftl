@@ -221,7 +221,6 @@
 					paymentFee: serviceProcessAction.paymentFee,
 					syncActionCode: serviceProcessAction.syncActionCode,
 					rollbackable: serviceProcessAction.rollbackable,
-					dossiertemplatesFileFilter: "",
 					createDossierNo : serviceProcessAction.createDossierNo,
 					eSignature : serviceProcessAction.eSignature,
 					configNote : serviceProcessAction.configNote,
@@ -233,7 +232,14 @@
 
 				initStepCombobox();
 
-				
+				if (serviceProcessAction.dossierTemplateNo) {
+					$("#createDossierFiles").data("kendoMultiSelect").dataSource.read({
+						id: serviceProcessAction.dossierTemplateNo
+					})
+					$("#returnDossierFiles").data("kendoMultiSelect").dataSource.read({
+						id: serviceProcessAction.dossierTemplateNo
+					})
+				}
 				console.log("serviceProcessAction.createDossierFiles==============",serviceProcessAction.createDossierFiles);
 				if (typeof serviceProcessAction.createDossierFiles === 'number'){
 					console.log("type number");
@@ -300,7 +306,6 @@
 					returnDossierFiles: "",
 					syncActionCode: "",
 					rollbackable: "",
-					dossiertemplatesFileFilter: "",
 					createDossierNo : "",
 					eSignature : "",
 					configNote : "",

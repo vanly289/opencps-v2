@@ -332,6 +332,18 @@ public class AdminPortlet extends FreeMarkerPortlet {
 		// roles
 		List<Role> roles =
 			RoleLocalServiceUtil.getRoles(themeDisplay.getCompanyId());
+		
+		List<Role> rolesUser = RoleLocalServiceUtil.getUserRoles(themeDisplay.getUserId());
+		boolean isPowerUser = false;
+		_log.info("-----------------------rolesUser.toString()++++++++++++++++" + rolesUser.toString());
+		for (Role role : rolesUser) {
+			
+		   if (role.getName().equals("Power User") || role.getName().equals("Administrator")) {
+		    isPowerUser = true;
+		   }
+		}
+		  
+		renderRequest.setAttribute("isAdminUser", String.valueOf(isPowerUser));
 
 		// api
 		apiObject.put("server", themeDisplay.getPortalURL() + "/o/rest/v2");

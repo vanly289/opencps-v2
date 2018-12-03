@@ -397,7 +397,7 @@ import backend.utils.ObjectConverterUtil;
 				"portletNamespace",
 				themeDisplay.getPortletDisplay().getNamespace());
 			apiObject.put("roles", roles);
-
+			renderRequest.setAttribute("user", themeDisplay.getUser());
 			// set varible
 			renderRequest.setAttribute("ajax", urlObject);
 			renderRequest.setAttribute("api", apiObject);
@@ -810,10 +810,15 @@ import backend.utils.ObjectConverterUtil;
 						employee.getClass(), employee);
 
 					long mappingUserId = employee.getMappingUserId();
+					
+					
 
 					if (mappingUserId > 0) {
 						User user = UserLocalServiceUtil.getUser(mappingUserId);
 						JSONObject userInfo = JSONFactoryUtil.createJSONObject();
+						
+						renderRequest.setAttribute(
+								"userEmployee", JSONFactoryUtil.looseSerialize(user));
 
 						userInfo.put("email", user.getEmailAddress());
 						userInfo.put("screenName", user.getScreenName());
@@ -824,7 +829,7 @@ import backend.utils.ObjectConverterUtil;
 
 						renderRequest.setAttribute(
 							"employee_accountInfo", userInfo);
-
+						_log.info("++++++++++++userEmployee-----------" + JSONFactoryUtil.looseSerialize(user));
 					}
 
 					renderRequest.setAttribute(

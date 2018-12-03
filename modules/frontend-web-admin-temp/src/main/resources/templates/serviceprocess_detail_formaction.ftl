@@ -291,6 +291,10 @@
 						id = $("#dossiertemplateTmp").val();
 						
 					}
+					if (!id) {
+						options.error();
+						return;
+					}
 
 					$.ajax({
 						url : "${api.server}" + "/dossiertemplates/"+id+"/parts",
@@ -346,7 +350,10 @@
 						id = $("#dossiertemplateTmp").val();
 						
 					}
-
+					if (!id) {
+						options.error();
+						return;
+					}
 					$.ajax({
 						url : "${api.server}" + "/dossiertemplates/"+id+"/parts",
 						dataType : "json",
