@@ -438,7 +438,6 @@ public class DossierManagementImpl implements DossierManagement {
 						if (query.getEnd() == -1) {
 							results.getData().addAll(DossierUtils.mappingForGetList(docs));
 						} else {
-							_log.info("669999");
 							results.getData().addAll(
 									DossierUtils.mappingForGetListPaging(docs, query.getStart(), query.getEnd()));
 						}

@@ -231,7 +231,6 @@ public class DossierActionsImpl implements DossierActions {
 
 				long total = 0;
 				if (dictItem != null) {
-					_log.info("53");
 					String metaData = dictItem.getMetaData();
 					String specialStatus = StringPool.BLANK;
 					if (Validator.isNotNull(metaData)) {
@@ -626,18 +625,11 @@ public class DossierActionsImpl implements DossierActions {
 													.getDossierFileByDID_FTNO_DPT(dossierId, fileTemplateNo, 2, false,
 															QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 															new DossierFileComparator(false, "createDate", Date.class));
-											
-											if (dossierFilesResult != null) {
-												for (DossierFile dossierFile : dossierFilesResult) {
-													_log.info("******* : " + dossierFile.getDisplayName() + dossierFile.getFileTemplateNo());
-												}
-											}
 
 											if (dossierFilesResult != null && !dossierFilesResult.isEmpty()) {
 												df: for (DossierFile dossierFile : dossierFilesResult) {
 													if (dossierFile.getDossierPartNo()
 															.equals(dossierPart.getPartNo())) {
-														_log.info("****** FORMDATA = dossierFile.getFormData();");
 
 														eForm = dossierFile.getEForm();
 														formData = dossierFile.getFormData();
@@ -2269,7 +2261,7 @@ public class DossierActionsImpl implements DossierActions {
 	protected boolean hasDossierSync(long groupId, long dossierId, String refId, ProcessAction action)
 			throws PortalException {
 
-		Dossier dossier = getDossier(groupId, dossierId, refId);
+//		Dossier dossier = getDossier(groupId, dossierId, refId);
 
 		// TODO add more logic here
 		boolean isSync = false;

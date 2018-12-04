@@ -73,7 +73,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 				RESTFulConfiguration.SERVER_PASS, properties, serviceContext);
 		
 		List<String> lsServerNo = getListServerNo(resServerConfig);
-		_log.info("resServerConfig lsServerNo ---------- :" + lsServerNo);
+//		_log.info("resServerConfig lsServerNo ---------- :" + lsServerNo);
 		for (String serverNo : lsServerNo) {
 
 			String dossierSyncEndpoint = "serverconfigs/" + serverNo;
@@ -86,14 +86,14 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 				
 
 				long groupId = getGroupId(resDossierSync);
-				_log.info("resServerConfig groupId ---------- :" + groupId);
+//				_log.info("resServerConfig groupId ---------- :" + groupId);
 				
 				// TODO GROUP EMPLOYEE
 				long desGroupId = 55301;
 
 				// listener submiting of server
 				List<Registration> registrations = RegistrationLocalServiceUtil.getdByF_submitting(groupId, Boolean.TRUE);
-				_log.info("resServerConfig registrations ---------- :" + registrations);
+//				_log.info("resServerConfig registrations ---------- :" + registrations);
 				String registrationEndpoint = "registrations/syncs";
 				String registrationFormEndpoint = "registrations/syncs/form";
 				
