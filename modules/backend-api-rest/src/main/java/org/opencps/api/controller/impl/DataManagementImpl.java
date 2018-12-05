@@ -1,5 +1,27 @@
 package org.opencps.api.controller.impl;
 
+import com.liferay.asset.kernel.exception.DuplicateCategoryException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -54,26 +76,6 @@ import org.opencps.synchronization.model.DictCollectionTemp;
 import org.opencps.synchronization.model.DictGroupTemp;
 import org.opencps.synchronization.model.DictItemTemp;
 import org.opencps.synchronization.service.DictItemTempLocalServiceUtil;
-
-import com.liferay.asset.kernel.exception.DuplicateCategoryException;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 public class DataManagementImpl implements DataManagement {
 
@@ -2467,5 +2469,88 @@ public class DataManagementImpl implements DataManagement {
 			return Response.status(409).entity(error).build();
 
 		}
+	}
+
+	@Override
+	public Response getCorrecting(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, DataSearchModel query) {
+		
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		
+		
+		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+		DictcollectionInterface dictItemDataUtil = new DictCollectionActions();
+
+		params.put("groupId", String.valueOf(groupId));
+		params.put("keywords", query.getKeywords());
+
+		Sort[] sorts = new Sort[] {
+				SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE, false) };
+
+		JSONObject jsonData = dictItemDataUtil.getDictCollection(user.getUserId(), company.getCompanyId(), groupId,
+				params, sorts, QueryUtil.ALL_POS, QueryUtil.ALL_POS, serviceContext);
+		
+		long total = jsonData.getLong("total");
+		
+		_log.info("total****" + total);
+		_log.info("groupId****" + groupId);
+		
+		//JSONArray collectionArr = JSONFactoryUtil.createJSONArray();
+
+		List<Document> lstDocuments = (List<Document>) jsonData.get("data");	
+		
+		Indexer<DictItem> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(DictItem.class);
+
+		for (Document document : lstDocuments) {
+			
+			String collectionCode = document.get("collectionCode");
+			
+			_log.info("******" + collectionCode + "******");
+			
+			if (!collectionCode.equalsIgnoreCase("ADMINISTRATIVE_REGION")) {
+				//do
+				
+				LinkedHashMap<String, Object> paramsDict = new LinkedHashMap<String, Object>();
+
+				paramsDict.put("groupId", groupId);
+				paramsDict.put(DictItemTerm.DICT_COLLECTION_CODE, collectionCode);
+				params.put("itemLv", 0);
+				params.put(DictItemTerm.PARENT_ITEM_CODE, 0);
+				
+				Sort[] sortsDict = new Sort[] {
+						SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE, false) };
+				
+				JSONObject jsonDataDict = dictItemDataUtil.getDictItems(user.getUserId(), company.getCompanyId(), groupId,
+						paramsDict, sortsDict, QueryUtil.ALL_POS, QueryUtil.ALL_POS, serviceContext);
+				
+				List<Document> lstDocumentsDict = (List<Document>) jsonDataDict.get("data");
+				_log.info("******" + jsonDataDict.getLong("total") + "******");
+				for (Document elm : lstDocumentsDict) {
+					long dictItemId = GetterUtil.getLong(elm.get("dictItemId"));
+					long companyId = GetterUtil.getLong(elm.get(Field.COMPANY_ID));
+					String uid = elm.get(Field.UID);
+					_log.info("******dictItemId" + dictItemId + "******");
+
+					DictItem di = DictItemLocalServiceUtil.fetchDictItem(dictItemId);
+					
+					if (Validator.isNull(di)) {
+						try {
+							
+							_log.info("del**" + di.getItemName());
+							indexer.delete(companyId, uid);
+						} catch (SearchException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+
+			}
+			
+		}
+		
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

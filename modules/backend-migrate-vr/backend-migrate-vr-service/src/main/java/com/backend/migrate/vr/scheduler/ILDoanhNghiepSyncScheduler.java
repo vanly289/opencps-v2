@@ -106,7 +106,7 @@ public class ILDoanhNghiepSyncScheduler extends BaseSchedulerEntryMessageListene
 	@Modified
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(),
-				15, TimeUnit.SECOND));
+				8, TimeUnit.HOUR));
 		_schedulerEngineHelper.register(this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 

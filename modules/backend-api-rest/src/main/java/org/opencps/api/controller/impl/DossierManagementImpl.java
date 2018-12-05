@@ -359,6 +359,10 @@ public class DossierManagementImpl implements DossierManagement {
 			String dossierIdCTN = query.getDossierIdCTN();
 			String fromSubmitDate = APIDateTimeUtils.convertNormalDateToLuceneDate(query.getFromSubmitDate());
 			String toSubmitDate = APIDateTimeUtils.convertNormalDateToLuceneDate(query.getToSubmitDate());
+			
+			String online = query.getOnline();
+
+			params.put(DossierTerm.ONLINE, online);
 
 			params.put(DossierTerm.STATUS, status);
 			params.put(DossierTerm.SUBSTATUS, substatus);
@@ -1008,17 +1012,27 @@ public class DossierManagementImpl implements DossierManagement {
 	protected ProcessAction getProcessAction(long groupId, long dossierId, String refId, String actionCode,
 			long serviceProcessId) throws PortalException {
 
-		_log.debug("GET PROCESS ACTION____");
+		_log.info("GET PROCESS ACTION____");
 
 		ProcessAction action = null;
 
 		try {
 			List<ProcessAction> actions = ProcessActionLocalServiceUtil.getByActionCode(groupId, actionCode,
 					serviceProcessId);
+			
+			_log.info("ACTIONS groupId" + groupId);
+			_log.info("ACTIONS serviceProcessId" + serviceProcessId);
+
+			
+			_log.info("ACTIONS NUMBER____" + actions.size());
 
 			Dossier dossier = getDossier(groupId, dossierId, refId);
+			_log.info("ACTIONS dossierId" + dossierId);
+			_log.info("ACTIONS refId" + refId);
 
 			String dossierStatus = dossier.getDossierStatus();
+
+			_log.info("ACTIONS dossierStatus" + dossierStatus);
 
 			String dossierSubStatus = dossier.getDossierSubStatus();
 
@@ -1042,6 +1056,7 @@ public class DossierManagementImpl implements DossierManagement {
 			}
 
 		} catch (Exception e) {
+			_log.info(e);
 			throw new NotFoundException("NotProcessActionFound");
 		}
 

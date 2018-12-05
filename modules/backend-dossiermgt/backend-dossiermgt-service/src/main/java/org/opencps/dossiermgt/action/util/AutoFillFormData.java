@@ -91,7 +91,7 @@ public class AutoFillFormData {
 
 				_govAgencyName = dossier.getGovAgencyName();
 				_serviceName = dossier.getServiceName();
-				_referenceUid = dossier.getReferenceUid();
+				_referenceUid = dossier.getReferenceUid().trim();
 				
 			// get data applicant or employee
 			ApplicantActions applicantActions = new ApplicantActionsImpl();
@@ -168,7 +168,7 @@ public class AutoFillFormData {
 
 					// _log.info(employeeJSON);
 
-				_employee_employeeNo = employeeJSON.getString("employeeNo");
+				_employee_employeeNo = employeeJSON.getString("");
 				_employee_fullName = employeeJSON.getString("fullName");
 				_employee_title = employeeJSON.getString("title");
 
@@ -236,6 +236,12 @@ public class AutoFillFormData {
 						jsonMap.put(entry.getKey(), _curDate);
 					} else if (value.equals("_representative")) {
 						jsonMap.put(entry.getKey(), _representative);
+					} else if (value.equals("_govAgencyName")) {
+						jsonMap.put(entry.getKey(), _govAgencyName);
+					}else if (value.equals("_serviceName")) {
+						jsonMap.put(entry.getKey(), _serviceName);
+					}else if (value.equals("_referenceUid")) {
+						jsonMap.put(entry.getKey(), _referenceUid.trim());
 					}
 
 				} else if (value.startsWith("_") && value.contains(":")) {
@@ -288,6 +294,12 @@ public class AutoFillFormData {
 							resultBinding += ", " + _curDate;
 						} else if (value.equals("_representative")) {
 							resultBinding += ", " + _representative;
+						} else if (value.equals("_govAgencyName")) {
+							resultBinding += ", " + _govAgencyName;
+						}else if (value.equals("_serviceName")) {
+							resultBinding += ", " + _serviceName;
+						}else if (value.equals("_referenceUid")) {
+							resultBinding += ", " + _referenceUid.trim();
 						}
 					}
 
