@@ -3,7 +3,8 @@
 	<template slot="items" slot-scope="props">
 		<td style="padding: 8px; padding-left: 0px;width: 3%;" class="text-xs-center">{{ danhSachHoSoTablepage * 15 - 15 + props.index + 1 }}</td>
 		<td style="padding: 8px; width: 10%;" class="text-xs-center">
-			{{ props.item.referenceUid }}
+			<span v-if="props.item.online">{{ props.item.referenceUid }}</span>
+			<span v-else>{{ props.item.dossierIdCTN }}</span>
 		</td>
 		<td style="padding: 8px; width: 39%;" class="text-xs-left">
 			<a href="javascript:;" @click.prevent.stop="toDetailHoSo(props.item)">

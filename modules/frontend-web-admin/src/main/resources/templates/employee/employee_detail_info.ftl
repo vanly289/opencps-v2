@@ -386,7 +386,11 @@
 							class="btn btn-active border-rad-4"> 
 							Khóa tài khoản
 						</button>
-
+						<button name="employee-detail-looking"
+						data-pk="${(employee.employeeId)!}" onclick="showDialogChangePass()" data-vl="true"
+						class="btn btn-active border-rad-4"> 
+						Đổi mật khẩu
+						</button>
 					<#else>
 						
 						<button name="employee-detail-looking" style="display: none" 
@@ -400,7 +404,11 @@
 							class="btn btn-active border-rad-4"> 
 							Khóa tài khoản
 						</button>
-
+						<button name="employee-detail-looking"
+						data-pk="${(employee.employeeId)!}" onclick="showDialogChangePass()" data-vl="true"
+						class="btn btn-active border-rad-4"> 
+						Đổi mật khẩu
+						</button>
 					</#if>
 					
 
@@ -411,7 +419,11 @@
 						class="btn btn-active border-rad-4"> 
 							Mở tài khoản
 					</button>
-					
+					<button name="employee-detail-looking"
+					data-pk="${(employee.employeeId)!}" onclick="showDialogChangePass()" data-vl="true"
+					class="btn btn-active border-rad-4"> 
+					Đổi mật khẩu
+					</button>
 				</#if>
 
 			</div>
@@ -419,13 +431,109 @@
 		</div>
 
 	</div>
+	<div class="modal fade" id="changePassEmployeeDialog" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Đổi mật khẩu</h4>
+				</div>
+				<div class="modal-body">
+					<form id="formChangePassEmployee" name="formChangePassEmployee">
+						<div class="row MB10">
+							<div class="col-sm-4 col-xs-12">
+								Mật khẩu cũ
+							</div>
+							<div class="col-sm-8 col-xs-12">
+								<input type="password" class="form-control" name="oldEmployeePass" id="oldEmployeePass" required="required" validationMessage="Trường nhập yêu cầu bắt buộc">
+							</div>
+						</div>
+						<div class="row MB10">
+							<div class="col-sm-4 col-xs-12">
+								Mật khẩu mới
+							</div>
+							<div class="col-sm-8 col-xs-12">
+								<input type="password" class="form-control" name="newEmployeePass" id="newEmployeePass" required="required" validationMessage="Trường nhập yêu cầu bắt buộc">
+							</div>
+						</div>
+						<div class="row MB10">
+							<div class="col-sm-4 col-xs-12">
+								Nhập lại mật khẩu mới
+							</div>
+							<div class="col-sm-8 col-xs-12">
+								<input type="password" class="form-control" name="renewEmployeePass" id="renewEmployeePass" required="required" validationMessage="Trường nhập yêu cầu bắt buộc">
+							</div>
+						</div>
+						<div class="row MB10">
+							<div class="col-sm-12 col-xs-12">
+								<div class="checkbox-inline"> 
+									<input onchange="changeShowPassEmployee(this)" type="checkbox" id="showPassEmployee" name="showPassEmployee"> 
+									<label id="lblShowPassEmployee" for="showPassEmployee" class="text-normal">Xem mật khẩu. </label> 
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-active border-rad-4 MR10" data-pk="${(employee.userId)!}" onclick="changePassEmployee(this)">Đồng ý</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				</div>
+			</div>
 
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript" charset="utf-8" >
 
 var employeeUpdateBaseUrl = '${api.endpoint}/employees';
+function showDialogChangePass () {
+	$('#changePassEmployeeDialog').modal('show');
+}
+function changeShowPassEmployee(input) {
+	if ($(input).prop("checked")) {
+		$("#formChangePassEmployee > input[type=password]").each(function () {
+			$(this).attr('type', 'text')
+		});
+		$("#lblShowPassEmployee").html('Ẩn mật khẩu.');
+	} else {
+		$("#formChangePassEmployee > input[type=text]").each(function () {
+			$(this).attr('type', 'password')
+		});
+		$("#lblShowPassEmployee").html('Hiện mật khẩu.');
+	}
+}
+function changePassEmployee (btn) {
+	var validator = $("#formChangePassEmployee").kendoValidator().data("kendoValidator");
+	if (validator.validate()) {
+		if ($('#newEmployeePass').val() !== $('#renewEmployeePass').val()) {
+			showMessageToastr("error", 'Nhập lại mật khẩu mới chưa chính xác, vui lòng kiểm tra lại!');
+		} else {
+			var userId = $(btn).attr('data-pk');
+			$.ajax({
+				url : "${api.server}/users/" + userId + "/changepass/application",
+				dataType : "json",
+				type : "POST",
+				headers: {"groupId": ${groupId}},
+				data : {
+					oldPassword : $("#oldEmployeePass").val(),
+					newPassword : $("#newEmployeePass").val()
+				},
+				success : function(result){
+					notification.show({
+						message: "Yêu cầu được thực hiện thành công"
+					}, "success");
+				},
+				error : function(xhr){
+					notification.show({
+						message: "Yêu cầu được thực hiện không thành công"
+					}, "error");
+				}
+			});
+		}
+	}
 
+}
 function employeeChangeAvatar(fileInput) {
 	
 	var files = fileInput.files;

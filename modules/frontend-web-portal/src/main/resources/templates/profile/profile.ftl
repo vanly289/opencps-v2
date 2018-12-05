@@ -132,6 +132,11 @@
 										</span>
 									</div>
 								</div>
+								<div class="row MB15">
+									<div class="col-sm-12 col-xs-12">
+										<button class="btn btn-active" type="button" onclick="goBack()">Quay lại</button>
+									</div>
+								</div>
 							</div>
 						</div>
 					<#elseif applicantIdType?has_content && applicantIdType == "citizen">
@@ -216,6 +221,11 @@
 										<#-- <span class="pull-right">
 											<a href="#" id="editEmail" style="float: right"><i class="fa fa-pencil"></i></a>
 										</span> -->
+									</div>
+								</div>
+								<div class="row MB15">
+									<div class="col-sm-12 col-xs-12">
+										<button class="btn btn-active" type="button" onclick="goBack()">Quay lại</button>
 									</div>
 								</div>
 							</div>
@@ -364,6 +374,10 @@
 </div>
 
 <script type="text/javascript">
+
+	function goBack () {
+		window.history.back();
+	}
 
 	var notification = $("#notification").kendoNotification().data("kendoNotification");
 
