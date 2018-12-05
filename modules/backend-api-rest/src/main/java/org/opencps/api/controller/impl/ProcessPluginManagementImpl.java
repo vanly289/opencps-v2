@@ -67,15 +67,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 				throw new UnauthenticationException();
 			}
 			
-			
-
-
 			Dossier dossier = getDossier(id, groupId);
 			
-			
-
-			
-
 			if (Validator.isNotNull(dossier)) {
 
 				long dossierActionId = dossier.getDossierActionId();
@@ -387,9 +380,12 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 					String formReport = StringPool.BLANK;
 
 					if (formCode.startsWith("#")) {
+						
 						formData = _getFormData(groupId, formCode, dossier.getDossierId(), autoRun,
 								dossier.getDossierTemplateNo(), original, serviceContext);
-
+						
+						_log.info("formData"+ formData);
+						
 						formReport = _getFormScript(formCode, dossier.getDossierId());
 					}
 
@@ -490,8 +486,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 			formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
 			
-			
-			//_log.info(StringUtil.shorten(formData, 300));
+			_log.info(formData);
 
 			if (original) {
 
