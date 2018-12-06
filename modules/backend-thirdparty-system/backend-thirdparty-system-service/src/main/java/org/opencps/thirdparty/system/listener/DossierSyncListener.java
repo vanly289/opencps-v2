@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.opencps.communication.model.ServerConfig;
 import org.opencps.communication.service.ServerConfigLocalService;
+import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierSync;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.thirdparty.system.constants.SyncServerTerm;
@@ -34,9 +35,9 @@ public class DossierSyncListener extends BaseModelListener<DossierSync> {
 							&& configObj.getString(SyncServerTerm.SERVER_TYPE).equals(SyncServerTerm.SOAP_SYNC_SERVER_TYPE)) {
 						if (model.getMethod() == 0) {
 							
-							int count = DossierLocalServiceUtil.countByReferenceUid(model.getDossierReferenceUid());
+							Dossier dossier = DossierLocalServiceUtil.getDossier(model.getDossierId());
 							
-							if(count == 1) {
+							if(dossier.getOnline()) {
 								_thirdPartySyncService.updateThirdPartyDossierSync(model.getGroupId(), model.getUserId(), model.getDossierId(), model.getDossierReferenceUid(), model.getCreateDossier(), model.getMethod(), model.getClassPK(), model.getFileReferenceUid(), sc.getServerNo(), model.getDossierSyncId());
 							}
 						}

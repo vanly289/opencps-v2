@@ -18,6 +18,8 @@ import org.opencps.thirdparty.system.messagequeue.model.MessageQueueInputModel;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 public class OpenCPSRestClient {
 	private static final String MESSAGE_QUEUE_BASE_PATH = "/messagequeues";
@@ -75,15 +77,18 @@ public class OpenCPSRestClient {
 
 		} catch (MalformedURLException e) {
 
-			e.printStackTrace();
+			_log.error(e);
 
 		} catch (IOException e) {
 
-			e.printStackTrace();
+			_log.error(e);
 
 		} catch (JSONException e) {
-			e.printStackTrace();
+			_log.error(e);
 		}
+		
 		return result;
 	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(OpenCPSConverter.class);
 }

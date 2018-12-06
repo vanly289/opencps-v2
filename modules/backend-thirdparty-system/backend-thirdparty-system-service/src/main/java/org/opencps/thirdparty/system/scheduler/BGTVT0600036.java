@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 public class BGTVT0600036 {
 	private static String DUMMY_DATA = "1";
@@ -58,9 +57,6 @@ public class BGTVT0600036 {
 
 		String templateNo = StringPool.BLANK;
 		String partNo = StringPool.BLANK;
-		int partType = 2;
-		boolean eSign = true;
-		String deliverableCode = StringPool.BLANK;
 
 		ServiceInfo serviceInfo = ServiceInfoLocalServiceUtil.getByCode(dossier.getGroupId(),
 				dossier.getServiceCode());
@@ -382,16 +378,16 @@ public class BGTVT0600036 {
 						issuingAuthority.setSignPlace(formDataObj.getString("SignPlace"));						
 					}
 					else {
-						issuingAuthority.setSignPlace("Hà Nội");						
+						issuingAuthority.setSignPlace("Hà Nội");
 					}
 					if (formDataObj.has("SignTitle")) {
-						issuingAuthority.setSignTitle(formDataObj.getString("SignTitle"));						
+						issuingAuthority.setSignTitle(formDataObj.getString("SignTitle"));
 					}
 					else {
-						issuingAuthority.setSignTitle("Cục trưởng");												
+						issuingAuthority.setSignTitle("Cục trưởng");
 					}
 					
-					vtOfficialTransportPermit.setIssuingAuthority(issuingAuthority);										
+					vtOfficialTransportPermit.setIssuingAuthority(issuingAuthority);
 					vtOfficialTransportPermit.getAttachedFile().addAll(lstFiles);
 					envelope.getBody().getContent().setVTOfficialTransportPermit(vtOfficialTransportPermit);
 

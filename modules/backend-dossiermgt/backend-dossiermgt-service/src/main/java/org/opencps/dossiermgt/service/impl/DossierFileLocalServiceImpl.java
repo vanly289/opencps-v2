@@ -25,9 +25,7 @@ import java.util.Map;
 
 import org.opencps.dossiermgt.action.FileUploadUtils;
 import org.opencps.dossiermgt.action.util.AutoFillFormData;
-import org.opencps.dossiermgt.action.util.DeliverableNumberGenerator;
 import org.opencps.dossiermgt.constants.DossierFileTerm;
-import org.opencps.dossiermgt.exception.DuplicateDossierFileException;
 import org.opencps.dossiermgt.exception.InvalidDossierStatusException;
 import org.opencps.dossiermgt.exception.NoSuchDossierFileException;
 import org.opencps.dossiermgt.exception.NoSuchDossierPartException;
@@ -37,9 +35,6 @@ import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
 import org.opencps.dossiermgt.service.DeliverableTypeLocalServiceUtil;
 import org.opencps.dossiermgt.service.base.DossierFileLocalServiceBaseImpl;
-import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
-import org.opencps.usermgt.action.ApplicantActions;
-import org.opencps.usermgt.action.impl.ApplicantActionsImpl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -71,7 +66,6 @@ import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -123,12 +117,8 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 
 		long userId = serviceContext.getUserId();
 		
-		_log.info("****Start add file at:" + new Date());
-
 		validateAddDossierFile(groupId, dossierId, referenceUid, dossierTemplateNo, dossierPartNo, fileTemplateNo);
 		
-		_log.info("****End validator file at:" + new Date());
-
 		DossierPart dossierPart = dossierPartPersistence.findByTP_NO_PART(groupId, dossierTemplateNo, dossierPartNo);
 
 		long fileEntryId = 0;
@@ -143,7 +133,6 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		} catch (Exception e) {
 			throw new SystemException(e);
 		}
-		_log.info("****End uploadFile file at:" + new Date());
 
 		Date now = new Date();
 
@@ -199,9 +188,6 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				object.setFormReport(dossierPart.getFormReport());
 			}
 		}
-		_log.info("****Start autofill file at:" + new Date());
-
-		_log.info("****End autofill file at:" + new Date());
 
 		object.setDisplayName(displayName);
 		object.setOriginal(true);
@@ -210,38 +196,10 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			object.setIsNew(true);
 		}
 		
-//		String deliverableCode = PwdGenerator.getPassword(10);
-//		
-//		if (Validator.isNotNull(dossierPart.getDeliverableType())) {
-//			object.setDeliverableCode(deliverableCode);
-//		}
-		String deliverableCode = StringPool.BLANK;
-		
-		_log.info("Dossier part ESign: " + dossierPart.getESign());
-		
 		if (Validator.isNotNull(dossierPart.getSampleData())) {
 			String formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, serviceContext);
 			JSONObject formDataObj = JSONFactoryUtil.createJSONObject(formData);
 			if (!formDataObj.has("LicenceNo") || Validator.isNull(formDataObj.getString("LicenceNo"))) {
-//				if (Validator.isNotNull(dossierPart.getDeliverableType()) && dossierPart.getESign()) {
-//					DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.getByCode(groupId, dossierPart.getDeliverableType());
-//					
-//					if (Validator.isNull(object.getDeliverableCode())) {
-//						deliverableCode = DeliverableNumberGenerator.generateDeliverableNumber(groupId, serviceContext.getCompanyId(), deliverableType.getDeliverableTypeId());
-//						object.setDeliverableCode(deliverableCode);
-//					}
-//					else {
-//						deliverableCode = object.getDeliverableCode();
-//					}
-//					_log.info("Deliverable code when add dossier file: " + deliverableCode);
-//				}
-//
-//				if (Validator.isNotNull(deliverableCode)) {
-//					formDataObj.put("LicenceNo", deliverableCode);				
-//				}
-//				else {
-//					formDataObj.put("LicenceNo", StringPool.BLANK);
-//				}
 			}
 			else {
 				if (dossierPart.getESign() && Validator.isNotNull(dossierPart.getDeliverableType())) {
@@ -249,222 +207,12 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				}
 			}
 			formData = formDataObj.toJSONString();
-			_log.info("Form data before update form data: " + formData);
 			object.setFormData(
 					formData
 					);
 		}
 
 		return dossierFilePersistence.update(object);
-	}
-
-	private String sampleDataBinding(String sampleData, long dossierId, ServiceContext serviceContext) {
-		// TODO Auto-generated method stub
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		try {
-			Dossier dossier = dossierPersistence.fetchByPrimaryKey(dossierId);
-			
-			result = JSONFactoryUtil.createJSONObject(sampleData);
-
-			String _subjectName = StringPool.BLANK;
-			String _subjectId = StringPool.BLANK;
-			String _address = StringPool.BLANK;
-			String _cityCode = StringPool.BLANK;
-			String _cityName = StringPool.BLANK;
-			String _districtCode = StringPool.BLANK;
-			String _districtName = StringPool.BLANK;
-			String _wardCode = StringPool.BLANK;
-			String _wardName = StringPool.BLANK;
-			String _contactName = StringPool.BLANK;
-			String _contactTelNo = StringPool.BLANK;
-			String _contactEmail = StringPool.BLANK;
-			String _govAgencyName = StringPool.BLANK;
-			String _serviceName = StringPool.BLANK;
-			String _referenceUid = StringPool.BLANK;
-			String _dossierNo = StringPool.BLANK;
-			// TODO
-			String _dossierFileNo = StringPool.BLANK;
-			String _dossierFileDate = StringPool.BLANK;
-
-			if (dossier != null) {
-				_dossierNo = dossier.getDossierNo();
-				_govAgencyName = dossier.getGovAgencyName();
-				_serviceName = dossier.getServiceName();
-				_referenceUid = dossier.getReferenceUid();
-			}
-			// get data applicant or employee
-			ApplicantActions applicantActions = new ApplicantActionsImpl();
-
-			try {
-				String applicantStr = applicantActions.getApplicantByUserId(serviceContext);
-
-				JSONObject applicantJSON = JSONFactoryUtil.createJSONObject(applicantStr);
-
-				_subjectName = applicantJSON.getString("applicantName");
-				_subjectId = applicantJSON.getString("applicantId");
-				_address = applicantJSON.getString("address");
-				_cityCode = applicantJSON.getString("cityCode");
-				_cityName = applicantJSON.getString("cityName");
-				_districtCode = applicantJSON.getString("districtCode");
-				_districtName = applicantJSON.getString("districtName");
-				_wardCode = applicantJSON.getString("wardCode");
-				_wardName = applicantJSON.getString("wardName");
-				_contactName = applicantJSON.getString("contactName");
-				_contactTelNo = applicantJSON.getString("contactTelNo");
-				_contactEmail = applicantJSON.getString("contactEmail");
-
-			} catch (PortalException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			// process sampleData
-			if (Validator.isNull(sampleData)) {
-				sampleData = "{}";
-			}
-
-			Map<String, Object> jsonMap = jsonToMap(result);
-
-			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
-
-				String value = String.valueOf(entry.getValue());
-
-				if (value.startsWith("_") && !value.contains(":")) {
-
-					if (value.equals("_subjectName")) {
-						jsonMap.put(entry.getKey(), _subjectName);
-					} else if (value.equals("_subjectId")) {
-						jsonMap.put(entry.getKey(), _subjectId);
-					} else if (value.equals("_address")) {
-						jsonMap.put(entry.getKey(), _address);
-					} else if (value.equals("_cityCode")) {
-						jsonMap.put(entry.getKey(), _cityCode);
-					} else if (value.equals("_cityName")) {
-						jsonMap.put(entry.getKey(), _cityName);
-					} else if (value.equals("_districtCode")) {
-						jsonMap.put(entry.getKey(), _districtCode);
-					} else if (value.equals("_districtName")) {
-						jsonMap.put(entry.getKey(), _districtName);
-					} else if (value.equals("_wardCode")) {
-						jsonMap.put(entry.getKey(), _wardCode);
-					} else if (value.equals("_wardName")) {
-						jsonMap.put(entry.getKey(), _wardName);
-					} else if (value.equals("_contactName")) {
-						jsonMap.put(entry.getKey(), _contactName);
-					} else if (value.equals("_contactTelNo")) {
-						jsonMap.put(entry.getKey(), _contactTelNo);
-					} else if (value.equals("_contactEmail")) {
-						jsonMap.put(entry.getKey(), _contactEmail);
-					}
-
-				} else if (value.startsWith("_") && value.contains(":")) {
-					String resultBinding = StringPool.BLANK;
-					String[] valueSplit = value.split(":");
-					for (String string : valueSplit) {
-						if (string.equals("_subjectName")) {
-							resultBinding += ", " + _subjectName;
-						} else if (string.equals("_subjectId")) {
-							resultBinding += ", " + _subjectId;
-						} else if (string.equals("_address")) {
-							resultBinding += ", " + _address;
-						} else if (string.equals("_wardCode")) {
-							resultBinding += ", " + _wardCode;
-						} else if (string.equals("_wardName")) {
-							resultBinding += ", " + _wardName;
-						} else if (string.equals("_districtCode")) {
-							resultBinding += ", " + _districtCode;
-						} else if (string.equals("_districtName")) {
-							resultBinding += ", " + _districtName;
-						} else if (string.equals("_cityCode")) {
-							resultBinding += ", " + _cityCode;
-						} else if (string.equals("_cityName")) {
-							resultBinding += ", " + _cityName;
-						} else if (string.equals("_contactName")) {
-							resultBinding += ", " + _contactName;
-						} else if (string.equals("_contactTelNo")) {
-							resultBinding += ", " + _contactTelNo;
-						} else if (string.equals("_contactEmail")) {
-							resultBinding += ", " + _contactEmail;
-						}
-					}
-
-					jsonMap.put(entry.getKey(), resultBinding.replaceFirst(", ", StringPool.BLANK));
-
-				} else if (value.startsWith("#") && value.contains("@")) {
-					String newString = value.substring(1);
-					String[] stringSplit = newString.split("@");
-					String variable = stringSplit[0];
-					String paper = stringSplit[1];
-					try {
-						DossierFile dossierFile = dossierFileLocalService.getDossierFileByDID_FTNO_First(dossierId,
-								paper, false, new DossierFileComparator(false, "createDate", Date.class));
-
-						if (Validator.isNotNull(dossierFile) && Validator.isNotNull(dossierFile.getFormData())) {
-							JSONObject jsonOtherData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
-							Map<String, Object> jsonOtherMap = jsonToMap(jsonOtherData);
-							String myCHK = StringPool.BLANK;
-							try {
-								if (variable.contains(":")) {
-									String[] variableMuti = variable.split(":");
-									for (String string : variableMuti) {
-										myCHK += ", " + jsonOtherMap.get(string).toString();
-									}
-									myCHK = myCHK.replaceFirst(", ", "");
-								}
-							} catch (Exception e) {
-								// TODO: handle exception
-							}
-
-							if (myCHK.startsWith("#")) {
-								jsonMap.put(entry.getKey(), "");
-							} else {
-								jsonMap.put(entry.getKey(), myCHK.toString());
-							}
-						}
-					} catch (SystemException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-
-			if (!jsonMap.containsKey("govAgencyName"))
-				jsonMap.put("govAgencyName", _govAgencyName);
-			if (!jsonMap.containsKey("serviceName"))
-				jsonMap.put("serviceName", _serviceName);
-			if (!jsonMap.containsKey("dossierNo"))
-				jsonMap.put("dossierNo", _dossierNo);
-			if (!jsonMap.containsKey("referenceUid"))
-				jsonMap.put("referenceUid", _referenceUid);
-			
-			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
-				if (entry.getValue().getClass().getName().contains("JSONArray")) {
-					result.put(entry.getKey(), (JSONArray) entry.getValue());
-				} else if (entry.getValue().getClass().getName().contains("JSONObject")) {
-					result.put(entry.getKey(), (JSONObject) entry.getValue());
-				} else {
-					result.put(entry.getKey(), entry.getValue() + "");
-				}
-			}
-
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return result.toJSONString();
-	}
-
-	private Map<String, Object> jsonToMap(JSONObject json) {
-		Map<String, Object> retMap = new HashMap<String, Object>();
-
-		if (Validator.isNotNull(json)) {
-			try {
-				retMap = toMap(json);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return retMap;
 	}
 
 	public static Map<String, Object> toMap(JSONObject object) throws JSONException {
@@ -1037,18 +785,6 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 
 	private void validateAddDossierFile(long groupId, long dossierId, String referenceUid, String dossierTemplateNo,
 			String dossierPartNo, String fileTemplateNo) throws PortalException {
-
-		// TODO add more logic here
-
-		//dossierPersistence.findByPrimaryKey(dossierId);
-
-		if (Validator.isNotNull(referenceUid)) {
-			//DossierFile dossierFile = dossierFilePersistence.fetchByD_RUID(dossierId, referenceUid, false);
-			DossierFile dossierFile = null;
-			if (dossierFile != null) {
-				throw new DuplicateDossierFileException("dossierId= " + dossierId + "|referenceUid=" + referenceUid);
-			}
-		}
 	}
 
 	public List<DossierFile> getDossierFileByDID_DPNO(long dossierId, String dossierPartNo, boolean removed) {
