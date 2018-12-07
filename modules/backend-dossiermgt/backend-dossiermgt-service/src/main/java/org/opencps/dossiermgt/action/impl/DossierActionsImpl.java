@@ -678,7 +678,7 @@ public class DossierActionsImpl implements DossierActions {
 																referenceUid, dossier.getDossierTemplateNo(),
 																dossierPart.getPartNo(), fileTemplateNo,
 																dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-																StringPool.BLANK, String.valueOf(false),
+																StringPool.BLANK, String.valueOf(true),
 																serviceContext);
 														docFileReferenceUid = dossierFile.getReferenceUid();
 														dossierFileId = dossierFile.getDossierFileId();
@@ -781,8 +781,10 @@ public class DossierActionsImpl implements DossierActions {
 																					dossier.getDossierTemplateNo(), dossierPart.getPartNo(),
 																					fileTemplateNo, dossierPart.getPartName(),
 																					StringPool.BLANK, 0L, null, StringPool.BLANK,
-																					String.valueOf(false), serviceContext);
+																					String.valueOf(true), serviceContext);
 																	}
+																	
+																	
 
 																	docFileReferenceUid = dossierFile.getReferenceUid();
 
@@ -843,7 +845,7 @@ public class DossierActionsImpl implements DossierActions {
 																						StringPool.BLANK,
 																						0L, null,
 																						StringPool.BLANK,
-																						String.valueOf(false),
+																						String.valueOf(true),
 																						serviceContext);
 																			}
 
@@ -929,7 +931,7 @@ public class DossierActionsImpl implements DossierActions {
 																									0L,
 																									null,
 																									StringPool.BLANK,
-																									String.valueOf(false),
+																									String.valueOf(true),
 																								serviceContext);
 																							}
 
@@ -1020,7 +1022,7 @@ public class DossierActionsImpl implements DossierActions {
 																			dossierPart.getPartName(),
 																			StringPool.BLANK, 0L, null,
 																			StringPool.BLANK,
-																			String.valueOf(false),
+																			String.valueOf(true),
 																			serviceContext);
 																	}
 
@@ -1083,7 +1085,7 @@ public class DossierActionsImpl implements DossierActions {
 																														null,
 																														StringPool.BLANK,
 																														String.valueOf(
-																																false),
+																																true),
 																														serviceContext);
 																									docFileReferenceUid = dossierFile.getReferenceUid();
 																									dossierFileId = dossierFile.getDossierFileId();
@@ -2078,7 +2080,7 @@ public class DossierActionsImpl implements DossierActions {
 								dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
 										dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo,
 										dossierPart.getPartName(), StringPool.BLANK, 0L, null, StringPool.BLANK,
-										String.valueOf(false), context);
+										String.valueOf(true), context);
 
 								_log.info("UPDATED DOSSIERFILE");
 								if (Validator.isNotNull(dossierFile.getDeliverableCode())) {
@@ -2106,7 +2108,7 @@ public class DossierActionsImpl implements DossierActions {
 				if (Validator.isNull(dossierFile)) {
 					dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
 							dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
-							StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
+							StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(true), context);
 
 					if (Validator.isNotNull(dossierFile.getDeliverableCode())) {
 						formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
