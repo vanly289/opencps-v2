@@ -111,31 +111,34 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 								
 								//only add return file
 								
-								boolean contains = false;
+								if (dossierFile != null) {
 								
-								if (model.getActionCode().equals("1000")) {
-									contains = true;
-								} else {
-									contains = Arrays.stream(returnFiles).anyMatch(dossierFile.getFileTemplateNo()::equals);
-								}
-								
-								if (Validator.isNotNull(dossierFile) && contains) {
+									boolean contains = false;
 									
-									JSONObject file = JSONFactoryUtil.createJSONObject();
-									
-									try {
-										DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(dossierFile.getFileEntryId());
-										
-										file.put("fileName", dossierFile.getDisplayName() + " (" + dlFileEntry.getFileName() +")");
-										
-									} catch (Exception e) {
-										file.put("fileName", dossierFile.getDisplayName());
+									if (model.getActionCode().equals("1000")) {
+										contains = true;
+									} else {
+										contains = Arrays.stream(returnFiles).anyMatch(dossierFile.getFileTemplateNo()::equals);
 									}
-
-									file.put("dossierFileId", dossierFile.getDossierFileId());
-									file.put("createDate", APIDateTimeUtils.convertDateToString(dossierFile.getCreateDate(),
-											APIDateTimeUtils._TIMESTAMP));
-									files.put(file);
+									
+									if (contains) {
+										
+										JSONObject file = JSONFactoryUtil.createJSONObject();
+										
+										try {
+											DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(dossierFile.getFileEntryId());
+											
+											file.put("fileName", dossierFile.getDisplayName() + " (" + dlFileEntry.getFileName() +")");
+											
+										} catch (Exception e) {
+											file.put("fileName", dossierFile.getDisplayName());
+										}
+	
+										file.put("dossierFileId", dossierFile.getDossierFileId());
+										file.put("createDate", APIDateTimeUtils.convertDateToString(dossierFile.getCreateDate(),
+												APIDateTimeUtils._TIMESTAMP));
+										files.put(file);
+									}
 								}
 							}
 
