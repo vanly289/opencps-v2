@@ -119,8 +119,10 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 			JSONObject jsData = JSONFactoryUtil
 					.createJSONObject(resDossierSearch.getString(RESTFulConfiguration.MESSAGE));
+			
 
 			JSONArray array = JSONFactoryUtil.createJSONArray(jsData.getString("data"));
+			_log.info("DOSSIER_NEED_PULL_ " + array.length());
 
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject object = array.getJSONObject(i);
@@ -190,6 +192,8 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			}
 
 		}
+		
+		_log.info("SYNC_PROCESSES_ " + syncProcesses.size());
 
 		for (ServiceProcess syncServiceProcess : syncProcesses) {
 			// Create DOSSIER for destination PROCESS

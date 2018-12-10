@@ -113,6 +113,8 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 						params.put(EmployeeTerm.WORKING_UNIT_ID, userWorkingUnitId);
 					}
 					
+					_log.info("*** WORKING UNIT *** " + userWorkingUnitId + "***");
+					
 				}
 				
 			}
