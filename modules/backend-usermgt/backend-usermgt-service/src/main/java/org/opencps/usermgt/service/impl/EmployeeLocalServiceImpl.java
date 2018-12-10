@@ -322,7 +322,10 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		// String[] advFilterOptions = (String[])
 		// params.get("advFilterOptions");
 		String isAccount = GetterUtil.getString(params.get("isAccount"));
-		String workingUnitId = GetterUtil.getString(params.get(EmployeeTerm.WORKING_UNIT_ID));
+		
+		String workingUnitId = Long.toString(GetterUtil.getLong(params.get(EmployeeTerm.WORKING_UNIT_ID)));
+		
+		System.out.println("XXXXXXXXXXXXXXXXXXXXX&****&&*&" + workingUnitId);
 		
 		String jobPostId = GetterUtil.getString(params.get(EmployeeTerm.JOB_POS_ID));
 		String status = GetterUtil.getString(params.get(EmployeeTerm.WORKING_STATUS));
@@ -405,6 +408,8 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 
 		if (Validator.isNotNull(workingUnitId)) {
 			MultiMatchQuery query = new MultiMatchQuery(workingUnitId);
+			
+			System.out.println("&****&&*&" + workingUnitId);
 
 			query.addFields(EmployeeTerm.WORKING_UNIT_ID);
 
@@ -489,7 +494,7 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		// String[] advFilterOptions = (String[])
 		// params.get("advFilterOptions");
 		String isAccount = GetterUtil.getString(params.get("isAccount"));
-		String workingUnitId = GetterUtil.getString(params.get(EmployeeTerm.WORKING_UNIT_ID));
+		String workingUnitId = Long.toString(GetterUtil.getLong(params.get(EmployeeTerm.WORKING_UNIT_ID)));
 		String jobPostId = GetterUtil.getString(params.get(EmployeeTerm.JOB_POS_ID));
 		String status = GetterUtil.getString(params.get(EmployeeTerm.WORKING_STATUS));
 		String active = GetterUtil.getString(params.get(EmployeeTerm.ACTIVE));

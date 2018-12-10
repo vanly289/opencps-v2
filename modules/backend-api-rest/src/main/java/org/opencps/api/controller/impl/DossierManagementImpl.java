@@ -535,7 +535,12 @@ public class DossierManagementImpl implements DossierManagement {
 					throw new NotFoundException("Cant add DOSSIER");
 				}
 	
-				dossier = DossierLocalServiceUtil.updateSubmittingDate(groupId, 0l, input.getReferenceUid(), new Date(), serviceContext);
+				//dossier = DossierLocalServiceUtil.updateSubmittingDate(groupId, 0l, input.getReferenceUid(), new Date(), serviceContext);
+				
+				dossier.setSubmitDate(new Date());
+				dossier.setModifiedDate(new Date());
+				
+				DossierLocalServiceUtil.updateDossier(dossier);
 				
 				DossierDetailModel result = DossierUtils.mappingForGetDetail(dossier, user.getUserId());
 				return Response.status(200).entity(result).build();
@@ -546,7 +551,7 @@ public class DossierManagementImpl implements DossierManagement {
 			}
 
 		} catch (Exception e) {
-//			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
