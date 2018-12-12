@@ -257,6 +257,12 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 			params.put("actionNote", actionNote);
 			params.put("assignUserId", assignUserId);
 			params.put("isSynAction", 1);
+			
+			
+			_log.info("***PARAM***" + params.toString());
+			_log.info("***GROUP_ID***" + groupId);
+			_log.info("***ENDPOINTSYNACTION***" + endPointSynAction);
+
 
 			JSONObject resSynsActions = rest.callPostAPI(groupId, HttpMethods.POST, "application/json",
 					RESTFulConfiguration.SERVER_PATH_BASE, endPointSynAction, RESTFulConfiguration.SERVER_USER,

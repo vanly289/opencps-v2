@@ -310,7 +310,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 						}
 
-						_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
+						//_dossierSyncLocalService.deleteDossierSync(sync.getBaseDossierSyncId());
 
 						_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 					}

@@ -43,6 +43,7 @@ import org.opencps.dossiermgt.constants.ServiceConfigTerm;
 import org.opencps.dossiermgt.constants.ServiceInfoTerm;
 import org.opencps.dossiermgt.model.ProcessOption;
 import org.opencps.dossiermgt.model.ServiceConfig;
+import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
 import org.opencps.dossiermgt.service.indexer.RegistrationIndexer;
 
@@ -657,6 +658,9 @@ public class ServiceConfigManagementImpl implements ServiceConfigManagement {
 
 								srvElm.put("serviceInfoId", doc.get(ServiceConfigTerm.SERVICEINFO_ID));
 								srvElm.put("serviceConfigId", doc.get(Field.ENTRY_CLASS_PK));
+								
+								srvElm.put("processOptions", getServiceOption(GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK))));
+								
 								srvElm.put("serviceInfoName", doc.get(ServiceConfigTerm.SERVICE_NAME));
 								srvElm.put("level", doc.get(ServiceConfigTerm.SERVICE_LEVEL));
 
@@ -711,6 +715,25 @@ public class ServiceConfigManagementImpl implements ServiceConfigManagement {
 			}
 		}
 
+	}
+	
+	private JSONArray getServiceOption(long serviceConfigId) {
+		
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		
+		try {
+			List<ProcessOption> processOptions = ProcessOptionLocalServiceUtil.getByServiceProcessId(serviceConfigId);
+			
+			for (ProcessOption elm : processOptions) {
+				JSONObject obj = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(elm));
+				
+				jsonArray.put(obj);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return jsonArray;
 	}
 
 	Log _log = LogFactoryUtil.getLog(ServiceConfigManagementImpl.class);

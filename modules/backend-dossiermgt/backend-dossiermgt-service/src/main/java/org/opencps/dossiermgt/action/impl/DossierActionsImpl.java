@@ -1610,6 +1610,7 @@ public class DossierActionsImpl implements DossierActions {
 				DossierSyncLocalServiceUtil.updateDossierSync(groupId, userId, dossierId, dossier.getReferenceUid(),
 						isCreateDossier, method, dossierAction.getPrimaryKey(), StringPool.BLANK,
 						serviceProcess.getServerNo());
+				_log.info("END - PROCESS update Dossier Sync:" + hasDossierSync);
 
 				// TODO add SYNC for DossierFile and PaymentFile here
 

@@ -17,9 +17,12 @@ package org.opencps.dossiermgt.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierSync;
+import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
 import org.opencps.dossiermgt.service.base.DossierSyncLocalServiceBaseImpl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
 import aQute.bnd.annotation.ProviderType;
@@ -51,6 +54,19 @@ public class DossierSyncLocalServiceImpl extends DossierSyncLocalServiceBaseImpl
 	 * org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil} to access the
 	 * dossier sync local service.
 	 */
+	
+	public void removeDossierSync(long dossierSyncId) throws PortalException {
+		
+		DossierSync dossierSync = DossierSyncLocalServiceUtil.fetchDossierSync(dossierSyncId);
+		
+		Dossier dossier = dossierLocalService.getDossier(dossierSync.getDossierId());
+		
+		int count = dossierLocalService.countByReferenceUid(dossier.getReferenceUid());
+		
+		if (count == 1) {
+			dossierLocalService.deleteDossier(dossierSync.getDossierId());
+		}
+	}
 
 	public DossierSync updateDossierSync(long groupId, long userId, long dossierId, String dossierReferenceUid,
 			boolean createDossier, int method, long classPK, String fileReferenceUid, String serverNo) {
