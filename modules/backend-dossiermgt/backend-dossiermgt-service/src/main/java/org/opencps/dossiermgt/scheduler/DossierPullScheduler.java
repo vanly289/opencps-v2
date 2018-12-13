@@ -119,8 +119,10 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 			JSONObject jsData = JSONFactoryUtil
 					.createJSONObject(resDossierSearch.getString(RESTFulConfiguration.MESSAGE));
+			
 
 			JSONArray array = JSONFactoryUtil.createJSONArray(jsData.getString("data"));
+			_log.info("DOSSIER_NEED_PULL_ " + array.length());
 
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject object = array.getJSONObject(i);
@@ -190,6 +192,8 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			}
 
 		}
+		
+		_log.info("SYNC_PROCESSES_ " + syncProcesses.size());
 
 		for (ServiceProcess syncServiceProcess : syncProcesses) {
 			// Create DOSSIER for destination PROCESS
@@ -275,6 +279,9 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 				String applicantName = object.getString(DossierTerm.APPLICANT_NAME);
 
 				// Process doAction (with autoEvent = SUBMIT)
+				
+				_log.info("PRE_GETPROCESSACTION************" + applicantNote);
+
 				try {
 					// DossierLocalServiceUtil.syncDossier(desDossier);
 
@@ -282,7 +289,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 							.fetchBySPI_PRESC_AEV(syncServiceProcess.getServiceProcessId(), StringPool.BLANK, "SUBMIT");
 					
 					
-					//_log.info("GETPROCESSACTION************" + processAction.getActionName());
+					_log.info("GETPROCESSACTION************" + processAction.getActionName());
 
 					long assignedUserId = processAction.getAssignUserId();
 
@@ -291,7 +298,8 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 							applicantNote, assignedUserId, systemUser.getUserId(), StringPool.BLANK, serviceContext);
 
 				} catch (Exception e) {
-					_log.info("SyncDossierUnsuccessfuly" + desDossier.getReferenceUid());
+					_log.error("ERRRRORRRR****");
+					_log.error(e);
 				}
 
 			} else {

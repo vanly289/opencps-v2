@@ -359,6 +359,10 @@ public class DossierManagementImpl implements DossierManagement {
 			String dossierIdCTN = query.getDossierIdCTN();
 			String fromSubmitDate = APIDateTimeUtils.convertNormalDateToLuceneDate(query.getFromSubmitDate());
 			String toSubmitDate = APIDateTimeUtils.convertNormalDateToLuceneDate(query.getToSubmitDate());
+			
+			String online = query.getOnline();
+
+			params.put(DossierTerm.ONLINE, online);
 
 			params.put(DossierTerm.STATUS, status);
 			params.put(DossierTerm.SUBSTATUS, substatus);
@@ -531,7 +535,12 @@ public class DossierManagementImpl implements DossierManagement {
 					throw new NotFoundException("Cant add DOSSIER");
 				}
 	
-				dossier = DossierLocalServiceUtil.updateSubmittingDate(groupId, 0l, input.getReferenceUid(), new Date(), serviceContext);
+				//dossier = DossierLocalServiceUtil.updateSubmittingDate(groupId, 0l, input.getReferenceUid(), new Date(), serviceContext);
+				
+				dossier.setSubmitDate(new Date());
+				dossier.setModifiedDate(new Date());
+				
+				DossierLocalServiceUtil.updateDossier(dossier);
 				
 				DossierDetailModel result = DossierUtils.mappingForGetDetail(dossier, user.getUserId());
 				return Response.status(200).entity(result).build();
@@ -542,7 +551,7 @@ public class DossierManagementImpl implements DossierManagement {
 			}
 
 		} catch (Exception e) {
-//			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -861,8 +870,9 @@ public class DossierManagementImpl implements DossierManagement {
 						input.getActionNote(), input.getAssignUserId(), 0l, subUsers, serviceContext);
 				
 				//update Deliverable
-				
-				updateDeliverable(input.getActionCode(), Long.getLong(id), groupId);
+				if ( Validator.isNotNull(input.getActionCode()) && (input.getActionCode().equals("1056") || input.getActionCode().equals("1057"))) {
+					updateDeliverable(input.getActionCode(), Long.getLong(id), groupId);
+				}
 
 				return Response.status(200).entity(JSONFactoryUtil.looseSerializeDeep(dossierAction)).build();
 
@@ -1007,17 +1017,27 @@ public class DossierManagementImpl implements DossierManagement {
 	protected ProcessAction getProcessAction(long groupId, long dossierId, String refId, String actionCode,
 			long serviceProcessId) throws PortalException {
 
-		_log.debug("GET PROCESS ACTION____");
+		_log.info("GET PROCESS ACTION____");
 
 		ProcessAction action = null;
 
 		try {
 			List<ProcessAction> actions = ProcessActionLocalServiceUtil.getByActionCode(groupId, actionCode,
 					serviceProcessId);
+			
+			_log.info("ACTIONS groupId" + groupId);
+			_log.info("ACTIONS serviceProcessId" + serviceProcessId);
+
+			
+			_log.info("ACTIONS NUMBER____" + actions.size());
 
 			Dossier dossier = getDossier(groupId, dossierId, refId);
+			_log.info("ACTIONS dossierId" + dossierId);
+			_log.info("ACTIONS refId" + refId);
 
 			String dossierStatus = dossier.getDossierStatus();
+
+			_log.info("ACTIONS dossierStatus" + dossierStatus);
 
 			String dossierSubStatus = dossier.getDossierSubStatus();
 
@@ -1041,6 +1061,7 @@ public class DossierManagementImpl implements DossierManagement {
 			}
 
 		} catch (Exception e) {
+			_log.info(e);
 			throw new NotFoundException("NotProcessActionFound");
 		}
 
@@ -1971,5 +1992,25 @@ public class DossierManagementImpl implements DossierManagement {
 		} catch (Exception e) {
 			return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(e).build();
 		}		
+	}
+
+	@Override
+	public Response getNumberOfDossier(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, String id) {
+		
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		
+		try {
+			
+			int count = DossierLocalServiceUtil.countByReferenceUid(id);
+			
+			result.put("numberOfDossier", count);
+			
+			return Response.status(200).entity(result.toJSONString()).build();
+
+		} catch (Exception e) {
+			return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(e).build();
+		}
+		
 	}
 }

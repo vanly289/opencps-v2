@@ -678,7 +678,7 @@ public class DossierActionsImpl implements DossierActions {
 																referenceUid, dossier.getDossierTemplateNo(),
 																dossierPart.getPartNo(), fileTemplateNo,
 																dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-																StringPool.BLANK, String.valueOf(false),
+																StringPool.BLANK, String.valueOf(true),
 																serviceContext);
 														docFileReferenceUid = dossierFile.getReferenceUid();
 														dossierFileId = dossierFile.getDossierFileId();
@@ -781,8 +781,10 @@ public class DossierActionsImpl implements DossierActions {
 																					dossier.getDossierTemplateNo(), dossierPart.getPartNo(),
 																					fileTemplateNo, dossierPart.getPartName(),
 																					StringPool.BLANK, 0L, null, StringPool.BLANK,
-																					String.valueOf(false), serviceContext);
+																					String.valueOf(true), serviceContext);
 																	}
+																	
+																	
 
 																	docFileReferenceUid = dossierFile.getReferenceUid();
 
@@ -843,7 +845,7 @@ public class DossierActionsImpl implements DossierActions {
 																						StringPool.BLANK,
 																						0L, null,
 																						StringPool.BLANK,
-																						String.valueOf(false),
+																						String.valueOf(true),
 																						serviceContext);
 																			}
 
@@ -929,7 +931,7 @@ public class DossierActionsImpl implements DossierActions {
 																									0L,
 																									null,
 																									StringPool.BLANK,
-																									String.valueOf(false),
+																									String.valueOf(true),
 																								serviceContext);
 																							}
 
@@ -1020,7 +1022,7 @@ public class DossierActionsImpl implements DossierActions {
 																			dossierPart.getPartName(),
 																			StringPool.BLANK, 0L, null,
 																			StringPool.BLANK,
-																			String.valueOf(false),
+																			String.valueOf(true),
 																			serviceContext);
 																	}
 
@@ -1083,7 +1085,7 @@ public class DossierActionsImpl implements DossierActions {
 																														null,
 																														StringPool.BLANK,
 																														String.valueOf(
-																																false),
+																																true),
 																														serviceContext);
 																									docFileReferenceUid = dossierFile.getReferenceUid();
 																									dossierFileId = dossierFile.getDossierFileId();
@@ -1456,6 +1458,8 @@ public class DossierActionsImpl implements DossierActions {
 		if (processActionId != 0) {
 			hasDossierSync = hasDossierSync(groupId, dossierId, referenceUid, processAction);
 		}
+		
+		boolean hasCongDVC = hasDossierDVC(groupId, dossierId, referenceUid, processAction);
 
 		// TODO take a look later
 
@@ -1608,51 +1612,13 @@ public class DossierActionsImpl implements DossierActions {
 				DossierSyncLocalServiceUtil.updateDossierSync(groupId, userId, dossierId, dossier.getReferenceUid(),
 						isCreateDossier, method, dossierAction.getPrimaryKey(), StringPool.BLANK,
 						serviceProcess.getServerNo());
+				_log.info("END - PROCESS update Dossier Sync:" + hasDossierSync);
 
 				// TODO add SYNC for DossierFile and PaymentFile here
 
 				// TODO: process SyncDossierFile
 				processSyncDossierFile(dossierId, dossier.getReferenceUid(), processAction, groupId, userId,
 						serviceProcess.getServerNo());
-				// SyncDossierFile
-				// List<DossierFile> lsDossierFile =
-				// DossierFileLocalServiceUtil.getByDossierIdAndIsNew(dossierId,
-				// true);
-
-				// check return file
-				// List<String> returnDossierFileTemplateNos = ListUtil
-				// .toList(StringUtil.split(processAction.getReturnDossierFiles()));
-
-				// _log.info("__return dossierFiles" +
-				// processAction.getReturnDossierFiles());
-
-				// for (DossierFile dosserFile : lsDossierFile) {
-
-				// _log.info("&&&StartUpdateDossierFile" + new Date());
-
-				// dosserFile.setIsNew(false);
-
-				// DossierFileLocalServiceUtil.updateDossierFile(dosserFile);
-
-				// _log.info("&&&EndUpdateDossierFile" + new Date());
-
-				// _log.info("__dossierPart" +
-				// processAction.getReturnDossierFiles());
-				// _log.info("__dossierPart" + dosserFile.getFileTemplateNo());
-
-				// if
-				// (returnDossierFileTemplateNos.contains(dosserFile.getFileTemplateNo()))
-				// {
-				// _log.info("START SYNC DOSSIER FILE");
-				// DossierSyncLocalServiceUtil.updateDossierSync(groupId,
-				// userId, dossierId,
-				// dossier.getReferenceUid(), false, 1,
-				// dosserFile.getDossierFileId(),
-				// dosserFile.getReferenceUid(), serviceProcess.getServerNo());
-
-				// }
-
-				// }
 
 			}
 
@@ -2078,7 +2044,7 @@ public class DossierActionsImpl implements DossierActions {
 								dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
 										dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo,
 										dossierPart.getPartName(), StringPool.BLANK, 0L, null, StringPool.BLANK,
-										String.valueOf(false), context);
+										String.valueOf(true), context);
 
 								_log.info("UPDATED DOSSIERFILE");
 								if (Validator.isNotNull(dossierFile.getDeliverableCode())) {
@@ -2098,7 +2064,7 @@ public class DossierActionsImpl implements DossierActions {
 							}
 
 						} else {
-
+							
 						}
 					}
 				}
@@ -2106,7 +2072,7 @@ public class DossierActionsImpl implements DossierActions {
 				if (Validator.isNull(dossierFile)) {
 					dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
 							dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
-							StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
+							StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(true), context);
 
 					if (Validator.isNotNull(dossierFile.getDeliverableCode())) {
 						formDataObj.put(deliverableCodeKey, dossierFile.getDeliverableCode());
@@ -2273,7 +2239,16 @@ public class DossierActionsImpl implements DossierActions {
 
 		// Hot fix
 		if (action.getSyncActionCode().length() != 0) {
-			isSync = true;
+			
+			Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+			
+			if (Validator.isNotNull(dossier)) { 
+				
+				int count = DossierLocalServiceUtil.countByReferenceUid(dossier.getReferenceUid());
+				
+					isSync = true;
+			
+			}
 		}
 
 		// Hot fix
@@ -2281,13 +2256,37 @@ public class DossierActionsImpl implements DossierActions {
 		// isSync = true;
 		// }
 
-		_log.info("GROUPID_" + groupId);
-		_log.info("ISSYNC_" + isSync);
+		//_log.info("GROUPID_" + groupId);
+		//_log.info("ISSYNC_" + isSync);
 
 		return isSync;
 
 	}
 
+	protected boolean hasDossierDVC(long groupId, long dossierId, String refId, ProcessAction action)
+			throws PortalException {
+
+//		Dossier dossier = getDossier(groupId, dossierId, refId);
+
+		// TODO add more logic here
+		boolean isSync = false;
+
+		if (action.getSyncActionCode().length() != 0) {
+			
+			Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+			
+			if (Validator.isNotNull(dossier)) { 
+				
+				int count = DossierLocalServiceUtil.countByReferenceUid(dossier.getReferenceUid());
+				if (count == 2) {
+					isSync = true;
+				}
+			}
+		}
+
+		return isSync;
+	}
+	
 	protected boolean forcedDossierSync(long groupId, long dossierId, String refId, ProcessAction action,
 			boolean isSubmit) throws PortalException {
 

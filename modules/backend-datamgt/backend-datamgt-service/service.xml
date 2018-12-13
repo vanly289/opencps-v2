@@ -131,7 +131,11 @@
             <finder-column name="modifiedDate" comparator="&gt;="></finder-column>
             <finder-column name="groupId"></finder-column>
         </finder>
-	</entity>
+        
+        <finder name="GROUPID_GREATER_THAN" return-type="Collection">
+            <finder-column name="groupId" comparator="&gt;="/>
+        </finder>
+  	</entity>
 
 	<entity name="DictGroup" uuid="true" local-service="true"
 		remote-service="false" table="opencps_dictgroup">

@@ -48,6 +48,13 @@ public interface DataManagement {
 	public Response getDictCollection(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@BeanParam DataSearchModel query);
+	@GET
+	@Path("/correcting")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response getCorrecting(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
+			@BeanParam DataSearchModel query);
 
 	@GET
 	@Path("/{code}")
