@@ -458,26 +458,13 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						ketqua.setSoGp(StringPool.BLANK);
 					}*/
 					
-					if (dossier.getServiceCode().equals("BGTVT0600042")
-							|| dossier.getServiceCode().equals("BGTVT0600043")
-							|| dossier.getServiceCode().equals("BGTVT0600048")
-							|| dossier.getServiceCode().equals("BGTVT0600049")
-							|| dossier.getServiceCode().equals("BGTVT0600050")
-							|| dossier.getServiceCode().equals("BGTVT0600051")
-							|| dossier.getServiceCode().equals("BGTVT0600052")
-							|| dossier.getServiceCode().equals("BGTVT0600053")
-							|| dossier.getServiceCode().equals("BGTVT0600054")
-							|| dossier.getServiceCode().equals("BGTVT0600055")
-							|| dossier.getServiceCode().equals("BGTVT0600056")
-							|| dossier.getServiceCode().equals("BGTVT0600057")
-							) {
+					if(ArrayUtil.contains(new String[]{"BGTVT0600057"}, 
+							dossier.getServiceCode())) {
 						ketqua.setSoTn(dossier.getDossierNo());
-					}
-					if (dossier.getServiceCode().equals("BGTVT0600058")
-							|| dossier.getServiceCode().equals("BGTVT0600059")
-							|| dossier.getServiceCode().equals("BGTVT0600060")
-							|| dossier.getServiceCode().equals("BGTVT0600061")
-							|| dossier.getServiceCode().equals("BGTVT0600062")) {
+					} else if(ArrayUtil.contains(new String[]{"BGTVT0600042","BGTVT0600043","BGTVT0600048","BGTVT0600049",
+							"BGTVT0600050","BGTVT0600051","BGTVT0600052","BGTVT0600053","BGTVT0600054","BGTVT0600055",
+							"BGTVT0600056","BGTVT0600058","BGTVT0600059","BGTVT0600060","BGTVT0600061","BGTVT0600062"}, 
+							dossier.getServiceCode())) {
 						ketqua.setSoGp(StringPool.BLANK);
 					}
 					
