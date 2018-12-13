@@ -1458,6 +1458,8 @@ public class DossierActionsImpl implements DossierActions {
 		if (processActionId != 0) {
 			hasDossierSync = hasDossierSync(groupId, dossierId, referenceUid, processAction);
 		}
+		
+		boolean hasCongDVC = hasDossierDVC(groupId, dossierId, referenceUid, processAction);
 
 		// TODO take a look later
 
@@ -1617,45 +1619,6 @@ public class DossierActionsImpl implements DossierActions {
 				// TODO: process SyncDossierFile
 				processSyncDossierFile(dossierId, dossier.getReferenceUid(), processAction, groupId, userId,
 						serviceProcess.getServerNo());
-				// SyncDossierFile
-				// List<DossierFile> lsDossierFile =
-				// DossierFileLocalServiceUtil.getByDossierIdAndIsNew(dossierId,
-				// true);
-
-				// check return file
-				// List<String> returnDossierFileTemplateNos = ListUtil
-				// .toList(StringUtil.split(processAction.getReturnDossierFiles()));
-
-				// _log.info("__return dossierFiles" +
-				// processAction.getReturnDossierFiles());
-
-				// for (DossierFile dosserFile : lsDossierFile) {
-
-				// _log.info("&&&StartUpdateDossierFile" + new Date());
-
-				// dosserFile.setIsNew(false);
-
-				// DossierFileLocalServiceUtil.updateDossierFile(dosserFile);
-
-				// _log.info("&&&EndUpdateDossierFile" + new Date());
-
-				// _log.info("__dossierPart" +
-				// processAction.getReturnDossierFiles());
-				// _log.info("__dossierPart" + dosserFile.getFileTemplateNo());
-
-				// if
-				// (returnDossierFileTemplateNos.contains(dosserFile.getFileTemplateNo()))
-				// {
-				// _log.info("START SYNC DOSSIER FILE");
-				// DossierSyncLocalServiceUtil.updateDossierSync(groupId,
-				// userId, dossierId,
-				// dossier.getReferenceUid(), false, 1,
-				// dosserFile.getDossierFileId(),
-				// dosserFile.getReferenceUid(), serviceProcess.getServerNo());
-
-				// }
-
-				// }
 
 			}
 
@@ -2276,7 +2239,16 @@ public class DossierActionsImpl implements DossierActions {
 
 		// Hot fix
 		if (action.getSyncActionCode().length() != 0) {
-			isSync = true;
+			
+			Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+			
+			if (Validator.isNotNull(dossier)) { 
+				
+				int count = DossierLocalServiceUtil.countByReferenceUid(dossier.getReferenceUid());
+				
+					isSync = true;
+			
+			}
 		}
 
 		// Hot fix
@@ -2284,13 +2256,37 @@ public class DossierActionsImpl implements DossierActions {
 		// isSync = true;
 		// }
 
-		_log.info("GROUPID_" + groupId);
-		_log.info("ISSYNC_" + isSync);
+		//_log.info("GROUPID_" + groupId);
+		//_log.info("ISSYNC_" + isSync);
 
 		return isSync;
 
 	}
 
+	protected boolean hasDossierDVC(long groupId, long dossierId, String refId, ProcessAction action)
+			throws PortalException {
+
+//		Dossier dossier = getDossier(groupId, dossierId, refId);
+
+		// TODO add more logic here
+		boolean isSync = false;
+
+		if (action.getSyncActionCode().length() != 0) {
+			
+			Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+			
+			if (Validator.isNotNull(dossier)) { 
+				
+				int count = DossierLocalServiceUtil.countByReferenceUid(dossier.getReferenceUid());
+				if (count == 2) {
+					isSync = true;
+				}
+			}
+		}
+
+		return isSync;
+	}
+	
 	protected boolean forcedDossierSync(long groupId, long dossierId, String refId, ProcessAction action,
 			boolean isSubmit) throws PortalException {
 

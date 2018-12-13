@@ -58,14 +58,19 @@ public class DossierSyncLocalServiceImpl extends DossierSyncLocalServiceBaseImpl
 	public void removeDossierSync(long dossierSyncId) throws PortalException {
 		
 		DossierSync dossierSync = DossierSyncLocalServiceUtil.fetchDossierSync(dossierSyncId);
+		System.out.println("**XXXX_dossierSyncId**" + dossierSyncId);
+
 		
-		Dossier dossier = dossierLocalService.getDossier(dossierSync.getDossierId());
+			Dossier dossier = dossierLocalService.getDossier(dossierSync.getDossierId());
+			
+			int count = dossierLocalService.countByReferenceUid(dossier.getReferenceUid());
+			
+			if (count == 1) {
+				dossierSyncLocalService.deleteDossierSync(dossierSync);
+			}
+
 		
-		int count = dossierLocalService.countByReferenceUid(dossier.getReferenceUid());
-		
-		if (count == 1) {
-			dossierLocalService.deleteDossier(dossierSync.getDossierId());
-		}
+
 	}
 
 	public DossierSync updateDossierSync(long groupId, long userId, long dossierId, String dossierReferenceUid,

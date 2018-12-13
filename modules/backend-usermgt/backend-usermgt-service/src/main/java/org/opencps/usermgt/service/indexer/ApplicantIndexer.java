@@ -62,7 +62,17 @@ public class ApplicantIndexer extends BaseIndexer<Applicant> {
 		document.addTextSortable(ApplicantTerm.CONTACTTELNO, object.getContactTelNo());
 		document.addTextSortable(ApplicantTerm.CONTACTEMAIL, object.getContactEmail());
 		document.addNumberSortable(ApplicantTerm.MAPPINGUSERID, object.getMappingUserId());
+		
 
+		document.addTextSortable("cityCode", object.getCityCode());
+		document.addTextSortable("cityName", object.getCityName());
+		document.addTextSortable("districtCode", object.getDistrictCode());
+		document.addTextSortable("districtName", object.getDistrictName());
+		document.addTextSortable("wardCode", object.getWardCode());
+		document.addTextSortable("wardName", object.getWardName());
+		
+		System.out.println("cityCode*****" + object.getCityCode());
+		
 		try {
 			User user = UserLocalServiceUtil.getUser(object.getMappingUserId());
 			document.addTextSortable(ApplicantTerm.LOCK, Boolean.toString(user.getLockout()));

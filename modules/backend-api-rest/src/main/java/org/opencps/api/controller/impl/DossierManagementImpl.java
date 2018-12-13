@@ -870,8 +870,9 @@ public class DossierManagementImpl implements DossierManagement {
 						input.getActionNote(), input.getAssignUserId(), 0l, subUsers, serviceContext);
 				
 				//update Deliverable
-				
-				updateDeliverable(input.getActionCode(), Long.getLong(id), groupId);
+				if ( Validator.isNotNull(input.getActionCode()) && (input.getActionCode().equals("1056") || input.getActionCode().equals("1057"))) {
+					updateDeliverable(input.getActionCode(), Long.getLong(id), groupId);
+				}
 
 				return Response.status(200).entity(JSONFactoryUtil.looseSerializeDeep(dossierAction)).build();
 
@@ -1991,5 +1992,25 @@ public class DossierManagementImpl implements DossierManagement {
 		} catch (Exception e) {
 			return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(e).build();
 		}		
+	}
+
+	@Override
+	public Response getNumberOfDossier(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, String id) {
+		
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		
+		try {
+			
+			int count = DossierLocalServiceUtil.countByReferenceUid(id);
+			
+			result.put("numberOfDossier", count);
+			
+			return Response.status(200).entity(result.toJSONString()).build();
+
+		} catch (Exception e) {
+			return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(e).build();
+		}
+		
 	}
 }
