@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.FileUtil;
 
 public class Engine implements MessageListener {
 
@@ -62,8 +63,7 @@ public class Engine implements MessageListener {
 			indexer.reindex(dossierFile);
 			
 		} catch (SearchException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			_log.error(e);
 		}
 	}
 	
@@ -71,6 +71,8 @@ public class Engine implements MessageListener {
 		// TODO Auto-generated method stub
 		_log.info("Dossier listener receive Jasper .............................");
 		JSONObject msgData = (JSONObject) message.get("msgToEngine");
+		
+		File file = null;
 
 		try {
 
@@ -82,7 +84,7 @@ public class Engine implements MessageListener {
 
 			String filePath = msgData.getString("filePath");
 
-			File file = new File(filePath);
+			file = new File(filePath);
 
 			_log.info("Engine._doReceiveJasperRequest()" + filePath);
 			
@@ -136,9 +138,12 @@ public class Engine implements MessageListener {
 			}
 
 		} catch (Exception e) {
-		    _log.error(e);
+			_log.error(e);
+		} finally {
+			if(file != null) {
+				FileUtil.delete(file);
+			}
 		}
-
 	}
 
 	private Log _log = LogFactoryUtil.getLog(Engine.class);
