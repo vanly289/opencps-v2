@@ -62,7 +62,8 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 		Company company = CompanyLocalServiceUtil.getCompanyByMx(PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
 		// This is TEMPORARY code for auto = timer, it need to optimize later
-		allDossierTimer = DossierLocalServiceUtil.getDossiers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+//		allDossierTimer = DossierLocalServiceUtil.getDossiers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		allDossierTimer = DossierLocalServiceUtil.getDossiersByAutoEvent("timmer", 0, 100);	// get 100 dossier once
 
 		DossierActions dossierActions = new DossierActionsImpl();
 
@@ -205,7 +206,7 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 	@Modified
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(
-				TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(), 1, TimeUnit.MINUTE));
+				TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(), 5, TimeUnit.MINUTE));
 		_schedulerEngineHelper.register(this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 

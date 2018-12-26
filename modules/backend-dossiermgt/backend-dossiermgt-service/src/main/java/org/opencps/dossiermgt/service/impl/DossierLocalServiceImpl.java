@@ -47,6 +47,7 @@ import org.opencps.dossiermgt.service.base.DossierLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -2769,5 +2770,15 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 	
 	public int countByReferenceUid(String referenceUid) {
 		return dossierPersistence.countByReferenceUid(referenceUid);
+	}
+	
+	public List<Dossier> getDossiersByAutoEvent(String autoEvent, int start, int end) {
+		try {
+			return dossierFinder.getDossiersByAutoEvent(autoEvent, start, end);
+		} catch (SystemException se) {
+			_log.error(se);
+		}
+		
+		return new ArrayList<Dossier>();
 	}
 }
