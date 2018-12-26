@@ -53,7 +53,6 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		// TODO Auto-generated method stub
 		_log.info("Invoke Timer****");
 		// get all actions that has preCondition is "timer"
 

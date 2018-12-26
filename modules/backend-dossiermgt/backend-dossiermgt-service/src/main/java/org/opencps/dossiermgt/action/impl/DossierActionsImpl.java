@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -86,7 +85,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -119,11 +117,11 @@ public class DossierActionsImpl implements DossierActions {
 		try {
 
 			String status = GetterUtil.getString(params.get(DossierTerm.STATUS));
-			_log.info("status: " + status);
+//			_log.info("status: " + status);
 			if (Validator.isNotNull(status)) {
 				if (!status.contains(StringPool.COMMA)) {
 					if (!status.equals("done") && !status.equals("cancelled")) {
-						_log.info("done: " + status);
+//						_log.info("done: " + status);
 						params.put(DossierTerm.NOT_STATE, "cancelling");
 					}
 				}
@@ -234,14 +232,13 @@ public class DossierActionsImpl implements DossierActions {
 					String metaData = dictItem.getMetaData();
 					String specialStatus = StringPool.BLANK;
 					if (Validator.isNotNull(metaData)) {
-						_log.info("metaData: " + metaData);
+//						_log.info("metaData: " + metaData);
 						try {
 							JSONObject metaJson = JSONFactoryUtil.createJSONObject(metaData);
 							specialStatus = metaJson.getString("specialStatus");
 							// _log.info("specialStatus: " + specialStatus);
 
 						} catch (Exception e) {
-							// TODO: handle exception
 						}
 					}
 
@@ -294,7 +291,6 @@ public class DossierActionsImpl implements DossierActions {
 								// _log.info("specialStatus: " + specialStatus);
 
 							} catch (Exception e) {
-								// TODO: handle exception
 							}
 						}
 
@@ -354,10 +350,10 @@ public class DossierActionsImpl implements DossierActions {
 									// _log.info("SizeList2: " +
 									// hits.toList().size());
 									long count = DossierLocalServiceUtil.countLucene(params, searchContext);
-									_log.info("count: " + count);
+//									_log.info("count: " + count);
 									if (dictItem.getParentItemId() != 0) {
 										allDocsList.addAll(hits.toList());
-										_log.info("SizeList2: " + hits.toList().size());
+//										_log.info("SizeList2: " + hits.toList().size());
 										total += count;
 									}
 								}
@@ -376,29 +372,6 @@ public class DossierActionsImpl implements DossierActions {
 
 		return result;
 
-	}
-
-	private boolean checkSpecialStatus(DictItem dictItem) {
-		boolean flag = false;
-		String metaData = dictItem.getMetaData();
-		String specialStatus = StringPool.BLANK;
-		if (Validator.isNotNull(metaData)) {
-			_log.info("metaData: " + metaData);
-			try {
-				JSONObject metaJson = JSONFactoryUtil.createJSONObject(metaData);
-				specialStatus = metaJson.getString("specialStatus");
-				_log.info("specialStatus: " + specialStatus);
-
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		}
-
-		if (Validator.isNotNull(specialStatus) && Boolean.parseBoolean(specialStatus)) {
-			flag = true;
-		}
-
-		return flag;
 	}
 
 	@Override
@@ -587,21 +560,21 @@ public class DossierActionsImpl implements DossierActions {
 						List<String> returnDossierFileTemplateNos = ListUtil
 								.toList(StringUtil.split(returnDossierFiles));
 						JSONArray createFiles = JSONFactoryUtil.createJSONArray();
-						_log.info("***CREATE DOSSIER FILES***" + dossierFileTemplateNos + ", " + createDossierFiles);
+//						_log.info("***CREATE DOSSIER FILES***" + dossierFileTemplateNos + ", " + createDossierFiles);
 						if (dossierFileTemplateNos != null && !dossierFileTemplateNos.isEmpty()) {
 							DossierTemplate dossierTemplate = DossierTemplateLocalServiceUtil.getByTemplateNo(groupId,
 									dossier.getDossierTemplateNo());
-							_log.info("***CREATE DOSSIER FILES***DOSSIER TEMPLATE***" + dossierTemplate.getTemplateNo() + "," + groupId + "," + dossier.getDossierTemplateNo());
+//							_log.info("***CREATE DOSSIER FILES***DOSSIER TEMPLATE***" + dossierTemplate.getTemplateNo() + "," + groupId + "," + dossier.getDossierTemplateNo());
 							List<DossierPart> dossierParts = DossierPartLocalServiceUtil.getByTemplateNo(groupId,
 									dossierTemplate.getTemplateNo());
 							if (dossierParts != null) {
 								for (DossierPart dossierPart : dossierParts) {
 									String fileTemplateNo = dossierPart.getFileTemplateNo();
-									_log.info("***CREATE DOSSIER FILES***" + fileTemplateNo + "," + dossierFileTemplateNos);
+//									_log.info("***CREATE DOSSIER FILES***" + fileTemplateNo + "," + dossierFileTemplateNos);
 									if (dossierFileTemplateNos.contains(fileTemplateNo)) {
 										
-										_log.info("***DOSSIERFILETEMPLATENOS " + dossierFileTemplateNos.toString());
-										_log.info("***fileTemplateNo " + fileTemplateNo);
+//										_log.info("***DOSSIERFILETEMPLATENOS " + dossierFileTemplateNos.toString());
+//										_log.info("***fileTemplateNo " + fileTemplateNo);
 										
 										JSONObject createFile = JSONFactoryUtil.createJSONObject();
 										createFile.put("dossierPartId", dossierPart.getDossierPartId());
@@ -649,7 +622,7 @@ public class DossierActionsImpl implements DossierActions {
 											} else {
 												eForm = Validator.isNotNull(dossierPart.getFormScript()) ? true : false;
 												
-												_log.info("****** FORMDATA = AutoFillFormData.sampleDataBinding" + fileTemplateNo);
+//												_log.info("****** FORMDATA = AutoFillFormData.sampleDataBinding" + fileTemplateNo);
 												
 												formData = AutoFillFormData.sampleDataBinding(
 														dossierPart.getSampleData(), dossierId, serviceContext);
@@ -1392,7 +1365,7 @@ public class DossierActionsImpl implements DossierActions {
 			String dossierStatus = dossier.getDossierStatus().toLowerCase();
 			if (Validator.isNotNull(dossierStatus) && !dossierStatus.equals("new")) {
 				String applicantNote = _buildDossierNote(dossier, actionNote, groupId, type);
-				_log.info("applicantNote: " + applicantNote);
+//				_log.info("applicantNote: " + applicantNote);
 
 				dossier.setApplicantNote(applicantNote);
 

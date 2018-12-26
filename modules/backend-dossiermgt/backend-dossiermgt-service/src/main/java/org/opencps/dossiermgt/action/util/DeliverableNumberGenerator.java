@@ -25,7 +25,11 @@ public class DeliverableNumberGenerator {
 		return UUID.randomUUID().toString();
 	}
 	
-	public static String generateDeliverableNumber(long groupId, long companyId, long deliverableTypeId)
+	public static String generateDeliverableNumber(long groupId, long companyId, long deliverableTypeId) throws ParseException {
+		return generateDeliverableNumber(groupId, companyId, deliverableTypeId, StringPool.BLANK);
+	}
+	
+	public static String generateDeliverableNumber(long groupId, long companyId, long deliverableTypeId, String maDonVi)
 			throws ParseException {
 		DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.fetchDeliverableType(deliverableTypeId);
 		String seriNumberPattern = null;		
@@ -58,7 +62,7 @@ public class DeliverableNumberGenerator {
 					String tmp = m.group(1);
 
 					if (r.toString().equals(codePattern)) {
-						String number = countByInit(pattern, Integer.valueOf(deliverableType.getCounter()));
+						String number = countByInit(maDonVi + pattern, Integer.valueOf(deliverableType.getCounter()));
 
 						tmp = tmp.replaceAll(tmp.charAt(0) + StringPool.BLANK, String.valueOf(0));
 						if (number.length() < tmp.length()) {
@@ -66,7 +70,6 @@ public class DeliverableNumberGenerator {
 						}
 						seriNumberPattern = seriNumberPattern.replace(m.group(0), number);
 					} else if (r.toString().equals(datetimePattern)) {
-						System.out.println(tmp);
 
 						seriNumberPattern = seriNumberPattern.replace(m.group(0), "OK");
 

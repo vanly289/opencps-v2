@@ -1001,7 +1001,7 @@
 		<column name="configNote" type="String"/>
 		<column name="dossierTemplateNo" type="String"/>
 		
-		<order by="ASC">
+		<order by="asc">
 			<order-column name="createDate"/>
 		</order>
 		

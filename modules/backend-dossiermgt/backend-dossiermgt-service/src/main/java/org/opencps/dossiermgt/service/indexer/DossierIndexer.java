@@ -71,6 +71,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 		Document document = getBaseModelDocument(CLASS_NAME, object);
 
 		try{
+//		_log.info("===DOSSIER_INDEX_START===" + object.getPrimaryKey());
 		// Indexer of audit fields
 		document.addNumberSortable(Field.COMPANY_ID, object.getCompanyId());
 		document.addNumberSortable(Field.GROUP_ID, object.getGroupId());
@@ -197,7 +198,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 
 			if (dossierAction != null) {
 				if (Validator.isNotNull(dossierAction.getCreateDate())) {
-			document.addTextSortable(DossierTerm.LAST_ACTION_DATE, APIDateTimeUtils
+					document.addTextSortable(DossierTerm.LAST_ACTION_DATE, APIDateTimeUtils
 							.convertDateToString(dossierAction.getCreateDate(), APIDateTimeUtils._NORMAL_PARTTERN));					
 				}
 				if (Validator.isNotNull(dossierAction.getActionCode())) {
@@ -238,6 +239,8 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 				}
 			}
 		}
+		
+//		_log.info("==DOSSIER_INDEX_LAU_VAI_01");
 
 		// add text fields
 
@@ -315,6 +318,8 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 		document.addTextSortable(DossierTerm.SERVER_NO, object.getServerNo());
 		document.addTextSortable(DossierTerm.DOSSIER_OVER_DUE,
 				Boolean.toString(getDossierOverDue(object.getPrimaryKey())));
+		
+//		_log.info("==DOSSIER_INDEX_LAU_VAI_02");
 
 		//TODO: index dossierAction StepCode
 		StringBundler sb = new StringBundler();
@@ -337,6 +342,8 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 				}
 			}
 		}
+		
+//		_log.info("==DOSSIER_INDEX_LAU_VAI_020");
 		//_log.info("Mapping user:"+sb.toString());
 		document.addTextSortable(DossierTerm.ACTION_MAPPING_USERID, sb.toString());
 		
@@ -365,6 +372,8 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 		//_log.info("Action user:"+StringUtil.merge(actionUserIds, StringPool.SPACE));
 		document.addTextSortable(DossierTerm.ACTION_USERIDS, StringUtil.merge(actionUserIds, StringPool.SPACE));
 		
+//		_log.info("==DOSSIER_INDEX_LAU_VAI_0200");
+		
 		//binhth index dossierId CTN
 		// TODO
 		
@@ -380,6 +389,8 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 			
 		} catch (Exception e) {
 		} 
+		
+//		_log.info("==DOSSIER_INDEX_LAU_VAI_021");
 
 		DateFormat df = new SimpleDateFormat("yy");
 		
@@ -389,10 +400,14 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 		
 		dossierIDCTN = formattedDate + HashFunction.hexShort(ba);
 		
+//		_log.info("==DOSSIER_INDEX_LAU_VAI_022");
+		
 		document.addTextSortable(DossierTerm.DOSSIER_ID+"CTN", dossierIDCTN);
 
+		//TODO: KHI NAO DEPLOY DANG KIEM THI MOI MO RA, HAM NAY CHAY LAU LAM NHE
+		
 		// Get info cert Number
-		List<String> certNoIndexer = certNoIndexer(dossierId, object.getGroupId());
+		/*List<String> certNoIndexer = certNoIndexer(dossierId, object.getGroupId());
 		if (certNoIndexer != null && certNoIndexer.size() > 0) {
 			String certNo = certNoIndexer.get(0);
 			String certDateStr = certNoIndexer.get(1);
@@ -407,7 +422,9 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 				String certNoSearch = SpecialCharacterUtils.splitSpecial(certNo);
 				document.addTextSortable(DossierTerm.CERT_NO_SEARCH, certNoSearch);
 			}
-		}
+		}*/
+		
+//		_log.info("==DOSSIER_INDEX_LAU_VAI_03");
 
 		document.addTextSortable(DossierTerm.ENDORSEMENT_DATE,
 				APIDateTimeUtils.convertDateToString(object.getEndorsementDate(), APIDateTimeUtils._NORMAL_PARTTERN));
@@ -439,6 +456,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 		List<String> certIndex = new ArrayList<String>();
 		// Get info cert Number
 		List<DossierFile> dossierFileList = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
+//		_log.info("==certNoIndexer===");
 		if (dossierFileList != null && dossierFileList.size() > 0) {
 			String templateNo = StringPool.BLANK;
 			String partNo = StringPool.BLANK;
@@ -450,13 +468,15 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 				partNo = dossierFile.getDossierPartNo();
 				DossierPart dossierPart = DossierPartLocalServiceUtil.getByPartTypeEsign (templateNo,
 						partNo, partType, eSign);
+				
+//				_log.info("==certNoIndexer===dossierPart==");
 				if (dossierPart != null) {
 					List<DossierFile> dossierFileRefList = DossierFileLocalServiceUtil
 							.getByReferenceUid(dossierFile.getReferenceUid());
 					if (dossierFileRefList != null && dossierFileRefList.size() > 0) {
 						for (DossierFile dof : dossierFileRefList) {
 							deliverableCode = dof.getDeliverableCode();
-							_log.info("DOssier deliverableCode: "+deliverableCode);
+//							_log.info("DOssier deliverableCode: "+deliverableCode);
 							if (Validator.isNotNull(deliverableCode)) {
 								Deliverable deli = DeliverableLocalServiceUtil.getByCodeAndState(deliverableCode, "2");
 								if (deli != null) {
