@@ -36,9 +36,9 @@ public class ILCertificateScheduler extends BaseSchedulerEntryMessageListener {
 	@Activate
 	@Modified
 	protected void activate() {
-		//TODO: 24Hour
+		//TODO: 5 minute
 		schedulerEntryImpl.setTrigger(
-				TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(), 24, TimeUnit.HOUR));
+				TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(), 5, TimeUnit.MINUTE));
 		_schedulerEngineHelper.register(this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
