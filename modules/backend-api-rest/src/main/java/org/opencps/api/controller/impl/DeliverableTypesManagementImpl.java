@@ -391,21 +391,20 @@ public class DeliverableTypesManagementImpl implements DeliverableTypesManagemen
 
 			DeliverableType deliverableType = DeliverableTypeLocalServiceUtil.getDeliverableTypebyId(groupId, id);
 
-			//TODO:
 			StringBuilder sbPrefix = new StringBuilder();
 			
 			Date now = new Date();
 			DateFormat yearFormat = DateFormatFactoryUtil.getSimpleDateFormat("YY");
-			//sbPrefix.append(yearFormat.format(now));	// nam
+			sbPrefix.append(yearFormat.format(now));	// nam
 			
 			String maDonVi = "";
-			/*if(Validator.isNotNull(govAgencyCode)) {
+			if(Validator.isNotNull(govAgencyCode)) {
 				WorkingUnit workingUnit = WorkingUnitLocalServiceUtil.fetWorkingUnitByGovAgencyCode(groupId, govAgencyCode);
 				
 				maDonVi = workingUnit.getSibling();
-			}*/
+			}
 			
-			//sbPrefix.append(maDonVi);	// ma don vi
+			sbPrefix.append(maDonVi);	// ma don vi
 			
 			String deliverableNumber = StringPool.BLANK;
 			if (deliverableType != null) {
