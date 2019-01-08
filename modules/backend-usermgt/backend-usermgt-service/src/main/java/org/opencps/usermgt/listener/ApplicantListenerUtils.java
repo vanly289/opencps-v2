@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 public class ApplicantListenerUtils {
 	public static JSONObject getPayload(String notiType, JSONObject object, long groupId) {
@@ -17,8 +16,8 @@ public class ApplicantListenerUtils {
 
 		try {
 			
-			_log.info("notiType"+notiType);
-			_log.info("groupId"+groupId);
+//			_log.info("notiType"+notiType);
+//			_log.info("groupId"+groupId);
 			
 			Notificationtemplate notificationtemplate = NotificationtemplateLocalServiceUtil
 					.fetchByF_NotificationtemplateByType(groupId, notiType);
@@ -66,7 +65,7 @@ public class ApplicantListenerUtils {
 			String key = object.names().getString(i);
 			//String value = (String) object.get(key);
 			sb.append(key);
-			_log.info("APPLICANT notification key =========" + key);
+//			_log.info("APPLICANT notification key =========" + key);
 			sb.append(StringPool.COMMA);
 		}
 
@@ -79,8 +78,8 @@ public class ApplicantListenerUtils {
 		for (int i = 0; i < object.names().length(); i++) {
 			String key = object.names().getString(i);
 			String value = (String) object.get(key);
-			_log.info("APPLICANT notification key =========" + key);
-			_log.info("APPLICANT notification value =========" + value);
+//			_log.info("APPLICANT notification key =========" + key);
+//			_log.info("APPLICANT notification value =========" + value);
 			sb.append(value);
 			sb.append(StringPool.COMMA);
 		}
