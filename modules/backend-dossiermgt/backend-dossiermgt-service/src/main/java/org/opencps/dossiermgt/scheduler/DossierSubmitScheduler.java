@@ -6,8 +6,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -21,7 +19,6 @@ import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 public class DossierSubmitScheduler extends BaseSchedulerEntryMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_log.info("Invoke Submit****");
 
 	}
 	
@@ -29,7 +26,7 @@ public class DossierSubmitScheduler extends BaseSchedulerEntryMessageListener {
 	@Modified
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(
-				TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(), 1, TimeUnit.MINUTE));
+				TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(), 365, TimeUnit.DAY));
 		_schedulerEngineHelper.register(this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
@@ -53,7 +50,4 @@ public class DossierSubmitScheduler extends BaseSchedulerEntryMessageListener {
 	}
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	private Log _log = LogFactoryUtil.getLog(DossierSubmitScheduler.class);
-	
 }
