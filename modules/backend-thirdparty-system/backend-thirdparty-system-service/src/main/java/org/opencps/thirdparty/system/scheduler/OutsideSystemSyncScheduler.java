@@ -99,8 +99,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 		
 		if (sync.getMethod() == 0) {
 			Dossier dossier = _dossierLocalService.fetchDossier(sync.getDossierId());
-			ThirdPartyDossierSync dossierSync = _thirdPartyDossierSyncLocalService
-					.fetchThirdPartyDossierSync(sync.getDossierSyncId());
+			ThirdPartyDossierSync dossierSync = sync;/*_thirdPartyDossierSyncLocalService
+					.fetchThirdPartyDossierSync(sync.getDossierSyncId());*/
 			
 			long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
 			

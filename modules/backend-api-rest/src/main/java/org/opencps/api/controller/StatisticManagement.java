@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.BeanParam;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -24,13 +23,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 public interface StatisticManagement {
 
-//	@GET
-//	@Path("/dossiers/todo")
-//	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-//	public Response getDossierTodo(@Context HttpServletRequest request, @Context HttpHeaders header,
-//			@Context Company company, @Context Locale locale, @Context User user,
-//			@Context ServiceContext serviceContext, @BeanParam StatisticDossierSearchModel query);
-
+	@GET
+	@Path("/dossiers")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getDossiers(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam StatisticDossierSearchModel query,
+			@QueryParam("agency") String agency, @QueryParam("from") String from, @QueryParam("to") String to);
+	
 	@GET
 	@Path("/dossiers/todo")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })

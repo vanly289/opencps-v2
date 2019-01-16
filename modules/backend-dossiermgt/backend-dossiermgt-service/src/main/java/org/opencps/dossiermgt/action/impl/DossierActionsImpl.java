@@ -2986,6 +2986,100 @@ public class DossierActionsImpl implements DossierActions {
 
 		return result;
 	}
+	
+	@Override
+	public JSONObject getDossierStatistics(long userId, long companyId, long groupId,
+			LinkedHashMap<String, Object> params, Sort[] sorts, ServiceContext serviceContext) {
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+
+//		String statusCode = StringPool.BLANK;
+
+//		String subStatusCode = StringPool.BLANK;
+
+		JSONArray statistics = JSONFactoryUtil.createJSONArray();
+
+		long total = 0;
+
+		try {
+			DictCollection dictCollection = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode("DOSSIER_STATUS",
+					groupId);
+//			statusCode = GetterUtil.getString(params.get(DossierTerm.STATUS));
+
+			String[] subStatusCodes = StringUtil.split(GetterUtil.getString(params.get(DossierTerm.SUBSTATUS)));
+
+			if (subStatusCodes != null && subStatusCodes.length > 0) {
+				for(String subStatusCode : subStatusCodes) {
+					DictItem dictItem = DictItemLocalServiceUtil.fetchByF_dictItemCode(subStatusCode,
+								dictCollection.getDictCollectionId(), groupId);
+	
+					if (dictItem != null) {
+						params.put(DossierTerm.SUBSTATUS, subStatusCode);
+						long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+	
+						JSONObject statistic = JSONFactoryUtil.createJSONObject();
+//						statistic.put("dossierStatus", statusCode);
+						statistic.put("dossierSubStatus", subStatusCode);
+						statistic.put("level", dictItem.getLevel());
+						statistic.put("statusName", dictItem.getItemName());
+						statistic.put("count", count);
+	
+						statistics.put(statistic);
+	
+						total = count;
+					}
+				}
+
+			} else {
+				String statusCode = StringPool.BLANK;
+				String subStatusCode = StringPool.BLANK;
+						
+				List<DictItem> dictItems = DictItemLocalServiceUtil
+						.findByF_dictCollectionId(dictCollection.getDictCollectionId());
+
+				for (DictItem dictItem : dictItems) {
+					if (dictItem.getParentItemId() != 0) {
+						subStatusCode = dictItem.getItemCode();
+						DictItem parentDictItem = DictItemLocalServiceUtil.getDictItem(dictItem.getParentItemId());
+						statusCode = parentDictItem.getItemCode();
+					} else {
+						statusCode = dictItem.getItemCode();
+					}
+
+					JSONObject statistic = JSONFactoryUtil.createJSONObject();
+
+					params.put(DossierTerm.STATUS, statusCode);
+					params.put(DossierTerm.SUBSTATUS, subStatusCode);
+					params.put(DossierTerm.FOLLOW, String.valueOf(false));
+
+					long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+
+//					statistic.put("dossierStatus", statusCode);
+					statistic.put("dossierSubStatus", subStatusCode);
+					statistic.put("level", dictItem.getLevel());
+					statistic.put("statusName", dictItem.getItemName());
+					statistic.put("count", count);
+					if (dictItem.getParentItemId() != 0) {
+						total += count;
+					}
+					statistics.put(statistic);
+				}
+			}
+
+			result.put("data", statistics);
+
+//			result.put("total", total);
+
+		} catch (Exception e) {
+			_log.error(e);
+		}
+
+		return result;
+	}
 
 	@Override
 	public JSONObject getDossierCountTodoPermission(long userId, long companyId, long groupId,

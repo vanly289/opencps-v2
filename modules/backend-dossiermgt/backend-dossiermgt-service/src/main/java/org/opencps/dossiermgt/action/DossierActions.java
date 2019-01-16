@@ -106,4 +106,7 @@ public interface DossierActions {
 			LinkedHashMap<String, Object> params, Object object, ServiceContext serviceContext);
 
 	public List<Deliverable> getDeliverablesByDossier(long groupId, String id);
+
+	public JSONObject getDossierStatistics(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
+			Sort[] sorts, ServiceContext serviceContext);
 }
