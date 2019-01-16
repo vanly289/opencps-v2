@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 0ec3c3ef0c9da2dd0a0802d562739481d2c5916a Vu Dang Khoa <khoavd.it@gmail.com> 1526373340 +0700	clone: from ssh://git@hanoi.fds.vn:2213/mtcore/vr-rest.git
+0ec3c3ef0c9da2dd0a0802d562739481d2c5916a 687dbd7f96ce58a75d4a886877c546bd555890a6 Vu Dang Khoa <khoavd.it@gmail.com> 1528164532 +0700	commit: process api search
+687dbd7f96ce58a75d4a886877c546bd555890a6 83a6c9a93109faf6bda91769254630bf5cac730a Vu Dang Khoa <khoavd.it@gmail.com> 1528182462 +0700	commit: update field certificate
+83a6c9a93109faf6bda91769254630bf5cac730a 396b618150facb3cc2e50e10bbade5ceb2b73050 Vu Dang Khoa <khoavd.it@gmail.com> 1528270273 +0700	commit: update process vehicle
+396b618150facb3cc2e50e10bbade5ceb2b73050 b399335e494398ed9ec6c0947df582620900772f Vu Dang Khoa <khoavd.it@gmail.com> 1528280289 +0700	commit: update code
