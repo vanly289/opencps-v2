@@ -127,9 +127,6 @@ public class DossierActionsImpl implements DossierActions {
 			long total = DossierLocalServiceUtil.countLucene(params, searchContext);
 
 			result.put("total", total);
-			
-		User user = UserLocalServiceUtil.getUser(1);
-		user.getFullName();
 
 		} catch (Exception e) {
 			_log.error(e);

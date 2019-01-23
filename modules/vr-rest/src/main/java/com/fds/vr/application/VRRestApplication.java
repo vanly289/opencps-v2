@@ -1,43 +1,5 @@
 package com.fds.vr.application;
 
-import java.io.File;
-import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import javax.activation.DataHandler;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-
-import org.apache.cxf.jaxrs.ext.multipart.Attachment;
-import org.apache.cxf.jaxrs.ext.multipart.Multipart;
-import org.opencps.auth.utils.DLFolderUtil;
-import org.opencps.auth.utils.FileUploadUtils;
-import org.opencps.datamgt.model.DictItem;
-import org.opencps.datamgt.service.DictItemLocalServiceUtil;
-import org.osgi.service.component.annotations.Component;
-
 import com.fds.vr.business.action.ILCertificateActions;
 import com.fds.vr.business.action.VRActions;
 import com.fds.vr.business.action.impl.DictItemUtil;
@@ -55,10 +17,7 @@ import com.fds.vr.ilcertificate.model.ILCertificateResultModel;
 import com.fds.vr.util.ILCertificateUtils;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -66,21 +25,42 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+
+import org.opencps.datamgt.model.DictItem;
+import org.opencps.datamgt.service.DictItemLocalServiceUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author admin
@@ -90,38 +70,14 @@ import com.liferay.portal.kernel.util.Validator;
 public class VRRestApplication extends Application {
 
 	public Set<Object> getSingletons() {
+		
 		return Collections.<Object>singleton(this);
 	}
 
 	public static final String PRE_FIX_CERT = "DKLR_CERT@";
 	public static final String PRE_FIX_CERT_CURR = "DKLR_CERT_CURR@";
 	public static final String PRE_FIX_CERT_ELM = "DKLR_CERT_ELM@";
-	
-	public static final String FORM_FILE = "form_file";
 
-	@POST
-	@Path("/business/uploadfiles")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Response uploadFile(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, @Multipart("file") Attachment file) {
-
-		DataHandler dataHandler = file.getDataHandler();
-
-		try {
-			FileEntry fileEntry = FileUploadUtils.uploadFile(user.getUserId(), company.getCompanyId(),
-					company.getGroupId(), dataHandler.getInputStream(), dataHandler.getName(),
-					FileUtil.getExtension(dataHandler.getName()),
-					GetterUtil.getLong(FileUtil.getBytes(dataHandler.getInputStream()).length), FORM_FILE, "",
-					serviceContext);
-			
-
-		} catch (Exception e) {
-			throw new SystemException(e);
-		}
-
-	}
 
 	@GET
 	@Path("/techspecs/vehicleclass/{vehicleClass}")
@@ -838,5 +794,17 @@ public class VRRestApplication extends Application {
 	}
 
 	Log _log = LogFactoryUtil.getLog(VRRestApplication.class);
+
+	@Reference
+	private com.fds.vr.provider.CompanyContextProvider _companyContextProvider;
+
+	@Reference
+	private com.fds.vr.provider.LocaleContextProvider _localeContextProvider;
+
+	@Reference
+	private com.fds.vr.provider.UserContextProvider _userContextProvider;
+
+	@Reference
+	private com.fds.vr.provider.ServiceContextProvider _serviceContextProvider;
 
 }

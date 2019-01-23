@@ -33,8 +33,8 @@ public class DossierStatisticUtils {
 		return 1;
 	}
 	
-	public String getDossierStatus(long dossierId) {
+/*	public String getDossierStatus(long dossierId) {
 		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
-	}
+	}*/
 	
 }
