@@ -1,4 +1,3 @@
-**/modules/vr-rest/**
 **/!bnd.bnd
 **/!build.gradle
 **/indexes.sql
@@ -77,9 +76,7 @@ gradle-local.properties
 
 **/**/ServiceProps.java
 
-**/vr-business/**
-**/vr-rest/**
 mt-dklr/**
 theme_nz/*
-modules/vr-business
+
 gradle.properties
