@@ -63,6 +63,8 @@ public class ILCertificateLocalServiceImpl
 		long ilCertificateId = counterLocalService.increment(ILCertificate.class.getName());
 
 		ILCertificate object = ilCertificatePersistence.create(ilCertificateId);
+		
+		
 
 		/// Add audit fields
 		object.setSyncDate(now);

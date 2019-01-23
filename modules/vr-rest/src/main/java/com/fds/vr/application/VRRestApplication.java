@@ -79,9 +79,9 @@ public class VRRestApplication extends Application {
 	public static final String PRE_FIX_CERT_ELM = "DKLR_CERT_ELM@";
 
 
-	@GET
-	@Path("/techspecs/vehicleclass/{vehicleClass}")
-	@Produces(MediaType.APPLICATION_JSON)
+	@GET //method
+	@Path("/techspecs/vehicleclass/{vehicleClass}") // duong dan API POST ~ ADD, PUT ~ UPDATE, DELELTE - REMOVE (Xoa)
+	@Produces(MediaType.APPLICATION_JSON) // Loai gia tri trar ve 
 	public Response getTechSpecByVehicleClass(@Context HttpHeaders header,
 			@PathParam("vehicleClass") String vehicleClass) {
 		VRActions actions = new VRActionsImpl();
@@ -90,7 +90,9 @@ public class VRRestApplication extends Application {
 		String module = header.getHeaderString("module");
 		long dossierId = GetterUtil.getLong(header.getHeaderString("dossierId"));
 		long dossierFileId = GetterUtil.getLong(header.getHeaderString("dossierFileId"));
-
+		
+	
+		
 		try {
 			JSONObject object = actions.getTechSpecByVehicleClass(groupId, module, dossierId, dossierFileId,
 					vehicleClass);
