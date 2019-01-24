@@ -413,9 +413,9 @@ public class ILCertificateLocalServiceImpl
 		
 		Date now = new Date();
 
-		_log.info("dossierFileId111: "+dossierFileId);
+//		_log.info("dossierFileId111: "+dossierFileId);
 		ILCertificate object = ilCertificatePersistence.fetchByF_DFILE_ID(dossierFileId);
-		_log.info("object: "+object);
+//		_log.info("object: "+object);
 		try{
 
 		/// Add audit fields
@@ -715,5 +715,13 @@ public class ILCertificateLocalServiceImpl
 	
 	public ILCertificate fetchByLicenceNo(String licenceNo) throws PortalException {
 		return ilCertificatePersistence.fetchByF_LICENCENO(licenceNo);
+	}
+	
+	public ILCertificate fetchByDossierFileId(long dossierFileId) {
+		return ilCertificatePersistence.fetchByF_DFILE_ID(dossierFileId);
+	}
+	
+	public int countByDossierFileId(long dossierFileId) {
+		return ilCertificatePersistence.countByF_DFILE_ID(dossierFileId);
 	}
 }

@@ -2,7 +2,6 @@ package org.opencps.dossiermgt.action.util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 public class AutoFillFormData {
@@ -150,8 +148,7 @@ public class AutoFillFormData {
 				}
 
 			} catch (PortalException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				_log.error(e1);
 			}
 
 			try {
@@ -344,7 +341,7 @@ public class AutoFillFormData {
 							jsonMap.put(entry.getKey(), "");
 						}
 					} catch (SystemException e) {
-						e.printStackTrace();
+						_log.error(e);
 					}
 				}
 			}
@@ -360,7 +357,7 @@ public class AutoFillFormData {
 			
 			for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
 				
-				_log.info(StringUtil.shorten(entry.getValue().toString(), 2500));
+				//_log.info(StringUtil.shorten(entry.getValue().toString(), 2500));
 
 				if (entry.getValue().toString().trim().startsWith("[")) {
 					JSONArray jsonArray = JSONFactoryUtil.createJSONArray(entry.getValue().toString());
@@ -391,7 +388,7 @@ public class AutoFillFormData {
 			
 			*/
 		} catch (JSONException e) {
-			e.printStackTrace();
+			_log.error(e);
 		}
 		//_log.info("FORM_DATA *********** " + result.toJSONString());
 
@@ -405,8 +402,7 @@ public class AutoFillFormData {
 			try {
 				retMap = toMap(json);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				_log.error(e);
 			}
 		}
 		return retMap;

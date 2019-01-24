@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.opencps.usermgt.constants.WorkingUnitTerm;
 import org.opencps.usermgt.exception.NoSuchWorkingUnitException;
-import org.opencps.usermgt.model.Employee;
 import org.opencps.usermgt.model.EmployeeJobPos;
 import org.opencps.usermgt.model.WorkingUnit;
 import org.opencps.usermgt.service.base.WorkingUnitLocalServiceBaseImpl;
@@ -105,7 +104,6 @@ public class WorkingUnitLocalServiceImpl extends WorkingUnitLocalServiceBaseImpl
 		if (!hasPermission) {
 			throw new UnauthorizationException();
 		}
-		System.out.println("WorkingUnitLocalServiceImpl.addWorkingUnit()"+parentWorkingUnitId + "//"+ groupId);
 		sibling = getSibling(groupId, parentWorkingUnitId, sibling);
 		
 		WorkingUnit workingUnitCheck = workingUnitPersistence.fetchByF_govAgencyCode(groupId, govAgencyCode);
@@ -188,7 +186,6 @@ public class WorkingUnitLocalServiceImpl extends WorkingUnitLocalServiceBaseImpl
 		if (Validator.isNotNull(listWor) && listWor.size() > 1) {
 			throw new UnauthorizationException();
 		}
-		System.out.println("After check child wu");
 		try {
 
 			workingUnit = workingUnitPersistence.remove(workingUnitId);
@@ -474,8 +471,6 @@ public class WorkingUnitLocalServiceImpl extends WorkingUnitLocalServiceBaseImpl
 					ext += "0";
 				}
 				
-				System.out.println("WorkingUnitLocalServiceImpl.getTreeIndex()"+parentItem);
-				System.out.println("WorkingUnitLocalServiceImpl.getTreeIndex()"+sibling);
 				return parentItem.getTreeIndex() + StringPool.PERIOD + ext + Integer.toHexString(Integer.valueOf(sibling));
 			
 			} catch (NoSuchWorkingUnitException e) {
@@ -488,5 +483,9 @@ public class WorkingUnitLocalServiceImpl extends WorkingUnitLocalServiceBaseImpl
 	
 	public WorkingUnit getWorkingUnitbyGidandWid(long groupId, long workingUnitId){
 		return workingUnitPersistence.fetchByF_WID(groupId, workingUnitId);
+	}
+	
+	public WorkingUnit fetWorkingUnitByGovAgencyCode(long groupId, String govAgencyCode) {
+		return workingUnitPersistence.fetchByF_govAgencyCode(groupId, govAgencyCode);
 	}
 }

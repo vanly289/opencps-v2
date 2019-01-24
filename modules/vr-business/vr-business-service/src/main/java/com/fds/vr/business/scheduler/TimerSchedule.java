@@ -25,7 +25,7 @@ public class TimerSchedule extends BaseSchedulerEntryMessageListener{
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		// TODO Auto-generated method stub
-		_log.info("****OutputDB Timer****");
+//		_log.info("****OutputDB Timer****");
 
 //		VROutputDBActions outputDB = new VROutputDBActionsImpl();
 //		outputDB.processOutputDB();

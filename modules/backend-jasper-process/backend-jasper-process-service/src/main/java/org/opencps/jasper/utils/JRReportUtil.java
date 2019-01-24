@@ -115,9 +115,9 @@ public class JRReportUtil {
 			// fix json enter char
 			//hot fix
 //			jsonData = quoteHTML(jsonData);
-			_log.info("JASPER JSON DATA: " + jsonData);
+//			_log.info("JASPER JSON DATA: " + jsonData);
 			if (isJsonObject(jsonData)) {
-				_log.info("JSON Object");
+//				_log.info("JSON Object");
 				JasperReport reportTemplate = JRReportTemplate.getJasperReport(jrxmlTemplate);
 				JRJSONDataSource dataSource = JRJSONDataSource.getInstance(jsonData);
 
@@ -126,11 +126,11 @@ public class JRReportUtil {
 				return exportReport(jasperPrint, destFileName, DocType.PDF);				
 			}
 			else {
-				_log.info("JSON array");
+//				_log.info("JSON array");
 				List<JasperPrint> jasperPrints = new ArrayList<JasperPrint>();
 				
 				JSONArray jsonArrData = JSONFactoryUtil.createJSONArray(jsonData);
-				_log.info("JSON Array data object: " + jsonArrData.toJSONString());
+//				_log.info("JSON Array data object: " + jsonArrData.toJSONString());
 //				if (jsonArrData.length() > 0) {
 //					JSONObject jsonDataObj = jsonArrData.getJSONObject(0);
 //					
@@ -147,11 +147,11 @@ public class JRReportUtil {
 				JasperReport reportTemplate = JRReportTemplate.getJasperReport(jrxmlTemplate);
 				JRJSONDataSource dataSource = null;
 				
-				_log.info("JSON Array length: " + jsonArrData.length());
+//				_log.info("JSON Array length: " + jsonArrData.length());
 
 				for (int i = 0; i < jsonArrData.length(); i++) {
 					JSONObject jsonDataObj = jsonArrData.getJSONObject(i);
-					_log.info("JASPER ONE JSON: " + jsonDataObj.toJSONString());
+//					_log.info("JASPER ONE JSON: " + jsonDataObj.toJSONString());
 					
 					dataSource = JRJSONDataSource.getInstance(jsonDataObj.toJSONString());
 
@@ -159,7 +159,7 @@ public class JRReportUtil {
 					jasperPrints.add(jasperPrint);
 
 				}
-				_log.info("Before export pdf file");
+//				_log.info("Before export pdf file");
 //				return exportReport(jasperPrint, destFileName, DocType.PDF);				
 				
 				return exportPdfFile(jasperPrints, destFileName);

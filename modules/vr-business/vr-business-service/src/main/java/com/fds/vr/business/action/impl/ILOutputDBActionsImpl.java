@@ -1,13 +1,9 @@
 package com.fds.vr.business.action.impl;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import org.opencps.datamgt.model.DictCollection;
 import org.opencps.datamgt.model.DictItem;
@@ -21,10 +17,7 @@ import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.thirdparty.system.model.ILDoanhNghiep;
-import org.opencps.thirdparty.system.model.ILPhuongTien;
 import org.opencps.thirdparty.system.service.ILDoanhNghiepLocalServiceUtil;
-import org.opencps.usermgt.model.Applicant;
-import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 
 import com.fds.vr.business.action.ILOutputDBActions;
 import com.fds.vr.business.action.util.ConvertFormatDate;
@@ -35,8 +28,6 @@ import com.fds.vr.business.service.ILCertificateLocalServiceUtil;
 import com.fds.vr.business.service.ILSyncDateLocalServiceUtil;
 import com.fds.vr.business.service.ILVehicleCustomsBorderGuardLocalServiceUtil;
 import com.fds.vr.business.service.ILVehicleLocalServiceUtil;
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -45,9 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 public class ILOutputDBActionsImpl implements ILOutputDBActions {
@@ -55,23 +44,10 @@ public class ILOutputDBActionsImpl implements ILOutputDBActions {
 	private static final String DATE_TIME = "yyyy-MM-dd HH:mm:ss";
 	private Log _log = LogFactoryUtil.getLog(ILOutputDBActionsImpl.class);
 	
-	public static void main(String[] args) {
-		
-		Calendar calendar = Calendar.getInstance();
-		
-		calendar.set(2018, 9, 31);
-		
-		System.out.println(calendar.getTime());
-	}
-
 	@Override
 	public boolean processOutputDB() throws ParseException, SearchException, JSONException {
 
 		Date syncDate = ILSyncDateLocalServiceUtil.getSyncDate();
-		
-		Calendar calendar = Calendar.getInstance();
-		
-		calendar.set(2018, 9, 31);
 
 		_log.info("synsDate: "+syncDate);
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME);
@@ -203,8 +179,9 @@ public class ILOutputDBActionsImpl implements ILOutputDBActions {
 		_log.info("DELI_TYPE" + deliverable.getDeliverableType());
 		
 		boolean flag = false;
-		if (dossierFileId != 0) {
-			List<ILCertificate> certificateList = ILCertificateLocalServiceUtil.getAllCertificate();
+		if (dossierFileId > 0) {
+			//TODO: For performance
+			/*List<ILCertificate> certificateList = ILCertificateLocalServiceUtil.getAllCertificate();
 			if (certificateList != null && certificateList.size() > 0) {
 				long dossierIdCert = 0;
 				for (ILCertificate certInfo : certificateList) {
@@ -216,6 +193,11 @@ public class ILOutputDBActionsImpl implements ILOutputDBActions {
 						}
 					}
 				}
+			}*/
+			
+			int countCertificate = ILCertificateLocalServiceUtil.countByDossierFileId(dossierFileId);
+			if(countCertificate > 0) {
+				flag = true;
 			}
 		}
 		

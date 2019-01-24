@@ -445,7 +445,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				}
 			}
 			catch (JSONException e) {
-				e.printStackTrace();
+				_log.error(e);
 			}
 		}
 		
@@ -453,8 +453,8 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		dossierFile.setIsNew(true);
 
 		// Binhth add message bus to processing jasper file
-		_log.info("IN DOSSIER FILE UPDATE FORM DATA: " + formData);
-		_log.info("IN DOSSIER FILE UPDATE FORM DATA DELIVERABLE CODE: " + dossierFile.getDeliverableCode());
+//		_log.info("IN DOSSIER FILE UPDATE FORM DATA: " + formData);
+//		_log.info("IN DOSSIER FILE UPDATE FORM DATA DELIVERABLE CODE: " + dossierFile.getDeliverableCode());
 		Message message = new Message();
 
 		JSONObject msgData = JSONFactoryUtil.createJSONObject();
@@ -467,7 +467,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		message.put("msgToEngine", msgData);
 		MessageBusUtil.sendMessage("jasper/engine/out/destination", message);
 
-		_log.info("SEND TO CREATED FILE MODEL");
+//		_log.info("SEND TO CREATED FILE MODEL");
 		
 		return dossierFilePersistence.update(dossierFile);
 	}

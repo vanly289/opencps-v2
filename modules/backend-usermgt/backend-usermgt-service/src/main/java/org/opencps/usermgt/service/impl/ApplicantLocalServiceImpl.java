@@ -21,8 +21,6 @@ import java.util.List;
 
 import org.opencps.usermgt.constants.ApplicantTerm;
 import org.opencps.usermgt.exception.DuplicateApplicantIdException;
-import org.opencps.usermgt.exception.DuplicateContactEmailException;
-import org.opencps.usermgt.exception.DuplicateContactTelNoException;
 import org.opencps.usermgt.exception.NoApplicantIdDateException;
 import org.opencps.usermgt.exception.NoApplicantIdNoException;
 import org.opencps.usermgt.exception.NoApplicantIdTypeException;
