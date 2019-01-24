@@ -63,6 +63,10 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 				RESTFulConfiguration.SERVER_PASS, properties, serviceContext);
 
 		List<String> lsServerNo = getListServerNo(resServerConfig);
+		
+		_log.info("LSSERVERNO***** " + lsServerNo.toString());
+		
+		lsServerNo.add("GPLVVL");
 
 		for (String serverNo : lsServerNo) {
 

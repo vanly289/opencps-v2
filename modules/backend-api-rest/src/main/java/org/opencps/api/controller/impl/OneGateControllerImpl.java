@@ -104,6 +104,9 @@ public class OneGateControllerImpl implements OneGateController {
 
 			for (ServiceInfo serviceInfo : serviceInfos) {
 				ServiceConfig serviceConfig = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(groupId, serviceInfo.getServiceCode(), agencies.toString());
+				_log.info("groupId" + groupId);
+				_log.info("getServiceCode" + serviceInfo.getServiceCode());
+				_log.info("agencies" + agencies.toString());
 				
 				if (Validator.isNotNull(serviceConfig)) {
 					JSONObject elmData = JSONFactoryUtil.createJSONObject();
