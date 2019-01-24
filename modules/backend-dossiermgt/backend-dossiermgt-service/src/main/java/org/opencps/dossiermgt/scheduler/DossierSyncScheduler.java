@@ -105,7 +105,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 				DossierSyncUtils.orderSync(origin);
 				
 				for (DossierSyncOrderedModel elm : origin) {
-					System.out.println("dossierId_" + elm.getDossierId() + "_method_" + elm.getMethodId());
+//					System.out.println("dossierId_" + elm.getDossierId() + "_method_" + elm.getMethodId());
 					
 					try {
 
@@ -129,7 +129,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 								serviceContext);
 
 					} catch (Exception e) {
-						//e.printStackTrace();
+						//_log.error(e);
 						
 						_log.info("Can't Sync DossierSyncId = " + elm.getDossierSyncId());
 					}
@@ -164,7 +164,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 			}
 
 		} catch (JSONException e) {
-			e.printStackTrace();
+			_log.error(e);
 		}
 
 		return lsServer;
@@ -194,7 +194,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 	@Modified
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(
-				TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(), 45, TimeUnit.SECOND));
+				TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(), 1, TimeUnit.MINUTE));
 		_schedulerEngineHelper.register(this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 

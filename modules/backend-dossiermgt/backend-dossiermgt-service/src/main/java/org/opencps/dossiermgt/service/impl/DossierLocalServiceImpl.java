@@ -2626,7 +2626,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 		try {
 			List<ServerConfig> sc = ServerConfigLocalServiceUtil.getGroupId(groupId);
-			_log.info("sc.get(0).getServerNo():" + sc.get(0).getServerNo());
+//			_log.info("sc.get(0).getServerNo():" + sc.get(0).getServerNo());
 			return sc.get(0).getServerNo();
 		} catch (Exception e) {
 			return StringPool.BLANK;
