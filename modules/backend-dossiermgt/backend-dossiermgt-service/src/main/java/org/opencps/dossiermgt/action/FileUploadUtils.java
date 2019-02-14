@@ -191,7 +191,7 @@ public class FileUploadUtils {
 			PermissionThreadLocal.setPermissionChecker(checker);
 			
 			if(fileEntryId > 0) {
-				fileEntry = DLAppLocalServiceUtil.updateFileEntry(userId, fileEntryId, sourceFileName, 
+				fileEntry = DLAppLocalServiceUtil.updateFileEntry(userId, fileEntryId, title, 
 						fileType, title, title, title, true, inputStream, fileSize, serviceContext);
 			} else {
 				fileEntry = DLAppLocalServiceUtil.addFileEntry(userId, groupId, dlFolder.getFolderId(), title,
@@ -256,7 +256,7 @@ public class FileUploadUtils {
 			
 			if(fileEntryId > 0) {
 				fileEntry = DLAppLocalServiceUtil.updateFileEntry(userId, fileEntryId, 
-						sourceFileName, fileType, title,
+						title, fileType, title,
 						title, title, true, file, serviceContext);
 			} else {
 				fileEntry = DLAppLocalServiceUtil.addFileEntry(userId, groupId, dlFolder.getFolderId(), title,

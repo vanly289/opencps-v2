@@ -2025,17 +2025,17 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 		String fromSubmitDateFilter = fromSubmitDate + "000000";
 		String toSubmitDateFilter = toSubmitDate + "235959";
 		
-		_log.info("FROMSUBMITDATEFILTER_" + fromSubmitDateFilter);
-		_log.info("TOSUBMITDATEFILTER_" + toSubmitDateFilter);
+//		_log.info("FROMSUBMITDATEFILTER_" + fromSubmitDateFilter);
+//		_log.info("TOSUBMITDATEFILTER_" + toSubmitDateFilter);
 		
 		if (Validator.isNotNull(fromSubmitDate)) {
 			
-			_log.info("FROMSUBMITDATEFILTER_" + fromSubmitDateFilter);
-			_log.info("TOSUBMITDATEFILTER_" + toSubmitDateFilter);
+//			_log.info("FROMSUBMITDATEFILTER_" + fromSubmitDateFilter);
+//			_log.info("TOSUBMITDATEFILTER_" + toSubmitDateFilter);
 			
 			if (Validator.isNotNull(toSubmitDate)) {
 				
-				_log.info("Validator.isNotNull(toSubmitDate) GO TO HERE!");
+//				_log.info("Validator.isNotNull(toSubmitDate) GO TO HERE!");
 
 				TermRangeQueryImpl termRangeQuery = new TermRangeQueryImpl(DossierTerm.SUBMIT_DATE,
 						fromSubmitDateFilter, toSubmitDateFilter, true, true);
@@ -2046,7 +2046,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 						fromSubmitDateFilter, toSubmitDateFilter, true, false);
 
 				booleanQuery.add(termRangeQuery, BooleanClauseOccur.MUST);
-		}
+			}
 		} else {
 			if (Validator.isNotNull(toSubmitDate)) {
 				TermRangeQueryImpl termRangeQuery = new TermRangeQueryImpl(DossierTerm.RECEIVE_DATE,

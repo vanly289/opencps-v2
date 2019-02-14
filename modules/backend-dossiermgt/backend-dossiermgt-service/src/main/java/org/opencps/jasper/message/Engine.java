@@ -27,7 +27,6 @@ public class Engine implements MessageListener {
 
 	@Override
 	public void receive(Message message) throws MessageListenerException {
-		// TODO Auto-generated method stub
 		try {
 			JSONObject msgData = (JSONObject) message.get("msgToEngine");
 			
@@ -68,8 +67,7 @@ public class Engine implements MessageListener {
 	}
 	
 	private void _doReceiveJasperRequest(Message message) {
-		// TODO Auto-generated method stub
-		_log.info("Dossier listener receive Jasper .............................");
+//		_log.info("Dossier listener receive Jasper .............................");
 		JSONObject msgData = (JSONObject) message.get("msgToEngine");
 		
 		File file = null;
@@ -85,6 +83,8 @@ public class Engine implements MessageListener {
 			String filePath = msgData.getString("filePath");
 
 			file = new File(filePath);
+			
+			_log.info("Receive=jasper=engine=in=destination=" + classPK);
 
 			_log.info("Engine._doReceiveJasperRequest()" + filePath);
 			

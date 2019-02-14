@@ -1,5 +1,8 @@
 package com.fds.vr.business.service.persistence.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import com.fds.vr.business.model.ILCertificate;
@@ -10,20 +13,24 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl implements ILCertificateFinder {
 
-	Log _log = LogFactoryUtil.getLog(ILCertificateFinderImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ILCertificateFinderImpl.class);
 
 	private static final String SEARCH_LIENVAN = ILCertificateFinder.class.getName() + ".searchLienVan";
 	private static final String SEARCH_GIAYPHEP = ILCertificateFinder.class.getName() + ".searhGiayPhep";
 	private static final String SEARCH_BY_REG_NUMBER = ILCertificateFinder.class.getName() + ".searchCertificateByRegNumber";
+	private static final String COUNT_BY_SERVICE_CODE = ILCertificateFinder.class.getName() + ".countByServiceCode";
 	
 	@SuppressWarnings("unchecked")
 	public List<ILCertificate> searchByRegNumber(String keyword, int start, int end) {
@@ -47,11 +54,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			return (List<ILCertificate>) QueryUtil.list(q, getDialect(), start, end);
 
 		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
+			_log.error(e);
 		} finally {
 			closeSession(session);
 		}
@@ -90,11 +93,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			return (List<ILCertificate>) QueryUtil.list(q, getDialect(), start, end);
 
 		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
+			_log.error(e);
 		} finally {
 			closeSession(session);
 		}
@@ -128,11 +127,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			return (List<ILCertificate>) QueryUtil.list(q, getDialect(), start, end);
 
 		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
+			_log.error(e);
 		} finally {
 			closeSession(session);
 		}
@@ -176,11 +171,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			certList = q.list();
 			// _log.info("SQL list deliverable: "+ deliverableList);
 		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
+			_log.error(e);
 		} finally {
 			closeSession(session);
 		}
@@ -207,11 +198,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			total = q.list().size();
 			// _log.info("SQL list deliverable: "+ deliverableList);
 		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
+			_log.error(e);
 		} finally {
 			closeSession(session);
 		}
@@ -370,11 +357,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			certList = q.list();
 			// _log.info("SQL list deliverable: "+ deliverableList);
 		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
+			_log.error(e);
 		} finally {
 			closeSession(session);
 		}
@@ -403,16 +386,95 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			total = q.list().size();
 			// _log.info("SQL list deliverable: "+ deliverableList);
 		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
+			_log.error(e);
 		} finally {
 			closeSession(session);
 		}
 
 		return total;
+	}
+	
+	public int countByServiceCode(String govAgencyCode, String[] serviceCodes, Date fromDate, Date toDate) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_SERVICE_CODE);
+			
+			if(serviceCodes != null && serviceCodes.length > 0) {
+				
+				StringBundler sb = new StringBundler(2 * serviceCodes.length - 1);
+
+				for (int i = 0; i < serviceCodes.length; i++) {
+					if (i != 0) {
+						sb.append(",");
+					}
+
+					sb.append("'");
+					sb.append(serviceCodes[i]);
+					sb.append("'");
+				}
+				
+				sql = StringUtil.replace(sql, "[$SERVICE_CODE$]", StringUtil.lowerCase(sb.toString()));
+			} else {
+				sql = StringUtil.replace(sql, "AND (LOWER(serviceCode) IN ([$SERVICE_CODE$]))", StringPool.BLANK);
+			}
+			
+			Timestamp fromDateLT_TS = null;
+			if(fromDate != null) {
+				fromDateLT_TS = CalendarUtil.getTimestamp(fromDate);
+			}
+			
+			if(fromDateLT_TS == null) {
+				sql = StringUtil.replace(sql, "AND (signDate >= ?)", StringPool.BLANK);
+			}
+			
+			Timestamp toDateLT_TS = null;
+			if(toDate != null) {
+				toDateLT_TS = CalendarUtil.getTimestamp(toDate);
+			}
+			
+			if(toDateLT_TS == null) {
+				sql = StringUtil.replace(sql, "AND (signDate <= ?)", StringPool.BLANK);
+			}
+			
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar("COUNT_VALUE", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+			
+			qPos.add(govAgencyCode);
+
+			if(fromDateLT_TS != null) {
+				qPos.add(fromDateLT_TS);
+			}
+			
+			if(toDateLT_TS != null) {
+				qPos.add(toDateLT_TS);
+			}
+			
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+
+		} catch (Exception e) {
+			_log.error(e);
+		} finally {
+			closeSession(session);
+		}
+
+		return 0;
 	}
 
 }

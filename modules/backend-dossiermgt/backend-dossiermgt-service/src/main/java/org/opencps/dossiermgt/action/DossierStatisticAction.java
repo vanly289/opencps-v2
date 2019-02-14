@@ -29,4 +29,7 @@ public interface DossierStatisticAction {
 			ServiceContext serviceContext) throws PortalException;
 
 	public List<DossierStatistic> getDossierStatisticbyYear(long userId, long groupId, int year);
+
+	public long countDossierStatistic(long companyId, long groupId, LinkedHashMap<String, Object> params,
+			Sort[] sorts);
 }

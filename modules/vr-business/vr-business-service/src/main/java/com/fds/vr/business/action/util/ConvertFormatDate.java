@@ -66,10 +66,26 @@ public class ConvertFormatDate {
 			return df.parse(strDate);
 		}
 		catch (ParseException e) {
-//				_log.error(e);
 			return null;
 		}
 		
+	}
+	
+	public static String convertNormalDateToLuceneDate(String normal) {
+		if (Validator.isNull(normal)) {
+			return StringPool.BLANK;
+		}
+		String[] splitD = normal.split("/");
+		if (splitD.length != 3 ||
+				splitD[1].length() > 2 ||
+				splitD[0].length() > 2) {
+			return StringPool.BLANK;
+		}
+		String year = splitD[2];
+		String month = (splitD[1].length() == 1) ? "0" + splitD[1] : splitD[1];
+		String day = (splitD[0].length() == 1) ? "0" + splitD[0] : splitD[0];
+		
+		return year + month + day;
 	}
 
 }

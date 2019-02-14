@@ -96,17 +96,11 @@ public class ILCertificateLocalServiceImpl
 
 		/// Add audit fields
 		object.setSyncDate(now);
-//		_log.info("Vao KHONG syncDateList:"+object.getSyncDate());
 
-		//
-		
-		
 		String transportOperation = "";
 		
 		if (Validator.isNotNull(dossier)) {
 			transportOperation = TransportOperationUtil.getTransportOperation(jsonData, dossier);
-		} else {
-			_log.info("***IS NULL*****");
 		}
 		
 		
@@ -723,5 +717,9 @@ public class ILCertificateLocalServiceImpl
 	
 	public int countByDossierFileId(long dossierFileId) {
 		return ilCertificatePersistence.countByF_DFILE_ID(dossierFileId);
+	}
+	
+	public int countByServiceCode(String govAgencyCode, String[] serviceCodes, Date fromDate, Date toDate) {
+		return ilCertificateFinder.countByServiceCode(govAgencyCode, serviceCodes, fromDate, toDate);
 	}
 }

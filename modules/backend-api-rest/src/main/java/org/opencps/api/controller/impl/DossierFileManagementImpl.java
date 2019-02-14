@@ -425,7 +425,6 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			return processException(e);
 		}
 	}
@@ -599,7 +598,7 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 				return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
 
 			} else {
-
+				_log.error(e);
 				error.setMessage("No Content.");
 				error.setCode(HttpURLConnection.HTTP_FORBIDDEN);
 				error.setDescription(e.getMessage());

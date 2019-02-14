@@ -15,14 +15,11 @@ import org.opencps.dossiermgt.model.ProcessOption;
 import org.opencps.dossiermgt.model.ServiceConfig;
 import org.opencps.dossiermgt.model.ServiceInfo;
 import org.opencps.dossiermgt.model.ServiceProcess;
-import org.opencps.dossiermgt.service.DeliverableLocalService;
-import org.opencps.dossiermgt.service.DossierActionLocalService;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
-import org.opencps.dossiermgt.service.DossierFileLocalService;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
-import org.opencps.dossiermgt.service.DossierLocalService;
+import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
-import org.opencps.dossiermgt.service.DossierSyncLocalService;
+import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
@@ -45,7 +42,7 @@ import org.opencps.thirdparty.system.nsw.model.Subject;
 import org.opencps.thirdparty.system.nsw.model.To;
 import org.opencps.thirdparty.system.rest.client.OpenCPSRestClient;
 import org.opencps.thirdparty.system.rest.client.PrefsProperties;
-import org.opencps.thirdparty.system.service.ThirdPartyDossierSyncLocalService;
+import org.opencps.thirdparty.system.service.ThirdPartyDossierSyncLocalServiceUtil;
 import org.opencps.thirdparty.system.util.OutsideSystemConverter;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -53,7 +50,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -76,30 +72,40 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_log.info("Starting sync with third party system is starting at  : "
+		_log.info("===THIRD_PARTY_SYNC_BEGIN==="
 				+ APIDateTimeUtils.convertDateToString(new Date()));
 
-		List<ThirdPartyDossierSync> lstSyncs = _thirdPartyDossierSyncLocalService.findAll(QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+		List<ThirdPartyDossierSync> lstSyncs = ThirdPartyDossierSyncLocalServiceUtil.findByStatus(false, 
+				0, 1);
 
 		for (ThirdPartyDossierSync sync : lstSyncs) {
+			long dossierSyncId = sync.getDossierSyncId();
+			
+			boolean pending = false;
 			try {
-				doSync(sync);
+				ThirdPartyDossierSyncLocalServiceUtil.updateStatus(sync, true);
+				pending = doSync(sync);
 			} catch(Exception e) {
 				_log.error(e);
 			}
+			
+			if(!pending) {	// pending thi khong xu ly tiep nua
+				ThirdPartyDossierSyncLocalServiceUtil.updateStatus(dossierSyncId, false);
+			}
 		}
 
-		_log.info("Sync with third party system finished at  : " + APIDateTimeUtils.convertDateToString(new Date()));
+		_log.info("===THIRD_PARTY_SYNC_END===" + APIDateTimeUtils.convertDateToString(new Date()));
 	}
 	
-	private void doSync(ThirdPartyDossierSync sync) throws PortalException {
+	private boolean doSync(ThirdPartyDossierSync sync) throws PortalException {
+		boolean pending = false;
+		
 		OpenCPSRestClient client = new OpenCPSRestClient(PrefsProperties.getJaxRsUrl());
 		String jaxRsPublicUrl = PrefsPropsUtil.getString(SyncServerTerm.JAXRS_PUBLIC_URL);
 		
 		if (sync.getMethod() == 0) {
-			Dossier dossier = _dossierLocalService.fetchDossier(sync.getDossierId());
-			ThirdPartyDossierSync dossierSync = sync;/*_thirdPartyDossierSyncLocalService
+			Dossier dossier = DossierLocalServiceUtil.fetchDossier(sync.getDossierId());
+			ThirdPartyDossierSync dossierSync = sync;/*ThirdPartyDossierSyncLocalServiceUtil
 					.fetchThirdPartyDossierSync(sync.getDossierSyncId());*/
 			
 			long dossierActionId = dossierSync.getMethod() == 0 ? dossierSync.getClassPK() : 0;
@@ -165,7 +171,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 			Content content = new Content();
 			body.setContent(content);
 
-			DossierAction dossierAction = _dossierActionLocalService.fetchDossierAction(dossierActionId);
+			DossierAction dossierAction = DossierActionLocalServiceUtil.fetchDossierAction(dossierActionId);
 			
 			org.opencps.thirdparty.system.nsw.vt.model.NSWRequest nswRequest2 = new org.opencps.thirdparty.system.nsw.vt.model.NSWRequest();
 			org.opencps.thirdparty.system.nsw.vt.model.RequestPayload requestPayload2 = new org.opencps.thirdparty.system.nsw.vt.model.RequestPayload();
@@ -310,9 +316,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 						}
 
-						//_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+						DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-						_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 					}
 				} else if (dossierAction.getSyncActionCode().equals("1106")) {
 					nswRequest.setDocumentType(dossier.getServiceCode());
@@ -435,9 +441,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 						}
 
-						_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+						DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-						_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 					}
 				} else if (dossierAction.getSyncActionCode().equals("1114")) {
 					nswRequest.setDocumentType(dossier.getServiceCode());
@@ -529,9 +535,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 						}
 
-						_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+						DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-						_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 					}
 				} else if (dossierAction.getSyncActionCode().equals("1117")) {
 					nswRequest.setDocumentType(dossier.getServiceCode());
@@ -551,11 +557,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 						KetQuaXuLy ketqua = new KetQuaXuLy();
 						content.setKetQuaXuLy(ketqua);
-						String templateNo = StringPool.BLANK;
-						String partNo = StringPool.BLANK;
 
-						templateNo = dossierFile.getFileTemplateNo();
-						partNo = dossierFile.getDossierPartNo();
+//						String templateNo = dossierFile.getFileTemplateNo();
+//						String partNo = dossierFile.getDossierPartNo();
 
 //						DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(dossierFile.getGroupId(), templateNo);
 						
@@ -641,9 +645,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 					}
 
-					_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+					DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+					ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 					
 				} else if (dossierAction.getSyncActionCode().equals("1409")) {
 					nswRequest.setDocumentType(dossier.getServiceCode());
@@ -772,9 +776,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 						}
 
-						_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+						DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-						_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 					}
 				} else if (dossierAction.getSyncActionCode().equals("1410")) {
 					nswRequest.setDocumentType(dossier.getServiceCode());
@@ -904,9 +908,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 						}
 
-						_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+						DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-						_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 					}
 				} else if (dossierAction.getSyncActionCode().equals("1815")) {
 					nswRequest.setDocumentType(dossier.getServiceCode());
@@ -971,9 +975,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 					}
 					else if (dossier.getServiceCode().equals("BGTVT0600005")
@@ -1008,9 +1012,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 	
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 	
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						} else {
+							pending = true;
 						}
 
 					}
@@ -1033,9 +1039,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1054,9 +1060,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1075,9 +1081,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1105,9 +1111,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 	
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 	
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						} else {
+							pending = true;
 						}
 					}
 					else if (dossier.getServiceCode().equals("BGTVT0600044")
@@ -1126,9 +1134,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1152,9 +1160,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}	
 							
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 	
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						} else {
+							pending = true;
 						}
 					}
 					else if (dossier.getServiceCode().equals("BGTVT0600052")
@@ -1177,9 +1187,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 	
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 	
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						} else {
+							pending = true;
 						}
 
 					}
@@ -1197,9 +1209,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1219,9 +1231,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1245,9 +1257,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 	
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 	
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						} else {
+							pending = true;
 						}
 
 					}
@@ -1269,9 +1283,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1290,9 +1304,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}						
@@ -1387,9 +1401,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 							DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 						}
 
-						_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+						DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-						_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 					}
 				} else if (dossierAction.getSyncActionCode().equals("1816")) {
 					nswRequest.setDocumentType(dossier.getServiceCode());
@@ -1438,9 +1452,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 									DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 								}
 
-								_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+								DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-								_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+								ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 							}
 					}
 					else if (dossier.getServiceCode().equals("BGTVT0600005")
@@ -1475,9 +1489,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 	
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 	
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						} else {
+							pending = true;
 						}
 					}
 					else if (dossier.getServiceCode().equals("BGTVT0600013")
@@ -1499,9 +1515,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1520,9 +1536,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1541,9 +1557,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1571,9 +1587,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 	
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 	
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						} else {
+							pending = true;
 						}
 					}
 					else if (dossier.getServiceCode().equals("BGTVT0600044")
@@ -1592,9 +1610,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}	
@@ -1618,9 +1636,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 	
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 	
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						} else {
+							pending = true;
 						}
 
 					}	
@@ -1644,9 +1664,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 	
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 	
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						} else {
+							pending = true;
 						}
 
 					}	
@@ -1664,9 +1686,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}	
@@ -1686,9 +1708,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}	
@@ -1712,9 +1734,11 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 	
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 	
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+						} else {
+							pending = true;
 						}
 					}	
 					else if (dossier.getServiceCode().equals("BGTVT0600018")
@@ -1735,9 +1759,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}
@@ -1757,9 +1781,9 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 								DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 							}
 
-							_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+							DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-							_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+							ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 						}
 						
 					}						
@@ -1773,12 +1797,14 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 						DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
 					}
 
-					_dossierSyncLocalService.removeDossierSync(sync.getBaseDossierSyncId());
+					DossierSyncLocalServiceUtil.removeDossierSync(sync.getBaseDossierSyncId());
 
-					_thirdPartyDossierSyncLocalService.deleteThirdPartyDossierSync(sync.getDossierSyncId());
+					ThirdPartyDossierSyncLocalServiceUtil.deleteThirdPartyDossierSync(sync.getDossierSyncId());
 				}
 			}
 		}
+		
+		return pending;
 	}
 	
 	@Activate
@@ -1810,23 +1836,23 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-	@Reference
-	private DossierLocalService _dossierLocalService;
+	/*@Reference
+	private DossierLocalService DossierLocalServiceUtil;
 
 	@Reference
-	private ThirdPartyDossierSyncLocalService _thirdPartyDossierSyncLocalService;
+	private ThirdPartyDossierSyncLocalService ThirdPartyDossierSyncLocalServiceUtil;
 
 	@Reference
-	private DossierSyncLocalService _dossierSyncLocalService;
+	private DossierSyncLocalService DossierSyncLocalServiceUtil;
 
 	@Reference
-	private DossierFileLocalService _dossierFileLocalService;
+	private DossierFileLocalService DossierFileLocalServiceUtil;
 
 	@Reference
 	private DeliverableLocalService _deliverableLocalService;
 
 	@Reference
-	private DossierActionLocalService _dossierActionLocalService;
+	private DossierActionLocalService DossierActionLocalServiceUtil;*/
 
 	private Log _log = LogFactoryUtil.getLog(OutsideSystemSyncScheduler.class);
 }

@@ -75,6 +75,7 @@ public class ThirdPartyDossierSyncLocalServiceImpl
 			thirdPartyDossierSync.setFileReferenceUid(fileReferenceUid);
 			thirdPartyDossierSync.setServerNo(serverNo);
 			thirdPartyDossierSync.setBaseDossierSyncId(baseDossierSyncId);
+			thirdPartyDossierSync.setStatus(false);
 
 			thirdPartyDossierSyncPersistence.update(thirdPartyDossierSync);
 
@@ -135,5 +136,26 @@ public class ThirdPartyDossierSyncLocalServiceImpl
 	
 	public List<ThirdPartyDossierSync> findAll(int start, int end) {
 		return thirdPartyDossierSyncPersistence.findAll(start, end);
+	}
+	
+	public List<ThirdPartyDossierSync> findByStatus(boolean status, int start, int end) {
+		return thirdPartyDossierSyncPersistence.findByStatus(status, start, end);
+	}
+	
+	public void updateStatus(long dossierSyncId, boolean status) {
+		ThirdPartyDossierSync sync = thirdPartyDossierSyncPersistence.fetchByPrimaryKey(dossierSyncId);
+		
+		if(sync != null) {
+			thirdPartyDossierSyncLocalService.updateStatus(sync, status);
+		}
+	}
+	
+	public void updateStatus(ThirdPartyDossierSync sync, boolean status) {
+		if(sync != null) {
+			sync.setStatus(status);
+			sync.setModifiedDate(new Date());
+			
+			thirdPartyDossierSyncPersistence.update(sync);
+		}
 	}
 }

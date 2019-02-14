@@ -25,6 +25,7 @@
 		<column name="classPK" type="long" />
 		<column name="fileReferenceUid" type="String" />
 		<column name="serverNo" type="String" />
+		<column name="status" type="boolean" />
 
 		<column name="baseDossierSyncId" type="long" />
 
@@ -60,7 +61,11 @@
 		
 		<finder return-type="Collection" name="DossierId">
 			<finder-column name="dossierId" />
-		</finder>		
+		</finder>	
+		
+		<finder return-type="Collection" name="Status">
+			<finder-column name="status" />
+		</finder>	
 	</entity>
 	
 	<entity local-service="true" name="ILPhuongTien" remote-service="false"

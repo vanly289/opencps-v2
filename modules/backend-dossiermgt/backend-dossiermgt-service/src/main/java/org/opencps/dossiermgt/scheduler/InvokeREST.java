@@ -5,14 +5,30 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Base64;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.opencps.dossiermgt.action.util.MultipartUtility;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,10 +42,46 @@ public class InvokeREST {
 			String username, String password, HashMap<String, String> properties, ServiceContext serviceContext) {
 
 		JSONObject response = JSONFactoryUtil.createJSONObject();
+		
+		CloseableHttpClient httpClient = null;
+		BufferedReader br = null;
 
 		try {
+			CredentialsProvider provider = new BasicCredentialsProvider();
+			UsernamePasswordCredentials credentials
+			 = new UsernamePasswordCredentials(username, password);
+			provider.setCredentials(AuthScope.ANY, credentials);
+			
+			int timeout = 30;
+			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+			
+			httpClient = HttpClientBuilder.create()
+					.setDefaultRequestConfig(config)
+					.setDefaultCredentialsProvider(provider)
+					.build();
+			
+//			HttpGet getRequest = new HttpGet(pathBase + endPoint);
+ 			
+			Header groupHeader = new BasicHeader("groupId", String.valueOf(groupId));
+// 			getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
+// 			getRequest.addHeader(groupHeader);
+ 			
+ 			HttpUriRequest request = RequestBuilder.create(httpMethod)
+ 					.setUri(pathBase + endPoint)
+ 					.addHeader(HttpHeaders.ACCEPT, "application/json")
+ 					.addHeader(groupHeader)
+ 					.build();
+ 			
+ 			if (!properties.isEmpty()) {
+				for (Map.Entry<String, String> m : properties.entrySet()) {
+					request.setHeader(m.getKey().toString(), m.getValue().toString());
+				}
+			}
+ 			
+ 			CloseableHttpResponse clientResponse = httpClient.execute(request);
 
-			URL url = new URL(pathBase + endPoint);
+			/*URL url = new URL(pathBase + endPoint);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -50,27 +102,49 @@ public class InvokeREST {
 				}
 			}
 
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));*/
 
-			String output;
+			/*String output;
 
 			StringBuilder sb = new StringBuilder();
 
 			while ((output = br.readLine()) != null) {
 				sb.append(output);
+			}*/
+			
+			if (clientResponse.getStatusLine().getStatusCode() == 200) {
+				br = new BufferedReader(new InputStreamReader((clientResponse.getEntity().getContent())));
+				String output = "";
+				StringBuilder jsonStr = new StringBuilder();
+				
+				while ((output = br.readLine()) != null) {
+					jsonStr.append(output);
+				}
+				
+				response.put(RESTFulConfiguration.MESSAGE, jsonStr.toString());
 			}
+			
+			response.put(RESTFulConfiguration.STATUS, clientResponse.getStatusLine().getStatusCode());
 
-			response.put(RESTFulConfiguration.STATUS, conn.getResponseCode());
-			response.put(RESTFulConfiguration.MESSAGE, sb.toString());
-
-			conn.disconnect();
-
-		} catch (MalformedURLException e) {
-//			e.printStackTrace();
-		} catch (IOException e) {
-
-//			e.printStackTrace();
-
+		} catch (Exception e) {
+			response.put(RESTFulConfiguration.STATUS, HttpURLConnection.HTTP_FORBIDDEN);
+			_log.error(e);
+		} finally {
+			if(httpClient != null) {
+				try {
+					httpClient.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
+			if(br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
 		}
 
 		return response;
@@ -82,13 +156,63 @@ public class InvokeREST {
 
 		JSONObject response = JSONFactoryUtil.createJSONObject();
 
-		HttpURLConnection conn = null;
+		/*HttpURLConnection conn = null;*/
+		 
+		CloseableHttpClient httpClient = null;
 
 		BufferedReader br = null;
 
 		try {
+			CredentialsProvider provider = new BasicCredentialsProvider();
+			UsernamePasswordCredentials credentials
+			 = new UsernamePasswordCredentials(username, password);
+			provider.setCredentials(AuthScope.ANY, credentials);
+			
+			int timeout = 30;
+			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+			
+			httpClient = HttpClientBuilder.create()
+					.setDefaultRequestConfig(config)
+					.setDefaultCredentialsProvider(provider)
+					.build();
+			
+			HttpPost clientRequest = new HttpPost(pathBase + endPoint);
+ 			Header groupHeader = new BasicHeader("groupId", String.valueOf(groupId));
+ 			clientRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
+ 			clientRequest.addHeader(groupHeader);
+ 			
+ 			if (!properties.isEmpty()) {
+				for (Map.Entry<String, String> m : properties.entrySet()) {
+					clientRequest.setHeader(m.getKey().toString(), m.getValue().toString());
+				}
+			}
+ 			
+			List<NameValuePair> clientParams = new ArrayList<NameValuePair>();
+			
+			for (Map.Entry<String, Object> param : params.entrySet()) {
+				clientParams.add(new BasicNameValuePair(param.getKey(), String.valueOf(param.getValue())));
+			}
+			
+			clientRequest.setEntity(new UrlEncodedFormEntity(clientParams, "UTF-8"));
+			
+			CloseableHttpResponse clientResponse = httpClient.execute(clientRequest);
 
-			URL url = new URL(pathBase + endPoint);
+			if (clientResponse.getStatusLine().getStatusCode() == 200) {
+				br = new BufferedReader(new InputStreamReader((clientResponse.getEntity().getContent())));
+				String output = "";
+				StringBuilder jsonStr = new StringBuilder();
+				
+				while ((output = br.readLine()) != null) {
+					jsonStr.append(output);
+				}
+				
+				response.put(RESTFulConfiguration.MESSAGE, jsonStr.toString());
+			}
+			
+			response.put(RESTFulConfiguration.STATUS, clientResponse.getStatusLine().getStatusCode());
+
+			/*URL url = new URL(pathBase + endPoint);
 
 			conn = (HttpURLConnection) url.openConnection();
 
@@ -135,20 +259,18 @@ public class InvokeREST {
 
 			while ((output = br.readLine()) != null) {
 				sb.append(output);
-			}
+			}*/
 
-			response.put(RESTFulConfiguration.STATUS, conn.getResponseCode());
-			response.put(RESTFulConfiguration.MESSAGE, sb.toString());
+			/*response.put(RESTFulConfiguration.STATUS, conn.getResponseCode());
+			response.put(RESTFulConfiguration.MESSAGE, sb.toString());*/
 
-			conn.disconnect();
+			/*conn.disconnect();*/
 
-		} catch (MalformedURLException e) {
+		} catch (Exception e) {
+			response.put(RESTFulConfiguration.STATUS, HttpURLConnection.HTTP_FORBIDDEN);
 			_log.error("Can't invoke api " + pathBase + endPoint, e);
-		} catch (IOException e) {
-			_log.error("Can't invoke api " + pathBase + endPoint, e);
-
 		} finally {
-			if (conn != null) {
+			/*if (conn != null) {
 				conn.disconnect();
 			}
 
@@ -158,14 +280,111 @@ public class InvokeREST {
 				} catch (IOException e) {
 					_log.error(e);
 				}
+			}*/
+			
+			if(httpClient != null) {
+				try {
+					httpClient.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
 			}
+			
+			if(br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+		}
 
+		return response;
+	}
+	
+	public JSONObject callPostFileAPI(long groupId, String httpMethod, String accept, String pathBase, String endPoint,
+			String username, String password, HashMap<String, String> properties, File file,
+			ServiceContext serviceContext) {
+		JSONObject response = JSONFactoryUtil.createJSONObject();
+
+		CloseableHttpClient httpClient = null;
+
+		BufferedReader br = null;
+
+		try {
+			CredentialsProvider provider = new BasicCredentialsProvider();
+			UsernamePasswordCredentials credentials
+			 = new UsernamePasswordCredentials(username, password);
+			provider.setCredentials(AuthScope.ANY, credentials);
+			
+			int timeout = 30;
+			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+			
+			httpClient = HttpClientBuilder.create()
+					.setDefaultRequestConfig(config)
+					.setDefaultCredentialsProvider(provider)
+					.build();
+			
+			HttpPost clientRequest = new HttpPost(pathBase + endPoint);
+ 			Header groupHeader = new BasicHeader("groupId", String.valueOf(groupId));
+ 			clientRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
+ 			clientRequest.addHeader(groupHeader);
+ 			
+ 			if (!properties.isEmpty()) {
+				for (Map.Entry<String, String> m : properties.entrySet()) {
+					clientRequest.setHeader(m.getKey().toString(), m.getValue().toString());
+				}
+			}
+ 			
+ 			MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+			builder.addBinaryBody("file", file);
+
+			HttpEntity multipart = builder.build();
+			clientRequest.setEntity(multipart);
+			
+			CloseableHttpResponse clientResponse = httpClient.execute(clientRequest);
+
+			if (clientResponse.getStatusLine().getStatusCode() == 200) {
+				br = new BufferedReader(new InputStreamReader((clientResponse.getEntity().getContent())));
+				String output = "";
+				StringBuilder jsonStr = new StringBuilder();
+				
+				while ((output = br.readLine()) != null) {
+					jsonStr.append(output);
+				}
+				
+				response.put(RESTFulConfiguration.MESSAGE, jsonStr.toString());
+			}
+			
+			response.put(RESTFulConfiguration.STATUS, clientResponse.getStatusLine().getStatusCode());
+
+		} catch (Exception e) {
+			response.put(RESTFulConfiguration.STATUS, HttpURLConnection.HTTP_FORBIDDEN);
+			_log.error("Can't invoke api " + pathBase + endPoint, e);
+		} finally {
+			
+			if(httpClient != null) {
+				try {
+					httpClient.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
+			if(br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
 		}
 
 		return response;
 	}
 
-	public JSONObject callPostFileAPI(long groupId, String httpMethod, String accept, String pathBase, String endPoint,
+	/*public JSONObject callPostFileAPI(long groupId, String httpMethod, String accept, String pathBase, String endPoint,
 			String username, String password, HashMap<String, String> properties, File file,
 			ServiceContext serviceContext) {
 
@@ -180,7 +399,6 @@ public class InvokeREST {
 			String requestURL = pathBase + endPoint;
 
 			MultipartUtility multipart = new MultipartUtility(requestURL, "UTF-8", groupId, authStringEnc);
-			// TODO; check logic here, if ref fileId in SERVER equal CLIENT
 
 			multipart.addFilePart("file", file);
 
@@ -208,7 +426,7 @@ public class InvokeREST {
 		}
 
 		return response;
-	}
+	}*/
 
-	private Log _log = LogFactoryUtil.getLog(InvokeREST.class.getName());
+	private static final Log _log = LogFactoryUtil.getLog(InvokeREST.class.getName());
 }

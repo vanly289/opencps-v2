@@ -170,7 +170,6 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 		document.addNumberSortable(DossierTerm.FOLDER_ID, object.getFolderId());
 		document.addNumberSortable(DossierTerm.DOSSIER_ACTION_ID, object.getDossierActionId());
 		document.addNumberSortable(DossierTerm.VIA_POSTAL, object.getViaPostal());
-		document.addNumberSortable(DossierTerm.COUNTER, object.getCounter());
 
 		int yearDossier = 0;
 
@@ -434,13 +433,13 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 		//LamTV: Indexer from dossierRequest to Dossier
 		DossierRequestUD dRegUD = DossierRequestUDLocalServiceUtil.getDossierRequestByDossierId(dossierId);
 		if (dRegUD != null) {
-			_log.info("statusReg: "+dRegUD.getStatusReg());
+//			_log.info("statusReg: "+dRegUD.getStatusReg());
 			document.addNumberSortable(DossierTerm.STATUS_REG, dRegUD.getStatusReg());
 		} else {
 			document.addNumberSortable(DossierTerm.STATUS_REG, 4);
 		}
 
-		_log.info("object.getLockState(): "+object.getLockState());
+//		_log.info("object.getLockState(): "+object.getLockState());
 		if (Validator.isNotNull(object.getLockState())) {
 			document.addTextSortable(DossierTerm.LOCK_STATE, object.getLockState());
 		} else {

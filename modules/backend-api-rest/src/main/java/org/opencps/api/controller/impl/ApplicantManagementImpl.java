@@ -165,7 +165,10 @@ public class ApplicantManagementImpl implements ApplicantManagement {
 					serviceContext);
 
 			results.setTotal(jsonData.getInt("total"));
-			results.getData().addAll(ApplicantUtils.mappingToApplicantResults((List<Document>) jsonData.get("data")));
+			
+			if(jsonData.get("data") != null) {
+				results.getData().addAll(ApplicantUtils.mappingToApplicantResults((List<Document>) jsonData.get("data")));
+			}
 
 			return Response.status(200).entity(results).build();
 

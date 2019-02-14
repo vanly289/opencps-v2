@@ -24,26 +24,36 @@ import com.liferay.portal.kernel.util.Validator;
 public class DossierSyncListener extends BaseModelListener<DossierSync> {
 	@Override
 	public void onAfterCreate(DossierSync model) throws ModelListenerException {
-		List<ServerConfig> lstServers = _serverConfigLocalService.getServerConfigs(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		
-		for (ServerConfig sc : lstServers) {
-			String configs = sc.getConfigs();
-			if (Validator.isNotNull(configs)) {
-				try {
-					JSONObject configObj = JSONFactoryUtil.createJSONObject(configs);
-					if (configObj.has(SyncServerTerm.SERVER_TYPE) 
-							&& configObj.getString(SyncServerTerm.SERVER_TYPE).equals(SyncServerTerm.SOAP_SYNC_SERVER_TYPE)) {
-						if (model.getMethod() == 0) {
-							
-							Dossier dossier = DossierLocalServiceUtil.getDossier(model.getDossierId());
-							
-							if(dossier.getOnline()) {
-								_thirdPartySyncService.updateThirdPartyDossierSync(model.getGroupId(), model.getUserId(), model.getDossierId(), model.getDossierReferenceUid(), model.getCreateDossier(), model.getMethod(), model.getClassPK(), model.getFileReferenceUid(), sc.getServerNo(), model.getDossierSyncId());
+		if (model.getMethod() == 0) {
+			
+			Dossier dossier = DossierLocalServiceUtil.fetchDossier(model.getDossierId());
+			
+			if(dossier != null && dossier.getOnline()) {
+				List<ServerConfig> lstServers = _serverConfigLocalService.getServerConfigs(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				
+				for (ServerConfig sc : lstServers) {
+					
+					String configs = sc.getConfigs();
+					
+					if (Validator.isNotNull(configs)) {
+						
+						try {
+							JSONObject configObj = JSONFactoryUtil.createJSONObject(configs);
+							if (configObj.has(SyncServerTerm.SERVER_TYPE) 
+									&& configObj.getString(SyncServerTerm.SERVER_TYPE).equals(SyncServerTerm.SOAP_SYNC_SERVER_TYPE)) {
+	//							if (model.getMethod() == 0) {
+									
+	//								Dossier dossier = DossierLocalServiceUtil.getDossier(model.getDossierId());
+									
+//									if(dossier.getOnline()) {
+										_thirdPartySyncService.updateThirdPartyDossierSync(model.getGroupId(), model.getUserId(), model.getDossierId(), model.getDossierReferenceUid(), model.getCreateDossier(), model.getMethod(), model.getClassPK(), model.getFileReferenceUid(), sc.getServerNo(), model.getDossierSyncId());
+//									}
+	//							}
 							}
 						}
+						catch (Exception e) {
+						}
 					}
-				}
-				catch (Exception e) {
 				}
 			}
 		}

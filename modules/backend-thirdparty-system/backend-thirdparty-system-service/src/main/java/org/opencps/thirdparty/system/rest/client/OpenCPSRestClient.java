@@ -3,10 +3,10 @@ package org.opencps.thirdparty.system.rest.client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -15,7 +15,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueDetailModel;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueInputModel;
 
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -44,10 +43,20 @@ public class OpenCPSRestClient {
 
 	public MessageQueueDetailModel postMessageQueue(MessageQueueInputModel model) {
 		MessageQueueDetailModel result = null;
+		
+		CloseableHttpClient httpClient = null;
+		BufferedReader br = null;
+		
+		_log.info("===postMessageQueue===" + model.getMessageId());
 
 		try {
 
-			CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+			int timeout = 30;
+			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+
+			httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+//			CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 			List<NameValuePair> params = OpenCPSConverter.convertHttpParams(model);
 
 			HttpPost postRequest = new HttpPost(baseUrl + MESSAGE_QUEUE_BASE_PATH);
@@ -58,33 +67,41 @@ public class OpenCPSRestClient {
 //			System.out.println("Params: " + params.toString());
 			CloseableHttpResponse httpresponse = httpClient.execute(postRequest);
 			
-			if (httpresponse.getStatusLine().getStatusCode() >= 401) {
-				return result;
+			_log.info("===postMessageQueue===" + model.getMessageId() + "=" + httpresponse.getStatusLine().getStatusCode());
+			
+			if (httpresponse.getStatusLine().getStatusCode() == 200) {
+				br = new BufferedReader(new InputStreamReader((httpresponse.getEntity().getContent())));
+				String output = "";
+
+				StringBuilder jsonString = new StringBuilder();
+
+				while ((output = br.readLine()) != null) {
+					jsonString.append(output);
+				}
+
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(jsonString.toString());
+
+				result = OpenCPSConverter.convertMessageQueueDetail(jsonObj);
 			}
-
-			BufferedReader br = new BufferedReader(new InputStreamReader((httpresponse.getEntity().getContent())));
-			String output = "";
-
-			StringBuilder jsonString = new StringBuilder();
-
-			while ((output = br.readLine()) != null) {
-				jsonString.append(output);
+		} catch (Exception e) {
+			_log.error(e);
+		} finally {
+			
+			if(httpClient != null) {
+				try {
+					httpClient.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
 			}
-
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(jsonString.toString());
-
-			result = OpenCPSConverter.convertMessageQueueDetail(jsonObj);
-
-		} catch (MalformedURLException e) {
-
-			_log.error(e);
-
-		} catch (IOException e) {
-
-			_log.error(e);
-
-		} catch (JSONException e) {
-			_log.error(e);
+			
+			if(br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
 		}
 		
 		return result;

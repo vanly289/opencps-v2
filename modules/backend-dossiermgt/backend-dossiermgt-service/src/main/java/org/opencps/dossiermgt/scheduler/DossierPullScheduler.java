@@ -135,7 +135,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 		} catch (Exception e) {
 
-			e.printStackTrace();
+			_log.error(e);
 
 		}
 	}
@@ -484,7 +484,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			_log.error(e);
 		}
 	}
 
@@ -596,10 +596,10 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 				} catch (MalformedURLException e) {
 
-					e.printStackTrace();
+					_log.error(e);
 				} catch (IOException e) {
 
-					e.printStackTrace();
+					_log.error(e);
 
 				}
 
@@ -676,10 +676,10 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 				} catch (MalformedURLException e) {
 
-					e.printStackTrace();
+					_log.error(e);
 				} catch (IOException e) {
 
-					e.printStackTrace();
+					_log.error(e);
 
 				}
 
@@ -761,7 +761,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			_log.error(e);
 		}
 	}
 
@@ -927,10 +927,10 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 				} catch (MalformedURLException e) {
 
-					e.printStackTrace();
+					_log.error(e);
 				} catch (IOException e) {
 
-					e.printStackTrace();
+					_log.error(e);
 
 				}
 			}
@@ -1107,7 +1107,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 	@Modified
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(),
-				45, TimeUnit.SECOND));
+				1, TimeUnit.MINUTE));
 		_schedulerEngineHelper.register(this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 

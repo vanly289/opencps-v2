@@ -147,7 +147,6 @@ public class DossierFileActionsImpl implements DossierFileActions {
 
 	@Override
 	public void copyFile(String orgFileName, String targetFileName) throws IOException {
-		// TODO Auto-generated method stub
 		InputStream inStream = null;
 		OutputStream outStream = null;
 

@@ -21,13 +21,16 @@ public class ApplicantListenerUtils {
 			
 			Notificationtemplate notificationtemplate = NotificationtemplateLocalServiceUtil
 					.fetchByF_NotificationtemplateByType(groupId, notiType);
-			String body = getEmailBody(notificationtemplate, object);
-			String subject = notificationtemplate.getEmailSubject();
 			
-			payload.put("toName", object.get("toName"));
-			payload.put("toAddress", object.get("toAddress"));
-			payload.put("subject", subject);
-			payload.put("body", body);
+			if(notificationtemplate != null) {
+				String body = getEmailBody(notificationtemplate, object);
+				String subject = notificationtemplate.getEmailSubject();
+				
+				payload.put("toName", object.get("toName"));
+				payload.put("toAddress", object.get("toAddress"));
+				payload.put("subject", subject);
+				payload.put("body", body);
+			}
 		} catch (Exception e) {
 			_log.error(e);
 		}

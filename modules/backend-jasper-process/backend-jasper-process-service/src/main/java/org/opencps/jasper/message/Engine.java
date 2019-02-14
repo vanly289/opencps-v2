@@ -4,7 +4,6 @@ import java.io.File;
 
 import org.opencps.jasper.utils.JRReportUtil;
 
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -20,7 +19,6 @@ public class Engine implements MessageListener {
 
 	@Override
 	public void receive(Message message) throws MessageListenerException {
-		// TODO Auto-generated method stub
 		try {
 			_doReceiveJasperRequest(message);
 		} catch (Exception e) {
@@ -29,7 +27,6 @@ public class Engine implements MessageListener {
 	}
 
 	private void _doReceiveJasperRequest(Message message) {
-		// TODO Auto-generated method stub
 		_log.info("Jasper processing .............................");
 		JSONObject msgData = (JSONObject) message.get("msgToEngine");
 
@@ -45,12 +42,11 @@ public class Engine implements MessageListener {
 
 			if (className.equals("org.opencps.dossiermgt.model.DossierFile")) {
 				JSONObject jsonData = JSONFactoryUtil.createJSONObject();
-				try {
+				/*try {*/
 					jsonData = JSONFactoryUtil.createJSONObject(msgData.getString("formData"));
-				} catch (JSONException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				/*} catch (JSONException e1) {
+					_log.error(e1);
+				}*/
 
 				String fileExport = JRReportUtil.createReportFile(msgData.getString("jrxmlTemplate"),
 						jsonData.toJSONString(), null, file.getCanonicalPath());
@@ -71,12 +67,12 @@ public class Engine implements MessageListener {
 			}
 			else if (className.equals("org.opencps.dossiermgt.Deliverable")) {
 				JSONObject jsonData = JSONFactoryUtil.createJSONObject();
-				try {
+				/*try {*/
 					jsonData = JSONFactoryUtil.createJSONObject(msgData.getString("formData"));
-				} catch (JSONException e1) {
+				/*} catch (JSONException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				}*/
 
 				String fileExport = JRReportUtil.createReportFile(msgData.getString("jrxmlTemplate"),
 						jsonData.toJSONString(), null, file.getCanonicalPath());
@@ -96,8 +92,7 @@ public class Engine implements MessageListener {
 				}								
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			_log.error(e);
 		}
 
 	}

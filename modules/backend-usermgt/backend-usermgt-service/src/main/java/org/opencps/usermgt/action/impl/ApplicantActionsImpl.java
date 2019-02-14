@@ -65,7 +65,9 @@ public class ApplicantActionsImpl implements ApplicantActions {
 
 			hits = ApplicantLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
 
-			result.put("data", hits != null ? hits.toList() : "");
+			if(hits != null) {
+				result.put("data", hits.toList());
+			}
 
 			long total = ApplicantLocalServiceUtil.countLucene(params, searchContext);
 

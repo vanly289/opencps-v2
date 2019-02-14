@@ -3,7 +3,6 @@ package org.opencps.synchronization.rest.client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -13,6 +12,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -25,6 +25,8 @@ import org.opencps.synchronization.rest.model.DictItemModel;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 public class DictDataRestClient {
 	private String username;
@@ -73,15 +75,24 @@ public class DictDataRestClient {
 	public DictCollectionModel getCollectionDetail(String collectionCode) {
 		DictCollectionModel result = null;
 		
+		CloseableHttpClient httpClient = null;
+
+		BufferedReader br = null;
+		
 		try {
 			CredentialsProvider provider = new BasicCredentialsProvider();
 			UsernamePasswordCredentials credentials
 			 = new UsernamePasswordCredentials(username, password);
 			provider.setCredentials(AuthScope.ANY, credentials);
 			  
-			CloseableHttpClient httpClient = HttpClientBuilder.create()
-			  .setDefaultCredentialsProvider(provider)
-			  .build();
+			int timeout = 15;
+			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+
+			httpClient = HttpClientBuilder.create()
+					.setDefaultRequestConfig(config)
+					.setDefaultCredentialsProvider(provider)
+					.build();
 			HttpGet getRequest = new HttpGet(baseUrl + DICT_COLLLECTIONS_BASE_PATH + "/" + URLEncoder.encode(collectionCode, StandardCharsets.UTF_8.toString()));
  			Header groupHeader = new BasicHeader("groupId", String.valueOf(groupId));
  			getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
@@ -90,7 +101,7 @@ public class DictDataRestClient {
 			HttpResponse getqueryresponse = httpClient.execute(getRequest);
  			 			
 			if (getqueryresponse.getStatusLine().getStatusCode() == SyncServerTerm.STATUS_OK) {
-				BufferedReader br = new BufferedReader(new InputStreamReader((getqueryresponse.getEntity().getContent())));
+				br = new BufferedReader(new InputStreamReader((getqueryresponse.getEntity().getContent())));
 				String output = "";
 				StringBuilder jsonStr = new StringBuilder();
 				
@@ -99,23 +110,29 @@ public class DictDataRestClient {
 				}
 
 				JSONObject obj = JSONFactoryUtil.createJSONObject(jsonStr.toString());
-
-				httpClient.close();	
 				
 				result = DictCollectionModel.fromJSONObject(obj);
 			}
-		} catch (MalformedURLException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
+		} catch (Exception e) {
+			_log.error(e);
+		} finally {
+			
+			if(httpClient != null) {
+				try {
+					httpClient.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
+			if(br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}			
 		
 		return result;
 	}
@@ -123,15 +140,23 @@ public class DictDataRestClient {
 	public DictItemModel getItemDetail(String code, String itemCode) {
 		DictItemModel result = null;
 		
+		CloseableHttpClient httpClient = null;
+		BufferedReader br = null;
+		
 		try {
 			CredentialsProvider provider = new BasicCredentialsProvider();
 			UsernamePasswordCredentials credentials
 			 = new UsernamePasswordCredentials(username, password);
 			provider.setCredentials(AuthScope.ANY, credentials);
 			  
-			CloseableHttpClient httpClient = HttpClientBuilder.create()
-			  .setDefaultCredentialsProvider(provider)
-			  .build();
+			int timeout = 15;
+			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+
+			httpClient = HttpClientBuilder.create()
+					.setDefaultRequestConfig(config)
+					.setDefaultCredentialsProvider(provider)
+					.build();
 			HttpGet getRequest = new HttpGet(baseUrl + DICT_COLLLECTIONS_BASE_PATH + "/" + URLEncoder.encode(code, StandardCharsets.UTF_8.toString()) + "/dictitems/" + URLEncoder.encode(itemCode, StandardCharsets.UTF_8.toString()));
  			
 			Header groupHeader = new BasicHeader("groupId", String.valueOf(groupId));
@@ -141,7 +166,7 @@ public class DictDataRestClient {
 			HttpResponse getqueryresponse = httpClient.execute(getRequest);
 						
 			if (getqueryresponse.getStatusLine().getStatusCode() == SyncServerTerm.STATUS_OK) {
-				BufferedReader br = new BufferedReader(new InputStreamReader((getqueryresponse.getEntity().getContent())));
+				br = new BufferedReader(new InputStreamReader((getqueryresponse.getEntity().getContent())));
 				String output = "";
 				StringBuilder jsonStr = new StringBuilder();
 				
@@ -151,22 +176,28 @@ public class DictDataRestClient {
 				
 				JSONObject obj = JSONFactoryUtil.createJSONObject(jsonStr.toString());
 
-				httpClient.close();	
-				
 				result = DictItemModel.fromJSONObject(obj);
 			}
-		} catch (MalformedURLException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
+		} catch (Exception e) {
+			_log.error(e);
+		} finally {
+			
+			if(httpClient != null) {
+				try {
+					httpClient.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
+			if(br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}			
 		
 		return result;
 	}	
@@ -174,15 +205,23 @@ public class DictDataRestClient {
 	public DictGroupModel getGroupDetail(String collectionCode, String groupCode) {
 		DictGroupModel result = null;
 		
+		CloseableHttpClient httpClient = null;
+
+		BufferedReader br = null;
 		try {
 			CredentialsProvider provider = new BasicCredentialsProvider();
 			UsernamePasswordCredentials credentials
 			 = new UsernamePasswordCredentials(username, password);
 			provider.setCredentials(AuthScope.ANY, credentials);
 			  
-			CloseableHttpClient httpClient = HttpClientBuilder.create()
-			  .setDefaultCredentialsProvider(provider)
-			  .build();
+			int timeout = 15;
+			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+
+			httpClient = HttpClientBuilder.create()
+					.setDefaultRequestConfig(config)
+					.setDefaultCredentialsProvider(provider)
+					.build();
 			HttpGet getRequest = new HttpGet(baseUrl + DICT_COLLLECTIONS_BASE_PATH + "/" + URLEncoder.encode(collectionCode, StandardCharsets.UTF_8.toString()) + "/dictgroups/" + URLEncoder.encode(groupCode, StandardCharsets.UTF_8.toString()));
  			Header groupHeader = new BasicHeader("groupId", String.valueOf(groupId));
  			getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
@@ -191,7 +230,7 @@ public class DictDataRestClient {
 			HttpResponse getqueryresponse = httpClient.execute(getRequest);
  			 			
 			if (getqueryresponse.getStatusLine().getStatusCode() == SyncServerTerm.STATUS_OK) {
-				BufferedReader br = new BufferedReader(new InputStreamReader((getqueryresponse.getEntity().getContent())));
+				br = new BufferedReader(new InputStreamReader((getqueryresponse.getEntity().getContent())));
 				String output = "";
 				StringBuilder jsonStr = new StringBuilder();
 				
@@ -201,23 +240,31 @@ public class DictDataRestClient {
 
 				JSONObject obj = JSONFactoryUtil.createJSONObject(jsonStr.toString());
 
-				httpClient.close();	
-				
 				result = DictGroupModel.fromJSONObject(obj);
 			}
-		} catch (MalformedURLException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
+		} catch (Exception e) {
+			_log.error(e);
+		} finally {
+			
+			if(httpClient != null) {
+				try {
+					httpClient.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
+			if(br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}			
 		
 		return result;
 	}	
+	
+	private static final Log _log = LogFactoryUtil.getLog(DictDataRestClient.class);
 }

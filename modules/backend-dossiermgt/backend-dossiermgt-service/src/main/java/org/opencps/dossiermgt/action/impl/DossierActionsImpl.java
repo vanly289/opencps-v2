@@ -170,45 +170,6 @@ public class DossierActionsImpl implements DossierActions {
 
 				return result;
 			}
-			// if (Validator.isNotNull(statusCode) &&
-			// statusCode.indexOf(StringPool.COMMA) != -1) {
-			// hits = DossierLocalServiceUtil.searchLucene(params, sorts, start,
-			// end, searchContext);
-			//
-			// result.put("data", hits.toList());
-			//
-			// long total = DossierLocalServiceUtil.countLucene(params,
-			// searchContext);
-			//
-			// result.put("total", total);
-			//
-			// return result;
-			// }
-
-			// Get list dossierActionId
-			// List<DossierActionUser> dauList =
-			// DossierActionUserLocalServiceUtil.getListUserByUserId(userId);
-			// long dossierActionId = 0;
-			// StringBuilder sb = null;
-			// if (dauList != null && dauList.size() > 0) {
-			// sb = new StringBuilder();
-			// int length = dauList.size();
-			// DossierActionUser dau = null;
-			// for (int i = 0; i < length; i++) {
-			// dau = dauList.get(i);
-			// dossierActionId = dau.getDossierActionId();
-			// // StringBuilder sb = new StringBuilder();
-			// if (dossierActionId > 0) {
-			//
-			// if (i == 0) {
-			// sb.append(dossierActionId);
-			// } else {
-			// sb.append(StringPool.COMMA);
-			// sb.append(dossierActionId);
-			// }
-			// }
-			// }
-			// }
 
 			// Get collection with collection Code
 			DictCollection dictCollection = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode("DOSSIER_STATUS",
@@ -263,19 +224,7 @@ public class DossierActionsImpl implements DossierActions {
 
 				List<DictItem> dictItems = DictItemLocalServiceUtil
 						.findByF_dictCollectionId(dictCollection.getDictCollectionId());
-
-				// TODO:
-				// if (dictItems != null && dictItems.size() > 0) {
-				// StringBuilder sbNormal = new StringBuilder();
-				// StringBuilder sbSpecial = new StringBuilder();
-				// List<Document> allDocsList = new ArrayList<Document>();
-				// for (DictItem dictItem : dictItems) {
-				// boolean flagSpecial = checkSpecialStatus(dictItem);
-				// if (flagSpecial) {
-				//
-				// }
-				// }
-				// }
+			
 				// Get list dossier follow each status
 				if (dictItems != null && dictItems.size() > 0) {
 					List<Document> allDocsList = new ArrayList<Document>();

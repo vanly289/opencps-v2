@@ -37,4 +37,18 @@
 				dossierTemplateNo IN ('BGTVT0600039','BGTVT0600040')
 		]]>
 	</sql>
+	
+	<sql id="com.fds.vr.business.service.persistence.ILCertificateFinder.countByServiceCode">
+		<![CDATA[
+			SELECT
+				count(*) AS COUNT_VALUE
+			FROM 
+				il_certificate
+			WHERE 
+				(govAgencyCode = ?) 
+				AND (LOWER(serviceCode) IN ([$SERVICE_CODE$])) 
+				AND (signDate >= ?) 
+				AND (signDate <= ?) 
+		]]>
+	</sql>
 </custom-sql>

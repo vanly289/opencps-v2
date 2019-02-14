@@ -4,11 +4,13 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -27,7 +29,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import org.opencps.datamgt.model.DictCollection;
 import org.opencps.datamgt.model.DictItem;
+import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
@@ -54,6 +58,7 @@ import org.opencps.thirdparty.system.service.ILViPhamLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ViewGiayPhepVanTaiLocalServiceUtil;
 import org.opencps.thirdparty.system.service.ViewPhuongTienLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import com.backend.migrate.vr.model.PhuongTien;
 import com.backend.migrate.vr.service.PhuongTienLocalServiceUtil;
@@ -71,6 +76,10 @@ import com.fds.vr.business.service.ILCertificateLocalServiceUtil;
 import com.fds.vr.business.service.ILVehicleCustomsBorderGuardLocalServiceUtil;
 import com.fds.vr.business.service.ILVehicleLocalServiceUtil;
 import com.fds.vr.business.service.VRReportLocalServiceUtil;
+import com.fds.vr.context.provider.CompanyContextProvider;
+import com.fds.vr.context.provider.LocaleContextProvider;
+import com.fds.vr.context.provider.ServiceContextProvider;
+import com.fds.vr.context.provider.UserContextProvider;
 import com.fds.vr.ilcertificate.model.ILCBGuardModel;
 import com.fds.vr.ilcertificate.model.ILCBGuardResultModel;
 import com.fds.vr.ilcertificate.model.ILCertificateModel;
@@ -78,6 +87,7 @@ import com.fds.vr.ilcertificate.model.ILCertificateResultModel;
 import com.fds.vr.ilcertificate.model.ILCertificateSearchModel;
 import com.fds.vr.ilcertificate.model.ILVehicleModel;
 import com.fds.vr.util.ILCertificateUtils;
+import com.fds.vr.util.StatisticsUtils;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -92,8 +102,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -112,8 +124,28 @@ import com.liferay.portal.kernel.util.Validator;
 public class VRRestApplication extends Application {
 
 	public Set<Object> getSingletons() {
-		return Collections.<Object>singleton(this);
+		Set<Object> singletons = new HashSet<Object>();
+		singletons.add(this);
+		
+		singletons.add(_serviceContextProvider);
+		singletons.add(_companyContextProvider);
+		singletons.add(_localeContextProvider);
+		singletons.add(_userContextProvider);
+		
+		return singletons;
 	}
+	
+	@Reference
+	private CompanyContextProvider _companyContextProvider;
+
+	@Reference
+	private LocaleContextProvider _localeContextProvider;
+
+	@Reference
+	private UserContextProvider _userContextProvider;
+
+	@Reference
+	private ServiceContextProvider _serviceContextProvider;
 
 	public static final String PRE_FIX_CERT = "DKLR_CERT@";
 	public static final String PRE_FIX_CERT_CURR = "DKLR_CERT_CURR@";
@@ -1017,7 +1049,6 @@ public class VRRestApplication extends Application {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response validVehicleLicence(@Context HttpHeaders header, @FormParam("licenceNo") String licenceNo,
 			@FormParam("licenceDate") String licenceDate) {
-		long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
 		try {
 			ILCertificate ilCertificate = ILCertificateLocalServiceUtil.fetchByLicenceNo(licenceNo);
@@ -1066,7 +1097,6 @@ public class VRRestApplication extends Application {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response checkVehicle(@Context HttpHeaders header,
 			@PathParam("registrationNumber") String registrationNumber) {
-		long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
 		JSONObject obj = JSONFactoryUtil.createJSONObject();
 		PhuongTien phuongTien = PhuongTienLocalServiceUtil.findByBKS(registrationNumber);
 		ILVehicle vehicle = ILVehicleLocalServiceUtil.getByRegistrationNumber(registrationNumber);
@@ -1827,6 +1857,155 @@ public class VRRestApplication extends Application {
 
 		return Response.status(200).entity(result).build();
 	}
+	
+	@GET
+	@Path("/thongKeTheoNam")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response thongKeTheoNam(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@QueryParam("agency") String govAgencyCodes, @QueryParam("from") String from, @QueryParam("to") String to, @QueryParam("govAgencyName") String govAgencyName) {
+				
+		
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		
+		try {
+			
+			String report = StatisticsUtils.thongKeTheoNam(company.getCompanyId(), groupId, govAgencyCodes, from, to, govAgencyName);
+
+			DictCollection collection = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode("dm_bao_cao", groupId);
+			
+			DictItem formReportItem = DictItemLocalServiceUtil.fetchByF_dictItemCode(
+					"bc_thong_ke_theo_nam", collection.getDictCollectionId(), groupId);
+			
+			String formData = report;
+			
+			Message message = new Message();
+
+			message.put("formReport", formReportItem.getItemDescription());
+
+			message.put("formData", formData);
+
+//			message.setResponseId("");
+			message.setResponseDestinationName("jasper/engine/preview/callback");
+
+			String previewResponse = (String) MessageBusUtil
+					.sendSynchronousMessage("jasper/engine/preview/destination", message, 10000);
+
+			File file = new File(previewResponse);
+
+			ResponseBuilder responseBuilder = Response.ok((Object) file);
+
+			responseBuilder.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+			responseBuilder.header("Content-Type", "application/pdf");
+
+			return responseBuilder.build();
+
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+	}
+	
+	@GET
+	@Path("/baoCaoTinhTrangXuLyHoSo")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response baoCaoTinhTrangXuLyHoSo(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@QueryParam("agency") String govAgencyCodes, @QueryParam("from") String from, 
+			@QueryParam("to") String to, @QueryParam("govAgencyName") String govAgencyName, @QueryParam("status") String status) {
+				
+		
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		
+		try {
+			
+			String report = StatisticsUtils.baoCaoTinhTrangXuLyHoSo(company.getCompanyId(), 
+					groupId, govAgencyCodes, status, from, to, govAgencyName);
+
+			DictCollection collection = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode("dm_bao_cao", groupId);
+			
+			DictItem formReportItem = DictItemLocalServiceUtil.fetchByF_dictItemCode(
+					"bc_tinh_trang_xu_ly_ho_so", collection.getDictCollectionId(), groupId);
+			
+			String formData = report;
+			
+			Message message = new Message();
+
+			message.put("formReport", formReportItem.getItemDescription());
+
+			message.put("formData", formData);
+
+//			message.setResponseId("");
+			message.setResponseDestinationName("jasper/engine/preview/callback");
+
+			String previewResponse = (String) MessageBusUtil
+					.sendSynchronousMessage("jasper/engine/preview/destination", message, 10000);
+
+			File file = new File(previewResponse);
+
+			ResponseBuilder responseBuilder = Response.ok((Object) file);
+
+			responseBuilder.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+			responseBuilder.header("Content-Type", "application/pdf");
+
+			return responseBuilder.build();	
+
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+	}
+	
+	@GET
+	@Path("/baoCaoCapPhep")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response baoCaoCapPhep(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@QueryParam("agency") String govAgencyCodes, @QueryParam("from") String from, 
+			@QueryParam("to") String to, @QueryParam("govAgencyName") String govAgencyName, @QueryParam("nhomVanTai") String nhomVanTai, 
+			@QueryParam("loaiGiayPhep") String loaiGiayPhep) {
+				
+		
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		
+		try {
+			String report = StatisticsUtils.baoCaoCapPhep(groupId, govAgencyCodes, nhomVanTai, loaiGiayPhep, from, to, govAgencyName);
+			
+			DictCollection collection = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode("dm_bao_cao", groupId);
+			
+			DictItem formReportItem = DictItemLocalServiceUtil.fetchByF_dictItemCode(
+					"bc_bao_cao_cap_phep", collection.getDictCollectionId(), groupId);
+			
+			String formData = report;
+			
+			Message message = new Message();
+
+			message.put("formReport", formReportItem.getItemDescription());
+
+			message.put("formData", formData);
+
+//			message.setResponseId("");
+			message.setResponseDestinationName("jasper/engine/preview/callback");
+
+			String previewResponse = (String) MessageBusUtil
+					.sendSynchronousMessage("jasper/engine/preview/destination", message, 10000);
+
+			File file = new File(previewResponse);
+
+			ResponseBuilder responseBuilder = Response.ok((Object) file);
+
+			responseBuilder.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+			responseBuilder.header("Content-Type", "application/pdf");
+
+			return responseBuilder.build();
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+	}
 
 	@GET
 	@Produces("text/plain")
@@ -1834,6 +2013,5 @@ public class VRRestApplication extends Application {
 		return "It works!";
 	}
 
-	Log _log = LogFactoryUtil.getLog(VRRestApplication.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(VRRestApplication.class);
 }

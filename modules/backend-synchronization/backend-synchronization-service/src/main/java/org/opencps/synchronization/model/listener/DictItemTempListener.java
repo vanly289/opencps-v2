@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 @Component(immediate = true, service = ModelListener.class)
@@ -25,7 +24,7 @@ public class DictItemTempListener extends BaseModelListener<DictItemTemp> {
 	public void onAfterCreate(DictItemTemp model) throws ModelListenerException {
 		super.onAfterCreate(model);
 
-		_log.info("onAfterCreate DictItemTemp" + model);
+//		_log.info("onAfterCreate DictItemTemp" + model);
 
 	}
 
@@ -33,7 +32,7 @@ public class DictItemTempListener extends BaseModelListener<DictItemTemp> {
 	public void onAfterUpdate(DictItemTemp model) throws ModelListenerException {
 		super.onAfterUpdate(model);
 
-		_log.info("onAfterUpdate DictItemTemp" + model);
+//		_log.info("onAfterUpdate DictItemTemp" + model);
 
 		ServiceContext serviceContext = new ServiceContext();
 		serviceContext.setCompanyId(model.getCompanyId());
@@ -43,7 +42,7 @@ public class DictItemTempListener extends BaseModelListener<DictItemTemp> {
 
 		for (DictItemTemp dictItem : listChilds) {
 
-			_log.info("onAfterUpdate DictItemTemp listChilds" + dictItem.getDictItemId());
+//			_log.info("onAfterUpdate DictItemTemp listChilds" + dictItem.getDictItemId());
 
 			try {
 				dictItem = DictItemTempLocalServiceUtil.updateDictItemTempListener(dictItem.getUserId(), dictItem.getDictItemId(),
@@ -54,15 +53,7 @@ public class DictItemTempListener extends BaseModelListener<DictItemTemp> {
 
 				Indexer<DictItemTemp> indexer = IndexerRegistryUtil.nullSafeGetIndexer(DictItemTemp.class);
 
-				try {
-					indexer.reindex(dictItem);
-				} catch (SearchException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				indexer.reindex(dictItem);
 
 			} catch (Exception e) {
 				_log.error(e);
@@ -74,7 +65,7 @@ public class DictItemTempListener extends BaseModelListener<DictItemTemp> {
 	public void onAfterRemove(DictItemTemp model) throws ModelListenerException {
 		super.onAfterRemove(model);
 
-		_log.info("onAfterRemove DictItemTemp" + model);
+//		_log.info("onAfterRemove DictItemTemp" + model);
 
 		try {
 
@@ -107,7 +98,7 @@ public class DictItemTempListener extends BaseModelListener<DictItemTemp> {
 		super.onBeforeRemove(model);
 
 		long id = model.getDictItemId();
-		_log.info("id" + id);
+//		_log.info("id" + id);
 
 		try {
 			modelBefore = DictItemTempLocalServiceUtil.fetchDictItemTemp(id);
@@ -122,7 +113,7 @@ public class DictItemTempListener extends BaseModelListener<DictItemTemp> {
 		super.onBeforeUpdate(model);
 
 		long id = model.getDictItemId();
-		_log.info("id" + id);
+//		_log.info("id" + id);
 
 		try {
 			modelBefore = DictItemTempLocalServiceUtil.fetchDictItemTemp(id);

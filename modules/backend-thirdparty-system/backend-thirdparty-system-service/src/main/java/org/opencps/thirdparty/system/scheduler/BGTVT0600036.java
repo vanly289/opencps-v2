@@ -16,7 +16,6 @@ import org.opencps.dossiermgt.model.DossierRequestUD;
 import org.opencps.dossiermgt.model.ProcessAction;
 import org.opencps.dossiermgt.model.ProcessOption;
 import org.opencps.dossiermgt.model.ServiceConfig;
-import org.opencps.dossiermgt.model.ServiceInfo;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
@@ -24,7 +23,6 @@ import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
-import org.opencps.dossiermgt.service.ServiceInfoLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 import org.opencps.thirdparty.system.constants.SyncServerTerm;
 import org.opencps.thirdparty.system.messagequeue.model.MessageQueueInputModel;
@@ -38,6 +36,9 @@ import org.opencps.thirdparty.system.util.OutsideSystemConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -58,10 +59,10 @@ public class BGTVT0600036 {
 		String templateNo = StringPool.BLANK;
 		String partNo = StringPool.BLANK;
 
-		ServiceInfo serviceInfo = ServiceInfoLocalServiceUtil.getByCode(dossier.getGroupId(),
-				dossier.getServiceCode());
+//		ServiceInfo serviceInfo = ServiceInfoLocalServiceUtil.getByCode(dossier.getGroupId(),
+//				dossier.getServiceCode());
 		ServiceConfig serviceConfig = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(
-				dossier.getGroupId(), serviceInfo.getServiceCode(), dossier.getGovAgencyCode());
+				dossier.getGroupId(), dossier.getServiceCode(), dossier.getGovAgencyCode());
 
 		ProcessOption processOption = ProcessOptionLocalServiceUtil.getByDTPLNoAndServiceCF(
 				dossier.getGroupId(), dossier.getDossierTemplateNo(),
@@ -89,14 +90,18 @@ public class BGTVT0600036 {
 			}
 		}
 		
+		String returnDossierFiles = processAction.getReturnDossierFiles();
+		String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
+		
+		_log.info("===BGTVT0600036=convertResult=size===" + dossierSync.getDossierSyncId() + "=" + dossierFileList.size() + "=" + returnDossierFiles);
+		
 		for (DossierFile dossierFile : dossierFileList) {
 			templateNo = dossierFile.getFileTemplateNo();
 			partNo = dossierFile.getDossierPartNo();
 
-			String returnDossierFiles = processAction.getReturnDossierFiles();
-			String[] returnDossierFilesArr = StringUtil.split(returnDossierFiles);
-			for (String returnDossierFile : returnDossierFilesArr) {
-				if (templateNo.equals(returnDossierFile)) {
+			
+//			for (String returnDossierFile : returnDossierFilesArr) {
+				if (ArrayUtil.contains(returnDossierFilesArr, templateNo)) {
 					VTOfficialTransportPermit vtOfficialTransportPermit = new VTOfficialTransportPermit();
 
 					AttachedFile attachedFile = new AttachedFile();
@@ -407,9 +412,11 @@ public class BGTVT0600036 {
 //						}
 //					}
 				}
-			}
+//			}
 		}
 
 		return lstResults;
 	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(BGTVT0600036.class);
 }

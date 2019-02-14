@@ -22,7 +22,7 @@ public class SOAPConverter {
 	        Marshaller m = context.createMarshaller();
 
 	        m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+//	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
 	        StringWriter sw = new StringWriter();
 	        m.marshal(request, sw);
@@ -42,7 +42,7 @@ public class SOAPConverter {
 	        Marshaller m = context.createMarshaller();
 
 	        m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+//	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
 	        StringWriter sw = new StringWriter();
 	        m.marshal(envelope, sw);
@@ -62,7 +62,7 @@ public class SOAPConverter {
 	        Marshaller m = context.createMarshaller();
 
 	        m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+//	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
 	        StringWriter sw = new StringWriter();
 	        m.marshal(request, sw);
@@ -82,7 +82,7 @@ public class SOAPConverter {
 	        Marshaller m = context.createMarshaller();
 
 	        m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+//	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
 	        StringWriter sw = new StringWriter();
 	        m.marshal(envelope, sw);

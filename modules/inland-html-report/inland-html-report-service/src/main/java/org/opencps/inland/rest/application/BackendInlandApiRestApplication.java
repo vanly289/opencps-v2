@@ -432,7 +432,7 @@ public class BackendInlandApiRestApplication extends Application {
 							html += "<div style='" + styleCss + "'>";
 							
 							String formTemplate = printTemplate.getFormTemplate();
-							_log.info("==getPrintHtmlByDossier==formTemplate==="+ printTemplate);
+//							_log.info("==getPrintHtmlByDossier==formTemplate==="+ printTemplate);
 							JSONObject formTemplateObj = JSONFactoryUtil.createJSONObject(formTemplate);
 							Iterator<String> keys = formTemplateObj.keys();
 							while (keys.hasNext()) {
