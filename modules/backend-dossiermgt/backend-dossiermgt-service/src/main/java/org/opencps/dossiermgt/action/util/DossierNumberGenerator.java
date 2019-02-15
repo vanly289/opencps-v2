@@ -9,8 +9,6 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.ws.rs.core.Response;
-
 import org.opencps.datamgt.utils.DateTimeUtils;
 import org.opencps.dossiermgt.constants.ConstantsUtils;
 import org.opencps.dossiermgt.constants.DossierTerm;
@@ -39,9 +37,33 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 public class DossierNumberGenerator {
+	
+	public static void main(String[] args) {
+		String codePattern = "\\{(n+|N+)\\}";
+		String dayPattern = "\\{(d{2}|D{2})\\}";
+		String monthPattern = "\\{(m{2}|M{2})\\}";
+		String yearPattern = "\\{(y+|Y+)\\}";
+		String dynamicVariablePattern = "\\{\\$(.*?)\\}";
+		String datetimePattern = "\\{([D|d]{2}[-\\/]{1}[M|m]{2}[-|\\/]{1}[Y|y]{4})\\}";
+		String[] patterns = new String[] { codePattern, dayPattern, monthPattern, yearPattern,
+				dynamicVariablePattern, datetimePattern };
+		
+		String seriNumberPattern = "{$LVVC7 [$$]}/{yy}-{nnnnnn}";
+		
+		for (String pattern : patterns) {
+			Pattern r = Pattern.compile(pattern);
+	
+			Matcher m = r.matcher(seriNumberPattern);
+			
+			System.out.println("==pattern==" + pattern);
+			while (m.find()) {
+				System.out.println(m.group(0));
+				System.out.println(m.group(1));
+			}
+		}
+	}
 
 	public static String generateReferenceUID(long groupId) {
-		// TODO add more logic here for the generate by pattern
 
 		return UUID.randomUUID().toString();
 	}
@@ -60,13 +82,11 @@ public class DossierNumberGenerator {
 			
 			serviceProcessCode = serviceProcess.getProcessNo();
 			
-			_log.info("SERVICECODE____"+serviceProcessCode);
+//			_log.info("SERVICECODE____"+serviceProcessCode);
 			
 		} catch (Exception e) {
-			_log.info("SERVICECODE____ERROR");
-
+			_log.error(e);
 		}
-		
 		
 		String dossierNumber = StringPool.BLANK;
 
@@ -101,8 +121,8 @@ public class DossierNumberGenerator {
 						
 						String number = countByInit(serviceProcessCode, dossierId);
 
-						_log.info("//////////////////////////////////////////////////////////// " + number
-								+ "|processOtionId= " + number);
+//						_log.info("==generateDossierNumber==" + serviceProcessCode
+//								+ "|processOtionId= " + number);
 
 						tmp = tmp.replaceAll(tmp.charAt(0) + StringPool.BLANK, String.valueOf(0));
 
@@ -113,7 +133,7 @@ public class DossierNumberGenerator {
 						seriNumberPattern = seriNumberPattern.replace(m.group(0), number);
 
 					} else if (r.toString().equals(datetimePattern)) {
-						System.out.println(tmp);
+//						System.out.println(tmp);
 
 						seriNumberPattern = seriNumberPattern.replace(m.group(0), "OK");
 
@@ -281,10 +301,8 @@ public class DossierNumberGenerator {
 			//int curYear = cal.get(Calendar.YEAR);
 			
 			DateFormat df = new SimpleDateFormat("yyyy");
-			DateFormat sdf = new SimpleDateFormat("yy");
 			
 			String curYear = df.format(cal.getTime());
-			String shortCurYear = sdf.format(cal.getTime());
 
 			String certConfigId = ConstantsUtils.PRE_FIX_CERT + pattern + StringPool.AT + curYear;
 			
@@ -295,6 +313,12 @@ public class DossierNumberGenerator {
 			_log.info("___certConfigCurrId" + certConfigCurrId);
 
 			Counter counterConfig = CounterLocalServiceUtil.fetchCounter(certConfigId);
+			//TODO: PATCH FOR DOSSIER NO INCREMENT FOR NEW YEAR
+			if (Validator.isNull(counterConfig)) {
+				counterConfig = CounterLocalServiceUtil.createCounter(certConfigId);
+				counterConfig.setCurrentId(1);
+				counterConfig = CounterLocalServiceUtil.updateCounter(counterConfig);
+			}
 
 			String elmCertId = ConstantsUtils.PRE_FIX_CERT_ELM + pattern + StringPool.AT + curYear + StringPool.AT + dossierid;
 
@@ -353,7 +377,6 @@ public class DossierNumberGenerator {
 					
 				}
 
-
 				certNumber = String.format("%07d", _counterNumber); 
 				
 			} else {
@@ -373,7 +396,6 @@ public class DossierNumberGenerator {
 	public static String generatePassword(String pattern, int length) {
 		String password = StringPool.BLANK;
 
-		// TODO add more logic here if that is necessary
 		password = PwdGenerator.getPassword(pattern, length);
 
 		return password;
