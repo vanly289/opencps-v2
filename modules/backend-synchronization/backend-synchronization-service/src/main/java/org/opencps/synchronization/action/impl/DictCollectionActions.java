@@ -701,4 +701,49 @@ public class DictCollectionActions implements DictCollectionTempInterface {
 
 	public Log _log = LogFactoryUtil.getLog(DictCollectionActions.class);
 
+	@Override
+	public String updateBusiessDictItemGroupTemp(long userId, long groupId, long dictItemId, String groupCodes,
+			String collectionCode, ServiceContext serviceContext) throws NoSuchUserException, UnauthenticationException,
+			UnauthorizationException, DuplicateCategoryException {
+		// TODO Auto-generated method stub
+		// Remove all dictItemGroup
+
+		List<String> groupCodeList = new ArrayList<String>();
+
+		List<DictItemGroupTemp> dictItemGroups = new ArrayList<>();
+		try {
+			dictItemGroups = DictItemGroupTempLocalServiceUtil.findByF_dictItemId(groupId, dictItemId);
+			for (DictItemGroupTemp dictItemGroup : dictItemGroups) {
+				DictItemGroupTempLocalServiceUtil.deleteDictItemGroupTemp(dictItemGroup.getDictItemGroupId());
+			}
+		} catch (Exception e) {
+			_log.warn("Can't not get DictItemGroupsTemp by groupId, dictItemId " + groupId + "|" + dictItemId);
+		}
+		if (Validator.isNotNull(groupCodes)) {
+			String[] arrGroupCode = StringUtil.split(groupCodes);
+			if (arrGroupCode != null && arrGroupCode.length > 0) {
+				for (int i = 0; i < arrGroupCode.length; i++) {
+					if (Validator.isNotNull(arrGroupCode[i])) {
+						try {
+							DictCollectionTemp dictCollection = DictCollectionTempLocalServiceUtil
+									.fetchByF_dictCollectionCode(collectionCode, groupId);
+							DictGroupTemp dictGroup = DictGroupTempLocalServiceUtil.getByGC_GI_DCI(arrGroupCode[i],
+									groupId, dictCollection.getDictCollectionId());
+
+							DictItemGroupTempLocalServiceUtil.addBusinessDictItemGroupTemp(userId, groupId,
+									dictGroup.getDictGroupId(), dictItemId, arrGroupCode[i], serviceContext);
+							groupCodeList.add(arrGroupCode[i]);
+						} catch (Exception e) {
+							continue;
+
+						}
+					}
+
+				}
+			}
+		}
+
+		return StringUtil.merge(groupCodeList);
+	}
+
 }

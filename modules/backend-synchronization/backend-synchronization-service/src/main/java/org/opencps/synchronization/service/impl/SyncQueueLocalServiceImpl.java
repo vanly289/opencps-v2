@@ -115,6 +115,65 @@ public class SyncQueueLocalServiceImpl extends SyncQueueLocalServiceBaseImpl {
 		return syncQueuePersistence.update(syncQueue);
 	}
 	
+	public SyncQueue addBusinessSyncQueue(
+			long userId, 
+			long groupId, 
+			String serverNo,
+			String className,
+			String jsonObject,
+			int status,
+			int retryCount,
+			int priority,
+			String method,
+			ServiceContext serviceContext) throws UnauthenticationException,
+			UnauthorizationException, NoSuchUserException, SystemException {
+	
+		// authen
+		BackendAuthImpl authImpl = new BackendAuthImpl();
+
+		boolean isAuth = authImpl.isAuth(serviceContext);
+
+		if (!isAuth) {
+			throw new UnauthenticationException();
+		}
+
+//		boolean hasPermission = authImpl.hasResource(serviceContext, ModelNameKeys.WORKINGUNIT_MGT_CENTER,
+//				ActionKeys.EDIT_DATA);
+//
+//		if (!hasPermission) {
+//			throw new UnauthorizationException();
+//		}
+
+		Date now = new Date();
+		
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		long syncQueueId = counterLocalService.increment(SyncQueue.class.getName());
+		
+		SyncQueue syncQueue = syncQueuePersistence.create(syncQueueId);
+		
+		// Group instance
+		syncQueue.setGroupId(groupId);
+
+		// Audit fields
+		syncQueue.setUuid(serviceContext.getUuid());
+		syncQueue.setCompanyId(user.getCompanyId());
+		syncQueue.setUserId(user.getUserId());
+		syncQueue.setUserName(user.getFullName());
+		syncQueue.setCreateDate(serviceContext.getCreateDate(now));
+		syncQueue.setModifiedDate(serviceContext.getCreateDate(now));
+
+		syncQueue.setServerNo(serverNo);
+		syncQueue.setClassName(className);
+		syncQueue.setJsonObject(jsonObject);
+		syncQueue.setStatus(status);
+		syncQueue.setRetryCount(retryCount);
+		syncQueue.setPriority(priority);
+		syncQueue.setMethod(method);
+		
+		return syncQueuePersistence.update(syncQueue);
+	}
+	
 	@Override
 	public SyncQueue updateSyncQueue(
 			long userId, 
