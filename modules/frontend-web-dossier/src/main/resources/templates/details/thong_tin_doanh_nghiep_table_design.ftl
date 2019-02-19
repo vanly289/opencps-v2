@@ -1,8 +1,8 @@
 <!-- TODO paymentViewJX template one page view List detail template -->
 <div id="thong_tin_doanh_nghiep_table_template" class="hidden">
 	<template slot="items" slot-scope="props">
-		<td style="padding-top: 8px">{{ danhSachHoSoTablepage * 8 - 8 + props.index + 1 }}</td>
-		<td style="padding: 8px;" class="text-xs-left">
+		<td class="text-xs-center" style="padding: 8px; width: 5%;">{{ danhSachHoSoTablepage * 8 - 8 + props.index + 1 }}</td>
+		<td style="padding: 8px; width: 33%;" class="text-xs-left">
 			{{ props.item.applicantName }}  <br/>
 			{{ props.item.address }}
 		</td>
@@ -13,10 +13,7 @@
 		</td>
 		<td style="padding: 8px;" class="text-xs-left">{{ props.item.contactName }}</td>
 		<td style="padding: 8px;" class="text-xs-left">
-			///
-		</td>
-		<td style="padding: 8px;" class="text-xs-left">
-			///
+			{{ props.item['loaiHinh'] }} 
 		</td>
 
 		<td style="padding: 8px;" class="text-xs-left">

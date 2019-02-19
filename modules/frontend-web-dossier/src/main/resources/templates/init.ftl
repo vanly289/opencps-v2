@@ -25,11 +25,11 @@
 	<#assign dossierPartNo = (Request.dossierPartNo)!>
 	<#assign stateWindow = (Request.stateWindow)!>
 	<#assign employee = (Request.employee)!>
-	
+	<#assign ajax = (Request.ajax)!>
+	<#assign getDictGroupURL = (Request.getDictGroupURL)!>
 	<#assign RequestParameters = (Request.RequestParameters)!>
 	
 </#if>
-
 
 <#include "layout/navigation.ftl">
 

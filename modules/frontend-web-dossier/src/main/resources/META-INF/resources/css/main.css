@@ -176,3 +176,20 @@ body .table-bordered tbody > tr > td {
 .table-bordered table.table tbody td:first-child, .table-bordered table.table tbody td:not(:first-child), .table-bordered table.table tbody th:first-child, .table-bordered table.table tbody th:not(:first-child), .table-bordered table.table thead td:first-child, .table-bordered table.table thead td:not(:first-child), .table-bordered table.table thead th:first-child, .table-bordered table.table thead th:not(:first-child) {
     padding: 2px 5px;
 }
+
+button.btn.btn--small.primary>div.btn__content {
+    text-transform: none ;
+}
+
+.btn--small.btn__content {
+    padding: 0 8px !important;
+    text-transform: none !important;
+}
+
+table.table tbody td, table.table tbody th {
+	height: 35px !important;
+}
+
+table.table tfoot tr {
+    height: 35px !important;
+}
