@@ -156,6 +156,66 @@ public class DictItemGroupTempLocalServiceImpl
 		return dictItemGroup;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	public DictItemGroupTemp addBusinessDictItemGroupTemp(long userId, long groupId, long dictGroupId, long dictItemId,
+			String groupCode, ServiceContext serviceContext) throws DuplicateCategoryException,
+			UnauthenticationException, UnauthorizationException, NoSuchUserException {
+
+		DictItemGroupTemp dictItemColl = dictItemGroupTempPersistence.fetchByF_dictItemId_dictGroupId(groupId, dictGroupId,
+				dictItemId);
+
+		if (Validator.isNotNull(dictItemColl)) {
+
+			throw new DuplicateCategoryException();
+
+		}
+
+		// authen
+		BackendAuthImpl authImpl = new BackendAuthImpl();
+
+		boolean isAuth = authImpl.isAuth(serviceContext);
+
+		if (!isAuth) {
+			throw new UnauthenticationException();
+		}
+
+//		boolean hasPermission = authImpl.hasResource(serviceContext, ModelNameKeys.WORKINGUNIT_MGT_CENTER,
+//				ActionKeys.EDIT_DATA);
+//
+//		if (!hasPermission) {
+//			throw new UnauthorizationException();
+//		}
+		Date now = new Date();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		long dictItemGroupId = counterLocalService.increment(DictItemGroupTemp.class.getName());
+
+		DictItemGroupTemp dictItemGroup = dictItemGroupTempPersistence.create(dictItemGroupId);
+
+		// Group instance
+		dictItemGroup.setGroupId(groupId);
+
+		// Audit fields
+		dictItemGroup.setUuid(serviceContext.getUuid());
+		dictItemGroup.setCompanyId(user.getCompanyId());
+		dictItemGroup.setUserId(user.getUserId());
+		dictItemGroup.setUserName(user.getFullName());
+		dictItemGroup.setCreateDate(serviceContext.getCreateDate(now));
+		dictItemGroup.setModifiedDate(serviceContext.getCreateDate(now));
+
+		// Other fields
+		dictItemGroup.setDictGroupId(dictGroupId);
+		dictItemGroup.setDictItemId(dictItemId);
+		dictItemGroup.setDictGroupName(groupCode);
+
+		dictItemGroup.setExpandoBridgeAttributes(serviceContext);
+
+		dictItemGroupTempPersistence.update(dictItemGroup);
+
+		return dictItemGroup;
+	}
+	
 	/**
 	 * @author binhth
 	 * @param dictItemGroupId

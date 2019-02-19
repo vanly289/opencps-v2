@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -58,6 +60,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -119,8 +123,27 @@ public class DictItemTempLocalServiceImpl
 			throw new UnauthenticationException();
 		}
 
-		boolean hasPermission = authImpl.hasResource(serviceContext, ModelNameKeys.WORKINGUNIT_MGT_CENTER,
-				ActionKeys.EDIT_DATA);
+//		boolean hasPermission = authImpl.hasResource(serviceContext, ModelNameKeys.WORKINGUNIT_MGT_CENTER,
+//				ActionKeys.EDIT_DATA);
+//
+//		if (!hasPermission) {
+//			throw new UnauthorizationException();
+//		}
+		
+		boolean hasPermission = false;
+
+		// check neu role Administrator
+		List<Role> roles = RoleLocalServiceUtil.getUserRoles(serviceContext.getUserId());
+
+		for (Role role : roles) {
+
+			if (role.getName().equals("Administrator") || role.getName().equals("EMPLOYEE")) {
+
+				hasPermission = true;
+				break;
+
+			}
+		}
 
 		if (!hasPermission) {
 			throw new UnauthorizationException();
@@ -358,8 +381,27 @@ public class DictItemTempLocalServiceImpl
 			throw new UnauthenticationException();
 		}
 
-		boolean hasPermission = authImpl.hasResource(serviceContext, ModelNameKeys.WORKINGUNIT_MGT_CENTER,
-				ActionKeys.EDIT_DATA);
+//		boolean hasPermission = authImpl.hasResource(serviceContext, ModelNameKeys.WORKINGUNIT_MGT_CENTER,
+//				ActionKeys.EDIT_DATA);
+//
+//		if (!hasPermission) {
+//			throw new UnauthorizationException();
+//		}
+		
+		boolean hasPermission = false;
+
+		// check neu role Administrator
+		List<Role> roles = RoleLocalServiceUtil.getUserRoles(serviceContext.getUserId());
+
+		for (Role role : roles) {
+
+			if (role.getName().equals("Administrator") || role.getName().equals("EMPLOYEE")) {
+
+				hasPermission = true;
+				break;
+
+			}
+		}
 
 		if (!hasPermission) {
 			throw new UnauthorizationException();
@@ -419,9 +461,28 @@ public class DictItemTempLocalServiceImpl
 			throw new UnauthenticationException();
 		}
 
-		boolean hasPermission = authImpl.hasResource(serviceContext, ModelNameKeys.WORKINGUNIT_MGT_CENTER,
-				ActionKeys.EDIT_DATA);
+//		boolean hasPermission = authImpl.hasResource(serviceContext, ModelNameKeys.WORKINGUNIT_MGT_CENTER,
+//				ActionKeys.EDIT_DATA);
+//
+//		if (!hasPermission) {
+//			throw new UnauthorizationException();
+//		}
+		
+		boolean hasPermission = false;
+		
+		// check neu role Administrator 
+		List<Role> roles = RoleLocalServiceUtil.getUserRoles(serviceContext.getUserId());
+		
+		for (Role role : roles) {
 
+			if (role.getName().equals("Administrator") || role.getName().equals("EMPLOYEE")) {
+
+				hasPermission = true;
+				break;
+
+			}
+		}
+		
 		if (!hasPermission) {
 			throw new UnauthorizationException();
 		}

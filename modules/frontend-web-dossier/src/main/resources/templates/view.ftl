@@ -17,8 +17,11 @@
 		var dossierPartNo = "${(dossierPartNo)!}";
 
 		var emailAddress = '${(user.emailAddress)!}';
+		var urlCoSo = "${(ajax.saveDictItemURL)!}";
+		var urlGetDictGroup = "${(getDictGroupURL)!}";
+		var portletNamespace = "${(portletNamespace)!}";
 
-		funLoadVue(stateWindow, dossierId, dossierPartNo, emailAddress);
+		funLoadVue(stateWindow, dossierId, dossierPartNo, emailAddress, urlCoSo, urlGetDictGroup, portletNamespace);
 	});
-
+	
 </script>

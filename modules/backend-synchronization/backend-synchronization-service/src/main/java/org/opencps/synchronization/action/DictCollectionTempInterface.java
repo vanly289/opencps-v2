@@ -102,4 +102,8 @@ public interface DictCollectionTempInterface {
 	public String updateDictItemGroupTemp(long userId, long groupId, long dictItemId, String groupCodes,
 			String collectionCode, ServiceContext serviceContext) throws NoSuchUserException, UnauthenticationException,
 			UnauthorizationException, DuplicateCategoryException;
+	
+	public String updateBusiessDictItemGroupTemp(long userId, long groupId, long dictItemId, String groupCodes,
+			String collectionCode, ServiceContext serviceContext) throws NoSuchUserException, UnauthenticationException,
+			UnauthorizationException, DuplicateCategoryException;
 }
