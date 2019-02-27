@@ -284,18 +284,14 @@ public class DossierManagementImpl implements DossierManagement {
 		DossierActions actions = new DossierActionsImpl();
 
 		try {
-
 			// _log.info("1");
 			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
-
 			// _log.info("2");
 			boolean isCitizen = dossierPermission.isCitizen(user.getUserId());
-
 			// _log.info("3");
 			dossierPermission.hasGetDossiers(groupId, user.getUserId(), query.getSecetKey());
-
 			// _log.info("31" + query.getEnd());
 
 			if (query.getEnd() == 0) {
@@ -315,6 +311,7 @@ public class DossierManagementImpl implements DossierManagement {
 			if (Validator.isNotNull(keywordSearch)) {
 				keySearch = SpecialCharacterUtils.splitSpecial(keywordSearch);
 			}
+			
 			params.put(Field.KEYWORD_SEARCH, keySearch);
 
 			String status = query.getStatus();
@@ -339,6 +336,7 @@ public class DossierManagementImpl implements DossierManagement {
 			if (Validator.isNotNull(dossierIdNo)) {
 				dossierNoSearch = SpecialCharacterUtils.splitSpecial(dossierIdNo);
 			}
+			
 			String soChungChi = query.getSoChungChi();
 			String certNo = StringPool.BLANK;
 			if (Validator.isNotNull(soChungChi)) {
@@ -860,7 +858,7 @@ public class DossierManagementImpl implements DossierManagement {
 
 				_log.info(JSONFactoryUtil.looseSerialize(input));
 
-				_log.info("Call in SynAction **********8 ===========");
+//				_log.info("Call in SynAction **********8 ===========");
 
 				DossierAction dossierAction = actions.doAction(groupId, dossier.getDossierId(),
 						dossier.getReferenceUid(), input.getActionCode(), 0l, input.getActionUser(),
@@ -879,7 +877,7 @@ public class DossierManagementImpl implements DossierManagement {
 					throw new UnauthenticationException();
 				}
 
-				_log.info("Call ===========");
+//				_log.info("Call ===========");
 
 				ProcessOption option = getProcessOption(dossier.getServiceCode(), dossier.getGovAgencyCode(),
 						dossier.getDossierTemplateNo(), groupId);

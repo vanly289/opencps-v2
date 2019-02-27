@@ -53,7 +53,7 @@ public class InvokeREST {
 			 = new UsernamePasswordCredentials(username, password);
 			provider.setCredentials(AuthScope.ANY, credentials);
 			
-			int timeout = 30;
+			int timeout = 15;
 			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
 					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
 			
@@ -174,7 +174,7 @@ public class InvokeREST {
 			 = new UsernamePasswordCredentials(username, password);
 			provider.setCredentials(AuthScope.ANY, credentials);
 			
-			int timeout = 30;
+			int timeout = 15;
 			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
 					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
 			
@@ -328,7 +328,7 @@ public class InvokeREST {
 			 = new UsernamePasswordCredentials(username, password);
 			provider.setCredentials(AuthScope.ANY, credentials);
 			
-			int timeout = 30;
+			int timeout = 15;
 			RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
 					.setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
 			

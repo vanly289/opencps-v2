@@ -1740,13 +1740,13 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 //			}
 		}
 
-			if (Validator.isNotNull(groupId)) {
-				MultiMatchQuery query = new MultiMatchQuery(groupId);
+		if (Validator.isNotNull(groupId)) {
+			MultiMatchQuery query = new MultiMatchQuery(groupId);
 
-				query.addFields(Field.GROUP_ID);
+			query.addFields(Field.GROUP_ID);
 
-				booleanQuery.add(query, BooleanClauseOccur.MUST);
-			}
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
 
 		if (Validator.isNotNull(owner) && Boolean.parseBoolean(owner) && userId > 0) {
 			MultiMatchQuery query = new MultiMatchQuery(String.valueOf(userId));

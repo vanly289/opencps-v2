@@ -76,14 +76,17 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				+ APIDateTimeUtils.convertDateToString(new Date()));
 
 		List<ThirdPartyDossierSync> lstSyncs = ThirdPartyDossierSyncLocalServiceUtil.findByStatus(false, 
-				0, 1);
+				0, 20);
+		
+		for (ThirdPartyDossierSync sync : lstSyncs) {
+			ThirdPartyDossierSyncLocalServiceUtil.updateStatus(sync, true);
+		}
 
 		for (ThirdPartyDossierSync sync : lstSyncs) {
 			long dossierSyncId = sync.getDossierSyncId();
 			
 			boolean pending = false;
 			try {
-				ThirdPartyDossierSyncLocalServiceUtil.updateStatus(sync, true);
 				pending = doSync(sync);
 			} catch(Exception e) {
 				_log.error(e);
@@ -1811,7 +1814,7 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 	@Modified
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(),
-				15, TimeUnit.SECOND));
+				30, TimeUnit.SECOND));
 		_schedulerEngineHelper.register(this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 

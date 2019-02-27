@@ -187,6 +187,8 @@ public class DossierActionsImpl implements DossierActions {
 					dictItem = DictItemLocalServiceUtil.fetchByF_dictItemCode(statusCode,
 							dictCollection.getDictCollectionId(), groupId);
 				}
+				
+				_log.info("===getDossiersTest==="+ new Date());
 
 				long total = 0;
 				if (dictItem != null) {
