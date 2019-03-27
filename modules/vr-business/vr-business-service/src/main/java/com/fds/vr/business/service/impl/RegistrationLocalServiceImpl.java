@@ -14,9 +14,10 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
+import com.fds.vr.business.model.Registration;
 import com.fds.vr.business.service.base.RegistrationLocalServiceBaseImpl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the registration local service.
