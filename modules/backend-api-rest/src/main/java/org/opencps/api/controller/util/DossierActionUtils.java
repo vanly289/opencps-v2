@@ -16,6 +16,7 @@ import org.opencps.auth.utils.APIDateTimeUtils;
 import org.opencps.dossiermgt.constants.DossierActionTerm;
 import org.opencps.dossiermgt.constants.DossierFileTerm;
 import org.opencps.dossiermgt.constants.DossierPartTerm;
+import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.constants.ProcessActionTerm;
 import org.opencps.dossiermgt.constants.ProcessStepRoleTerm;
 import org.opencps.dossiermgt.model.Dossier;
@@ -290,6 +291,21 @@ public class DossierActionUtils {
 //			_log.info("LAmTV_List user: "+lstUser);
 			JSONArray createFiles = jsonData.getJSONArray("createFiles");
 			List<DossierFile> returnFiles = (List<DossierFile>) jsonData.get("returnFiles");
+			
+			if (processAction != null) {
+				model.setProcessActionId(processAction.getProcessActionId());
+				model.setActionCode(processAction.getActionCode());
+				model.setActionName(processAction.getActionName());
+				model.setPreStepCode(processAction.getPreStepCode());
+				model.setPostStepCode(processAction.getPostStepCode());
+				model.setAutoEvent(processAction.getAutoEvent());
+				model.setPreCondition(processAction.getPreCondition());
+				model.setAllowAssignUser(processAction.getAllowAssignUser());
+				model.seteSignature(processAction.getESignature());
+				//model.setSignatureType(processAction.getSignatureType());
+//				model.setCheckInput(processAction.getCheckInput());
+				model.setConfigNote(processAction.getConfigNote());
+			}
 
 			List<DossierActionNextActiontoUser> outputUsers = new ArrayList<DossierActionNextActiontoUser>();
 			DossierActionNextActiontoUser modelUser = null;
@@ -334,14 +350,14 @@ public class DossierActionUtils {
 			}
 			model.setToUsers(outputUsers);
 
-			List<DossierActionNextActioncreateFiles> outputCreeateFiles = null;
+			List<DossierActionNextActioncreateFiles> outputCreateFiles = null;
 			if (createFiles != null && createFiles.length() > 0) {
-				outputCreeateFiles = new ArrayList<DossierActionNextActioncreateFiles>();
+				outputCreateFiles = new ArrayList<DossierActionNextActioncreateFiles>();
 				for (int j = 0; j < createFiles.length(); j++) {
 					JSONObject createFile = createFiles.getJSONObject(j);
 					DossierActionNextActioncreateFiles dossierActionNextActioncreateFile = new DossierActionNextActioncreateFiles();
 					dossierActionNextActioncreateFile.setDossierPartId(createFile.getLong(DossierPartTerm.DOSSIERPART_ID));
-					//dossierActionNextActioncreateFile.setEForm(createFile.getBoolean(DossierPartTerm.EFORM));
+					dossierActionNextActioncreateFile.setEform(createFile.getBoolean(DossierPartTerm.EFORM));
 					dossierActionNextActioncreateFile.setFormData(createFile.getString(DossierPartTerm.FORM_DATA));
 					dossierActionNextActioncreateFile.setFormScript(createFile.getString(DossierPartTerm.FORM_SCRIPT));
 					dossierActionNextActioncreateFile.setMultiple(createFile.getBoolean(DossierPartTerm.MULTIPLE));
@@ -350,12 +366,12 @@ public class DossierActionUtils {
 					//dossierActionNextActioncreateFile.setPartType(createFile.getInt(DossierPartTerm.PART_TYPE));
 					dossierActionNextActioncreateFile.setPartTip(createFile.getString(DossierPartTerm.PART_TIP));
 					dossierActionNextActioncreateFile.setTemplateFileNo(createFile.getString(DossierFileTerm.FILE_TEMPLATE_NO));
-					//dossierActionNextActioncreateFile.setReferenceUid(createFile.getString(DossierPartTerm.REFERENCE_UID));
-					//dossierActionNextActioncreateFile.setCounter(createFile.getInt(DossierPartTerm.COUNTER));
-					//dossierActionNextActioncreateFile.setDossierFileId(createFile.getLong(DossierPartTerm.DOSSIER_FILE_ID));
-					outputCreeateFiles.add(dossierActionNextActioncreateFile);
+					dossierActionNextActioncreateFile.setReferenceUid(createFile.getString(DossierTerm.REFERENCE_UID));
+					dossierActionNextActioncreateFile.setCounter(createFile.getInt(DossierTerm.COUNTER));
+					dossierActionNextActioncreateFile.setDossierFileId(createFile.getLong(DossierFileTerm.DOSSIER_FILE_ID));
+					outputCreateFiles.add(dossierActionNextActioncreateFile);
 				}
-				model.getCreateFiles().addAll(outputCreeateFiles);
+				model.getCreateFiles().addAll(outputCreateFiles);
 			}
 
 				List<DossierActionNextActionReturnFiles> outputReturnFiles = null;
