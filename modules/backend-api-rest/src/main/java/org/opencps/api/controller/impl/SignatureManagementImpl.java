@@ -137,9 +137,9 @@ public class SignatureManagementImpl implements SignatureManagement{
 //					_log.info("subUsers: "+subUsers);
 					DossierActions dossierAction = new DossierActionsImpl();
 					if (TYPE_KYSO.contains(actionCode)) {
-						dossierAction.doAction(groupId, dossierId, dossier.getReferenceUid(), actionCode,
-								0L, actionUser, actionNote, assignUserId, user.getUserId(), subUsers,
-								serviceContext);
+//						dossierAction.doAction(groupId, dossierId, dossier.getReferenceUid(), actionCode,
+//								0L, actionUser, actionNote, assignUserId, user.getUserId(), subUsers,
+//								serviceContext);
 					} else if(TYPE_DONGDAU.contains(actionCode)) {
 						ProcessOption option = getProcessOption(dossier.getServiceCode(), dossier.getGovAgencyCode(),
 								dossier.getDossierTemplateNo(), groupId);
@@ -147,9 +147,9 @@ public class SignatureManagementImpl implements SignatureManagement{
 						ProcessAction action = getProcessAction(groupId, dossier.getDossierId(), dossier.getReferenceUid(),
 								input.getActionCode(), option.getServiceProcessId());
 	
-						dossierAction.doAction(groupId, dossierId, dossier.getReferenceUid(), actionCode,
-								action.getProcessActionId(), actionUser, actionNote, assignUserId, user.getUserId(), subUsers,
-								serviceContext);
+//						dossierAction.doAction(groupId, dossierId, dossier.getReferenceUid(), actionCode,
+//								action.getProcessActionId(), actionUser, actionNote, assignUserId, user.getUserId(), subUsers,
+//								serviceContext);
 					} else {
 						//TODO
 					}

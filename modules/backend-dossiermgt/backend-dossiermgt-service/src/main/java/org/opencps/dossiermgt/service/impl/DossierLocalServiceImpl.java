@@ -640,7 +640,6 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 		validateUpdateStatus(groupId, id, refId, status, statusText, subStatus, subStatusText);
 
 		Date now = new Date();
-
 		Dossier dossier = null;
 
 		if (id != 0) {
@@ -667,11 +666,12 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 		if (status.equalsIgnoreCase(DossierStatusConstants.DONE)) {
 			dossier.setFinishDate(now);
+			if (dossier.getReleaseDate() == null) {
+				dossier.setReleaseDate(now);
+			}
 		}
 
-		dossierPersistence.update(dossier);
-
-		return dossier;
+		return dossierPersistence.update(dossier);
 
 	}
 
@@ -2054,6 +2054,10 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			return StringPool.BLANK;
 		}
 
+	}
+
+	public List<Dossier> getBySubmitting(boolean submitting) {
+		return dossierPersistence.findBySUB_MIT(submitting);
 	}
 
 	public static final String CLASS_NAME = Dossier.class.getName();

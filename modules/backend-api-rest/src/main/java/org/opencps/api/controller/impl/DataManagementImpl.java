@@ -75,6 +75,7 @@ public class DataManagementImpl implements DataManagement {
 
 	Log _log = LogFactoryUtil.getLog(DataManagementImpl.class);
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Response getDictCollection(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, DataSearchModel query) {
@@ -494,6 +495,7 @@ public class DataManagementImpl implements DataManagement {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Response getDictgroups(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, String code, DataSearchModel query) {
@@ -792,6 +794,7 @@ public class DataManagementImpl implements DataManagement {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Response getDictgroupsDictItems(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, String code, String groupCode, boolean full) {
@@ -1102,6 +1105,7 @@ public class DataManagementImpl implements DataManagement {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Response getDictItems(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, String code, DataSearchModel query) {
@@ -1587,7 +1591,6 @@ public class DataManagementImpl implements DataManagement {
 	public Response deleteMetaDataOfDictItem(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, String code, String itemCode, String key,
 			String body) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -1613,8 +1616,7 @@ public class DataManagementImpl implements DataManagement {
 				value = jsonMetaData.getString(key);
 
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				_log.error(e);
 			}
 
 			return Response.status(200).entity(value).build();
@@ -1636,7 +1638,6 @@ public class DataManagementImpl implements DataManagement {
 	public Response updateMetaDataOfDictItem(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, String code, String itemCode,
 			DictItemInputModel input) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -1763,7 +1764,7 @@ public class DataManagementImpl implements DataManagement {
 	public Response updateOrCreateNewDictItemByItemCode(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, String code, String itemCode,
 			DictItemInputModel input, long modifiedDateTime) {
-		// TODO Auto-generated method stub
+
 		DictcollectionInterface dictItemDataUtil = new DictCollectionActions();
 		DictItemModel dictItemModel = new DictItemModel();
 		DictCollectionTempInterface dictItemDataTempUtil = new org.opencps.synchronization.action.impl.DictCollectionActions();
@@ -1911,7 +1912,7 @@ public class DataManagementImpl implements DataManagement {
 	public Response updateOrCreateNewDictCollection(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, String code, DictCollectionInputModel input,
 			long modifiedDateTime) {
-		// TODO Auto-generated method stub
+
 		DictcollectionInterface dictItemDataUtil = new DictCollectionActions();
 		DictCollectionModel dictCollectionModel = new DictCollectionModel();
 		DictCollectionTempInterface dictItemDataTempUtil = new org.opencps.synchronization.action.impl.DictCollectionActions();
@@ -2007,7 +2008,7 @@ public class DataManagementImpl implements DataManagement {
 	public Response getSyncDictCollections(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext,
 			org.opencps.api.datamgtsync.model.DataSearchModel query) {
-		// TODO Auto-generated method stub
+
 		int start = QueryUtil.ALL_POS;
 		int end = QueryUtil.ALL_POS;
 
@@ -2053,7 +2054,7 @@ public class DataManagementImpl implements DataManagement {
 	@Override
 	public Response getSyncDictItems(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, org.opencps.api.datamgtsync.model.DataSearchModel query) {
-		// TODO Auto-generated method stub
+
 		int start = QueryUtil.ALL_POS;
 		int end = QueryUtil.ALL_POS;
 
@@ -2099,7 +2100,7 @@ public class DataManagementImpl implements DataManagement {
 	@Override
 	public Response getSyncDictGroups(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, org.opencps.api.datamgtsync.model.DataSearchModel query) {
-		// TODO Auto-generated method stub
+
 		int start = QueryUtil.ALL_POS;
 		int end = QueryUtil.ALL_POS;
 
@@ -2146,7 +2147,7 @@ public class DataManagementImpl implements DataManagement {
 	public Response updateOrCreateNewDictgroups(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, String code, String groupCode,
 			DictGroupInputModel input, long modifiedDateTime) {
-		// TODO Auto-generated method stub
+
 		DictcollectionInterface dictItemDataUtil = new DictCollectionActions();
 		Groups dictGroupModel = new Groups();
 		DictCollectionTempInterface dictItemDataTempUtil = new org.opencps.synchronization.action.impl.DictCollectionActions();
@@ -2240,7 +2241,7 @@ public class DataManagementImpl implements DataManagement {
 	public Response getSyncDictgroupsDictItems(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext,
 			org.opencps.api.datamgtsync.model.DataSearchModel query) {
-		// TODO Auto-generated method stub
+
 		int start = QueryUtil.ALL_POS;
 		int end = QueryUtil.ALL_POS;
 
