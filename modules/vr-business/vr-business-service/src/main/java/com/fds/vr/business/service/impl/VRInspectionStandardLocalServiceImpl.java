@@ -17,9 +17,8 @@ package com.fds.vr.business.service.impl;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
-import org.opencps.dossiermgt.model.DossierFile;
-import org.opencps.dossiermgt.model.Registration;
-
+import com.fds.vr.business.model.DossierFile;
+import com.fds.vr.business.model.Registration;
 import com.fds.vr.business.model.VRInspectionStandard;
 import com.fds.vr.business.service.base.VRInspectionStandardLocalServiceBaseImpl;
 

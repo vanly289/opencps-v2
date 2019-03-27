@@ -17,9 +17,8 @@ package com.fds.vr.business.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.opencps.dossiermgt.model.Dossier;
-
 import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.Dossier;
 import com.fds.vr.business.model.ILCertificate;
 import com.fds.vr.business.service.base.ILCertificateLocalServiceBaseImpl;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -613,4 +612,5 @@ public class ILCertificateLocalServiceImpl
 
 		return ilCertificateFinder.countILCertificateByApplicant(serviceCode, applicant);
 	}
+
 }

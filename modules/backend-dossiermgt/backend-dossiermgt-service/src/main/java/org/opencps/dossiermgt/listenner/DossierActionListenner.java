@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -46,7 +48,9 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 	@Override
 	public void onAfterCreate(DossierAction model) throws ModelListenerException {
 
-		_log.info("START Dossier Action Listenner");
+		_log.info("START Dossier Action");
+		Indexer<DossierLog> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(DossierLog.class);
 		if (true) {
 
 			ServiceContext serviceContext = new ServiceContext();
@@ -82,12 +86,12 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 				JSONArray files = JSONFactoryUtil.createJSONArray();
 
 				if (dossierId > 0) {
-
-					_log.info("START Dossier Action11111");
+					long now = System.currentTimeMillis();
+					_log.info("START Dossier Action11111: " + (System.currentTimeMillis() - now));
 					List<DossierLog> dossierLogs = DossierLogLocalServiceUtil.getByDossierAndType(dossierId,
 							DossierFileListenerMessageKeys.DOSSIER_LOG_CREATE_TYPE, QueryUtil.ALL_POS,
 							QueryUtil.ALL_POS);
-
+					_log.info("START Dossier Action2222: " + (System.currentTimeMillis() - now));
 					for (DossierLog log : dossierLogs) {
 						long dossierFileId = 0;
 
@@ -98,7 +102,7 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 						} catch (Exception e) {
 
 						}
-
+						_log.info("START Dossier Action333: " + (System.currentTimeMillis() - now));
 						if (dossierFileId != 0) {
 							DossierFile dossierFile = DossierFileLocalServiceUtil.fetchDossierFile(dossierFileId);
 
@@ -113,10 +117,12 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 							}
 						}
 
-						DossierLogLocalServiceUtil.deleteDossierLog(log);
-
+						//DossierLogLocalServiceUtil.deleteDossierLog(log);
+						indexer.delete(log);
 					}
-
+					DossierLogLocalServiceUtil.deleteByDossierAndType(dossierId,
+							DossierFileListenerMessageKeys.DOSSIER_LOG_CREATE_TYPE);
+					_log.info("START Dossier Action4444: " + (System.currentTimeMillis() - now));
 				}
 
 				payload.put("jobPosName", jobPosName);
