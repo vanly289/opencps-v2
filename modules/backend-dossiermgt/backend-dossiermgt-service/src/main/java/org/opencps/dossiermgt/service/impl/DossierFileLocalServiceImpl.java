@@ -590,6 +590,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 
 		// User user =
 		// userPersistence.findByPrimaryKey(serviceContext.getUserId());
+		long now = System.currentTimeMillis();
 		DossierFile dossierFile = dossierFilePersistence.findByDID_REF(dossierId, referenceUid);
 
 		// dossierFileLocalService.getDossierFileByReferenceUid(dossierId,
@@ -621,16 +622,16 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			serviceContextFile.setCompanyId(companyId);
 			serviceContextFile.setScopeGroupId(groupId);
 			
-			_log.info("NEW CODE FILES_FROM_FORM_UPDATEDDDDD");
+			//_log.info("NEW CODE FILES_FROM_FORM_UPDATEDDDDD: "+(System.currentTimeMillis() - now));
 			DossierFileUtils fileUtils = new DossierFileUtils();
 			
-			FileEntry fileEntry = fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
+			fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
 					serviceContextFile);
-			
-			String urlFile = fileUtils.getFileContent(fileEntry.getFileEntryId());
-			
-			_log.info(urlFile);
-
+			//FileEntry fileEntry = fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
+			//		serviceContextFile);
+			//String urlFile = fileUtils.getFileContent(fileEntry.getFileEntryId());
+			//_log.info(urlFile);
+			//_log.info("SEND TO UPLOAD FILE ENTRY END: "+(System.currentTimeMillis() - now));
 			
 		} catch (Exception e) {
 			_log.error(e);
@@ -651,7 +652,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		message.put("msgToEngine", msgData);
 		MessageBusUtil.sendMessage("jasper/engine/out/destination", message);
 
-		_log.info("SEND TO CREATED FILE MODEL");
+		_log.info("SEND TO CREATED FILE MODEL END: "+(System.currentTimeMillis() - now));
 		
 		return dossierFilePersistence.update(dossierFile);
 	}
@@ -1053,6 +1054,10 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 	//Get dossierFile follow fileEntryId
 	public DossierFile getByFileEntryId(long fileEntryId) {
 		return dossierFilePersistence.fetchByFILE_ID(fileEntryId);
+	}
+
+	public List<DossierFile> getByTemplateNoAndIsNew(long dossierId, boolean isNew, String[] fileTemplateNoArr) {
+		return dossierFilePersistence.findByDID_ISN_TEMP(dossierId, isNew, fileTemplateNoArr);
 	}
 
 	public static final String CLASS_NAME = DossierFile.class.getName();
