@@ -71,6 +71,7 @@ import org.opencps.usermgt.service.util.OCPSUserUtils;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -2864,12 +2865,6 @@ public class DossierActionsImpl implements DossierActions {
 					}
 				}
 
-				if (processAction != null) {
-					ServiceProcess serviceProcess = ServiceProcessLocalServiceUtil.fetchServiceProcess(serviceProcessId);
-//					ProcessStep postStep = ProcessStepLocalServiceUtil.fetchBySC_GID(processAction.getPostStepCode(), groupId, serviceProcessId);
-					ProcessStep postStep = processStep;
-				}
-				//
 				String createDossierFiles = StringPool.BLANK;
 				String returnDossierFiles = StringPool.BLANK;
 				if (processAction != null) {
@@ -2877,6 +2872,7 @@ public class DossierActionsImpl implements DossierActions {
 					returnDossierFiles = processAction.getReturnDossierFiles();
 				}
 
+				_log.info("createDossierFiles: "+createDossierFiles);
 				List<String> createFileTempNoList = ListUtil.toList(StringUtil.split(createDossierFiles));
 				List<String> returnFileTempNoList = ListUtil.toList(StringUtil.split(returnDossierFiles));
 
@@ -2905,11 +2901,6 @@ public class DossierActionsImpl implements DossierActions {
 			
 				JSONArray createFiles = JSONFactoryUtil.createJSONArray();
 				if (createFileTempNoList != null && !createFileTempNoList.isEmpty()) {
-//					DossierTemplate dossierTemplate = DossierTemplateLocalServiceUtil.getByTemplateNo(groupId,
-//							dossierTempNo);
-
-//					List<DossierPart> partList = DossierPartLocalServiceUtil.getByTemplateNo(groupId, dossierTemplate.getTemplateNo());
-
 					if (partList != null && partList.size() > 0) {
 						long fileEntryId = 0;
 						boolean eForm = false;
@@ -2922,6 +2913,7 @@ public class DossierActionsImpl implements DossierActions {
 						boolean returned = false;
 						for (DossierPart dossierPart : partList) {
 							String fileTemplateNo = dossierPart.getFileTemplateNo();
+							_log.info("fileTemplateNo: "+fileTemplateNo);
 							//eForm = dossierPart.getEForm();
 							multiple = dossierPart.getMultiple();
 							
@@ -2941,8 +2933,9 @@ public class DossierActionsImpl implements DossierActions {
 										.getDossierFileByDID_FTNO_DPT(dossierId, fileTemplateNo, 2, false,
 												QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 												new DossierFileComparator(false, "createDate", Date.class));
-
+								
 								if (dossierFilesResult != null && !dossierFilesResult.isEmpty()) {
+									_log.info("dossierFilesResult: "+dossierFilesResult.size());
 									df: for (DossierFile dossierFile : dossierFilesResult) {
 										if (dossierFile.getDossierPartNo().equals(dossierPart.getPartNo())) {
 											eForm = dossierFile.getEForm();
@@ -2960,9 +2953,11 @@ public class DossierActionsImpl implements DossierActions {
 											break df;
 										}
 									}
+									_log.info("docFileReferenceUid: "+docFileReferenceUid);
+									_log.info("fileEntryId: "+fileEntryId);
 								} else {
 									eForm = Validator.isNotNull(dossierPart.getFormScript()) ? true : false;
-
+									_log.info("eForm: "+eForm);
 									formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(),
 											dossierId, serviceContext);
 									formScript = dossierPart.getFormScript();
@@ -2973,7 +2968,7 @@ public class DossierActionsImpl implements DossierActions {
 									}
 
 									// create Dossier File
-									//if (eForm) {
+									if (eForm) {
 										DossierFileActions actions = new DossierFileActionsImpl();
 
 										// check dossierFile contain
@@ -2988,6 +2983,7 @@ public class DossierActionsImpl implements DossierActions {
 										} catch (Exception e) {
 											_log.debug(e);
 										}
+										_log.info("dossierFile: "+JSONFactoryUtil.looseSerialize(dossierFile));
 										if (Validator.isNull(dossierFile)) {
 
 											dossierFile = actions.addDossierFile(groupId, dossierId,
@@ -2997,11 +2993,12 @@ public class DossierActionsImpl implements DossierActions {
 													StringPool.BLANK, String.valueOf(false), serviceContext);
 
 										}
+										_log.info("docFileReferenceUid: "+dossierFile.getReferenceUid());
 
 										docFileReferenceUid = dossierFile.getReferenceUid();
 
 										dossierFileId = dossierFile.getDossierFileId();
-									//}
+									}
 
 								}
 
@@ -3012,6 +3009,7 @@ public class DossierActionsImpl implements DossierActions {
 								counter = (dossierFilesResult != null && !dossierFilesResult.isEmpty())
 										? dossierFilesResult.size() : 0;
 
+										_log.info("docFileReferenceUid: "+docFileReferenceUid);
 								createFile.put("eform", eForm);
 								createFile.put("dossierFileId", dossierFileId);
 								createFile.put("formData", formData);
@@ -3022,12 +3020,8 @@ public class DossierActionsImpl implements DossierActions {
 								createFile.put("fileEntryId", fileEntryId);
 								createFiles.put(createFile);
 
-//								_log.info("#" + j + "." + k + ".>> END-PROCESS-TEMPLACE: "
-//										+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
-
 							}
 						}
-
 //						_log.info("#" + j + ".>> END-FOR-DOSSIER-PART: "
 //								+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 
