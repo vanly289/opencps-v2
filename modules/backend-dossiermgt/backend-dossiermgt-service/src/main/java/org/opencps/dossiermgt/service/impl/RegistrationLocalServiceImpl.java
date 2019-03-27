@@ -23,6 +23,7 @@ import org.opencps.dossiermgt.action.RegistrationFormActions;
 import org.opencps.dossiermgt.action.impl.RegistrationFormActionsImpl;
 import org.opencps.dossiermgt.constants.RegistrationTerm;
 import org.opencps.dossiermgt.model.Registration;
+import org.opencps.dossiermgt.service.RegistrationLocalServiceUtil;
 import org.opencps.dossiermgt.service.base.RegistrationLocalServiceBaseImpl;
 import org.opencps.usermgt.model.Applicant;
 import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
@@ -83,7 +84,7 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 			String applicantIdNo, String applicantIdDate, String address, String cityCode, String cityName,
 			String districtCode, String districtName, String wardCode, String wardName, String contactName,
 			String contactTelNo, String contactEmail, String govAgencyCode, String govAgencyName, int registrationState,
-			String registrationClass, String representativeEnterprise, ServiceContext serviceContext)
+			String registrationClass, String representativeEnterprise, int markasdeleted, String remarks, ServiceContext serviceContext)
 			throws PortalException, SystemException {
 		Date now = new Date();
 		long userId = serviceContext.getUserId();
@@ -127,6 +128,8 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 		model.setRegistrationState(registrationState);
 		model.setSubmitting(false);
 		model.setRepresentativeEnterprise(representativeEnterprise);
+		model.setMarkasdeleted(markasdeleted);
+		model.setRemarks(remarks);
 
 		RegistrationFormActions actionForm = new RegistrationFormActionsImpl();
 		List<Registration> registrations = registrationPersistence.findByG_APPNO_GOVCODE(
@@ -148,13 +151,13 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 			String applicantIdType, String applicantIdNo, String applicantIdDate, String address, String cityCode,
 			String cityName, String districtCode, String districtName, String wardCode, String wardName,
 			String contactName, String contactTelNo, String contactEmail, String govAgencyCode, String govAgencyName,
-			int registrationState, String registrationClass, String representativeEnterprise,
+			int registrationState, String registrationClass, String representativeEnterprise, int markasdeleted, String remarks,
 			ServiceContext serviceContext) throws PortalException, SystemException {
 
 		Date now = new Date();
 
 		Registration model = registrationPersistence.fetchByPrimaryKey(registrationId);
-
+		
 		model.setModifiedDate(now);
 		if (registrationState == 0) {
 			model.setSubmitting(false);
@@ -226,6 +229,11 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 		if (Validator.isNotNull(representativeEnterprise)) {
 			model.setRepresentativeEnterprise(representativeEnterprise);
 		}
+		if (Validator.isNotNull(remarks)) {
+			model.setRemarks(remarks);
+		}
+		
+		model.setMarkasdeleted(markasdeleted);		
 
 		return registrationPersistence.update(model);
 	}
@@ -279,7 +287,34 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 		String owner = GetterUtil.getString(params.get(RegistrationTerm.OWNER));
 		String registrationClass = GetterUtil.getString(params.get(RegistrationTerm.REGISTRATION_CLASS));
 		String submitting = GetterUtil.getString(params.get(RegistrationTerm.SUBMITTING));
+		String applicantName = GetterUtil.getString(params.get(RegistrationTerm.APPLICATION_NAME));
+		String address = GetterUtil.getString(params.get(RegistrationTerm.ADDRESS));
+		String applicantIdNo = GetterUtil.getString(params.get(RegistrationTerm.APPLICATION_ID_NO));
+		
+		if (Validator.isNotNull(applicantName) && applicantName.trim().length() > 0	) {
+			MultiMatchQuery query = new MultiMatchQuery(applicantName.toLowerCase());
 
+			query.addFields(RegistrationTerm.APPLICATION_NAME);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+
+		if (Validator.isNotNull(address) && address.trim().length() > 0	) {
+			MultiMatchQuery query = new MultiMatchQuery(address.toLowerCase());
+
+			query.addFields(RegistrationTerm.ADDRESS);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		
+		if (Validator.isNotNull(applicantIdNo) && applicantIdNo.trim().length() > 0	) {
+			MultiMatchQuery query = new MultiMatchQuery(applicantIdNo);
+
+			query.addFields(RegistrationTerm.APPLICATION_ID_NO);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		
 		if (Validator.isNotNull(registrationState) && !registrationState.isEmpty()) {
 			MultiMatchQuery query = new MultiMatchQuery(registrationState);
 
@@ -360,7 +395,34 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 		String owner = GetterUtil.getString(params.get(RegistrationTerm.OWNER));
 		String registrationClass = GetterUtil.getString(params.get(RegistrationTerm.REGISTRATION_CLASS));
 		String submitting = GetterUtil.getString(params.get(RegistrationTerm.SUBMITTING));
+		String applicantName = GetterUtil.getString(params.get(RegistrationTerm.APPLICATION_NAME));
+		String address = GetterUtil.getString(params.get(RegistrationTerm.ADDRESS));
+		String applicantIdNo = GetterUtil.getString(params.get(RegistrationTerm.APPLICATION_ID_NO));
+		
+		if (Validator.isNotNull(applicantName) && applicantName.trim().length() > 0	) {
+			MultiMatchQuery query = new MultiMatchQuery(applicantName.toLowerCase());
 
+			query.addFields(RegistrationTerm.APPLICATION_NAME);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+
+		if (Validator.isNotNull(address) && address.trim().length() > 0	) {
+			MultiMatchQuery query = new MultiMatchQuery(address.toLowerCase());
+
+			query.addFields(RegistrationTerm.ADDRESS);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		
+		if (Validator.isNotNull(applicantIdNo) && applicantIdNo.trim().length() > 0	) {
+			MultiMatchQuery query = new MultiMatchQuery(applicantIdNo);
+
+			query.addFields(RegistrationTerm.APPLICATION_ID_NO);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		
 		if (Validator.isNotNull(registrationState) && !registrationState.isEmpty()) {
 			MultiMatchQuery query = new MultiMatchQuery(registrationState);
 
@@ -564,6 +626,16 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 		}
 	}
 
+	public List<Registration> findByREG_APPNO_markasdeleted(long groupId, String applicantIdNo, int markasdeleted) {
+		try {
+			return registrationPersistence.findByREG_APPNO_markasdeleted(groupId, applicantIdNo, markasdeleted);
+
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	
 	private Log _log = LogFactoryUtil.getLog(RegistrationLocalServiceImpl.class);
 
 }

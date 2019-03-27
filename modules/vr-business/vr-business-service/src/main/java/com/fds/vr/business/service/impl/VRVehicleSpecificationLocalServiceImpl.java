@@ -20,8 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
-import org.opencps.dossiermgt.model.DossierFile;
-import org.opencps.dossiermgt.model.Registration;
+import com.fds.vr.business.model.DossierFile;
 
 import com.fds.vr.business.model.VRVehicleSpecification;
 import com.fds.vr.business.service.base.VRVehicleSpecificationLocalServiceBaseImpl;
@@ -55,7 +54,7 @@ public class VRVehicleSpecificationLocalServiceImpl
 
 
 	public VRVehicleSpecification updateVehicleSpecification(LinkedHashMap<String, String> mapValues,
-			long vrVehicleTypeCertificateId, Date modifiedDate, Registration registration, DossierFile dossierFile) {
+			long vrVehicleTypeCertificateId, Date modifiedDate, DossierFile dossierFile) {
 		
 		Date now = new Date();
 

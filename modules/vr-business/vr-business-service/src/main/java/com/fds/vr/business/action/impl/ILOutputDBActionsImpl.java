@@ -6,14 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-
+/*
 import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
-
+*/
 import com.fds.vr.business.action.ILOutputDBActions;
 import com.fds.vr.business.model.ILCertificate;
 import com.fds.vr.business.model.ILVehicle;
@@ -43,7 +43,7 @@ public class ILOutputDBActionsImpl implements ILOutputDBActions {
 
 	@Override
 	public boolean processOutputDB() throws ParseException, SearchException, JSONException {
-
+/*
 		Date syncDate = ILSyncDateLocalServiceUtil.getSyncDate();
 
 //		_log.info("synsDate: "+syncDate);
@@ -100,11 +100,11 @@ public class ILOutputDBActionsImpl implements ILOutputDBActions {
 					}
 				}
 			}
-		}
+		}*/
 
 		return true;
 	}
-
+	/*
 	private void outputDBAction(JSONObject formJsonData, Date modifiedDate, Dossier dossier, long dossierFileId,
 			String dossierTemplateNo, String dossierPartNo, String fileTemplateNo, String referenceUid) {
 		_log.info("dossierFileId: "+dossierFileId);
@@ -236,7 +236,7 @@ public class ILOutputDBActionsImpl implements ILOutputDBActions {
 		ILSyncDateLocalServiceUtil.updateSyncDate(modifiedDate);
 
 	}
-
+*/
 //	public static void main(String []args) {
 //		
 //		

@@ -16,9 +16,16 @@ package com.fds.vr.business.service.impl;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 
 import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.service.base.VRProductionPlantLocalServiceBaseImpl;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -88,5 +95,53 @@ public class VRProductionPlantLocalServiceImpl
 
 		return vrProductionPlantPersistence.update(object);
 	}
+	
+	
+	
+	public List<VRProductionPlant> findBymappingStatus(long mtCore, String mappingStatus){
+		return vrProductionPlantPersistence.findBymappingStatus(mtCore, mappingStatus);
+	}
+	
+	public List<VRProductionPlant> findByproductionPlantCode(long mtCore, long applicantProfileId, String productionPlantCode){
+		return vrProductionPlantPersistence.findByproductionPlantCode(mtCore, applicantProfileId, productionPlantCode);
+	}	
+	
+	public List<VRProductionPlant> findBymappingMA_XUONG_LR(long mtCore, String mappingMA_CTY, String mappingMA_XUONG_LR){
+		return vrProductionPlantPersistence.findBymappingMA_XUONG_LR(mtCore, mappingMA_CTY, mappingMA_XUONG_LR);
+	}
+	
+	public List<VRProductionPlant> findByproductionPlantType(long mtCore, String productionPlantType){
+		return vrProductionPlantPersistence.findByproductionPlantType(mtCore, productionPlantType);
+	}
+	
+	public List<VRProductionPlant> findByproductionPlantStatus(long mtCore, String productionPlantStatus){
+		return vrProductionPlantPersistence.findByproductionPlantStatus(mtCore, productionPlantStatus);
+	}
+	
+	public List<VRProductionPlant> findByproductionPlantStatus_PPCode(long mtCore, long applicantProfileId, String productionPlantCode, String productionPlantStatus){
+		return vrProductionPlantPersistence.findByproductionPlantStatus_PPCode(mtCore, applicantProfileId, productionPlantCode, productionPlantStatus);
+	}
+	
+	public List<VRProductionPlant> findByproductionPlantStatus_PPName(long mtCore, long applicantProfileId, String productionPlantName, String productionPlantStatus){
+		return vrProductionPlantPersistence.findByproductionPlantStatus_PPName(mtCore, applicantProfileId, productionPlantName, productionPlantStatus);
+	}
+	
+	public List<VRProductionPlant> findByproductionPlantStatus_PPAddress(long mtCore, long applicantProfileId, String productionPlantAddress, String productionPlantStatus){
+		return vrProductionPlantPersistence.findByproductionPlantStatus_PPAddress(mtCore, applicantProfileId, productionPlantAddress, productionPlantStatus);
+	}
+	
+	public List<VRProductionPlant> findByproductionPlantName_PPAddress(long mtCore, long applicantProfileId, String productionPlantName, String productionPlantAddress){
+		return vrProductionPlantPersistence.findByproductionPlantName_PPAddress(mtCore, applicantProfileId, productionPlantName, productionPlantAddress);
+	}
+	
+	public List<VRProductionPlant> findByproductionPlantRep_PPAddress(long mtCore, long applicantProfileId, String productionPlantRepresentative, String productionPlantAddress){
+		return vrProductionPlantPersistence.findByproductionPlantRep_PPAddress(mtCore, applicantProfileId, productionPlantRepresentative, productionPlantAddress);
+	}
+	
+	public List<VRProductionPlant> findByproductionPlantName(long mtCore, long applicantProfileId, String productionPlantName){
+		return vrProductionPlantPersistence.findByproductionPlantName(mtCore, applicantProfileId, productionPlantName);
+	}
+	
+	private Log _log = LogFactoryUtil.getLog(VRProductionPlantLocalServiceImpl.class);
 
 }

@@ -1,6 +1,7 @@
 package org.opencps.dossiermgt.scheduler;
 
 import java.net.HttpURLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,12 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.opencps.auth.utils.APIDateTimeUtils;
+import org.opencps.datamgt.model.DictItemGroup;
 import org.opencps.dossiermgt.constants.RegistrationTerm;
 import org.opencps.dossiermgt.exception.NoSuchRegistrationException;
 import org.opencps.dossiermgt.model.Registration;
 import org.opencps.dossiermgt.model.RegistrationForm;
 import org.opencps.dossiermgt.service.RegistrationFormLocalServiceUtil;
 import org.opencps.dossiermgt.service.RegistrationLocalServiceUtil;
+
 import org.opencps.usermgt.model.Applicant;
 import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 import org.opencps.usermgt.utils.DateTimeUtils;
@@ -23,6 +26,16 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
+import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRApplicantProfileHistory;
+import com.fds.vr.business.model.VRProductionPlant;
+import com.fds.vr.business.model.impl.VRApplicantProfileHistoryImpl;
+import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantImpl;
+import com.fds.vr.business.service.VRApplicantProfileHistoryLocalServiceUtil;
+import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
+import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -46,6 +59,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 @Component(immediate = true, service = RegistrationSyncScheduler.class)
@@ -112,8 +126,9 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 						RegistrationLocalServiceUtil.updateRegistration(registration);
 						
 						// TODO sync registrationForm
-						List<RegistrationForm> registrationForms = RegistrationFormLocalServiceUtil.findByG_REGID_ISNEW(
-						    registration.getRegistrationId(), Boolean.TRUE);
+						List<RegistrationForm> registrationForms = RegistrationFormLocalServiceUtil.getFormsbyRegId(groupId, registration.getRegistrationId());
+						//List<RegistrationForm> registrationForms = RegistrationFormLocalServiceUtil.findByG_REGID_ISNEW(
+						//    registration.getRegistrationId(), Boolean.TRUE);
 						
 						for (RegistrationForm registrationForm : registrationForms) {
 							
@@ -125,8 +140,10 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 									properties, paramsForm, serviceContext);
 							
 							if (registrationFormPOSTrespone.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
-								
-								registrationForm.setIsNew(Boolean.FALSE);
+								if(registration.getRegistrationState() == 2) {
+									 registrationForm.setIsNew(Boolean.FALSE);
+								}
+								registrationForm.setModifiedDate(new Date());
 								RegistrationFormLocalServiceUtil.updateRegistrationForm(registrationForm);
 								
 							}
@@ -159,7 +176,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
                                 
                                 if(registrationClient.getRegistrationState() == 2) {
                                     try {
-                                        //Update application info
+                                        //1. Update application info
                                         Applicant applicant = ApplicantLocalServiceUtil.fetchByAppId(registrationClient.getApplicantIdNo());
                                         
                                         if(applicant != null) {
@@ -183,6 +200,196 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
                                             Indexer<Applicant> indexApplicant = IndexerRegistryUtil.nullSafeGetIndexer(Applicant.class);
                                             indexApplicant.reindex(applicant);
                                         }
+                                        
+                                        String mappingMA_CTY = StringPool.BLANK;
+                                		String mappingTEN_CTY = StringPool.BLANK;
+                                		String mappingDIA_CHI_CTY = StringPool.BLANK;
+                                		String mappingStatus = StringPool.BLANK;
+                                		String mappingNote = StringPool.BLANK;
+                                		String markupDesigner = StringPool.BLANK; //1: CSTK
+                                		String markupDomesticsManufacturer = StringPool.BLANK; //2: CSSX TN
+                                		String markupImporter = StringPool.BLANK; //3: CSNK
+                                		String markupCorporation = StringPool.BLANK; //4: CSSX NN, 5: CSBHBD, 9: KHAC
+                                		
+                                		SimpleDateFormat formatDateShort = new SimpleDateFormat("dd/MM/yyyy");
+                                		String applicantCeremonyDate = formatDateShort.format(registrationClient.getApplicantIdDate()); 
+                                		
+                						RegistrationForm registrationFormTTC = RegistrationFormLocalServiceUtil.getByRegIdAndFormNo(registrationClient.getRegistrationId(), "TTCDN");
+                						
+                                		String applicantBusinessType = StringPool.BLANK;
+                                		if (registrationFormTTC != null && registrationFormTTC.getFormData().length() > 1) {
+                                			JSONObject formJson = JSONFactoryUtil.createJSONObject(registrationFormTTC.getFormData());
+                                			applicantBusinessType = formJson.getString("loai_hinh_doanh_nghiep");
+                                			markupCorporation = formJson.getString("doi_tuong");
+                                			markupDesigner = markupCorporation.contains("1") ? "1" : "0";
+                                			markupDomesticsManufacturer = markupCorporation.contains("2") ? "1" : "0";
+                                			markupImporter = markupCorporation.contains("3") ? "1" : "0";
+                                		}
+                						
+                						
+                                        if (1==1) {
+                                        	// Lay tu json
+                                    		// anh xa lai Ma_cty
+                                    		 mappingMA_CTY = StringPool.BLANK;
+                                    		 mappingTEN_CTY = StringPool.BLANK;
+                                    		 mappingDIA_CHI_CTY = StringPool.BLANK;
+                                    		 mappingStatus = StringPool.BLANK;
+                                    		 mappingNote = StringPool.BLANK;
+                                        }
+                                        
+                                        //2. Update vr_applicantprofile
+                                        VRApplicantProfile appProfile = new VRApplicantProfileImpl();
+                                        appProfile = VRApplicantProfileLocalServiceUtil.fetchVRApplicantProfile(0);  // fake
+                                        if (Validator.isNull(appProfile) || appProfile.getId() == 0) {
+                                        	appProfile = new VRApplicantProfileImpl();
+                                        }
+                                        appProfile.setMtCore(1);
+                                    	if (1==1) {
+                                    		// Mapping with one specific Oracle account (if exist)
+                                    		
+                                    		appProfile.setMappingMA_CTY(mappingMA_CTY);
+                                        	appProfile.setMappingTEN_CTY(mappingTEN_CTY);
+                                        	appProfile.setMappingDIA_CHI_CTY(mappingDIA_CHI_CTY);
+                                        	appProfile.setMappingStatus(mappingStatus);
+                                        	appProfile.setMappingNote(mappingNote);
+                                    	}                                        	
+                                    	appProfile.setApplicantCode(registrationClient.getApplicantIdNo());
+                                    	appProfile.setApplicantName(registrationClient.getApplicantName());
+                                    	appProfile.setApplicantAddress(registrationClient.getAddress());
+                                    	appProfile.setApplicantPhone(registrationClient.getContactTelNo());
+                                    	appProfile.setApplicantEmail(registrationClient.getContactEmail());
+                                    	appProfile.setApplicantFax("---");
+                                    	appProfile.setApplicantBusinessType(applicantBusinessType); // Lay tu json
+                                    	appProfile.setApplicantRepresentative(registrationClient.getContactName());
+                                    	appProfile.setApplicantRepresentativeTitle(registrationClient.getRepresentativeEnterprise());
+                                    	appProfile.setApplicantCity(registrationClient.getCityCode());
+                                    	appProfile.setApplicantContactName(registrationClient.getContactName());
+                                    	appProfile.setApplicantContactEmail(registrationClient.getContactEmail());
+                                    	appProfile.setApplicantContactPhone(registrationClient.getContactTelNo());
+                                    	appProfile.setApplicantNationality("VN");
+                                    	appProfile.setApplicantRegion("---");
+                                    	appProfile.setMarkupDesigner(markupDesigner); // Lay tu json
+                                    	appProfile.setMarkupDomesticsManufacturer(markupDomesticsManufacturer); // Lay tu json
+                                    	appProfile.setMarkupOverseasManufacturer(StringPool.BLANK);
+                                    	appProfile.setMarkupCorporation(markupCorporation);  // Lay tu json
+                                    	appProfile.setMarkupImporter(markupImporter); // Lay tu json
+                                    	appProfile.setApplicantStatus("2"); // da phe duyet
+                                    	appProfile.setApplicantCeremonyDate(applicantCeremonyDate.toString());
+                                    	appProfile.setModifyDate(new Date());
+                                        
+                                        if (appProfile != null && appProfile.getId() > 0) {
+                                        	
+                                        	VRApplicantProfileLocalServiceUtil.updateVRApplicantProfile(appProfile);
+                                        } else {
+                                        	
+                                        	long VRApplicantProfileId = CounterLocalServiceUtil.increment(VRApplicantProfile.class.getName());
+                                        	appProfile.setId(VRApplicantProfileId);
+                                        	
+                                        	VRApplicantProfileLocalServiceUtil.addVRApplicantProfile(appProfile);
+                                        }
+                                        
+                                        
+                                        //3. Insert vr_applicantprofile_history
+                                        VRApplicantProfileHistory appProfileHistory = new VRApplicantProfileHistoryImpl(); 
+                                        long VRApplicantProfileHistoryId = CounterLocalServiceUtil.increment(VRApplicantProfileHistory.class.getName());
+                                    	appProfileHistory.setId(VRApplicantProfileHistoryId);
+                                    	appProfileHistory.setMtCore(1);
+                                    	if (1==1) {
+                                    		// Mapping with one specific Oracle account (if exist)
+                                    		appProfileHistory.setMappingMA_CTY(mappingMA_CTY);
+                                    		appProfileHistory.setMappingTEN_CTY(mappingTEN_CTY);
+                                    		appProfileHistory.setMappingDIA_CHI_CTY(mappingDIA_CHI_CTY);
+                                    		appProfileHistory.setMappingStatus(mappingStatus);
+                                    		appProfileHistory.setMappingNote(mappingNote);
+                                    	}                                        	
+                                    	appProfileHistory.setApplicantCode(registrationClient.getApplicantIdNo());
+                                    	appProfileHistory.setApplicantName(registrationClient.getApplicantName());
+                                    	appProfileHistory.setApplicantAddress(registrationClient.getAddress());
+                                    	appProfileHistory.setApplicantPhone(registrationClient.getContactTelNo());
+                                    	appProfileHistory.setApplicantEmail(registrationClient.getContactEmail());
+                                    	appProfileHistory.setApplicantFax("---");
+                                    	appProfileHistory.setApplicantBusinessType(applicantBusinessType); // Lay tu json
+                                    	appProfileHistory.setApplicantRepresentative(registrationClient.getContactName());
+                                    	appProfileHistory.setApplicantRepresentativeTitle(registrationClient.getRepresentativeEnterprise());
+                                    	appProfileHistory.setApplicantCity(registrationClient.getCityCode());
+                                    	appProfileHistory.setApplicantContactName(registrationClient.getContactName());
+                                    	appProfileHistory.setApplicantContactEmail(registrationClient.getContactEmail());
+                                    	appProfileHistory.setApplicantContactPhone(registrationClient.getContactTelNo());
+                                    	appProfileHistory.setApplicantNationality("VN");
+                                    	appProfile.setApplicantRegion("---");
+                                    	appProfile.setMarkupDesigner(markupDesigner); // Lay tu json
+                                    	appProfile.setMarkupDomesticsManufacturer(markupDomesticsManufacturer); // Lay tu json
+                                    	appProfile.setMarkupOverseasManufacturer(StringPool.BLANK);
+                                    	appProfile.setMarkupCorporation(markupCorporation);  // Lay tu json
+                                    	appProfile.setMarkupImporter(markupImporter); // Lay tu json
+                                    	appProfileHistory.setApplicantStatus("2"); // da phe duyet
+                                    	appProfileHistory.setApplicantCeremonyDate(applicantCeremonyDate.toString());
+                                    	appProfileHistory.setModifyDate(new Date());
+                                    	                                    	
+                                    	VRApplicantProfileHistoryLocalServiceUtil.addVRApplicantProfileHistory(appProfileHistory);
+                                        
+                                        
+                                        
+                                        //4. Update vr_productionplant 
+                                    	List<RegistrationForm> registrationForms = RegistrationFormLocalServiceUtil.getFormsbyRegId(groupId, registrationClient.getRegistrationId());
+                                    	if (registrationForms != null && registrationForms.size() > 0) {
+                        					for (RegistrationForm regForm : registrationForms) {
+                        						
+                        						if ((regForm.getFormData().length() > 1) && (regForm.getRemoved() == false) && (regForm.getFormNo().contains("TTXSXLR") )) {
+                        							JSONObject xuongSXJson = JSONFactoryUtil.createJSONObject();
+    	                        					String formData = regForm.getFormData();
+    	                        					long registrationFormId = regForm.getRegistrationFormId();
+    	                        					try {
+    	                        						JSONObject formJson = JSONFactoryUtil.createJSONObject(formData);
+    	                        						String tenxuongSX = formJson.getString("ten_xuong_san_xuat");
+    	                        						String diachixuongSX = formJson.getString("dia_chi_xuong_san_xuat");
+    	                        						String nguoi_dai_dien_xuong = formJson.getString("nguoi_dai_dien_xuong");
+    	                        						String chuc_danh_dai_dien_xuong = formJson.getString("chuc_danh_dai_dien_xuong");
+    	                        						String email_xuong = formJson.getString("email_xuong");
+    	                        						if (Validator.isNotNull(tenxuongSX) && Validator.isNotNull(diachixuongSX)) {
+    	                        							// Quy tac Update: Trung ca ten & dia chi; hoac Trung ten, khac dia chi; hoac Trung dia chi va nguoi_dai_dien_xuong
+    	                        							
+    	                        							VRProductionPlant objProductionPlant = new VRProductionPlantImpl(); 
+    	                                                    objProductionPlant = VRProductionPlantLocalServiceUtil.fetchVRProductionPlant(0); // fake
+    	                                                    if (Validator.isNull(objProductionPlant) || objProductionPlant.getId() == 0) {
+    	                                                    	objProductionPlant = new VRProductionPlantImpl();
+    	                                                    }
+    	                                                    objProductionPlant.setMtCore(1);
+    	                                                    objProductionPlant.setApplicantProfileId(appProfile.getId());
+    	                                                    
+    	                                                    
+    	                                                    if (objProductionPlant != null && objProductionPlant.getId() > 0) {
+    	                                                    	
+    	                                                    	VRProductionPlantLocalServiceUtil.updateVRProductionPlant(objProductionPlant);
+    	                                                    } else {
+    	                                                    	objProductionPlant = new VRProductionPlantImpl();  
+    	                                                    	long VRProductionPlantId = CounterLocalServiceUtil.increment(VRProductionPlant.class.getName());
+    	                                                    	objProductionPlant.setId(VRProductionPlantId);
+    	                                                    	
+    	                                                    	
+    	                                                    	VRProductionPlantLocalServiceUtil.addVRProductionPlant(objProductionPlant);
+    	                                                    }
+    	                        							
+    	                        							
+    	                        							
+    	                        							
+    	                        							}
+    	                        						//5. Mapping with one specific Oracle account-based XuongSX (if exist)
+    	                        						
+    	                        						
+    	                        						
+    	                        						} catch (Exception e) {
+    	                        							// TODO: handle exception
+    	                        						}
+    	                        					}
+                        						}
+                        					
+                        				}
+                                      
+                                    
+                                        
+                                     
+                                            
                                     } catch(Exception e) {
                                         _log.error(e);
                                     }
@@ -229,6 +436,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 
 		return lsServer;
 	}
+	
 	private Map<String, Object> getParamsPostRegistration(Registration registration) throws PortalException {
 
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -263,6 +471,8 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 			params.put(RegistrationTerm.REGISTRATION_CLASS, registration.getRegistrationClass());
 			params.put(RegistrationTerm.REPRESENTATIVE_ENTERPRISE, registration.getRepresentativeEnterprise());
 			params.put(RegistrationTerm.SUBMITTING, registration.getSubmitting());
+			params.put(RegistrationTerm.REMARKS, registration.getRemarks());
+			params.put(RegistrationTerm.MARK_AS_DELETED, registration.getMarkasdeleted());
 			
 			
 		} catch (Exception e) {

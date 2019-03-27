@@ -34,6 +34,7 @@ import org.opencps.dossiermgt.exception.NoSuchDossierPartException;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
+import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.base.DossierFileLocalServiceBaseImpl;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 import org.opencps.usermgt.action.ApplicantActions;
@@ -593,9 +594,6 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		long now = System.currentTimeMillis();
 		DossierFile dossierFile = dossierFilePersistence.findByDID_REF(dossierId, referenceUid);
 
-		// dossierFileLocalService.getDossierFileByReferenceUid(dossierId,
-		// referenceUid);
-
 		String jrxmlTemplate = dossierFile.getFormReport();
 
 		if (Validator.isNull(jrxmlTemplate)) {
@@ -639,6 +637,28 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		
 		dossierFile.setIsNew(true);
 
+		long userActionId = serviceContext.getUserId();
+		User userAction = null;
+		if (userActionId != 0) {
+			userAction = userLocalService.getUser(userActionId);
+		}
+		if (userActionId != dossierFile.getUserId()) {
+			// add new Dossier File
+			
+			long dossierFileId = counterLocalService.increment(DossierFile.class.getName());
+			dossierFile.setDossierFileId(dossierFileId);
+			dossierFile.setCreateDate(new Date());
+			dossierFile.setModifiedDate(new Date());
+			dossierFile.setUserId(userActionId);
+			dossierFile.setUserName(Validator.isNotNull(userAction) ? userAction.getFullName() : StringPool.BLANK);
+			dossierFile.setReferenceUid(PortalUUIDUtil.generate());
+			dossierFile.setIsNew(true);
+			dossierFile.setOriginal(true);			
+			
+			DossierFileLocalServiceUtil.addDossierFile(dossierFile);
+		}
+		
+		
 		// Binhth add message bus to processing jasper file
 		Message message = new Message();
 
