@@ -14,9 +14,22 @@
 
 package com.fds.vr.business.service.impl;
 
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+
+import com.fds.vr.business.model.VRApplicantProfileHistory;
+import com.fds.vr.business.service.base.VRApplicantProfileHistoryServiceBaseImpl;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import aQute.bnd.annotation.ProviderType;
 
-import com.fds.vr.business.service.base.VRApplicantProfileHistoryServiceBaseImpl;
+
 
 /**
  * The implementation of the vr applicant profile history remote service.
@@ -40,4 +53,33 @@ public class VRApplicantProfileHistoryServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRApplicantProfileHistoryServiceUtil} to access the vr applicant profile history remote service.
 	 */
+	public List<VRApplicantProfileHistory> findBymappingStatus(long mtCore, String mappingStatus) {
+		return vrApplicantProfileHistoryPersistence.findBymappingStatus(mtCore, mappingStatus);
+	}
+	
+	public List<VRApplicantProfileHistory> findByapplicantCode(long mtCore, String applicantCode) {
+		return vrApplicantProfileHistoryPersistence.findByapplicantCode(mtCore, applicantCode);
+	}
+
+	public List<VRApplicantProfileHistory> findBymappingMA_CTY(long mtCore, String mappingMA_CTY) {
+		return vrApplicantProfileHistoryPersistence.findBymappingMA_CTY(mtCore, mappingMA_CTY);
+	}
+
+	public List<VRApplicantProfileHistory> findBymappingTEN_CTY(long mtCore, String mappingTEN_CTY) {
+		return vrApplicantProfileHistoryPersistence.findBymappingTEN_CTY(mtCore, mappingTEN_CTY);
+	}
+
+	public List<VRApplicantProfileHistory> findByapplicantRegion(long mtCore, String applicantRegion) {
+		return vrApplicantProfileHistoryPersistence.findByapplicantRegion(mtCore, applicantRegion);
+	}
+
+	public List<VRApplicantProfileHistory> findByapplicantCity(long mtCore, String applicantCity) {
+		return vrApplicantProfileHistoryPersistence.findByapplicantCity(mtCore, applicantCity);
+	}
+
+	public List<VRApplicantProfileHistory> findByapplicantStatus(long mtCore, String applicantStatus) {
+		return vrApplicantProfileHistoryPersistence.findByapplicantStatus(mtCore, applicantStatus);
+	}
+	
+	private Log _log = LogFactoryUtil.getLog(VRApplicantProfileLocalServiceImpl.class);
 }

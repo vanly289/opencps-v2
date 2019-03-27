@@ -21,10 +21,10 @@ import com.fds.vr.business.service.base.VRRPDossierStatisticsLocalServiceBaseImp
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.opencps.dossiermgt.model.Dossier;
-import org.opencps.dossiermgt.model.DossierRequestUD;
-import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
-
+import com.fds.vr.business.model.Dossier;
+/*import com.fds.vr.business.model.DossierRequestUD;
+import com.fds.vr.business.service.DossierRequestUDLocalServiceUtil;
+*/
 /**
  * The implementation of the vrrp dossier statistics local service.
  *
@@ -84,7 +84,7 @@ public class VRRPDossierStatisticsLocalServiceImpl
 					dossierStatistics.setDossierfirstupdatingdate(dossier.getModifiedDate());
 				}
 			}
-			
+			/* SONVH comment 25/3/2019
 			//dossierendorsementdate
 			if (Validator.isNull(dossierStatistics.getDossierfirstupdatingdate())) {
 				DossierRequestUD dossierRequestUD = DossierRequestUDLocalServiceUtil.getByDossierAndType(dossier.getDossierId(), "submitting");
@@ -93,7 +93,7 @@ public class VRRPDossierStatisticsLocalServiceImpl
 					dossierStatistics.setDossierfirstupdatingdate(dossierRequestUD.getCreateDate());
 				}
 			}
-			
+			*/
 			//dossiersubmittingdate
 			if (Validator.isNull(dossierStatistics.getDossiersubmittingdate())) {
 				if(dossier.getDossierStatus().contentEquals("processing")) {

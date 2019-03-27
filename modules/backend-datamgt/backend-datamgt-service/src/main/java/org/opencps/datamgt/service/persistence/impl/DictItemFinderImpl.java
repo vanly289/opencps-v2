@@ -2,11 +2,15 @@ package org.opencps.datamgt.service.persistence.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,16 +44,18 @@ public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictIt
 			
 			StringBuilder query = new StringBuilder();
 			query.append("SELECT {opencps_dictitem.*} FROM opencps_dictitem ");
-			if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
+			if (Validator.isNull(level)) {
+				// bo qua
+			} else if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
 				// bo qua INNER JOIN parentItem
 			} else {
 				query.append("INNER JOIN opencps_dictitem parent  ");
 				query.append("ON opencps_dictitem.dictCollectionId = parent.dictCollectionId  ");
 				query.append("AND opencps_dictitem.parentItemId = parent.dictItemId  ");
-				if (Validator.isNotNull(level)) {
-					query.append("AND parent.level <   " + level);
+				if (Validator.isNotNull(level) && Long.parseLong(level.trim()) > 0) {
+					query.append("AND parent.level < " + level +" ");
 				} else {
-					query.append("AND parent.level = 1  ");
+					query.append("AND parent.level in (0, 1)  ");
 				}
 			}			
 			
@@ -58,12 +64,14 @@ public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictIt
 			query.append("AND collection.collectionCode in (" + collectionCode + ")  ");
 			query.append("WHERE  1=1 ");
 			if (groupId > 0 ) {
-				query.append(" and opencps_dictitem.groupId =   " + groupId);
+				query.append(" and opencps_dictitem.groupId =   " + groupId +" ");
 			} else { 
 				query.append(" and opencps_dictitem.groupId = 55301  ");	
 			}
 			
-			if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
+			if (Validator.isNull(level)) {
+				// bo qua
+			} else if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
 				query.append(" and opencps_dictitem.level = 0  ");
 			} else {
 				query.append(" and opencps_dictitem.parentItemId > 0  ");
@@ -103,17 +111,19 @@ public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictIt
 			
 			StringBuilder query = new StringBuilder();
 			query.append("SELECT {opencps_dictitem.*} FROM opencps_dictitem ");
-			if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
+			if (Validator.isNull(level)) {
+				// bo qua
+			} else if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
 				// bo qua INNER JOIN parentItem
 			} else {
 				query.append("INNER JOIN opencps_dictitem parent  ");
 				query.append("ON opencps_dictitem.dictCollectionId = parent.dictCollectionId  ");
 				query.append("AND opencps_dictitem.parentItemId = parent.dictItemId  ");
-				if (Validator.isNotNull(level)) {
-					query.append("AND parent.level <   " + level);
+				if (Validator.isNotNull(level) && Long.parseLong(level.trim()) > 0) {
+					query.append("AND parent.level < " + level +" ");
 				} else {
-					query.append("AND parent.level = 1  ");
-				}				
+					query.append("AND parent.level in (0, 1)  ");
+				}			
 				
 				String parentFilter = StringPool.BLANK;
 				if (Validator.isNotNull(parentItemCode)) {
@@ -142,12 +152,14 @@ public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictIt
 			query.append("AND collection.collectionCode in (" + collectionCode + ")  ");
 			query.append("WHERE  1=1 ");
 			if (groupId > 0 ) {
-				query.append(" and opencps_dictitem.groupId =   " + groupId);
+				query.append(" and opencps_dictitem.groupId =   " + groupId +" ");
 			} else { 
 				query.append(" and opencps_dictitem.groupId = 55301  ");	
 			}
 			
-			if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
+			if (Validator.isNull(level)) {
+				// bo qua
+			} else if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
 				query.append(" and opencps_dictitem.level = 0  ");
 			} else {
 				query.append(" and opencps_dictitem.parentItemId > 0  ");
@@ -188,16 +200,18 @@ public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictIt
 			
 			StringBuilder query = new StringBuilder();
 			query.append("SELECT {opencps_dictitem.*} FROM opencps_dictitem ");
-			if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
+			if (Validator.isNull(level)) {
+				// bo qua
+			} else if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
 				// bo qua INNER JOIN parentItem
 			} else {
 				query.append("INNER JOIN opencps_dictitem parent  ");
 				query.append("ON opencps_dictitem.dictCollectionId = parent.dictCollectionId  ");
 				query.append("AND opencps_dictitem.parentItemId = parent.dictItemId  ");
-				if (Validator.isNotNull(level)) {
-					query.append("AND parent.level <   " + level);
+				if (Validator.isNotNull(level) && Long.parseLong(level.trim()) > 0) {
+					query.append("AND parent.level < " + level +" ");
 				} else {
-					query.append("AND parent.level = 1  ");
+					query.append("AND parent.level in (0, 1)  ");
 				}	
 			}			
 
@@ -234,12 +248,14 @@ public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictIt
 			
 			query.append("WHERE  1=1 ");
 			if (groupId > 0 ) {
-				query.append(" and opencps_dictitem.groupId =   " + groupId);
+				query.append(" and opencps_dictitem.groupId =   " + groupId +" ");
 			} else { 
 				query.append(" and opencps_dictitem.groupId = 55301  ");	
 			}
 			
-			if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
+			if (Validator.isNull(level)) {
+				// bo qua
+			} else if ((Validator.isNotNull(level)) && level.equalsIgnoreCase("0")){
 				query.append(" and opencps_dictitem.level = 0  ");
 			} else {
 				query.append(" and opencps_dictitem.parentItemId > 0  ");
@@ -271,6 +287,7 @@ public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictIt
 		
 		return new ArrayList<DictItem>();
 	}
+	
 	
 	/*
 	public List<DictItem> findCustomSLQ_GroupName_AlterName123(String groupName, String alterName) {

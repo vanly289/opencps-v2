@@ -13,8 +13,8 @@ import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
 import org.opencps.datamgt.service.DictGroupLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemGroupLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
-import org.opencps.dossiermgt.model.DossierFile;
-import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
+import com.fds.vr.business.model.DossierFile;
+import com.fds.vr.business.service.DossierFileLocalServiceUtil;
 
 import com.fds.vr.business.action.VRActions;
 import com.fds.vr.business.constant.VRKeys;
@@ -538,7 +538,7 @@ public class VRActionsImpl implements VRActions {
 
 		JSONArray output = JSONFactoryUtil.createJSONArray();
 
-		org.opencps.dossiermgt.model.DossierFile dossierFile = getDossierFile(dossierFileId);
+		DossierFile dossierFile = getDossierFile(dossierFileId);
 
 		JSONObject formData = null;
 
@@ -604,9 +604,9 @@ public class VRActionsImpl implements VRActions {
 		return output;
 	}
 
-	private org.opencps.dossiermgt.model.DossierFile getDossierFile(long dossierFileId) {
+	private DossierFile getDossierFile(long dossierFileId) {
 
-		org.opencps.dossiermgt.model.DossierFile dossierFile = null;
+		DossierFile dossierFile = null;
 
 		if (dossierFileId != 0) {
 			try {

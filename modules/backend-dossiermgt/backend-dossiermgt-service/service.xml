@@ -942,7 +942,7 @@
 		<column name="configNote" type="String"/>
 		<column name="dossierTemplateNo" type="String"/>
 		
-		<order by="ASC">
+		<order by="asc">
 			<order-column name="createDate"/>
 		</order>
 		
@@ -1245,12 +1245,14 @@
 		<column name="registrationClass" type="String" />
 		<column name="submitting" type="boolean" />
 		<column name="representativeEnterprise" type="String" />
+		<column name="remarks" type="String" />
+		<column name="markasdeleted" type="int" />
 
 		<!-- Order -->
 
 		<!-- Filter -->
         <order by="desc">
-            <order-column name="modifiedDate" order-by="desc"></order-column>
+            <order-column name="createDate" order-by="desc"></order-column>
         </order>
         
 		<finder return-type="Collection" name="F_submitting">
@@ -1288,6 +1290,12 @@
 
 		<finder return-type="Registration" name="REG_APPNO">
         	<finder-column name="applicantIdNo"></finder-column>
+        </finder>
+        
+        <finder return-type="Collection" name="REG_APPNO_markasdeleted">
+        	<finder-column name="groupId" />
+        	<finder-column name="applicantIdNo"></finder-column>
+        	<finder-column name="markasdeleted"></finder-column>
         </finder>
 	</entity>
 

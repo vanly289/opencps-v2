@@ -27,12 +27,12 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.opencps.dossiermgt.model.Deliverable;
-import org.opencps.dossiermgt.model.DossierFile;
-import org.opencps.dossiermgt.model.Registration;
-import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
-import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
-import org.opencps.dossiermgt.service.RegistrationLocalServiceUtil;
+import com.fds.vr.business.model.Deliverable;
+import com.fds.vr.business.model.DossierFile;
+import com.fds.vr.business.model.Registration;
+import com.fds.vr.business.service.DeliverableLocalServiceUtil;
+import com.fds.vr.business.service.DossierFileLocalServiceUtil;
+import com.fds.vr.business.service.RegistrationLocalServiceUtil;
 
 public class VROutputDBActionsImpl implements VROutputDBActions{
 
@@ -63,6 +63,7 @@ public class VROutputDBActionsImpl implements VROutputDBActions{
 				String deliverableCode = deliverable.getDeliverableCode();
 				if (Validator.isNotNull(applicantIdNo)) {
 					registration = RegistrationLocalServiceUtil.getByApplicantIdNo(applicantIdNo);
+					
 				}
 				if (Validator.isNotNull(deliverableCode)) {
 					dossierFile = DossierFileLocalServiceUtil.getByDeliverableCode(deliverableCode);
@@ -96,7 +97,7 @@ public class VROutputDBActionsImpl implements VROutputDBActions{
 
 		// update table VR_VEHICLESPECIFICATION
 		VRVehicleSpecificationLocalServiceUtil.updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId,
-				modifiedDate, registration, dossierFile);
+				modifiedDate, dossierFile);
 		// update VR_INSPECTIONSTANDARD
 		//VRInspectionStandardLocalServiceUtil.updateInspectionStandard(mapValues, vrVehicleTypeCertificateId,
 				//modifiedDate, registration, dossierFile);
