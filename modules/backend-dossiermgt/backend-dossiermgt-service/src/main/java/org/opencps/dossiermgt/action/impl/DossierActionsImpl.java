@@ -1705,7 +1705,6 @@ public class DossierActionsImpl implements DossierActions {
 								actionNote, 0, status, context);
 
 						// in SERVER
-
 						Dossier sourceDossier = DossierLocalServiceUtil.getByRef(55217, dossier.getReferenceUid());
 						if (sourceDossier != null) {
 							context.setScopeGroupId(sourceDossier.getGroupId());
@@ -2904,7 +2903,7 @@ public class DossierActionsImpl implements DossierActions {
 					if (partList != null && partList.size() > 0) {
 						long fileEntryId = 0;
 						boolean eForm = false;
-						boolean multiple = false;
+						//boolean multiple = false;
 						String formData = StringPool.BLANK;
 						String formScript = StringPool.BLANK;
 						String docFileReferenceUid = StringPool.BLANK;
@@ -2915,7 +2914,7 @@ public class DossierActionsImpl implements DossierActions {
 							String fileTemplateNo = dossierPart.getFileTemplateNo();
 							_log.info("fileTemplateNo: "+fileTemplateNo);
 							//eForm = dossierPart.getEForm();
-							multiple = dossierPart.getMultiple();
+							//multiple = dossierPart.getMultiple();
 							
 							if (createFileTempNoList.contains(fileTemplateNo)) {
 								JSONObject createFile = JSONFactoryUtil.createJSONObject();
@@ -2927,7 +2926,7 @@ public class DossierActionsImpl implements DossierActions {
 								createFile.put(DossierPartTerm.FILE_TEMPLATE_NO, fileTemplateNo);
 								createFile.put(DossierPartTerm.PART_TYPE, dossierPart.getPartType());
 								//createFile.put(DossierPartTerm.EFORM, eForm);
-								createFile.put(DossierPartTerm.MULTIPLE, multiple);
+								createFile.put(DossierPartTerm.MULTIPLE, dossierPart.getMultiple());
 
 								List<DossierFile> dossierFilesResult = DossierFileLocalServiceUtil
 										.getDossierFileByDID_FTNO_DPT(dossierId, fileTemplateNo, 2, false,
@@ -2943,11 +2942,8 @@ public class DossierActionsImpl implements DossierActions {
 											formScript = dossierFile.getFormScript();
 											docFileReferenceUid = dossierFile.getReferenceUid();
 											fileEntryId = dossierFile.getFileEntryId();
-											if (createFileTempNoList
-													.contains(dossierFile.getFileTemplateNo())) {
-												returned = true;
-											}
-
+											returned = createFileTempNoList.contains(dossierFile.getFileTemplateNo())
+													? true : false;
 											dossierFileId = dossierFile.getDossierFileId();
 
 											break df;
@@ -2961,63 +2957,42 @@ public class DossierActionsImpl implements DossierActions {
 									formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(),
 											dossierId, serviceContext);
 									formScript = dossierPart.getFormScript();
-
-									if (returnFileTempNoList
-											.contains(dossierPart.getFileTemplateNo())) {
-										returned = true;
-									}
+									returned = returnFileTempNoList.contains(dossierPart.getFileTemplateNo())
+											? true : false;
 
 									// create Dossier File
 									if (eForm) {
 										DossierFileActions actions = new DossierFileActionsImpl();
 
 										// check dossierFile contain
+										DossierFile dossierFile = DossierFileLocalServiceUtil
+												.getDossierFileByDID_FTNO_DPT_First(dossierId, fileTemplateNo, 2, false,
+														new DossierFileComparator(false, "createDate", Date.class));
 
-										DossierFile dossierFile = null;
-
-										try {
-											dossierFile = DossierFileLocalServiceUtil
-													.getDossierFileByDID_FTNO_DPT_First(dossierId,
-															fileTemplateNo, 2, false, new DossierFileComparator(
-																	false, "createDate", Date.class));
-										} catch (Exception e) {
-											_log.debug(e);
-										}
-										_log.info("dossierFile: "+JSONFactoryUtil.looseSerialize(dossierFile));
 										if (Validator.isNull(dossierFile)) {
-
 											dossierFile = actions.addDossierFile(groupId, dossierId,
 													StringPool.BLANK, dossier.getDossierTemplateNo(),
 													dossierPart.getPartNo(), fileTemplateNo,
 													dossierPart.getPartName(), StringPool.BLANK, 0L, null,
 													StringPool.BLANK, String.valueOf(false), serviceContext);
-
 										}
-										_log.info("docFileReferenceUid: "+dossierFile.getReferenceUid());
-
 										docFileReferenceUid = dossierFile.getReferenceUid();
-
 										dossierFileId = dossierFile.getDossierFileId();
 									}
-
 								}
 
-								dossierFilesResult = DossierFileLocalServiceUtil
-										.getDossierFileByDID_FTNO_DPT_NOT_NULL_FID(dossierId, fileTemplateNo, 2,
-												0, false);
-
-								counter = (dossierFilesResult != null && !dossierFilesResult.isEmpty())
-										? dossierFilesResult.size() : 0;
+								counter = DossierFileLocalServiceUtil.countDossierFileByDID_FTNO_DPT_NOT_NULL_FID(
+										dossierId, fileTemplateNo, 2, 0, false);
 
 										_log.info("docFileReferenceUid: "+docFileReferenceUid);
-								createFile.put("eform", eForm);
-								createFile.put("dossierFileId", dossierFileId);
-								createFile.put("formData", formData);
-								createFile.put("formScript", formScript);
-								createFile.put("referenceUid", docFileReferenceUid);
+								createFile.put(DossierPartTerm.EFORM, eForm);
+								createFile.put(DossierFileTerm.DOSSIER_FILE_ID, dossierFileId);
+								createFile.put(DossierPartTerm.FORM_DATA, formData);
+								createFile.put(DossierPartTerm.FORM_SCRIPT, formScript);
+								createFile.put(DossierTerm.REFERENCE_UID, docFileReferenceUid);
 								createFile.put("counter", counter);
 								createFile.put("returned", returned);
-								createFile.put("fileEntryId", fileEntryId);
+								createFile.put(DossierFileTerm.FILE_ENTRY_ID, fileEntryId);
 								createFiles.put(createFile);
 
 							}
@@ -3029,6 +3004,24 @@ public class DossierActionsImpl implements DossierActions {
 				}
 				result.put("processAction", processAction);
 				result.put("createFiles", createFiles);
+				//
+				_log.info(">> END-FOR-PROCESS-ACTION: "
+						+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+				List<ProcessPlugin> pluginList = ProcessPluginLocalServiceUtil.getBySC_SPID_ARUN(serviceProcessId,
+						postStepCode, true);
+
+				if (pluginList != null && pluginList.size() > 0) {
+					for (ProcessPlugin plg : pluginList) {
+						// do create file
+						String pluginForm = plg.getPluginForm();
+						String fileTemplateNo = StringUtil.replaceFirst(plg.getSampleData(), "#", StringPool.BLANK);
+
+						if (Validator.isNotNull(pluginForm) && !pluginForm.contains("original")) {
+							_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(),
+									serviceContext);
+						}
+					}
+				}
 			}
 		} catch (Exception e) {
 			_log.error(e);

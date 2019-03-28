@@ -11,4 +11,5 @@ Export-Package: \
 	com.fds.vr.business.service.persistence,\
 	com.fds.vr.business.action,\
 	com.fds.vr.business.action.impl,\
-	com.fds.vr.business.constant
+	com.fds.vr.business.constant,\
+	com.fds.vr.business.action

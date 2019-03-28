@@ -1014,8 +1014,13 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 
 	public DossierFile getDossierFileByDID_FTNO_DPT_First(long dossierId, String fileTemplateNo, int dossierPartType,
 			boolean removed, OrderByComparator orderByComparator) throws NoSuchDossierFileException {
-		return dossierFilePersistence.findByDID_FTNO_DPT_First(dossierId, fileTemplateNo, dossierPartType, removed,
-				orderByComparator);
+		try {
+			return dossierFilePersistence.findByDID_FTNO_DPT_First(dossierId, fileTemplateNo, dossierPartType, removed,
+					orderByComparator);
+		} catch (NoSuchDossierFileException e) {
+			_log.debug(e);
+			return null;
+		}
 	}
 
 	public List<DossierFile> getDossierFileByDID_FTNO(long dossierId, String fileTemplateNo, boolean removed) {
@@ -1042,6 +1047,11 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			int dossierPartType, long fileEntryId, boolean removed) {
 		return dossierFilePersistence.findByDID_FTNO_DPT_NOT_NULL_FID(dossierId, fileTemplateNo, dossierPartType,
 				fileEntryId, removed);
+	}
+
+	public int countDossierFileByDID_FTNO_DPT_NOT_NULL_FID(long dossierId, String fileTemplateNo,
+			int dossierPartType, long fileEntryId, boolean removed) {
+		return dossierFilePersistence.countByDID_FTNO_DPT_NOT_NULL_FID(dossierId, fileTemplateNo, dossierPartType, fileEntryId, removed);
 	}
 
 	public List<DossierFile> getDossierFileByDID_FTNO_DPT_NOT_NULL_FID(long dossierId, String fileTemplateNo,
