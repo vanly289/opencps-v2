@@ -60,51 +60,56 @@ public class VRActionsImpl implements VRActions {
 			for (DictItemGroup dg : danhSachNhomThongSoKTChiTiet) {
 
 				DictItem dictItem = DictItemLocalServiceUtil.getDictItem(dg.getDictItemId());
+				if (dg.getDictItemId() > 0 && dictItem != null && dictItem.getItemCode().length() > 0 ) {
+					_log.info("vehicleClass====" + vehicleClass + "===========dictItem.getItemCode()====" + dictItem.getItemCode() + "============module===="+ module );
+					List<VRConfigTechSpec> configTechSpecs = VRConfigTechSpecLocalServiceUtil.getByVCSC(vehicleClass,
+							dictItem.getItemCode().trim(), module);
+					JSONObject jsonTechSpec = JSONFactoryUtil.createJSONObject();
 
-				List<VRConfigTechSpec> configTechSpecs = VRConfigTechSpecLocalServiceUtil.getByVCSC(vehicleClass,
-						dictItem.getItemCode(), module);
-				JSONObject jsonTechSpec = JSONFactoryUtil.createJSONObject();
+					jsonTechSpec.put("key", dictItem.getItemCode());
+					jsonTechSpec.put("type", "label");
+					jsonTechSpec.put("title", dictItem.getItemName());
+					jsonTechSpec.put("required", false);
+					jsonTechSpec.put("Reference", false);
+					jsonTechSpec.put("placeholder", dictItem.getItemDescription());
+					jsonTechSpec.put("datasource", StringPool.BLANK);
+					jsonTechSpec.put("value", StringPool.BLANK);
 
-				jsonTechSpec.put("key", dictItem.getItemCode());
-				jsonTechSpec.put("type", "label");
-				jsonTechSpec.put("title", dictItem.getItemName());
-				jsonTechSpec.put("required", false);
-				jsonTechSpec.put("Reference", false);
-				jsonTechSpec.put("placeholder", dictItem.getItemDescription());
-				jsonTechSpec.put("datasource", StringPool.BLANK);
-				jsonTechSpec.put("value", StringPool.BLANK);
+					if (configTechSpecs != null && configTechSpecs.size() > 0 ) {
+						JSONArray items = JSONFactoryUtil.createJSONArray();
 
-				JSONArray items = JSONFactoryUtil.createJSONArray();
+						for (VRConfigTechSpec vrConfig : configTechSpecs) {
+							JSONObject techspec = JSONFactoryUtil.createJSONObject();
 
-				for (VRConfigTechSpec vrConfig : configTechSpecs) {
-					JSONObject techspec = JSONFactoryUtil.createJSONObject();
+							techspec.put("key", vrConfig.getSpecificationCode());
 
-					techspec.put("key", vrConfig.getSpecificationCode());
+							techspec.put("type", vrConfig.getSpecificationEntryType());
 
-					techspec.put("type", vrConfig.getSpecificationEntryType());
+							techspec.put("title", vrConfig.getSpecificationDisplayName());
 
-					techspec.put("title", vrConfig.getSpecificationDisplayName());
+							techspec.put("required", vrConfig.getSpecificationMandatory());
 
-					techspec.put("required", vrConfig.getSpecificationMandatory());
+							techspec.put("Reference", false);
 
-					techspec.put("Reference", false);
+							techspec.put("value", StringPool.BLANK);
 
-					techspec.put("value", StringPool.BLANK);
+							techspec.put("standard", vrConfig.getSpecificationStandard());
+							techspec.put("basicunit", vrConfig.getSpecificationBasicUnit());
+							techspec.put("placeholder", vrConfig.getSpecificationEntryPlaceholder());
+							if (Validator.isNotNull(vrConfig.getSpecificationDataCollectionId())) {
+								techspec.put("datasource",
+										getDataSource(vrConfig.getSpecificationDataCollectionId(), groupId, vehicleClass));
+							}
 
-					techspec.put("standard", vrConfig.getSpecificationStandard());
-					techspec.put("basicunit", vrConfig.getSpecificationBasicUnit());
-					techspec.put("placeholder", vrConfig.getSpecificationEntryPlaceholder());
-					if (Validator.isNotNull(vrConfig.getSpecificationDataCollectionId())) {
-						techspec.put("datasource",
-								getDataSource(vrConfig.getSpecificationDataCollectionId(), groupId, vehicleClass));
+							items.put(techspec);
+						}
+
+						jsonTechSpec.put("items", items);
+
+						techSpecArr.put(jsonTechSpec);
 					}
-
-					items.put(techspec);
-				}
-
-				jsonTechSpec.put("items", items);
-
-				techSpecArr.put(jsonTechSpec);
+					
+				}				
 			}
 
 			if (dossierFileId != 0) {
@@ -116,9 +121,7 @@ public class VRActionsImpl implements VRActions {
 			returnObj.put("content", techSpecArr);
 
 		} catch (Exception e) {
-			_log.error(e);
-			// returnObj.put("status", HttpsURLConnection.HTTP_OK);
-			// returnObj.put("content", techSpecArr);
+			_log.error(e);			
 		}
 
 		return returnObj;
