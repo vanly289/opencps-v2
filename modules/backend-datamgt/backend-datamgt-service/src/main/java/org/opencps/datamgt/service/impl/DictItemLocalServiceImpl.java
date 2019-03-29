@@ -14,6 +14,7 @@
 
 package org.opencps.datamgt.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -797,6 +798,33 @@ public class DictItemLocalServiceImpl extends DictItemLocalServiceBaseImpl {
 	@Override
 	public long countByOlderThanDate(Date date, long groupId) {
 		return dictItemPersistence.countByF_dictItemNewerThan(date, groupId);
+	}
+	
+	public List<DictItem> findByCollection_Group_Level_OrderBy(long groupId, String collectionCode, String groupCode , String level, String OrderBy )  throws PortalException, SystemException {
+		try {
+			return dictItemFinder.findByCollection_Group_Level_OrderBy(groupId, collectionCode, groupCode, level, OrderBy);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<DictItem>();
+	}
+	
+	public List<DictItem> findByCollection_Level_OrderBy(long groupId, String collectionCode, String level, String OrderBy )  throws PortalException, SystemException {
+		try {
+			return dictItemFinder.findByCollection_Level_OrderBy(groupId, collectionCode, level, OrderBy);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<DictItem>();
+	}
+	
+	public List<DictItem> findByCollection_Parent_Level_OrderBy(long groupId, String collectionCode, String parentItemCode, String level, String OrderBy )  throws PortalException, SystemException {
+		try {
+			return dictItemFinder.findByCollection_Parent_Level_OrderBy(groupId, collectionCode, parentItemCode, level, OrderBy);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<DictItem>();
 	}
 	private static final Log _log = LogFactoryUtil.getLog(DictItemLocalServiceImpl.class);
 }
