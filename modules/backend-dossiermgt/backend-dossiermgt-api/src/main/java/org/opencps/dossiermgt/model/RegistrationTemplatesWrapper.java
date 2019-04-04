@@ -74,6 +74,9 @@ public class RegistrationTemplatesWrapper implements RegistrationTemplates,
 		attributes.put("formScript", getFormScript());
 		attributes.put("formReport", getFormReport());
 		attributes.put("sampleData", getSampleData());
+		attributes.put("formScriptOfficial", getFormScriptOfficial());
+		attributes.put("formReportOfficial", getFormReportOfficial());
+		attributes.put("sampleDataOfficial", getSampleDataOfficial());
 
 		return attributes;
 	}
@@ -169,6 +172,24 @@ public class RegistrationTemplatesWrapper implements RegistrationTemplates,
 
 		if (sampleData != null) {
 			setSampleData(sampleData);
+		}
+
+		String formScriptOfficial = (String)attributes.get("formScriptOfficial");
+
+		if (formScriptOfficial != null) {
+			setFormScriptOfficial(formScriptOfficial);
+		}
+
+		String formReportOfficial = (String)attributes.get("formReportOfficial");
+
+		if (formReportOfficial != null) {
+			setFormReportOfficial(formReportOfficial);
+		}
+
+		String sampleDataOfficial = (String)attributes.get("sampleDataOfficial");
+
+		if (sampleDataOfficial != null) {
+			setSampleDataOfficial(sampleDataOfficial);
 		}
 	}
 
@@ -278,6 +299,16 @@ public class RegistrationTemplatesWrapper implements RegistrationTemplates,
 	}
 
 	/**
+	* Returns the form report official of this registration templates.
+	*
+	* @return the form report official of this registration templates
+	*/
+	@Override
+	public java.lang.String getFormReportOfficial() {
+		return _registrationTemplates.getFormReportOfficial();
+	}
+
+	/**
 	* Returns the form script of this registration templates.
 	*
 	* @return the form script of this registration templates
@@ -285,6 +316,16 @@ public class RegistrationTemplatesWrapper implements RegistrationTemplates,
 	@Override
 	public java.lang.String getFormScript() {
 		return _registrationTemplates.getFormScript();
+	}
+
+	/**
+	* Returns the form script official of this registration templates.
+	*
+	* @return the form script official of this registration templates
+	*/
+	@Override
+	public java.lang.String getFormScriptOfficial() {
+		return _registrationTemplates.getFormScriptOfficial();
 	}
 
 	/**
@@ -315,6 +356,16 @@ public class RegistrationTemplatesWrapper implements RegistrationTemplates,
 	@Override
 	public java.lang.String getSampleData() {
 		return _registrationTemplates.getSampleData();
+	}
+
+	/**
+	* Returns the sample data official of this registration templates.
+	*
+	* @return the sample data official of this registration templates
+	*/
+	@Override
+	public java.lang.String getSampleDataOfficial() {
+		return _registrationTemplates.getSampleDataOfficial();
 	}
 
 	/**
@@ -484,6 +535,16 @@ public class RegistrationTemplatesWrapper implements RegistrationTemplates,
 	}
 
 	/**
+	* Sets the form report official of this registration templates.
+	*
+	* @param formReportOfficial the form report official of this registration templates
+	*/
+	@Override
+	public void setFormReportOfficial(java.lang.String formReportOfficial) {
+		_registrationTemplates.setFormReportOfficial(formReportOfficial);
+	}
+
+	/**
 	* Sets the form script of this registration templates.
 	*
 	* @param formScript the form script of this registration templates
@@ -491,6 +552,16 @@ public class RegistrationTemplatesWrapper implements RegistrationTemplates,
 	@Override
 	public void setFormScript(java.lang.String formScript) {
 		_registrationTemplates.setFormScript(formScript);
+	}
+
+	/**
+	* Sets the form script official of this registration templates.
+	*
+	* @param formScriptOfficial the form script official of this registration templates
+	*/
+	@Override
+	public void setFormScriptOfficial(java.lang.String formScriptOfficial) {
+		_registrationTemplates.setFormScriptOfficial(formScriptOfficial);
 	}
 
 	/**
@@ -581,6 +652,16 @@ public class RegistrationTemplatesWrapper implements RegistrationTemplates,
 	@Override
 	public void setSampleData(java.lang.String sampleData) {
 		_registrationTemplates.setSampleData(sampleData);
+	}
+
+	/**
+	* Sets the sample data official of this registration templates.
+	*
+	* @param sampleDataOfficial the sample data official of this registration templates
+	*/
+	@Override
+	public void setSampleDataOfficial(java.lang.String sampleDataOfficial) {
+		_registrationTemplates.setSampleDataOfficial(sampleDataOfficial);
 	}
 
 	/**

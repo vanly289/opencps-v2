@@ -66,7 +66,7 @@ public class RegistrationTemplatesCacheModel implements CacheModel<RegistrationT
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -98,6 +98,12 @@ public class RegistrationTemplatesCacheModel implements CacheModel<RegistrationT
 		sb.append(formReport);
 		sb.append(", sampleData=");
 		sb.append(sampleData);
+		sb.append(", formScriptOfficial=");
+		sb.append(formScriptOfficial);
+		sb.append(", formReportOfficial=");
+		sb.append(formReportOfficial);
+		sb.append(", sampleDataOfficial=");
+		sb.append(sampleDataOfficial);
 		sb.append("}");
 
 		return sb.toString();
@@ -190,6 +196,27 @@ public class RegistrationTemplatesCacheModel implements CacheModel<RegistrationT
 			registrationTemplatesImpl.setSampleData(sampleData);
 		}
 
+		if (formScriptOfficial == null) {
+			registrationTemplatesImpl.setFormScriptOfficial(StringPool.BLANK);
+		}
+		else {
+			registrationTemplatesImpl.setFormScriptOfficial(formScriptOfficial);
+		}
+
+		if (formReportOfficial == null) {
+			registrationTemplatesImpl.setFormReportOfficial(StringPool.BLANK);
+		}
+		else {
+			registrationTemplatesImpl.setFormReportOfficial(formReportOfficial);
+		}
+
+		if (sampleDataOfficial == null) {
+			registrationTemplatesImpl.setSampleDataOfficial(StringPool.BLANK);
+		}
+		else {
+			registrationTemplatesImpl.setSampleDataOfficial(sampleDataOfficial);
+		}
+
 		registrationTemplatesImpl.resetOriginalValues();
 
 		return registrationTemplatesImpl;
@@ -216,6 +243,9 @@ public class RegistrationTemplatesCacheModel implements CacheModel<RegistrationT
 		formScript = objectInput.readUTF();
 		formReport = objectInput.readUTF();
 		sampleData = objectInput.readUTF();
+		formScriptOfficial = objectInput.readUTF();
+		formReportOfficial = objectInput.readUTF();
+		sampleDataOfficial = objectInput.readUTF();
 	}
 
 	@Override
@@ -294,6 +324,27 @@ public class RegistrationTemplatesCacheModel implements CacheModel<RegistrationT
 		else {
 			objectOutput.writeUTF(sampleData);
 		}
+
+		if (formScriptOfficial == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(formScriptOfficial);
+		}
+
+		if (formReportOfficial == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(formReportOfficial);
+		}
+
+		if (sampleDataOfficial == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(sampleDataOfficial);
+		}
 	}
 
 	public String uuid;
@@ -311,4 +362,7 @@ public class RegistrationTemplatesCacheModel implements CacheModel<RegistrationT
 	public String formScript;
 	public String formReport;
 	public String sampleData;
+	public String formScriptOfficial;
+	public String formReportOfficial;
+	public String sampleDataOfficial;
 }

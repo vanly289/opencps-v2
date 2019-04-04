@@ -93,7 +93,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 		} else {
 			return;
 		}
-		_log.error("OpenCPS PULL DOSSIERS IS STARTING : " + APIDateTimeUtils.convertDateToString(new Date()));
+		_log.info("OpenCPS PULL DOSSIERS IS STARTING : " + APIDateTimeUtils.convertDateToString(new Date()));
 
 		Company company = CompanyLocalServiceUtil.getCompanyByMx(PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
@@ -166,7 +166,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 					option = ProcessOptionLocalServiceUtil.getByDTPLNoAndServiceCF(desGroupId, dossierTemplateNo,
 							config.getServiceConfigId());
 					if (Validator.isNotNull(option)) {
-						serviceProcessId = option.getServiceConfigId();
+						serviceProcessId = option.getServiceProcessId();
 						break;
 					}
 				}
@@ -180,7 +180,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 			Dossier desDossier = DossierLocalServiceUtil.getByRef(desGroupId, referenceUid);
 			long userId = systemUser.getUserId();
-			_log.info("userId: " + userId);
+			_log.info("userId: " + userId + "====desGroupId====="+desGroupId+"======serviceProcessId====="+serviceProcessId);
 
 			if (Validator.isNull(desDossier)) {
 				// Create DOSSIER
@@ -232,15 +232,17 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 					ProcessAction processAction = ProcessActionLocalServiceUtil
 							.fetchBySPI_PRESC_AEV(serviceProcessId, StringPool.BLANK, "SUBMIT");
-					_log.info("GETPROCESSACTION************" + processAction.getActionName());
 
-					actions.doAction(desGroupId, desDossier, option, processAction, processAction.getActionCode(),
-							applicantName, applicantNote, processAction.getAssignUserId(), systemUser.getUserId(),
-							StringPool.BLANK, serviceContext);
-
+					if (processAction != null && processAction.getProcessActionId() > 0 ) {
+						_log.info("========serviceProcessId=======" + serviceProcessId + "=======GETPROCESSACTION************" + processAction.getActionName());
+						actions.doAction(desGroupId, desDossier, option, processAction, processAction.getActionCode(),
+								applicantName, applicantNote, processAction.getAssignUserId(), systemUser.getUserId(),
+								StringPool.BLANK, serviceContext);
+					}
+					
 				} catch (Exception e) {
 					_log.error(e);
-					_log.info("SyncDossierUnsuccessfuly" + desDossier.getReferenceUid());
+					_log.info("SyncDossierUnsuccessfully=========" + desDossier.getReferenceUid());
 				}
 
 			} else {

@@ -14,9 +14,10 @@ import org.opencps.dossiermgt.constants.RegistrationTerm;
 import org.opencps.dossiermgt.exception.NoSuchRegistrationException;
 import org.opencps.dossiermgt.model.Registration;
 import org.opencps.dossiermgt.model.RegistrationForm;
+import org.opencps.dossiermgt.model.RegistrationTemplates;
 import org.opencps.dossiermgt.service.RegistrationFormLocalServiceUtil;
 import org.opencps.dossiermgt.service.RegistrationLocalServiceUtil;
-
+import org.opencps.dossiermgt.service.RegistrationTemplatesLocalServiceUtil;
 import org.opencps.usermgt.model.Applicant;
 import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 import org.opencps.usermgt.utils.DateTimeUtils;
@@ -61,6 +62,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 
 @Component(immediate = true, service = RegistrationSyncScheduler.class)
 public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener {
@@ -92,14 +94,14 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 
 			String dossierSyncEndpoint = "serverconfigs/" + serverNo;
 
-			JSONObject resDossierSync = rest.callAPI(0l, HttpMethods.GET, "application/json",
+			JSONObject resRegisSync = rest.callAPI(0l, HttpMethods.GET, "application/json",
 					RESTFulConfiguration.CLIENT_PATH_BASE, dossierSyncEndpoint, RESTFulConfiguration.CLIENT_USER,
 					RESTFulConfiguration.CLIENT_PASS, properties, serviceContext);
 
-			if (resDossierSync.getInt(RESTFulConfiguration.STATUS) == 200) {
+			if (resRegisSync.getInt(RESTFulConfiguration.STATUS) == 200) {
 				
 
-				long groupId = getGroupId(resDossierSync);
+				long groupId = getGroupId(resRegisSync);
 				_log.info("resServerConfig groupId ---------- :" + groupId);
 				
 				// TODO GROUP EMPLOYEE
@@ -132,7 +134,8 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 						
 						for (RegistrationForm registrationForm : registrationForms) {
 							
-							Map<String, Object> paramsForm = getParamsPostRegistrationForm(registrationForm, registration.getUuid());
+							// Map<String, Object> paramsForm = getParamsPostRegistrationForm(registrationForm, registration.getUuid());
+							Map<String, Object> paramsForm = getParamsPostRegistrationFormBusiness(groupId, registrationForm, registration.getUuid());
 							
 							JSONObject registrationFormPOSTrespone = rest.callPostAPI(desGroupId, HttpMethods.POST, "application/json", 
 									RESTFulConfiguration.SERVER_PATH_BASE, registrationFormEndpoint, RESTFulConfiguration.SERVER_USER,
@@ -226,24 +229,23 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
                                 			markupImporter = markupCorporation.contains("3") ? "1" : "0";
                                 		}
                 						
-                						
-                                        if (1==1) {
-                                        	// Lay tu json
-                                    		// anh xa lai Ma_cty
-                                    		 mappingMA_CTY = StringPool.BLANK;
-                                    		 mappingTEN_CTY = StringPool.BLANK;
-                                    		 mappingDIA_CHI_CTY = StringPool.BLANK;
-                                    		 mappingStatus = StringPool.BLANK;
-                                    		 mappingNote = StringPool.BLANK;
+                                		boolean flagUpdate = true; 
+                                        //2. Update vr_applicantprofile
+                                        
+                                		VRApplicantProfile appProfile = new VRApplicantProfileImpl();
+                                        List <VRApplicantProfile> lstAppProfile = VRApplicantProfileLocalServiceUtil.findByapplicantCode(1, registrationClient.getApplicantIdNo().trim());
+                                        if (lstAppProfile != null && lstAppProfile.size() > 0 ) {
+                                        	appProfile = lstAppProfile.get(0);
+                                        	flagUpdate = true;
+                                        } else {
+                                        	flagUpdate = false;
+                                        	appProfile.setId(CounterLocalServiceUtil.increment(VRApplicantProfile.class.getName()));
                                         }
                                         
-                                        //2. Update vr_applicantprofile
-                                        VRApplicantProfile appProfile = new VRApplicantProfileImpl();
-                                        appProfile = VRApplicantProfileLocalServiceUtil.fetchVRApplicantProfile(0);  // fake
-                                        if (Validator.isNull(appProfile) || appProfile.getId() == 0) {
-                                        	appProfile = new VRApplicantProfileImpl();
-                                        }
                                         appProfile.setMtCore(1);
+                                        appProfile.setModifyDate(new Date());
+                                        appProfile.setSyncDate(new Date());
+                                        
                                     	if (1==1) {
                                     		// Mapping with one specific Oracle account (if exist)
                                     		
@@ -270,26 +272,22 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
                                     	appProfile.setApplicantRegion("---");
                                     	appProfile.setMarkupDesigner(markupDesigner); // Lay tu json
                                     	appProfile.setMarkupDomesticsManufacturer(markupDomesticsManufacturer); // Lay tu json
-                                    	appProfile.setMarkupOverseasManufacturer(StringPool.BLANK);
+                                    	appProfile.setMarkupOverseasManufacturer(StringPool.BLANK); // Chua co thong tin
                                     	appProfile.setMarkupCorporation(markupCorporation);  // Lay tu json
                                     	appProfile.setMarkupImporter(markupImporter); // Lay tu json
                                     	appProfile.setApplicantStatus("2"); // da phe duyet
                                     	appProfile.setApplicantCeremonyDate(applicantCeremonyDate.toString());
-                                    	appProfile.setModifyDate(new Date());
+                                    	
                                         
-                                        if (appProfile != null && appProfile.getId() > 0) {
-                                        	
+                                    	if (flagUpdate == true) {                                        	
                                         	VRApplicantProfileLocalServiceUtil.updateVRApplicantProfile(appProfile);
                                         } else {
-                                        	
-                                        	long VRApplicantProfileId = CounterLocalServiceUtil.increment(VRApplicantProfile.class.getName());
-                                        	appProfile.setId(VRApplicantProfileId);
-                                        	
                                         	VRApplicantProfileLocalServiceUtil.addVRApplicantProfile(appProfile);
                                         }
                                         
-                                        
+                                    	
                                         //3. Insert vr_applicantprofile_history
+                                    	
                                         VRApplicantProfileHistory appProfileHistory = new VRApplicantProfileHistoryImpl(); 
                                         long VRApplicantProfileHistoryId = CounterLocalServiceUtil.increment(VRApplicantProfileHistory.class.getName());
                                     	appProfileHistory.setId(VRApplicantProfileHistoryId);
@@ -316,20 +314,20 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
                                     	appProfileHistory.setApplicantContactEmail(registrationClient.getContactEmail());
                                     	appProfileHistory.setApplicantContactPhone(registrationClient.getContactTelNo());
                                     	appProfileHistory.setApplicantNationality("VN");
-                                    	appProfile.setApplicantRegion("---");
-                                    	appProfile.setMarkupDesigner(markupDesigner); // Lay tu json
-                                    	appProfile.setMarkupDomesticsManufacturer(markupDomesticsManufacturer); // Lay tu json
-                                    	appProfile.setMarkupOverseasManufacturer(StringPool.BLANK);
-                                    	appProfile.setMarkupCorporation(markupCorporation);  // Lay tu json
-                                    	appProfile.setMarkupImporter(markupImporter); // Lay tu json
+                                    	appProfileHistory.setApplicantRegion("---");
+                                    	appProfileHistory.setMarkupDesigner(markupDesigner); // Lay tu json
+                                    	appProfileHistory.setMarkupDomesticsManufacturer(markupDomesticsManufacturer); // Lay tu json
+                                    	appProfileHistory.setMarkupOverseasManufacturer(StringPool.BLANK);
+                                    	appProfileHistory.setMarkupCorporation(markupCorporation);  // Lay tu json
+                                    	appProfileHistory.setMarkupImporter(markupImporter); // Lay tu json
                                     	appProfileHistory.setApplicantStatus("2"); // da phe duyet
                                     	appProfileHistory.setApplicantCeremonyDate(applicantCeremonyDate.toString());
                                     	appProfileHistory.setModifyDate(new Date());
+                                    	appProfileHistory.setSyncDate(new Date());
                                     	                                    	
                                     	VRApplicantProfileHistoryLocalServiceUtil.addVRApplicantProfileHistory(appProfileHistory);
                                         
-                                        
-                                        
+                                    	flagUpdate = true; //reset flagUpdate
                                         //4. Update vr_productionplant 
                                     	List<RegistrationForm> registrationForms = RegistrationFormLocalServiceUtil.getFormsbyRegId(groupId, registrationClient.getRegistrationId());
                                     	if (registrationForms != null && registrationForms.size() > 0) {
@@ -341,50 +339,86 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
     	                        					long registrationFormId = regForm.getRegistrationFormId();
     	                        					try {
     	                        						JSONObject formJson = JSONFactoryUtil.createJSONObject(formData);
-    	                        						String tenxuongSX = formJson.getString("ten_xuong_san_xuat");
-    	                        						String diachixuongSX = formJson.getString("dia_chi_xuong_san_xuat");
-    	                        						String nguoi_dai_dien_xuong = formJson.getString("nguoi_dai_dien_xuong");
-    	                        						String chuc_danh_dai_dien_xuong = formJson.getString("chuc_danh_dai_dien_xuong");
+    	                        						String productionPlantName = formJson.getString("ten_xuong_san_xuat");
+    	                        						String productionPlantAddress = formJson.getString("dia_chi_xuong_san_xuat");
+    	                        						String productionPlantRepresentative = formJson.getString("nguoi_dai_dien_xuong");
+    	                        						String productionPlantRepresentativeTitle = formJson.getString("chuc_danh_dai_dien_xuong");
     	                        						String email_xuong = formJson.getString("email_xuong");
-    	                        						if (Validator.isNotNull(tenxuongSX) && Validator.isNotNull(diachixuongSX)) {
+    	                        						if (Validator.isNotNull(productionPlantName) && Validator.isNotNull(productionPlantAddress)) {
     	                        							// Quy tac Update: Trung ca ten & dia chi; hoac Trung ten, khac dia chi; hoac Trung dia chi va nguoi_dai_dien_xuong
     	                        							
-    	                        							VRProductionPlant objProductionPlant = new VRProductionPlantImpl(); 
-    	                                                    objProductionPlant = VRProductionPlantLocalServiceUtil.fetchVRProductionPlant(0); // fake
-    	                                                    if (Validator.isNull(objProductionPlant) || objProductionPlant.getId() == 0) {
-    	                                                    	objProductionPlant = new VRProductionPlantImpl();
-    	                                                    }
-    	                                                    objProductionPlant.setMtCore(1);
-    	                                                    objProductionPlant.setApplicantProfileId(appProfile.getId());
-    	                                                    
-    	                                                    
-    	                                                    if (objProductionPlant != null && objProductionPlant.getId() > 0) {
-    	                                                    	
-    	                                                    	VRProductionPlantLocalServiceUtil.updateVRProductionPlant(objProductionPlant);
-    	                                                    } else {
+    	                        							// int Count1 = 0; //  Trung ca ten & dia chi;
+    	                        							// int Count2 = 0; // hoac Trung ten, khac dia chi;
+    	                        							// int Count3 = 0; // hoac Trung dia chi va nguoi_dai_dien_xuong;
+    	                        							long applicantProfileId = appProfile.getId();
+    	                        							
+    	                        							VRProductionPlant objProductionPlant = new VRProductionPlantImpl();
+    	                        							List <VRProductionPlant > lstProductionPlantCount1 = VRProductionPlantLocalServiceUtil.findByproductionPlantName(1, applicantProfileId, productionPlantName);
+    	                        							if (lstProductionPlantCount1 != null && lstProductionPlantCount1.size() > 0) {
+    	                        								objProductionPlant = lstProductionPlantCount1.get(0);
+    	                        								flagUpdate = true;
+    	                        							} else {
+    	                        							List <VRProductionPlant > lstProductionPlantCount2 = VRProductionPlantLocalServiceUtil.findByproductionPlantName_PPAddress(1, applicantProfileId, productionPlantName, productionPlantAddress);
+    	                        									if (lstProductionPlantCount2 != null && lstProductionPlantCount2.size() > 0) {
+    	    	                        								objProductionPlant = lstProductionPlantCount2.get(0);
+    	    	                        								flagUpdate = true;
+    	    	                        							} else {
+    	    	                        								List <VRProductionPlant > lstProductionPlantCount3 = VRProductionPlantLocalServiceUtil.findByproductionPlantRep_PPAddress(1, applicantProfileId, productionPlantRepresentative, productionPlantAddress);
+    	    	                        								if (lstProductionPlantCount3 != null && lstProductionPlantCount3.size() > 0) {
+        	    	                        								objProductionPlant = lstProductionPlantCount3.get(0);
+        	    	                        								flagUpdate = true;
+        	    	                        							} else {        	    	                        								
+        	    	                        								flagUpdate = false;
+        	    	                        							}
+    	    	                        							}
+    	                        							}
+    	                        							 
+    	                        							                           
+    	                                                    if (flagUpdate == false) {
     	                                                    	objProductionPlant = new VRProductionPlantImpl();  
     	                                                    	long VRProductionPlantId = CounterLocalServiceUtil.increment(VRProductionPlant.class.getName());
     	                                                    	objProductionPlant.setId(VRProductionPlantId);
+    	                                                    	objProductionPlant.setApplicantProfileId(applicantProfileId);
+    	                                                    	objProductionPlant.setProductionPlantCode(registrationClient.getApplicantIdNo() +"."+ VRProductionPlantId+"");    	                                                    	
+    	                                                    }
+    	                                                    
+    	                                                    
+    	                                                    
+    	                                                    objProductionPlant.setMtCore(1);
+    	                                                    objProductionPlant.setModifyDate(new Date());
+    	                                                    objProductionPlant.setSyncDate(new Date());
+    	                                                	
+    	                                                    objProductionPlant.setProductionPlantName(productionPlantName);
+    	                                                    objProductionPlant.setProductionPlantAddress(productionPlantAddress);
+    	                                                    objProductionPlant.setProductionPlantStateCode("VN");
+    	                                                    //objProductionPlant.setProductionPlantStateName("");
+    	                                                    objProductionPlant.setProductionPlantProvinceCode(registrationClient.getCityCode());
+    	                                                    //objProductionPlant.setProductionPlantProvinceName("");
+    	                                                    objProductionPlant.setProductionPlantEmail(email_xuong);
+    	                                                    objProductionPlant.setProductionPlantRepresentative(productionPlantRepresentative);
+    	                                                    objProductionPlant.setProductionPlantRepresentativeTitle(productionPlantRepresentativeTitle);
+    	                                                    objProductionPlant.setProductionPlantType("TN");
+    	                                                    objProductionPlant.setProductionPlantStatus(1+"");
+    	                                                    
+    	                                                    if (flagUpdate == true) {
     	                                                    	
-    	                                                    	
+    	                                                    	VRProductionPlantLocalServiceUtil.updateVRProductionPlant(objProductionPlant);
+    	                                                    } else {
     	                                                    	VRProductionPlantLocalServiceUtil.addVRProductionPlant(objProductionPlant);
     	                                                    }
-    	                        							
-    	                        							
-    	                        							
-    	                        							
-    	                        							}
-    	                        						//5. Mapping with one specific Oracle account-based XuongSX (if exist)
-    	                        						
-    	                        						
-    	                        						
-    	                        						} catch (Exception e) {
-    	                        							// TODO: handle exception
+    	                        								
     	                        						}
-    	                        					}
-                        						}
+    	                        						
+	                        						} catch (Exception e) {
+	                        							// TODO: handle exception
+	                        						}
+	                        					}
+                    						}
                         					
                         				}
+                                    	
+                                    	flagUpdate = true; //reset flagUpdate
+                						//5. Mapping with one specific Oracle account-based XuongSX (if exist)
                                       
                                     
                                         
@@ -482,6 +516,32 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 		return params;
 	}
 	
+	private Map<String, Object> getParamsPostRegistrationFormBusiness(long groupId, RegistrationForm registrationForm, String registrationUUID) throws PortalException {
+
+		Map<String, Object> params = new HashMap<String, Object>();
+
+		try {
+			String govAgencyCode = "";
+			RegistrationTemplates registrationTemplate = RegistrationTemplatesLocalServiceUtil
+					.getRegTempbyFormNoGovCode(groupId, registrationForm.getFormNo(), govAgencyCode);
+			
+			params.put(RegistrationTerm.UUID, registrationUUID);
+			params.put("referenceUid", registrationForm.getReferenceUid());
+			params.put("formNo", registrationForm.getFormNo());
+			params.put("formName", registrationForm.getFormName());
+			params.put("formData", registrationForm.getFormData()); // xem xet bo sung FormData chenh lech giua 2 cong
+			params.put("formScript", registrationTemplate.getFormScriptOfficial());
+			params.put("formReport", registrationTemplate.getFormReportOfficial());
+			params.put("fileEntryId", registrationForm.getFileEntryId());
+			params.put("removed", Boolean.valueOf(registrationForm.getRemoved()));
+			
+		} catch (Exception e) {
+			throw new PortalException("RegistrationFormNotFound");
+		}
+
+		return params;
+	}
+
 	private Map<String, Object> getParamsPostRegistrationForm(RegistrationForm registrationForm, String registrationUUID) throws PortalException {
 
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -504,7 +564,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 
 		return params;
 	}
-	
+
 	private long getGroupId(JSONObject response) {
 		long groupId = 0l;
 

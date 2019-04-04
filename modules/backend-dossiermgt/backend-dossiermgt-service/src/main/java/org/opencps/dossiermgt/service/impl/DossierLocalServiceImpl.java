@@ -480,6 +480,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			dossier.setWardName(wardName);
 			dossier.setContactName(contactName);
 			dossier.setContactEmail(contactEmail);
+			dossier.setContactTelNo(contactTelNo);
 
 			dossier.setFolderId(folderId);
 			dossier.setDossierActionId(dossierActionId);
@@ -513,6 +514,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			dossier.setWardName(wardName);
 			dossier.setContactName(contactName);
 			dossier.setContactEmail(contactEmail);
+			dossier.setContactTelNo(contactTelNo);
 			dossier.setViaPostal(viaPostal);
 			dossier.setPostalAddress(postalAddress);
 			dossier.setPostalCityCode(postalCityCode);

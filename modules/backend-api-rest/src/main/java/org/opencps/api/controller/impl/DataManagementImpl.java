@@ -54,6 +54,7 @@ import org.opencps.synchronization.service.DictItemTempLocalServiceUtil;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -2085,6 +2086,154 @@ public class DataManagementImpl implements DataManagement {
 			result.getDictItemModel().addAll(DataManagementUtils.mapperDictItemList(lstItems));
 
 			return Response.status(200).entity(result).build();
+		} catch (Exception e) {
+			_log.error("@GET: " + e);
+			ErrorMsg error = new ErrorMsg();
+
+			error.setMessage("not found!");
+			error.setCode(404);
+			error.setDescription("not found!");
+
+			return Response.status(404).entity(error).build();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Response getDictItemsByCollection_Level_OrderBy(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, String collectionCode, DataSearchModel query) {
+		DictcollectionInterface dictItemDataUtil = new DictCollectionActions();
+		DictItemResults result = new DictItemResults();
+		SearchContext searchContext = new SearchContext();
+		searchContext.setCompanyId(company.getCompanyId());
+
+		String level = query.getLevel();
+		String OrderBy = query.getOrder();
+		try {
+			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+			JSONObject jsonData = JSONFactoryUtil.createJSONObject();
+
+			
+			JSONArray arrReturn = JSONFactoryUtil.createJSONArray();
+
+			List<DictItem> items = DictItemLocalServiceUtil.findByCollection_Level_OrderBy(groupId, collectionCode, level, OrderBy);
+			if (items != null) {
+				_log.info("SIZE: "+items.size());
+				for (DictItem di : items) {
+					JSONObject ob = JSONFactoryUtil.createJSONObject();
+
+					ob.put(di.getItemCode(), di.getItemName());
+
+					arrReturn.put(ob);
+				}
+			}			
+
+			jsonData.put("Items", arrReturn);			
+			
+			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(jsonData)).build();
+
+		} catch (Exception e) {
+			_log.error("@GET: " + e);
+			ErrorMsg error = new ErrorMsg();
+
+			error.setMessage("not found!");
+			error.setCode(404);
+			error.setDescription("not found!");
+
+			return Response.status(404).entity(error).build();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Response getDictItemsByCollection_Group_Level_OrderBy(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, String collectionCode, String groupCode, DataSearchModel query) {
+		DictcollectionInterface dictItemDataUtil = new DictCollectionActions();
+		DictItemResults result = new DictItemResults();
+		SearchContext searchContext = new SearchContext();
+		searchContext.setCompanyId(company.getCompanyId());
+ 		
+		String level = query.getLevel();
+		String OrderBy = query.getOrder();
+		try {
+			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+			JSONObject jsonData = JSONFactoryUtil.createJSONObject();
+
+			
+			JSONArray arrReturn = JSONFactoryUtil.createJSONArray();
+
+			List<DictItem> items = DictItemLocalServiceUtil.findByCollection_Group_Level_OrderBy(groupId, collectionCode, groupCode, level, OrderBy);
+			if (items != null) {
+				_log.info("SIZE: "+items.size());
+				for (DictItem di : items) {
+					JSONObject ob = JSONFactoryUtil.createJSONObject();
+
+					ob.put(di.getItemCode(), di.getItemName());
+
+					arrReturn.put(ob);
+				}
+			}			
+
+			jsonData.put("Items", arrReturn);			
+			
+			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(jsonData)).build();
+
+		} catch (Exception e) {
+			_log.error("@GET: " + e);
+			ErrorMsg error = new ErrorMsg();
+
+			error.setMessage("not found!");
+			error.setCode(404);
+			error.setDescription("not found!");
+
+			return Response.status(404).entity(error).build();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Response getDictItemsByCollection_Parent_Level_OrderBy(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, String collectionCode, DataSearchModel query) {
+		DictcollectionInterface dictItemDataUtil = new DictCollectionActions();
+		DictItemResults result = new DictItemResults();
+		SearchContext searchContext = new SearchContext();
+		searchContext.setCompanyId(company.getCompanyId());
+		
+		String parentItemCode = query.getParent();
+		String level = query.getLevel();
+		String OrderBy = query.getOrder();
+ 
+		try {
+			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+			JSONObject jsonData = JSONFactoryUtil.createJSONObject();
+
+			
+			JSONArray arrReturn = JSONFactoryUtil.createJSONArray();
+
+			List<DictItem> items = DictItemLocalServiceUtil.findByCollection_Parent_Level_OrderBy(groupId, collectionCode, parentItemCode, level, OrderBy);
+			if (items != null) {
+				_log.info("SIZE: "+items.size());
+				for (DictItem di : items) {
+					JSONObject ob = JSONFactoryUtil.createJSONObject();
+
+					ob.put(di.getItemCode(), di.getItemName());
+
+					arrReturn.put(ob);
+				}
+				
+				////////////// TODO
+			}			
+
+			jsonData.put("Items", arrReturn);
+			
+			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(jsonData)).build();
+
 		} catch (Exception e) {
 			_log.error("@GET: " + e);
 			ErrorMsg error = new ErrorMsg();

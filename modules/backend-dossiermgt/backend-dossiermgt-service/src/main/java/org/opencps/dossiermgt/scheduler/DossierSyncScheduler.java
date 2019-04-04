@@ -40,12 +40,12 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-
+/*
 		if (!isRunning) {
 			isRunning = true;
 		} else {
 			return;
-		}
+		}*/
 
 			_log.info("OpenCPS SYNC DOSSIERS IS  : " + APIDateTimeUtils.convertDateToString(new Date()));
 

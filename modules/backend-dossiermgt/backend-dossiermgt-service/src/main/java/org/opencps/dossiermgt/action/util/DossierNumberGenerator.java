@@ -597,7 +597,7 @@ public class DossierNumberGenerator {
 				}
 
 
-				certNumber = String.format("%07d", _counterNumber); 
+				certNumber = String.format("%05d", _counterNumber); 
 				
 			} else {
 				certNumber = "0";

@@ -3671,6 +3671,9 @@ public class RegistrationTemplatesPersistenceImpl extends BasePersistenceImpl<Re
 		registrationTemplatesImpl.setFormScript(registrationTemplates.getFormScript());
 		registrationTemplatesImpl.setFormReport(registrationTemplates.getFormReport());
 		registrationTemplatesImpl.setSampleData(registrationTemplates.getSampleData());
+		registrationTemplatesImpl.setFormScriptOfficial(registrationTemplates.getFormScriptOfficial());
+		registrationTemplatesImpl.setFormReportOfficial(registrationTemplates.getFormReportOfficial());
+		registrationTemplatesImpl.setSampleDataOfficial(registrationTemplates.getSampleDataOfficial());
 
 		return registrationTemplatesImpl;
 	}

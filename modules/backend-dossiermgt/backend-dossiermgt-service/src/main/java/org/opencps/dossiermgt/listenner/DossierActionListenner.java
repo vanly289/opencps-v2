@@ -174,7 +174,7 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 					//_log.debug("dossierLog: "+dossierLog);
 					
 					// SONVH bosung 25/03/2019: Ghi vao vr_rp_dossierstatistics
-					UpdateRPdossierstatistics(model, payload.toString());
+					String processNo = UpdateRPdossierstatistics(model, payload.toString());
 				}
 
 			} catch (SystemException | PortalException e) {
@@ -223,8 +223,8 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 
 		return userName;
 	}
-
-	public boolean UpdateRPdossierstatistics(DossierAction dossierActionModel, String payload) throws PortalException {
+	
+	public String UpdateRPdossierstatistics(DossierAction dossierActionModel, String payload) throws PortalException {
 		try {
 			//Lan luot tung quy trinh
 			String processNo = StringPool.BLANK;
@@ -246,7 +246,7 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 					statistics = lstVRRPDossierStatistics.get(0);
 				}
 				
-				if (Validator.isNull(statistics) || statistics.getId() == 0) {
+				if (Validator.isNull(statistics) || statistics.getDossierid() == 0) {
 					flagUpdate = false;
 					statistics = new VRRPDossierStatisticsImpl();
 					statistics.setId(CounterLocalServiceUtil.increment(VRRPDossierStatistics.class.getName()));
@@ -289,6 +289,7 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 					statistics.setApplicantaddress(sourceDossier.getAddress());
 					statistics.setDossiersubstatus(sourceDossier.getDossierSubStatusText());
 					statistics.setModifyDate(new Date());
+					statistics.setSyncDate(new Date());
 				
 				}
 				switch (processNo) {
@@ -3424,13 +3425,12 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 				}
 			}
 			
-			
+			return processNo;	
 		} catch (SystemException e) {
 			_log.error(e);
-			return false;
+			return "";
 		}
-				
-		return true;
 	}
+	
 	private Log _log = LogFactoryUtil.getLog(DossierActionListenner.class.getName());
 }

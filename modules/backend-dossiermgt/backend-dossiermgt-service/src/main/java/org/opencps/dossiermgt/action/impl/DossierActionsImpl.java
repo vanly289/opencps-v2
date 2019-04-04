@@ -1479,7 +1479,7 @@ public class DossierActionsImpl implements DossierActions {
 
 				// Cap nhat ngay tiep nhan khi duoc cap so
 				dossier.setReceiveDate(new Date());
-//				_log.info("==DossierNumberGenerator==" + dossier.getDossierId() + "=" + dossierRef.trim());
+
 				dossier.setDossierNo(dossierRef.trim());
 				
 				// To index
@@ -1489,10 +1489,16 @@ public class DossierActionsImpl implements DossierActions {
 			boolean flagCOP = false;
 			if (Validator.isNull(dossier.getDossierNo())) {
 				if (curStep.getDossierStatus().contentEquals(DossierStatusConstants.WAITING)) {
-					if ((curStep.getDossierSubStatus().contentEquals("waiting_4"))) {
+					if (curStep.getDossierSubStatus().equalsIgnoreCase("waiting_4")) {
 						flagCOP = true;
 					}
-					if (curStep.getDossierSubStatus().contentEquals("waiting_3")) {
+					if (curStep.getDossierSubStatus().equalsIgnoreCase("waiting_3")) {
+						flagCOP = true;
+					}
+					if (curStep.getDossierSubStatus().equalsIgnoreCase("waiting_8")) {
+						flagCOP = true;
+					}
+					if (curStep.getDossierSubStatus().equalsIgnoreCase("waiting_15")) {
 						flagCOP = true;
 					}
 				}
@@ -1511,6 +1517,7 @@ public class DossierActionsImpl implements DossierActions {
 
 				// Cap nhat ngay tiep nhan khi duoc cap so
 				dossier.setReceiveDate(new Date());
+				
 				dossier.setDossierNo(dossierRef.trim());
 				// To index
 				//DossierLocalServiceUtil.syncDossier(dossier);
@@ -1553,26 +1560,7 @@ public class DossierActionsImpl implements DossierActions {
 						}
 					}
 				}
-//				//Process Add Sync dossierFile
-//				// check return file
-//				String[] returnFileTempNoArr = StringUtil.split(proAction.getReturnDossierFiles());
-//				if (returnFileTempNoArr != null && returnFileTempNoArr.length > 0) {
-//					List<DossierFile> dossierFileList = DossierFileLocalServiceUtil.getByTemplateNoAndIsNew(dossierId,
-//							true, returnFileTempNoArr);
-//					if (dossierFileList != null && dossierFileList.size() > 0) {
-//						for (DossierFile dosserFile : dossierFileList) {
-//							_log.info("&&&StartUpdateDossierFile" + new Date());
-//							dosserFile.setIsNew(false);
-//							DossierFileLocalServiceUtil.updateDossierFile(dosserFile);
-//							_log.info("&&&EndUpdateDossierFile" + new Date());
-//
-//							_log.info("START SYNC DOSSIER FILE");
-//							DossierSyncLocalServiceUtil.updateDossierSync(groupId, userId, dossierId,
-//									dossier.getReferenceUid(), false, 1, dosserFile.getDossierFileId(),
-//									dosserFile.getReferenceUid(), serviceProcess.getServerNo());
-//						}
-//					}
-//				}
+
 			}
 
 			String preCondition = proAction.getPreCondition();

@@ -302,6 +302,51 @@ public interface RegistrationTemplatesModel extends BaseModel<RegistrationTempla
 	 */
 	public void setSampleData(String sampleData);
 
+	/**
+	 * Returns the form script official of this registration templates.
+	 *
+	 * @return the form script official of this registration templates
+	 */
+	@AutoEscape
+	public String getFormScriptOfficial();
+
+	/**
+	 * Sets the form script official of this registration templates.
+	 *
+	 * @param formScriptOfficial the form script official of this registration templates
+	 */
+	public void setFormScriptOfficial(String formScriptOfficial);
+
+	/**
+	 * Returns the form report official of this registration templates.
+	 *
+	 * @return the form report official of this registration templates
+	 */
+	@AutoEscape
+	public String getFormReportOfficial();
+
+	/**
+	 * Sets the form report official of this registration templates.
+	 *
+	 * @param formReportOfficial the form report official of this registration templates
+	 */
+	public void setFormReportOfficial(String formReportOfficial);
+
+	/**
+	 * Returns the sample data official of this registration templates.
+	 *
+	 * @return the sample data official of this registration templates
+	 */
+	@AutoEscape
+	public String getSampleDataOfficial();
+
+	/**
+	 * Sets the sample data official of this registration templates.
+	 *
+	 * @param sampleDataOfficial the sample data official of this registration templates
+	 */
+	public void setSampleDataOfficial(String sampleDataOfficial);
+
 	@Override
 	public boolean isNew();
 
