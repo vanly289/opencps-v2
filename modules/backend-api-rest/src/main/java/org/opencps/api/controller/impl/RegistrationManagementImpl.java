@@ -162,15 +162,22 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 			_log.info("cityName: "+cityName);
 			_log.info("districtName: "+districtName);
 			_log.info("wardName: "+wardName);
+			_log.info("input.getRegistrationState(): "+input.getRegistrationState());
 
 			RegistrationActions action = new RegistrationActionsImpl();
 
-			Registration registration = action.insert(groupId, companyId, input.getApplicantName(), input.getApplicantIdType(),
-					input.getApplicantIdNo(), input.getApplicantIdDate(), input.getAddress(), input.getCityCode(),
-					cityName, input.getDistrictCode(), districtName, input.getWardCode(), wardName,
-					input.getContactName(), input.getContactTelNo(), input.getContactEmail(), input.getGovAgencyCode(),
-					input.getGovAgencyName(), input.getRegistrationState(), input.getRegistrationClass(),
-					input.getRepresentativeEnterprise(), input.getMarkasdeleted(), input.getRemarks(), serviceContext);
+			Registration registration = action.insert(groupId, companyId, input.getApplicantName(),
+					input.getApplicantIdType(), input.getApplicantIdNo(), input.getApplicantIdDate(),
+					input.getAddress(), input.getCityCode(), cityName, input.getDistrictCode(), districtName,
+					input.getWardCode(), wardName, input.getContactName(), input.getContactTelNo(),
+					input.getContactEmail(), 
+					input.getGovAgencyCode(),
+					input.getGovAgencyName(),
+					Validator.isNotNull(input.getRegistrationState()) ? input.getRegistrationState() : 0,
+					input.getRegistrationClass(), 
+					input.getRepresentativeEnterprise(),
+					Validator.isNotNull(input.getMarkasdeleted()) ? input.getMarkasdeleted() : 0, input.getRemarks(),
+					serviceContext);
 
 			result = RegistrationUtils.mappingToRegistrationDetailModel(registration);
 			return Response.status(200).entity(result).build();
@@ -222,14 +229,14 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 				wardName = getDictItemName(groupId, ADMINISTRATIVE_REGION, input.getWardCode());
 
 			}
-			_log.info("RegistrationInputModel========" + input);
+			//_log.info("RegistrationInputModel========" + JSONFactoryUtil.looseSerialize(input));
 			Registration registration = action.updateRegistration(groupId, registrationId, input.getApplicantName(),
 					input.getApplicantIdType(), input.getApplicantIdNo(), input.getApplicantIdDate(),
 					input.getAddress(), input.getCityCode(), cityName, input.getDistrictCode(), districtName,
 					input.getWardCode(), wardName, input.getContactName(), input.getContactTelNo(),
 					input.getContactEmail(), input.getGovAgencyCode(), input.getGovAgencyName(),
 					input.getRegistrationState(), input.getRegistrationClass(), input.getRepresentativeEnterprise(),
-					input.getMarkasdeleted(), input.getRemarks(),
+					Validator.isNull(input.getMarkasdeleted()) ? input.getMarkasdeleted(): 0, input.getRemarks(),
 					serviceContext);
 
 			RegistrationDetailResultModel result = RegistrationUtils.mappingToRegistrationDetailResultModel(registration);
@@ -379,7 +386,9 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 					input.getDistrictName(), input.getWardCode(), input.getWardName(), input.getContactName(),
 					input.getContactTelNo(), input.getContactEmail(), input.getGovAgencyCode(),
 					input.getGovAgencyName(), input.getRegistrationState(), input.getRegistrationClass(),
-					input.getRepresentativeEnterprise(), serviceContext);
+					input.getRepresentativeEnterprise(),
+					Validator.isNotNull(input.getMarkasdeleted()) ? input.getMarkasdeleted() : 0, input.getRemarks(),
+					serviceContext);
 
 			return Response.status(200).build();
 		} catch (Exception e) {

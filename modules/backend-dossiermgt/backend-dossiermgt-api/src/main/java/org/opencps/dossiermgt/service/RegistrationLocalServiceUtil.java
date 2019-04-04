@@ -422,7 +422,8 @@ public class RegistrationLocalServiceUtil {
 		java.lang.String contactEmail, java.lang.String govAgencyCode,
 		java.lang.String govAgencyName, int registrationState,
 		java.lang.String registrationClass,
-		java.lang.String representativeEnterprise,
+		java.lang.String representativeEnterprise, int markasdeleted,
+		java.lang.String remarks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -432,7 +433,7 @@ public class RegistrationLocalServiceUtil {
 			cityName, districtCode, districtName, wardCode, wardName,
 			contactName, contactTelNo, contactEmail, govAgencyCode,
 			govAgencyName, registrationState, registrationClass,
-			representativeEnterprise, serviceContext);
+			representativeEnterprise, markasdeleted, remarks, serviceContext);
 	}
 
 	public static org.opencps.dossiermgt.model.Registration updateRegistration(

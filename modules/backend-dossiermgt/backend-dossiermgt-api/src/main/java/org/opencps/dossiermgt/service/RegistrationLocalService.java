@@ -362,7 +362,8 @@ public interface RegistrationLocalService extends BaseLocalService,
 		java.lang.String contactTelNo, java.lang.String contactEmail,
 		java.lang.String govAgencyCode, java.lang.String govAgencyName,
 		int registrationState, java.lang.String registrationClass,
-		java.lang.String representativeEnterprise, ServiceContext serviceContext)
+		java.lang.String representativeEnterprise, int markasdeleted,
+		java.lang.String remarks, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	@Indexable(type = IndexableType.REINDEX)
