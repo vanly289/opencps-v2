@@ -1556,6 +1556,9 @@
 		<column name="formScript" type="String" />
 		<column name="formReport" type="String" />
 		<column name="sampleData" type="String" />
+		<column name="formScriptOfficial" type="String" />
+		<column name="formReportOfficial" type="String" />
+		<column name="sampleDataOfficial" type="String" />
 
 		<finder return-type="RegistrationTemplates" name="G_REGID">
 			<finder-column name="groupId" />

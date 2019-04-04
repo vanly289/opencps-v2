@@ -49,6 +49,9 @@ public class RegistrationTemplatesSoap implements Serializable {
 		soapModel.setFormScript(model.getFormScript());
 		soapModel.setFormReport(model.getFormReport());
 		soapModel.setSampleData(model.getSampleData());
+		soapModel.setFormScriptOfficial(model.getFormScriptOfficial());
+		soapModel.setFormReportOfficial(model.getFormReportOfficial());
+		soapModel.setSampleDataOfficial(model.getSampleDataOfficial());
 
 		return soapModel;
 	}
@@ -228,6 +231,30 @@ public class RegistrationTemplatesSoap implements Serializable {
 		_sampleData = sampleData;
 	}
 
+	public String getFormScriptOfficial() {
+		return _formScriptOfficial;
+	}
+
+	public void setFormScriptOfficial(String formScriptOfficial) {
+		_formScriptOfficial = formScriptOfficial;
+	}
+
+	public String getFormReportOfficial() {
+		return _formReportOfficial;
+	}
+
+	public void setFormReportOfficial(String formReportOfficial) {
+		_formReportOfficial = formReportOfficial;
+	}
+
+	public String getSampleDataOfficial() {
+		return _sampleDataOfficial;
+	}
+
+	public void setSampleDataOfficial(String sampleDataOfficial) {
+		_sampleDataOfficial = sampleDataOfficial;
+	}
+
 	private String _uuid;
 	private long _registrationTemplateId;
 	private long _groupId;
@@ -243,4 +270,7 @@ public class RegistrationTemplatesSoap implements Serializable {
 	private String _formScript;
 	private String _formReport;
 	private String _sampleData;
+	private String _formScriptOfficial;
+	private String _formReportOfficial;
+	private String _sampleDataOfficial;
 }

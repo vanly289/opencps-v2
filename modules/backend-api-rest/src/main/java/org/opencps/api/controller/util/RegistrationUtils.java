@@ -262,6 +262,7 @@ public class RegistrationUtils {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			_log.info("Failed to mappingToRegistrationDetailResultModel");
 			return null;
 		}
 

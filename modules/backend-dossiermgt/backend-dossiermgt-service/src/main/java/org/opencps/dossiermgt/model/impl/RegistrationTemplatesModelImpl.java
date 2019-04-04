@@ -79,7 +79,10 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 			{ "multiple", Types.BOOLEAN },
 			{ "formScript", Types.VARCHAR },
 			{ "formReport", Types.VARCHAR },
-			{ "sampleData", Types.VARCHAR }
+			{ "sampleData", Types.VARCHAR },
+			{ "formScriptOfficial", Types.VARCHAR },
+			{ "formReportOfficial", Types.VARCHAR },
+			{ "sampleDataOfficial", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -99,9 +102,12 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 		TABLE_COLUMNS_MAP.put("formScript", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("formReport", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sampleData", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("formScriptOfficial", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("formReportOfficial", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("sampleDataOfficial", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table opencps_registrationtemplate (uuid_ VARCHAR(75) null,registrationTemplateId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,govAgencyCode VARCHAR(75) null,govAgencyName VARCHAR(75) null,formNo VARCHAR(75) null,formName VARCHAR(75) null,multiple BOOLEAN,formScript VARCHAR(75) null,formReport VARCHAR(75) null,sampleData VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table opencps_registrationtemplate (uuid_ VARCHAR(75) null,registrationTemplateId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,govAgencyCode VARCHAR(75) null,govAgencyName VARCHAR(75) null,formNo VARCHAR(75) null,formName VARCHAR(75) null,multiple BOOLEAN,formScript VARCHAR(75) null,formReport VARCHAR(75) null,sampleData VARCHAR(75) null,formScriptOfficial VARCHAR(75) null,formReportOfficial VARCHAR(75) null,sampleDataOfficial VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table opencps_registrationtemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY registrationTemplates.registrationTemplateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY opencps_registrationtemplate.registrationTemplateId ASC";
@@ -177,6 +183,9 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 		attributes.put("formScript", getFormScript());
 		attributes.put("formReport", getFormReport());
 		attributes.put("sampleData", getSampleData());
+		attributes.put("formScriptOfficial", getFormScriptOfficial());
+		attributes.put("formReportOfficial", getFormReportOfficial());
+		attributes.put("sampleDataOfficial", getSampleDataOfficial());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -275,6 +284,24 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 
 		if (sampleData != null) {
 			setSampleData(sampleData);
+		}
+
+		String formScriptOfficial = (String)attributes.get("formScriptOfficial");
+
+		if (formScriptOfficial != null) {
+			setFormScriptOfficial(formScriptOfficial);
+		}
+
+		String formReportOfficial = (String)attributes.get("formReportOfficial");
+
+		if (formReportOfficial != null) {
+			setFormReportOfficial(formReportOfficial);
+		}
+
+		String sampleDataOfficial = (String)attributes.get("sampleDataOfficial");
+
+		if (sampleDataOfficial != null) {
+			setSampleDataOfficial(sampleDataOfficial);
 		}
 	}
 
@@ -552,6 +579,51 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 		_sampleData = sampleData;
 	}
 
+	@Override
+	public String getFormScriptOfficial() {
+		if (_formScriptOfficial == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _formScriptOfficial;
+		}
+	}
+
+	@Override
+	public void setFormScriptOfficial(String formScriptOfficial) {
+		_formScriptOfficial = formScriptOfficial;
+	}
+
+	@Override
+	public String getFormReportOfficial() {
+		if (_formReportOfficial == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _formReportOfficial;
+		}
+	}
+
+	@Override
+	public void setFormReportOfficial(String formReportOfficial) {
+		_formReportOfficial = formReportOfficial;
+	}
+
+	@Override
+	public String getSampleDataOfficial() {
+		if (_sampleDataOfficial == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _sampleDataOfficial;
+		}
+	}
+
+	@Override
+	public void setSampleDataOfficial(String sampleDataOfficial) {
+		_sampleDataOfficial = sampleDataOfficial;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -598,6 +670,9 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 		registrationTemplatesImpl.setFormScript(getFormScript());
 		registrationTemplatesImpl.setFormReport(getFormReport());
 		registrationTemplatesImpl.setSampleData(getSampleData());
+		registrationTemplatesImpl.setFormScriptOfficial(getFormScriptOfficial());
+		registrationTemplatesImpl.setFormReportOfficial(getFormReportOfficial());
+		registrationTemplatesImpl.setSampleDataOfficial(getSampleDataOfficial());
 
 		registrationTemplatesImpl.resetOriginalValues();
 
@@ -781,12 +856,36 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 			registrationTemplatesCacheModel.sampleData = null;
 		}
 
+		registrationTemplatesCacheModel.formScriptOfficial = getFormScriptOfficial();
+
+		String formScriptOfficial = registrationTemplatesCacheModel.formScriptOfficial;
+
+		if ((formScriptOfficial != null) && (formScriptOfficial.length() == 0)) {
+			registrationTemplatesCacheModel.formScriptOfficial = null;
+		}
+
+		registrationTemplatesCacheModel.formReportOfficial = getFormReportOfficial();
+
+		String formReportOfficial = registrationTemplatesCacheModel.formReportOfficial;
+
+		if ((formReportOfficial != null) && (formReportOfficial.length() == 0)) {
+			registrationTemplatesCacheModel.formReportOfficial = null;
+		}
+
+		registrationTemplatesCacheModel.sampleDataOfficial = getSampleDataOfficial();
+
+		String sampleDataOfficial = registrationTemplatesCacheModel.sampleDataOfficial;
+
+		if ((sampleDataOfficial != null) && (sampleDataOfficial.length() == 0)) {
+			registrationTemplatesCacheModel.sampleDataOfficial = null;
+		}
+
 		return registrationTemplatesCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -818,6 +917,12 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 		sb.append(getFormReport());
 		sb.append(", sampleData=");
 		sb.append(getSampleData());
+		sb.append(", formScriptOfficial=");
+		sb.append(getFormScriptOfficial());
+		sb.append(", formReportOfficial=");
+		sb.append(getFormReportOfficial());
+		sb.append(", sampleDataOfficial=");
+		sb.append(getSampleDataOfficial());
 		sb.append("}");
 
 		return sb.toString();
@@ -825,7 +930,7 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("org.opencps.dossiermgt.model.RegistrationTemplates");
@@ -891,6 +996,18 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 			"<column><column-name>sampleData</column-name><column-value><![CDATA[");
 		sb.append(getSampleData());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>formScriptOfficial</column-name><column-value><![CDATA[");
+		sb.append(getFormScriptOfficial());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>formReportOfficial</column-name><column-value><![CDATA[");
+		sb.append(getFormReportOfficial());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>sampleDataOfficial</column-name><column-value><![CDATA[");
+		sb.append(getSampleDataOfficial());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -924,6 +1041,9 @@ public class RegistrationTemplatesModelImpl extends BaseModelImpl<RegistrationTe
 	private String _formScript;
 	private String _formReport;
 	private String _sampleData;
+	private String _formScriptOfficial;
+	private String _formReportOfficial;
+	private String _sampleDataOfficial;
 	private long _columnBitmask;
 	private RegistrationTemplates _escapedModel;
 }

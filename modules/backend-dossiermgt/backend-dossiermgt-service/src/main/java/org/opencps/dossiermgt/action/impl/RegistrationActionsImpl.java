@@ -82,7 +82,7 @@ public class RegistrationActionsImpl implements RegistrationActions {
 
 		List<RegistrationForm> lstRegistrationFormchange = new ArrayList<RegistrationForm>();
 		// Sonvh commented 19/3/2019
-/*		List<RegistrationForm> lstRegistrationForm = RegistrationFormLocalServiceUtil.getRegistrationForms(start, end);
+		List<RegistrationForm> lstRegistrationForm = RegistrationFormLocalServiceUtil.getRegistrationForms(start, end);
 		// changeType removed in registrationForm
 					for (RegistrationForm registrationForm : lstRegistrationForm) {
 				registrationForm.setIsNew(true);
@@ -90,7 +90,7 @@ public class RegistrationActionsImpl implements RegistrationActions {
 						.updateRegistrationForm(registrationForm);
 				lstRegistrationFormchange.add(registrationFormChanged);
 		}
-*/
+
 		// add registrationLog
 		String content = "";
 		RegistrationLogActions registrationLogActions = new RegistrationLogActionsImpl();
@@ -105,6 +105,7 @@ public class RegistrationActionsImpl implements RegistrationActions {
 		if (registrationState == 2 || registrationState == 3) {			
 			addLog("", groupId, userId, registrationId, content, lstRegistrationFormchange);
 		}
+	
 		if (registrationState == 2) {
 			// Find all Registrations with exacted applicantIdNo: update markasdeleted from 0 to 1 
 			List<Registration> oldReg =  RegistrationLocalServiceUtil.findByREG_APPNO_markasdeleted(groupId, applicantIdNo, 0);

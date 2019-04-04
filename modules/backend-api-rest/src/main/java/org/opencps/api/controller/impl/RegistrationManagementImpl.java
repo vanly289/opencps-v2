@@ -222,6 +222,7 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 				wardName = getDictItemName(groupId, ADMINISTRATIVE_REGION, input.getWardCode());
 
 			}
+			_log.info("RegistrationInputModel========" + input);
 			Registration registration = action.updateRegistration(groupId, registrationId, input.getApplicantName(),
 					input.getApplicantIdType(), input.getApplicantIdNo(), input.getApplicantIdDate(),
 					input.getAddress(), input.getCityCode(), cityName, input.getDistrictCode(), districtName,
@@ -537,8 +538,9 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 			for (Document doc : docList) {
 				String formData = doc.get(RegistrationFormTerm.FORM_DATA);
 				String registrationFormId = doc.get(RegistrationFormTerm.REGISTRATION_FORM_ID);
+				String formDataRemoved = doc.get(RegistrationFormTerm.REMOVED);
 				JSONObject formDataJson = null;
-				if (Validator.isNotNull(formData)) {
+				if (Validator.isNotNull(formData) && formDataRemoved.equalsIgnoreCase("0")) {
 					formDataJson = JSONFactoryUtil.createJSONObject(formData);
 					formDataJson.put("registrationFormId", registrationFormId);
 				}

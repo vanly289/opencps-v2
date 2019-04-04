@@ -19,6 +19,15 @@ import aQute.bnd.annotation.ProviderType;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 import com.fds.vr.business.model.DossierFile;
 
@@ -52,6 +61,26 @@ public class VRVehicleSpecificationLocalServiceImpl
 		return vrVehicleSpecificationPersistence.fetchBySC_VCID(vehiceTypeId, specificationCode);
 	}
 
+	public List<VRVehicleSpecification> findByVehicleCertificateId(long vehicleCertificateId) throws PortalException, SystemException {
+		try {
+			return vrVehicleSpecificationPersistence.findByVehicleCertificateId(vehicleCertificateId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRVehicleSpecification>();
+		
+	}
+
+
+	public List<VRVehicleSpecification> findByDeliverableCode(String deliverableCode) throws PortalException, SystemException {
+		try {
+			return vrVehicleSpecificationPersistence.findByDeliverableCode(deliverableCode);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRVehicleSpecification>();
+		
+	}
 
 	public VRVehicleSpecification updateVehicleSpecification(LinkedHashMap<String, String> mapValues,
 			long vrVehicleTypeCertificateId, Date modifiedDate, DossierFile dossierFile) {
@@ -84,5 +113,5 @@ public class VRVehicleSpecificationLocalServiceImpl
 		return vrVehicleSpecificationPersistence.update(object);
 	}
 	
-
+	private Log _log = LogFactoryUtil.getLog(VRVehicleSpecificationLocalServiceImpl.class);
 }
