@@ -83,13 +83,13 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 	//private final String serectKey = "OPENCPSV2";
 	private static final int BUFFER_SIZE = 4096;
-	private static volatile boolean isRunning = false;
+	private static volatile boolean isRunningPull = false;
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
 
-		if (!isRunning) {
-			isRunning = true;
+		if (!isRunningPull) {
+			isRunningPull = true;
 		} else {
 			return;
 		}
@@ -132,7 +132,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 		} catch (Exception e) {
 		}
-		isRunning = false;
+		isRunningPull = false;
 	}
 
 	private void pullDossier(Company company, Dossier dossier, User systemUser) throws PortalException {

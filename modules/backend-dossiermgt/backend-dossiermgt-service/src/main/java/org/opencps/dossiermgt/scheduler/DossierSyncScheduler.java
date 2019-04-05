@@ -36,16 +36,16 @@ import com.liferay.portal.kernel.util.Validator;
 @Component(immediate = true, service = DossierSyncScheduler.class)
 public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 
-	private static volatile boolean isRunning = false;
+	private static volatile boolean isRunningSync = false;
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-/*
-		if (!isRunning) {
-			isRunning = true;
+
+		if (!isRunningSync) {
+			isRunningSync = true;
 		} else {
 			return;
-		}*/
+		}
 
 			_log.info("OpenCPS SYNC DOSSIERS IS  : " + APIDateTimeUtils.convertDateToString(new Date()));
 
@@ -161,7 +161,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 //
 //			}
 //		}
-		isRunning = false;
+		isRunningSync = false;
 		_log.info("OpenCPS SYNC DOSSIERS HAS BEEN DONE : " + APIDateTimeUtils.convertDateToString(new Date()));
 
 	}
