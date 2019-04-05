@@ -86,6 +86,7 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 			String contactTelNo, String contactEmail, String govAgencyCode, String govAgencyName, int registrationState,
 			String registrationClass, String representativeEnterprise, int markasdeleted, String remarks, ServiceContext serviceContext)
 			throws PortalException, SystemException {
+		try {
 		Date now = new Date();
 		long userId = serviceContext.getUserId();
 		User userAction = userLocalService.getUser(userId);
@@ -144,6 +145,10 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 
 
 		return registrationPersistence.update(model);
+		} catch (Exception e) {
+			_log.error(e);
+			return null;
+		}
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -478,7 +483,8 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 			String applicantIdNo, String applicantIdDate, String address, String cityCode, String cityName,
 			String districtCode, String districtName, String wardCode, String wardName, String contactName,
 			String contactTelNo, String contactEmail, String govAgencyCode, String govAgencyName, int registrationState,
-			String registrationClass, String representativeEnterprise, ServiceContext serviceContext)
+			String registrationClass, String representativeEnterprise, int markasdeleted, String remarks,
+			ServiceContext serviceContext)
 			throws PortalException, SystemException {
 
 		Date now = new Date();
@@ -517,6 +523,8 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 			registration.setRegistrationClass(registrationClass);
 			registration.setRegistrationState(registrationState);
 			registration.setRepresentativeEnterprise(representativeEnterprise);
+			registration.setMarkasdeleted(markasdeleted);
+			registration.setRemarks(remarks);
 
 			registration = registrationPersistence.update(registration);
 		} else {
@@ -557,6 +565,8 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 			registration.setRegistrationClass(registrationClass);
 			registration.setRegistrationState(registrationState);
 			registration.setRepresentativeEnterprise(representativeEnterprise);
+			registration.setMarkasdeleted(markasdeleted);
+			registration.setRemarks(remarks);
 
 			registration.setUuid(uuid);
 

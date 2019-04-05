@@ -8,6 +8,7 @@
 
 package org.opencps.api.registration.model;
 
+import javax.ws.rs.FormParam;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -74,33 +75,52 @@ import javax.xml.bind.annotation.XmlType;
     "registrationState",
     "registrationClass",
     "representativeEnterprise",
-    "submitting",
     "markasdeleted",
     "remarks"
 })
 public class RegistrationInputModel {
 
+	@FormParam(value = "applicantName")
     protected String applicantName;
+	@FormParam(value = "applicantIdType")
     protected String applicantIdType;
+	@FormParam(value = "applicantIdNo")
     protected String applicantIdNo;
+	@FormParam(value = "applicantIdDate")
     protected String applicantIdDate;
+	@FormParam(value = "address")
     protected String address;
+	@FormParam(value = "cityCode")
     protected String cityCode;
+	@FormParam(value = "cityName")
     protected String cityName;
+	@FormParam(value = "districtCode")
     protected String districtCode;
+	@FormParam(value = "districtName")
     protected String districtName;
+	@FormParam(value = "wardCode")
     protected String wardCode;
+	@FormParam(value = "wardName")
     protected String wardName;
+	@FormParam(value = "contactName")
     protected String contactName;
+	@FormParam(value = "contactTelNo")
     protected String contactTelNo;
+	@FormParam(value = "contactEmail")
     protected String contactEmail;
+	@FormParam(value = "govAgencyCode")
     protected String govAgencyCode;
+	@FormParam(value = "govAgencyName")
     protected String govAgencyName;
+	@FormParam(value = "registrationState")
     protected Integer registrationState;
+	@FormParam(value = "registrationClass")
     protected String registrationClass;
+	@FormParam(value = "representativeEnterprise")
     protected String representativeEnterprise;
-    protected Integer submitting;
+	@FormParam(value = "markasdeleted")
     protected Integer markasdeleted;
+	@FormParam(value = "remarks")
     protected String remarks;
 
     /**
@@ -557,30 +577,6 @@ public class RegistrationInputModel {
      */
     public void setRepresentativeEnterprise(String value) {
         this.representativeEnterprise = value;
-    }
-
-    /**
-     * Gets the value of the submitting property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getSubmitting() {
-        return submitting;
-    }
-
-    /**
-     * Sets the value of the submitting property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setSubmitting(Integer value) {
-        this.submitting = value;
     }
 
     /**

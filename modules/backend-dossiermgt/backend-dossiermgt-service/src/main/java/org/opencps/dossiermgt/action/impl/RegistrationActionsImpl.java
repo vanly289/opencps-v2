@@ -48,7 +48,8 @@ public class RegistrationActionsImpl implements RegistrationActions {
 		if (listRegistration.size() == 0) {
 			return RegistrationLocalServiceUtil.insert(groupId, companyId, applicantName, applicantIdType,
 					applicantIdNo, applicantIdDate, address, cityCode, cityName, districtCode, districtName, wardCode,
-					wardName, contactName, contactTelNo, contactEmail, govAgencyCode, govAgencyName, 0, registrationClass.toString(),
+					wardName, contactName, contactTelNo, contactEmail, govAgencyCode, govAgencyName, 0, 
+					Validator.isNotNull(registrationClass) ? registrationClass.toString(): StringPool.BLANK,
 					representativeEnterprise, 1, remarks, serviceContext);
 		} else {
 			Registration registration = listRegistration.get(0);
@@ -59,7 +60,8 @@ public class RegistrationActionsImpl implements RegistrationActions {
 				return RegistrationLocalServiceUtil.insert(groupId, companyId, applicantName, applicantIdType,
 						applicantIdNo, applicantIdDate, address, cityCode, cityName, districtCode, districtName,
 						wardCode, wardName, contactName, contactTelNo, contactEmail, govAgencyCode, govAgencyName, 0,
-						registrationClass.toString(), representativeEnterprise, 1, remarks, serviceContext);
+						Validator.isNotNull(registrationClass) ? registrationClass.toString() : StringPool.BLANK,
+						representativeEnterprise, 1, remarks, serviceContext);
 			} else {
 				return registration;
 			}
