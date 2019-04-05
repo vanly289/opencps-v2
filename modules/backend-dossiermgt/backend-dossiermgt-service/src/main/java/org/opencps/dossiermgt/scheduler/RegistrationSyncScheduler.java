@@ -161,9 +161,6 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 								applicant.setRepresentativeEnterprise(registrationClient.getRepresentativeEnterprise());
 
 								ApplicantLocalServiceUtil.updateApplicant(applicant);
-								Indexer<Applicant> indexApplicant = IndexerRegistryUtil
-										.nullSafeGetIndexer(Applicant.class);
-								indexApplicant.reindex(applicant);
 							}
 
 							String mappingMA_CTY = StringPool.BLANK;
