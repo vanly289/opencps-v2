@@ -198,6 +198,16 @@ public interface VRIssueVehiclecertificateLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRIssueVehiclecertificate> findBycertificateId(long mtCore,
+		long dossierId, long certificateId)
+		throws PortalException, SystemException;
+
+	public List<VRIssueVehiclecertificate> findBydossierId(long mtCore,
+		long dossierId) throws PortalException, SystemException;
+
+	public List<VRIssueVehiclecertificate> findByissueId(long mtCore,
+		long issueId) throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr issue vehiclecertificates.
 	*

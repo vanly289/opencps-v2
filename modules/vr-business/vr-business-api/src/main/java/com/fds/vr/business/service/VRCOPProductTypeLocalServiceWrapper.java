@@ -220,6 +220,24 @@ public class VRCOPProductTypeLocalServiceWrapper
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRCOPProductType> findBycopReportNo(
+		long mtCore, java.lang.String copReportNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrcopProductTypeLocalService.findBycopReportNo(mtCore,
+			copReportNo);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRCOPProductType> findBycopReportRepositoryID(
+		long mtCore, long copReportRepositoryID)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrcopProductTypeLocalService.findBycopReportRepositoryID(mtCore,
+			copReportRepositoryID);
+	}
+
 	/**
 	* Returns a range of all the vrcop product types.
 	*

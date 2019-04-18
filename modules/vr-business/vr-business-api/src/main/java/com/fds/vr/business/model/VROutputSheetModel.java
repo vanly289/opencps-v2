@@ -302,15 +302,14 @@ public interface VROutputSheetModel extends BaseModel<VROutputSheet> {
 	 *
 	 * @return the dossier ID of this vr output sheet
 	 */
-	@AutoEscape
-	public String getDossierId();
+	public long getDossierId();
 
 	/**
 	 * Sets the dossier ID of this vr output sheet.
 	 *
 	 * @param dossierId the dossier ID of this vr output sheet
 	 */
-	public void setDossierId(String dossierId);
+	public void setDossierId(long dossierId);
 
 	/**
 	 * Returns the issue ID of this vr output sheet.

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-
+import com.fds.vr.business.model.VROutputSheetDetails;
 import com.fds.vr.business.service.base.VROutputSheetDetailsLocalServiceBaseImpl;
 
 /**
@@ -51,4 +51,98 @@ public class VROutputSheetDetailsLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VROutputSheetDetailsLocalServiceUtil} to access the vr output sheet details local service.
 	 */
+	
+	public List<VROutputSheetDetails> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {
+		try {
+			return vrOutputSheetDetailsPersistence.findByInputSheetId(mtCore, inputSheetId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VROutputSheetDetails>();
+		
+	}
+
+
+	public List<VROutputSheetDetails> findByInputSheetIdAndBookId(long mtCore, long inputSheetId, long bookId) throws PortalException, SystemException {
+		try {
+			return vrOutputSheetDetailsPersistence.findByInputSheetIdAndBookId(mtCore, inputSheetId, bookId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VROutputSheetDetails>();
+		
+	}
+	
+	public List<VROutputSheetDetails> findByOutputSheetId(long mtCore, long outputSheetId) throws PortalException, SystemException {
+		try {
+			return vrOutputSheetDetailsPersistence.findByOutputSheetId(mtCore, outputSheetId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VROutputSheetDetails>();
+		
+	}
+	
+	public List<VROutputSheetDetails> findByOutputSheetIdAndBookId(long mtCore, long outputSheetId, long bookId) throws PortalException, SystemException {
+		try {
+			return vrOutputSheetDetailsPersistence.findByOutputSheetIdAndBookId(mtCore, outputSheetId, bookId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VROutputSheetDetails>();
+		
+	}
+	
+	public List<VROutputSheetDetails> findByInputSheetIdAndBookIdAndStampType(long mtCore, long inputSheetId, long bookId, String stampType) throws PortalException, SystemException {
+		try {
+			return vrOutputSheetDetailsPersistence.findByInputSheetIdAndBookIdAndStampType(mtCore, inputSheetId, bookId, stampType);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VROutputSheetDetails>();
+		
+	}
+	
+	public List<VROutputSheetDetails> findByOutputSheetIdAndBookIdAndStampType(long mtCore, long outputSheetId, long bookId, String stampType) throws PortalException, SystemException {
+		try {
+			return vrOutputSheetDetailsPersistence.findByOutputSheetIdAndBookIdAndStampType(mtCore, outputSheetId, bookId, stampType);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VROutputSheetDetails>();
+		
+	}
+	
+	public List<VROutputSheetDetails> findBycertificateId(long mtCore, long certificateId) throws PortalException, SystemException {
+		try {
+			return vrOutputSheetDetailsPersistence.findBycertificateId(mtCore, certificateId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VROutputSheetDetails>();
+		
+	}
+
+
+	public List<VROutputSheetDetails> findBycertificateNumber(long mtCore, String certificateNumber) throws PortalException, SystemException {
+		try {
+			return vrOutputSheetDetailsPersistence.findBycertificateNumber(mtCore, certificateNumber);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VROutputSheetDetails>();
+		
+	}
+	
+	public List<VROutputSheetDetails> findByissueVehicleCertificateId(long mtCore, long issueVehicleCertificateId) throws PortalException, SystemException {
+		try {
+			return vrOutputSheetDetailsPersistence.findByissueVehicleCertificateId(mtCore, issueVehicleCertificateId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VROutputSheetDetails>();
+		
+	}
+	
+	private Log _log = LogFactoryUtil.getLog(VROutputSheetDetailsLocalServiceBaseImpl.class);
 }

@@ -210,6 +210,43 @@ public class VROutputSheetLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VROutputSheet> findBydossierId(
+		long mtCore, long dossierId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBydossierId(mtCore, dossierId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VROutputSheet> findByinputSheetNo(
+		long mtCore, java.lang.String outputSheetNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByinputSheetNo(mtCore, outputSheetNo);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VROutputSheet> findByoutputSheetType(
+		long mtCore, long outputSheetType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByoutputSheetType(mtCore, outputSheetType);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VROutputSheet> findBypurchaserCorporationId(
+		long mtCore, java.lang.String purchaserCorporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findBypurchaserCorporationId(mtCore, purchaserCorporationId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VROutputSheet> findBysupplierCorporationId(
+		long mtCore, java.lang.String supplierCorporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findBysupplierCorporationId(mtCore, supplierCorporationId);
+	}
+
 	/**
 	* Returns a range of all the vr output sheets.
 	*

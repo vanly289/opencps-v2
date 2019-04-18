@@ -220,6 +220,24 @@ public class VRCOPProductionPlantEquipmentLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRCOPProductionPlantEquipment> findBycopReportNo(
+		long mtCore, java.lang.String copReportNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrcopProductionPlantEquipmentLocalService.findBycopReportNo(mtCore,
+			copReportNo);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRCOPProductionPlantEquipment> findBycopReportRepositoryID(
+		long mtCore, long copReportRepositoryID)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrcopProductionPlantEquipmentLocalService.findBycopReportRepositoryID(mtCore,
+			copReportRepositoryID);
+	}
+
 	/**
 	* Returns a range of all the vrcop production plant equipments.
 	*

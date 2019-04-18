@@ -217,6 +217,50 @@ public class VROutputSheetLocalServiceWrapper
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheet> findBydossierId(
+		long mtCore, long dossierId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetLocalService.findBydossierId(mtCore, dossierId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheet> findByinputSheetNo(
+		long mtCore, java.lang.String outputSheetNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetLocalService.findByinputSheetNo(mtCore,
+			outputSheetNo);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheet> findByoutputSheetType(
+		long mtCore, long outputSheetType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetLocalService.findByoutputSheetType(mtCore,
+			outputSheetType);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheet> findBypurchaserCorporationId(
+		long mtCore, java.lang.String purchaserCorporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetLocalService.findBypurchaserCorporationId(mtCore,
+			purchaserCorporationId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheet> findBysupplierCorporationId(
+		long mtCore, java.lang.String supplierCorporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetLocalService.findBysupplierCorporationId(mtCore,
+			supplierCorporationId);
+	}
+
 	/**
 	* Returns a range of all the vr output sheets.
 	*

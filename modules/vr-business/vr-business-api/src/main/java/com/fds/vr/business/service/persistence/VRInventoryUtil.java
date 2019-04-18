@@ -118,9 +118,9 @@ public class VRInventoryUtil {
 	* @param yearofPeriod the yearof period
 	* @return the matching vr inventories
 	*/
-	public static List<VRInventory> findByyearofPeriod(long mtCore,
+	public static List<VRInventory> findByYearofPeriod(long mtCore,
 		long yearofPeriod) {
-		return getPersistence().findByyearofPeriod(mtCore, yearofPeriod);
+		return getPersistence().findByYearofPeriod(mtCore, yearofPeriod);
 	}
 
 	/**
@@ -136,10 +136,10 @@ public class VRInventoryUtil {
 	* @param end the upper bound of the range of vr inventories (not inclusive)
 	* @return the range of matching vr inventories
 	*/
-	public static List<VRInventory> findByyearofPeriod(long mtCore,
+	public static List<VRInventory> findByYearofPeriod(long mtCore,
 		long yearofPeriod, int start, int end) {
 		return getPersistence()
-				   .findByyearofPeriod(mtCore, yearofPeriod, start, end);
+				   .findByYearofPeriod(mtCore, yearofPeriod, start, end);
 	}
 
 	/**
@@ -156,11 +156,11 @@ public class VRInventoryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching vr inventories
 	*/
-	public static List<VRInventory> findByyearofPeriod(long mtCore,
+	public static List<VRInventory> findByYearofPeriod(long mtCore,
 		long yearofPeriod, int start, int end,
 		OrderByComparator<VRInventory> orderByComparator) {
 		return getPersistence()
-				   .findByyearofPeriod(mtCore, yearofPeriod, start, end,
+				   .findByYearofPeriod(mtCore, yearofPeriod, start, end,
 			orderByComparator);
 	}
 
@@ -179,12 +179,12 @@ public class VRInventoryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching vr inventories
 	*/
-	public static List<VRInventory> findByyearofPeriod(long mtCore,
+	public static List<VRInventory> findByYearofPeriod(long mtCore,
 		long yearofPeriod, int start, int end,
 		OrderByComparator<VRInventory> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByyearofPeriod(mtCore, yearofPeriod, start, end,
+				   .findByYearofPeriod(mtCore, yearofPeriod, start, end,
 			orderByComparator, retrieveFromCache);
 	}
 
@@ -197,11 +197,11 @@ public class VRInventoryUtil {
 	* @return the first matching vr inventory
 	* @throws NoSuchVRInventoryException if a matching vr inventory could not be found
 	*/
-	public static VRInventory findByyearofPeriod_First(long mtCore,
+	public static VRInventory findByYearofPeriod_First(long mtCore,
 		long yearofPeriod, OrderByComparator<VRInventory> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInventoryException {
 		return getPersistence()
-				   .findByyearofPeriod_First(mtCore, yearofPeriod,
+				   .findByYearofPeriod_First(mtCore, yearofPeriod,
 			orderByComparator);
 	}
 
@@ -213,10 +213,10 @@ public class VRInventoryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching vr inventory, or <code>null</code> if a matching vr inventory could not be found
 	*/
-	public static VRInventory fetchByyearofPeriod_First(long mtCore,
+	public static VRInventory fetchByYearofPeriod_First(long mtCore,
 		long yearofPeriod, OrderByComparator<VRInventory> orderByComparator) {
 		return getPersistence()
-				   .fetchByyearofPeriod_First(mtCore, yearofPeriod,
+				   .fetchByYearofPeriod_First(mtCore, yearofPeriod,
 			orderByComparator);
 	}
 
@@ -229,11 +229,11 @@ public class VRInventoryUtil {
 	* @return the last matching vr inventory
 	* @throws NoSuchVRInventoryException if a matching vr inventory could not be found
 	*/
-	public static VRInventory findByyearofPeriod_Last(long mtCore,
+	public static VRInventory findByYearofPeriod_Last(long mtCore,
 		long yearofPeriod, OrderByComparator<VRInventory> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInventoryException {
 		return getPersistence()
-				   .findByyearofPeriod_Last(mtCore, yearofPeriod,
+				   .findByYearofPeriod_Last(mtCore, yearofPeriod,
 			orderByComparator);
 	}
 
@@ -245,10 +245,10 @@ public class VRInventoryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching vr inventory, or <code>null</code> if a matching vr inventory could not be found
 	*/
-	public static VRInventory fetchByyearofPeriod_Last(long mtCore,
+	public static VRInventory fetchByYearofPeriod_Last(long mtCore,
 		long yearofPeriod, OrderByComparator<VRInventory> orderByComparator) {
 		return getPersistence()
-				   .fetchByyearofPeriod_Last(mtCore, yearofPeriod,
+				   .fetchByYearofPeriod_Last(mtCore, yearofPeriod,
 			orderByComparator);
 	}
 
@@ -262,12 +262,12 @@ public class VRInventoryUtil {
 	* @return the previous, current, and next vr inventory
 	* @throws NoSuchVRInventoryException if a vr inventory with the primary key could not be found
 	*/
-	public static VRInventory[] findByyearofPeriod_PrevAndNext(long id,
+	public static VRInventory[] findByYearofPeriod_PrevAndNext(long id,
 		long mtCore, long yearofPeriod,
 		OrderByComparator<VRInventory> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInventoryException {
 		return getPersistence()
-				   .findByyearofPeriod_PrevAndNext(id, mtCore, yearofPeriod,
+				   .findByYearofPeriod_PrevAndNext(id, mtCore, yearofPeriod,
 			orderByComparator);
 	}
 
@@ -277,8 +277,8 @@ public class VRInventoryUtil {
 	* @param mtCore the mt core
 	* @param yearofPeriod the yearof period
 	*/
-	public static void removeByyearofPeriod(long mtCore, long yearofPeriod) {
-		getPersistence().removeByyearofPeriod(mtCore, yearofPeriod);
+	public static void removeByYearofPeriod(long mtCore, long yearofPeriod) {
+		getPersistence().removeByYearofPeriod(mtCore, yearofPeriod);
 	}
 
 	/**
@@ -288,8 +288,8 @@ public class VRInventoryUtil {
 	* @param yearofPeriod the yearof period
 	* @return the number of matching vr inventories
 	*/
-	public static int countByyearofPeriod(long mtCore, long yearofPeriod) {
-		return getPersistence().countByyearofPeriod(mtCore, yearofPeriod);
+	public static int countByYearofPeriod(long mtCore, long yearofPeriod) {
+		return getPersistence().countByYearofPeriod(mtCore, yearofPeriod);
 	}
 
 	/**

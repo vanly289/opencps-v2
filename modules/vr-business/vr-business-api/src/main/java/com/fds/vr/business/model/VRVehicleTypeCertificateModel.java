@@ -374,6 +374,21 @@ public interface VRVehicleTypeCertificateModel extends BaseModel<VRVehicleTypeCe
 	public void setApplicantcontactPhone(String applicantcontactPhone);
 
 	/**
+	 * Returns the city code of this vr vehicle type certificate.
+	 *
+	 * @return the city code of this vr vehicle type certificate
+	 */
+	@AutoEscape
+	public String getCityCode();
+
+	/**
+	 * Sets the city code of this vr vehicle type certificate.
+	 *
+	 * @param cityCode the city code of this vr vehicle type certificate
+	 */
+	public void setCityCode(String cityCode);
+
+	/**
 	 * Returns the manufacturer foreign code of this vr vehicle type certificate.
 	 *
 	 * @return the manufacturer foreign code of this vr vehicle type certificate
@@ -1562,6 +1577,36 @@ public interface VRVehicleTypeCertificateModel extends BaseModel<VRVehicleTypeCe
 	 * @param emissionStandard the emission standard of this vr vehicle type certificate
 	 */
 	public void setEmissionStandard(String emissionStandard);
+
+	/**
+	 * Returns the common safety description of this vr vehicle type certificate.
+	 *
+	 * @return the common safety description of this vr vehicle type certificate
+	 */
+	@AutoEscape
+	public String getCommonSafetyDescription();
+
+	/**
+	 * Sets the common safety description of this vr vehicle type certificate.
+	 *
+	 * @param commonSafetyDescription the common safety description of this vr vehicle type certificate
+	 */
+	public void setCommonSafetyDescription(String commonSafetyDescription);
+
+	/**
+	 * Returns the emission description of this vr vehicle type certificate.
+	 *
+	 * @return the emission description of this vr vehicle type certificate
+	 */
+	@AutoEscape
+	public String getEmissionDescription();
+
+	/**
+	 * Sets the emission description of this vr vehicle type certificate.
+	 *
+	 * @param emissionDescription the emission description of this vr vehicle type certificate
+	 */
+	public void setEmissionDescription(String emissionDescription);
 
 	/**
 	 * Returns the other test report no of this vr vehicle type certificate.

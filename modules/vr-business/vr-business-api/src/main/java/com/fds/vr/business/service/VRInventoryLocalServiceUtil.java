@@ -210,6 +210,60 @@ public class VRInventoryLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRInventory> findByBookId(
+		long mtCore, long bookId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByBookId(mtCore, bookId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInventory> findByBookIdAndVehicleClass(
+		long mtCore, long bookId, java.lang.String vehicleClass)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByBookIdAndVehicleClass(mtCore, bookId, vehicleClass);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInventory> findByYearofPeriod(
+		long mtCore, long yearofPeriod)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByYearofPeriod(mtCore, yearofPeriod);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInventory> findByYearofPeriodAndCorporationId(
+		long mtCore, long yearofPeriod, java.lang.String corporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
+			corporationId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInventory> findByYearofPeriodAndVehicleClass(
+		long mtCore, long yearofPeriod, java.lang.String vehicleClass)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByYearofPeriodAndVehicleClass(mtCore, yearofPeriod,
+			vehicleClass);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInventory> findBycheckStatus(
+		long mtCore, long checkStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBycheckStatus(mtCore, checkStatus);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInventory> findBycheckType(
+		long mtCore, long checkType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBycheckType(mtCore, checkType);
+	}
+
 	/**
 	* Returns a range of all the vr inventories.
 	*

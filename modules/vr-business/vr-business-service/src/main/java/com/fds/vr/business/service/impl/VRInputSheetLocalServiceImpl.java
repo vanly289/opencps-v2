@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.model.VRInputSheet;
 import com.fds.vr.business.service.base.VRInputSheetLocalServiceBaseImpl;
 
 /**
@@ -50,4 +51,37 @@ public class VRInputSheetLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRInputSheetLocalServiceUtil} to access the vr input sheet local service.
 	 */
+	
+	public List<VRInputSheet> findByinputSheetNo(long mtCore, String inputSheetNo) throws PortalException, SystemException {
+		try {
+			return vrInputSheetPersistence.findByinputSheetNo(mtCore, inputSheetNo);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInputSheet>();
+		
+	}
+
+
+	public List<VRInputSheet> findBycorporationId(long mtCore, String corporationId) throws PortalException, SystemException {
+		try {
+			return vrInputSheetPersistence.findBycorporationId(mtCore, corporationId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInputSheet>();
+		
+	}
+	
+	public List<VRInputSheet> findByinputSheetType(long mtCore, long inputSheetType) throws PortalException, SystemException {
+		try {
+			return vrInputSheetPersistence.findByinputSheetType(mtCore, inputSheetType);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInputSheet>();
+		
+	}
+	
+	private Log _log = LogFactoryUtil.getLog(VRInputSheetLocalServiceImpl.class);
 }

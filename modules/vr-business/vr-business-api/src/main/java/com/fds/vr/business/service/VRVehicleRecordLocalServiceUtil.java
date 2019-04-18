@@ -210,6 +210,54 @@ public class VRVehicleRecordLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRVehicleRecord> findByapplicantProfileId(
+		long mtCore, long applicantProfileId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByapplicantProfileId(mtCore, applicantProfileId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRVehicleRecord> findByapplicantProfileIdAndPrintingStatus(
+		long mtCore, long applicantProfileId, long printingStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByapplicantProfileIdAndPrintingStatus(mtCore,
+			applicantProfileId, printingStatus);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRVehicleRecord> findByapplicantProfileIdAndVehicleRecordStatus(
+		long mtCore, long applicantProfileId, long vehicleRecordStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByapplicantProfileIdAndVehicleRecordStatus(mtCore,
+			applicantProfileId, vehicleRecordStatus);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRVehicleRecord> findBycertificateId(
+		long mtCore, long certificateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBycertificateId(mtCore, certificateId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRVehicleRecord> findBydossierId(
+		long mtCore, long dossierId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBydossierId(mtCore, dossierId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRVehicleRecord> findByissueVehicleCertificateId(
+		long mtCore, long issueVehicleCertificateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByissueVehicleCertificateId(mtCore,
+			issueVehicleCertificateId);
+	}
+
 	/**
 	* Returns a range of all the vr vehicle records.
 	*

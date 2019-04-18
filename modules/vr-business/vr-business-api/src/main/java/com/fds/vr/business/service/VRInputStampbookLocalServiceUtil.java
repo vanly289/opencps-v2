@@ -210,6 +210,30 @@ public class VRInputStampbookLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbook> findByInputSheetId(
+		long mtCore, long inputSheetId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByInputSheetId(mtCore, inputSheetId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbook> findByInputSheetIdAndBookId(
+		long mtCore, long inputSheetId, long bookId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByInputSheetIdAndBookId(mtCore, inputSheetId, bookId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbook> findByInputSheetIdAndBookIdAndStampType(
+		long mtCore, long inputSheetId, long bookId, java.lang.String stampType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByInputSheetIdAndBookIdAndStampType(mtCore,
+			inputSheetId, bookId, stampType);
+	}
+
 	/**
 	* Returns a range of all the vr input stampbooks.
 	*

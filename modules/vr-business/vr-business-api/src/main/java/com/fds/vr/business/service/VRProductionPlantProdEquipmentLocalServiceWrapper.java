@@ -220,6 +220,15 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRProductionPlantProdEquipment> findByproductPlantID(
+		long mtCore, long productPlantID)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrProductionPlantProdEquipmentLocalService.findByproductPlantID(mtCore,
+			productPlantID);
+	}
+
 	/**
 	* Returns a range of all the vr production plant prod equipments.
 	*

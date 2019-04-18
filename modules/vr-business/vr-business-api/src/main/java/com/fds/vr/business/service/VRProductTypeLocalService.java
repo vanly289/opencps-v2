@@ -193,6 +193,9 @@ public interface VRProductTypeLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRProductType> findByproductPlantID(long mtCore,
+		long productPlantID) throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr product types.
 	*

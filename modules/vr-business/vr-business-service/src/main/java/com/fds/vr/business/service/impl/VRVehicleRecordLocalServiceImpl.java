@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-
+import com.fds.vr.business.model.VRVehicleRecord;
 import com.fds.vr.business.service.base.VRVehicleRecordLocalServiceBaseImpl;
 
 /**
@@ -51,4 +51,67 @@ public class VRVehicleRecordLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRVehicleRecordLocalServiceUtil} to access the vr vehicle record local service.
 	 */
+	
+	public List<VRVehicleRecord> findByissueVehicleCertificateId(long mtCore, long issueVehicleCertificateId) throws PortalException, SystemException {
+		try {
+			return vrVehicleRecordPersistence.findByissueVehicleCertificateId(mtCore, issueVehicleCertificateId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRVehicleRecord>();
+		
+	}
+
+
+	public List<VRVehicleRecord> findBydossierId(long mtCore, long dossierId) throws PortalException, SystemException {
+		try {
+			return vrVehicleRecordPersistence.findBydossierId(mtCore, dossierId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRVehicleRecord>();
+		
+	}
+	
+	public List<VRVehicleRecord> findBycertificateId(long mtCore, long certificateId) throws PortalException, SystemException {
+		try {
+			return vrVehicleRecordPersistence.findBycertificateId(mtCore, certificateId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRVehicleRecord>();
+		
+	}
+	
+	public List<VRVehicleRecord> findByapplicantProfileId(long mtCore, long applicantProfileId) throws PortalException, SystemException {
+		try {
+			return vrVehicleRecordPersistence.findByapplicantProfileId(mtCore, applicantProfileId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRVehicleRecord>();
+		
+	}
+	
+	public List<VRVehicleRecord> findByapplicantProfileIdAndPrintingStatus(long mtCore, long applicantProfileId, long printingStatus) throws PortalException, SystemException {
+		try {
+			return vrVehicleRecordPersistence.findByapplicantProfileIdAndPrintingStatus(mtCore, applicantProfileId, printingStatus);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRVehicleRecord>();
+		
+	}
+	
+	public List<VRVehicleRecord> findByapplicantProfileIdAndVehicleRecordStatus(long mtCore, long applicantProfileId, long vehicleRecordStatus) throws PortalException, SystemException {
+		try {
+			return vrVehicleRecordPersistence.findByapplicantProfileIdAndVehicleRecordStatus(mtCore, applicantProfileId, vehicleRecordStatus);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRVehicleRecord>();
+		
+	}
+	
+	private Log _log = LogFactoryUtil.getLog(VRVehicleRecordLocalServiceImpl.class);
 }

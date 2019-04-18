@@ -241,11 +241,11 @@ public class VROutputSheetSoap implements Serializable {
 		_inventoryDate = inventoryDate;
 	}
 
-	public String getDossierId() {
+	public long getDossierId() {
 		return _dossierId;
 	}
 
-	public void setDossierId(String dossierId) {
+	public void setDossierId(long dossierId) {
 		_dossierId = dossierId;
 	}
 
@@ -353,7 +353,7 @@ public class VROutputSheetSoap implements Serializable {
 	private String _inventoryName;
 	private String _inventoryPlace;
 	private Date _inventoryDate;
-	private String _dossierId;
+	private long _dossierId;
 	private long _issueId;
 	private String _purchaserId;
 	private String _purchaserCorporationId;

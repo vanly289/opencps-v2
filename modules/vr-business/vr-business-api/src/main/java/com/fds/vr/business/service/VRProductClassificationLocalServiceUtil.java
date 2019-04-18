@@ -212,6 +212,13 @@ public class VRProductClassificationLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRProductClassification> findByproductPlantID(
+		long mtCore, long productPlantID)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByproductPlantID(mtCore, productPlantID);
+	}
+
 	/**
 	* Returns a range of all the vr product classifications.
 	*

@@ -178,7 +178,7 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 					input.getRepresentativeEnterprise(),
 					Validator.isNotNull(input.getMarkasdeleted()) ? input.getMarkasdeleted() : 0, input.getRemarks(),
 					serviceContext);
-
+			
 			result = RegistrationUtils.mappingToRegistrationDetailModel(registration);
 			return Response.status(200).entity(result).build();
 		} catch (Exception e) {
@@ -549,7 +549,7 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 				String registrationFormId = doc.get(RegistrationFormTerm.REGISTRATION_FORM_ID);
 				String formDataRemoved = doc.get(RegistrationFormTerm.REMOVED);
 				JSONObject formDataJson = null;
-				if (Validator.isNotNull(formData) && formDataRemoved.equalsIgnoreCase("0")) {
+				if (Validator.isNotNull(formData) && !Boolean.valueOf(formDataRemoved)) {
 					formDataJson = JSONFactoryUtil.createJSONObject(formData);
 					formDataJson.put("registrationFormId", registrationFormId);
 				}

@@ -85,7 +85,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_YEAROFPERIOD =
 		new FinderPath(VRInventoryModelImpl.ENTITY_CACHE_ENABLED,
 			VRInventoryModelImpl.FINDER_CACHE_ENABLED, VRInventoryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByyearofPeriod",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByYearofPeriod",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -95,14 +95,14 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAROFPERIOD =
 		new FinderPath(VRInventoryModelImpl.ENTITY_CACHE_ENABLED,
 			VRInventoryModelImpl.FINDER_CACHE_ENABLED, VRInventoryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByyearofPeriod",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByYearofPeriod",
 			new String[] { Long.class.getName(), Long.class.getName() },
 			VRInventoryModelImpl.MTCORE_COLUMN_BITMASK |
 			VRInventoryModelImpl.YEAROFPERIOD_COLUMN_BITMASK |
 			VRInventoryModelImpl.MODIFYDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_YEAROFPERIOD = new FinderPath(VRInventoryModelImpl.ENTITY_CACHE_ENABLED,
 			VRInventoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByyearofPeriod",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByYearofPeriod",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
@@ -113,8 +113,8 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @return the matching vr inventories
 	 */
 	@Override
-	public List<VRInventory> findByyearofPeriod(long mtCore, long yearofPeriod) {
-		return findByyearofPeriod(mtCore, yearofPeriod, QueryUtil.ALL_POS,
+	public List<VRInventory> findByYearofPeriod(long mtCore, long yearofPeriod) {
+		return findByYearofPeriod(mtCore, yearofPeriod, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -132,9 +132,9 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @return the range of matching vr inventories
 	 */
 	@Override
-	public List<VRInventory> findByyearofPeriod(long mtCore, long yearofPeriod,
+	public List<VRInventory> findByYearofPeriod(long mtCore, long yearofPeriod,
 		int start, int end) {
-		return findByyearofPeriod(mtCore, yearofPeriod, start, end, null);
+		return findByYearofPeriod(mtCore, yearofPeriod, start, end, null);
 	}
 
 	/**
@@ -152,9 +152,9 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @return the ordered range of matching vr inventories
 	 */
 	@Override
-	public List<VRInventory> findByyearofPeriod(long mtCore, long yearofPeriod,
+	public List<VRInventory> findByYearofPeriod(long mtCore, long yearofPeriod,
 		int start, int end, OrderByComparator<VRInventory> orderByComparator) {
-		return findByyearofPeriod(mtCore, yearofPeriod, start, end,
+		return findByYearofPeriod(mtCore, yearofPeriod, start, end,
 			orderByComparator, true);
 	}
 
@@ -174,7 +174,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @return the ordered range of matching vr inventories
 	 */
 	@Override
-	public List<VRInventory> findByyearofPeriod(long mtCore, long yearofPeriod,
+	public List<VRInventory> findByYearofPeriod(long mtCore, long yearofPeriod,
 		int start, int end, OrderByComparator<VRInventory> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -295,10 +295,10 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @throws NoSuchVRInventoryException if a matching vr inventory could not be found
 	 */
 	@Override
-	public VRInventory findByyearofPeriod_First(long mtCore, long yearofPeriod,
+	public VRInventory findByYearofPeriod_First(long mtCore, long yearofPeriod,
 		OrderByComparator<VRInventory> orderByComparator)
 		throws NoSuchVRInventoryException {
-		VRInventory vrInventory = fetchByyearofPeriod_First(mtCore,
+		VRInventory vrInventory = fetchByYearofPeriod_First(mtCore,
 				yearofPeriod, orderByComparator);
 
 		if (vrInventory != null) {
@@ -329,9 +329,9 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @return the first matching vr inventory, or <code>null</code> if a matching vr inventory could not be found
 	 */
 	@Override
-	public VRInventory fetchByyearofPeriod_First(long mtCore,
+	public VRInventory fetchByYearofPeriod_First(long mtCore,
 		long yearofPeriod, OrderByComparator<VRInventory> orderByComparator) {
-		List<VRInventory> list = findByyearofPeriod(mtCore, yearofPeriod, 0, 1,
+		List<VRInventory> list = findByYearofPeriod(mtCore, yearofPeriod, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -351,10 +351,10 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @throws NoSuchVRInventoryException if a matching vr inventory could not be found
 	 */
 	@Override
-	public VRInventory findByyearofPeriod_Last(long mtCore, long yearofPeriod,
+	public VRInventory findByYearofPeriod_Last(long mtCore, long yearofPeriod,
 		OrderByComparator<VRInventory> orderByComparator)
 		throws NoSuchVRInventoryException {
-		VRInventory vrInventory = fetchByyearofPeriod_Last(mtCore,
+		VRInventory vrInventory = fetchByYearofPeriod_Last(mtCore,
 				yearofPeriod, orderByComparator);
 
 		if (vrInventory != null) {
@@ -385,15 +385,15 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @return the last matching vr inventory, or <code>null</code> if a matching vr inventory could not be found
 	 */
 	@Override
-	public VRInventory fetchByyearofPeriod_Last(long mtCore, long yearofPeriod,
+	public VRInventory fetchByYearofPeriod_Last(long mtCore, long yearofPeriod,
 		OrderByComparator<VRInventory> orderByComparator) {
-		int count = countByyearofPeriod(mtCore, yearofPeriod);
+		int count = countByYearofPeriod(mtCore, yearofPeriod);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<VRInventory> list = findByyearofPeriod(mtCore, yearofPeriod,
+		List<VRInventory> list = findByYearofPeriod(mtCore, yearofPeriod,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -414,7 +414,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @throws NoSuchVRInventoryException if a vr inventory with the primary key could not be found
 	 */
 	@Override
-	public VRInventory[] findByyearofPeriod_PrevAndNext(long id, long mtCore,
+	public VRInventory[] findByYearofPeriod_PrevAndNext(long id, long mtCore,
 		long yearofPeriod, OrderByComparator<VRInventory> orderByComparator)
 		throws NoSuchVRInventoryException {
 		VRInventory vrInventory = findByPrimaryKey(id);
@@ -426,12 +426,12 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 
 			VRInventory[] array = new VRInventoryImpl[3];
 
-			array[0] = getByyearofPeriod_PrevAndNext(session, vrInventory,
+			array[0] = getByYearofPeriod_PrevAndNext(session, vrInventory,
 					mtCore, yearofPeriod, orderByComparator, true);
 
 			array[1] = vrInventory;
 
-			array[2] = getByyearofPeriod_PrevAndNext(session, vrInventory,
+			array[2] = getByYearofPeriod_PrevAndNext(session, vrInventory,
 					mtCore, yearofPeriod, orderByComparator, false);
 
 			return array;
@@ -444,7 +444,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 		}
 	}
 
-	protected VRInventory getByyearofPeriod_PrevAndNext(Session session,
+	protected VRInventory getByYearofPeriod_PrevAndNext(Session session,
 		VRInventory vrInventory, long mtCore, long yearofPeriod,
 		OrderByComparator<VRInventory> orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -561,8 +561,8 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @param yearofPeriod the yearof period
 	 */
 	@Override
-	public void removeByyearofPeriod(long mtCore, long yearofPeriod) {
-		for (VRInventory vrInventory : findByyearofPeriod(mtCore, yearofPeriod,
+	public void removeByYearofPeriod(long mtCore, long yearofPeriod) {
+		for (VRInventory vrInventory : findByYearofPeriod(mtCore, yearofPeriod,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(vrInventory);
 		}
@@ -576,7 +576,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 * @return the number of matching vr inventories
 	 */
 	@Override
-	public int countByyearofPeriod(long mtCore, long yearofPeriod) {
+	public int countByYearofPeriod(long mtCore, long yearofPeriod) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_YEAROFPERIOD;
 
 		Object[] finderArgs = new Object[] { mtCore, yearofPeriod };

@@ -220,6 +220,87 @@ public class VROutputSheetDetailsLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheetDetails> findByInputSheetId(
+		long mtCore, long inputSheetId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.findByInputSheetId(mtCore,
+			inputSheetId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheetDetails> findByInputSheetIdAndBookId(
+		long mtCore, long inputSheetId, long bookId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.findByInputSheetIdAndBookId(mtCore,
+			inputSheetId, bookId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheetDetails> findByInputSheetIdAndBookIdAndStampType(
+		long mtCore, long inputSheetId, long bookId, java.lang.String stampType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.findByInputSheetIdAndBookIdAndStampType(mtCore,
+			inputSheetId, bookId, stampType);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheetDetails> findByOutputSheetId(
+		long mtCore, long outputSheetId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.findByOutputSheetId(mtCore,
+			outputSheetId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheetDetails> findByOutputSheetIdAndBookId(
+		long mtCore, long outputSheetId, long bookId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.findByOutputSheetIdAndBookId(mtCore,
+			outputSheetId, bookId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheetDetails> findByOutputSheetIdAndBookIdAndStampType(
+		long mtCore, long outputSheetId, long bookId, java.lang.String stampType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.findByOutputSheetIdAndBookIdAndStampType(mtCore,
+			outputSheetId, bookId, stampType);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheetDetails> findBycertificateId(
+		long mtCore, long certificateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.findBycertificateId(mtCore,
+			certificateId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheetDetails> findBycertificateNumber(
+		long mtCore, java.lang.String certificateNumber)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.findBycertificateNumber(mtCore,
+			certificateNumber);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VROutputSheetDetails> findByissueVehicleCertificateId(
+		long mtCore, long issueVehicleCertificateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.findByissueVehicleCertificateId(mtCore,
+			issueVehicleCertificateId);
+	}
+
 	/**
 	* Returns a range of all the vr output sheet detailses.
 	*

@@ -1,6 +1,7 @@
 package org.opencps.dossiermgt.action.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,12 +46,14 @@ public class RegistrationActionsImpl implements RegistrationActions {
 		List<Registration> listRegistration = RegistrationLocalServiceUtil.getRegistrationByGID_UID(groupId,
 				serviceContext.getUserId());
 		_log.info("listRegistration: "+listRegistration.size());
+		// registration moi nhat se thiet lap flag markasdeleted = 1; Chi khi duyet moi chuyen ve gia tri 0;
+		markasdeleted = 1; 
 		if (listRegistration.size() == 0) {
 			return RegistrationLocalServiceUtil.insert(groupId, companyId, applicantName, applicantIdType,
 					applicantIdNo, applicantIdDate, address, cityCode, cityName, districtCode, districtName, wardCode,
 					wardName, contactName, contactTelNo, contactEmail, govAgencyCode, govAgencyName, 0, 
 					Validator.isNotNull(registrationClass) ? registrationClass.toString(): StringPool.BLANK,
-					representativeEnterprise, 1, remarks, serviceContext);
+					representativeEnterprise, markasdeleted, remarks, serviceContext);
 		} else {
 			Registration registration = listRegistration.get(0);
 			int state = registration.getRegistrationState();
@@ -61,7 +64,7 @@ public class RegistrationActionsImpl implements RegistrationActions {
 						applicantIdNo, applicantIdDate, address, cityCode, cityName, districtCode, districtName,
 						wardCode, wardName, contactName, contactTelNo, contactEmail, govAgencyCode, govAgencyName, 0,
 						Validator.isNotNull(registrationClass) ? registrationClass.toString() : StringPool.BLANK,
-						representativeEnterprise, 1, remarks, serviceContext);
+						representativeEnterprise, markasdeleted, remarks, serviceContext);
 			} else {
 				return registration;
 			}
@@ -83,16 +86,18 @@ public class RegistrationActionsImpl implements RegistrationActions {
 		long userId = serviceContext.getUserId();
 
 		List<RegistrationForm> lstRegistrationFormchange = new ArrayList<RegistrationForm>();
-		// Sonvh commented 19/3/2019
-		List<RegistrationForm> lstRegistrationForm = RegistrationFormLocalServiceUtil.getRegistrationForms(start, end);
-		// changeType removed in registrationForm
-					for (RegistrationForm registrationForm : lstRegistrationForm) {
-				registrationForm.setIsNew(true);
-				RegistrationForm registrationFormChanged = RegistrationFormLocalServiceUtil
-						.updateRegistrationForm(registrationForm);
-				lstRegistrationFormchange.add(registrationFormChanged);
+		
+		List<RegistrationForm> lstRegistrationForm = RegistrationFormLocalServiceUtil.findByG_REGID_ISNEW(registrationId, true);
+		// changeType IsNew in registrationForm
+		if  (lstRegistrationForm != null && lstRegistrationForm.size() > 0 && registrationState == 2) {
+			for (RegistrationForm registrationForm : lstRegistrationForm) {
+					registrationForm.setIsNew(false);
+					registrationForm.setModifiedDate(new Date());
+					RegistrationForm registrationFormChanged = RegistrationFormLocalServiceUtil
+							.updateRegistrationForm(registrationForm);
+					lstRegistrationFormchange.add(registrationFormChanged);
+			}
 		}
-
 		// add registrationLog
 		String content = "";
 		RegistrationLogActions registrationLogActions = new RegistrationLogActionsImpl();
@@ -108,15 +113,14 @@ public class RegistrationActionsImpl implements RegistrationActions {
 			addLog("", groupId, userId, registrationId, content, lstRegistrationFormchange);
 		}
 	
-		if (registrationState == 2) {
-			// Find all Registrations with exacted applicantIdNo: update markasdeleted from 0 to 1 
+		if (registrationState == 2) {			
+			// Find all Registrations with exacted applicantIdNo: update markasdeleted from 0 to 1
+			// Registration moi nhat khi duoc duyet se chuyen flag markasdeleted ve gia tri 0;
 			List<Registration> oldReg =  RegistrationLocalServiceUtil.findByREG_APPNO_markasdeleted(groupId, applicantIdNo, 0);
 			if (oldReg != null && oldReg.size() > 0) {
 				for (Registration oldregistration : oldReg) {
-					if (oldregistration.getRegistrationId() != registrationId) {
-						oldregistration.setMarkasdeleted(1);
-						RegistrationLocalServiceUtil.updateRegistration(oldregistration);
-					}
+					oldregistration.setMarkasdeleted(1);
+					RegistrationLocalServiceUtil.updateRegistration(oldregistration);
 				}
 			}
 			markasdeleted = 0;	

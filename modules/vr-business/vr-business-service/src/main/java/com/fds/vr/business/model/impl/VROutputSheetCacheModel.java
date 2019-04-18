@@ -229,13 +229,7 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 			vrOutputSheetImpl.setInventoryDate(new Date(inventoryDate));
 		}
 
-		if (dossierId == null) {
-			vrOutputSheetImpl.setDossierId(StringPool.BLANK);
-		}
-		else {
-			vrOutputSheetImpl.setDossierId(dossierId);
-		}
-
+		vrOutputSheetImpl.setDossierId(dossierId);
 		vrOutputSheetImpl.setIssueId(issueId);
 
 		if (purchaserId == null) {
@@ -316,7 +310,8 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 		inventoryName = objectInput.readUTF();
 		inventoryPlace = objectInput.readUTF();
 		inventoryDate = objectInput.readLong();
-		dossierId = objectInput.readUTF();
+
+		dossierId = objectInput.readLong();
 
 		issueId = objectInput.readLong();
 		purchaserId = objectInput.readUTF();
@@ -424,12 +419,7 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 
 		objectOutput.writeLong(inventoryDate);
 
-		if (dossierId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(dossierId);
-		}
+		objectOutput.writeLong(dossierId);
 
 		objectOutput.writeLong(issueId);
 
@@ -494,7 +484,7 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 	public String inventoryName;
 	public String inventoryPlace;
 	public long inventoryDate;
-	public String dossierId;
+	public long dossierId;
 	public long issueId;
 	public String purchaserId;
 	public String purchaserCorporationId;

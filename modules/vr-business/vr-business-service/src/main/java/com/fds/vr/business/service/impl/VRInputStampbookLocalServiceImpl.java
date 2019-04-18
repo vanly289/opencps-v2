@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-
+import com.fds.vr.business.model.VRInputStampbook;
 import com.fds.vr.business.service.base.VRInputStampbookLocalServiceBaseImpl;
 
 /**
@@ -51,4 +51,38 @@ public class VRInputStampbookLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRInputStampbookLocalServiceUtil} to access the vr input stampbook local service.
 	 */
+	
+	public List<VRInputStampbook> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {
+		try {
+			return vrInputStampbookPersistence.findByInputSheetId(mtCore, inputSheetId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInputStampbook>();
+		
+	}
+
+
+	public List<VRInputStampbook> findByInputSheetIdAndBookId(long mtCore, long inputSheetId, long bookId) throws PortalException, SystemException {
+		try {
+			return vrInputStampbookPersistence.findByInputSheetIdAndBookId(mtCore, inputSheetId, bookId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInputStampbook>();
+		
+	}
+	
+	public List<VRInputStampbook> findByInputSheetIdAndBookIdAndStampType(long mtCore, long inputSheetId, long bookId, String stampType) throws PortalException, SystemException {
+		try {
+			return vrInputStampbookPersistence.findByInputSheetIdAndBookIdAndStampType(mtCore, inputSheetId, bookId, stampType);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInputStampbook>();
+		
+	}
+	
+	
+	private Log _log = LogFactoryUtil.getLog(VRInputStampbookLocalServiceImpl.class);
 }

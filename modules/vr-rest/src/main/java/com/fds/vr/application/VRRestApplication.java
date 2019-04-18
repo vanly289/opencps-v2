@@ -251,6 +251,11 @@ public class VRRestApplication extends Application {
 			@PathParam("type") String type) {
 
 		long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
+		groupId = 55301; //fixed;
+		String collectionCode = code;
+		String parentItemCode = type; 
+		String level = "2"; 
+		String OrderBy = "name"; 
 
 		JSONObject resp = JSONFactoryUtil.createJSONObject();
 
@@ -259,10 +264,14 @@ public class VRRestApplication extends Application {
 		long dictCollectionId = dictUtil.getCollectionId(code, groupId);
 
 		try {
+  
 			List<DictItem> items = DictItemLocalServiceUtil.findByF_dictCollectionId(dictCollectionId);
 
-			JSONArray itemsJson = dictUtil.getDictItem(items, type);
+			// Cach cu: B1. lay toan bo danh sach theo CollectionCode; B2.Loc danh sach theo Ma nhom (type)
+			//JSONArray itemsJson = dictUtil.getDictItem(items, type);
 
+			// Cach moi: Lay danh sach theo ma cha parentItemCode va CollectionCode.			
+			JSONArray itemsJson = dictUtil.getDictItemByCollection_Parent_Level_OrderBy(items, groupId, collectionCode, parentItemCode, level, OrderBy );
 			resp.put("Items", itemsJson);
 			resp.put("Total", itemsJson.length());
 

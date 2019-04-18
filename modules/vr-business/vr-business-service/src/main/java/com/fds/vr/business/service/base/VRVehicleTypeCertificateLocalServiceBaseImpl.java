@@ -95,6 +95,25 @@ import com.fds.vr.business.service.persistence.VRRPDossierStatisticsFinder;
 import com.fds.vr.business.service.persistence.VRRPDossierStatisticsPersistence;
 import com.fds.vr.business.service.persistence.VRReportPersistence;
 import com.fds.vr.business.service.persistence.VRSyncDatePersistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_LKXCGPersistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_LKXMYPart2Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_LKXMYPersistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCGPart1Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCGPart2Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCGPart3Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCGPart4Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCGPart5Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCGPart6Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCGPersistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCHPart2Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCHPersistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCNPart2Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCNPart3Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XCNPersistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XDDPersistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XMYPart2Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XMYPart3Persistence;
+import com.fds.vr.business.service.persistence.VRTechnicalSpec_XMYPersistence;
 import com.fds.vr.business.service.persistence.VRTemplateNoPersistence;
 import com.fds.vr.business.service.persistence.VRVehicleEquipmentFinder;
 import com.fds.vr.business.service.persistence.VRVehicleEquipmentPersistence;
@@ -2730,6 +2749,728 @@ public abstract class VRVehicleTypeCertificateLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the vr technical spec_lkxcg local service.
+	 *
+	 * @return the vr technical spec_lkxcg local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_LKXCGLocalService getVRTechnicalSpec_LKXCGLocalService() {
+		return vrTechnicalSpec_LKXCGLocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_lkxcg local service.
+	 *
+	 * @param vrTechnicalSpec_LKXCGLocalService the vr technical spec_lkxcg local service
+	 */
+	public void setVRTechnicalSpec_LKXCGLocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_LKXCGLocalService vrTechnicalSpec_LKXCGLocalService) {
+		this.vrTechnicalSpec_LKXCGLocalService = vrTechnicalSpec_LKXCGLocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_lkxcg persistence.
+	 *
+	 * @return the vr technical spec_lkxcg persistence
+	 */
+	public VRTechnicalSpec_LKXCGPersistence getVRTechnicalSpec_LKXCGPersistence() {
+		return vrTechnicalSpec_LKXCGPersistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_lkxcg persistence.
+	 *
+	 * @param vrTechnicalSpec_LKXCGPersistence the vr technical spec_lkxcg persistence
+	 */
+	public void setVRTechnicalSpec_LKXCGPersistence(
+		VRTechnicalSpec_LKXCGPersistence vrTechnicalSpec_LKXCGPersistence) {
+		this.vrTechnicalSpec_LKXCGPersistence = vrTechnicalSpec_LKXCGPersistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_lkxmy local service.
+	 *
+	 * @return the vr technical spec_lkxmy local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_LKXMYLocalService getVRTechnicalSpec_LKXMYLocalService() {
+		return vrTechnicalSpec_LKXMYLocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_lkxmy local service.
+	 *
+	 * @param vrTechnicalSpec_LKXMYLocalService the vr technical spec_lkxmy local service
+	 */
+	public void setVRTechnicalSpec_LKXMYLocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_LKXMYLocalService vrTechnicalSpec_LKXMYLocalService) {
+		this.vrTechnicalSpec_LKXMYLocalService = vrTechnicalSpec_LKXMYLocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_lkxmy persistence.
+	 *
+	 * @return the vr technical spec_lkxmy persistence
+	 */
+	public VRTechnicalSpec_LKXMYPersistence getVRTechnicalSpec_LKXMYPersistence() {
+		return vrTechnicalSpec_LKXMYPersistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_lkxmy persistence.
+	 *
+	 * @param vrTechnicalSpec_LKXMYPersistence the vr technical spec_lkxmy persistence
+	 */
+	public void setVRTechnicalSpec_LKXMYPersistence(
+		VRTechnicalSpec_LKXMYPersistence vrTechnicalSpec_LKXMYPersistence) {
+		this.vrTechnicalSpec_LKXMYPersistence = vrTechnicalSpec_LKXMYPersistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_lkxmy part2 local service.
+	 *
+	 * @return the vr technical spec_lkxmy part2 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_LKXMYPart2LocalService getVRTechnicalSpec_LKXMYPart2LocalService() {
+		return vrTechnicalSpec_LKXMYPart2LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_lkxmy part2 local service.
+	 *
+	 * @param vrTechnicalSpec_LKXMYPart2LocalService the vr technical spec_lkxmy part2 local service
+	 */
+	public void setVRTechnicalSpec_LKXMYPart2LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_LKXMYPart2LocalService vrTechnicalSpec_LKXMYPart2LocalService) {
+		this.vrTechnicalSpec_LKXMYPart2LocalService = vrTechnicalSpec_LKXMYPart2LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_lkxmy part2 persistence.
+	 *
+	 * @return the vr technical spec_lkxmy part2 persistence
+	 */
+	public VRTechnicalSpec_LKXMYPart2Persistence getVRTechnicalSpec_LKXMYPart2Persistence() {
+		return vrTechnicalSpec_LKXMYPart2Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_lkxmy part2 persistence.
+	 *
+	 * @param vrTechnicalSpec_LKXMYPart2Persistence the vr technical spec_lkxmy part2 persistence
+	 */
+	public void setVRTechnicalSpec_LKXMYPart2Persistence(
+		VRTechnicalSpec_LKXMYPart2Persistence vrTechnicalSpec_LKXMYPart2Persistence) {
+		this.vrTechnicalSpec_LKXMYPart2Persistence = vrTechnicalSpec_LKXMYPart2Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg local service.
+	 *
+	 * @return the vr technical spec_xcg local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCGLocalService getVRTechnicalSpec_XCGLocalService() {
+		return vrTechnicalSpec_XCGLocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg local service.
+	 *
+	 * @param vrTechnicalSpec_XCGLocalService the vr technical spec_xcg local service
+	 */
+	public void setVRTechnicalSpec_XCGLocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCGLocalService vrTechnicalSpec_XCGLocalService) {
+		this.vrTechnicalSpec_XCGLocalService = vrTechnicalSpec_XCGLocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg persistence.
+	 *
+	 * @return the vr technical spec_xcg persistence
+	 */
+	public VRTechnicalSpec_XCGPersistence getVRTechnicalSpec_XCGPersistence() {
+		return vrTechnicalSpec_XCGPersistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg persistence.
+	 *
+	 * @param vrTechnicalSpec_XCGPersistence the vr technical spec_xcg persistence
+	 */
+	public void setVRTechnicalSpec_XCGPersistence(
+		VRTechnicalSpec_XCGPersistence vrTechnicalSpec_XCGPersistence) {
+		this.vrTechnicalSpec_XCGPersistence = vrTechnicalSpec_XCGPersistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part1 local service.
+	 *
+	 * @return the vr technical spec_xcg part1 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCGPart1LocalService getVRTechnicalSpec_XCGPart1LocalService() {
+		return vrTechnicalSpec_XCGPart1LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part1 local service.
+	 *
+	 * @param vrTechnicalSpec_XCGPart1LocalService the vr technical spec_xcg part1 local service
+	 */
+	public void setVRTechnicalSpec_XCGPart1LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCGPart1LocalService vrTechnicalSpec_XCGPart1LocalService) {
+		this.vrTechnicalSpec_XCGPart1LocalService = vrTechnicalSpec_XCGPart1LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part1 persistence.
+	 *
+	 * @return the vr technical spec_xcg part1 persistence
+	 */
+	public VRTechnicalSpec_XCGPart1Persistence getVRTechnicalSpec_XCGPart1Persistence() {
+		return vrTechnicalSpec_XCGPart1Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part1 persistence.
+	 *
+	 * @param vrTechnicalSpec_XCGPart1Persistence the vr technical spec_xcg part1 persistence
+	 */
+	public void setVRTechnicalSpec_XCGPart1Persistence(
+		VRTechnicalSpec_XCGPart1Persistence vrTechnicalSpec_XCGPart1Persistence) {
+		this.vrTechnicalSpec_XCGPart1Persistence = vrTechnicalSpec_XCGPart1Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part2 local service.
+	 *
+	 * @return the vr technical spec_xcg part2 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCGPart2LocalService getVRTechnicalSpec_XCGPart2LocalService() {
+		return vrTechnicalSpec_XCGPart2LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part2 local service.
+	 *
+	 * @param vrTechnicalSpec_XCGPart2LocalService the vr technical spec_xcg part2 local service
+	 */
+	public void setVRTechnicalSpec_XCGPart2LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCGPart2LocalService vrTechnicalSpec_XCGPart2LocalService) {
+		this.vrTechnicalSpec_XCGPart2LocalService = vrTechnicalSpec_XCGPart2LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part2 persistence.
+	 *
+	 * @return the vr technical spec_xcg part2 persistence
+	 */
+	public VRTechnicalSpec_XCGPart2Persistence getVRTechnicalSpec_XCGPart2Persistence() {
+		return vrTechnicalSpec_XCGPart2Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part2 persistence.
+	 *
+	 * @param vrTechnicalSpec_XCGPart2Persistence the vr technical spec_xcg part2 persistence
+	 */
+	public void setVRTechnicalSpec_XCGPart2Persistence(
+		VRTechnicalSpec_XCGPart2Persistence vrTechnicalSpec_XCGPart2Persistence) {
+		this.vrTechnicalSpec_XCGPart2Persistence = vrTechnicalSpec_XCGPart2Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part3 local service.
+	 *
+	 * @return the vr technical spec_xcg part3 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCGPart3LocalService getVRTechnicalSpec_XCGPart3LocalService() {
+		return vrTechnicalSpec_XCGPart3LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part3 local service.
+	 *
+	 * @param vrTechnicalSpec_XCGPart3LocalService the vr technical spec_xcg part3 local service
+	 */
+	public void setVRTechnicalSpec_XCGPart3LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCGPart3LocalService vrTechnicalSpec_XCGPart3LocalService) {
+		this.vrTechnicalSpec_XCGPart3LocalService = vrTechnicalSpec_XCGPart3LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part3 persistence.
+	 *
+	 * @return the vr technical spec_xcg part3 persistence
+	 */
+	public VRTechnicalSpec_XCGPart3Persistence getVRTechnicalSpec_XCGPart3Persistence() {
+		return vrTechnicalSpec_XCGPart3Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part3 persistence.
+	 *
+	 * @param vrTechnicalSpec_XCGPart3Persistence the vr technical spec_xcg part3 persistence
+	 */
+	public void setVRTechnicalSpec_XCGPart3Persistence(
+		VRTechnicalSpec_XCGPart3Persistence vrTechnicalSpec_XCGPart3Persistence) {
+		this.vrTechnicalSpec_XCGPart3Persistence = vrTechnicalSpec_XCGPart3Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part4 local service.
+	 *
+	 * @return the vr technical spec_xcg part4 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCGPart4LocalService getVRTechnicalSpec_XCGPart4LocalService() {
+		return vrTechnicalSpec_XCGPart4LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part4 local service.
+	 *
+	 * @param vrTechnicalSpec_XCGPart4LocalService the vr technical spec_xcg part4 local service
+	 */
+	public void setVRTechnicalSpec_XCGPart4LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCGPart4LocalService vrTechnicalSpec_XCGPart4LocalService) {
+		this.vrTechnicalSpec_XCGPart4LocalService = vrTechnicalSpec_XCGPart4LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part4 persistence.
+	 *
+	 * @return the vr technical spec_xcg part4 persistence
+	 */
+	public VRTechnicalSpec_XCGPart4Persistence getVRTechnicalSpec_XCGPart4Persistence() {
+		return vrTechnicalSpec_XCGPart4Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part4 persistence.
+	 *
+	 * @param vrTechnicalSpec_XCGPart4Persistence the vr technical spec_xcg part4 persistence
+	 */
+	public void setVRTechnicalSpec_XCGPart4Persistence(
+		VRTechnicalSpec_XCGPart4Persistence vrTechnicalSpec_XCGPart4Persistence) {
+		this.vrTechnicalSpec_XCGPart4Persistence = vrTechnicalSpec_XCGPart4Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part5 local service.
+	 *
+	 * @return the vr technical spec_xcg part5 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCGPart5LocalService getVRTechnicalSpec_XCGPart5LocalService() {
+		return vrTechnicalSpec_XCGPart5LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part5 local service.
+	 *
+	 * @param vrTechnicalSpec_XCGPart5LocalService the vr technical spec_xcg part5 local service
+	 */
+	public void setVRTechnicalSpec_XCGPart5LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCGPart5LocalService vrTechnicalSpec_XCGPart5LocalService) {
+		this.vrTechnicalSpec_XCGPart5LocalService = vrTechnicalSpec_XCGPart5LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part5 persistence.
+	 *
+	 * @return the vr technical spec_xcg part5 persistence
+	 */
+	public VRTechnicalSpec_XCGPart5Persistence getVRTechnicalSpec_XCGPart5Persistence() {
+		return vrTechnicalSpec_XCGPart5Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part5 persistence.
+	 *
+	 * @param vrTechnicalSpec_XCGPart5Persistence the vr technical spec_xcg part5 persistence
+	 */
+	public void setVRTechnicalSpec_XCGPart5Persistence(
+		VRTechnicalSpec_XCGPart5Persistence vrTechnicalSpec_XCGPart5Persistence) {
+		this.vrTechnicalSpec_XCGPart5Persistence = vrTechnicalSpec_XCGPart5Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part6 local service.
+	 *
+	 * @return the vr technical spec_xcg part6 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCGPart6LocalService getVRTechnicalSpec_XCGPart6LocalService() {
+		return vrTechnicalSpec_XCGPart6LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part6 local service.
+	 *
+	 * @param vrTechnicalSpec_XCGPart6LocalService the vr technical spec_xcg part6 local service
+	 */
+	public void setVRTechnicalSpec_XCGPart6LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCGPart6LocalService vrTechnicalSpec_XCGPart6LocalService) {
+		this.vrTechnicalSpec_XCGPart6LocalService = vrTechnicalSpec_XCGPart6LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcg part6 persistence.
+	 *
+	 * @return the vr technical spec_xcg part6 persistence
+	 */
+	public VRTechnicalSpec_XCGPart6Persistence getVRTechnicalSpec_XCGPart6Persistence() {
+		return vrTechnicalSpec_XCGPart6Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcg part6 persistence.
+	 *
+	 * @param vrTechnicalSpec_XCGPart6Persistence the vr technical spec_xcg part6 persistence
+	 */
+	public void setVRTechnicalSpec_XCGPart6Persistence(
+		VRTechnicalSpec_XCGPart6Persistence vrTechnicalSpec_XCGPart6Persistence) {
+		this.vrTechnicalSpec_XCGPart6Persistence = vrTechnicalSpec_XCGPart6Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xch local service.
+	 *
+	 * @return the vr technical spec_xch local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCHLocalService getVRTechnicalSpec_XCHLocalService() {
+		return vrTechnicalSpec_XCHLocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xch local service.
+	 *
+	 * @param vrTechnicalSpec_XCHLocalService the vr technical spec_xch local service
+	 */
+	public void setVRTechnicalSpec_XCHLocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCHLocalService vrTechnicalSpec_XCHLocalService) {
+		this.vrTechnicalSpec_XCHLocalService = vrTechnicalSpec_XCHLocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xch persistence.
+	 *
+	 * @return the vr technical spec_xch persistence
+	 */
+	public VRTechnicalSpec_XCHPersistence getVRTechnicalSpec_XCHPersistence() {
+		return vrTechnicalSpec_XCHPersistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xch persistence.
+	 *
+	 * @param vrTechnicalSpec_XCHPersistence the vr technical spec_xch persistence
+	 */
+	public void setVRTechnicalSpec_XCHPersistence(
+		VRTechnicalSpec_XCHPersistence vrTechnicalSpec_XCHPersistence) {
+		this.vrTechnicalSpec_XCHPersistence = vrTechnicalSpec_XCHPersistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xch part2 local service.
+	 *
+	 * @return the vr technical spec_xch part2 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCHPart2LocalService getVRTechnicalSpec_XCHPart2LocalService() {
+		return vrTechnicalSpec_XCHPart2LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xch part2 local service.
+	 *
+	 * @param vrTechnicalSpec_XCHPart2LocalService the vr technical spec_xch part2 local service
+	 */
+	public void setVRTechnicalSpec_XCHPart2LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCHPart2LocalService vrTechnicalSpec_XCHPart2LocalService) {
+		this.vrTechnicalSpec_XCHPart2LocalService = vrTechnicalSpec_XCHPart2LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xch part2 persistence.
+	 *
+	 * @return the vr technical spec_xch part2 persistence
+	 */
+	public VRTechnicalSpec_XCHPart2Persistence getVRTechnicalSpec_XCHPart2Persistence() {
+		return vrTechnicalSpec_XCHPart2Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xch part2 persistence.
+	 *
+	 * @param vrTechnicalSpec_XCHPart2Persistence the vr technical spec_xch part2 persistence
+	 */
+	public void setVRTechnicalSpec_XCHPart2Persistence(
+		VRTechnicalSpec_XCHPart2Persistence vrTechnicalSpec_XCHPart2Persistence) {
+		this.vrTechnicalSpec_XCHPart2Persistence = vrTechnicalSpec_XCHPart2Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcn local service.
+	 *
+	 * @return the vr technical spec_xcn local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCNLocalService getVRTechnicalSpec_XCNLocalService() {
+		return vrTechnicalSpec_XCNLocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcn local service.
+	 *
+	 * @param vrTechnicalSpec_XCNLocalService the vr technical spec_xcn local service
+	 */
+	public void setVRTechnicalSpec_XCNLocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCNLocalService vrTechnicalSpec_XCNLocalService) {
+		this.vrTechnicalSpec_XCNLocalService = vrTechnicalSpec_XCNLocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcn persistence.
+	 *
+	 * @return the vr technical spec_xcn persistence
+	 */
+	public VRTechnicalSpec_XCNPersistence getVRTechnicalSpec_XCNPersistence() {
+		return vrTechnicalSpec_XCNPersistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcn persistence.
+	 *
+	 * @param vrTechnicalSpec_XCNPersistence the vr technical spec_xcn persistence
+	 */
+	public void setVRTechnicalSpec_XCNPersistence(
+		VRTechnicalSpec_XCNPersistence vrTechnicalSpec_XCNPersistence) {
+		this.vrTechnicalSpec_XCNPersistence = vrTechnicalSpec_XCNPersistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcn part2 local service.
+	 *
+	 * @return the vr technical spec_xcn part2 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCNPart2LocalService getVRTechnicalSpec_XCNPart2LocalService() {
+		return vrTechnicalSpec_XCNPart2LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcn part2 local service.
+	 *
+	 * @param vrTechnicalSpec_XCNPart2LocalService the vr technical spec_xcn part2 local service
+	 */
+	public void setVRTechnicalSpec_XCNPart2LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCNPart2LocalService vrTechnicalSpec_XCNPart2LocalService) {
+		this.vrTechnicalSpec_XCNPart2LocalService = vrTechnicalSpec_XCNPart2LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcn part2 persistence.
+	 *
+	 * @return the vr technical spec_xcn part2 persistence
+	 */
+	public VRTechnicalSpec_XCNPart2Persistence getVRTechnicalSpec_XCNPart2Persistence() {
+		return vrTechnicalSpec_XCNPart2Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcn part2 persistence.
+	 *
+	 * @param vrTechnicalSpec_XCNPart2Persistence the vr technical spec_xcn part2 persistence
+	 */
+	public void setVRTechnicalSpec_XCNPart2Persistence(
+		VRTechnicalSpec_XCNPart2Persistence vrTechnicalSpec_XCNPart2Persistence) {
+		this.vrTechnicalSpec_XCNPart2Persistence = vrTechnicalSpec_XCNPart2Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcn part3 local service.
+	 *
+	 * @return the vr technical spec_xcn part3 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XCNPart3LocalService getVRTechnicalSpec_XCNPart3LocalService() {
+		return vrTechnicalSpec_XCNPart3LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcn part3 local service.
+	 *
+	 * @param vrTechnicalSpec_XCNPart3LocalService the vr technical spec_xcn part3 local service
+	 */
+	public void setVRTechnicalSpec_XCNPart3LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XCNPart3LocalService vrTechnicalSpec_XCNPart3LocalService) {
+		this.vrTechnicalSpec_XCNPart3LocalService = vrTechnicalSpec_XCNPart3LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xcn part3 persistence.
+	 *
+	 * @return the vr technical spec_xcn part3 persistence
+	 */
+	public VRTechnicalSpec_XCNPart3Persistence getVRTechnicalSpec_XCNPart3Persistence() {
+		return vrTechnicalSpec_XCNPart3Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xcn part3 persistence.
+	 *
+	 * @param vrTechnicalSpec_XCNPart3Persistence the vr technical spec_xcn part3 persistence
+	 */
+	public void setVRTechnicalSpec_XCNPart3Persistence(
+		VRTechnicalSpec_XCNPart3Persistence vrTechnicalSpec_XCNPart3Persistence) {
+		this.vrTechnicalSpec_XCNPart3Persistence = vrTechnicalSpec_XCNPart3Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xdd local service.
+	 *
+	 * @return the vr technical spec_xdd local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XDDLocalService getVRTechnicalSpec_XDDLocalService() {
+		return vrTechnicalSpec_XDDLocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xdd local service.
+	 *
+	 * @param vrTechnicalSpec_XDDLocalService the vr technical spec_xdd local service
+	 */
+	public void setVRTechnicalSpec_XDDLocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XDDLocalService vrTechnicalSpec_XDDLocalService) {
+		this.vrTechnicalSpec_XDDLocalService = vrTechnicalSpec_XDDLocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xdd persistence.
+	 *
+	 * @return the vr technical spec_xdd persistence
+	 */
+	public VRTechnicalSpec_XDDPersistence getVRTechnicalSpec_XDDPersistence() {
+		return vrTechnicalSpec_XDDPersistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xdd persistence.
+	 *
+	 * @param vrTechnicalSpec_XDDPersistence the vr technical spec_xdd persistence
+	 */
+	public void setVRTechnicalSpec_XDDPersistence(
+		VRTechnicalSpec_XDDPersistence vrTechnicalSpec_XDDPersistence) {
+		this.vrTechnicalSpec_XDDPersistence = vrTechnicalSpec_XDDPersistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xmy local service.
+	 *
+	 * @return the vr technical spec_xmy local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XMYLocalService getVRTechnicalSpec_XMYLocalService() {
+		return vrTechnicalSpec_XMYLocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xmy local service.
+	 *
+	 * @param vrTechnicalSpec_XMYLocalService the vr technical spec_xmy local service
+	 */
+	public void setVRTechnicalSpec_XMYLocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XMYLocalService vrTechnicalSpec_XMYLocalService) {
+		this.vrTechnicalSpec_XMYLocalService = vrTechnicalSpec_XMYLocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xmy persistence.
+	 *
+	 * @return the vr technical spec_xmy persistence
+	 */
+	public VRTechnicalSpec_XMYPersistence getVRTechnicalSpec_XMYPersistence() {
+		return vrTechnicalSpec_XMYPersistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xmy persistence.
+	 *
+	 * @param vrTechnicalSpec_XMYPersistence the vr technical spec_xmy persistence
+	 */
+	public void setVRTechnicalSpec_XMYPersistence(
+		VRTechnicalSpec_XMYPersistence vrTechnicalSpec_XMYPersistence) {
+		this.vrTechnicalSpec_XMYPersistence = vrTechnicalSpec_XMYPersistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xmy part2 local service.
+	 *
+	 * @return the vr technical spec_xmy part2 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XMYPart2LocalService getVRTechnicalSpec_XMYPart2LocalService() {
+		return vrTechnicalSpec_XMYPart2LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xmy part2 local service.
+	 *
+	 * @param vrTechnicalSpec_XMYPart2LocalService the vr technical spec_xmy part2 local service
+	 */
+	public void setVRTechnicalSpec_XMYPart2LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XMYPart2LocalService vrTechnicalSpec_XMYPart2LocalService) {
+		this.vrTechnicalSpec_XMYPart2LocalService = vrTechnicalSpec_XMYPart2LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xmy part2 persistence.
+	 *
+	 * @return the vr technical spec_xmy part2 persistence
+	 */
+	public VRTechnicalSpec_XMYPart2Persistence getVRTechnicalSpec_XMYPart2Persistence() {
+		return vrTechnicalSpec_XMYPart2Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xmy part2 persistence.
+	 *
+	 * @param vrTechnicalSpec_XMYPart2Persistence the vr technical spec_xmy part2 persistence
+	 */
+	public void setVRTechnicalSpec_XMYPart2Persistence(
+		VRTechnicalSpec_XMYPart2Persistence vrTechnicalSpec_XMYPart2Persistence) {
+		this.vrTechnicalSpec_XMYPart2Persistence = vrTechnicalSpec_XMYPart2Persistence;
+	}
+
+	/**
+	 * Returns the vr technical spec_xmy part3 local service.
+	 *
+	 * @return the vr technical spec_xmy part3 local service
+	 */
+	public com.fds.vr.business.service.VRTechnicalSpec_XMYPart3LocalService getVRTechnicalSpec_XMYPart3LocalService() {
+		return vrTechnicalSpec_XMYPart3LocalService;
+	}
+
+	/**
+	 * Sets the vr technical spec_xmy part3 local service.
+	 *
+	 * @param vrTechnicalSpec_XMYPart3LocalService the vr technical spec_xmy part3 local service
+	 */
+	public void setVRTechnicalSpec_XMYPart3LocalService(
+		com.fds.vr.business.service.VRTechnicalSpec_XMYPart3LocalService vrTechnicalSpec_XMYPart3LocalService) {
+		this.vrTechnicalSpec_XMYPart3LocalService = vrTechnicalSpec_XMYPart3LocalService;
+	}
+
+	/**
+	 * Returns the vr technical spec_xmy part3 persistence.
+	 *
+	 * @return the vr technical spec_xmy part3 persistence
+	 */
+	public VRTechnicalSpec_XMYPart3Persistence getVRTechnicalSpec_XMYPart3Persistence() {
+		return vrTechnicalSpec_XMYPart3Persistence;
+	}
+
+	/**
+	 * Sets the vr technical spec_xmy part3 persistence.
+	 *
+	 * @param vrTechnicalSpec_XMYPart3Persistence the vr technical spec_xmy part3 persistence
+	 */
+	public void setVRTechnicalSpec_XMYPart3Persistence(
+		VRTechnicalSpec_XMYPart3Persistence vrTechnicalSpec_XMYPart3Persistence) {
+		this.vrTechnicalSpec_XMYPart3Persistence = vrTechnicalSpec_XMYPart3Persistence;
+	}
+
+	/**
 	 * Returns the vr template no local service.
 	 *
 	 * @return the vr template no local service
@@ -3387,6 +4128,82 @@ public abstract class VRVehicleTypeCertificateLocalServiceBaseImpl
 	protected com.fds.vr.business.service.VRSyncDateLocalService vrSyncDateLocalService;
 	@BeanReference(type = VRSyncDatePersistence.class)
 	protected VRSyncDatePersistence vrSyncDatePersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_LKXCGLocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_LKXCGLocalService vrTechnicalSpec_LKXCGLocalService;
+	@BeanReference(type = VRTechnicalSpec_LKXCGPersistence.class)
+	protected VRTechnicalSpec_LKXCGPersistence vrTechnicalSpec_LKXCGPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_LKXMYLocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_LKXMYLocalService vrTechnicalSpec_LKXMYLocalService;
+	@BeanReference(type = VRTechnicalSpec_LKXMYPersistence.class)
+	protected VRTechnicalSpec_LKXMYPersistence vrTechnicalSpec_LKXMYPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_LKXMYPart2LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_LKXMYPart2LocalService vrTechnicalSpec_LKXMYPart2LocalService;
+	@BeanReference(type = VRTechnicalSpec_LKXMYPart2Persistence.class)
+	protected VRTechnicalSpec_LKXMYPart2Persistence vrTechnicalSpec_LKXMYPart2Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCGLocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCGLocalService vrTechnicalSpec_XCGLocalService;
+	@BeanReference(type = VRTechnicalSpec_XCGPersistence.class)
+	protected VRTechnicalSpec_XCGPersistence vrTechnicalSpec_XCGPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCGPart1LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCGPart1LocalService vrTechnicalSpec_XCGPart1LocalService;
+	@BeanReference(type = VRTechnicalSpec_XCGPart1Persistence.class)
+	protected VRTechnicalSpec_XCGPart1Persistence vrTechnicalSpec_XCGPart1Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCGPart2LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCGPart2LocalService vrTechnicalSpec_XCGPart2LocalService;
+	@BeanReference(type = VRTechnicalSpec_XCGPart2Persistence.class)
+	protected VRTechnicalSpec_XCGPart2Persistence vrTechnicalSpec_XCGPart2Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCGPart3LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCGPart3LocalService vrTechnicalSpec_XCGPart3LocalService;
+	@BeanReference(type = VRTechnicalSpec_XCGPart3Persistence.class)
+	protected VRTechnicalSpec_XCGPart3Persistence vrTechnicalSpec_XCGPart3Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCGPart4LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCGPart4LocalService vrTechnicalSpec_XCGPart4LocalService;
+	@BeanReference(type = VRTechnicalSpec_XCGPart4Persistence.class)
+	protected VRTechnicalSpec_XCGPart4Persistence vrTechnicalSpec_XCGPart4Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCGPart5LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCGPart5LocalService vrTechnicalSpec_XCGPart5LocalService;
+	@BeanReference(type = VRTechnicalSpec_XCGPart5Persistence.class)
+	protected VRTechnicalSpec_XCGPart5Persistence vrTechnicalSpec_XCGPart5Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCGPart6LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCGPart6LocalService vrTechnicalSpec_XCGPart6LocalService;
+	@BeanReference(type = VRTechnicalSpec_XCGPart6Persistence.class)
+	protected VRTechnicalSpec_XCGPart6Persistence vrTechnicalSpec_XCGPart6Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCHLocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCHLocalService vrTechnicalSpec_XCHLocalService;
+	@BeanReference(type = VRTechnicalSpec_XCHPersistence.class)
+	protected VRTechnicalSpec_XCHPersistence vrTechnicalSpec_XCHPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCHPart2LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCHPart2LocalService vrTechnicalSpec_XCHPart2LocalService;
+	@BeanReference(type = VRTechnicalSpec_XCHPart2Persistence.class)
+	protected VRTechnicalSpec_XCHPart2Persistence vrTechnicalSpec_XCHPart2Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCNLocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCNLocalService vrTechnicalSpec_XCNLocalService;
+	@BeanReference(type = VRTechnicalSpec_XCNPersistence.class)
+	protected VRTechnicalSpec_XCNPersistence vrTechnicalSpec_XCNPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCNPart2LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCNPart2LocalService vrTechnicalSpec_XCNPart2LocalService;
+	@BeanReference(type = VRTechnicalSpec_XCNPart2Persistence.class)
+	protected VRTechnicalSpec_XCNPart2Persistence vrTechnicalSpec_XCNPart2Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XCNPart3LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XCNPart3LocalService vrTechnicalSpec_XCNPart3LocalService;
+	@BeanReference(type = VRTechnicalSpec_XCNPart3Persistence.class)
+	protected VRTechnicalSpec_XCNPart3Persistence vrTechnicalSpec_XCNPart3Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XDDLocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XDDLocalService vrTechnicalSpec_XDDLocalService;
+	@BeanReference(type = VRTechnicalSpec_XDDPersistence.class)
+	protected VRTechnicalSpec_XDDPersistence vrTechnicalSpec_XDDPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XMYLocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XMYLocalService vrTechnicalSpec_XMYLocalService;
+	@BeanReference(type = VRTechnicalSpec_XMYPersistence.class)
+	protected VRTechnicalSpec_XMYPersistence vrTechnicalSpec_XMYPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XMYPart2LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XMYPart2LocalService vrTechnicalSpec_XMYPart2LocalService;
+	@BeanReference(type = VRTechnicalSpec_XMYPart2Persistence.class)
+	protected VRTechnicalSpec_XMYPart2Persistence vrTechnicalSpec_XMYPart2Persistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTechnicalSpec_XMYPart3LocalService.class)
+	protected com.fds.vr.business.service.VRTechnicalSpec_XMYPart3LocalService vrTechnicalSpec_XMYPart3LocalService;
+	@BeanReference(type = VRTechnicalSpec_XMYPart3Persistence.class)
+	protected VRTechnicalSpec_XMYPart3Persistence vrTechnicalSpec_XMYPart3Persistence;
 	@BeanReference(type = com.fds.vr.business.service.VRTemplateNoLocalService.class)
 	protected com.fds.vr.business.service.VRTemplateNoLocalService vrTemplateNoLocalService;
 	@BeanReference(type = VRTemplateNoPersistence.class)

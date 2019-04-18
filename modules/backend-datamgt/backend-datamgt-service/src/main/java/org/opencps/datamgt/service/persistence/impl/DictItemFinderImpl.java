@@ -274,7 +274,7 @@ public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictIt
 			q.setCacheable(false);
 			q.addEntity(DictItemImpl.TABLE_NAME, DictItemImpl.class);
 			
-			log.info("=========findByCollection_Parent_Level_OrderBy===" + query.toString() );
+			log.info("=========findByCollection_Group_Level_OrderBy===" + query.toString() );
 			QueryPos qPos = QueryPos.getInstance(q);
 			
 			
@@ -289,30 +289,4 @@ public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictIt
 	}
 	
 	
-	/*
-	public List<DictItem> findCustomSLQ_GroupName_AlterName123(String groupName, String alterName) {
-		Session session = null;
-		try {
-			session = openSession();
-			 //get sql query return in default.xml
-            String query=CustomSQLUtil.get(getClass(),"getAllProduct");
-			SQLQuery q = session.createSQLQuery(query.toString());
-			q.setCacheable(false);
-			q.addEntity(DictItemImpl.TABLE_NAME, DictItemImpl.class);
-			
-			log.info("=========findByGroupName_AlterName123===" + query.toString() );
-			QueryPos qPos = QueryPos.getInstance(q);
-			qPos.add(alterName);
-			qPos.add(groupName);
-			
-			return (List<DictItem>) QueryUtil.list(q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		} catch (Exception e) {
-			log.error(e);
-		} finally {
-			closeSession(session);
-		}
-		
-		return new ArrayList<DictItem>();
-	}	
-	 */
 }

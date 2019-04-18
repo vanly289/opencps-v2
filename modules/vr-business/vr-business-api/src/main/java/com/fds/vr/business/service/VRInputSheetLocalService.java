@@ -193,6 +193,15 @@ public interface VRInputSheetLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRInputSheet> findBycorporationId(long mtCore,
+		java.lang.String corporationId) throws PortalException, SystemException;
+
+	public List<VRInputSheet> findByinputSheetNo(long mtCore,
+		java.lang.String inputSheetNo) throws PortalException, SystemException;
+
+	public List<VRInputSheet> findByinputSheetType(long mtCore,
+		long inputSheetType) throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr input sheets.
 	*

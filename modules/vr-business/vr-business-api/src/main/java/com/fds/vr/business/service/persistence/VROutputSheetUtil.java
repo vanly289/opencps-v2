@@ -689,7 +689,7 @@ public class VROutputSheetUtil {
 	* @return the matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBydossierId(long mtCore,
-		java.lang.String dossierId) {
+		long dossierId) {
 		return getPersistence().findBydossierId(mtCore, dossierId);
 	}
 
@@ -707,7 +707,7 @@ public class VROutputSheetUtil {
 	* @return the range of matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBydossierId(long mtCore,
-		java.lang.String dossierId, int start, int end) {
+		long dossierId, int start, int end) {
 		return getPersistence().findBydossierId(mtCore, dossierId, start, end);
 	}
 
@@ -726,7 +726,7 @@ public class VROutputSheetUtil {
 	* @return the ordered range of matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBydossierId(long mtCore,
-		java.lang.String dossierId, int start, int end,
+		long dossierId, int start, int end,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		return getPersistence()
 				   .findBydossierId(mtCore, dossierId, start, end,
@@ -749,7 +749,7 @@ public class VROutputSheetUtil {
 	* @return the ordered range of matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBydossierId(long mtCore,
-		java.lang.String dossierId, int start, int end,
+		long dossierId, int start, int end,
 		OrderByComparator<VROutputSheet> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -767,8 +767,7 @@ public class VROutputSheetUtil {
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet findBydossierId_First(long mtCore,
-		java.lang.String dossierId,
-		OrderByComparator<VROutputSheet> orderByComparator)
+		long dossierId, OrderByComparator<VROutputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVROutputSheetException {
 		return getPersistence()
 				   .findBydossierId_First(mtCore, dossierId, orderByComparator);
@@ -783,8 +782,7 @@ public class VROutputSheetUtil {
 	* @return the first matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet fetchBydossierId_First(long mtCore,
-		java.lang.String dossierId,
-		OrderByComparator<VROutputSheet> orderByComparator) {
+		long dossierId, OrderByComparator<VROutputSheet> orderByComparator) {
 		return getPersistence()
 				   .fetchBydossierId_First(mtCore, dossierId, orderByComparator);
 	}
@@ -799,8 +797,7 @@ public class VROutputSheetUtil {
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet findBydossierId_Last(long mtCore,
-		java.lang.String dossierId,
-		OrderByComparator<VROutputSheet> orderByComparator)
+		long dossierId, OrderByComparator<VROutputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVROutputSheetException {
 		return getPersistence()
 				   .findBydossierId_Last(mtCore, dossierId, orderByComparator);
@@ -815,8 +812,7 @@ public class VROutputSheetUtil {
 	* @return the last matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet fetchBydossierId_Last(long mtCore,
-		java.lang.String dossierId,
-		OrderByComparator<VROutputSheet> orderByComparator) {
+		long dossierId, OrderByComparator<VROutputSheet> orderByComparator) {
 		return getPersistence()
 				   .fetchBydossierId_Last(mtCore, dossierId, orderByComparator);
 	}
@@ -832,7 +828,7 @@ public class VROutputSheetUtil {
 	* @throws NoSuchVROutputSheetException if a vr output sheet with the primary key could not be found
 	*/
 	public static VROutputSheet[] findBydossierId_PrevAndNext(long id,
-		long mtCore, java.lang.String dossierId,
+		long mtCore, long dossierId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVROutputSheetException {
 		return getPersistence()
@@ -846,7 +842,7 @@ public class VROutputSheetUtil {
 	* @param mtCore the mt core
 	* @param dossierId the dossier ID
 	*/
-	public static void removeBydossierId(long mtCore, java.lang.String dossierId) {
+	public static void removeBydossierId(long mtCore, long dossierId) {
 		getPersistence().removeBydossierId(mtCore, dossierId);
 	}
 
@@ -857,7 +853,7 @@ public class VROutputSheetUtil {
 	* @param dossierId the dossier ID
 	* @return the number of matching vr output sheets
 	*/
-	public static int countBydossierId(long mtCore, java.lang.String dossierId) {
+	public static int countBydossierId(long mtCore, long dossierId) {
 		return getPersistence().countBydossierId(mtCore, dossierId);
 	}
 

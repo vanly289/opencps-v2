@@ -215,6 +215,74 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssue> findByapplicantProfileId(
+		long mtCore, long dossierId, long applicantProfileId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.findByapplicantProfileId(mtCore, dossierId,
+			applicantProfileId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssue> findBycopreportno(
+		long mtCore, java.lang.String copreportno)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.findBycopreportno(mtCore, copreportno);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssue> findBycorporationId(
+		long mtCore, java.lang.String corporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.findBycorporationId(mtCore, corporationId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssue> findBydossierId(
+		long mtCore, long dossierId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.findBydossierId(mtCore, dossierId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssue> findByissueCorporationId(
+		long mtCore, java.lang.String issueCorporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.findByissueCorporationId(mtCore,
+			issueCorporationId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssue> findByproductionPlantId(
+		long mtCore, long productionPlantId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.findByproductionPlantId(mtCore,
+			productionPlantId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssue> findBystampIssueNo(
+		long mtCore, java.lang.String stampIssueNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.findBystampIssueNo(mtCore, stampIssueNo);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssue> findByverifyCorporationId(
+		long mtCore, java.lang.String verifyCorporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.findByverifyCorporationId(mtCore,
+			verifyCorporationId);
+	}
+
 	/**
 	* Returns a range of all the vr issues.
 	*

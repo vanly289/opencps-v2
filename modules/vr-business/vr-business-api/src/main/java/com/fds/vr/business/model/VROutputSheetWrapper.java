@@ -189,7 +189,7 @@ public class VROutputSheetWrapper implements VROutputSheet,
 			setInventoryDate(inventoryDate);
 		}
 
-		String dossierId = (String)attributes.get("dossierId");
+		Long dossierId = (Long)attributes.get("dossierId");
 
 		if (dossierId != null) {
 			setDossierId(dossierId);
@@ -356,16 +356,6 @@ public class VROutputSheetWrapper implements VROutputSheet,
 	@Override
 	public java.lang.String getChecker() {
 		return _vrOutputSheet.getChecker();
-	}
-
-	/**
-	* Returns the dossier ID of this vr output sheet.
-	*
-	* @return the dossier ID of this vr output sheet
-	*/
-	@Override
-	public java.lang.String getDossierId() {
-		return _vrOutputSheet.getDossierId();
 	}
 
 	/**
@@ -539,6 +529,16 @@ public class VROutputSheetWrapper implements VROutputSheet,
 	}
 
 	/**
+	* Returns the dossier ID of this vr output sheet.
+	*
+	* @return the dossier ID of this vr output sheet
+	*/
+	@Override
+	public long getDossierId() {
+		return _vrOutputSheet.getDossierId();
+	}
+
+	/**
 	* Returns the ID of this vr output sheet.
 	*
 	* @return the ID of this vr output sheet
@@ -674,7 +674,7 @@ public class VROutputSheetWrapper implements VROutputSheet,
 	* @param dossierId the dossier ID of this vr output sheet
 	*/
 	@Override
-	public void setDossierId(java.lang.String dossierId) {
+	public void setDossierId(long dossierId) {
 		_vrOutputSheet.setDossierId(dossierId);
 	}
 

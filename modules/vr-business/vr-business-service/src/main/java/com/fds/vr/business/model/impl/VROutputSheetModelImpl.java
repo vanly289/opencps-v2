@@ -79,7 +79,7 @@ public class VROutputSheetModelImpl extends BaseModelImpl<VROutputSheet>
 			{ "inventoryName", Types.VARCHAR },
 			{ "inventoryPlace", Types.VARCHAR },
 			{ "inventoryDate", Types.TIMESTAMP },
-			{ "dossierId", Types.VARCHAR },
+			{ "dossierId", Types.BIGINT },
 			{ "issueId", Types.BIGINT },
 			{ "purchaserId", Types.VARCHAR },
 			{ "purchaserCorporationId", Types.VARCHAR },
@@ -111,7 +111,7 @@ public class VROutputSheetModelImpl extends BaseModelImpl<VROutputSheet>
 		TABLE_COLUMNS_MAP.put("inventoryName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("inventoryPlace", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("inventoryDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("dossierId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("issueId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("purchaserId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("purchaserCorporationId", Types.VARCHAR);
@@ -125,7 +125,7 @@ public class VROutputSheetModelImpl extends BaseModelImpl<VROutputSheet>
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_outputsheet (id LONG not null primary key,mtCore LONG,outputSheetNo VARCHAR(75) null,outputSheetDate DATE null,originalDocumentNo VARCHAR(75) null,supplierCorporationId VARCHAR(75) null,outputSheetType LONG,maker VARCHAR(75) null,checker VARCHAR(75) null,approver VARCHAR(75) null,receiverName VARCHAR(75) null,receiverPlace VARCHAR(75) null,receiverRequest VARCHAR(75) null,inventoryName VARCHAR(75) null,inventoryPlace VARCHAR(75) null,inventoryDate DATE null,dossierId VARCHAR(75) null,issueId LONG,purchaserId VARCHAR(75) null,purchaserCorporationId VARCHAR(75) null,bookIDList VARCHAR(75) null,isApproval LONG,totalQuantities LONG,totalAmount LONG,amountInWords VARCHAR(75) null,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_outputsheet (id LONG not null primary key,mtCore LONG,outputSheetNo VARCHAR(75) null,outputSheetDate DATE null,originalDocumentNo VARCHAR(75) null,supplierCorporationId VARCHAR(75) null,outputSheetType LONG,maker VARCHAR(75) null,checker VARCHAR(75) null,approver VARCHAR(75) null,receiverName VARCHAR(75) null,receiverPlace VARCHAR(75) null,receiverRequest VARCHAR(75) null,inventoryName VARCHAR(75) null,inventoryPlace VARCHAR(75) null,inventoryDate DATE null,dossierId LONG,issueId LONG,purchaserId VARCHAR(75) null,purchaserCorporationId VARCHAR(75) null,bookIDList VARCHAR(75) null,isApproval LONG,totalQuantities LONG,totalAmount LONG,amountInWords VARCHAR(75) null,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_outputsheet";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrOutputSheet.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_outputsheet.modifyDate DESC";
@@ -322,7 +322,7 @@ public class VROutputSheetModelImpl extends BaseModelImpl<VROutputSheet>
 			setInventoryDate(inventoryDate);
 		}
 
-		String dossierId = (String)attributes.get("dossierId");
+		Long dossierId = (Long)attributes.get("dossierId");
 
 		if (dossierId != null) {
 			setDossierId(dossierId);
@@ -656,28 +656,25 @@ public class VROutputSheetModelImpl extends BaseModelImpl<VROutputSheet>
 	}
 
 	@Override
-	public String getDossierId() {
-		if (_dossierId == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _dossierId;
-		}
+	public long getDossierId() {
+		return _dossierId;
 	}
 
 	@Override
-	public void setDossierId(String dossierId) {
+	public void setDossierId(long dossierId) {
 		_columnBitmask |= DOSSIERID_COLUMN_BITMASK;
 
-		if (_originalDossierId == null) {
+		if (!_setOriginalDossierId) {
+			_setOriginalDossierId = true;
+
 			_originalDossierId = _dossierId;
 		}
 
 		_dossierId = dossierId;
 	}
 
-	public String getOriginalDossierId() {
-		return GetterUtil.getString(_originalDossierId);
+	public long getOriginalDossierId() {
+		return _originalDossierId;
 	}
 
 	@Override
@@ -963,6 +960,8 @@ public class VROutputSheetModelImpl extends BaseModelImpl<VROutputSheet>
 
 		vrOutputSheetModelImpl._originalDossierId = vrOutputSheetModelImpl._dossierId;
 
+		vrOutputSheetModelImpl._setOriginalDossierId = false;
+
 		vrOutputSheetModelImpl._originalPurchaserCorporationId = vrOutputSheetModelImpl._purchaserCorporationId;
 
 		vrOutputSheetModelImpl._columnBitmask = 0;
@@ -1086,12 +1085,6 @@ public class VROutputSheetModelImpl extends BaseModelImpl<VROutputSheet>
 		}
 
 		vrOutputSheetCacheModel.dossierId = getDossierId();
-
-		String dossierId = vrOutputSheetCacheModel.dossierId;
-
-		if ((dossierId != null) && (dossierId.length() == 0)) {
-			vrOutputSheetCacheModel.dossierId = null;
-		}
 
 		vrOutputSheetCacheModel.issueId = getIssueId();
 
@@ -1380,8 +1373,9 @@ public class VROutputSheetModelImpl extends BaseModelImpl<VROutputSheet>
 	private String _inventoryName;
 	private String _inventoryPlace;
 	private Date _inventoryDate;
-	private String _dossierId;
-	private String _originalDossierId;
+	private long _dossierId;
+	private long _originalDossierId;
+	private boolean _setOriginalDossierId;
 	private long _issueId;
 	private String _purchaserId;
 	private String _purchaserCorporationId;

@@ -220,6 +220,15 @@ public class VRProductionPlantEmployeeLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRProductionPlantEmployee> findByproductPlantID(
+		long mtCore, long productPlantID)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrProductionPlantEmployeeLocalService.findByproductPlantID(mtCore,
+			productPlantID);
+	}
+
 	/**
 	* Returns a range of all the vr production plant employees.
 	*
