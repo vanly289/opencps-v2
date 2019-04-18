@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.fds.vr.business.model.DossierFile;
 import com.fds.vr.business.model.Registration;
+import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -195,8 +196,8 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTTTKXCG_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		Date modifiedDate, Registration registration, DossierFile dossierFile)
-		throws PortalException, SystemException;
+		Date applicantIdDate, VRApplicantProfile appProfile,
+		DossierFile dossierFile) throws PortalException, SystemException;
 
 	/**
 	* Updates the vr vehicle type certificate in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

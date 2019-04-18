@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.model.VRCOPProductLine;
 import com.fds.vr.business.service.base.VRCOPProductLineLocalServiceBaseImpl;
 
 /**
@@ -50,4 +51,27 @@ public class VRCOPProductLineLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRCOPProductLineLocalServiceUtil} to access the vrcop product line local service.
 	 */
+	
+	public List<VRCOPProductLine> findBycopReportRepositoryID(long mtCore, long copReportRepositoryID) throws PortalException, SystemException {
+		try {
+			return vrcopProductLinePersistence.findBycopReportRepositoryID(mtCore, copReportRepositoryID);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRCOPProductLine>();
+		
+	}
+
+
+	public List<VRCOPProductLine> findBycopReportNo(long mtCore, String copReportNo) throws PortalException, SystemException {
+		try {
+			return vrcopProductLinePersistence.findBycopReportNo(mtCore, copReportNo);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRCOPProductLine>();
+		
+	}
+	
+	private Log _log = LogFactoryUtil.getLog(VRCOPProductLineLocalServiceImpl.class);
 }

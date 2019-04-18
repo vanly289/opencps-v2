@@ -193,6 +193,23 @@ public interface VROutputSheetLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VROutputSheet> findBydossierId(long mtCore, long dossierId)
+		throws PortalException, SystemException;
+
+	public List<VROutputSheet> findByinputSheetNo(long mtCore,
+		java.lang.String outputSheetNo) throws PortalException, SystemException;
+
+	public List<VROutputSheet> findByoutputSheetType(long mtCore,
+		long outputSheetType) throws PortalException, SystemException;
+
+	public List<VROutputSheet> findBypurchaserCorporationId(long mtCore,
+		java.lang.String purchaserCorporationId)
+		throws PortalException, SystemException;
+
+	public List<VROutputSheet> findBysupplierCorporationId(long mtCore,
+		java.lang.String supplierCorporationId)
+		throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr output sheets.
 	*

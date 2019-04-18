@@ -198,6 +198,12 @@ public interface VRCOPReportAttachLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRCOPReportAttach> findBycopReportNo(long mtCore,
+		java.lang.String copReportNo) throws PortalException, SystemException;
+
+	public List<VRCOPReportAttach> findBycopReportRepositoryID(long mtCore,
+		long copReportRepositoryID) throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vrcop report attachs.
 	*

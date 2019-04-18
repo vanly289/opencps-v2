@@ -210,6 +210,13 @@ public class VRProductLineLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRProductLine> findByproductPlantID(
+		long mtCore, long productPlantID)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByproductPlantID(mtCore, productPlantID);
+	}
+
 	/**
 	* Returns a range of all the vr product lines.
 	*

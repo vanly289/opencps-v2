@@ -3,6 +3,8 @@ package org.opencps.dossiermgt.listenner;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
+import org.opencps.usermgt.model.Applicant;
+import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,12 +20,16 @@ import com.fds.vr.business.action.util.ConvertJONObjectUtils;
 import com.fds.vr.business.model.DossierFile;
 import com.fds.vr.business.model.Registration;
 import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRApplicantProfileHistory;
 import com.fds.vr.business.model.VRConfigTechSpec;
 import com.fds.vr.business.model.VRVehicleSpecification;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
+import com.fds.vr.business.model.impl.VRApplicantProfileHistoryImpl;
+import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
 import com.fds.vr.business.model.impl.VRVehicleSpecificationImpl;
 import com.fds.vr.business.service.DossierFileLocalServiceUtil;
 import com.fds.vr.business.service.RegistrationLocalServiceUtil;
+import com.fds.vr.business.service.VRApplicantProfileHistoryLocalServiceUtil;
 import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
 import com.fds.vr.business.service.VRConfigTechSpecLocalServiceUtil;
 import com.fds.vr.business.service.VRSyncDateLocalServiceUtil;
@@ -109,25 +115,29 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 			}
 			
 			String formData = dossierDeliverableModel.getFormData();
-			Date modifiedDate = dossierDeliverableModel.getModifiedDate();
+			Date modifiedDate = dossierDeliverableModel.getModifiedDate();			
 			DossierFile dossierFile = null;
 			Registration registration = null;
 			VRApplicantProfile appProfile = null;
-
+			Applicant applicant = null;
+			
 			String applicantIdNo = dossierDeliverableModel.getApplicantIdNo();
 			String deliverableCode = dossierDeliverableModel.getDeliverableCode();
 			if (Validator.isNotNull(applicantIdNo)) {
+				// 1. Get ApplicantProfile, Registration and Applicant
 				List <VRApplicantProfile> lstVRApplicantProfile = VRApplicantProfileLocalServiceUtil.findByapplicantCode(1, applicantIdNo);
 				if (lstVRApplicantProfile != null && lstVRApplicantProfile.size() > 0 ) {
 					appProfile = lstVRApplicantProfile.get(0);
 				}
-				registration = RegistrationLocalServiceUtil.getByApplicantIdNo(applicantIdNo);
-				
+				registration = RegistrationLocalServiceUtil.getByApplicantIdNo(applicantIdNo);				
+				applicant = ApplicantLocalServiceUtil.fetchByAppId(applicantIdNo);
 			}
 			if (Validator.isNotNull(deliverableCode)) {
 				dossierFile = DossierFileLocalServiceUtil.getByDeliverableCode(deliverableCode);
 			}			
-			
+			if (Validator.isNull(dossierFile)) {
+				return "";
+			}
 			if (Validator.isNull(formData)) {
 				return "";
 			}
@@ -135,31 +145,118 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 			if (Validator.isNull(mapValues)) {
 				return "";
 			}
-						
+			if ((mtCore == 1) && (Validator.isNotNull(applicant)) && (Validator.isNull(appProfile)) ) {
+				// 2. Insert vr_applicantprofile
+				String markupDesigner = StringPool.BLANK; // 1: CSTK
+				String markupDomesticsManufacturer = StringPool.BLANK; // 2: CSSX TN
+				String markupImporter = StringPool.BLANK; // 3: CSNK
+				String markupCorporation = StringPool.BLANK; // 4:CSSX NN, 5: CSBHBD, 9: KHAC
+				String markupOverseasManufacturer = StringPool.BLANK;
+
+				SimpleDateFormat formatDateShort = new SimpleDateFormat("dd/MM/yyyy");
+				String applicantCeremonyDate = formatDateShort
+						.format(applicant.getApplicantIdDate());
+				
+				appProfile = new VRApplicantProfileImpl();
+				appProfile.setId(CounterLocalServiceUtil.increment(VRApplicantProfile.class.getName()));
+				appProfile.setMtCore(1);
+				appProfile.setModifyDate(new Date());
+				appProfile.setSyncDate(new Date());
+
+				appProfile.setApplicantCode(applicant.getApplicantIdNo());
+				appProfile.setApplicantName(applicant.getApplicantName());
+				appProfile.setApplicantAddress(applicant.getAddress());
+				appProfile.setApplicantPhone(applicant.getContactTelNo());
+				appProfile.setApplicantEmail(applicant.getContactEmail());
+				appProfile.setApplicantFax("---");
+				appProfile.setApplicantBusinessType("---"); // Lay tu json
+				appProfile.setApplicantRepresentative(applicant.getContactName());
+				appProfile
+						.setApplicantRepresentativeTitle(applicant.getRepresentativeEnterprise());
+				appProfile.setApplicantCity(applicant.getCityCode());
+				appProfile.setApplicantContactName(applicant.getContactName());
+				appProfile.setApplicantContactEmail(applicant.getContactEmail());
+				appProfile.setApplicantContactPhone(applicant.getContactTelNo());
+				appProfile.setApplicantNationality("VN");
+				appProfile.setApplicantRegion("---");
+				appProfile.setMarkupDesigner(markupDesigner); // Lay tu json
+				appProfile.setMarkupDomesticsManufacturer(markupDomesticsManufacturer); // Lay tu json
+				appProfile.setMarkupOverseasManufacturer(markupOverseasManufacturer); // Chua co thong tin
+				appProfile.setMarkupCorporation(markupCorporation); // Lay tu json
+				appProfile.setMarkupImporter(markupImporter); // Lay tu json
+				appProfile.setApplicantStatus("2"); // da phe duyet
+				appProfile.setApplicantCeremonyDate(applicantCeremonyDate.toString());
+				
+				VRApplicantProfileLocalServiceUtil.addVRApplicantProfile(appProfile);
+				
+				// 3. Insert vr_applicantprofile_history
+				VRApplicantProfileHistory appProfileHistory = new VRApplicantProfileHistoryImpl();
+				long VRApplicantProfileHistoryId = CounterLocalServiceUtil
+						.increment(VRApplicantProfileHistory.class.getName());
+				appProfileHistory.setId(VRApplicantProfileHistoryId);
+				appProfileHistory.setMtCore(1);
+				
+				appProfileHistory.setApplicantCode(applicant.getApplicantIdNo());
+				appProfileHistory.setApplicantName(applicant.getApplicantName());
+				appProfileHistory.setApplicantAddress(applicant.getAddress());
+				appProfileHistory.setApplicantPhone(applicant.getContactTelNo());
+				appProfileHistory.setApplicantEmail(applicant.getContactEmail());
+				appProfileHistory.setApplicantFax("---");
+				appProfileHistory.setApplicantBusinessType("---");
+				appProfileHistory.setApplicantRepresentative(applicant.getContactName());
+				appProfileHistory
+						.setApplicantRepresentativeTitle(applicant.getRepresentativeEnterprise());
+				appProfileHistory.setApplicantCity(applicant.getCityCode());
+				appProfileHistory.setApplicantContactName(applicant.getContactName());
+				appProfileHistory.setApplicantContactEmail(applicant.getContactEmail());
+				appProfileHistory.setApplicantContactPhone(applicant.getContactTelNo());
+				appProfileHistory.setApplicantNationality("VN");
+				appProfileHistory.setApplicantRegion("---");
+				appProfileHistory.setMarkupDesigner(markupDesigner);
+				appProfileHistory.setMarkupDomesticsManufacturer(markupDomesticsManufacturer);
+				appProfileHistory.setMarkupOverseasManufacturer(markupOverseasManufacturer);
+				appProfileHistory.setMarkupCorporation(markupCorporation);
+				appProfileHistory.setMarkupImporter(markupImporter);
+				appProfileHistory.setApplicantStatus("2");
+				appProfileHistory.setApplicantCeremonyDate(applicantCeremonyDate.toString());
+				appProfileHistory.setModifyDate(new Date());
+				appProfileHistory.setSyncDate(new Date());
+
+				VRApplicantProfileHistoryLocalServiceUtil.addVRApplicantProfileHistory(appProfileHistory);
+
+			}
 			String businessTypeCode = dossierDeliverableModel.getDeliverableType();
 			switch (businessTypeCode) {
 			case "GCN_TDTK_XCG":  //Tham dinh thiet ke Xe co gioi
 				// update table VRVehicleTypeCertificate
+				// update table VR_VEHICLESPECIFICATION
 				if (mtCore == 1) {
-					/*
+					
 					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
-							.updateTT302011BGTVTTTKXCG_VehicleTypeCertificate(mapValues, modifiedDate, registration, appProfile, dossierFile);
-	
+							.updateTT302011BGTVTTTKXCG_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+					
 					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
 					
-					updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate);
-	
-					// update table VR_VEHICLESPECIFICATION
-					VRVehicleSpecificationLocalServiceUtil.updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId,
-							modifiedDate, dossierFile);
-					*/
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "1");
+					}					
 				}
 				break;				
 			case "TT302011BGTVTTDTKXMCD": //Tham dinh thiet ke Xe may chuyen dung
 				
 				break;		
 			case "TT302011BGTVTKTSPMXCG":  //Kiem tra san pham mau Xe co gioi
-				
+				if (mtCore == 1) {
+					
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+	
+					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+					
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "21");
+					}					
+				}
 				break;				
 			case "TT302011BGTVTKTSPMXBBCN": //Kiem tra san pham mau Xe cho nguoi bon banh co gan dong co
 
@@ -255,15 +352,15 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 		}
 	}
 	
-	private void updateVehicleSpecification(LinkedHashMap<String, String> mapValues, long vrVehicleTypeCertificateId, Date modifiedDate) {
-		//_log.info("**mapValues** " + mapValues);
+	private void updateVehicleSpecification(LinkedHashMap<String, String> mapValues, long vrVehicleTypeCertificateId, Date modifiedDate, String VehicleClass, String module) {
+		
 		
 		String strChungChi = mapValues.get("bien_ban");
 		
 		try {
 			JSONObject objChungChi = JSONFactoryUtil.createJSONObject(strChungChi);
 			
-			List<VRConfigTechSpec> configTechSpecs = VRConfigTechSpecLocalServiceUtil.getByVCMD("XCG", "21");
+			List<VRConfigTechSpec> configTechSpecs = VRConfigTechSpecLocalServiceUtil.getByVCMD(VehicleClass, module);
 
 			String prefix = "bb_";
 			
@@ -287,9 +384,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				if (Validator.isNotNull(elm)) {
 					 specification = elm;
 				} else {
-					long specId = CounterLocalServiceUtil.increment(VRVehicleSpecification.class.getName());
-					
-					specification.setPrimaryKey(specId);
+					specification.setId(CounterLocalServiceUtil.increment(VRVehicleSpecification.class.getName()));
 					
 					isnew = true;
 				}
@@ -307,7 +402,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				specification.setSpecificationGroup(Integer.toString(configTechSpec.getSpecificationGroup()));
 				specification.setSpecificationDataCollectionID(configTechSpec.getSpecificationDataCollectionId());
 				specification.setSpecificationResult(specificationResult);
-				specification.setSyncDate(GetterUtil.getDate(modifiedDate, new SimpleDateFormat("dd:MM:yyyy hh:mm:ss")));
+				specification.setSyncDate(GetterUtil.getDate(modifiedDate, new SimpleDateFormat("dd:MM:yyyy HH:mm:ss")));
 				
 				if (isnew) {
 					VRVehicleSpecificationLocalServiceUtil.addVRVehicleSpecification(specification);
@@ -319,7 +414,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 			}
 			
 		} catch (JSONException e) {
-			_log.info("**ERROR** CAN NOT CREATE");
+			_log.error("**ERROR** CANNOT CREATE/UPDATE VehicleSpecification");
 
 		}
 	}

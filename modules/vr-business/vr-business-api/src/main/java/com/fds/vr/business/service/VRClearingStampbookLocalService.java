@@ -198,6 +198,37 @@ public interface VRClearingStampbookLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRClearingStampbook> findByInputSheetId(long mtCore,
+		long inputSheetId) throws PortalException, SystemException;
+
+	public List<VRClearingStampbook> findByInputSheetIdAndBookId(long mtCore,
+		long inputSheetId, long bookId) throws PortalException, SystemException;
+
+	public List<VRClearingStampbook> findByInputSheetIdAndBookIdAndStampType(
+		long mtCore, long inputSheetId, long bookId, java.lang.String stampType)
+		throws PortalException, SystemException;
+
+	public List<VRClearingStampbook> findByOutputSheetId(long mtCore,
+		long outputSheetId) throws PortalException, SystemException;
+
+	public List<VRClearingStampbook> findByOutputSheetIdAndBookId(long mtCore,
+		long outputSheetId, long bookId)
+		throws PortalException, SystemException;
+
+	public List<VRClearingStampbook> findByOutputSheetIdAndBookIdAndStampType(
+		long mtCore, long outputSheetId, long bookId, java.lang.String stampType)
+		throws PortalException, SystemException;
+
+	public List<VRClearingStampbook> findBycertificateId(long mtCore,
+		long certificateId) throws PortalException, SystemException;
+
+	public List<VRClearingStampbook> findBycertificateNumber(long mtCore,
+		java.lang.String certificateNumber)
+		throws PortalException, SystemException;
+
+	public List<VRClearingStampbook> findBydebitNoteId(long mtCore,
+		long debitNoteId) throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr clearing stampbooks.
 	*

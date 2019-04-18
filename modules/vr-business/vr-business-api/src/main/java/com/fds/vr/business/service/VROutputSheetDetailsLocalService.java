@@ -198,6 +198,38 @@ public interface VROutputSheetDetailsLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VROutputSheetDetails> findByInputSheetId(long mtCore,
+		long inputSheetId) throws PortalException, SystemException;
+
+	public List<VROutputSheetDetails> findByInputSheetIdAndBookId(long mtCore,
+		long inputSheetId, long bookId) throws PortalException, SystemException;
+
+	public List<VROutputSheetDetails> findByInputSheetIdAndBookIdAndStampType(
+		long mtCore, long inputSheetId, long bookId, java.lang.String stampType)
+		throws PortalException, SystemException;
+
+	public List<VROutputSheetDetails> findByOutputSheetId(long mtCore,
+		long outputSheetId) throws PortalException, SystemException;
+
+	public List<VROutputSheetDetails> findByOutputSheetIdAndBookId(
+		long mtCore, long outputSheetId, long bookId)
+		throws PortalException, SystemException;
+
+	public List<VROutputSheetDetails> findByOutputSheetIdAndBookIdAndStampType(
+		long mtCore, long outputSheetId, long bookId, java.lang.String stampType)
+		throws PortalException, SystemException;
+
+	public List<VROutputSheetDetails> findBycertificateId(long mtCore,
+		long certificateId) throws PortalException, SystemException;
+
+	public List<VROutputSheetDetails> findBycertificateNumber(long mtCore,
+		java.lang.String certificateNumber)
+		throws PortalException, SystemException;
+
+	public List<VROutputSheetDetails> findByissueVehicleCertificateId(
+		long mtCore, long issueVehicleCertificateId)
+		throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr output sheet detailses.
 	*

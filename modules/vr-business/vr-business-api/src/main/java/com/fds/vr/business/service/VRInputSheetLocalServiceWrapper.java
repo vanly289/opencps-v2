@@ -216,6 +216,32 @@ public class VRInputSheetLocalServiceWrapper implements VRInputSheetLocalService
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInputSheet> findBycorporationId(
+		long mtCore, java.lang.String corporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInputSheetLocalService.findBycorporationId(mtCore,
+			corporationId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInputSheet> findByinputSheetNo(
+		long mtCore, java.lang.String inputSheetNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInputSheetLocalService.findByinputSheetNo(mtCore, inputSheetNo);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInputSheet> findByinputSheetType(
+		long mtCore, long inputSheetType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInputSheetLocalService.findByinputSheetType(mtCore,
+			inputSheetType);
+	}
+
 	/**
 	* Returns a range of all the vr input sheets.
 	*

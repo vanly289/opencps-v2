@@ -193,6 +193,32 @@ public interface VRIssueLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRIssue> findByapplicantProfileId(long mtCore, long dossierId,
+		long applicantProfileId) throws PortalException, SystemException;
+
+	public List<VRIssue> findBycopreportno(long mtCore,
+		java.lang.String copreportno) throws PortalException, SystemException;
+
+	public List<VRIssue> findBycorporationId(long mtCore,
+		java.lang.String corporationId) throws PortalException, SystemException;
+
+	public List<VRIssue> findBydossierId(long mtCore, long dossierId)
+		throws PortalException, SystemException;
+
+	public List<VRIssue> findByissueCorporationId(long mtCore,
+		java.lang.String issueCorporationId)
+		throws PortalException, SystemException;
+
+	public List<VRIssue> findByproductionPlantId(long mtCore,
+		long productionPlantId) throws PortalException, SystemException;
+
+	public List<VRIssue> findBystampIssueNo(long mtCore,
+		java.lang.String stampIssueNo) throws PortalException, SystemException;
+
+	public List<VRIssue> findByverifyCorporationId(long mtCore,
+		java.lang.String verifyCorporationId)
+		throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr issues.
 	*

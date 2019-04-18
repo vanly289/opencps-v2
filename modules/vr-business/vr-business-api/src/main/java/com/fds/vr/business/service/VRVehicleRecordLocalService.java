@@ -197,6 +197,26 @@ public interface VRVehicleRecordLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRVehicleRecord> findByapplicantProfileId(long mtCore,
+		long applicantProfileId) throws PortalException, SystemException;
+
+	public List<VRVehicleRecord> findByapplicantProfileIdAndPrintingStatus(
+		long mtCore, long applicantProfileId, long printingStatus)
+		throws PortalException, SystemException;
+
+	public List<VRVehicleRecord> findByapplicantProfileIdAndVehicleRecordStatus(
+		long mtCore, long applicantProfileId, long vehicleRecordStatus)
+		throws PortalException, SystemException;
+
+	public List<VRVehicleRecord> findBycertificateId(long mtCore,
+		long certificateId) throws PortalException, SystemException;
+
+	public List<VRVehicleRecord> findBydossierId(long mtCore, long dossierId)
+		throws PortalException, SystemException;
+
+	public List<VRVehicleRecord> findByissueVehicleCertificateId(long mtCore,
+		long issueVehicleCertificateId) throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr vehicle records.
 	*

@@ -220,6 +220,33 @@ public class VRIssueVehiclecertificateLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssueVehiclecertificate> findBycertificateId(
+		long mtCore, long dossierId, long certificateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueVehiclecertificateLocalService.findBycertificateId(mtCore,
+			dossierId, certificateId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssueVehiclecertificate> findBydossierId(
+		long mtCore, long dossierId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueVehiclecertificateLocalService.findBydossierId(mtCore,
+			dossierId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssueVehiclecertificate> findByissueId(
+		long mtCore, long issueId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueVehiclecertificateLocalService.findByissueId(mtCore,
+			issueId);
+	}
+
 	/**
 	* Returns a range of all the vr issue vehiclecertificates.
 	*

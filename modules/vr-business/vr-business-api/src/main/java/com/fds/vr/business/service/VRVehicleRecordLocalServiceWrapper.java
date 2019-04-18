@@ -220,6 +220,59 @@ public class VRVehicleRecordLocalServiceWrapper
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleRecord> findByapplicantProfileId(
+		long mtCore, long applicantProfileId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrVehicleRecordLocalService.findByapplicantProfileId(mtCore,
+			applicantProfileId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleRecord> findByapplicantProfileIdAndPrintingStatus(
+		long mtCore, long applicantProfileId, long printingStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrVehicleRecordLocalService.findByapplicantProfileIdAndPrintingStatus(mtCore,
+			applicantProfileId, printingStatus);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleRecord> findByapplicantProfileIdAndVehicleRecordStatus(
+		long mtCore, long applicantProfileId, long vehicleRecordStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrVehicleRecordLocalService.findByapplicantProfileIdAndVehicleRecordStatus(mtCore,
+			applicantProfileId, vehicleRecordStatus);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleRecord> findBycertificateId(
+		long mtCore, long certificateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrVehicleRecordLocalService.findBycertificateId(mtCore,
+			certificateId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleRecord> findBydossierId(
+		long mtCore, long dossierId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrVehicleRecordLocalService.findBydossierId(mtCore, dossierId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleRecord> findByissueVehicleCertificateId(
+		long mtCore, long issueVehicleCertificateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrVehicleRecordLocalService.findByissueVehicleCertificateId(mtCore,
+			issueVehicleCertificateId);
+	}
+
 	/**
 	* Returns a range of all the vr vehicle records.
 	*

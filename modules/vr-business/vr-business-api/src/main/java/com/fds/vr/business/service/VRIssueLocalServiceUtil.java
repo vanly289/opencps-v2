@@ -208,6 +208,65 @@ public class VRIssueLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRIssue> findByapplicantProfileId(
+		long mtCore, long dossierId, long applicantProfileId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByapplicantProfileId(mtCore, dossierId,
+			applicantProfileId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRIssue> findBycopreportno(
+		long mtCore, java.lang.String copreportno)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBycopreportno(mtCore, copreportno);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRIssue> findBycorporationId(
+		long mtCore, java.lang.String corporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBycorporationId(mtCore, corporationId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRIssue> findBydossierId(
+		long mtCore, long dossierId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBydossierId(mtCore, dossierId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRIssue> findByissueCorporationId(
+		long mtCore, java.lang.String issueCorporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByissueCorporationId(mtCore, issueCorporationId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRIssue> findByproductionPlantId(
+		long mtCore, long productionPlantId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByproductionPlantId(mtCore, productionPlantId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRIssue> findBystampIssueNo(
+		long mtCore, java.lang.String stampIssueNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBystampIssueNo(mtCore, stampIssueNo);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRIssue> findByverifyCorporationId(
+		long mtCore, java.lang.String verifyCorporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByverifyCorporationId(mtCore, verifyCorporationId);
+	}
+
 	/**
 	* Returns a range of all the vr issues.
 	*

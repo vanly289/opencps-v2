@@ -217,6 +217,15 @@ public class VRProductLineLocalServiceWrapper
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRProductLine> findByproductPlantID(
+		long mtCore, long productPlantID)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrProductLineLocalService.findByproductPlantID(mtCore,
+			productPlantID);
+	}
+
 	/**
 	* Returns a range of all the vr product lines.
 	*

@@ -220,6 +220,24 @@ public class VRCOPProdEquipmentLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRCOPProdEquipment> findBycopReportNo(
+		long mtCore, java.lang.String copReportNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrcopProdEquipmentLocalService.findBycopReportNo(mtCore,
+			copReportNo);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRCOPProdEquipment> findBycopReportRepositoryID(
+		long mtCore, long copReportRepositoryID)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrcopProdEquipmentLocalService.findBycopReportRepositoryID(mtCore,
+			copReportRepositoryID);
+	}
+
 	/**
 	* Returns a range of all the vrcop prod equipments.
 	*

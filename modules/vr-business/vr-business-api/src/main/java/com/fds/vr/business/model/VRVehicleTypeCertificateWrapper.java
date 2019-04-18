@@ -81,6 +81,7 @@ public class VRVehicleTypeCertificateWrapper implements VRVehicleTypeCertificate
 		attributes.put("applicantContactName", getApplicantContactName());
 		attributes.put("applicantContactEmail", getApplicantContactEmail());
 		attributes.put("applicantcontactPhone", getApplicantcontactPhone());
+		attributes.put("cityCode", getCityCode());
 		attributes.put("manufacturerForeignCode", getManufacturerForeignCode());
 		attributes.put("manufacturerName", getManufacturerName());
 		attributes.put("manufacturerAddress", getManufacturerAddress());
@@ -175,6 +176,8 @@ public class VRVehicleTypeCertificateWrapper implements VRVehicleTypeCertificate
 		attributes.put("emissionTestReportDate", getEmissionTestReportDate());
 		attributes.put("commonSafetyStandard", getCommonSafetyStandard());
 		attributes.put("emissionStandard", getEmissionStandard());
+		attributes.put("commonSafetyDescription", getCommonSafetyDescription());
+		attributes.put("emissionDescription", getEmissionDescription());
 		attributes.put("otherTestReportNo", getOtherTestReportNo());
 		attributes.put("otherTestReportDate", getOtherTestReportDate());
 		attributes.put("sampleFrameNo", getSampleFrameNo());
@@ -342,6 +345,12 @@ public class VRVehicleTypeCertificateWrapper implements VRVehicleTypeCertificate
 
 		if (applicantcontactPhone != null) {
 			setApplicantcontactPhone(applicantcontactPhone);
+		}
+
+		String cityCode = (String)attributes.get("cityCode");
+
+		if (cityCode != null) {
+			setCityCode(cityCode);
 		}
 
 		String manufacturerForeignCode = (String)attributes.get(
@@ -863,6 +872,20 @@ public class VRVehicleTypeCertificateWrapper implements VRVehicleTypeCertificate
 
 		if (emissionStandard != null) {
 			setEmissionStandard(emissionStandard);
+		}
+
+		String commonSafetyDescription = (String)attributes.get(
+				"commonSafetyDescription");
+
+		if (commonSafetyDescription != null) {
+			setCommonSafetyDescription(commonSafetyDescription);
+		}
+
+		String emissionDescription = (String)attributes.get(
+				"emissionDescription");
+
+		if (emissionDescription != null) {
+			setEmissionDescription(emissionDescription);
 		}
 
 		String otherTestReportNo = (String)attributes.get("otherTestReportNo");
@@ -1457,6 +1480,26 @@ public class VRVehicleTypeCertificateWrapper implements VRVehicleTypeCertificate
 	}
 
 	/**
+	* Returns the city code of this vr vehicle type certificate.
+	*
+	* @return the city code of this vr vehicle type certificate
+	*/
+	@Override
+	public java.lang.String getCityCode() {
+		return _vrVehicleTypeCertificate.getCityCode();
+	}
+
+	/**
+	* Returns the common safety description of this vr vehicle type certificate.
+	*
+	* @return the common safety description of this vr vehicle type certificate
+	*/
+	@Override
+	public java.lang.String getCommonSafetyDescription() {
+		return _vrVehicleTypeCertificate.getCommonSafetyDescription();
+	}
+
+	/**
 	* Returns the common safety standard of this vr vehicle type certificate.
 	*
 	* @return the common safety standard of this vr vehicle type certificate
@@ -1644,6 +1687,16 @@ public class VRVehicleTypeCertificateWrapper implements VRVehicleTypeCertificate
 	@Override
 	public java.lang.String getDossierType() {
 		return _vrVehicleTypeCertificate.getDossierType();
+	}
+
+	/**
+	* Returns the emission description of this vr vehicle type certificate.
+	*
+	* @return the emission description of this vr vehicle type certificate
+	*/
+	@Override
+	public java.lang.String getEmissionDescription() {
+		return _vrVehicleTypeCertificate.getEmissionDescription();
 	}
 
 	/**
@@ -2848,6 +2901,27 @@ public class VRVehicleTypeCertificateWrapper implements VRVehicleTypeCertificate
 	}
 
 	/**
+	* Sets the city code of this vr vehicle type certificate.
+	*
+	* @param cityCode the city code of this vr vehicle type certificate
+	*/
+	@Override
+	public void setCityCode(java.lang.String cityCode) {
+		_vrVehicleTypeCertificate.setCityCode(cityCode);
+	}
+
+	/**
+	* Sets the common safety description of this vr vehicle type certificate.
+	*
+	* @param commonSafetyDescription the common safety description of this vr vehicle type certificate
+	*/
+	@Override
+	public void setCommonSafetyDescription(
+		java.lang.String commonSafetyDescription) {
+		_vrVehicleTypeCertificate.setCommonSafetyDescription(commonSafetyDescription);
+	}
+
+	/**
 	* Sets the common safety standard of this vr vehicle type certificate.
 	*
 	* @param commonSafetyStandard the common safety standard of this vr vehicle type certificate
@@ -3088,6 +3162,16 @@ public class VRVehicleTypeCertificateWrapper implements VRVehicleTypeCertificate
 	@Override
 	public void setDossierType(java.lang.String dossierType) {
 		_vrVehicleTypeCertificate.setDossierType(dossierType);
+	}
+
+	/**
+	* Sets the emission description of this vr vehicle type certificate.
+	*
+	* @param emissionDescription the emission description of this vr vehicle type certificate
+	*/
+	@Override
+	public void setEmissionDescription(java.lang.String emissionDescription) {
+		_vrVehicleTypeCertificate.setEmissionDescription(emissionDescription);
 	}
 
 	/**

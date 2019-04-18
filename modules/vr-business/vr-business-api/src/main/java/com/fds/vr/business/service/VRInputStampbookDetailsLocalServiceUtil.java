@@ -212,6 +212,56 @@ public class VRInputStampbookDetailsLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbookDetails> findByInputSheetId(
+		long mtCore, long inputSheetId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByInputSheetId(mtCore, inputSheetId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbookDetails> findByInputSheetIdAndBookId(
+		long mtCore, long inputSheetId, long bookId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByInputSheetIdAndBookId(mtCore, inputSheetId, bookId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbookDetails> findBycertificateId(
+		long mtCore, long certificateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBycertificateId(mtCore, certificateId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbookDetails> findBycertificateNumber(
+		long mtCore, java.lang.String certificateNumber)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBycertificateNumber(mtCore, certificateNumber);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbookDetails> findBycorporationId(
+		long mtCore, java.lang.String corporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBycorporationId(mtCore, corporationId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbookDetails> findBydossierId(
+		long mtCore, long dossierId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBydossierId(mtCore, dossierId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbookDetails> findByvehicleRecordId(
+		long mtCore, long vehicleRecordId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByvehicleRecordId(mtCore, vehicleRecordId);
+	}
+
 	/**
 	* Returns a range of all the vr input stampbook detailses.
 	*

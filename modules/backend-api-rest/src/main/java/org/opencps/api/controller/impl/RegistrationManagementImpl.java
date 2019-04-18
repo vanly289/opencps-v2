@@ -178,7 +178,7 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 					input.getRepresentativeEnterprise(),
 					Validator.isNotNull(input.getMarkasdeleted()) ? input.getMarkasdeleted() : 0, input.getRemarks(),
 					serviceContext);
-
+			
 			result = RegistrationUtils.mappingToRegistrationDetailModel(registration);
 			return Response.status(200).entity(result).build();
 		} catch (Exception e) {

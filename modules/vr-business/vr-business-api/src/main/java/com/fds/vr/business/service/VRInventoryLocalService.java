@@ -193,6 +193,30 @@ public interface VRInventoryLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRInventory> findByBookId(long mtCore, long bookId)
+		throws PortalException, SystemException;
+
+	public List<VRInventory> findByBookIdAndVehicleClass(long mtCore,
+		long bookId, java.lang.String vehicleClass)
+		throws PortalException, SystemException;
+
+	public List<VRInventory> findByYearofPeriod(long mtCore, long yearofPeriod)
+		throws PortalException, SystemException;
+
+	public List<VRInventory> findByYearofPeriodAndCorporationId(long mtCore,
+		long yearofPeriod, java.lang.String corporationId)
+		throws PortalException, SystemException;
+
+	public List<VRInventory> findByYearofPeriodAndVehicleClass(long mtCore,
+		long yearofPeriod, java.lang.String vehicleClass)
+		throws PortalException, SystemException;
+
+	public List<VRInventory> findBycheckStatus(long mtCore, long checkStatus)
+		throws PortalException, SystemException;
+
+	public List<VRInventory> findBycheckType(long mtCore, long checkType)
+		throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr inventories.
 	*

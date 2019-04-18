@@ -216,6 +216,65 @@ public class VRInventoryLocalServiceWrapper implements VRInventoryLocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInventory> findByBookId(
+		long mtCore, long bookId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInventoryLocalService.findByBookId(mtCore, bookId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInventory> findByBookIdAndVehicleClass(
+		long mtCore, long bookId, java.lang.String vehicleClass)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInventoryLocalService.findByBookIdAndVehicleClass(mtCore,
+			bookId, vehicleClass);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInventory> findByYearofPeriod(
+		long mtCore, long yearofPeriod)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInventoryLocalService.findByYearofPeriod(mtCore, yearofPeriod);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInventory> findByYearofPeriodAndCorporationId(
+		long mtCore, long yearofPeriod, java.lang.String corporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInventoryLocalService.findByYearofPeriodAndCorporationId(mtCore,
+			yearofPeriod, corporationId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInventory> findByYearofPeriodAndVehicleClass(
+		long mtCore, long yearofPeriod, java.lang.String vehicleClass)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInventoryLocalService.findByYearofPeriodAndVehicleClass(mtCore,
+			yearofPeriod, vehicleClass);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInventory> findBycheckStatus(
+		long mtCore, long checkStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInventoryLocalService.findBycheckStatus(mtCore, checkStatus);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInventory> findBycheckType(
+		long mtCore, long checkType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInventoryLocalService.findBycheckType(mtCore, checkType);
+	}
+
 	/**
 	* Returns a range of all the vr inventories.
 	*

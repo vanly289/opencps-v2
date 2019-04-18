@@ -501,7 +501,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBydossierId(long mtCore,
-		java.lang.String dossierId);
+		long dossierId);
 
 	/**
 	* Returns a range of all the vr output sheets where mtCore = &#63; and dossierId = &#63;.
@@ -517,7 +517,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the range of matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBydossierId(long mtCore,
-		java.lang.String dossierId, int start, int end);
+		long dossierId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the vr output sheets where mtCore = &#63; and dossierId = &#63;.
@@ -534,7 +534,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the ordered range of matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBydossierId(long mtCore,
-		java.lang.String dossierId, int start, int end,
+		long dossierId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator);
 
 	/**
@@ -553,7 +553,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the ordered range of matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBydossierId(long mtCore,
-		java.lang.String dossierId, int start, int end,
+		long dossierId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -566,8 +566,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the first matching vr output sheet
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
-	public VROutputSheet findBydossierId_First(long mtCore,
-		java.lang.String dossierId,
+	public VROutputSheet findBydossierId_First(long mtCore, long dossierId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException;
 
@@ -579,8 +578,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
-	public VROutputSheet fetchBydossierId_First(long mtCore,
-		java.lang.String dossierId,
+	public VROutputSheet fetchBydossierId_First(long mtCore, long dossierId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator);
 
 	/**
@@ -592,8 +590,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the last matching vr output sheet
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
-	public VROutputSheet findBydossierId_Last(long mtCore,
-		java.lang.String dossierId,
+	public VROutputSheet findBydossierId_Last(long mtCore, long dossierId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException;
 
@@ -605,8 +602,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
-	public VROutputSheet fetchBydossierId_Last(long mtCore,
-		java.lang.String dossierId,
+	public VROutputSheet fetchBydossierId_Last(long mtCore, long dossierId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator);
 
 	/**
@@ -620,7 +616,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @throws NoSuchVROutputSheetException if a vr output sheet with the primary key could not be found
 	*/
 	public VROutputSheet[] findBydossierId_PrevAndNext(long id, long mtCore,
-		java.lang.String dossierId,
+		long dossierId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException;
 
@@ -630,7 +626,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @param mtCore the mt core
 	* @param dossierId the dossier ID
 	*/
-	public void removeBydossierId(long mtCore, java.lang.String dossierId);
+	public void removeBydossierId(long mtCore, long dossierId);
 
 	/**
 	* Returns the number of vr output sheets where mtCore = &#63; and dossierId = &#63;.
@@ -639,7 +635,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @param dossierId the dossier ID
 	* @return the number of matching vr output sheets
 	*/
-	public int countBydossierId(long mtCore, java.lang.String dossierId);
+	public int countBydossierId(long mtCore, long dossierId);
 
 	/**
 	* Returns all the vr output sheets where mtCore = &#63; and outputSheetType = &#63;.

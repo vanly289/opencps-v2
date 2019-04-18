@@ -1904,7 +1904,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 			VROutputSheetImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findBydossierId",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -1914,14 +1914,14 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 			VROutputSheetModelImpl.FINDER_CACHE_ENABLED,
 			VROutputSheetImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findBydossierId",
-			new String[] { Long.class.getName(), String.class.getName() },
+			new String[] { Long.class.getName(), Long.class.getName() },
 			VROutputSheetModelImpl.MTCORE_COLUMN_BITMASK |
 			VROutputSheetModelImpl.DOSSIERID_COLUMN_BITMASK |
 			VROutputSheetModelImpl.MODIFYDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_DOSSIERID = new FinderPath(VROutputSheetModelImpl.ENTITY_CACHE_ENABLED,
 			VROutputSheetModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBydossierId",
-			new String[] { Long.class.getName(), String.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns all the vr output sheets where mtCore = &#63; and dossierId = &#63;.
@@ -1931,7 +1931,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 * @return the matching vr output sheets
 	 */
 	@Override
-	public List<VROutputSheet> findBydossierId(long mtCore, String dossierId) {
+	public List<VROutputSheet> findBydossierId(long mtCore, long dossierId) {
 		return findBydossierId(mtCore, dossierId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1950,7 +1950,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 * @return the range of matching vr output sheets
 	 */
 	@Override
-	public List<VROutputSheet> findBydossierId(long mtCore, String dossierId,
+	public List<VROutputSheet> findBydossierId(long mtCore, long dossierId,
 		int start, int end) {
 		return findBydossierId(mtCore, dossierId, start, end, null);
 	}
@@ -1970,7 +1970,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 * @return the ordered range of matching vr output sheets
 	 */
 	@Override
-	public List<VROutputSheet> findBydossierId(long mtCore, String dossierId,
+	public List<VROutputSheet> findBydossierId(long mtCore, long dossierId,
 		int start, int end, OrderByComparator<VROutputSheet> orderByComparator) {
 		return findBydossierId(mtCore, dossierId, start, end,
 			orderByComparator, true);
@@ -1992,7 +1992,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 * @return the ordered range of matching vr output sheets
 	 */
 	@Override
-	public List<VROutputSheet> findBydossierId(long mtCore, String dossierId,
+	public List<VROutputSheet> findBydossierId(long mtCore, long dossierId,
 		int start, int end, OrderByComparator<VROutputSheet> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -2023,8 +2023,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 			if ((list != null) && !list.isEmpty()) {
 				for (VROutputSheet vrOutputSheet : list) {
 					if ((mtCore != vrOutputSheet.getMtCore()) ||
-							!Objects.equals(dossierId,
-								vrOutputSheet.getDossierId())) {
+							(dossierId != vrOutputSheet.getDossierId())) {
 						list = null;
 
 						break;
@@ -2048,19 +2047,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 			query.append(_FINDER_COLUMN_DOSSIERID_MTCORE_2);
 
-			boolean bindDossierId = false;
-
-			if (dossierId == null) {
-				query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_1);
-			}
-			else if (dossierId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_3);
-			}
-			else {
-				bindDossierId = true;
-
-				query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_2);
-			}
+			query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -2084,9 +2071,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 				qPos.add(mtCore);
 
-				if (bindDossierId) {
-					qPos.add(dossierId);
-				}
+				qPos.add(dossierId);
 
 				if (!pagination) {
 					list = (List<VROutputSheet>)QueryUtil.list(q, getDialect(),
@@ -2128,7 +2113,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 * @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	 */
 	@Override
-	public VROutputSheet findBydossierId_First(long mtCore, String dossierId,
+	public VROutputSheet findBydossierId_First(long mtCore, long dossierId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException {
 		VROutputSheet vrOutputSheet = fetchBydossierId_First(mtCore, dossierId,
@@ -2162,7 +2147,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 * @return the first matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	 */
 	@Override
-	public VROutputSheet fetchBydossierId_First(long mtCore, String dossierId,
+	public VROutputSheet fetchBydossierId_First(long mtCore, long dossierId,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		List<VROutputSheet> list = findBydossierId(mtCore, dossierId, 0, 1,
 				orderByComparator);
@@ -2184,7 +2169,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 * @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	 */
 	@Override
-	public VROutputSheet findBydossierId_Last(long mtCore, String dossierId,
+	public VROutputSheet findBydossierId_Last(long mtCore, long dossierId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException {
 		VROutputSheet vrOutputSheet = fetchBydossierId_Last(mtCore, dossierId,
@@ -2218,7 +2203,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 * @return the last matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	 */
 	@Override
-	public VROutputSheet fetchBydossierId_Last(long mtCore, String dossierId,
+	public VROutputSheet fetchBydossierId_Last(long mtCore, long dossierId,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		int count = countBydossierId(mtCore, dossierId);
 
@@ -2248,7 +2233,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet[] findBydossierId_PrevAndNext(long id, long mtCore,
-		String dossierId, OrderByComparator<VROutputSheet> orderByComparator)
+		long dossierId, OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException {
 		VROutputSheet vrOutputSheet = findByPrimaryKey(id);
 
@@ -2278,7 +2263,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	}
 
 	protected VROutputSheet getBydossierId_PrevAndNext(Session session,
-		VROutputSheet vrOutputSheet, long mtCore, String dossierId,
+		VROutputSheet vrOutputSheet, long mtCore, long dossierId,
 		OrderByComparator<VROutputSheet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -2295,19 +2280,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 		query.append(_FINDER_COLUMN_DOSSIERID_MTCORE_2);
 
-		boolean bindDossierId = false;
-
-		if (dossierId == null) {
-			query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_1);
-		}
-		else if (dossierId.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_3);
-		}
-		else {
-			bindDossierId = true;
-
-			query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_2);
-		}
+		query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2379,9 +2352,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 		qPos.add(mtCore);
 
-		if (bindDossierId) {
-			qPos.add(dossierId);
-		}
+		qPos.add(dossierId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(vrOutputSheet);
@@ -2408,7 +2379,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 * @param dossierId the dossier ID
 	 */
 	@Override
-	public void removeBydossierId(long mtCore, String dossierId) {
+	public void removeBydossierId(long mtCore, long dossierId) {
 		for (VROutputSheet vrOutputSheet : findBydossierId(mtCore, dossierId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(vrOutputSheet);
@@ -2423,7 +2394,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 * @return the number of matching vr output sheets
 	 */
 	@Override
-	public int countBydossierId(long mtCore, String dossierId) {
+	public int countBydossierId(long mtCore, long dossierId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_DOSSIERID;
 
 		Object[] finderArgs = new Object[] { mtCore, dossierId };
@@ -2437,19 +2408,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 			query.append(_FINDER_COLUMN_DOSSIERID_MTCORE_2);
 
-			boolean bindDossierId = false;
-
-			if (dossierId == null) {
-				query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_1);
-			}
-			else if (dossierId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_3);
-			}
-			else {
-				bindDossierId = true;
-
-				query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_2);
-			}
+			query.append(_FINDER_COLUMN_DOSSIERID_DOSSIERID_2);
 
 			String sql = query.toString();
 
@@ -2464,9 +2423,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 				qPos.add(mtCore);
 
-				if (bindDossierId) {
-					qPos.add(dossierId);
-				}
+				qPos.add(dossierId);
 
 				count = (Long)q.uniqueResult();
 
@@ -2486,9 +2443,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	}
 
 	private static final String _FINDER_COLUMN_DOSSIERID_MTCORE_2 = "vrOutputSheet.mtCore = ? AND ";
-	private static final String _FINDER_COLUMN_DOSSIERID_DOSSIERID_1 = "vrOutputSheet.dossierId IS NULL";
 	private static final String _FINDER_COLUMN_DOSSIERID_DOSSIERID_2 = "vrOutputSheet.dossierId = ?";
-	private static final String _FINDER_COLUMN_DOSSIERID_DOSSIERID_3 = "(vrOutputSheet.dossierId IS NULL OR vrOutputSheet.dossierId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_OUTPUTSHEETTYPE =
 		new FinderPath(VROutputSheetModelImpl.ENTITY_CACHE_ENABLED,
 			VROutputSheetModelImpl.FINDER_CACHE_ENABLED,

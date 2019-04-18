@@ -198,6 +198,29 @@ public interface VRInputStampbookDetailsLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRInputStampbookDetails> findByInputSheetId(long mtCore,
+		long inputSheetId) throws PortalException, SystemException;
+
+	public List<VRInputStampbookDetails> findByInputSheetIdAndBookId(
+		long mtCore, long inputSheetId, long bookId)
+		throws PortalException, SystemException;
+
+	public List<VRInputStampbookDetails> findBycertificateId(long mtCore,
+		long certificateId) throws PortalException, SystemException;
+
+	public List<VRInputStampbookDetails> findBycertificateNumber(long mtCore,
+		java.lang.String certificateNumber)
+		throws PortalException, SystemException;
+
+	public List<VRInputStampbookDetails> findBycorporationId(long mtCore,
+		java.lang.String corporationId) throws PortalException, SystemException;
+
+	public List<VRInputStampbookDetails> findBydossierId(long mtCore,
+		long dossierId) throws PortalException, SystemException;
+
+	public List<VRInputStampbookDetails> findByvehicleRecordId(long mtCore,
+		long vehicleRecordId) throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr input stampbook detailses.
 	*

@@ -210,6 +210,21 @@ public class VRCOPReportAttachLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRCOPReportAttach> findBycopReportNo(
+		long mtCore, java.lang.String copReportNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBycopReportNo(mtCore, copReportNo);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRCOPReportAttach> findBycopReportRepositoryID(
+		long mtCore, long copReportRepositoryID)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findBycopReportRepositoryID(mtCore, copReportRepositoryID);
+	}
+
 	/**
 	* Returns a range of all the vrcop report attachs.
 	*

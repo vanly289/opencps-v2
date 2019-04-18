@@ -220,6 +220,87 @@ public class VRClearingStampbookLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRClearingStampbook> findByInputSheetId(
+		long mtCore, long inputSheetId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrClearingStampbookLocalService.findByInputSheetId(mtCore,
+			inputSheetId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRClearingStampbook> findByInputSheetIdAndBookId(
+		long mtCore, long inputSheetId, long bookId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrClearingStampbookLocalService.findByInputSheetIdAndBookId(mtCore,
+			inputSheetId, bookId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRClearingStampbook> findByInputSheetIdAndBookIdAndStampType(
+		long mtCore, long inputSheetId, long bookId, java.lang.String stampType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrClearingStampbookLocalService.findByInputSheetIdAndBookIdAndStampType(mtCore,
+			inputSheetId, bookId, stampType);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRClearingStampbook> findByOutputSheetId(
+		long mtCore, long outputSheetId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrClearingStampbookLocalService.findByOutputSheetId(mtCore,
+			outputSheetId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRClearingStampbook> findByOutputSheetIdAndBookId(
+		long mtCore, long outputSheetId, long bookId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrClearingStampbookLocalService.findByOutputSheetIdAndBookId(mtCore,
+			outputSheetId, bookId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRClearingStampbook> findByOutputSheetIdAndBookIdAndStampType(
+		long mtCore, long outputSheetId, long bookId, java.lang.String stampType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrClearingStampbookLocalService.findByOutputSheetIdAndBookIdAndStampType(mtCore,
+			outputSheetId, bookId, stampType);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRClearingStampbook> findBycertificateId(
+		long mtCore, long certificateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrClearingStampbookLocalService.findBycertificateId(mtCore,
+			certificateId);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRClearingStampbook> findBycertificateNumber(
+		long mtCore, java.lang.String certificateNumber)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrClearingStampbookLocalService.findBycertificateNumber(mtCore,
+			certificateNumber);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRClearingStampbook> findBydebitNoteId(
+		long mtCore, long debitNoteId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrClearingStampbookLocalService.findBydebitNoteId(mtCore,
+			debitNoteId);
+	}
+
 	/**
 	* Returns a range of all the vr clearing stampbooks.
 	*

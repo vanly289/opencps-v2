@@ -134,6 +134,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 
 				if (clientRegistrationPOSTrespone.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
 					registrationClient.setSubmitting(Boolean.FALSE);
+					registrationClient.setModifiedDate(new Date());
 
 					RegistrationLocalServiceUtil.updateRegistration(registrationClient);
 
@@ -172,6 +173,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 							String markupDomesticsManufacturer = StringPool.BLANK; // 2: CSSX TN
 							String markupImporter = StringPool.BLANK; // 3: CSNK
 							String markupCorporation = StringPool.BLANK; // 4:CSSX NN, 5: CSBHBD, 9: KHAC
+							String markupOverseasManufacturer = StringPool.BLANK;
 
 							SimpleDateFormat formatDateShort = new SimpleDateFormat("dd/MM/yyyy");
 							String applicantCeremonyDate = formatDateShort
@@ -237,7 +239,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 							appProfile.setApplicantRegion("---");
 							appProfile.setMarkupDesigner(markupDesigner); // Lay tu json
 							appProfile.setMarkupDomesticsManufacturer(markupDomesticsManufacturer); // Lay tu json
-							appProfile.setMarkupOverseasManufacturer(StringPool.BLANK); // Chua co thong tin
+							appProfile.setMarkupOverseasManufacturer(markupOverseasManufacturer); // Chua co thong tin
 							appProfile.setMarkupCorporation(markupCorporation); // Lay tu json
 							appProfile.setMarkupImporter(markupImporter); // Lay tu json
 							appProfile.setApplicantStatus("2"); // da phe duyet
@@ -283,7 +285,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 							appProfileHistory.setApplicantRegion("---");
 							appProfileHistory.setMarkupDesigner(markupDesigner); // Lay tu json
 							appProfileHistory.setMarkupDomesticsManufacturer(markupDomesticsManufacturer); // Lay tu json
-							appProfileHistory.setMarkupOverseasManufacturer(StringPool.BLANK);
+							appProfileHistory.setMarkupOverseasManufacturer(markupOverseasManufacturer);
 							appProfileHistory.setMarkupCorporation(markupCorporation); // Lay tu json
 							appProfileHistory.setMarkupImporter(markupImporter); // Lay tu json
 							appProfileHistory.setApplicantStatus("2"); // da phe duyet
@@ -317,18 +319,13 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 											String email_xuong = formJson.getString("email_xuong");
 											if (Validator.isNotNull(productionPlantName)
 													&& Validator.isNotNull(productionPlantAddress)) {
-												// Quy tac Update: Trung ca ten
-												// & dia chi; hoac Trung ten,
-												// khac dia chi; hoac Trung dia
-												// chi va nguoi_dai_dien_xuong
-
-												// int Count1 = 0; // Trung ca
-												// ten & dia chi;
-												// int Count2 = 0; // hoac Trung
-												// ten, khac dia chi;
-												// int Count3 = 0; // hoac Trung
-												// dia chi va
-												// nguoi_dai_dien_xuong;
+												 /*Quy tac Update: Trung ca ten
+												 & dia chi; hoac Trung ten,
+												 khac dia chi; hoac Trung dia
+												 chi va nguoi_dai_dien_xuong
+												 int Count1 = 0; // Trung ca ten & dia chi;
+												 int Count2 = 0; // hoac Trung ten, khac dia chi;
+												 int Count3 = 0; // hoac Trung dia chi va nguoi_dai_dien_xuong;*/
 												long applicantProfileId = appProfile.getId();
 
 												VRProductionPlant objProductionPlant = new VRProductionPlantImpl();

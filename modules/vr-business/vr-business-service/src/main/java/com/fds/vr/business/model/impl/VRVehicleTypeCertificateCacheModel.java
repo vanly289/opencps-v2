@@ -66,7 +66,7 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(265);
+		StringBundler sb = new StringBundler(271);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -110,6 +110,8 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 		sb.append(applicantContactEmail);
 		sb.append(", applicantcontactPhone=");
 		sb.append(applicantcontactPhone);
+		sb.append(", cityCode=");
+		sb.append(cityCode);
 		sb.append(", manufacturerForeignCode=");
 		sb.append(manufacturerForeignCode);
 		sb.append(", manufacturerName=");
@@ -270,6 +272,10 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 		sb.append(commonSafetyStandard);
 		sb.append(", emissionStandard=");
 		sb.append(emissionStandard);
+		sb.append(", commonSafetyDescription=");
+		sb.append(commonSafetyDescription);
+		sb.append(", emissionDescription=");
+		sb.append(emissionDescription);
 		sb.append(", otherTestReportNo=");
 		sb.append(otherTestReportNo);
 		sb.append(", otherTestReportDate=");
@@ -465,6 +471,13 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 		}
 		else {
 			vrVehicleTypeCertificateImpl.setApplicantcontactPhone(applicantcontactPhone);
+		}
+
+		if (cityCode == null) {
+			vrVehicleTypeCertificateImpl.setCityCode(StringPool.BLANK);
+		}
+		else {
+			vrVehicleTypeCertificateImpl.setCityCode(cityCode);
 		}
 
 		if (manufacturerForeignCode == null) {
@@ -1043,6 +1056,20 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 			vrVehicleTypeCertificateImpl.setEmissionStandard(emissionStandard);
 		}
 
+		if (commonSafetyDescription == null) {
+			vrVehicleTypeCertificateImpl.setCommonSafetyDescription(StringPool.BLANK);
+		}
+		else {
+			vrVehicleTypeCertificateImpl.setCommonSafetyDescription(commonSafetyDescription);
+		}
+
+		if (emissionDescription == null) {
+			vrVehicleTypeCertificateImpl.setEmissionDescription(StringPool.BLANK);
+		}
+		else {
+			vrVehicleTypeCertificateImpl.setEmissionDescription(emissionDescription);
+		}
+
 		if (otherTestReportNo == null) {
 			vrVehicleTypeCertificateImpl.setOtherTestReportNo(StringPool.BLANK);
 		}
@@ -1284,6 +1311,7 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 		applicantContactName = objectInput.readUTF();
 		applicantContactEmail = objectInput.readUTF();
 		applicantcontactPhone = objectInput.readUTF();
+		cityCode = objectInput.readUTF();
 		manufacturerForeignCode = objectInput.readUTF();
 		manufacturerName = objectInput.readUTF();
 		manufacturerAddress = objectInput.readUTF();
@@ -1364,6 +1392,8 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 		emissionTestReportDate = objectInput.readLong();
 		commonSafetyStandard = objectInput.readUTF();
 		emissionStandard = objectInput.readUTF();
+		commonSafetyDescription = objectInput.readUTF();
+		emissionDescription = objectInput.readUTF();
 		otherTestReportNo = objectInput.readUTF();
 		otherTestReportDate = objectInput.readLong();
 		sampleFrameNo = objectInput.readUTF();
@@ -1522,6 +1552,13 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 		}
 		else {
 			objectOutput.writeUTF(applicantcontactPhone);
+		}
+
+		if (cityCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(cityCode);
 		}
 
 		if (manufacturerForeignCode == null) {
@@ -1997,6 +2034,20 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 			objectOutput.writeUTF(emissionStandard);
 		}
 
+		if (commonSafetyDescription == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(commonSafetyDescription);
+		}
+
+		if (emissionDescription == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(emissionDescription);
+		}
+
 		if (otherTestReportNo == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -2200,6 +2251,7 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 	public String applicantContactName;
 	public String applicantContactEmail;
 	public String applicantcontactPhone;
+	public String cityCode;
 	public String manufacturerForeignCode;
 	public String manufacturerName;
 	public String manufacturerAddress;
@@ -2280,6 +2332,8 @@ public class VRVehicleTypeCertificateCacheModel implements CacheModel<VRVehicleT
 	public long emissionTestReportDate;
 	public String commonSafetyStandard;
 	public String emissionStandard;
+	public String commonSafetyDescription;
+	public String emissionDescription;
 	public String otherTestReportNo;
 	public long otherTestReportDate;
 	public String sampleFrameNo;

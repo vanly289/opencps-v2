@@ -210,6 +210,27 @@ public class VRInputSheetLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRInputSheet> findBycorporationId(
+		long mtCore, java.lang.String corporationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBycorporationId(mtCore, corporationId);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputSheet> findByinputSheetNo(
+		long mtCore, java.lang.String inputSheetNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByinputSheetNo(mtCore, inputSheetNo);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputSheet> findByinputSheetType(
+		long mtCore, long inputSheetType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByinputSheetType(mtCore, inputSheetType);
+	}
+
 	/**
 	* Returns a range of all the vr input sheets.
 	*

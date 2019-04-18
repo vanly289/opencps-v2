@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -16589,6 +16590,7 @@ public class VRVehicleTypeCertificatePersistenceImpl extends BasePersistenceImpl
 		vrVehicleTypeCertificateImpl.setApplicantContactName(vrVehicleTypeCertificate.getApplicantContactName());
 		vrVehicleTypeCertificateImpl.setApplicantContactEmail(vrVehicleTypeCertificate.getApplicantContactEmail());
 		vrVehicleTypeCertificateImpl.setApplicantcontactPhone(vrVehicleTypeCertificate.getApplicantcontactPhone());
+		vrVehicleTypeCertificateImpl.setCityCode(vrVehicleTypeCertificate.getCityCode());
 		vrVehicleTypeCertificateImpl.setManufacturerForeignCode(vrVehicleTypeCertificate.getManufacturerForeignCode());
 		vrVehicleTypeCertificateImpl.setManufacturerName(vrVehicleTypeCertificate.getManufacturerName());
 		vrVehicleTypeCertificateImpl.setManufacturerAddress(vrVehicleTypeCertificate.getManufacturerAddress());
@@ -16669,6 +16671,8 @@ public class VRVehicleTypeCertificatePersistenceImpl extends BasePersistenceImpl
 		vrVehicleTypeCertificateImpl.setEmissionTestReportDate(vrVehicleTypeCertificate.getEmissionTestReportDate());
 		vrVehicleTypeCertificateImpl.setCommonSafetyStandard(vrVehicleTypeCertificate.getCommonSafetyStandard());
 		vrVehicleTypeCertificateImpl.setEmissionStandard(vrVehicleTypeCertificate.getEmissionStandard());
+		vrVehicleTypeCertificateImpl.setCommonSafetyDescription(vrVehicleTypeCertificate.getCommonSafetyDescription());
+		vrVehicleTypeCertificateImpl.setEmissionDescription(vrVehicleTypeCertificate.getEmissionDescription());
 		vrVehicleTypeCertificateImpl.setOtherTestReportNo(vrVehicleTypeCertificate.getOtherTestReportNo());
 		vrVehicleTypeCertificateImpl.setOtherTestReportDate(vrVehicleTypeCertificate.getOtherTestReportDate());
 		vrVehicleTypeCertificateImpl.setSampleFrameNo(vrVehicleTypeCertificate.getSampleFrameNo());
@@ -17088,6 +17092,11 @@ public class VRVehicleTypeCertificatePersistenceImpl extends BasePersistenceImpl
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return VRVehicleTypeCertificateModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -17119,4 +17128,7 @@ public class VRVehicleTypeCertificatePersistenceImpl extends BasePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No VRVehicleTypeCertificate exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No VRVehicleTypeCertificate exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(VRVehicleTypeCertificatePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"commonSafetyDescription", "emissionDescription"
+			});
 }

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.model.VRInventory;
 import com.fds.vr.business.service.base.VRInventoryLocalServiceBaseImpl;
 
 /**
@@ -49,4 +50,77 @@ public class VRInventoryLocalServiceImpl extends VRInventoryLocalServiceBaseImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRInventoryLocalServiceUtil} to access the vr inventory local service.
 	 */
+	
+	public List<VRInventory> findByYearofPeriod(long mtCore, long yearofPeriod) throws PortalException, SystemException {
+		try {
+			return vrInventoryPersistence.findByYearofPeriod(mtCore, yearofPeriod);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInventory>();
+		
+	}
+
+
+	public List<VRInventory> findByYearofPeriodAndCorporationId(long mtCore, long yearofPeriod, String corporationId) throws PortalException, SystemException {
+		try {
+			return vrInventoryPersistence.findByYearofPeriodAndCorporationId(mtCore, yearofPeriod, corporationId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInventory>();
+		
+	}
+	
+	public List<VRInventory> findByYearofPeriodAndVehicleClass(long mtCore, long yearofPeriod, String vehicleClass) throws PortalException, SystemException {
+		try {
+			return vrInventoryPersistence.findByYearofPeriodAndVehicleClass(mtCore, yearofPeriod, vehicleClass);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInventory>();
+		
+	}
+	
+	public List<VRInventory> findByBookIdAndVehicleClass(long mtCore, long bookId, String vehicleClass) throws PortalException, SystemException {
+		try {
+			return vrInventoryPersistence.findByBookIdAndVehicleClass(mtCore, bookId, vehicleClass);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInventory>();
+		
+	}
+	
+	public List<VRInventory> findByBookId(long mtCore, long bookId) throws PortalException, SystemException {
+		try {
+			return vrInventoryPersistence.findByBookId(mtCore, bookId);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInventory>();
+		
+	}
+	
+	public List<VRInventory> findBycheckType(long mtCore, long checkType) throws PortalException, SystemException {
+		try {
+			return vrInventoryPersistence.findBycheckType(mtCore, checkType);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInventory>();
+		
+	}
+	
+	public List<VRInventory> findBycheckStatus(long mtCore, long checkStatus) throws PortalException, SystemException {
+		try {
+			return vrInventoryPersistence.findBycheckStatus(mtCore, checkStatus);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRInventory>();
+		
+	}
+	
+	private Log _log = LogFactoryUtil.getLog(VRInventoryLocalServiceImpl.class);
 }

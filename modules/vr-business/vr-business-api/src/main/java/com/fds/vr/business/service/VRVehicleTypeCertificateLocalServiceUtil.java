@@ -287,14 +287,14 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTTTKXCG_VehicleTypeCertificate(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		java.util.Date modifiedDate,
-		com.fds.vr.business.model.Registration registration,
+		java.util.Date applicantIdDate,
+		com.fds.vr.business.model.VRApplicantProfile appProfile,
 		com.fds.vr.business.model.DossierFile dossierFile)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTT302011BGTVTTTKXCG_VehicleTypeCertificate(mapValues,
-			modifiedDate, registration, dossierFile);
+			applicantIdDate, appProfile, dossierFile);
 	}
 
 	/**

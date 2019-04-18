@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-
+import com.fds.vr.business.model.VRProductClassification;
 import com.fds.vr.business.service.base.VRProductClassificationLocalServiceBaseImpl;
 
 /**
@@ -51,4 +51,18 @@ public class VRProductClassificationLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRProductClassificationLocalServiceUtil} to access the vr product classification local service.
 	 */
+	
+	public List<VRProductClassification> findByproductPlantID(long mtCore, long productPlantID) throws PortalException, SystemException {
+		try {
+			return vrProductClassificationPersistence.findByproductPlantID(mtCore, productPlantID);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRProductClassification>();
+		
+	}
+
+
+	
+	private Log _log = LogFactoryUtil.getLog(VRProductClassificationLocalServiceImpl.class);
 }

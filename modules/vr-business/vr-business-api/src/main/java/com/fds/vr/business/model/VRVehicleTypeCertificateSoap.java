@@ -55,6 +55,7 @@ public class VRVehicleTypeCertificateSoap implements Serializable {
 		soapModel.setApplicantContactName(model.getApplicantContactName());
 		soapModel.setApplicantContactEmail(model.getApplicantContactEmail());
 		soapModel.setApplicantcontactPhone(model.getApplicantcontactPhone());
+		soapModel.setCityCode(model.getCityCode());
 		soapModel.setManufacturerForeignCode(model.getManufacturerForeignCode());
 		soapModel.setManufacturerName(model.getManufacturerName());
 		soapModel.setManufacturerAddress(model.getManufacturerAddress());
@@ -135,6 +136,8 @@ public class VRVehicleTypeCertificateSoap implements Serializable {
 		soapModel.setEmissionTestReportDate(model.getEmissionTestReportDate());
 		soapModel.setCommonSafetyStandard(model.getCommonSafetyStandard());
 		soapModel.setEmissionStandard(model.getEmissionStandard());
+		soapModel.setCommonSafetyDescription(model.getCommonSafetyDescription());
+		soapModel.setEmissionDescription(model.getEmissionDescription());
 		soapModel.setOtherTestReportNo(model.getOtherTestReportNo());
 		soapModel.setOtherTestReportDate(model.getOtherTestReportDate());
 		soapModel.setSampleFrameNo(model.getSampleFrameNo());
@@ -388,6 +391,14 @@ public class VRVehicleTypeCertificateSoap implements Serializable {
 
 	public void setApplicantcontactPhone(String applicantcontactPhone) {
 		_applicantcontactPhone = applicantcontactPhone;
+	}
+
+	public String getCityCode() {
+		return _cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		_cityCode = cityCode;
 	}
 
 	public String getManufacturerForeignCode() {
@@ -1036,6 +1047,22 @@ public class VRVehicleTypeCertificateSoap implements Serializable {
 		_emissionStandard = emissionStandard;
 	}
 
+	public String getCommonSafetyDescription() {
+		return _commonSafetyDescription;
+	}
+
+	public void setCommonSafetyDescription(String commonSafetyDescription) {
+		_commonSafetyDescription = commonSafetyDescription;
+	}
+
+	public String getEmissionDescription() {
+		return _emissionDescription;
+	}
+
+	public void setEmissionDescription(String emissionDescription) {
+		_emissionDescription = emissionDescription;
+	}
+
 	public String getOtherTestReportNo() {
 		return _otherTestReportNo;
 	}
@@ -1306,6 +1333,7 @@ public class VRVehicleTypeCertificateSoap implements Serializable {
 	private String _applicantContactName;
 	private String _applicantContactEmail;
 	private String _applicantcontactPhone;
+	private String _cityCode;
 	private String _manufacturerForeignCode;
 	private String _manufacturerName;
 	private String _manufacturerAddress;
@@ -1386,6 +1414,8 @@ public class VRVehicleTypeCertificateSoap implements Serializable {
 	private Date _emissionTestReportDate;
 	private String _commonSafetyStandard;
 	private String _emissionStandard;
+	private String _commonSafetyDescription;
+	private String _emissionDescription;
 	private String _otherTestReportNo;
 	private Date _otherTestReportDate;
 	private String _sampleFrameNo;
