@@ -112,6 +112,212 @@ public class VRProductionPlantUtil {
 	}
 
 	/**
+	* Returns all the vr production plants where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63;.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	* @return the matching vr production plants
+	*/
+	public static List<VRProductionPlant> findByregistrationFormId(
+		long mtCore, long applicantProfileId, long registrationId) {
+		return getPersistence()
+				   .findByregistrationFormId(mtCore, applicantProfileId,
+			registrationId);
+	}
+
+	/**
+	* Returns a range of all the vr production plants where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	* @param start the lower bound of the range of vr production plants
+	* @param end the upper bound of the range of vr production plants (not inclusive)
+	* @return the range of matching vr production plants
+	*/
+	public static List<VRProductionPlant> findByregistrationFormId(
+		long mtCore, long applicantProfileId, long registrationId, int start,
+		int end) {
+		return getPersistence()
+				   .findByregistrationFormId(mtCore, applicantProfileId,
+			registrationId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the vr production plants where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	* @param start the lower bound of the range of vr production plants
+	* @param end the upper bound of the range of vr production plants (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vr production plants
+	*/
+	public static List<VRProductionPlant> findByregistrationFormId(
+		long mtCore, long applicantProfileId, long registrationId, int start,
+		int end, OrderByComparator<VRProductionPlant> orderByComparator) {
+		return getPersistence()
+				   .findByregistrationFormId(mtCore, applicantProfileId,
+			registrationId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the vr production plants where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	* @param start the lower bound of the range of vr production plants
+	* @param end the upper bound of the range of vr production plants (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vr production plants
+	*/
+	public static List<VRProductionPlant> findByregistrationFormId(
+		long mtCore, long applicantProfileId, long registrationId, int start,
+		int end, OrderByComparator<VRProductionPlant> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByregistrationFormId(mtCore, applicantProfileId,
+			registrationId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first vr production plant in the ordered set where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63;.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr production plant
+	* @throws NoSuchVRProductionPlantException if a matching vr production plant could not be found
+	*/
+	public static VRProductionPlant findByregistrationFormId_First(
+		long mtCore, long applicantProfileId, long registrationId,
+		OrderByComparator<VRProductionPlant> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRProductionPlantException {
+		return getPersistence()
+				   .findByregistrationFormId_First(mtCore, applicantProfileId,
+			registrationId, orderByComparator);
+	}
+
+	/**
+	* Returns the first vr production plant in the ordered set where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63;.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	*/
+	public static VRProductionPlant fetchByregistrationFormId_First(
+		long mtCore, long applicantProfileId, long registrationId,
+		OrderByComparator<VRProductionPlant> orderByComparator) {
+		return getPersistence()
+				   .fetchByregistrationFormId_First(mtCore, applicantProfileId,
+			registrationId, orderByComparator);
+	}
+
+	/**
+	* Returns the last vr production plant in the ordered set where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63;.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr production plant
+	* @throws NoSuchVRProductionPlantException if a matching vr production plant could not be found
+	*/
+	public static VRProductionPlant findByregistrationFormId_Last(long mtCore,
+		long applicantProfileId, long registrationId,
+		OrderByComparator<VRProductionPlant> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRProductionPlantException {
+		return getPersistence()
+				   .findByregistrationFormId_Last(mtCore, applicantProfileId,
+			registrationId, orderByComparator);
+	}
+
+	/**
+	* Returns the last vr production plant in the ordered set where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63;.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	*/
+	public static VRProductionPlant fetchByregistrationFormId_Last(
+		long mtCore, long applicantProfileId, long registrationId,
+		OrderByComparator<VRProductionPlant> orderByComparator) {
+		return getPersistence()
+				   .fetchByregistrationFormId_Last(mtCore, applicantProfileId,
+			registrationId, orderByComparator);
+	}
+
+	/**
+	* Returns the vr production plants before and after the current vr production plant in the ordered set where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63;.
+	*
+	* @param id the primary key of the current vr production plant
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next vr production plant
+	* @throws NoSuchVRProductionPlantException if a vr production plant with the primary key could not be found
+	*/
+	public static VRProductionPlant[] findByregistrationFormId_PrevAndNext(
+		long id, long mtCore, long applicantProfileId, long registrationId,
+		OrderByComparator<VRProductionPlant> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRProductionPlantException {
+		return getPersistence()
+				   .findByregistrationFormId_PrevAndNext(id, mtCore,
+			applicantProfileId, registrationId, orderByComparator);
+	}
+
+	/**
+	* Removes all the vr production plants where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63; from the database.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	*/
+	public static void removeByregistrationFormId(long mtCore,
+		long applicantProfileId, long registrationId) {
+		getPersistence()
+			.removeByregistrationFormId(mtCore, applicantProfileId,
+			registrationId);
+	}
+
+	/**
+	* Returns the number of vr production plants where mtCore = &#63; and applicantProfileId = &#63; and registrationId = &#63;.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationId the registration ID
+	* @return the number of matching vr production plants
+	*/
+	public static int countByregistrationFormId(long mtCore,
+		long applicantProfileId, long registrationId) {
+		return getPersistence()
+				   .countByregistrationFormId(mtCore, applicantProfileId,
+			registrationId);
+	}
+
+	/**
 	* Returns all the vr production plants where mtCore = &#63; and mappingStatus = &#63;.
 	*
 	* @param mtCore the mt core
