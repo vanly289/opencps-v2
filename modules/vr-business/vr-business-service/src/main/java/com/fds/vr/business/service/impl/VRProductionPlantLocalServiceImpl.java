@@ -104,6 +104,10 @@ public class VRProductionPlantLocalServiceImpl
 		return vrProductionPlantPersistence.findBymappingStatus(mtCore, mappingStatus);
 	}
 	
+	public List<VRProductionPlant> findByRegistrationFormId(long mtCore, long applicantProfileId, long registrationId){
+		return vrProductionPlantPersistence.findByregistrationFormId(mtCore, applicantProfileId, registrationId);
+	}
+	
 	public List<VRProductionPlant> findByproductionPlantCode(long mtCore, long applicantProfileId, String productionPlantCode){
 		return vrProductionPlantPersistence.findByproductionPlantCode(mtCore, applicantProfileId, productionPlantCode);
 	}	

@@ -215,6 +215,13 @@ public class VRProductionPlantLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRProductionPlant> findByRegistrationFormId(
+		long mtCore, long applicantProfileId, long registrationId) {
+		return getService()
+				   .findByRegistrationFormId(mtCore, applicantProfileId,
+			registrationId);
+	}
+
 	public static java.util.List<com.fds.vr.business.model.VRProductionPlant> findBymappingMA_XUONG_LR(
 		long mtCore, java.lang.String mappingMA_CTY,
 		java.lang.String mappingMA_XUONG_LR) {

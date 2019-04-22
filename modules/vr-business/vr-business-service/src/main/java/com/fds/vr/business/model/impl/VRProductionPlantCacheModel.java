@@ -66,7 +66,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(77);
+		StringBundler sb = new StringBundler(79);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -132,6 +132,8 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		sb.append(productionPlantEquipmentsNote);
 		sb.append(", productionPlantProdEquipmentsNote=");
 		sb.append(productionPlantProdEquipmentsNote);
+		sb.append(", registrationId=");
+		sb.append(registrationId);
 		sb.append(", applicantProfileId=");
 		sb.append(applicantProfileId);
 		sb.append(", latestCOPReportDate=");
@@ -366,6 +368,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			vrProductionPlantImpl.setProductionPlantProdEquipmentsNote(productionPlantProdEquipmentsNote);
 		}
 
+		vrProductionPlantImpl.setRegistrationId(registrationId);
 		vrProductionPlantImpl.setApplicantProfileId(applicantProfileId);
 
 		if (latestCOPReportDate == Long.MIN_VALUE) {
@@ -445,6 +448,8 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		productionPlantEmployeesNote = objectInput.readUTF();
 		productionPlantEquipmentsNote = objectInput.readUTF();
 		productionPlantProdEquipmentsNote = objectInput.readUTF();
+
+		registrationId = objectInput.readLong();
 
 		applicantProfileId = objectInput.readLong();
 		latestCOPReportDate = objectInput.readLong();
@@ -671,6 +676,8 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			objectOutput.writeUTF(productionPlantProdEquipmentsNote);
 		}
 
+		objectOutput.writeLong(registrationId);
+
 		objectOutput.writeLong(applicantProfileId);
 		objectOutput.writeLong(latestCOPReportDate);
 
@@ -718,6 +725,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 	public String productionPlantEmployeesNote;
 	public String productionPlantEquipmentsNote;
 	public String productionPlantProdEquipmentsNote;
+	public long registrationId;
 	public long applicantProfileId;
 	public long latestCOPReportDate;
 	public String latestCOPReportResult;

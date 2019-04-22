@@ -773,6 +773,7 @@
 		<column name="productionPlantEmployeesNote" type="String" db-name="productionPlantEmployeesNote"/>
 		<column name="productionPlantEquipmentsNote" type="String" db-name="productionPlantEquipmentsNote"/>
 		<column name="productionPlantProdEquipmentsNote" type="String" db-name="productionPlantProdEquipmentsNote"/>
+		<column name="registrationId" type="long" db-name="registrationId"/>
 		<column name="applicantProfileId" type="long" db-name="applicantProfileId"/>
 		<column name="latestCOPReportDate" type="Date" db-name="latestCOPReportDate"/>
 		<column name="latestCOPReportResult" type="String" db-name="latestCOPReportResult"/>
@@ -785,6 +786,11 @@
             <order-column name="modifyDate" order-by="desc"></order-column>
         </order>
         
+        <finder return-type="Collection" name="registrationFormId">
+			<finder-column name="mtCore"></finder-column>
+			<finder-column name="applicantProfileId"></finder-column>
+			<finder-column name="registrationId"></finder-column>
+		</finder>
         <finder return-type="Collection" name="mappingStatus">
 			<finder-column name="mtCore"></finder-column>
 			<finder-column name="mappingStatus"></finder-column>
@@ -3005,6 +3011,34 @@
 		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
 		<column name="deliverableCode" type="String" db-name="deliverableCode"/>
 		
+		<column name="XCG01070" type="String" db-name="XCG01070"/>
+		<column name="XCG01072" type="String" db-name="XCG01072"/>
+		<column name="XCG01083" type="String" db-name="XCG01083"/>
+		<column name="XCG01084" type="String" db-name="XCG01084"/>
+		<column name="XCG01085" type="String" db-name="XCG01085"/>
+		<column name="XCG01086" type="String" db-name="XCG01086"/>
+		<column name="XCG01087" type="String" db-name="XCG01087"/>
+		<column name="XCG01088" type="String" db-name="XCG01088"/>
+		<column name="XCG01090" type="String" db-name="XCG01090"/>
+		<column name="XCG01091" type="String" db-name="XCG01091"/>
+		<column name="XCG01092" type="String" db-name="XCG01092"/>
+		<column name="XCG01123" type="String" db-name="XCG01123"/>
+		<column name="XCG01124" type="String" db-name="XCG01124"/>
+		<column name="XCG01125" type="String" db-name="XCG01125"/>
+		<column name="XCG01156" type="String" db-name="XCG01156"/>
+		<column name="XCG01157" type="String" db-name="XCG01157"/>
+		<column name="XCG01163" type="String" db-name="XCG01163"/>
+		<column name="XCG01169" type="String" db-name="XCG01169"/>
+		<column name="XCG01170" type="String" db-name="XCG01170"/>
+		<column name="XCG01171" type="String" db-name="XCG01171"/>
+		<column name="XCG01172" type="String" db-name="XCG01172"/>
+		<column name="XCG01173" type="String" db-name="XCG01173"/>
+		<column name="XCG01182" type="String" db-name="XCG01182"/>
+		<column name="XCG01183" type="String" db-name="XCG01183"/>
+		<column name="XCG01192" type="String" db-name="XCG01192"/>
+		<column name="loai_dong_co" type="String" db-name="loai_dong_co"/>
+		
+		<!-- 
 		<column name="loai_dong_co" type="String" db-name="loai_dong_co"/>
 		<column name="XCG01001" type="String" db-name="XCG01001"/>
 		<column name="XCG01002" type="String" db-name="XCG01002"/>
@@ -3962,7 +3996,7 @@
 		<column name="BBKTSPMXCG024" type="String" db-name="BBKTSPMXCG024"/>
 		<column name="BBKTSPMXCG025" type="String" db-name="BBKTSPMXCG025"/>
 		
-						
+				 -->		
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		

@@ -102,6 +102,7 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 			getProductionPlantEquipmentsNote());
 		attributes.put("productionPlantProdEquipmentsNote",
 			getProductionPlantProdEquipmentsNote());
+		attributes.put("registrationId", getRegistrationId());
 		attributes.put("applicantProfileId", getApplicantProfileId());
 		attributes.put("latestCOPReportDate", getLatestCOPReportDate());
 		attributes.put("latestCOPReportResult", getLatestCOPReportResult());
@@ -327,6 +328,12 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 
 		if (productionPlantProdEquipmentsNote != null) {
 			setProductionPlantProdEquipmentsNote(productionPlantProdEquipmentsNote);
+		}
+
+		Long registrationId = (Long)attributes.get("registrationId");
+
+		if (registrationId != null) {
+			setRegistrationId(registrationId);
 		}
 
 		Long applicantProfileId = (Long)attributes.get("applicantProfileId");
@@ -822,6 +829,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 		return _vrProductionPlant.getPrimaryKey();
 	}
 
+	/**
+	* Returns the registration ID of this vr production plant.
+	*
+	* @return the registration ID of this vr production plant
+	*/
+	@Override
+	public long getRegistrationId() {
+		return _vrProductionPlant.getRegistrationId();
+	}
+
 	@Override
 	public void persist() {
 		_vrProductionPlant.persist();
@@ -1252,6 +1269,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public void setProductionPlantType(java.lang.String productionPlantType) {
 		_vrProductionPlant.setProductionPlantType(productionPlantType);
+	}
+
+	/**
+	* Sets the registration ID of this vr production plant.
+	*
+	* @param registrationId the registration ID of this vr production plant
+	*/
+	@Override
+	public void setRegistrationId(long registrationId) {
+		_vrProductionPlant.setRegistrationId(registrationId);
 	}
 
 	/**
