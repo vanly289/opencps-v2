@@ -227,6 +227,13 @@ public class VRProductionPlantLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.fds.vr.business.model.VRProductionPlant> findByRegistrationFormId(
+		long mtCore, long applicantProfileId, long registrationId) {
+		return _vrProductionPlantLocalService.findByRegistrationFormId(mtCore,
+			applicantProfileId, registrationId);
+	}
+
+	@Override
 	public java.util.List<com.fds.vr.business.model.VRProductionPlant> findBymappingMA_XUONG_LR(
 		long mtCore, java.lang.String mappingMA_CTY,
 		java.lang.String mappingMA_XUONG_LR) {

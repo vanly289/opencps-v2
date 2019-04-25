@@ -277,14 +277,34 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				
 				break;
 			case "TT302011BGTVTCNCLKLLKXCG": //Chung nhan chat luong kieu loai linh kien Xe co gioi
-				
+				if (mtCore == 1) {
+					
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.updateTT302011BGTVTCNCLKLLKXCG_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+	
+					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+					
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "21");
+					}					
+				}
 				break;				
 			case "TT302011BGTVTCNCLKLLKXM": //Chung nhan chat luong kieu loai linh kien Xe mo to, xe gan may
 
 				
 				break;				
 			case "TT302011BGTVTCNCLKLTXXCG": //Chung nhan chat luong kieu loai toan xe Xe co gioi
-				
+				if (mtCore == 1) {
+					
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.updateTT302011BGTVTCNCLKLTXXCG_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+	
+					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+					
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "21");
+					}					
+				}
 				break;				
 			case "TT302011BGTVTCNCLKLTXXMTGM": //Chung nhan chat luong kieu loai toan xe Xe mo to, xe gan may
 				

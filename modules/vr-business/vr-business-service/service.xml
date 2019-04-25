@@ -773,6 +773,7 @@
 		<column name="productionPlantEmployeesNote" type="String" db-name="productionPlantEmployeesNote"/>
 		<column name="productionPlantEquipmentsNote" type="String" db-name="productionPlantEquipmentsNote"/>
 		<column name="productionPlantProdEquipmentsNote" type="String" db-name="productionPlantProdEquipmentsNote"/>
+		<column name="registrationId" type="long" db-name="registrationId"/>
 		<column name="applicantProfileId" type="long" db-name="applicantProfileId"/>
 		<column name="latestCOPReportDate" type="Date" db-name="latestCOPReportDate"/>
 		<column name="latestCOPReportResult" type="String" db-name="latestCOPReportResult"/>
@@ -785,6 +786,11 @@
             <order-column name="modifyDate" order-by="desc"></order-column>
         </order>
         
+        <finder return-type="Collection" name="registrationFormId">
+			<finder-column name="mtCore"></finder-column>
+			<finder-column name="applicantProfileId"></finder-column>
+			<finder-column name="registrationId"></finder-column>
+		</finder>
         <finder return-type="Collection" name="mappingStatus">
 			<finder-column name="mtCore"></finder-column>
 			<finder-column name="mappingStatus"></finder-column>
@@ -2991,6 +2997,7 @@
 			<finder-column name="referenceUid" />
 		</finder>
 	</entity>
+
 	<entity name="VRTechnicalSpec_XCG" local-service="true" table="vr_technicalspec_xcg"
 		remote-service="false">
 		<!-- PK fields -->
@@ -3962,6 +3969,8 @@
 		<column name="BBKTSPMXCG024" type="String" db-name="BBKTSPMXCG024"/>
 		<column name="BBKTSPMXCG025" type="String" db-name="BBKTSPMXCG025"/>
 		
+
+				 -->		
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
