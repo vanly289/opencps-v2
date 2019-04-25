@@ -246,17 +246,17 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				
 				break;		
 			case "TT302011BGTVTKTSPMXCG":  //Kiem tra san pham mau Xe co gioi
-				if (mtCore == 1) {
-					
-					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
-							.updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
-	
-					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
-					
-					if (vrVehicleTypeCertificateId > 0 ) {
-						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "21");
-					}					
-				}
+//				if (mtCore == 1) {
+//					
+//					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+//							.updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+//	
+//					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+//					
+//					if (vrVehicleTypeCertificateId > 0 ) {
+//						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "21");
+//					}					
+//				}
 				break;				
 			case "TT302011BGTVTKTSPMXBBCN": //Kiem tra san pham mau Xe cho nguoi bon banh co gan dong co
 

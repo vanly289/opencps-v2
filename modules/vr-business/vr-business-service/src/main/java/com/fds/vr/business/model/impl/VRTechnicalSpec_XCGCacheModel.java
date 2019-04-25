@@ -66,7 +66,7 @@ public class VRTechnicalSpec_XCGCacheModel implements CacheModel<VRTechnicalSpec
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(933);
+		StringBundler sb = new StringBundler(1, 933);
 
 		sb.append("{id=");
 		sb.append(id);

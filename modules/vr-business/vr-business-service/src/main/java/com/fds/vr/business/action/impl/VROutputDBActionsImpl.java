@@ -27,12 +27,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import com.fds.vr.business.model.Deliverable;
 import com.fds.vr.business.model.DossierFile;
 import com.fds.vr.business.model.Registration;
-import com.fds.vr.business.service.DeliverableLocalServiceUtil;
-import com.fds.vr.business.service.DossierFileLocalServiceUtil;
-import com.fds.vr.business.service.RegistrationLocalServiceUtil;
 
 public class VROutputDBActionsImpl implements VROutputDBActions{
 
@@ -48,8 +44,9 @@ public class VROutputDBActionsImpl implements VROutputDBActions{
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME);
 		String strSyncDate = sdf.format(syncDate);
 
-		List<Deliverable> deliverableList = DeliverableLocalServiceUtil.getDeliverableByModifiedDate(strSyncDate,
-				"GCN_TDTK_XCG", 2);
+//		List<Deliverable> deliverableList = DeliverableLocalServiceUtil.getDeliverableByModifiedDate(strSyncDate,
+//				"GCN_TDTK_XCG", 2);
+		List<String> deliverableList = null;
 
 		if (deliverableList != null && deliverableList.size() > 0) {
 //			List<String> formDataList = new ArrayList<String>();
@@ -58,28 +55,28 @@ public class VROutputDBActionsImpl implements VROutputDBActions{
 			Date modifiedDate = null;
 			DossierFile dossierFile = null;
 			Registration registration = null;
-			for (Deliverable deliverable : deliverableList) {
-				String applicantIdNo = deliverable.getApplicantIdNo();
-				String deliverableCode = deliverable.getDeliverableCode();
-				if (Validator.isNotNull(applicantIdNo)) {
-					registration = RegistrationLocalServiceUtil.getByApplicantIdNo(applicantIdNo);
-					
-				}
-				if (Validator.isNotNull(deliverableCode)) {
-					dossierFile = DossierFileLocalServiceUtil.getByDeliverableCode(deliverableCode);
-				}
-
-//				_log.info("registration: "+registration);
-//				_log.info("dossierFile: "+dossierFile);
-				formData = deliverable.getFormData();
-				modifiedDate = deliverable.getModifiedDate();
-				if (Validator.isNotNull(formData)) {
-					LinkedHashMap<String, String> mapValues = ConvertJONObjectUtils.getKeyValuesMap(formData);
-					if (mapValues != null) {
-						outputDBAction(mapValues, modifiedDate, registration, dossierFile);
-					}
-				}
-			}
+//			for (Deliverable deliverable : deliverableList) {
+//				String applicantIdNo = deliverable.getApplicantIdNo();
+//				String deliverableCode = deliverable.getDeliverableCode();
+//				if (Validator.isNotNull(applicantIdNo)) {
+//					registration = RegistrationLocalServiceUtil.getByApplicantIdNo(applicantIdNo);
+//					
+//				}
+//				if (Validator.isNotNull(deliverableCode)) {
+//					dossierFile = DossierFileLocalServiceUtil.getByDeliverableCode(deliverableCode);
+//				}
+//
+////				_log.info("registration: "+registration);
+////				_log.info("dossierFile: "+dossierFile);
+//				formData = deliverable.getFormData();
+//				modifiedDate = deliverable.getModifiedDate();
+//				if (Validator.isNotNull(formData)) {
+//					LinkedHashMap<String, String> mapValues = ConvertJONObjectUtils.getKeyValuesMap(formData);
+//					if (mapValues != null) {
+//						outputDBAction(mapValues, modifiedDate, registration, dossierFile);
+//					}
+//				}
+//			}
 		}
 
 		return true;

@@ -1133,6 +1133,22 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 		return new ArrayList<VRVehicleTypeCertificate>();
 		
 	}
+
+	@Override
+	public VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date modifiedDate, Registration registration,
+			DossierFile dossierFile) throws PortalException, SystemException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public VRVehicleTypeCertificate updateTT302011BGTVTTDTKXMCD_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date modifiedDate, Registration registration,
+			DossierFile dossierFile) throws PortalException, SystemException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

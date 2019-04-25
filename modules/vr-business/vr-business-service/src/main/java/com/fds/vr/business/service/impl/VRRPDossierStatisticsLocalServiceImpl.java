@@ -65,17 +65,15 @@ public class VRRPDossierStatisticsLocalServiceImpl
 		return new ArrayList<VRRPDossierStatistics>();
 		
 	}
-	
-	public List<VRRPDossierStatistics> findByDossierId(long dossierid) throws PortalException, SystemException {
+
+	public List<VRRPDossierStatistics> findByDossierId(long dossierid) {
 		try {
 			return vrrpDossierStatisticsPersistence.findByDossierId(dossierid);
 		} catch (Exception e) {
-			_log.error(e);
+			return null;
 		}
-		return new ArrayList<VRRPDossierStatistics>();
-		
 	}
-	
+
 	public List<VRRPDossierStatistics> findByDossierNo(String DossierNo) throws PortalException, SystemException {
 		try {
 			return vrrpDossierStatisticsPersistence.findByDossierNo(DossierNo);

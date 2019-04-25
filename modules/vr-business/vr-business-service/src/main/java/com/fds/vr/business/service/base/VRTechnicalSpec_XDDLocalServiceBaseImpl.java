@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.fds.vr.business.model.VRTechnicalSpec_XDD;
 import com.fds.vr.business.service.VRTechnicalSpec_XDDLocalService;
-import com.fds.vr.business.service.persistence.DeliverableFinder;
-import com.fds.vr.business.service.persistence.DeliverablePersistence;
 import com.fds.vr.business.service.persistence.DossierFilePersistence;
 import com.fds.vr.business.service.persistence.DossierPersistence;
 import com.fds.vr.business.service.persistence.ILCertificateFinder;
@@ -417,62 +415,6 @@ public abstract class VRTechnicalSpec_XDDLocalServiceBaseImpl
 	public VRTechnicalSpec_XDD updateVRTechnicalSpec_XDD(
 		VRTechnicalSpec_XDD vrTechnicalSpec_XDD) {
 		return vrTechnicalSpec_XDDPersistence.update(vrTechnicalSpec_XDD);
-	}
-
-	/**
-	 * Returns the deliverable local service.
-	 *
-	 * @return the deliverable local service
-	 */
-	public com.fds.vr.business.service.DeliverableLocalService getDeliverableLocalService() {
-		return deliverableLocalService;
-	}
-
-	/**
-	 * Sets the deliverable local service.
-	 *
-	 * @param deliverableLocalService the deliverable local service
-	 */
-	public void setDeliverableLocalService(
-		com.fds.vr.business.service.DeliverableLocalService deliverableLocalService) {
-		this.deliverableLocalService = deliverableLocalService;
-	}
-
-	/**
-	 * Returns the deliverable persistence.
-	 *
-	 * @return the deliverable persistence
-	 */
-	public DeliverablePersistence getDeliverablePersistence() {
-		return deliverablePersistence;
-	}
-
-	/**
-	 * Sets the deliverable persistence.
-	 *
-	 * @param deliverablePersistence the deliverable persistence
-	 */
-	public void setDeliverablePersistence(
-		DeliverablePersistence deliverablePersistence) {
-		this.deliverablePersistence = deliverablePersistence;
-	}
-
-	/**
-	 * Returns the deliverable finder.
-	 *
-	 * @return the deliverable finder
-	 */
-	public DeliverableFinder getDeliverableFinder() {
-		return deliverableFinder;
-	}
-
-	/**
-	 * Sets the deliverable finder.
-	 *
-	 * @param deliverableFinder the deliverable finder
-	 */
-	public void setDeliverableFinder(DeliverableFinder deliverableFinder) {
-		this.deliverableFinder = deliverableFinder;
 	}
 
 	/**
@@ -3881,12 +3823,6 @@ public abstract class VRTechnicalSpec_XDDLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.fds.vr.business.service.DeliverableLocalService.class)
-	protected com.fds.vr.business.service.DeliverableLocalService deliverableLocalService;
-	@BeanReference(type = DeliverablePersistence.class)
-	protected DeliverablePersistence deliverablePersistence;
-	@BeanReference(type = DeliverableFinder.class)
-	protected DeliverableFinder deliverableFinder;
 	@BeanReference(type = com.fds.vr.business.service.DossierLocalService.class)
 	protected com.fds.vr.business.service.DossierLocalService dossierLocalService;
 	@BeanReference(type = DossierPersistence.class)
