@@ -106,8 +106,8 @@ public class VRInspectionStandardLocalServiceWrapper
 	public com.fds.vr.business.model.VRInspectionStandard updateInspectionStandard(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		long vrVehicleCertificateId, java.util.Date modifiedDate,
-		com.fds.vr.business.model.Registration registration,
-		com.fds.vr.business.model.DossierFile dossierFile) {
+		com.fds.vr.business.model.VRRegistration registration,
+		com.fds.vr.business.model.VRDossierFile dossierFile) {
 		return _vrInspectionStandardLocalService.updateInspectionStandard(mapValues,
 			vrVehicleCertificateId, modifiedDate, registration, dossierFile);
 	}

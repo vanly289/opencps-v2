@@ -32,8 +32,6 @@ import com.fds.vr.business.service.base.VRRPDossierStatisticsLocalServiceBaseImp
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import com.fds.vr.business.model.Dossier;
-
 /**
  * The implementation of the vrrp dossier statistics local service.
  *
@@ -65,17 +63,15 @@ public class VRRPDossierStatisticsLocalServiceImpl
 		return new ArrayList<VRRPDossierStatistics>();
 		
 	}
-	
-	public List<VRRPDossierStatistics> findByDossierId(long dossierid) throws PortalException, SystemException {
+
+	public List<VRRPDossierStatistics> findByDossierId(long dossierid) {
 		try {
 			return vrrpDossierStatisticsPersistence.findByDossierId(dossierid);
 		} catch (Exception e) {
-			_log.error(e);
+			return null;
 		}
-		return new ArrayList<VRRPDossierStatistics>();
-		
 	}
-	
+
 	public List<VRRPDossierStatistics> findByDossierNo(String DossierNo) throws PortalException, SystemException {
 		try {
 			return vrrpDossierStatisticsPersistence.findByDossierNo(DossierNo);

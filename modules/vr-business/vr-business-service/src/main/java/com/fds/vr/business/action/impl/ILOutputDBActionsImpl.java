@@ -15,13 +15,6 @@ import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 */
 import com.fds.vr.business.action.ILOutputDBActions;
-import com.fds.vr.business.model.ILCertificate;
-import com.fds.vr.business.model.ILVehicle;
-import com.fds.vr.business.model.ILVehicleCustomsBorderGuard;
-import com.fds.vr.business.service.ILCertificateLocalServiceUtil;
-import com.fds.vr.business.service.ILSyncDateLocalServiceUtil;
-import com.fds.vr.business.service.ILVehicleCustomsBorderGuardLocalServiceUtil;
-import com.fds.vr.business.service.ILVehicleLocalServiceUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;

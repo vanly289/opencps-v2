@@ -204,8 +204,7 @@ public interface VRRPDossierStatisticsLocalService extends BaseLocalService,
 	public List<VRRPDossierStatistics> findByCorporationId(
 		java.lang.String corporationId) throws PortalException, SystemException;
 
-	public List<VRRPDossierStatistics> findByDossierId(long dossierid)
-		throws PortalException, SystemException;
+	public List<VRRPDossierStatistics> findByDossierId(long dossierid);
 
 	public List<VRRPDossierStatistics> findByDossierIdCTN(long dossierid,
 		java.lang.String dossierIdCTN) throws PortalException, SystemException;

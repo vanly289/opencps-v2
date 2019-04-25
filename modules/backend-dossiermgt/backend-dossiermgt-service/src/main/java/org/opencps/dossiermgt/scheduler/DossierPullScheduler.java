@@ -116,6 +116,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			List<Dossier> dossierList = DossierLocalServiceUtil.getBySubmitting(true);
 
 			if (dossierList != null && dossierList.size() > 0) {
+				_log.info("dossierList : " + dossierList.size());
 				for (Dossier dossier : dossierList) {
 					pullDossier(company, dossier, systemUser);
 				}
@@ -133,6 +134,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 		} catch (Exception e) {
 		}
 		isRunningPull = false;
+		_log.info("OpenCPS PULL DOSSIERS IS DONE : " + APIDateTimeUtils.convertDateToString(new Date()));
 	}
 
 	private void pullDossier(Company company, Dossier dossier, User systemUser) throws PortalException {

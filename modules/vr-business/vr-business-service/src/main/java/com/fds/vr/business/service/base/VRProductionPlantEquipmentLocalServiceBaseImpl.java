@@ -18,16 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.service.VRProductionPlantEquipmentLocalService;
-import com.fds.vr.business.service.persistence.DeliverableFinder;
-import com.fds.vr.business.service.persistence.DeliverablePersistence;
-import com.fds.vr.business.service.persistence.DossierFilePersistence;
-import com.fds.vr.business.service.persistence.DossierPersistence;
-import com.fds.vr.business.service.persistence.ILCertificateFinder;
-import com.fds.vr.business.service.persistence.ILCertificatePersistence;
-import com.fds.vr.business.service.persistence.ILSyncDatePersistence;
-import com.fds.vr.business.service.persistence.ILVehicleCustomsBorderGuardPersistence;
-import com.fds.vr.business.service.persistence.ILVehiclePersistence;
-import com.fds.vr.business.service.persistence.RegistrationPersistence;
 import com.fds.vr.business.service.persistence.VRApplicantProfileFinder;
 import com.fds.vr.business.service.persistence.VRApplicantProfileHistoryFinder;
 import com.fds.vr.business.service.persistence.VRApplicantProfileHistoryPersistence;
@@ -58,6 +48,8 @@ import com.fds.vr.business.service.persistence.VRCorporationInspectorFinder;
 import com.fds.vr.business.service.persistence.VRCorporationInspectorPersistence;
 import com.fds.vr.business.service.persistence.VRCorporationViewFinder;
 import com.fds.vr.business.service.persistence.VRCorporationViewPersistence;
+import com.fds.vr.business.service.persistence.VRDossierFilePersistence;
+import com.fds.vr.business.service.persistence.VRDossierPersistence;
 import com.fds.vr.business.service.persistence.VRInputSheetFinder;
 import com.fds.vr.business.service.persistence.VRInputSheetPersistence;
 import com.fds.vr.business.service.persistence.VRInputStampbookDetailsFinder;
@@ -93,6 +85,7 @@ import com.fds.vr.business.service.persistence.VRProductionPlantProdEquipmentFin
 import com.fds.vr.business.service.persistence.VRProductionPlantProdEquipmentPersistence;
 import com.fds.vr.business.service.persistence.VRRPDossierStatisticsFinder;
 import com.fds.vr.business.service.persistence.VRRPDossierStatisticsPersistence;
+import com.fds.vr.business.service.persistence.VRRegistrationPersistence;
 import com.fds.vr.business.service.persistence.VRReportPersistence;
 import com.fds.vr.business.service.persistence.VRSyncDatePersistence;
 import com.fds.vr.business.service.persistence.VRTechnicalSpec_LKXCGPersistence;
@@ -418,345 +411,6 @@ public abstract class VRProductionPlantEquipmentLocalServiceBaseImpl
 	public VRProductionPlantEquipment updateVRProductionPlantEquipment(
 		VRProductionPlantEquipment vrProductionPlantEquipment) {
 		return vrProductionPlantEquipmentPersistence.update(vrProductionPlantEquipment);
-	}
-
-	/**
-	 * Returns the deliverable local service.
-	 *
-	 * @return the deliverable local service
-	 */
-	public com.fds.vr.business.service.DeliverableLocalService getDeliverableLocalService() {
-		return deliverableLocalService;
-	}
-
-	/**
-	 * Sets the deliverable local service.
-	 *
-	 * @param deliverableLocalService the deliverable local service
-	 */
-	public void setDeliverableLocalService(
-		com.fds.vr.business.service.DeliverableLocalService deliverableLocalService) {
-		this.deliverableLocalService = deliverableLocalService;
-	}
-
-	/**
-	 * Returns the deliverable persistence.
-	 *
-	 * @return the deliverable persistence
-	 */
-	public DeliverablePersistence getDeliverablePersistence() {
-		return deliverablePersistence;
-	}
-
-	/**
-	 * Sets the deliverable persistence.
-	 *
-	 * @param deliverablePersistence the deliverable persistence
-	 */
-	public void setDeliverablePersistence(
-		DeliverablePersistence deliverablePersistence) {
-		this.deliverablePersistence = deliverablePersistence;
-	}
-
-	/**
-	 * Returns the deliverable finder.
-	 *
-	 * @return the deliverable finder
-	 */
-	public DeliverableFinder getDeliverableFinder() {
-		return deliverableFinder;
-	}
-
-	/**
-	 * Sets the deliverable finder.
-	 *
-	 * @param deliverableFinder the deliverable finder
-	 */
-	public void setDeliverableFinder(DeliverableFinder deliverableFinder) {
-		this.deliverableFinder = deliverableFinder;
-	}
-
-	/**
-	 * Returns the dossier local service.
-	 *
-	 * @return the dossier local service
-	 */
-	public com.fds.vr.business.service.DossierLocalService getDossierLocalService() {
-		return dossierLocalService;
-	}
-
-	/**
-	 * Sets the dossier local service.
-	 *
-	 * @param dossierLocalService the dossier local service
-	 */
-	public void setDossierLocalService(
-		com.fds.vr.business.service.DossierLocalService dossierLocalService) {
-		this.dossierLocalService = dossierLocalService;
-	}
-
-	/**
-	 * Returns the dossier persistence.
-	 *
-	 * @return the dossier persistence
-	 */
-	public DossierPersistence getDossierPersistence() {
-		return dossierPersistence;
-	}
-
-	/**
-	 * Sets the dossier persistence.
-	 *
-	 * @param dossierPersistence the dossier persistence
-	 */
-	public void setDossierPersistence(DossierPersistence dossierPersistence) {
-		this.dossierPersistence = dossierPersistence;
-	}
-
-	/**
-	 * Returns the dossier file local service.
-	 *
-	 * @return the dossier file local service
-	 */
-	public com.fds.vr.business.service.DossierFileLocalService getDossierFileLocalService() {
-		return dossierFileLocalService;
-	}
-
-	/**
-	 * Sets the dossier file local service.
-	 *
-	 * @param dossierFileLocalService the dossier file local service
-	 */
-	public void setDossierFileLocalService(
-		com.fds.vr.business.service.DossierFileLocalService dossierFileLocalService) {
-		this.dossierFileLocalService = dossierFileLocalService;
-	}
-
-	/**
-	 * Returns the dossier file persistence.
-	 *
-	 * @return the dossier file persistence
-	 */
-	public DossierFilePersistence getDossierFilePersistence() {
-		return dossierFilePersistence;
-	}
-
-	/**
-	 * Sets the dossier file persistence.
-	 *
-	 * @param dossierFilePersistence the dossier file persistence
-	 */
-	public void setDossierFilePersistence(
-		DossierFilePersistence dossierFilePersistence) {
-		this.dossierFilePersistence = dossierFilePersistence;
-	}
-
-	/**
-	 * Returns the il certificate local service.
-	 *
-	 * @return the il certificate local service
-	 */
-	public com.fds.vr.business.service.ILCertificateLocalService getILCertificateLocalService() {
-		return ilCertificateLocalService;
-	}
-
-	/**
-	 * Sets the il certificate local service.
-	 *
-	 * @param ilCertificateLocalService the il certificate local service
-	 */
-	public void setILCertificateLocalService(
-		com.fds.vr.business.service.ILCertificateLocalService ilCertificateLocalService) {
-		this.ilCertificateLocalService = ilCertificateLocalService;
-	}
-
-	/**
-	 * Returns the il certificate persistence.
-	 *
-	 * @return the il certificate persistence
-	 */
-	public ILCertificatePersistence getILCertificatePersistence() {
-		return ilCertificatePersistence;
-	}
-
-	/**
-	 * Sets the il certificate persistence.
-	 *
-	 * @param ilCertificatePersistence the il certificate persistence
-	 */
-	public void setILCertificatePersistence(
-		ILCertificatePersistence ilCertificatePersistence) {
-		this.ilCertificatePersistence = ilCertificatePersistence;
-	}
-
-	/**
-	 * Returns the il certificate finder.
-	 *
-	 * @return the il certificate finder
-	 */
-	public ILCertificateFinder getILCertificateFinder() {
-		return ilCertificateFinder;
-	}
-
-	/**
-	 * Sets the il certificate finder.
-	 *
-	 * @param ilCertificateFinder the il certificate finder
-	 */
-	public void setILCertificateFinder(ILCertificateFinder ilCertificateFinder) {
-		this.ilCertificateFinder = ilCertificateFinder;
-	}
-
-	/**
-	 * Returns the il sync date local service.
-	 *
-	 * @return the il sync date local service
-	 */
-	public com.fds.vr.business.service.ILSyncDateLocalService getILSyncDateLocalService() {
-		return ilSyncDateLocalService;
-	}
-
-	/**
-	 * Sets the il sync date local service.
-	 *
-	 * @param ilSyncDateLocalService the il sync date local service
-	 */
-	public void setILSyncDateLocalService(
-		com.fds.vr.business.service.ILSyncDateLocalService ilSyncDateLocalService) {
-		this.ilSyncDateLocalService = ilSyncDateLocalService;
-	}
-
-	/**
-	 * Returns the il sync date persistence.
-	 *
-	 * @return the il sync date persistence
-	 */
-	public ILSyncDatePersistence getILSyncDatePersistence() {
-		return ilSyncDatePersistence;
-	}
-
-	/**
-	 * Sets the il sync date persistence.
-	 *
-	 * @param ilSyncDatePersistence the il sync date persistence
-	 */
-	public void setILSyncDatePersistence(
-		ILSyncDatePersistence ilSyncDatePersistence) {
-		this.ilSyncDatePersistence = ilSyncDatePersistence;
-	}
-
-	/**
-	 * Returns the il vehicle local service.
-	 *
-	 * @return the il vehicle local service
-	 */
-	public com.fds.vr.business.service.ILVehicleLocalService getILVehicleLocalService() {
-		return ilVehicleLocalService;
-	}
-
-	/**
-	 * Sets the il vehicle local service.
-	 *
-	 * @param ilVehicleLocalService the il vehicle local service
-	 */
-	public void setILVehicleLocalService(
-		com.fds.vr.business.service.ILVehicleLocalService ilVehicleLocalService) {
-		this.ilVehicleLocalService = ilVehicleLocalService;
-	}
-
-	/**
-	 * Returns the il vehicle persistence.
-	 *
-	 * @return the il vehicle persistence
-	 */
-	public ILVehiclePersistence getILVehiclePersistence() {
-		return ilVehiclePersistence;
-	}
-
-	/**
-	 * Sets the il vehicle persistence.
-	 *
-	 * @param ilVehiclePersistence the il vehicle persistence
-	 */
-	public void setILVehiclePersistence(
-		ILVehiclePersistence ilVehiclePersistence) {
-		this.ilVehiclePersistence = ilVehiclePersistence;
-	}
-
-	/**
-	 * Returns the il vehicle customs border guard local service.
-	 *
-	 * @return the il vehicle customs border guard local service
-	 */
-	public com.fds.vr.business.service.ILVehicleCustomsBorderGuardLocalService getILVehicleCustomsBorderGuardLocalService() {
-		return ilVehicleCustomsBorderGuardLocalService;
-	}
-
-	/**
-	 * Sets the il vehicle customs border guard local service.
-	 *
-	 * @param ilVehicleCustomsBorderGuardLocalService the il vehicle customs border guard local service
-	 */
-	public void setILVehicleCustomsBorderGuardLocalService(
-		com.fds.vr.business.service.ILVehicleCustomsBorderGuardLocalService ilVehicleCustomsBorderGuardLocalService) {
-		this.ilVehicleCustomsBorderGuardLocalService = ilVehicleCustomsBorderGuardLocalService;
-	}
-
-	/**
-	 * Returns the il vehicle customs border guard persistence.
-	 *
-	 * @return the il vehicle customs border guard persistence
-	 */
-	public ILVehicleCustomsBorderGuardPersistence getILVehicleCustomsBorderGuardPersistence() {
-		return ilVehicleCustomsBorderGuardPersistence;
-	}
-
-	/**
-	 * Sets the il vehicle customs border guard persistence.
-	 *
-	 * @param ilVehicleCustomsBorderGuardPersistence the il vehicle customs border guard persistence
-	 */
-	public void setILVehicleCustomsBorderGuardPersistence(
-		ILVehicleCustomsBorderGuardPersistence ilVehicleCustomsBorderGuardPersistence) {
-		this.ilVehicleCustomsBorderGuardPersistence = ilVehicleCustomsBorderGuardPersistence;
-	}
-
-	/**
-	 * Returns the registration local service.
-	 *
-	 * @return the registration local service
-	 */
-	public com.fds.vr.business.service.RegistrationLocalService getRegistrationLocalService() {
-		return registrationLocalService;
-	}
-
-	/**
-	 * Sets the registration local service.
-	 *
-	 * @param registrationLocalService the registration local service
-	 */
-	public void setRegistrationLocalService(
-		com.fds.vr.business.service.RegistrationLocalService registrationLocalService) {
-		this.registrationLocalService = registrationLocalService;
-	}
-
-	/**
-	 * Returns the registration persistence.
-	 *
-	 * @return the registration persistence
-	 */
-	public RegistrationPersistence getRegistrationPersistence() {
-		return registrationPersistence;
-	}
-
-	/**
-	 * Sets the registration persistence.
-	 *
-	 * @param registrationPersistence the registration persistence
-	 */
-	public void setRegistrationPersistence(
-		RegistrationPersistence registrationPersistence) {
-		this.registrationPersistence = registrationPersistence;
 	}
 
 	/**
@@ -1650,6 +1304,82 @@ public abstract class VRProductionPlantEquipmentLocalServiceBaseImpl
 	public void setVRCorporationViewFinder(
 		VRCorporationViewFinder vrCorporationViewFinder) {
 		this.vrCorporationViewFinder = vrCorporationViewFinder;
+	}
+
+	/**
+	 * Returns the vr dossier local service.
+	 *
+	 * @return the vr dossier local service
+	 */
+	public com.fds.vr.business.service.VRDossierLocalService getVRDossierLocalService() {
+		return vrDossierLocalService;
+	}
+
+	/**
+	 * Sets the vr dossier local service.
+	 *
+	 * @param vrDossierLocalService the vr dossier local service
+	 */
+	public void setVRDossierLocalService(
+		com.fds.vr.business.service.VRDossierLocalService vrDossierLocalService) {
+		this.vrDossierLocalService = vrDossierLocalService;
+	}
+
+	/**
+	 * Returns the vr dossier persistence.
+	 *
+	 * @return the vr dossier persistence
+	 */
+	public VRDossierPersistence getVRDossierPersistence() {
+		return vrDossierPersistence;
+	}
+
+	/**
+	 * Sets the vr dossier persistence.
+	 *
+	 * @param vrDossierPersistence the vr dossier persistence
+	 */
+	public void setVRDossierPersistence(
+		VRDossierPersistence vrDossierPersistence) {
+		this.vrDossierPersistence = vrDossierPersistence;
+	}
+
+	/**
+	 * Returns the vr dossier file local service.
+	 *
+	 * @return the vr dossier file local service
+	 */
+	public com.fds.vr.business.service.VRDossierFileLocalService getVRDossierFileLocalService() {
+		return vrDossierFileLocalService;
+	}
+
+	/**
+	 * Sets the vr dossier file local service.
+	 *
+	 * @param vrDossierFileLocalService the vr dossier file local service
+	 */
+	public void setVRDossierFileLocalService(
+		com.fds.vr.business.service.VRDossierFileLocalService vrDossierFileLocalService) {
+		this.vrDossierFileLocalService = vrDossierFileLocalService;
+	}
+
+	/**
+	 * Returns the vr dossier file persistence.
+	 *
+	 * @return the vr dossier file persistence
+	 */
+	public VRDossierFilePersistence getVRDossierFilePersistence() {
+		return vrDossierFilePersistence;
+	}
+
+	/**
+	 * Sets the vr dossier file persistence.
+	 *
+	 * @param vrDossierFilePersistence the vr dossier file persistence
+	 */
+	public void setVRDossierFilePersistence(
+		VRDossierFilePersistence vrDossierFilePersistence) {
+		this.vrDossierFilePersistence = vrDossierFilePersistence;
 	}
 
 	/**
@@ -2614,6 +2344,44 @@ public abstract class VRProductionPlantEquipmentLocalServiceBaseImpl
 	public void setVRProductTypePersistence(
 		VRProductTypePersistence vrProductTypePersistence) {
 		this.vrProductTypePersistence = vrProductTypePersistence;
+	}
+
+	/**
+	 * Returns the vr registration local service.
+	 *
+	 * @return the vr registration local service
+	 */
+	public com.fds.vr.business.service.VRRegistrationLocalService getVRRegistrationLocalService() {
+		return vrRegistrationLocalService;
+	}
+
+	/**
+	 * Sets the vr registration local service.
+	 *
+	 * @param vrRegistrationLocalService the vr registration local service
+	 */
+	public void setVRRegistrationLocalService(
+		com.fds.vr.business.service.VRRegistrationLocalService vrRegistrationLocalService) {
+		this.vrRegistrationLocalService = vrRegistrationLocalService;
+	}
+
+	/**
+	 * Returns the vr registration persistence.
+	 *
+	 * @return the vr registration persistence
+	 */
+	public VRRegistrationPersistence getVRRegistrationPersistence() {
+		return vrRegistrationPersistence;
+	}
+
+	/**
+	 * Sets the vr registration persistence.
+	 *
+	 * @param vrRegistrationPersistence the vr registration persistence
+	 */
+	public void setVRRegistrationPersistence(
+		VRRegistrationPersistence vrRegistrationPersistence) {
+		this.vrRegistrationPersistence = vrRegistrationPersistence;
 	}
 
 	/**
@@ -3882,42 +3650,6 @@ public abstract class VRProductionPlantEquipmentLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.fds.vr.business.service.DeliverableLocalService.class)
-	protected com.fds.vr.business.service.DeliverableLocalService deliverableLocalService;
-	@BeanReference(type = DeliverablePersistence.class)
-	protected DeliverablePersistence deliverablePersistence;
-	@BeanReference(type = DeliverableFinder.class)
-	protected DeliverableFinder deliverableFinder;
-	@BeanReference(type = com.fds.vr.business.service.DossierLocalService.class)
-	protected com.fds.vr.business.service.DossierLocalService dossierLocalService;
-	@BeanReference(type = DossierPersistence.class)
-	protected DossierPersistence dossierPersistence;
-	@BeanReference(type = com.fds.vr.business.service.DossierFileLocalService.class)
-	protected com.fds.vr.business.service.DossierFileLocalService dossierFileLocalService;
-	@BeanReference(type = DossierFilePersistence.class)
-	protected DossierFilePersistence dossierFilePersistence;
-	@BeanReference(type = com.fds.vr.business.service.ILCertificateLocalService.class)
-	protected com.fds.vr.business.service.ILCertificateLocalService ilCertificateLocalService;
-	@BeanReference(type = ILCertificatePersistence.class)
-	protected ILCertificatePersistence ilCertificatePersistence;
-	@BeanReference(type = ILCertificateFinder.class)
-	protected ILCertificateFinder ilCertificateFinder;
-	@BeanReference(type = com.fds.vr.business.service.ILSyncDateLocalService.class)
-	protected com.fds.vr.business.service.ILSyncDateLocalService ilSyncDateLocalService;
-	@BeanReference(type = ILSyncDatePersistence.class)
-	protected ILSyncDatePersistence ilSyncDatePersistence;
-	@BeanReference(type = com.fds.vr.business.service.ILVehicleLocalService.class)
-	protected com.fds.vr.business.service.ILVehicleLocalService ilVehicleLocalService;
-	@BeanReference(type = ILVehiclePersistence.class)
-	protected ILVehiclePersistence ilVehiclePersistence;
-	@BeanReference(type = com.fds.vr.business.service.ILVehicleCustomsBorderGuardLocalService.class)
-	protected com.fds.vr.business.service.ILVehicleCustomsBorderGuardLocalService ilVehicleCustomsBorderGuardLocalService;
-	@BeanReference(type = ILVehicleCustomsBorderGuardPersistence.class)
-	protected ILVehicleCustomsBorderGuardPersistence ilVehicleCustomsBorderGuardPersistence;
-	@BeanReference(type = com.fds.vr.business.service.RegistrationLocalService.class)
-	protected com.fds.vr.business.service.RegistrationLocalService registrationLocalService;
-	@BeanReference(type = RegistrationPersistence.class)
-	protected RegistrationPersistence registrationPersistence;
 	@BeanReference(type = com.fds.vr.business.service.VRApplicantProfileLocalService.class)
 	protected com.fds.vr.business.service.VRApplicantProfileLocalService vrApplicantProfileLocalService;
 	@BeanReference(type = VRApplicantProfilePersistence.class)
@@ -4012,6 +3744,14 @@ public abstract class VRProductionPlantEquipmentLocalServiceBaseImpl
 	protected VRCorporationViewPersistence vrCorporationViewPersistence;
 	@BeanReference(type = VRCorporationViewFinder.class)
 	protected VRCorporationViewFinder vrCorporationViewFinder;
+	@BeanReference(type = com.fds.vr.business.service.VRDossierLocalService.class)
+	protected com.fds.vr.business.service.VRDossierLocalService vrDossierLocalService;
+	@BeanReference(type = VRDossierPersistence.class)
+	protected VRDossierPersistence vrDossierPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRDossierFileLocalService.class)
+	protected com.fds.vr.business.service.VRDossierFileLocalService vrDossierFileLocalService;
+	@BeanReference(type = VRDossierFilePersistence.class)
+	protected VRDossierFilePersistence vrDossierFilePersistence;
 	@BeanReference(type = com.fds.vr.business.service.VRInputSheetLocalService.class)
 	protected com.fds.vr.business.service.VRInputSheetLocalService vrInputSheetLocalService;
 	@BeanReference(type = VRInputSheetPersistence.class)
@@ -4114,6 +3854,10 @@ public abstract class VRProductionPlantEquipmentLocalServiceBaseImpl
 	protected com.fds.vr.business.service.VRProductTypeLocalService vrProductTypeLocalService;
 	@BeanReference(type = VRProductTypePersistence.class)
 	protected VRProductTypePersistence vrProductTypePersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRRegistrationLocalService.class)
+	protected com.fds.vr.business.service.VRRegistrationLocalService vrRegistrationLocalService;
+	@BeanReference(type = VRRegistrationPersistence.class)
+	protected VRRegistrationPersistence vrRegistrationPersistence;
 	@BeanReference(type = com.fds.vr.business.service.VRReportLocalService.class)
 	protected com.fds.vr.business.service.VRReportLocalService vrReportLocalService;
 	@BeanReference(type = VRReportPersistence.class)
