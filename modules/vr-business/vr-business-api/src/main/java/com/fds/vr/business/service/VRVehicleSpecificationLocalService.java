@@ -16,7 +16,7 @@ package com.fds.vr.business.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.fds.vr.business.model.DossierFile;
+import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.model.VRVehicleSpecification;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -133,7 +133,7 @@ public interface VRVehicleSpecificationLocalService extends BaseLocalService,
 	public VRVehicleSpecification updateVehicleSpecification(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		long vrVehicleTypeCertificateId, Date modifiedDate,
-		DossierFile dossierFile);
+		VRDossierFile dossierFile);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

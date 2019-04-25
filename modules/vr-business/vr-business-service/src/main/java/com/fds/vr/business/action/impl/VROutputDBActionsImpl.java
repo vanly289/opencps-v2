@@ -1,15 +1,19 @@
 package com.fds.vr.business.action.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+
 import com.fds.vr.business.action.VROutputDBActions;
-import com.fds.vr.business.action.util.ConvertJONObjectUtils;
 import com.fds.vr.business.model.VRConfigTechSpec;
+import com.fds.vr.business.model.VRDossierFile;
+import com.fds.vr.business.model.VRRegistration;
 import com.fds.vr.business.model.VRVehicleSpecification;
-import com.fds.vr.business.model.VRVehicleTypeCertificate;
 import com.fds.vr.business.model.impl.VRVehicleSpecificationImpl;
 import com.fds.vr.business.service.VRConfigTechSpecLocalServiceUtil;
 import com.fds.vr.business.service.VRSyncDateLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleSpecificationLocalServiceUtil;
-import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -21,14 +25,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import com.fds.vr.business.model.DossierFile;
-import com.fds.vr.business.model.Registration;
 
 public class VROutputDBActionsImpl implements VROutputDBActions{
 
@@ -53,8 +49,8 @@ public class VROutputDBActionsImpl implements VROutputDBActions{
 //			List<Date> modifiedDateList = new ArrayList<Date>();
 			String formData = StringPool.BLANK;
 			Date modifiedDate = null;
-			DossierFile dossierFile = null;
-			Registration registration = null;
+			VRDossierFile dossierFile = null;
+			VRRegistration registration = null;
 //			for (Deliverable deliverable : deliverableList) {
 //				String applicantIdNo = deliverable.getApplicantIdNo();
 //				String deliverableCode = deliverable.getDeliverableCode();
@@ -83,18 +79,18 @@ public class VROutputDBActionsImpl implements VROutputDBActions{
 	}
 
 	private void outputDBAction(LinkedHashMap<String, String> mapValues, Date modifiedDate,
-			Registration registration, DossierFile dossierFile) {
+			VRRegistration registration, VRDossierFile dossierFile) {
 		// update table VRVehicleTypeCertificate
-		VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
-				.updateVehicleTypeCertificate(mapValues, modifiedDate, registration, dossierFile);
+//		VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+//				.updateVehicleTypeCertificate(mapValues, modifiedDate, registration, dossierFile);
 
-		long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+//		long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
 		
-		updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate);
+//		updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate);
 
 		// update table VR_VEHICLESPECIFICATION
-		VRVehicleSpecificationLocalServiceUtil.updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId,
-				modifiedDate, dossierFile);
+//		VRVehicleSpecificationLocalServiceUtil.updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId,
+//				modifiedDate, dossierFile);
 		// update VR_INSPECTIONSTANDARD
 		//VRInspectionStandardLocalServiceUtil.updateInspectionStandard(mapValues, vrVehicleTypeCertificateId,
 				//modifiedDate, registration, dossierFile);

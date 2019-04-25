@@ -32,8 +32,6 @@ import com.fds.vr.business.service.base.VRRPDossierStatisticsLocalServiceBaseImp
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import com.fds.vr.business.model.Dossier;
-
 /**
  * The implementation of the vrrp dossier statistics local service.
  *

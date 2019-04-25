@@ -125,7 +125,7 @@ public class VRVehicleSpecificationLocalServiceWrapper
 	public com.fds.vr.business.model.VRVehicleSpecification updateVehicleSpecification(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		long vrVehicleTypeCertificateId, java.util.Date modifiedDate,
-		com.fds.vr.business.model.DossierFile dossierFile) {
+		com.fds.vr.business.model.VRDossierFile dossierFile) {
 		return _vrVehicleSpecificationLocalService.updateVehicleSpecification(mapValues,
 			vrVehicleTypeCertificateId, modifiedDate, dossierFile);
 	}

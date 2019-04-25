@@ -1,11 +1,5 @@
 package org.opencps.dossiermgt.listenner;
 
-import org.opencps.dossiermgt.model.Dossier;
-import org.opencps.dossiermgt.model.DossierAction;
-import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
-import org.opencps.usermgt.model.Applicant;
-import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -13,26 +7,26 @@ import java.util.List;
 
 import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
-
+import org.opencps.usermgt.model.Applicant;
+import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 import com.fds.vr.business.action.util.ConvertJONObjectUtils;
-import com.fds.vr.business.model.DossierFile;
-import com.fds.vr.business.model.Registration;
 import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.VRApplicantProfileHistory;
 import com.fds.vr.business.model.VRConfigTechSpec;
+import com.fds.vr.business.model.VRDossierFile;
+import com.fds.vr.business.model.VRRegistration;
 import com.fds.vr.business.model.VRVehicleSpecification;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
 import com.fds.vr.business.model.impl.VRApplicantProfileHistoryImpl;
 import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
 import com.fds.vr.business.model.impl.VRVehicleSpecificationImpl;
-import com.fds.vr.business.service.DossierFileLocalServiceUtil;
-import com.fds.vr.business.service.RegistrationLocalServiceUtil;
 import com.fds.vr.business.service.VRApplicantProfileHistoryLocalServiceUtil;
 import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
 import com.fds.vr.business.service.VRConfigTechSpecLocalServiceUtil;
-import com.fds.vr.business.service.VRSyncDateLocalServiceUtil;
+import com.fds.vr.business.service.VRDossierFileLocalServiceUtil;
+import com.fds.vr.business.service.VRRegistrationLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleSpecificationLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
@@ -116,8 +110,8 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 			
 			String formData = dossierDeliverableModel.getFormData();
 			Date modifiedDate = dossierDeliverableModel.getModifiedDate();			
-			DossierFile dossierFile = null;
-			Registration registration = null;
+			VRDossierFile dossierFile = null;
+			VRRegistration registration = null;
 			VRApplicantProfile appProfile = null;
 			Applicant applicant = null;
 			
@@ -129,11 +123,11 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				if (lstVRApplicantProfile != null && lstVRApplicantProfile.size() > 0 ) {
 					appProfile = lstVRApplicantProfile.get(0);
 				}
-				registration = RegistrationLocalServiceUtil.getByApplicantIdNo(applicantIdNo);				
+				registration = VRRegistrationLocalServiceUtil.getByApplicantIdNo(applicantIdNo);				
 				applicant = ApplicantLocalServiceUtil.fetchByAppId(applicantIdNo);
 			}
 			if (Validator.isNotNull(deliverableCode)) {
-				dossierFile = DossierFileLocalServiceUtil.getByDeliverableCode(deliverableCode);
+				dossierFile = VRDossierFileLocalServiceUtil.getByDeliverableCode(deliverableCode);
 			}			
 			if (Validator.isNull(dossierFile)) {
 				return "";

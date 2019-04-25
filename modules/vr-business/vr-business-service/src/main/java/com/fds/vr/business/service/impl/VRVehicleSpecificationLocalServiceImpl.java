@@ -14,26 +14,22 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.model.VRDossierFile;
+import com.fds.vr.business.model.VRVehicleSpecification;
+import com.fds.vr.business.service.base.VRVehicleSpecificationLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-
-import com.fds.vr.business.model.DossierFile;
-
-import com.fds.vr.business.model.VRVehicleSpecification;
-import com.fds.vr.business.service.base.VRVehicleSpecificationLocalServiceBaseImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr vehicle specification local service.
@@ -83,7 +79,7 @@ public class VRVehicleSpecificationLocalServiceImpl
 	}
 
 	public VRVehicleSpecification updateVehicleSpecification(LinkedHashMap<String, String> mapValues,
-			long vrVehicleTypeCertificateId, Date modifiedDate, DossierFile dossierFile) {
+			long vrVehicleTypeCertificateId, Date modifiedDate, VRDossierFile dossierFile) {
 		
 		Date now = new Date();
 

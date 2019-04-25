@@ -16,9 +16,9 @@ package com.fds.vr.business.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.fds.vr.business.model.DossierFile;
-import com.fds.vr.business.model.Registration;
+import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.model.VRInspectionStandard;
+import com.fds.vr.business.model.VRRegistration;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -121,7 +121,7 @@ public interface VRInspectionStandardLocalService extends BaseLocalService,
 	public VRInspectionStandard updateInspectionStandard(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		long vrVehicleCertificateId, Date modifiedDate,
-		Registration registration, DossierFile dossierFile);
+		VRRegistration registration, VRDossierFile dossierFile);
 
 	/**
 	* Updates the vr inspection standard in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
