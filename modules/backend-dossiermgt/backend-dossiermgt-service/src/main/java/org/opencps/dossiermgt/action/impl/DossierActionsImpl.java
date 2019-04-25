@@ -1384,6 +1384,7 @@ public class DossierActionsImpl implements DossierActions {
 
 			JSONObject jsonDataStatusText = getStatusText(groupId, DOSSIER_SATUS_DC_CODE, curStep.getDossierStatus(),
 					curStep.getDossierSubStatus());
+			_log.info("jsonDataStatusText: "+JSONFactoryUtil.looseSerialize(jsonDataStatusText));
 
 			// update reference dossier
 			DossierAction prvAction = DossierActionLocalServiceUtil.getByNextActionId(dossierId, 0l);
@@ -1427,7 +1428,7 @@ public class DossierActionsImpl implements DossierActions {
 			DossierMgtUtils.updateStatus(dossier, curStep.getDossierStatus(),
 					jsonDataStatusText.getString(curStep.getDossierStatus()), curStep.getDossierSubStatus(),
 					jsonDataStatusText.getString(curStep.getDossierSubStatus()), curStep.getLockState(), context);
-
+			//.info("status: "+dossier.getDossierStatus());
 			//_log.info(jsStatus.toJSONString());
 			//_log.info(jsSubStatus.toJSONString());
 			//_log.info("dossier_" + dossier.getDossierStatus());
@@ -1780,6 +1781,7 @@ public class DossierActionsImpl implements DossierActions {
 			dossier.setBriefNote(dossierBriefNote);
 		//Reindex dossier
 		DossierLocalServiceUtil.updateDossier(dossier);
+		//_log.info("dossier: "+dossier);
 
 		// do plugin auto
 

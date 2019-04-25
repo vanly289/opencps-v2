@@ -13,14 +13,14 @@ import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
 import org.opencps.datamgt.service.DictGroupLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemGroupLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
-import com.fds.vr.business.model.DossierFile;
-import com.fds.vr.business.service.DossierFileLocalServiceUtil;
 
 import com.fds.vr.business.action.VRActions;
 import com.fds.vr.business.constant.VRKeys;
 import com.fds.vr.business.model.VRConfigTechSpec;
+import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.model.VRLimitConfigTechSpec;
 import com.fds.vr.business.service.VRConfigTechSpecLocalServiceUtil;
+import com.fds.vr.business.service.VRDossierFileLocalServiceUtil;
 import com.fds.vr.business.service.VRLimitConfigTechSpecLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -201,13 +201,13 @@ public class VRActionsImpl implements VRActions {
 					String result = StringPool.BLANK;
 					String resultTD = StringPool.BLANK;
 
-					DossierFile dossierFile = null;
+					VRDossierFile dossierFile = null;
 
 					String formData = StringPool.BLANK;
 
 					if (dossierFileId > 0) {
 
-						dossierFile = DossierFileLocalServiceUtil.fetchDossierFile(dossierFileId);
+						dossierFile = VRDossierFileLocalServiceUtil.fetchVRDossierFile(dossierFileId);
 
 					}
 					
@@ -222,7 +222,7 @@ public class VRActionsImpl implements VRActions {
 						//_log.info("==========================2");
 						if (Validator.isNotNull(fileTemplateNo)) {
 							try {
-								dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
+								dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 										fileTemplateNo, false, OrderByComparatorFactoryUtil
 												.create("opencps_dossierFile", "createDate", false));
 
@@ -411,11 +411,11 @@ public class VRActionsImpl implements VRActions {
 						String result = StringPool.BLANK;
 						String resultTD = StringPool.BLANK;
 	
-						DossierFile dossierFile = null;
+						VRDossierFile dossierFile = null;
 						String formData = StringPool.BLANK;
 
 						if (dossierFileId > 0) {
-							dossierFile = DossierFileLocalServiceUtil.fetchDossierFile(dossierFileId);
+							dossierFile = VRDossierFileLocalServiceUtil.fetchVRDossierFile(dossierFileId);
 						}
 						
 						_log.info("========================== dossierFileId = " + dossierFileId+ " |fileTemplateNo: "+fileTemplateNo);
@@ -426,7 +426,7 @@ public class VRActionsImpl implements VRActions {
 							if (Validator.isNull(formData)) {
 								if (Validator.isNotNull(fileTemplateNo)) {
 									try {
-										dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
+										dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 												fileTemplateNo, false, OrderByComparatorFactoryUtil
 														.create("opencps_dossierFile", "createDate", false));
 		
@@ -445,7 +445,7 @@ public class VRActionsImpl implements VRActions {
 							//_log.info("==========================2");
 							if (Validator.isNotNull(fileTemplateNo)) {
 								try {
-									dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
+									dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 											fileTemplateNo, false, OrderByComparatorFactoryUtil
 													.create("opencps_dossierFile", "createDate", false));
 	
@@ -541,7 +541,7 @@ public class VRActionsImpl implements VRActions {
 
 		JSONArray output = JSONFactoryUtil.createJSONArray();
 
-		DossierFile dossierFile = getDossierFile(dossierFileId);
+		VRDossierFile dossierFile = getDossierFile(dossierFileId);
 
 		JSONObject formData = null;
 
@@ -607,13 +607,13 @@ public class VRActionsImpl implements VRActions {
 		return output;
 	}
 
-	private DossierFile getDossierFile(long dossierFileId) {
+	private VRDossierFile getDossierFile(long dossierFileId) {
 
-		DossierFile dossierFile = null;
+		VRDossierFile dossierFile = null;
 
 		if (dossierFileId != 0) {
 			try {
-				dossierFile = DossierFileLocalServiceUtil.getDossierFile(dossierFileId);
+				dossierFile = VRDossierFileLocalServiceUtil.getVRDossierFile(dossierFileId);
 			} catch (Exception e) {
 				_log.error(e);
 			}

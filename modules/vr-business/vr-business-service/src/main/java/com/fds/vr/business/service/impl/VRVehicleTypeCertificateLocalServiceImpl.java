@@ -16,92 +16,24 @@ package com.fds.vr.business.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-
-import com.fds.vr.business.model.Dossier;
-import com.fds.vr.business.model.DossierFile;
-import com.fds.vr.business.model.Registration;
 import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.VRCOPReportRepository;
+import com.fds.vr.business.model.VRDossier;
+import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.model.VRProductionPlant;
-import com.fds.vr.business.model.VRTechnicalSpec_LKXCG;
-import com.fds.vr.business.model.VRTechnicalSpec_LKXMY;
-import com.fds.vr.business.model.VRTechnicalSpec_LKXMYPart2;
-import com.fds.vr.business.model.VRTechnicalSpec_XCG;
-import com.fds.vr.business.model.VRTechnicalSpec_XCGPart1;
-import com.fds.vr.business.model.VRTechnicalSpec_XCGPart2;
-import com.fds.vr.business.model.VRTechnicalSpec_XCGPart3;
-import com.fds.vr.business.model.VRTechnicalSpec_XCGPart4;
-import com.fds.vr.business.model.VRTechnicalSpec_XCGPart5;
-import com.fds.vr.business.model.VRTechnicalSpec_XCGPart6;
-import com.fds.vr.business.model.VRTechnicalSpec_XCH;
-import com.fds.vr.business.model.VRTechnicalSpec_XCHPart2;
-import com.fds.vr.business.model.VRTechnicalSpec_XCN;
-import com.fds.vr.business.model.VRTechnicalSpec_XCNPart2;
-import com.fds.vr.business.model.VRTechnicalSpec_XCNPart3;
-import com.fds.vr.business.model.VRTechnicalSpec_XDD;
-import com.fds.vr.business.model.VRTechnicalSpec_XMY;
-import com.fds.vr.business.model.VRTechnicalSpec_XMYPart2;
-import com.fds.vr.business.model.VRTechnicalSpec_XMYPart3;
-import com.fds.vr.business.model.VRVehicleSpecification;
+import com.fds.vr.business.model.VRRegistration;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
-import com.fds.vr.business.model.impl.DossierImpl;
+import com.fds.vr.business.model.impl.VRDossierImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_LKXCGImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_LKXMYImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_LKXMYPart2Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart1Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart2Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart3Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart4Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart5Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart6Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCHImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCHPart2Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCNImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCNPart2Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCNPart3Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XDDImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XMYImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XMYPart2Impl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XMYPart3Impl;
 import com.fds.vr.business.model.impl.VRVehicleTypeCertificateImpl;
-import com.fds.vr.business.service.DossierLocalServiceUtil;
 import com.fds.vr.business.service.VRCOPReportRepositoryLocalServiceUtil;
+import com.fds.vr.business.service.VRDossierLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_LKXCGLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_LKXMYLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_LKXMYPart2LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCGLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCGPart1LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCGPart2LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCGPart3LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCGPart4LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCGPart5LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCGPart6LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCHLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCHPart2LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCNLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCNPart2LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCNPart3LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XDDLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XMYLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XMYPart2LocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XMYPart3LocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleSpecificationLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.fds.vr.business.service.base.VRVehicleTypeCertificateLocalServiceBaseImpl;
@@ -109,7 +41,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -144,7 +75,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	private final String PATTERN_DATE_3 = "dd/MM/yyyy";
 
 	public VRVehicleTypeCertificate updateVehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, Registration registration, DossierFile dossierFile) {
+			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile) {
 		
 		Date now = new Date();
 
@@ -297,7 +228,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTTTKXCG_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();	
 			boolean flagUpdate = true;
@@ -339,11 +270,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} else {
 				return object;
 			}
-			Dossier objDossier = new DossierImpl();
+			VRDossier objDossier = new VRDossierImpl();
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = DossierLocalServiceUtil.fetchDossier(dossierFile.getDossierId());
+				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@hinh_thuc_cap_giay"));
 			
@@ -546,7 +477,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTTDTKXMCD_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();
 	
@@ -562,7 +493,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();	
 			boolean flagUpdate = true;
@@ -604,11 +535,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} else {
 				return object;
 			}
-			Dossier objDossier = new DossierImpl();
+			VRDossier objDossier = new VRDossierImpl();
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = DossierLocalServiceUtil.fetchDossier(dossierFile.getDossierId());
+				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCG01019"));
 			
@@ -802,7 +733,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXBBCN_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();	
 			boolean flagUpdate = true;
@@ -844,11 +775,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} else {
 				return object;
 			}
-			Dossier objDossier = new DossierImpl();
+			VRDossier objDossier = new VRDossierImpl();
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = DossierLocalServiceUtil.fetchDossier(dossierFile.getDossierId());
+				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCN01019"));
 			
@@ -1042,7 +973,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTCOP_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, Registration registration, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();
 	
@@ -1058,7 +989,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTKTTBLANDAU_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, Registration registration, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();
 	
@@ -1074,7 +1005,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT192012TTBGTVTDGLD_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, Registration registration, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();
 	
@@ -1090,7 +1021,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate update432014TTLTBGTVTBCTTTNLNK_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, Registration registration, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();
 	
@@ -1106,7 +1037,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate update432014TTLTBGTVTBCTTTNLSXLR_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, Registration registration, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();
 	
@@ -1122,7 +1053,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLLKXCG_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();	
 			boolean flagUpdate = true;
@@ -1164,11 +1095,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} else {
 				return object;
 			}
-			Dossier objDossier = new DossierImpl();
+			VRDossier objDossier = new VRDossierImpl();
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = DossierLocalServiceUtil.fetchDossier(dossierFile.getDossierId());
+				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCG01019"));
 			
@@ -1449,7 +1380,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLLKXM_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();	
 			boolean flagUpdate = true;
@@ -1491,11 +1422,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} else {
 				return object;
 			}
-			Dossier objDossier = new DossierImpl();
+			VRDossier objDossier = new VRDossierImpl();
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = DossierLocalServiceUtil.fetchDossier(dossierFile.getDossierId());
+				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XMY01019"));
 			
@@ -1775,7 +1706,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXCG_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();	
 			boolean flagUpdate = true;
@@ -1817,11 +1748,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} else {
 				return object;
 			}
-			Dossier objDossier = new DossierImpl();
+			VRDossier objDossier = new VRDossierImpl();
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = DossierLocalServiceUtil.fetchDossier(dossierFile.getDossierId());
+				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCG01019"));
 			
@@ -2089,7 +2020,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXMTGM_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();	
 			boolean flagUpdate = true;
@@ -2131,11 +2062,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} else {
 				return object;
 			}
-			Dossier objDossier = new DossierImpl();
+			VRDossier objDossier = new VRDossierImpl();
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = DossierLocalServiceUtil.fetchDossier(dossierFile.getDossierId());
+				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XMY01019"));
 			
@@ -2404,7 +2335,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXDD_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();	
 			boolean flagUpdate = true;
@@ -2446,11 +2377,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} else {
 				return object;
 			}
-			Dossier objDossier = new DossierImpl();
+			VRDossier objDossier = new VRDossierImpl();
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = DossierLocalServiceUtil.fetchDossier(dossierFile.getDossierId());
+				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XDD01019"));
 			
@@ -2719,7 +2650,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXBBCN_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();	
 			boolean flagUpdate = true;
@@ -2761,11 +2692,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} else {
 				return object;
 			}
-			Dossier objDossier = new DossierImpl();
+			VRDossier objDossier = new VRDossierImpl();
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = DossierLocalServiceUtil.fetchDossier(dossierFile.getDossierId());
+				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCN01019"));
 			
@@ -3034,7 +2965,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	}
 	
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXBBCH_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, DossierFile dossierFile)  throws PortalException, SystemException {
+			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
 		try {
 			Date now = new Date();	
 			boolean flagUpdate = true;
@@ -3076,11 +3007,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} else {
 				return object;
 			}
-			Dossier objDossier = new DossierImpl();
+			VRDossier objDossier = new VRDossierImpl();
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = DossierLocalServiceUtil.fetchDossier(dossierFile.getDossierId());
+				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCH01019"));
 			
@@ -3625,6 +3556,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 		return new ArrayList<VRVehicleTypeCertificate>();
 		
 	}
+
 	public boolean updateVRTechnicalSpec_ALL(LinkedHashMap<String, String> mapValues, long vrVehicleTypeCertificateId, long dossierId, String dossierIdCTN, String dossierNo, Date modifyDate, String VehicleClass, String deliverableCode) {
 		try {
 			String strChungChi = mapValues.get("bien_ban");

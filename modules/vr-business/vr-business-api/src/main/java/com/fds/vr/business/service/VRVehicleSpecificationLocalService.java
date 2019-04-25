@@ -16,7 +16,7 @@ package com.fds.vr.business.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.fds.vr.business.model.DossierFile;
+import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.model.VRVehicleSpecification;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -133,7 +133,7 @@ public interface VRVehicleSpecificationLocalService extends BaseLocalService,
 	public VRVehicleSpecification updateVehicleSpecification(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		long vrVehicleTypeCertificateId, Date modifiedDate,
-		DossierFile dossierFile);
+		VRDossierFile dossierFile);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -248,4 +248,39 @@ public interface VRVehicleSpecificationLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateVRTechnicalSpec_LKXCG(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_LKXMY(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_XCG(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_XCH(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_XCN(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_XDD(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_XMY(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
 }

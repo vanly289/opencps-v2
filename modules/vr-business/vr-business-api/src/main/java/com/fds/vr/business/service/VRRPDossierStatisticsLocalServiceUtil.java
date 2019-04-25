@@ -225,9 +225,7 @@ public class VRRPDossierStatisticsLocalServiceUtil {
 	}
 
 	public static java.util.List<com.fds.vr.business.model.VRRPDossierStatistics> findByDossierId(
-		long dossierid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long dossierid) {
 		return getService().findByDossierId(dossierid);
 	}
 

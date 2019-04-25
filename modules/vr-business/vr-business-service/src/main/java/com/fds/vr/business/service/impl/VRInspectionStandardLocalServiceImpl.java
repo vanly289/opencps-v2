@@ -14,22 +14,19 @@
 
 package com.fds.vr.business.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.model.VRDossierFile;
+import com.fds.vr.business.model.VRInspectionStandard;
+import com.fds.vr.business.model.VRRegistration;
+import com.fds.vr.business.service.base.VRInspectionStandardLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-
-import com.fds.vr.business.model.DossierFile;
-import com.fds.vr.business.model.Registration;
-import com.fds.vr.business.model.VRInspectionStandard;
-import com.fds.vr.business.service.base.VRInspectionStandardLocalServiceBaseImpl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -57,7 +54,7 @@ public class VRInspectionStandardLocalServiceImpl
 	 */
 
 	public VRInspectionStandard updateInspectionStandard(LinkedHashMap<String, String> mapValues,
-			long vrVehicleCertificateId, Date modifiedDate, Registration registration, DossierFile dossierFile) {
+			long vrVehicleCertificateId, Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile) {
 		
 		Date now = new Date();
 

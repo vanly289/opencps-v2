@@ -2008,170 +2008,7 @@
 		</finder>
 	</entity>
 
-	<!-- DUONGBO -->
-		<entity name="ILCertificate" local-service="true" table="il_certificate"
-		remote-service="false">
-		<!-- PK fields -->
-		<column name="id" type="long" primary="true" db-name="certificateId"/>
-		
- 		<!-- Audit fields -->
-		<column name="dossierId" type="long" db-name="dossierId"/>
-		<column name="dossierFileId" type="long" db-name="dossierFileId"/>
-		<column name="dossierTemplateNo" type="String" db-name="dossierTemplateNo"/>
-		<column name="dossierPartNo" type="String" db-name="dossierPartNo"/>
-		<column name="fileTemplateNo" type="String" db-name="fileTemplateNo"/>
-		<column name="referenceUid" type="String" db-name="referenceUid"/>
-		<column name="serviceCode" type="String" db-name="serviceCode"/>
-		<column name="validFrom" type="Date" db-name="validFrom"/>
-		<column name="validUntil" type="Date" db-name="validUntil"/>
-		<column name="transportOperation" type="String" db-name="transportOperation"/>
-		<column name="applicantName" type="String" db-name="applicantName"/>
-		<column name="applicantIdNo" type="String" db-name="applicantIdNo"/>
-		<column name="applicantAddress" type="String" db-name="applicantAddress"/>
-		<column name="applicantTel" type="String" db-name="applicantTel"/>
-		<column name="applicantFax" type="String" db-name="applicantFax"/>
-		<column name="applicantEmail" type="String" db-name="applicantEmail"/>
-		<column name="applicantWebsite" type="String" db-name="applicantWebsite"/>
-		<column name="signName" type="String" db-name="signName"/>
-		<column name="signTitle" type="String" db-name="signTitle"/>
-		<column name="signPlace" type="String" db-name="signPlace"/>
-		<column name="signDate" type="Date" db-name="signDate"/>
-		<column name="licenceNo" type="String" db-name="licenceNo"/>
-		<column name="licenceName" type="String" db-name="licenceName"/>
-		<column name="govAgencyCode" type="String" db-name="govAgencyCode"/>
-		<column name="govAgencyName" type="String" db-name="govAgencyName"/>
-		<column name="registrationNumber" type="String" db-name="registrationNumber"/>
-		<column name="manufacturedYear" type="String" db-name="manufacturedYear"/>
-		<column name="technicalData" type="String" db-name="technicalData"/>
-		<column name="trademarkCode" type="String" db-name="trademarkCode"/>
-		<column name="trademarkName" type="String" db-name="trademarkName"/>
-		<column name="model" type="String" db-name="model"/>
-		<column name="vehicleType" type="String" db-name="vehicleType"/>
-		<column name="vehicleColor" type="String" db-name="vehicleColor"/>
-		<column name="engineNumber" type="String" db-name="engineNumber"/>
-		<column name="chassisNumber" type="String" db-name="chassisNumber"/>
-		<column name="expiredDate" type="Date" db-name="expiredDate"/>
-		<column name="borderGate" type="String" db-name="borderGate"/>
-		<column name="travelingArea" type="String" db-name="travelingArea"/>
-		<column name="destination" type="String" db-name="destination"/>
-		<column name="extendedUntil" type="Date" db-name="extendedUntil"/>
-		<column name="noticesOfExtension" type="String" db-name="noticesOfExtension"/>
-		<column name="purposeOfTheTrip" type="String" db-name="purposeOfTheTrip"/>
-		<column name="issuingDispatchNo" type="String" db-name="issuingDispatchNo"/>
-		<column name="officialDispatchNo" type="String" db-name="officialDispatchNo"/>
-		<column name="officialDispatchDate" type="Date" db-name="officialDispatchDate"/>
-		<column name="departureFrom" type="String" db-name="departureFrom"/>
-		<column name="departureTo" type="String" db-name="departureTo"/>
-		<column name="fromParkingLot" type="String" db-name="fromParkingLot"/>
-		<column name="fromProvinceCode" type="String" db-name="fromProvinceCode"/>
-		<column name="fromProvinceName" type="String" db-name="fromProvinceName"/>
-		<column name="toParkingLot" type="String" db-name="toParkingLot"/>
-		<column name="toProvinceCode" type="String" db-name="toProvinceCode"/>
-		<column name="toProvinceName" type="String" db-name="toProvinceName"/>
-		<column name="distance" type="String" db-name="distance"/>
-		<column name="routeDescription" type="String" db-name="routeDescription"/>
-		<column name="expImpGateCode" type="String" db-name="expImpGateCode"/>
-		<column name="expImpGate" type="String" db-name="expImpGate"/>
-		<column name="itemNo" type="String" db-name="itemNo"/>
-		<column name="circularNo" type="String" db-name="circularNo"/>
-		<column name="circularDate" type="Date" db-name="circularDate"/>
-		<column name="numberOfVehicle" type="String" db-name="numberOfVehicle"/>
-		<column name="toVNAuthority" type="String" db-name="toVNAuthority"/>
-		<column name="toLAOAuthority" type="String" db-name="toLAOAuthority"/>
-		<column name="atParkingLot" type="String" db-name="atParkingLot"/>
-		<column name="atProvinceName" type="String" db-name="atProvinceName"/>
-		<column name="numberOfLot" type="long" db-name="numberOfLot"/>
-		<column name="applicantContactName" type="String" db-name="applicantContactName"/>
-		<column name="passenger" type="String" db-name="passenger"/>
-		<column name="capacity" type="String" db-name="capacity"/>
-		<column name="purpose" type="String" db-name="purpose"/>
-		<column name="routes" type="String" db-name="routes"/>
-		<column name="goodsType" type="String" db-name="goodsType"/>
-		<column name="stops" type="String" db-name="stops"/>
-		<column name="licenceType" type="String" db-name="licenceType"/>
-<!-- 		<column name="modifyDate" type="Date" db-name="modifyDate"/> -->
-		<column name="syncDate" type="Date" db-name="syncDate"/>
 
-		<order by = "asc">
-			<order-column name="validFrom" />
-		</order>
-		<finder return-type="ILCertificate" name="F_DFILE_ID">
-			<finder-column name="dossierFileId" />
-		</finder>
-		<finder return-type="Collection" name="F_APP_REG">
-			<finder-column name="serviceCode" />
-			<finder-column name="applicantIdNo" />
-			<finder-column name="registrationNumber" />
-		</finder>
-	</entity>
-
-	<entity name="ILVehicleCustomsBorderGuard" local-service="true" table="il_vehicle_customsborderguard"
-		remote-service="false">
-		<!-- PK fields -->
-		<column name="id" type="long" primary="true" db-name="vehicleCustomsBorderGuardId"/>
-
-		<!-- Audit fields -->
-		<column name="registrationNumber" type="String" db-name="registrationNumber"/>
-		<column name="expImpGateType" type="String" db-name="expImpGateType"/>
-		<column name="expImpGate" type="String" db-name="expImpGate"/>
-		<column name="driverName" type="String" db-name="driverName"/>
-		<column name="driverLicenceNo" type="String" db-name="driverLicenceNo"/>
-		<column name="registrationDate" type="Date" db-name="registrationDate"/>
-		<column name="customsDepartureDate" type="Date" db-name="customsDepartureDate"/>
-		<column name="customsArrivalDate" type="Date" db-name="customsArrivalDate"/>
-		<column name="borderGuardsDepartureDate" type="Date" db-name="borderGuardsDepartureDate"/>
-		<column name="borderGuardsArrivalDate" type="Date" db-name="borderGuardsArrivalDate"/>
-<!-- 		<column name="modifyDate" type="Date" db-name="modifyDate"/> -->
-		<column name="syncDate" type="Date" db-name="syncDate"/>
-
-		<order by = "desc">
-			<order-column name="syncDate"></order-column>
-		</order>
-		
-		<finder return-type="Collection" name="F_REG_NUMBER">
-			<finder-column name="registrationNumber" />
-		</finder>
-	</entity>
-
-	<entity name="ILVehicle" local-service="true" table="il_vehicle"
-		remote-service="false">
-		<!-- PK fields -->
-		<column name="id" type="long" primary="true" db-name="vehicleId"/>
-
-		<!-- Audit fields -->
-		<column name="issuingDispatchNo" type="String" db-name="issuingDispatchNo"/>
-		<column name="sequenceNo" type="int" db-name="sequenceNo"/>
-		<column name="registrationNumber" type="String" db-name="registrationNumber"/>
-		<column name="registrationDriver" type="String" db-name="registrationDriver"/>
-		<column name="vehicleModelCode" type="String" db-name="vehicleModelCode"/>
-		<column name="vehicleModelName" type="String" db-name="vehicleModelName"/>
-		<column name="capacity" type="String" db-name="capacity"/>
-		<column name="manufacturedYear" type="String" db-name="manufacturedYear"/>
-		<column name="vehicleExpImpGateCode" type="String" db-name="vehicleExpImpGateCode"/>
-		<column name="vehicleExpImpGate" type="String" db-name="vehicleExpImpGate"/>
-		<column name="operationType" type="String" db-name="operationType"/>
-		<column name="passengerOrCargo" type="String" db-name="passengerOrCargo"/>
-		<column name="lienVanNo" type="String" db-name="lienVanNo"/>
-<!-- 		<column name="modifyDate" type="Date" db-name="modifyDate"/> -->
-		<column name="syncDate" type="Date" db-name="syncDate"/>
-
-		<finder return-type="Collection" name="F_ISSU_NO">
-			<finder-column name="issuingDispatchNo" />
-		</finder>
-	</entity>
-
-	<entity name="ILSyncDate" local-service="true" table="il_syncdate"
-		remote-service="false">
-		<!-- PK fields -->
-		<column name="id" type="long" primary="true" db-name="id"/>
-		
-		<!-- Audit fields -->
-		<column name="tableName" type="String" db-name="tableName"/>
-		<column name="syncDate" type="Date" db-name="syncDate"/>
-	</entity>
-	
-	<!-- new table -->
-	
 	<entity name="VRRPDossierStatistics" local-service="true" table="vr_rp_dossierstatistics"
 		remote-service="false">	
 		<!-- PK fields -->
@@ -2340,59 +2177,59 @@
 		</finder>
 	</entity>
 	
-	<entity local-service="true" name="Deliverable" remote-service="false"
-		table="opencps_deliverable" uuid="true">
+<!-- 	<entity local-service="true" name="Deliverable" remote-service="false" -->
+<!-- 		table="opencps_deliverable" uuid="true"> -->
 
-		<column name="deliverableId" type="long" primary="true" />
+<!-- 		<column name="deliverableId" type="long" primary="true" /> -->
 
-		<!-- Audit fields -->
-		<column name="companyId" type="long" />
-		<column name="groupId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
+ 		<!-- Audit fields -->
+<!-- 		<column name="companyId" type="long" /> -->
+<!-- 		<column name="groupId" type="long" /> -->
+<!-- 		<column name="userId" type="long" /> -->
+<!-- 		<column name="userName" type="String" /> -->
+<!-- 		<column name="createDate" type="Date" /> -->
+<!-- 		<column name="modifiedDate" type="Date" /> -->
 
-		<column name="deliverableCode" type="String" />
-		<column name="deliverableName" type="String" />
-		<column name="deliverableType" type="String" />
-		<column name="govAgencyCode" type="String" />
-		<column name="govAgencyName" type="String" />
-		<column name="applicantIdNo" type="String" />
-		<column name="applicantName" type="String" />
-		<column name="subject" type="String" />
-		<column name="formData" type="String" />
-		<column name="formScript" type="String" />
-		<column name="formReport" type="String" />
-		<column name="expireDate" type="Date" />
-		<column name="issueDate" type="Date" />
-		<column name="revalidate" type="Date" />
-		<column name="deliverableState" type="String" />
+<!-- 		<column name="deliverableCode" type="String" /> -->
+<!-- 		<column name="deliverableName" type="String" /> -->
+<!-- 		<column name="deliverableType" type="String" /> -->
+<!-- 		<column name="govAgencyCode" type="String" /> -->
+<!-- 		<column name="govAgencyName" type="String" /> -->
+<!-- 		<column name="applicantIdNo" type="String" /> -->
+<!-- 		<column name="applicantName" type="String" /> -->
+<!-- 		<column name="subject" type="String" /> -->
+<!-- 		<column name="formData" type="String" /> -->
+<!-- 		<column name="formScript" type="String" /> -->
+<!-- 		<column name="formReport" type="String" /> -->
+<!-- 		<column name="expireDate" type="Date" /> -->
+<!-- 		<column name="issueDate" type="Date" /> -->
+<!-- 		<column name="revalidate" type="Date" /> -->
+<!-- 		<column name="deliverableState" type="String" /> -->
 
-		<finder return-type="Deliverable" name="DID">
-			<finder-column name="deliverableId" />
-		</finder>
-		<finder return-type="Deliverable" name="G_DID">
-			<finder-column name="groupId" />
-			<finder-column name="deliverableId" />
-		</finder>
-		<finder return-type="Collection" name="G_ID">
-			<finder-column name="deliverableState" />
-			<finder-column name="govAgencyCode" />
-			<finder-column name="deliverableType" />
-			<finder-column name="applicantIdNo" />
-		</finder>
+<!-- 		<finder return-type="Deliverable" name="DID"> -->
+<!-- 			<finder-column name="deliverableId" /> -->
+<!-- 		</finder> -->
+<!-- 		<finder return-type="Deliverable" name="G_DID"> -->
+<!-- 			<finder-column name="groupId" /> -->
+<!-- 			<finder-column name="deliverableId" /> -->
+<!-- 		</finder> -->
+<!-- 		<finder return-type="Collection" name="G_ID"> -->
+<!-- 			<finder-column name="deliverableState" /> -->
+<!-- 			<finder-column name="govAgencyCode" /> -->
+<!-- 			<finder-column name="deliverableType" /> -->
+<!-- 			<finder-column name="applicantIdNo" /> -->
+<!-- 		</finder> -->
 		
-		<finder return-type="Deliverable" name="FB_DCODE">
-			<finder-column name="deliverableCode"/>
-		</finder>
+<!-- 		<finder return-type="Deliverable" name="FB_DCODE"> -->
+<!-- 			<finder-column name="deliverableCode"/> -->
+<!-- 		</finder> -->
 
-		<finder return-type="Deliverable" name="FB_DCODE_STATE">
-			<finder-column name="deliverableCode"/>
-			<finder-column name="deliverableState"/>
-		</finder>
+<!-- 		<finder return-type="Deliverable" name="FB_DCODE_STATE"> -->
+<!-- 			<finder-column name="deliverableCode"/> -->
+<!-- 			<finder-column name="deliverableState"/> -->
+<!-- 		</finder> -->
 
-	</entity>
+<!-- 	</entity> -->
 
 	<entity name="VRTechnicalSpec_LKXCG" local-service="true" table="vr_technicalspec_lkxcg"
 		remote-service="false">
@@ -7206,7 +7043,7 @@
 	
 	
 	
-	<entity name="Dossier" table="opencps_dossier" local-service="true"
+	<entity name="VRDossier" table="opencps_dossier" local-service="true"
 		remote-service="false" uuid="true">
 
 		<!-- PK fields -->
@@ -7325,7 +7162,7 @@
 
 	</entity>
 	
-	<entity name="DossierFile" table="opencps_dossierfile"
+	<entity name="VRDossierFile" table="opencps_dossierfile"
 		local-service="true" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
@@ -7453,7 +7290,7 @@
        	
 	</entity>
 
-	<entity local-service="true" name="Registration" remote-service="false"
+	<entity local-service="true" name="VRRegistration" remote-service="false"
 		table="opencps_registration" uuid="true">
 
 		<column name="registrationId" type="long" primary="true" />

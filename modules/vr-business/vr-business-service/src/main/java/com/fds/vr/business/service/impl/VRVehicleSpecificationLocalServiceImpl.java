@@ -14,26 +14,12 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-
-import com.fds.vr.business.model.DossierFile;
+import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.model.VRTechnicalSpec_LKXCG;
 import com.fds.vr.business.model.VRTechnicalSpec_LKXMY;
 import com.fds.vr.business.model.VRTechnicalSpec_LKXMYPart2;
@@ -93,9 +79,19 @@ import com.fds.vr.business.service.VRTechnicalSpec_XMYLocalServiceUtil;
 import com.fds.vr.business.service.VRTechnicalSpec_XMYPart2LocalServiceUtil;
 import com.fds.vr.business.service.VRTechnicalSpec_XMYPart3LocalServiceUtil;
 import com.fds.vr.business.service.base.VRVehicleSpecificationLocalServiceBaseImpl;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr vehicle specification local service.
@@ -145,7 +141,7 @@ public class VRVehicleSpecificationLocalServiceImpl
 	}
 
 	public VRVehicleSpecification updateVehicleSpecification(LinkedHashMap<String, String> mapValues,
-			long vrVehicleTypeCertificateId, Date modifiedDate, DossierFile dossierFile) {
+			long vrVehicleTypeCertificateId, Date modifiedDate, VRDossierFile dossierFile) {
 		
 		Date now = new Date();
 

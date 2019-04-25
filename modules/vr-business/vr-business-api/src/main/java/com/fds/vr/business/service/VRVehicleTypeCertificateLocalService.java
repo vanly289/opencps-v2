@@ -16,9 +16,9 @@ package com.fds.vr.business.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.fds.vr.business.model.DossierFile;
-import com.fds.vr.business.model.Registration;
 import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRDossierFile;
+import com.fds.vr.business.model.VRRegistration;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -65,6 +65,12 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link VRVehicleTypeCertificateLocalServiceUtil} to access the vr vehicle type certificate local service. Add custom service methods to {@link com.fds.vr.business.service.impl.VRVehicleTypeCertificateLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public boolean updateVRTechnicalSpec_ALL(
+		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String VehicleClass,
+		java.lang.String deliverableCode);
 
 	/**
 	* Adds the vr vehicle type certificate to the database. Also notifies the appropriate model listeners.
@@ -121,83 +127,83 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 
 	public VRVehicleTypeCertificate update432014TTLTBGTVTBCTTTNLNK_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		Date modifiedDate, Registration registration, DossierFile dossierFile)
-		throws PortalException, SystemException;
+		Date modifiedDate, VRRegistration registration,
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate update432014TTLTBGTVTBCTTTNLSXLR_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		Date modifiedDate, Registration registration, DossierFile dossierFile)
-		throws PortalException, SystemException;
+		Date modifiedDate, VRRegistration registration,
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT192012TTBGTVTDGLD_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		Date modifiedDate, Registration registration, DossierFile dossierFile)
-		throws PortalException, SystemException;
+		Date modifiedDate, VRRegistration registration,
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLLKXCG_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLLKXM_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXBBCH_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXBBCN_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXCG_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXDD_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXMTGM_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTCOP_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		Date modifiedDate, Registration registration, DossierFile dossierFile)
-		throws PortalException, SystemException;
+		Date modifiedDate, VRRegistration registration,
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXBBCN_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTKTTBLANDAU_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		Date modifiedDate, Registration registration, DossierFile dossierFile)
-		throws PortalException, SystemException;
+		Date modifiedDate, VRRegistration registration,
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTTDTKXMCD_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	public VRVehicleTypeCertificate updateTT302011BGTVTTTKXCG_VehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
 		Date applicantIdDate, VRApplicantProfile appProfile,
-		DossierFile dossierFile) throws PortalException, SystemException;
+		VRDossierFile dossierFile) throws PortalException, SystemException;
 
 	/**
 	* Updates the vr vehicle type certificate in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -211,7 +217,8 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 
 	public VRVehicleTypeCertificate updateVehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		Date modifiedDate, Registration registration, DossierFile dossierFile);
+		Date modifiedDate, VRRegistration registration,
+		VRDossierFile dossierFile);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
