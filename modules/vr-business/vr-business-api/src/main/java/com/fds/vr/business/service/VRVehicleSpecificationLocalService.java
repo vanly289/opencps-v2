@@ -248,4 +248,39 @@ public interface VRVehicleSpecificationLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateVRTechnicalSpec_LKXCG(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_LKXMY(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_XCG(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_XCH(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_XCN(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_XDD(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
+
+	public void updateVRTechnicalSpec_XMY(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		Date modifyDate, java.lang.String deliverableCode);
 }
