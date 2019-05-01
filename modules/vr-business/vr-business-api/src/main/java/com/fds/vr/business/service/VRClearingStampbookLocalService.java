@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -113,6 +114,17 @@ public interface VRClearingStampbookLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRClearingStampbook getVRClearingStampbook(long id)
 		throws PortalException;
+
+	public VRClearingStampbook updateClearingStambook(long id, long mtCore,
+		long debitNoteId, long inputSheetId, long outputSheetId, long bookId,
+		long certificateId, java.lang.String certificateNumber,
+		Date certificateDate, java.lang.String vehicleClass,
+		java.lang.String stampType, java.lang.String stampShortNo,
+		java.lang.String serialStartNo, java.lang.String serialEndNo,
+		long subTotalInDocument, long subTotalQuantities, long vehiclePrice,
+		long unitPrice, long totalAmount, long totalInUse, long totalNotUsed,
+		long totalLost, long totalCancelled, long totalReturned,
+		java.lang.String remark) throws PortalException, SystemException;
 
 	/**
 	* Updates the vr clearing stampbook in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

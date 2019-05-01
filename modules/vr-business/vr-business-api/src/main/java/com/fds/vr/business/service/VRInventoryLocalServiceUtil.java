@@ -104,6 +104,23 @@ public class VRInventoryLocalServiceUtil {
 		return getService().getVRInventory(id);
 	}
 
+	public static com.fds.vr.business.model.VRInventory updateInventory(
+		long id, long mtCore, long yearofPeriod,
+		java.lang.String previousPeriod, java.lang.String previousPeriodCode,
+		long bookId, java.lang.String vehicleClass, java.lang.String stampType,
+		java.lang.String stampShortNo, java.lang.String serialStartNo,
+		java.lang.String serialEndNo, long totalQuantities, long totalInUse,
+		long totalNotUsed, java.lang.String remark,
+		java.lang.String corporationId, long checkType, long checkStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateInventory(id, mtCore, yearofPeriod, previousPeriod,
+			previousPeriodCode, bookId, vehicleClass, stampType, stampShortNo,
+			serialStartNo, serialEndNo, totalQuantities, totalInUse,
+			totalNotUsed, remark, corporationId, checkType, checkStatus);
+	}
+
 	/**
 	* Updates the vr inventory in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

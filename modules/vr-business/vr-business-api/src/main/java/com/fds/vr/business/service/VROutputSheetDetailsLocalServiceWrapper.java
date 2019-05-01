@@ -102,6 +102,28 @@ public class VROutputSheetDetailsLocalServiceWrapper
 		return _vrOutputSheetDetailsLocalService.getVROutputSheetDetails(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VROutputSheetDetails updateOutputSheetDetails(
+		long id, long mtCore, long inputSheetId, long outputSheetId,
+		long bookId, long issueVehicleCertificateId, long certificateId,
+		java.lang.String certificateNumber, java.util.Date certificateDate,
+		java.lang.String vehicleClass, java.lang.String stampType,
+		java.lang.String stampShortNo, java.lang.String serialStartNo,
+		java.lang.String serialEndNo, long subTotalInDocument,
+		long subTotalQuantities, long unitPrice, long totalAmount,
+		long totalInUse, long totalNotUsed, long totalLost,
+		long totalCancelled, long totalReturned, java.lang.String remark)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.updateOutputSheetDetails(id,
+			mtCore, inputSheetId, outputSheetId, bookId,
+			issueVehicleCertificateId, certificateId, certificateNumber,
+			certificateDate, vehicleClass, stampType, stampShortNo,
+			serialStartNo, serialEndNo, subTotalInDocument, subTotalQuantities,
+			unitPrice, totalAmount, totalInUse, totalNotUsed, totalLost,
+			totalCancelled, totalReturned, remark);
+	}
+
 	/**
 	* Updates the vr output sheet details in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

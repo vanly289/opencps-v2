@@ -100,6 +100,31 @@ public class VROutputSheetLocalServiceWrapper
 		return _vrOutputSheetLocalService.getVROutputSheet(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VROutputSheet updateOutputSheet(long id,
+		long mtCore, java.lang.String outputSheetNo,
+		java.util.Date outputSheetDate, java.lang.String originalDocumentNo,
+		java.lang.String supplierCorporationId, long outputSheetType,
+		java.lang.String maker, java.lang.String checker,
+		java.lang.String approver, java.lang.String receiverName,
+		java.lang.String receiverPlace, java.lang.String receiverRequest,
+		java.lang.String inventoryName, java.lang.String inventoryPlace,
+		java.util.Date inventoryDate, long dossierId, long issueId,
+		java.lang.String purchaserId, java.lang.String purchaserCorporationId,
+		java.lang.String bookIDList, long isApproval, long totalQuantities,
+		long totalAmount, java.lang.String amountInWords,
+		java.lang.String remark)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetLocalService.updateOutputSheet(id, mtCore,
+			outputSheetNo, outputSheetDate, originalDocumentNo,
+			supplierCorporationId, outputSheetType, maker, checker, approver,
+			receiverName, receiverPlace, receiverRequest, inventoryName,
+			inventoryPlace, inventoryDate, dossierId, issueId, purchaserId,
+			purchaserCorporationId, bookIDList, isApproval, totalQuantities,
+			totalAmount, amountInWords, remark);
+	}
+
 	/**
 	* Updates the vr output sheet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

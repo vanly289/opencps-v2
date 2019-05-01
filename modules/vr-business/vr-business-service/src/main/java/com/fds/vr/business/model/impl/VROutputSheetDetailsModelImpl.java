@@ -72,7 +72,7 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 			{ "certificateId", Types.BIGINT },
 			{ "certificateNumber", Types.VARCHAR },
 			{ "certificateDate", Types.TIMESTAMP },
-			{ "vehicleClass", Types.BIGINT },
+			{ "vehicleClass", Types.VARCHAR },
 			{ "stampType", Types.VARCHAR },
 			{ "stampShortNo", Types.VARCHAR },
 			{ "serialStartNo", Types.VARCHAR },
@@ -102,7 +102,7 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 		TABLE_COLUMNS_MAP.put("certificateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("certificateNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("certificateDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("vehicleClass", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("vehicleClass", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("stampType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("stampShortNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("serialStartNo", Types.VARCHAR);
@@ -121,7 +121,7 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_outputsheetdetails (id LONG not null primary key,mtCore LONG,inputSheetId LONG,outputSheetId LONG,bookId LONG,issueVehicleCertificateId LONG,certificateId LONG,certificateNumber VARCHAR(75) null,certificateDate DATE null,vehicleClass LONG,stampType VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialStartNo VARCHAR(75) null,serialEndNo VARCHAR(75) null,subTotalInDocument LONG,subTotalQuantities LONG,unitPrice LONG,totalAmount LONG,totalInUse LONG,totalNotUsed LONG,totalLost LONG,totalCancelled LONG,totalReturned LONG,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_outputsheetdetails (id LONG not null primary key,mtCore LONG,inputSheetId LONG,outputSheetId LONG,bookId LONG,issueVehicleCertificateId LONG,certificateId LONG,certificateNumber VARCHAR(75) null,certificateDate DATE null,vehicleClass VARCHAR(75) null,stampType VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialStartNo VARCHAR(75) null,serialEndNo VARCHAR(75) null,subTotalInDocument LONG,subTotalQuantities LONG,unitPrice LONG,totalAmount LONG,totalInUse LONG,totalNotUsed LONG,totalLost LONG,totalCancelled LONG,totalReturned LONG,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_outputsheetdetails";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrOutputSheetDetails.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_outputsheetdetails.modifyDate DESC";
@@ -277,7 +277,7 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 			setCertificateDate(certificateDate);
 		}
 
-		Long vehicleClass = (Long)attributes.get("vehicleClass");
+		String vehicleClass = (String)attributes.get("vehicleClass");
 
 		if (vehicleClass != null) {
 			setVehicleClass(vehicleClass);
@@ -558,12 +558,17 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 	}
 
 	@Override
-	public long getVehicleClass() {
-		return _vehicleClass;
+	public String getVehicleClass() {
+		if (_vehicleClass == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _vehicleClass;
+		}
 	}
 
 	@Override
-	public void setVehicleClass(long vehicleClass) {
+	public void setVehicleClass(String vehicleClass) {
 		_vehicleClass = vehicleClass;
 	}
 
@@ -952,6 +957,12 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 
 		vrOutputSheetDetailsCacheModel.vehicleClass = getVehicleClass();
 
+		String vehicleClass = vrOutputSheetDetailsCacheModel.vehicleClass;
+
+		if ((vehicleClass != null) && (vehicleClass.length() == 0)) {
+			vrOutputSheetDetailsCacheModel.vehicleClass = null;
+		}
+
 		vrOutputSheetDetailsCacheModel.stampType = getStampType();
 
 		String stampType = vrOutputSheetDetailsCacheModel.stampType;
@@ -1236,7 +1247,7 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 	private String _certificateNumber;
 	private String _originalCertificateNumber;
 	private Date _certificateDate;
-	private long _vehicleClass;
+	private String _vehicleClass;
 	private String _stampType;
 	private String _originalStampType;
 	private String _stampShortNo;

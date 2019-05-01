@@ -187,11 +187,11 @@ public class VRClearingStampbookSoap implements Serializable {
 		_certificateDate = certificateDate;
 	}
 
-	public long getVehicleClass() {
+	public String getVehicleClass() {
 		return _vehicleClass;
 	}
 
-	public void setVehicleClass(long vehicleClass) {
+	public void setVehicleClass(String vehicleClass) {
 		_vehicleClass = vehicleClass;
 	}
 
@@ -340,7 +340,7 @@ public class VRClearingStampbookSoap implements Serializable {
 	private long _certificateId;
 	private String _certificateNumber;
 	private Date _certificateDate;
-	private long _vehicleClass;
+	private String _vehicleClass;
 	private String _stampType;
 	private String _stampShortNo;
 	private String _serialStartNo;

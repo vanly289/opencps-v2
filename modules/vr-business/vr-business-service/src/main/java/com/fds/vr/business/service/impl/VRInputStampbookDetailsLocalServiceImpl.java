@@ -15,17 +15,14 @@
 package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.fds.vr.business.model.VRInputStampbookDetails;
 import com.fds.vr.business.service.base.VRInputStampbookDetailsLocalServiceBaseImpl;
 
@@ -51,6 +48,60 @@ public class VRInputStampbookDetailsLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRInputStampbookDetailsLocalServiceUtil} to access the vr input stampbook details local service.
 	 */
+	
+	public VRInputStampbookDetails updateInputStampbookDetails(long id, long mtCore, String stampSerialNo, 
+			long sequenceNo, long dossierId, long certificateId, String certificateNumber,
+			Date certificateDate, long vehicleRecordId, String frameNo, String BoxNo, String vinNo,
+			String engineNo, long copies, long markupFulfill, String replacedSerialNo,
+			String remark, long inputSheetId, long bookId, String purchaserId, String corporationId,
+			long issuingStatus, long clearingStatus, long stampStatus, Date issuingDate, Date printingDate,
+			Date noticeofLostDate, Date noticeofCancelDate, Date noticeofReturnDate, Date clearingDate, long clearingAdvancePaymentID)
+		throws PortalException, SystemException {
+		
+		VRInputStampbookDetails inputStampbookDetails = null;
+		
+		if(id > 0) {
+			inputStampbookDetails = vrInputStampbookDetailsPersistence.findByPrimaryKey(id);
+		} else {
+			id = counterLocalService.increment(VRInputStampbookDetails.class.getName());
+			inputStampbookDetails = vrInputStampbookDetailsPersistence.create(id);
+		}
+		
+		inputStampbookDetails.setModifyDate(new Date());
+		inputStampbookDetails.setMtCore(mtCore);
+		inputStampbookDetails.setStampSerialNo(stampSerialNo);
+		inputStampbookDetails.setSequenceNo(sequenceNo);
+		inputStampbookDetails.setDossierId(dossierId);
+		inputStampbookDetails.setCertificateId(certificateId);
+		inputStampbookDetails.setCertificateNumber(certificateNumber);
+		inputStampbookDetails.setCertificateDate(certificateDate);
+		inputStampbookDetails.setVehicleRecordId(vehicleRecordId);
+		inputStampbookDetails.setFrameNo(frameNo);
+		inputStampbookDetails.setBoxNo(BoxNo);
+		inputStampbookDetails.setVinNo(vinNo);
+		inputStampbookDetails.setEngineNo(engineNo);
+		inputStampbookDetails.setCopies(copies);
+		inputStampbookDetails.setMarkupFulfill(markupFulfill);
+		inputStampbookDetails.setReplacedSerialNo(replacedSerialNo);
+		inputStampbookDetails.setRemark(remark);
+		inputStampbookDetails.setInputSheetId(inputSheetId);
+		inputStampbookDetails.setBookId(bookId);
+		inputStampbookDetails.setPurchaserId(purchaserId);
+		inputStampbookDetails.setCorporationId(corporationId);
+		inputStampbookDetails.setIssuingStatus(issuingStatus);
+		inputStampbookDetails.setClearingStatus(clearingStatus);
+		inputStampbookDetails.setStampStatus(stampStatus);
+		inputStampbookDetails.setIssuingDate(issuingDate);
+		inputStampbookDetails.setPrintingDate(printingDate);
+		inputStampbookDetails.setNoticeofLostDate(noticeofLostDate);
+		inputStampbookDetails.setNoticeofCancelDate(noticeofCancelDate);
+		inputStampbookDetails.setNoticeofReturnDate(noticeofReturnDate);
+		inputStampbookDetails.setClearingDate(clearingDate);
+		inputStampbookDetails.setClearingAdvancePaymentID(clearingAdvancePaymentID);
+		
+		return vrInputStampbookDetailsPersistence.update(inputStampbookDetails);
+		
+	}
 	
 	public List<VRInputStampbookDetails> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {
 		try {

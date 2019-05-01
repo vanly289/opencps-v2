@@ -16,16 +16,13 @@ package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.fds.vr.business.model.VRInventory;
 import com.fds.vr.business.service.base.VRInventoryLocalServiceBaseImpl;
 
@@ -50,6 +47,43 @@ public class VRInventoryLocalServiceImpl extends VRInventoryLocalServiceBaseImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRInventoryLocalServiceUtil} to access the vr inventory local service.
 	 */
+	
+	public VRInventory updateInventory(long id, long mtCore, long yearofPeriod, String previousPeriod, String previousPeriodCode, 
+			long bookId, String vehicleClass, String stampType, String stampShortNo, String serialStartNo, String serialEndNo,
+			long totalQuantities, long totalInUse, long totalNotUsed, String remark, String corporationId, long checkType, long checkStatus) 
+		throws PortalException, SystemException {
+				
+		
+		VRInventory vrInventory = null;
+		
+		if(id > 0) {
+			vrInventory = vrInventoryPersistence.findByPrimaryKey(id);
+		} else {
+			id = counterLocalService.increment(VRInventory.class.getName());
+			vrInventory = vrInventoryPersistence.create(id);
+		}
+		
+		vrInventory.setModifyDate(new Date());
+		vrInventory.setMtCore(mtCore);
+		vrInventory.setYearofPeriod(yearofPeriod);
+		vrInventory.setPreviousPeriod(previousPeriod);
+		vrInventory.setPreviousPeriod(previousPeriodCode);
+		vrInventory.setBookId(bookId);
+		vrInventory.setVehicleClass(vehicleClass);
+		vrInventory.setStampType(stampType);
+		vrInventory.setStampShortNo(stampShortNo);
+		vrInventory.setSerialStartNo(serialStartNo);
+		vrInventory.setSerialEndNo(serialEndNo);
+		vrInventory.setTotalQuantities(totalQuantities);
+		vrInventory.setTotalInUse(totalInUse);
+		vrInventory.setTotalNotUsed(totalNotUsed);
+		vrInventory.setRemark(remark);
+		vrInventory.setCorporationId(corporationId);
+		vrInventory.setCheckType(checkType);
+		vrInventory.setCheckStatus(checkStatus);
+		
+		return vrInventoryPersistence.update(vrInventory);
+	}
 	
 	public List<VRInventory> findByYearofPeriod(long mtCore, long yearofPeriod) throws PortalException, SystemException {
 		try {
