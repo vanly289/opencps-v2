@@ -59,6 +59,7 @@ import org.opencps.dossiermgt.service.RegistrationTemplatesLocalServiceUtil;
 
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -87,12 +88,15 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 	@Path("/registrations")
 	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })
-	public Response getList(@Context ServiceContext serviceContext, @DefaultValue("") @QueryParam("stage") String stage,
+	public Response getList(@Context ServiceContext serviceContext, @DefaultValue("") @QueryParam("ttdnTinhTrang") String stage,
 			@DefaultValue("") @QueryParam("agency") String agency, @DefaultValue("") @QueryParam("owner") String owner,
-			@DefaultValue("") @QueryParam("registrationClass") String registrationClass,
+			@DefaultValue("") @QueryParam("ttdnLoaiHinh") String registrationClass,
 			@DefaultValue("") @QueryParam("submitting") String submitting,
+			@DefaultValue("") @QueryParam("ttdnMaDoanhNghiep") String applicantName,
+			@DefaultValue("") @QueryParam("ttdnMaSoThue") String applicantIdNo,
+			@DefaultValue("") @QueryParam("ttdnDiaChi") String address,
 			@DefaultValue("") @QueryParam("keyword") String keyword, @DefaultValue("") @QueryParam("sort") String sort,
-			@Context HttpHeaders header) {
+			@Context HttpHeaders header) {   
 
 		BackendAuth auth = new BackendAuthImpl();
 		RegistrationActions actions = new RegistrationActionsImpl();
@@ -112,7 +116,11 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 			params.put(RegistrationTerm.OWNER, owner);
 			params.put(RegistrationTerm.REGISTRATION_CLASS, registrationClass);
 			params.put(RegistrationTerm.SUBMITTING, submitting);
-
+			params.put(RegistrationTerm.APPLICATION_NAME, applicantName);
+			params.put(RegistrationTerm.ADDRESS, address);
+			params.put(RegistrationTerm.APPLICATION_ID_NO, applicantIdNo);
+			
+			
 			Sort[] sorts = new Sort[] { SortFactoryUtil.create(sort + "_sortable", Sort.STRING_TYPE, true) };
 
 			JSONObject jsonData = actions.getRegistrations(serviceContext.getUserId(), serviceContext.getCompanyId(),
@@ -216,7 +224,7 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 			String cityName = "";
 			String districtName = "";
 			String wardName = "";
-
+			_log.info("RegistrationInputModel Validator==== " + (Validator.isNotNull(input) ? "NOT NULL" : "NULL"));
 			if (Validator.isNotNull(input.getCityCode())) {
 				cityName = getDictItemName(groupId, ADMINISTRATIVE_REGION, input.getCityCode());
 
@@ -277,9 +285,9 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 
 			List<RegistrationForm> lstRegistrationForm = action.getFormbyRegId(groupId, id);
 			int total = lstRegistrationForm.size();
-			for (RegistrationForm registrationForm : lstRegistrationForm) {
-				_log.info("registrationFormXXXXXXX: "+registrationForm.getRemoved());
-			}
+//			for (RegistrationForm registrationForm : lstRegistrationForm) {
+//				_log.info("registrationFormXXXXXXX: "+registrationForm.getRemoved());
+//			}
 
 			List<RegistrationFormModel> lstRegistrationFormModel = RegistrationFormUtils
 					.mappingToRegistrationFormResultsModel(lstRegistrationForm);
@@ -619,13 +627,13 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
 
 			boolean isCitizen = dossierPermission.isCitizen(user.getUserId());
-			String status = query.getTtdnTinhTrang();
+			String state = Validator.isNotNull(query) ? query.getTtdnTinhTrang() : StringPool.BLANK;
 			String agency = StringPool.BLANK;
 			
-			String registrationClass = query.getTtdnLoaiHinh();
-			String applicantName = query.getTtdnMaDoanhNghiep();
-			String address = query.getTtdnDiaChi();
-			String applicantIdNo = query.getTtdnMaSoThue();
+			String registrationClass = Validator.isNotNull(query) ? query.getTtdnLoaiHinh() : StringPool.BLANK;
+			String applicantName = Validator.isNotNull(query) ? query.getTtdnMaDoanhNghiep() : StringPool.BLANK;
+			String address = Validator.isNotNull(query) ? query.getTtdnDiaChi() : StringPool.BLANK;
+			String applicantIdNo = Validator.isNotNull(query) ? query.getTtdnMaSoThue() : StringPool.BLANK;
 			
 			String submitting = StringPool.BLANK;
 			String keywordSearch = StringPool.BLANK;
@@ -635,14 +643,20 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 			if (isCitizen) {
 				owner = String.valueOf(true);
 			}
+			_log.info("registrationClass: "+registrationClass);
+			_log.info("applicantName: "+applicantName);
+			_log.info("address: "+address);
+			_log.info("applicantIdNo: "+applicantIdNo);
+			_log.info("status: "+state);
 			
-			if (query.getEnd() == 0) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 
 				query.setEnd(-1);
 
 			}
+			
 			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
 			params.put(Field.GROUP_ID, String.valueOf(groupId));
@@ -653,7 +667,7 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 			}
 			params.put(Field.KEYWORD_SEARCH, keySearch);
 			
-			params.put(RegistrationTerm.REGISTRATIONSTATE, status);
+			params.put(RegistrationTerm.REGISTRATIONSTATE, state);
 			params.put(RegistrationTerm.GOV_AGENCY_CODE, agency);
 			params.put(RegistrationTerm.OWNER, owner);
 			params.put(RegistrationTerm.REGISTRATION_CLASS, registrationClass);
@@ -682,25 +696,5 @@ public class RegistrationManagementImpl implements RegistrationManagement {
 		}
 	}
 
-//	public static void main(String []args) {
-//		String jsonString = "{'name':'Hamidul Islam','country':'India'}";
-//		try {
-//			JSONObject jSONObject = JSONFactoryUtil.createJSONObject(jsonString);
-//			jSONObject.put("test", "123456");
-//	        jSONObject.put("test1", "1111");
-//	        String formData = String.valueOf(jSONObject);
-//	        if (Validator.isNotNull(formData)) {
-//	        	try {
-//					JSONObject formDataJson = JSONFactoryUtil.createJSONObject(formData);
-//					formDataJson.put("test2", "33333");
-//					System.out.println(formDataJson.toString());
-//				} catch (JSONException e) {
-//					e.printStackTrace();
-//				}
-//	        	
-//			}
-//		} catch (JSONException e1) {
-//			e1.printStackTrace();
-//		}
-//	}
+
 }

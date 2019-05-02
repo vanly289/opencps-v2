@@ -47,6 +47,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="govAgencyName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="registrationState" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="registrationClass" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="representativeEnterprise" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="submitting" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="markasdeleted" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="remarks" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -83,6 +84,7 @@ import javax.xml.bind.annotation.XmlType;
     "govAgencyName",
     "registrationState",
     "registrationClass",
+    "representativeEnterprise",
     "submitting",
     "markasdeleted",
     "remarks"
@@ -113,6 +115,7 @@ public class RegistrationDetailResultModel {
     protected String govAgencyName;
     protected Integer registrationState;
     protected String registrationClass;
+    protected String representativeEnterprise;
     protected Boolean submitting;
     protected Integer markasdeleted;
     protected String remarks;
@@ -669,6 +672,30 @@ public class RegistrationDetailResultModel {
         this.registrationClass = value;
     }
 
+    /**
+     * Gets the value of the representativeEnterprise property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getRepresentativeEnterprise() {
+        return representativeEnterprise;
+    }
+
+    /**
+     * Sets the value of the representativeEnterprise property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setRepresentativeEnterprise(String value) {
+        this.representativeEnterprise = value;
+    }
+    
     /**
      * Gets the value of the submitting property.
      * 

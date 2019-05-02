@@ -295,7 +295,7 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 		String applicantName = GetterUtil.getString(params.get(RegistrationTerm.APPLICATION_NAME));
 		String address = GetterUtil.getString(params.get(RegistrationTerm.ADDRESS));
 		String applicantIdNo = GetterUtil.getString(params.get(RegistrationTerm.APPLICATION_ID_NO));
-		
+			
 		if (Validator.isNotNull(applicantName) && applicantName.trim().length() > 0	) {
 			MultiMatchQuery query = new MultiMatchQuery(applicantName.toLowerCase());
 
@@ -304,6 +304,7 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
 		}
 
+		
 		if (Validator.isNotNull(address) && address.trim().length() > 0	) {
 			MultiMatchQuery query = new MultiMatchQuery(address.toLowerCase());
 
@@ -343,6 +344,15 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
 		}
+		
+		if (Validator.isNull(owner) || (Validator.isNotNull(owner) && !owner.equalsIgnoreCase(String.valueOf(true))) ) {
+			int markasdeleted = 0;
+			MultiMatchQuery query = new MultiMatchQuery(markasdeleted+"");
+
+			query.addFields(RegistrationTerm.MARK_AS_DELETED);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
 
 		if (Validator.isNotNull(registrationClass) && !registrationClass.isEmpty()) {
 			MultiMatchQuery query = new MultiMatchQuery(registrationClass);
@@ -359,7 +369,8 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
 		}
-
+		
+				
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);
 
 		return IndexSearcherHelperUtil.search(searchContext, booleanQuery);
@@ -452,6 +463,15 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
 		}
 
+		if (Validator.isNull(owner) || (Validator.isNotNull(owner) && !owner.equalsIgnoreCase(String.valueOf(true))) ) {
+			int markasdeleted = 0;
+			MultiMatchQuery query = new MultiMatchQuery(markasdeleted+"");
+
+			query.addFields(RegistrationTerm.MARK_AS_DELETED);
+
+			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+		
 		if (Validator.isNotNull(registrationClass) && !registrationClass.isEmpty()) {
 			MultiMatchQuery query = new MultiMatchQuery(registrationClass);
 
@@ -468,6 +488,7 @@ public class RegistrationLocalServiceImpl extends RegistrationLocalServiceBaseIm
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
 		}
 
+		
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);
 
 		return IndexSearcherHelperUtil.searchCount(searchContext, booleanQuery);
