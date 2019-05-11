@@ -134,7 +134,7 @@ public class VRInputStampbookWrapper implements VRInputStampbook,
 			setSerialStartNo(serialStartNo);
 		}
 
-		String serialEndNo = (String)attributes.get("serialEndNo");
+		Long serialEndNo = (Long)attributes.get("serialEndNo");
 
 		if (serialEndNo != null) {
 			setSerialEndNo(serialEndNo);
@@ -285,16 +285,6 @@ public class VRInputStampbookWrapper implements VRInputStampbook,
 	}
 
 	/**
-	* Returns the serial end no of this vr input stampbook.
-	*
-	* @return the serial end no of this vr input stampbook
-	*/
-	@Override
-	public java.lang.String getSerialEndNo() {
-		return _vrInputStampbook.getSerialEndNo();
-	}
-
-	/**
 	* Returns the stamp short no of this vr input stampbook.
 	*
 	* @return the stamp short no of this vr input stampbook
@@ -402,6 +392,16 @@ public class VRInputStampbookWrapper implements VRInputStampbook,
 	@Override
 	public long getPrimaryKey() {
 		return _vrInputStampbook.getPrimaryKey();
+	}
+
+	/**
+	* Returns the serial end no of this vr input stampbook.
+	*
+	* @return the serial end no of this vr input stampbook
+	*/
+	@Override
+	public long getSerialEndNo() {
+		return _vrInputStampbook.getSerialEndNo();
 	}
 
 	/**
@@ -626,7 +626,7 @@ public class VRInputStampbookWrapper implements VRInputStampbook,
 	* @param serialEndNo the serial end no of this vr input stampbook
 	*/
 	@Override
-	public void setSerialEndNo(java.lang.String serialEndNo) {
+	public void setSerialEndNo(long serialEndNo) {
 		_vrInputStampbook.setSerialEndNo(serialEndNo);
 	}
 

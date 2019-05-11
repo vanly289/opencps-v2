@@ -67,6 +67,7 @@ public class VRCOPProductionPlantEmployeeWrapper
 		attributes.put("sequenceNo", getSequenceNo());
 		attributes.put("employeeName", getEmployeeName());
 		attributes.put("employeeCertificateNo", getEmployeeCertificateNo());
+		attributes.put("trainningAt", getTrainningAt());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -117,6 +118,12 @@ public class VRCOPProductionPlantEmployeeWrapper
 
 		if (employeeCertificateNo != null) {
 			setEmployeeCertificateNo(employeeCertificateNo);
+		}
+
+		String trainningAt = (String)attributes.get("trainningAt");
+
+		if (trainningAt != null) {
+			setTrainningAt(trainningAt);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -216,6 +223,16 @@ public class VRCOPProductionPlantEmployeeWrapper
 	@Override
 	public java.lang.String getEmployeeName() {
 		return _vrcopProductionPlantEmployee.getEmployeeName();
+	}
+
+	/**
+	* Returns the trainning at of this vrcop production plant employee.
+	*
+	* @return the trainning at of this vrcop production plant employee
+	*/
+	@Override
+	public java.lang.String getTrainningAt() {
+		return _vrcopProductionPlantEmployee.getTrainningAt();
 	}
 
 	@Override
@@ -432,6 +449,16 @@ public class VRCOPProductionPlantEmployeeWrapper
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_vrcopProductionPlantEmployee.setSyncDate(syncDate);
+	}
+
+	/**
+	* Sets the trainning at of this vrcop production plant employee.
+	*
+	* @param trainningAt the trainning at of this vrcop production plant employee
+	*/
+	@Override
+	public void setTrainningAt(java.lang.String trainningAt) {
+		_vrcopProductionPlantEmployee.setTrainningAt(trainningAt);
 	}
 
 	@Override

@@ -65,6 +65,15 @@ public class VRProductTypeWrapper implements VRProductType,
 		attributes.put("vehicleClass", getVehicleClass());
 		attributes.put("vehicleTypeCode", getVehicleTypeCode());
 		attributes.put("vehicleTypeDescription", getVehicleTypeDescription());
+		attributes.put("productClassificationCode",
+			getProductClassificationCode());
+		attributes.put("productClassificationDescription",
+			getProductClassificationDescription());
+		attributes.put("trademark", getTrademark());
+		attributes.put("trademarkName", getTrademarkName());
+		attributes.put("commercialName", getCommercialName());
+		attributes.put("modelCode", getModelCode());
+		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -114,6 +123,50 @@ public class VRProductTypeWrapper implements VRProductType,
 
 		if (vehicleTypeDescription != null) {
 			setVehicleTypeDescription(vehicleTypeDescription);
+		}
+
+		String productClassificationCode = (String)attributes.get(
+				"productClassificationCode");
+
+		if (productClassificationCode != null) {
+			setProductClassificationCode(productClassificationCode);
+		}
+
+		String productClassificationDescription = (String)attributes.get(
+				"productClassificationDescription");
+
+		if (productClassificationDescription != null) {
+			setProductClassificationDescription(productClassificationDescription);
+		}
+
+		String trademark = (String)attributes.get("trademark");
+
+		if (trademark != null) {
+			setTrademark(trademark);
+		}
+
+		String trademarkName = (String)attributes.get("trademarkName");
+
+		if (trademarkName != null) {
+			setTrademarkName(trademarkName);
+		}
+
+		String commercialName = (String)attributes.get("commercialName");
+
+		if (commercialName != null) {
+			setCommercialName(commercialName);
+		}
+
+		String modelCode = (String)attributes.get("modelCode");
+
+		if (modelCode != null) {
+			setModelCode(modelCode);
+		}
+
+		String designSymbolNo = (String)attributes.get("designSymbolNo");
+
+		if (designSymbolNo != null) {
+			setDesignSymbolNo(designSymbolNo);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -182,6 +235,76 @@ public class VRProductTypeWrapper implements VRProductType,
 	@Override
 	public java.lang.Object clone() {
 		return new VRProductTypeWrapper((VRProductType)_vrProductType.clone());
+	}
+
+	/**
+	* Returns the commercial name of this vr product type.
+	*
+	* @return the commercial name of this vr product type
+	*/
+	@Override
+	public java.lang.String getCommercialName() {
+		return _vrProductType.getCommercialName();
+	}
+
+	/**
+	* Returns the design symbol no of this vr product type.
+	*
+	* @return the design symbol no of this vr product type
+	*/
+	@Override
+	public java.lang.String getDesignSymbolNo() {
+		return _vrProductType.getDesignSymbolNo();
+	}
+
+	/**
+	* Returns the model code of this vr product type.
+	*
+	* @return the model code of this vr product type
+	*/
+	@Override
+	public java.lang.String getModelCode() {
+		return _vrProductType.getModelCode();
+	}
+
+	/**
+	* Returns the product classification code of this vr product type.
+	*
+	* @return the product classification code of this vr product type
+	*/
+	@Override
+	public java.lang.String getProductClassificationCode() {
+		return _vrProductType.getProductClassificationCode();
+	}
+
+	/**
+	* Returns the product classification description of this vr product type.
+	*
+	* @return the product classification description of this vr product type
+	*/
+	@Override
+	public java.lang.String getProductClassificationDescription() {
+		return _vrProductType.getProductClassificationDescription();
+	}
+
+	/**
+	* Returns the trademark of this vr product type.
+	*
+	* @return the trademark of this vr product type
+	*/
+	@Override
+	public java.lang.String getTrademark() {
+		return _vrProductType.getTrademark();
+	}
+
+	/**
+	* Returns the trademark name of this vr product type.
+	*
+	* @return the trademark name of this vr product type
+	*/
+	@Override
+	public java.lang.String getTrademarkName() {
+		return _vrProductType.getTrademarkName();
 	}
 
 	/**
@@ -304,6 +427,26 @@ public class VRProductTypeWrapper implements VRProductType,
 		_vrProductType.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the commercial name of this vr product type.
+	*
+	* @param commercialName the commercial name of this vr product type
+	*/
+	@Override
+	public void setCommercialName(java.lang.String commercialName) {
+		_vrProductType.setCommercialName(commercialName);
+	}
+
+	/**
+	* Sets the design symbol no of this vr product type.
+	*
+	* @param designSymbolNo the design symbol no of this vr product type
+	*/
+	@Override
+	public void setDesignSymbolNo(java.lang.String designSymbolNo) {
+		_vrProductType.setDesignSymbolNo(designSymbolNo);
+	}
+
 	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_vrProductType.setExpandoBridgeAttributes(expandoBridge);
@@ -328,6 +471,16 @@ public class VRProductTypeWrapper implements VRProductType,
 	@Override
 	public void setId(long id) {
 		_vrProductType.setId(id);
+	}
+
+	/**
+	* Sets the model code of this vr product type.
+	*
+	* @param modelCode the model code of this vr product type
+	*/
+	@Override
+	public void setModelCode(java.lang.String modelCode) {
+		_vrProductType.setModelCode(modelCode);
 	}
 
 	/**
@@ -371,6 +524,28 @@ public class VRProductTypeWrapper implements VRProductType,
 	}
 
 	/**
+	* Sets the product classification code of this vr product type.
+	*
+	* @param productClassificationCode the product classification code of this vr product type
+	*/
+	@Override
+	public void setProductClassificationCode(
+		java.lang.String productClassificationCode) {
+		_vrProductType.setProductClassificationCode(productClassificationCode);
+	}
+
+	/**
+	* Sets the product classification description of this vr product type.
+	*
+	* @param productClassificationDescription the product classification description of this vr product type
+	*/
+	@Override
+	public void setProductClassificationDescription(
+		java.lang.String productClassificationDescription) {
+		_vrProductType.setProductClassificationDescription(productClassificationDescription);
+	}
+
+	/**
 	* Sets the product plant ID of this vr product type.
 	*
 	* @param productPlantID the product plant ID of this vr product type
@@ -398,6 +573,26 @@ public class VRProductTypeWrapper implements VRProductType,
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_vrProductType.setSyncDate(syncDate);
+	}
+
+	/**
+	* Sets the trademark of this vr product type.
+	*
+	* @param trademark the trademark of this vr product type
+	*/
+	@Override
+	public void setTrademark(java.lang.String trademark) {
+		_vrProductType.setTrademark(trademark);
+	}
+
+	/**
+	* Sets the trademark name of this vr product type.
+	*
+	* @param trademarkName the trademark name of this vr product type
+	*/
+	@Override
+	public void setTrademarkName(java.lang.String trademarkName) {
+		_vrProductType.setTrademarkName(trademarkName);
 	}
 
 	/**

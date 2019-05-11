@@ -66,7 +66,7 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -78,8 +78,12 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 		sb.append(copReportNo);
 		sb.append(", sequenceNo=");
 		sb.append(sequenceNo);
-		sb.append(", attachFileURL=");
-		sb.append(attachFileURL);
+		sb.append(", DocName=");
+		sb.append(DocName);
+		sb.append(", DocNo=");
+		sb.append(DocNo);
+		sb.append(", Remarks=");
+		sb.append(Remarks);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -106,11 +110,25 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 
 		vrcopReportAttachImpl.setSequenceNo(sequenceNo);
 
-		if (attachFileURL == null) {
-			vrcopReportAttachImpl.setAttachFileURL(StringPool.BLANK);
+		if (DocName == null) {
+			vrcopReportAttachImpl.setDocName(StringPool.BLANK);
 		}
 		else {
-			vrcopReportAttachImpl.setAttachFileURL(attachFileURL);
+			vrcopReportAttachImpl.setDocName(DocName);
+		}
+
+		if (DocNo == null) {
+			vrcopReportAttachImpl.setDocNo(StringPool.BLANK);
+		}
+		else {
+			vrcopReportAttachImpl.setDocNo(DocNo);
+		}
+
+		if (Remarks == null) {
+			vrcopReportAttachImpl.setRemarks(StringPool.BLANK);
+		}
+		else {
+			vrcopReportAttachImpl.setRemarks(Remarks);
 		}
 
 		if (modifyDate == Long.MIN_VALUE) {
@@ -142,7 +160,9 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 		copReportNo = objectInput.readUTF();
 
 		sequenceNo = objectInput.readLong();
-		attachFileURL = objectInput.readUTF();
+		DocName = objectInput.readUTF();
+		DocNo = objectInput.readUTF();
+		Remarks = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -165,11 +185,25 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 
 		objectOutput.writeLong(sequenceNo);
 
-		if (attachFileURL == null) {
+		if (DocName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(attachFileURL);
+			objectOutput.writeUTF(DocName);
+		}
+
+		if (DocNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(DocNo);
+		}
+
+		if (Remarks == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(Remarks);
 		}
 
 		objectOutput.writeLong(modifyDate);
@@ -181,7 +215,9 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 	public long copReportRepositoryID;
 	public String copReportNo;
 	public long sequenceNo;
-	public String attachFileURL;
+	public String DocName;
+	public String DocNo;
+	public String Remarks;
 	public long modifyDate;
 	public long syncDate;
 }

@@ -168,20 +168,8 @@ public class VROutputSheetDetailsCacheModel implements CacheModel<VROutputSheetD
 			vrOutputSheetDetailsImpl.setStampShortNo(stampShortNo);
 		}
 
-		if (serialStartNo == null) {
-			vrOutputSheetDetailsImpl.setSerialStartNo(StringPool.BLANK);
-		}
-		else {
-			vrOutputSheetDetailsImpl.setSerialStartNo(serialStartNo);
-		}
-
-		if (serialEndNo == null) {
-			vrOutputSheetDetailsImpl.setSerialEndNo(StringPool.BLANK);
-		}
-		else {
-			vrOutputSheetDetailsImpl.setSerialEndNo(serialEndNo);
-		}
-
+		vrOutputSheetDetailsImpl.setSerialStartNo(serialStartNo);
+		vrOutputSheetDetailsImpl.setSerialEndNo(serialEndNo);
 		vrOutputSheetDetailsImpl.setSubTotalInDocument(subTotalInDocument);
 		vrOutputSheetDetailsImpl.setSubTotalQuantities(subTotalQuantities);
 		vrOutputSheetDetailsImpl.setUnitPrice(unitPrice);
@@ -239,8 +227,10 @@ public class VROutputSheetDetailsCacheModel implements CacheModel<VROutputSheetD
 		vehicleClass = objectInput.readLong();
 		stampType = objectInput.readUTF();
 		stampShortNo = objectInput.readUTF();
-		serialStartNo = objectInput.readUTF();
-		serialEndNo = objectInput.readUTF();
+
+		serialStartNo = objectInput.readLong();
+
+		serialEndNo = objectInput.readLong();
 
 		subTotalInDocument = objectInput.readLong();
 
@@ -306,19 +296,9 @@ public class VROutputSheetDetailsCacheModel implements CacheModel<VROutputSheetD
 			objectOutput.writeUTF(stampShortNo);
 		}
 
-		if (serialStartNo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(serialStartNo);
-		}
+		objectOutput.writeLong(serialStartNo);
 
-		if (serialEndNo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(serialEndNo);
-		}
+		objectOutput.writeLong(serialEndNo);
 
 		objectOutput.writeLong(subTotalInDocument);
 
@@ -361,8 +341,8 @@ public class VROutputSheetDetailsCacheModel implements CacheModel<VROutputSheetD
 	public long vehicleClass;
 	public String stampType;
 	public String stampShortNo;
-	public String serialStartNo;
-	public String serialEndNo;
+	public long serialStartNo;
+	public long serialEndNo;
 	public long subTotalInDocument;
 	public long subTotalQuantities;
 	public long unitPrice;

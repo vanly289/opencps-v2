@@ -49,6 +49,7 @@ public class VRCOPProductionPlantEquipmentSoap implements Serializable {
 		soapModel.setDesignSymbolNo(model.getDesignSymbolNo());
 		soapModel.setProductionCountryCode(model.getProductionCountryCode());
 		soapModel.setEquipmentStatus(model.getEquipmentStatus());
+		soapModel.setExpireDate(model.getExpireDate());
 		soapModel.setNotes(model.getNotes());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
@@ -227,6 +228,14 @@ public class VRCOPProductionPlantEquipmentSoap implements Serializable {
 		_equipmentStatus = equipmentStatus;
 	}
 
+	public Date getExpireDate() {
+		return _expireDate;
+	}
+
+	public void setExpireDate(Date expireDate) {
+		_expireDate = expireDate;
+	}
+
 	public String getNotes() {
 		return _notes;
 	}
@@ -266,6 +275,7 @@ public class VRCOPProductionPlantEquipmentSoap implements Serializable {
 	private String _designSymbolNo;
 	private String _productionCountryCode;
 	private String _equipmentStatus;
+	private Date _expireDate;
 	private String _notes;
 	private Date _modifyDate;
 	private Date _syncDate;

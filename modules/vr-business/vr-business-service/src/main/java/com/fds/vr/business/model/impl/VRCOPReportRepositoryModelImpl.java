@@ -66,9 +66,10 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 			{ "id", Types.BIGINT },
 			{ "mtCore", Types.BIGINT },
 			{ "applicantProfileId", Types.BIGINT },
+			{ "applicantCode", Types.VARCHAR },
 			{ "applicantName", Types.VARCHAR },
 			{ "applicantAddress", Types.VARCHAR },
-			{ "overseasManufacturerId", Types.BIGINT },
+			{ "overseasManufacturerCode", Types.VARCHAR },
 			{ "overseasManufacturerName", Types.VARCHAR },
 			{ "overseasManufacturerAddress", Types.VARCHAR },
 			{ "productionPlantId", Types.BIGINT },
@@ -85,6 +86,7 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 			{ "copReportDate", Types.TIMESTAMP },
 			{ "copReportApprovedDate", Types.TIMESTAMP },
 			{ "copReportExpiredDate", Types.TIMESTAMP },
+			{ "COPFileEntryId", Types.BIGINT },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -94,9 +96,10 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		TABLE_COLUMNS_MAP.put("id", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mtCore", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("applicantProfileId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("applicantCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantAddress", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("overseasManufacturerId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("overseasManufacturerCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("overseasManufacturerName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("overseasManufacturerAddress", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantId", Types.BIGINT);
@@ -113,11 +116,12 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		TABLE_COLUMNS_MAP.put("copReportDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("copReportApprovedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("copReportExpiredDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("COPFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copreportrepository (id LONG not null primary key,mtCore LONG,applicantProfileId LONG,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,overseasManufacturerId LONG,overseasManufacturerName VARCHAR(75) null,overseasManufacturerAddress VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,copReportNo VARCHAR(75) null,copReportStatus VARCHAR(75) null,copReportType VARCHAR(75) null,copReportMetadata VARCHAR(75) null,copReportSignName VARCHAR(75) null,copReportSignTitle VARCHAR(75) null,copReportSignPlace VARCHAR(75) null,copReportDate DATE null,copReportApprovedDate DATE null,copReportExpiredDate DATE null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copreportrepository (id LONG not null primary key,mtCore LONG,applicantProfileId LONG,applicantCode VARCHAR(75) null,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,overseasManufacturerCode VARCHAR(75) null,overseasManufacturerName VARCHAR(75) null,overseasManufacturerAddress VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,copReportNo VARCHAR(75) null,copReportStatus VARCHAR(75) null,copReportType VARCHAR(75) null,copReportMetadata VARCHAR(75) null,copReportSignName VARCHAR(75) null,copReportSignTitle VARCHAR(75) null,copReportSignPlace VARCHAR(75) null,copReportDate DATE null,copReportApprovedDate DATE null,copReportExpiredDate DATE null,COPFileEntryId LONG,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copreportrepository";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopReportRepository.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copreportrepository.modifyDate DESC";
@@ -184,9 +188,10 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
 		attributes.put("applicantProfileId", getApplicantProfileId());
+		attributes.put("applicantCode", getApplicantCode());
 		attributes.put("applicantName", getApplicantName());
 		attributes.put("applicantAddress", getApplicantAddress());
-		attributes.put("overseasManufacturerId", getOverseasManufacturerId());
+		attributes.put("overseasManufacturerCode", getOverseasManufacturerCode());
 		attributes.put("overseasManufacturerName", getOverseasManufacturerName());
 		attributes.put("overseasManufacturerAddress",
 			getOverseasManufacturerAddress());
@@ -204,6 +209,7 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		attributes.put("copReportDate", getCopReportDate());
 		attributes.put("copReportApprovedDate", getCopReportApprovedDate());
 		attributes.put("copReportExpiredDate", getCopReportExpiredDate());
+		attributes.put("COPFileEntryId", getCOPFileEntryId());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -233,6 +239,12 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 			setApplicantProfileId(applicantProfileId);
 		}
 
+		String applicantCode = (String)attributes.get("applicantCode");
+
+		if (applicantCode != null) {
+			setApplicantCode(applicantCode);
+		}
+
 		String applicantName = (String)attributes.get("applicantName");
 
 		if (applicantName != null) {
@@ -245,11 +257,11 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 			setApplicantAddress(applicantAddress);
 		}
 
-		Long overseasManufacturerId = (Long)attributes.get(
-				"overseasManufacturerId");
+		String overseasManufacturerCode = (String)attributes.get(
+				"overseasManufacturerCode");
 
-		if (overseasManufacturerId != null) {
-			setOverseasManufacturerId(overseasManufacturerId);
+		if (overseasManufacturerCode != null) {
+			setOverseasManufacturerCode(overseasManufacturerCode);
 		}
 
 		String overseasManufacturerName = (String)attributes.get(
@@ -354,6 +366,12 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 			setCopReportExpiredDate(copReportExpiredDate);
 		}
 
+		Long COPFileEntryId = (Long)attributes.get("COPFileEntryId");
+
+		if (COPFileEntryId != null) {
+			setCOPFileEntryId(COPFileEntryId);
+		}
+
 		Date modifyDate = (Date)attributes.get("modifyDate");
 
 		if (modifyDate != null) {
@@ -422,6 +440,21 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 	}
 
 	@Override
+	public String getApplicantCode() {
+		if (_applicantCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantCode;
+		}
+	}
+
+	@Override
+	public void setApplicantCode(String applicantCode) {
+		_applicantCode = applicantCode;
+	}
+
+	@Override
 	public String getApplicantName() {
 		if (_applicantName == null) {
 			return StringPool.BLANK;
@@ -452,13 +485,18 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 	}
 
 	@Override
-	public long getOverseasManufacturerId() {
-		return _overseasManufacturerId;
+	public String getOverseasManufacturerCode() {
+		if (_overseasManufacturerCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _overseasManufacturerCode;
+		}
 	}
 
 	@Override
-	public void setOverseasManufacturerId(long overseasManufacturerId) {
-		_overseasManufacturerId = overseasManufacturerId;
+	public void setOverseasManufacturerCode(String overseasManufacturerCode) {
+		_overseasManufacturerCode = overseasManufacturerCode;
 	}
 
 	@Override
@@ -733,6 +771,16 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 	}
 
 	@Override
+	public long getCOPFileEntryId() {
+		return _COPFileEntryId;
+	}
+
+	@Override
+	public void setCOPFileEntryId(long COPFileEntryId) {
+		_COPFileEntryId = COPFileEntryId;
+	}
+
+	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -788,9 +836,10 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		vrcopReportRepositoryImpl.setId(getId());
 		vrcopReportRepositoryImpl.setMtCore(getMtCore());
 		vrcopReportRepositoryImpl.setApplicantProfileId(getApplicantProfileId());
+		vrcopReportRepositoryImpl.setApplicantCode(getApplicantCode());
 		vrcopReportRepositoryImpl.setApplicantName(getApplicantName());
 		vrcopReportRepositoryImpl.setApplicantAddress(getApplicantAddress());
-		vrcopReportRepositoryImpl.setOverseasManufacturerId(getOverseasManufacturerId());
+		vrcopReportRepositoryImpl.setOverseasManufacturerCode(getOverseasManufacturerCode());
 		vrcopReportRepositoryImpl.setOverseasManufacturerName(getOverseasManufacturerName());
 		vrcopReportRepositoryImpl.setOverseasManufacturerAddress(getOverseasManufacturerAddress());
 		vrcopReportRepositoryImpl.setProductionPlantId(getProductionPlantId());
@@ -807,6 +856,7 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		vrcopReportRepositoryImpl.setCopReportDate(getCopReportDate());
 		vrcopReportRepositoryImpl.setCopReportApprovedDate(getCopReportApprovedDate());
 		vrcopReportRepositoryImpl.setCopReportExpiredDate(getCopReportExpiredDate());
+		vrcopReportRepositoryImpl.setCOPFileEntryId(getCOPFileEntryId());
 		vrcopReportRepositoryImpl.setModifyDate(getModifyDate());
 		vrcopReportRepositoryImpl.setSyncDate(getSyncDate());
 
@@ -903,6 +953,14 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 
 		vrcopReportRepositoryCacheModel.applicantProfileId = getApplicantProfileId();
 
+		vrcopReportRepositoryCacheModel.applicantCode = getApplicantCode();
+
+		String applicantCode = vrcopReportRepositoryCacheModel.applicantCode;
+
+		if ((applicantCode != null) && (applicantCode.length() == 0)) {
+			vrcopReportRepositoryCacheModel.applicantCode = null;
+		}
+
 		vrcopReportRepositoryCacheModel.applicantName = getApplicantName();
 
 		String applicantName = vrcopReportRepositoryCacheModel.applicantName;
@@ -919,7 +977,14 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 			vrcopReportRepositoryCacheModel.applicantAddress = null;
 		}
 
-		vrcopReportRepositoryCacheModel.overseasManufacturerId = getOverseasManufacturerId();
+		vrcopReportRepositoryCacheModel.overseasManufacturerCode = getOverseasManufacturerCode();
+
+		String overseasManufacturerCode = vrcopReportRepositoryCacheModel.overseasManufacturerCode;
+
+		if ((overseasManufacturerCode != null) &&
+				(overseasManufacturerCode.length() == 0)) {
+			vrcopReportRepositoryCacheModel.overseasManufacturerCode = null;
+		}
 
 		vrcopReportRepositoryCacheModel.overseasManufacturerName = getOverseasManufacturerName();
 
@@ -1051,6 +1116,8 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 			vrcopReportRepositoryCacheModel.copReportExpiredDate = Long.MIN_VALUE;
 		}
 
+		vrcopReportRepositoryCacheModel.COPFileEntryId = getCOPFileEntryId();
+
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -1074,7 +1141,7 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1082,12 +1149,14 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		sb.append(getMtCore());
 		sb.append(", applicantProfileId=");
 		sb.append(getApplicantProfileId());
+		sb.append(", applicantCode=");
+		sb.append(getApplicantCode());
 		sb.append(", applicantName=");
 		sb.append(getApplicantName());
 		sb.append(", applicantAddress=");
 		sb.append(getApplicantAddress());
-		sb.append(", overseasManufacturerId=");
-		sb.append(getOverseasManufacturerId());
+		sb.append(", overseasManufacturerCode=");
+		sb.append(getOverseasManufacturerCode());
 		sb.append(", overseasManufacturerName=");
 		sb.append(getOverseasManufacturerName());
 		sb.append(", overseasManufacturerAddress=");
@@ -1120,6 +1189,8 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		sb.append(getCopReportApprovedDate());
 		sb.append(", copReportExpiredDate=");
 		sb.append(getCopReportExpiredDate());
+		sb.append(", COPFileEntryId=");
+		sb.append(getCOPFileEntryId());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -1131,7 +1202,7 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(76);
+		StringBundler sb = new StringBundler(82);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPReportRepository");
@@ -1150,6 +1221,10 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		sb.append(getApplicantProfileId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>applicantCode</column-name><column-value><![CDATA[");
+		sb.append(getApplicantCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>applicantName</column-name><column-value><![CDATA[");
 		sb.append(getApplicantName());
 		sb.append("]]></column-value></column>");
@@ -1158,8 +1233,8 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		sb.append(getApplicantAddress());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>overseasManufacturerId</column-name><column-value><![CDATA[");
-		sb.append(getOverseasManufacturerId());
+			"<column><column-name>overseasManufacturerCode</column-name><column-value><![CDATA[");
+		sb.append(getOverseasManufacturerCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>overseasManufacturerName</column-name><column-value><![CDATA[");
@@ -1226,6 +1301,10 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		sb.append(getCopReportExpiredDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>COPFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getCOPFileEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
@@ -1250,9 +1329,10 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 	private long _applicantProfileId;
 	private long _originalApplicantProfileId;
 	private boolean _setOriginalApplicantProfileId;
+	private String _applicantCode;
 	private String _applicantName;
 	private String _applicantAddress;
-	private long _overseasManufacturerId;
+	private String _overseasManufacturerCode;
 	private String _overseasManufacturerName;
 	private String _overseasManufacturerAddress;
 	private long _productionPlantId;
@@ -1274,6 +1354,7 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 	private Date _copReportDate;
 	private Date _copReportApprovedDate;
 	private Date _copReportExpiredDate;
+	private long _COPFileEntryId;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

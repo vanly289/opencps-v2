@@ -148,14 +148,7 @@ public class VRInputStampbookCacheModel implements CacheModel<VRInputStampbook>,
 		}
 
 		vrInputStampbookImpl.setSerialStartNo(serialStartNo);
-
-		if (serialEndNo == null) {
-			vrInputStampbookImpl.setSerialEndNo(StringPool.BLANK);
-		}
-		else {
-			vrInputStampbookImpl.setSerialEndNo(serialEndNo);
-		}
-
+		vrInputStampbookImpl.setSerialEndNo(serialEndNo);
 		vrInputStampbookImpl.setSubTotalInDocument(subTotalInDocument);
 		vrInputStampbookImpl.setSubTotalQuantities(subTotalQuantities);
 		vrInputStampbookImpl.setUnits(units);
@@ -207,7 +200,8 @@ public class VRInputStampbookCacheModel implements CacheModel<VRInputStampbook>,
 		stampShortNo = objectInput.readUTF();
 
 		serialStartNo = objectInput.readLong();
-		serialEndNo = objectInput.readUTF();
+
+		serialEndNo = objectInput.readLong();
 
 		subTotalInDocument = objectInput.readLong();
 
@@ -267,12 +261,7 @@ public class VRInputStampbookCacheModel implements CacheModel<VRInputStampbook>,
 
 		objectOutput.writeLong(serialStartNo);
 
-		if (serialEndNo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(serialEndNo);
-		}
+		objectOutput.writeLong(serialEndNo);
 
 		objectOutput.writeLong(subTotalInDocument);
 
@@ -313,7 +302,7 @@ public class VRInputStampbookCacheModel implements CacheModel<VRInputStampbook>,
 	public String stampType;
 	public String stampShortNo;
 	public long serialStartNo;
-	public String serialEndNo;
+	public long serialEndNo;
 	public long subTotalInDocument;
 	public long subTotalQuantities;
 	public long units;

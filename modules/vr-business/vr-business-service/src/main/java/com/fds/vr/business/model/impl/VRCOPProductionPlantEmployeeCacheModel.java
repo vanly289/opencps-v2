@@ -67,7 +67,7 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -83,6 +83,8 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 		sb.append(employeeName);
 		sb.append(", employeeCertificateNo=");
 		sb.append(employeeCertificateNo);
+		sb.append(", trainningAt=");
+		sb.append(trainningAt);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -123,6 +125,13 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 			vrcopProductionPlantEmployeeImpl.setEmployeeCertificateNo(employeeCertificateNo);
 		}
 
+		if (trainningAt == null) {
+			vrcopProductionPlantEmployeeImpl.setTrainningAt(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEmployeeImpl.setTrainningAt(trainningAt);
+		}
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrcopProductionPlantEmployeeImpl.setModifyDate(null);
 		}
@@ -154,6 +163,7 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 		sequenceNo = objectInput.readLong();
 		employeeName = objectInput.readUTF();
 		employeeCertificateNo = objectInput.readUTF();
+		trainningAt = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -190,6 +200,13 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 			objectOutput.writeUTF(employeeCertificateNo);
 		}
 
+		if (trainningAt == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(trainningAt);
+		}
+
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -201,6 +218,7 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 	public long sequenceNo;
 	public String employeeName;
 	public String employeeCertificateNo;
+	public String trainningAt;
 	public long modifyDate;
 	public long syncDate;
 }

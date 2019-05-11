@@ -165,13 +165,13 @@ public class VROutputSheetDetailsWrapper implements VROutputSheetDetails,
 			setStampShortNo(stampShortNo);
 		}
 
-		String serialStartNo = (String)attributes.get("serialStartNo");
+		Long serialStartNo = (Long)attributes.get("serialStartNo");
 
 		if (serialStartNo != null) {
 			setSerialStartNo(serialStartNo);
 		}
 
-		String serialEndNo = (String)attributes.get("serialEndNo");
+		Long serialEndNo = (Long)attributes.get("serialEndNo");
 
 		if (serialEndNo != null) {
 			setSerialEndNo(serialEndNo);
@@ -326,26 +326,6 @@ public class VROutputSheetDetailsWrapper implements VROutputSheetDetails,
 	}
 
 	/**
-	* Returns the serial end no of this vr output sheet details.
-	*
-	* @return the serial end no of this vr output sheet details
-	*/
-	@Override
-	public java.lang.String getSerialEndNo() {
-		return _vrOutputSheetDetails.getSerialEndNo();
-	}
-
-	/**
-	* Returns the serial start no of this vr output sheet details.
-	*
-	* @return the serial start no of this vr output sheet details
-	*/
-	@Override
-	public java.lang.String getSerialStartNo() {
-		return _vrOutputSheetDetails.getSerialStartNo();
-	}
-
-	/**
 	* Returns the stamp short no of this vr output sheet details.
 	*
 	* @return the stamp short no of this vr output sheet details
@@ -483,6 +463,26 @@ public class VROutputSheetDetailsWrapper implements VROutputSheetDetails,
 	@Override
 	public long getPrimaryKey() {
 		return _vrOutputSheetDetails.getPrimaryKey();
+	}
+
+	/**
+	* Returns the serial end no of this vr output sheet details.
+	*
+	* @return the serial end no of this vr output sheet details
+	*/
+	@Override
+	public long getSerialEndNo() {
+		return _vrOutputSheetDetails.getSerialEndNo();
+	}
+
+	/**
+	* Returns the serial start no of this vr output sheet details.
+	*
+	* @return the serial start no of this vr output sheet details
+	*/
+	@Override
+	public long getSerialStartNo() {
+		return _vrOutputSheetDetails.getSerialStartNo();
 	}
 
 	/**
@@ -747,7 +747,7 @@ public class VROutputSheetDetailsWrapper implements VROutputSheetDetails,
 	* @param serialEndNo the serial end no of this vr output sheet details
 	*/
 	@Override
-	public void setSerialEndNo(java.lang.String serialEndNo) {
+	public void setSerialEndNo(long serialEndNo) {
 		_vrOutputSheetDetails.setSerialEndNo(serialEndNo);
 	}
 
@@ -757,7 +757,7 @@ public class VROutputSheetDetailsWrapper implements VROutputSheetDetails,
 	* @param serialStartNo the serial start no of this vr output sheet details
 	*/
 	@Override
-	public void setSerialStartNo(java.lang.String serialStartNo) {
+	public void setSerialStartNo(long serialStartNo) {
 		_vrOutputSheetDetails.setSerialStartNo(serialStartNo);
 	}
 

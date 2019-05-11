@@ -67,7 +67,7 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -99,6 +99,8 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 		sb.append(productionCountryCode);
 		sb.append(", equipmentStatus=");
 		sb.append(equipmentStatus);
+		sb.append(", expireDate=");
+		sb.append(expireDate);
 		sb.append(", notes=");
 		sb.append(notes);
 		sb.append(", modifyDate=");
@@ -197,6 +199,13 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 			vrcopProductionPlantEquipmentImpl.setEquipmentStatus(equipmentStatus);
 		}
 
+		if (expireDate == Long.MIN_VALUE) {
+			vrcopProductionPlantEquipmentImpl.setExpireDate(null);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setExpireDate(new Date(expireDate));
+		}
+
 		if (notes == null) {
 			vrcopProductionPlantEquipmentImpl.setNotes(StringPool.BLANK);
 		}
@@ -243,6 +252,7 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 		designSymbolNo = objectInput.readUTF();
 		productionCountryCode = objectInput.readUTF();
 		equipmentStatus = objectInput.readUTF();
+		expireDate = objectInput.readLong();
 		notes = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
@@ -336,6 +346,8 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 			objectOutput.writeUTF(equipmentStatus);
 		}
 
+		objectOutput.writeLong(expireDate);
+
 		if (notes == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -362,6 +374,7 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 	public String designSymbolNo;
 	public String productionCountryCode;
 	public String equipmentStatus;
+	public long expireDate;
 	public String notes;
 	public long modifyDate;
 	public long syncDate;

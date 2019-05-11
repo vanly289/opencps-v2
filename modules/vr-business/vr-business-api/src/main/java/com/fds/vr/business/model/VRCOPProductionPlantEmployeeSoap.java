@@ -41,6 +41,7 @@ public class VRCOPProductionPlantEmployeeSoap implements Serializable {
 		soapModel.setSequenceNo(model.getSequenceNo());
 		soapModel.setEmployeeName(model.getEmployeeName());
 		soapModel.setEmployeeCertificateNo(model.getEmployeeCertificateNo());
+		soapModel.setTrainningAt(model.getTrainningAt());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 
@@ -154,6 +155,14 @@ public class VRCOPProductionPlantEmployeeSoap implements Serializable {
 		_employeeCertificateNo = employeeCertificateNo;
 	}
 
+	public String getTrainningAt() {
+		return _trainningAt;
+	}
+
+	public void setTrainningAt(String trainningAt) {
+		_trainningAt = trainningAt;
+	}
+
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -177,6 +186,7 @@ public class VRCOPProductionPlantEmployeeSoap implements Serializable {
 	private long _sequenceNo;
 	private String _employeeName;
 	private String _employeeCertificateNo;
+	private String _trainningAt;
 	private Date _modifyDate;
 	private Date _syncDate;
 }
