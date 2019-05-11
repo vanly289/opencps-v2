@@ -621,4 +621,7 @@ public interface VRIssueVehiclecertificatePersistence extends BasePersistence<VR
 	* @return the number of vr issue vehiclecertificates
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

@@ -71,6 +71,13 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 			{ "vehicleClass", Types.VARCHAR },
 			{ "vehicleTypeCode", Types.VARCHAR },
 			{ "vehicleTypeDescription", Types.VARCHAR },
+			{ "productClassificationCode", Types.VARCHAR },
+			{ "productClassificationDescription", Types.VARCHAR },
+			{ "trademarkName", Types.VARCHAR },
+			{ "commercialName", Types.VARCHAR },
+			{ "modelCode", Types.VARCHAR },
+			{ "designSymbolNo", Types.VARCHAR },
+			{ "remarks", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -85,11 +92,18 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		TABLE_COLUMNS_MAP.put("vehicleClass", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("vehicleTypeCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("vehicleTypeDescription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productClassificationCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productClassificationDescription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("trademarkName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("commercialName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("modelCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("designSymbolNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("remarks", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copproducttype (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copproducttype (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,remarks VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copproducttype";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopProductType.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copproducttype.modifyDate DESC";
@@ -157,6 +171,15 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		attributes.put("vehicleClass", getVehicleClass());
 		attributes.put("vehicleTypeCode", getVehicleTypeCode());
 		attributes.put("vehicleTypeDescription", getVehicleTypeDescription());
+		attributes.put("productClassificationCode",
+			getProductClassificationCode());
+		attributes.put("productClassificationDescription",
+			getProductClassificationDescription());
+		attributes.put("trademarkName", getTrademarkName());
+		attributes.put("commercialName", getCommercialName());
+		attributes.put("modelCode", getModelCode());
+		attributes.put("designSymbolNo", getDesignSymbolNo());
+		attributes.put("remarks", getRemarks());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -216,6 +239,50 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 
 		if (vehicleTypeDescription != null) {
 			setVehicleTypeDescription(vehicleTypeDescription);
+		}
+
+		String productClassificationCode = (String)attributes.get(
+				"productClassificationCode");
+
+		if (productClassificationCode != null) {
+			setProductClassificationCode(productClassificationCode);
+		}
+
+		String productClassificationDescription = (String)attributes.get(
+				"productClassificationDescription");
+
+		if (productClassificationDescription != null) {
+			setProductClassificationDescription(productClassificationDescription);
+		}
+
+		String trademarkName = (String)attributes.get("trademarkName");
+
+		if (trademarkName != null) {
+			setTrademarkName(trademarkName);
+		}
+
+		String commercialName = (String)attributes.get("commercialName");
+
+		if (commercialName != null) {
+			setCommercialName(commercialName);
+		}
+
+		String modelCode = (String)attributes.get("modelCode");
+
+		if (modelCode != null) {
+			setModelCode(modelCode);
+		}
+
+		String designSymbolNo = (String)attributes.get("designSymbolNo");
+
+		if (designSymbolNo != null) {
+			setDesignSymbolNo(designSymbolNo);
+		}
+
+		String remarks = (String)attributes.get("remarks");
+
+		if (remarks != null) {
+			setRemarks(remarks);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -366,6 +433,112 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 	}
 
 	@Override
+	public String getProductClassificationCode() {
+		if (_productClassificationCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productClassificationCode;
+		}
+	}
+
+	@Override
+	public void setProductClassificationCode(String productClassificationCode) {
+		_productClassificationCode = productClassificationCode;
+	}
+
+	@Override
+	public String getProductClassificationDescription() {
+		if (_productClassificationDescription == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productClassificationDescription;
+		}
+	}
+
+	@Override
+	public void setProductClassificationDescription(
+		String productClassificationDescription) {
+		_productClassificationDescription = productClassificationDescription;
+	}
+
+	@Override
+	public String getTrademarkName() {
+		if (_trademarkName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _trademarkName;
+		}
+	}
+
+	@Override
+	public void setTrademarkName(String trademarkName) {
+		_trademarkName = trademarkName;
+	}
+
+	@Override
+	public String getCommercialName() {
+		if (_commercialName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _commercialName;
+		}
+	}
+
+	@Override
+	public void setCommercialName(String commercialName) {
+		_commercialName = commercialName;
+	}
+
+	@Override
+	public String getModelCode() {
+		if (_modelCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _modelCode;
+		}
+	}
+
+	@Override
+	public void setModelCode(String modelCode) {
+		_modelCode = modelCode;
+	}
+
+	@Override
+	public String getDesignSymbolNo() {
+		if (_designSymbolNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _designSymbolNo;
+		}
+	}
+
+	@Override
+	public void setDesignSymbolNo(String designSymbolNo) {
+		_designSymbolNo = designSymbolNo;
+	}
+
+	@Override
+	public String getRemarks() {
+		if (_remarks == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _remarks;
+		}
+	}
+
+	@Override
+	public void setRemarks(String remarks) {
+		_remarks = remarks;
+	}
+
+	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -426,6 +599,13 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		vrcopProductTypeImpl.setVehicleClass(getVehicleClass());
 		vrcopProductTypeImpl.setVehicleTypeCode(getVehicleTypeCode());
 		vrcopProductTypeImpl.setVehicleTypeDescription(getVehicleTypeDescription());
+		vrcopProductTypeImpl.setProductClassificationCode(getProductClassificationCode());
+		vrcopProductTypeImpl.setProductClassificationDescription(getProductClassificationDescription());
+		vrcopProductTypeImpl.setTrademarkName(getTrademarkName());
+		vrcopProductTypeImpl.setCommercialName(getCommercialName());
+		vrcopProductTypeImpl.setModelCode(getModelCode());
+		vrcopProductTypeImpl.setDesignSymbolNo(getDesignSymbolNo());
+		vrcopProductTypeImpl.setRemarks(getRemarks());
 		vrcopProductTypeImpl.setModifyDate(getModifyDate());
 		vrcopProductTypeImpl.setSyncDate(getSyncDate());
 
@@ -549,6 +729,64 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 			vrcopProductTypeCacheModel.vehicleTypeDescription = null;
 		}
 
+		vrcopProductTypeCacheModel.productClassificationCode = getProductClassificationCode();
+
+		String productClassificationCode = vrcopProductTypeCacheModel.productClassificationCode;
+
+		if ((productClassificationCode != null) &&
+				(productClassificationCode.length() == 0)) {
+			vrcopProductTypeCacheModel.productClassificationCode = null;
+		}
+
+		vrcopProductTypeCacheModel.productClassificationDescription = getProductClassificationDescription();
+
+		String productClassificationDescription = vrcopProductTypeCacheModel.productClassificationDescription;
+
+		if ((productClassificationDescription != null) &&
+				(productClassificationDescription.length() == 0)) {
+			vrcopProductTypeCacheModel.productClassificationDescription = null;
+		}
+
+		vrcopProductTypeCacheModel.trademarkName = getTrademarkName();
+
+		String trademarkName = vrcopProductTypeCacheModel.trademarkName;
+
+		if ((trademarkName != null) && (trademarkName.length() == 0)) {
+			vrcopProductTypeCacheModel.trademarkName = null;
+		}
+
+		vrcopProductTypeCacheModel.commercialName = getCommercialName();
+
+		String commercialName = vrcopProductTypeCacheModel.commercialName;
+
+		if ((commercialName != null) && (commercialName.length() == 0)) {
+			vrcopProductTypeCacheModel.commercialName = null;
+		}
+
+		vrcopProductTypeCacheModel.modelCode = getModelCode();
+
+		String modelCode = vrcopProductTypeCacheModel.modelCode;
+
+		if ((modelCode != null) && (modelCode.length() == 0)) {
+			vrcopProductTypeCacheModel.modelCode = null;
+		}
+
+		vrcopProductTypeCacheModel.designSymbolNo = getDesignSymbolNo();
+
+		String designSymbolNo = vrcopProductTypeCacheModel.designSymbolNo;
+
+		if ((designSymbolNo != null) && (designSymbolNo.length() == 0)) {
+			vrcopProductTypeCacheModel.designSymbolNo = null;
+		}
+
+		vrcopProductTypeCacheModel.remarks = getRemarks();
+
+		String remarks = vrcopProductTypeCacheModel.remarks;
+
+		if ((remarks != null) && (remarks.length() == 0)) {
+			vrcopProductTypeCacheModel.remarks = null;
+		}
+
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -572,7 +810,7 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -590,6 +828,20 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		sb.append(getVehicleTypeCode());
 		sb.append(", vehicleTypeDescription=");
 		sb.append(getVehicleTypeDescription());
+		sb.append(", productClassificationCode=");
+		sb.append(getProductClassificationCode());
+		sb.append(", productClassificationDescription=");
+		sb.append(getProductClassificationDescription());
+		sb.append(", trademarkName=");
+		sb.append(getTrademarkName());
+		sb.append(", commercialName=");
+		sb.append(getCommercialName());
+		sb.append(", modelCode=");
+		sb.append(getModelCode());
+		sb.append(", designSymbolNo=");
+		sb.append(getDesignSymbolNo());
+		sb.append(", remarks=");
+		sb.append(getRemarks());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -601,7 +853,7 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPProductType");
@@ -640,6 +892,34 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		sb.append(getVehicleTypeDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>productClassificationCode</column-name><column-value><![CDATA[");
+		sb.append(getProductClassificationCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productClassificationDescription</column-name><column-value><![CDATA[");
+		sb.append(getProductClassificationDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>trademarkName</column-name><column-value><![CDATA[");
+		sb.append(getTrademarkName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>commercialName</column-name><column-value><![CDATA[");
+		sb.append(getCommercialName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modelCode</column-name><column-value><![CDATA[");
+		sb.append(getModelCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>designSymbolNo</column-name><column-value><![CDATA[");
+		sb.append(getDesignSymbolNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>remarks</column-name><column-value><![CDATA[");
+		sb.append(getRemarks());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
@@ -670,6 +950,13 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 	private String _vehicleClass;
 	private String _vehicleTypeCode;
 	private String _vehicleTypeDescription;
+	private String _productClassificationCode;
+	private String _productClassificationDescription;
+	private String _trademarkName;
+	private String _commercialName;
+	private String _modelCode;
+	private String _designSymbolNo;
+	private String _remarks;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

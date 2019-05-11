@@ -122,7 +122,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @return the matching vr issue equipment certificates
 	*/
 	public static List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId) {
+		long issueVehicleCertificateId) {
 		return getPersistence()
 				   .findByIssueVehicleCertificateId(issueVehicleCertificateId);
 	}
@@ -140,7 +140,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @return the range of matching vr issue equipment certificates
 	*/
 	public static List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId, int start, int end) {
+		long issueVehicleCertificateId, int start, int end) {
 		return getPersistence()
 				   .findByIssueVehicleCertificateId(issueVehicleCertificateId,
 			start, end);
@@ -160,7 +160,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @return the ordered range of matching vr issue equipment certificates
 	*/
 	public static List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId, int start, int end,
+		long issueVehicleCertificateId, int start, int end,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator) {
 		return getPersistence()
 				   .findByIssueVehicleCertificateId(issueVehicleCertificateId,
@@ -182,7 +182,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @return the ordered range of matching vr issue equipment certificates
 	*/
 	public static List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId, int start, int end,
+		long issueVehicleCertificateId, int start, int end,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -199,7 +199,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @throws NoSuchVRIssueEquipmentCertificateException if a matching vr issue equipment certificate could not be found
 	*/
 	public static VRIssueEquipmentCertificate findByIssueVehicleCertificateId_First(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRIssueEquipmentCertificateException {
 		return getPersistence()
@@ -215,7 +215,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @return the first matching vr issue equipment certificate, or <code>null</code> if a matching vr issue equipment certificate could not be found
 	*/
 	public static VRIssueEquipmentCertificate fetchByIssueVehicleCertificateId_First(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator) {
 		return getPersistence()
 				   .fetchByIssueVehicleCertificateId_First(issueVehicleCertificateId,
@@ -231,7 +231,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @throws NoSuchVRIssueEquipmentCertificateException if a matching vr issue equipment certificate could not be found
 	*/
 	public static VRIssueEquipmentCertificate findByIssueVehicleCertificateId_Last(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRIssueEquipmentCertificateException {
 		return getPersistence()
@@ -247,7 +247,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @return the last matching vr issue equipment certificate, or <code>null</code> if a matching vr issue equipment certificate could not be found
 	*/
 	public static VRIssueEquipmentCertificate fetchByIssueVehicleCertificateId_Last(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator) {
 		return getPersistence()
 				   .fetchByIssueVehicleCertificateId_Last(issueVehicleCertificateId,
@@ -264,7 +264,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @throws NoSuchVRIssueEquipmentCertificateException if a vr issue equipment certificate with the primary key could not be found
 	*/
 	public static VRIssueEquipmentCertificate[] findByIssueVehicleCertificateId_PrevAndNext(
-		long id, int issueVehicleCertificateId,
+		long id, long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRIssueEquipmentCertificateException {
 		return getPersistence()
@@ -278,7 +278,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @param issueVehicleCertificateId the issue vehicle certificate ID
 	*/
 	public static void removeByIssueVehicleCertificateId(
-		int issueVehicleCertificateId) {
+		long issueVehicleCertificateId) {
 		getPersistence()
 			.removeByIssueVehicleCertificateId(issueVehicleCertificateId);
 	}
@@ -290,7 +290,7 @@ public class VRIssueEquipmentCertificateUtil {
 	* @return the number of matching vr issue equipment certificates
 	*/
 	public static int countByIssueVehicleCertificateId(
-		int issueVehicleCertificateId) {
+		long issueVehicleCertificateId) {
 		return getPersistence()
 				   .countByIssueVehicleCertificateId(issueVehicleCertificateId);
 	}

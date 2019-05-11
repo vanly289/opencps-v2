@@ -65,8 +65,8 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "id", Types.BIGINT },
 			{ "mtcore", Types.INTEGER },
-			{ "issueId", Types.INTEGER },
-			{ "issueVehicleCertificateId", Types.INTEGER },
+			{ "issueId", Types.BIGINT },
+			{ "issueVehicleCertificateId", Types.BIGINT },
 			{ "vehiclecertificaterecordno", Types.VARCHAR },
 			{ "equipmentName", Types.VARCHAR },
 			{ "equipmentType", Types.VARCHAR },
@@ -92,8 +92,8 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 	static {
 		TABLE_COLUMNS_MAP.put("id", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mtcore", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("issueId", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("issueVehicleCertificateId", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("issueId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("issueVehicleCertificateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("vehiclecertificaterecordno", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("equipmentName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("equipmentType", Types.VARCHAR);
@@ -115,7 +115,7 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_issue_equipmentcertificate (id LONG not null primary key,mtcore INTEGER,issueId INTEGER,issueVehicleCertificateId INTEGER,vehiclecertificaterecordno VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,equipmentCertificateType VARCHAR(75) null,equipmentDocumentNo VARCHAR(75) null,equipmentCertificateRecordNo VARCHAR(75) null,equipmentExamRecordNo VARCHAR(75) null,EquipmentCertificateRecordId INTEGER,TotalQuantity INTEGER,TotalProductUsed INTEGER,TotalInUse INTEGER,TotalNotUsed INTEGER,applicantNo VARCHAR(75) null,applicantname VARCHAR(75) null,applicantaddress VARCHAR(75) null,productionplantname VARCHAR(75) null,productionplantaddress VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_issue_equipmentcertificate (id LONG not null primary key,mtcore INTEGER,issueId LONG,issueVehicleCertificateId LONG,vehiclecertificaterecordno VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,equipmentCertificateType VARCHAR(75) null,equipmentDocumentNo VARCHAR(75) null,equipmentCertificateRecordNo VARCHAR(75) null,equipmentExamRecordNo VARCHAR(75) null,EquipmentCertificateRecordId INTEGER,TotalQuantity INTEGER,TotalProductUsed INTEGER,TotalInUse INTEGER,TotalNotUsed INTEGER,applicantNo VARCHAR(75) null,applicantname VARCHAR(75) null,applicantaddress VARCHAR(75) null,productionplantname VARCHAR(75) null,productionplantaddress VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_issue_equipmentcertificate";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrIssueEquipmentCertificate.syncDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_issue_equipmentcertificate.syncDate DESC";
@@ -223,13 +223,13 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 			setMtcore(mtcore);
 		}
 
-		Integer issueId = (Integer)attributes.get("issueId");
+		Long issueId = (Long)attributes.get("issueId");
 
 		if (issueId != null) {
 			setIssueId(issueId);
 		}
 
-		Integer issueVehicleCertificateId = (Integer)attributes.get(
+		Long issueVehicleCertificateId = (Long)attributes.get(
 				"issueVehicleCertificateId");
 
 		if (issueVehicleCertificateId != null) {
@@ -380,22 +380,22 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 	}
 
 	@Override
-	public int getIssueId() {
+	public long getIssueId() {
 		return _issueId;
 	}
 
 	@Override
-	public void setIssueId(int issueId) {
+	public void setIssueId(long issueId) {
 		_issueId = issueId;
 	}
 
 	@Override
-	public int getIssueVehicleCertificateId() {
+	public long getIssueVehicleCertificateId() {
 		return _issueVehicleCertificateId;
 	}
 
 	@Override
-	public void setIssueVehicleCertificateId(int issueVehicleCertificateId) {
+	public void setIssueVehicleCertificateId(long issueVehicleCertificateId) {
 		_columnBitmask |= ISSUEVEHICLECERTIFICATEID_COLUMN_BITMASK;
 
 		if (!_setOriginalIssueVehicleCertificateId) {
@@ -407,7 +407,7 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 		_issueVehicleCertificateId = issueVehicleCertificateId;
 	}
 
-	public int getOriginalIssueVehicleCertificateId() {
+	public long getOriginalIssueVehicleCertificateId() {
 		return _originalIssueVehicleCertificateId;
 	}
 
@@ -1129,9 +1129,9 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 		};
 	private long _id;
 	private int _mtcore;
-	private int _issueId;
-	private int _issueVehicleCertificateId;
-	private int _originalIssueVehicleCertificateId;
+	private long _issueId;
+	private long _issueVehicleCertificateId;
+	private long _originalIssueVehicleCertificateId;
 	private boolean _setOriginalIssueVehicleCertificateId;
 	private String _vehiclecertificaterecordno;
 	private String _originalVehiclecertificaterecordno;

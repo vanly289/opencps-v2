@@ -70,6 +70,13 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 			{ "vehicleClass", Types.VARCHAR },
 			{ "vehicleTypeCode", Types.VARCHAR },
 			{ "vehicleTypeDescription", Types.VARCHAR },
+			{ "productClassificationCode", Types.VARCHAR },
+			{ "productClassificationDescription", Types.VARCHAR },
+			{ "trademark", Types.VARCHAR },
+			{ "trademarkName", Types.VARCHAR },
+			{ "commercialName", Types.VARCHAR },
+			{ "modelCode", Types.VARCHAR },
+			{ "designSymbolNo", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -83,11 +90,18 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		TABLE_COLUMNS_MAP.put("vehicleClass", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("vehicleTypeCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("vehicleTypeDescription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productClassificationCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productClassificationDescription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("trademark", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("trademarkName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("commercialName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("modelCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("designSymbolNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productiontype (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productiontype (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productiontype";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductType.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productiontype.modifyDate DESC";
@@ -153,6 +167,15 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		attributes.put("vehicleClass", getVehicleClass());
 		attributes.put("vehicleTypeCode", getVehicleTypeCode());
 		attributes.put("vehicleTypeDescription", getVehicleTypeDescription());
+		attributes.put("productClassificationCode",
+			getProductClassificationCode());
+		attributes.put("productClassificationDescription",
+			getProductClassificationDescription());
+		attributes.put("trademark", getTrademark());
+		attributes.put("trademarkName", getTrademarkName());
+		attributes.put("commercialName", getCommercialName());
+		attributes.put("modelCode", getModelCode());
+		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -205,6 +228,50 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 		if (vehicleTypeDescription != null) {
 			setVehicleTypeDescription(vehicleTypeDescription);
+		}
+
+		String productClassificationCode = (String)attributes.get(
+				"productClassificationCode");
+
+		if (productClassificationCode != null) {
+			setProductClassificationCode(productClassificationCode);
+		}
+
+		String productClassificationDescription = (String)attributes.get(
+				"productClassificationDescription");
+
+		if (productClassificationDescription != null) {
+			setProductClassificationDescription(productClassificationDescription);
+		}
+
+		String trademark = (String)attributes.get("trademark");
+
+		if (trademark != null) {
+			setTrademark(trademark);
+		}
+
+		String trademarkName = (String)attributes.get("trademarkName");
+
+		if (trademarkName != null) {
+			setTrademarkName(trademarkName);
+		}
+
+		String commercialName = (String)attributes.get("commercialName");
+
+		if (commercialName != null) {
+			setCommercialName(commercialName);
+		}
+
+		String modelCode = (String)attributes.get("modelCode");
+
+		if (modelCode != null) {
+			setModelCode(modelCode);
+		}
+
+		String designSymbolNo = (String)attributes.get("designSymbolNo");
+
+		if (designSymbolNo != null) {
+			setDesignSymbolNo(designSymbolNo);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -330,6 +397,112 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	}
 
 	@Override
+	public String getProductClassificationCode() {
+		if (_productClassificationCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productClassificationCode;
+		}
+	}
+
+	@Override
+	public void setProductClassificationCode(String productClassificationCode) {
+		_productClassificationCode = productClassificationCode;
+	}
+
+	@Override
+	public String getProductClassificationDescription() {
+		if (_productClassificationDescription == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productClassificationDescription;
+		}
+	}
+
+	@Override
+	public void setProductClassificationDescription(
+		String productClassificationDescription) {
+		_productClassificationDescription = productClassificationDescription;
+	}
+
+	@Override
+	public String getTrademark() {
+		if (_trademark == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _trademark;
+		}
+	}
+
+	@Override
+	public void setTrademark(String trademark) {
+		_trademark = trademark;
+	}
+
+	@Override
+	public String getTrademarkName() {
+		if (_trademarkName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _trademarkName;
+		}
+	}
+
+	@Override
+	public void setTrademarkName(String trademarkName) {
+		_trademarkName = trademarkName;
+	}
+
+	@Override
+	public String getCommercialName() {
+		if (_commercialName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _commercialName;
+		}
+	}
+
+	@Override
+	public void setCommercialName(String commercialName) {
+		_commercialName = commercialName;
+	}
+
+	@Override
+	public String getModelCode() {
+		if (_modelCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _modelCode;
+		}
+	}
+
+	@Override
+	public void setModelCode(String modelCode) {
+		_modelCode = modelCode;
+	}
+
+	@Override
+	public String getDesignSymbolNo() {
+		if (_designSymbolNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _designSymbolNo;
+		}
+	}
+
+	@Override
+	public void setDesignSymbolNo(String designSymbolNo) {
+		_designSymbolNo = designSymbolNo;
+	}
+
+	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -389,6 +562,13 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		vrProductTypeImpl.setVehicleClass(getVehicleClass());
 		vrProductTypeImpl.setVehicleTypeCode(getVehicleTypeCode());
 		vrProductTypeImpl.setVehicleTypeDescription(getVehicleTypeDescription());
+		vrProductTypeImpl.setProductClassificationCode(getProductClassificationCode());
+		vrProductTypeImpl.setProductClassificationDescription(getProductClassificationDescription());
+		vrProductTypeImpl.setTrademark(getTrademark());
+		vrProductTypeImpl.setTrademarkName(getTrademarkName());
+		vrProductTypeImpl.setCommercialName(getCommercialName());
+		vrProductTypeImpl.setModelCode(getModelCode());
+		vrProductTypeImpl.setDesignSymbolNo(getDesignSymbolNo());
 		vrProductTypeImpl.setModifyDate(getModifyDate());
 		vrProductTypeImpl.setSyncDate(getSyncDate());
 
@@ -502,6 +682,64 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 			vrProductTypeCacheModel.vehicleTypeDescription = null;
 		}
 
+		vrProductTypeCacheModel.productClassificationCode = getProductClassificationCode();
+
+		String productClassificationCode = vrProductTypeCacheModel.productClassificationCode;
+
+		if ((productClassificationCode != null) &&
+				(productClassificationCode.length() == 0)) {
+			vrProductTypeCacheModel.productClassificationCode = null;
+		}
+
+		vrProductTypeCacheModel.productClassificationDescription = getProductClassificationDescription();
+
+		String productClassificationDescription = vrProductTypeCacheModel.productClassificationDescription;
+
+		if ((productClassificationDescription != null) &&
+				(productClassificationDescription.length() == 0)) {
+			vrProductTypeCacheModel.productClassificationDescription = null;
+		}
+
+		vrProductTypeCacheModel.trademark = getTrademark();
+
+		String trademark = vrProductTypeCacheModel.trademark;
+
+		if ((trademark != null) && (trademark.length() == 0)) {
+			vrProductTypeCacheModel.trademark = null;
+		}
+
+		vrProductTypeCacheModel.trademarkName = getTrademarkName();
+
+		String trademarkName = vrProductTypeCacheModel.trademarkName;
+
+		if ((trademarkName != null) && (trademarkName.length() == 0)) {
+			vrProductTypeCacheModel.trademarkName = null;
+		}
+
+		vrProductTypeCacheModel.commercialName = getCommercialName();
+
+		String commercialName = vrProductTypeCacheModel.commercialName;
+
+		if ((commercialName != null) && (commercialName.length() == 0)) {
+			vrProductTypeCacheModel.commercialName = null;
+		}
+
+		vrProductTypeCacheModel.modelCode = getModelCode();
+
+		String modelCode = vrProductTypeCacheModel.modelCode;
+
+		if ((modelCode != null) && (modelCode.length() == 0)) {
+			vrProductTypeCacheModel.modelCode = null;
+		}
+
+		vrProductTypeCacheModel.designSymbolNo = getDesignSymbolNo();
+
+		String designSymbolNo = vrProductTypeCacheModel.designSymbolNo;
+
+		if ((designSymbolNo != null) && (designSymbolNo.length() == 0)) {
+			vrProductTypeCacheModel.designSymbolNo = null;
+		}
+
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -525,7 +763,7 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -541,6 +779,20 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		sb.append(getVehicleTypeCode());
 		sb.append(", vehicleTypeDescription=");
 		sb.append(getVehicleTypeDescription());
+		sb.append(", productClassificationCode=");
+		sb.append(getProductClassificationCode());
+		sb.append(", productClassificationDescription=");
+		sb.append(getProductClassificationDescription());
+		sb.append(", trademark=");
+		sb.append(getTrademark());
+		sb.append(", trademarkName=");
+		sb.append(getTrademarkName());
+		sb.append(", commercialName=");
+		sb.append(getCommercialName());
+		sb.append(", modelCode=");
+		sb.append(getModelCode());
+		sb.append(", designSymbolNo=");
+		sb.append(getDesignSymbolNo());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -552,7 +804,7 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductType");
@@ -587,6 +839,34 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		sb.append(getVehicleTypeDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>productClassificationCode</column-name><column-value><![CDATA[");
+		sb.append(getProductClassificationCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productClassificationDescription</column-name><column-value><![CDATA[");
+		sb.append(getProductClassificationDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>trademark</column-name><column-value><![CDATA[");
+		sb.append(getTrademark());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>trademarkName</column-name><column-value><![CDATA[");
+		sb.append(getTrademarkName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>commercialName</column-name><column-value><![CDATA[");
+		sb.append(getCommercialName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modelCode</column-name><column-value><![CDATA[");
+		sb.append(getModelCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>designSymbolNo</column-name><column-value><![CDATA[");
+		sb.append(getDesignSymbolNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
@@ -615,6 +895,13 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	private String _vehicleClass;
 	private String _vehicleTypeCode;
 	private String _vehicleTypeDescription;
+	private String _productClassificationCode;
+	private String _productClassificationDescription;
+	private String _trademark;
+	private String _trademarkName;
+	private String _commercialName;
+	private String _modelCode;
+	private String _designSymbolNo;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

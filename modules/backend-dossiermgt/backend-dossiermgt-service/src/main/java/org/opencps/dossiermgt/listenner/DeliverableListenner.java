@@ -6,7 +6,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.opencps.dossiermgt.model.Deliverable;
+import org.opencps.dossiermgt.model.RegistrationForm;
 import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
+import org.opencps.dossiermgt.service.RegistrationFormLocalServiceUtil;
 import org.opencps.usermgt.model.Applicant;
 import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
@@ -140,6 +142,9 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				return "";
 			}
 			if ((mtCore == 1) && (Validator.isNotNull(applicant)) && (Validator.isNull(appProfile)) ) {
+				_log.info("VRApplicantProfile is NULL");
+				return "";
+				/*
 				// 2. Insert vr_applicantprofile
 				String markupDesigner = StringPool.BLANK; // 1: CSTK
 				String markupDomesticsManufacturer = StringPool.BLANK; // 2: CSSX TN
@@ -150,6 +155,21 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				SimpleDateFormat formatDateShort = new SimpleDateFormat("dd/MM/yyyy");
 				String applicantCeremonyDate = formatDateShort
 						.format(applicant.getApplicantIdDate());
+				
+				RegistrationForm registrationFormTTC = RegistrationFormLocalServiceUtil
+						.getByRegIdAndFormNo(registration.getRegistrationId(), "TTCDN");
+
+				String applicantBusinessType = StringPool.BLANK;
+				if (registrationFormTTC != null && registrationFormTTC.getFormData().length() > 1) {
+					JSONObject formJson = JSONFactoryUtil
+							.createJSONObject(registrationFormTTC.getFormData());
+					applicantBusinessType = formJson.getString("loai_hinh_doanh_nghiep");
+					markupCorporation = formJson.getString("doi_tuong");
+					markupDesigner = markupCorporation.contains("1") ? "1" : "0";
+					markupDomesticsManufacturer = markupCorporation.contains("2") ? "1" : "0";
+					markupImporter = markupCorporation.contains("3") ? "1" : "0";
+				}
+
 				
 				appProfile = new VRApplicantProfileImpl();
 				appProfile.setId(CounterLocalServiceUtil.increment(VRApplicantProfile.class.getName()));
@@ -163,7 +183,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				appProfile.setApplicantPhone(applicant.getContactTelNo());
 				appProfile.setApplicantEmail(applicant.getContactEmail());
 				appProfile.setApplicantFax("---");
-				appProfile.setApplicantBusinessType("---"); // Lay tu json
+				appProfile.setApplicantBusinessType(applicantBusinessType); // Lay tu json
 				appProfile.setApplicantRepresentative(applicant.getContactName());
 				appProfile
 						.setApplicantRepresentativeTitle(applicant.getRepresentativeEnterprise());
@@ -196,7 +216,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				appProfileHistory.setApplicantPhone(applicant.getContactTelNo());
 				appProfileHistory.setApplicantEmail(applicant.getContactEmail());
 				appProfileHistory.setApplicantFax("---");
-				appProfileHistory.setApplicantBusinessType("---");
+				appProfileHistory.setApplicantBusinessType(applicantBusinessType);
 				appProfileHistory.setApplicantRepresentative(applicant.getContactName());
 				appProfileHistory
 						.setApplicantRepresentativeTitle(applicant.getRepresentativeEnterprise());
@@ -218,7 +238,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 
 				VRApplicantProfileHistoryLocalServiceUtil.addVRApplicantProfileHistory(appProfileHistory);
 
-			}
+			*/}
 			String businessTypeCode = dossierDeliverableModel.getDeliverableType();
 			switch (businessTypeCode) {
 			case "GCN_TDTK_XCG":  //Tham dinh thiet ke Xe co gioi

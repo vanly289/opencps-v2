@@ -68,7 +68,9 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 			{ "copReportRepositoryID", Types.BIGINT },
 			{ "copReportNo", Types.VARCHAR },
 			{ "sequenceNo", Types.BIGINT },
-			{ "attachFileURL", Types.VARCHAR },
+			{ "DocName", Types.VARCHAR },
+			{ "DocNo", Types.VARCHAR },
+			{ "Remarks", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -80,12 +82,14 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		TABLE_COLUMNS_MAP.put("copReportRepositoryID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("copReportNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sequenceNo", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("attachFileURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("DocName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("DocNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("Remarks", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copreport_attach (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,attachFileURL VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copreport_attach (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,DocName VARCHAR(75) null,DocNo VARCHAR(75) null,Remarks VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copreport_attach";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopReportAttach.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copreport_attach.modifyDate DESC";
@@ -150,7 +154,9 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		attributes.put("copReportRepositoryID", getCopReportRepositoryID());
 		attributes.put("copReportNo", getCopReportNo());
 		attributes.put("sequenceNo", getSequenceNo());
-		attributes.put("attachFileURL", getAttachFileURL());
+		attributes.put("DocName", getDocName());
+		attributes.put("DocNo", getDocNo());
+		attributes.put("Remarks", getRemarks());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -193,10 +199,22 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 			setSequenceNo(sequenceNo);
 		}
 
-		String attachFileURL = (String)attributes.get("attachFileURL");
+		String DocName = (String)attributes.get("DocName");
 
-		if (attachFileURL != null) {
-			setAttachFileURL(attachFileURL);
+		if (DocName != null) {
+			setDocName(DocName);
+		}
+
+		String DocNo = (String)attributes.get("DocNo");
+
+		if (DocNo != null) {
+			setDocNo(DocNo);
+		}
+
+		String Remarks = (String)attributes.get("Remarks");
+
+		if (Remarks != null) {
+			setRemarks(Remarks);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -302,18 +320,48 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 	}
 
 	@Override
-	public String getAttachFileURL() {
-		if (_attachFileURL == null) {
+	public String getDocName() {
+		if (_DocName == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _attachFileURL;
+			return _DocName;
 		}
 	}
 
 	@Override
-	public void setAttachFileURL(String attachFileURL) {
-		_attachFileURL = attachFileURL;
+	public void setDocName(String DocName) {
+		_DocName = DocName;
+	}
+
+	@Override
+	public String getDocNo() {
+		if (_DocNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _DocNo;
+		}
+	}
+
+	@Override
+	public void setDocNo(String DocNo) {
+		_DocNo = DocNo;
+	}
+
+	@Override
+	public String getRemarks() {
+		if (_Remarks == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _Remarks;
+		}
+	}
+
+	@Override
+	public void setRemarks(String Remarks) {
+		_Remarks = Remarks;
 	}
 
 	@Override
@@ -374,7 +422,9 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		vrcopReportAttachImpl.setCopReportRepositoryID(getCopReportRepositoryID());
 		vrcopReportAttachImpl.setCopReportNo(getCopReportNo());
 		vrcopReportAttachImpl.setSequenceNo(getSequenceNo());
-		vrcopReportAttachImpl.setAttachFileURL(getAttachFileURL());
+		vrcopReportAttachImpl.setDocName(getDocName());
+		vrcopReportAttachImpl.setDocNo(getDocNo());
+		vrcopReportAttachImpl.setRemarks(getRemarks());
 		vrcopReportAttachImpl.setModifyDate(getModifyDate());
 		vrcopReportAttachImpl.setSyncDate(getSyncDate());
 
@@ -473,12 +523,28 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 
 		vrcopReportAttachCacheModel.sequenceNo = getSequenceNo();
 
-		vrcopReportAttachCacheModel.attachFileURL = getAttachFileURL();
+		vrcopReportAttachCacheModel.DocName = getDocName();
 
-		String attachFileURL = vrcopReportAttachCacheModel.attachFileURL;
+		String DocName = vrcopReportAttachCacheModel.DocName;
 
-		if ((attachFileURL != null) && (attachFileURL.length() == 0)) {
-			vrcopReportAttachCacheModel.attachFileURL = null;
+		if ((DocName != null) && (DocName.length() == 0)) {
+			vrcopReportAttachCacheModel.DocName = null;
+		}
+
+		vrcopReportAttachCacheModel.DocNo = getDocNo();
+
+		String DocNo = vrcopReportAttachCacheModel.DocNo;
+
+		if ((DocNo != null) && (DocNo.length() == 0)) {
+			vrcopReportAttachCacheModel.DocNo = null;
+		}
+
+		vrcopReportAttachCacheModel.Remarks = getRemarks();
+
+		String Remarks = vrcopReportAttachCacheModel.Remarks;
+
+		if ((Remarks != null) && (Remarks.length() == 0)) {
+			vrcopReportAttachCacheModel.Remarks = null;
 		}
 
 		Date modifyDate = getModifyDate();
@@ -504,7 +570,7 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -516,8 +582,12 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		sb.append(getCopReportNo());
 		sb.append(", sequenceNo=");
 		sb.append(getSequenceNo());
-		sb.append(", attachFileURL=");
-		sb.append(getAttachFileURL());
+		sb.append(", DocName=");
+		sb.append(getDocName());
+		sb.append(", DocNo=");
+		sb.append(getDocNo());
+		sb.append(", Remarks=");
+		sb.append(getRemarks());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -529,7 +599,7 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPReportAttach");
@@ -556,8 +626,16 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		sb.append(getSequenceNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>attachFileURL</column-name><column-value><![CDATA[");
-		sb.append(getAttachFileURL());
+			"<column><column-name>DocName</column-name><column-value><![CDATA[");
+		sb.append(getDocName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>DocNo</column-name><column-value><![CDATA[");
+		sb.append(getDocNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>Remarks</column-name><column-value><![CDATA[");
+		sb.append(getRemarks());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
@@ -587,7 +665,9 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 	private String _copReportNo;
 	private String _originalCopReportNo;
 	private long _sequenceNo;
-	private String _attachFileURL;
+	private String _DocName;
+	private String _DocNo;
+	private String _Remarks;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

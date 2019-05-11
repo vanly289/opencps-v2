@@ -900,6 +900,13 @@ public class VRProductTypePersistenceImpl extends BasePersistenceImpl<VRProductT
 		vrProductTypeImpl.setVehicleClass(vrProductType.getVehicleClass());
 		vrProductTypeImpl.setVehicleTypeCode(vrProductType.getVehicleTypeCode());
 		vrProductTypeImpl.setVehicleTypeDescription(vrProductType.getVehicleTypeDescription());
+		vrProductTypeImpl.setProductClassificationCode(vrProductType.getProductClassificationCode());
+		vrProductTypeImpl.setProductClassificationDescription(vrProductType.getProductClassificationDescription());
+		vrProductTypeImpl.setTrademark(vrProductType.getTrademark());
+		vrProductTypeImpl.setTrademarkName(vrProductType.getTrademarkName());
+		vrProductTypeImpl.setCommercialName(vrProductType.getCommercialName());
+		vrProductTypeImpl.setModelCode(vrProductType.getModelCode());
+		vrProductTypeImpl.setDesignSymbolNo(vrProductType.getDesignSymbolNo());
 		vrProductTypeImpl.setModifyDate(vrProductType.getModifyDate());
 		vrProductTypeImpl.setSyncDate(vrProductType.getSyncDate());
 

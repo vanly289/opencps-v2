@@ -11,6 +11,10 @@ import java.util.Map;
 import org.opencps.auth.utils.APIDateTimeUtils;
 import org.opencps.communication.model.ServerConfig;
 import org.opencps.communication.service.ServerConfigLocalServiceUtil;
+import org.opencps.datamgt.model.DictCollection;
+import org.opencps.datamgt.model.DictItem;
+import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
+import org.opencps.datamgt.service.DictItemLocalServiceUtil;
 import org.opencps.dossiermgt.constants.RegistrationTerm;
 import org.opencps.dossiermgt.exception.NoSuchRegistrationException;
 import org.opencps.dossiermgt.model.Registration;
@@ -140,6 +144,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 
 					if (registrationClient.getRegistrationState() == 2) {
 						try {
+							_log.info("Start Update application info ==="+registrationClient.getApplicantIdNo() );
 							// 1. Update application info
 							Applicant applicant = ApplicantLocalServiceUtil
 									.fetchByAppId(registrationClient.getApplicantIdNo());
@@ -194,6 +199,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 							}
 
 							boolean flagUpdate = true;
+							boolean flagNotDuplicate = true; //must check
 							// 2. Update vr_applicantprofile
 
 							VRApplicantProfile appProfile = new VRApplicantProfileImpl();
@@ -248,7 +254,15 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 							if (flagUpdate == true) {
 								VRApplicantProfileLocalServiceUtil.updateVRApplicantProfile(appProfile);
 							} else {
-								VRApplicantProfileLocalServiceUtil.addVRApplicantProfile(appProfile);
+								// Last check for duplicate error
+								List<VRApplicantProfile> lstNewAppProfile = VRApplicantProfileLocalServiceUtil
+										.findByapplicantCode(1, registrationClient.getApplicantIdNo().trim());
+								if (lstNewAppProfile != null && lstNewAppProfile.size() > 0) {
+									_log.info("Kiem tra va Loai bo trung lap VRApplicantProfile.");
+									flagNotDuplicate = false;
+								} else {
+									VRApplicantProfileLocalServiceUtil.addVRApplicantProfile(appProfile);
+								}					
 							}
 
 							// 3. Insert vr_applicantprofile_history
@@ -294,16 +308,20 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 							appProfileHistory.setSyncDate(new Date());
 
 							VRApplicantProfileHistoryLocalServiceUtil.addVRApplicantProfileHistory(appProfileHistory);
-
+							
+							
 							flagUpdate = true; // reset flagUpdate
 							// 4. Update vr_productionplant
 							List<RegistrationForm> registrationForms = RegistrationFormLocalServiceUtil
-									.getFormsbyRegId(groupId, registrationClient.getRegistrationId());
-							if (registrationForms != null && registrationForms.size() > 0) {
+									.getFormsbyRegId(desGroupId, registrationClient.getRegistrationId());
+							//_log.info("groupId==="+desGroupId+"===registrationClient.getRegistrationId()==="+registrationClient.getRegistrationId()+"====registrationForms.size()===="+registrationForms.size());
+							if (registrationForms != null && registrationForms.size() > 0 && (flagNotDuplicate == true) ) {
+								//_log.info("1. Start Update vr_productionplant");
 								for (RegistrationForm regForm : registrationForms) {
 
 									if ((regForm.getFormData().length() > 1) && (regForm.getRemoved() == false)
 											&& (regForm.getFormNo().contains("TTXSXLR"))) {
+										//_log.info("2. form TTXSXLR");
 										JSONObject xuongSXJson = JSONFactoryUtil.createJSONObject();
 										String formData = regForm.getFormData();
 										long registrationFormId = regForm.getRegistrationFormId();
@@ -319,6 +337,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 											String email_xuong = formJson.getString("email_xuong");
 											if (Validator.isNotNull(productionPlantName)
 													&& Validator.isNotNull(productionPlantAddress)) {
+												_log.info("Quy tac Update form TTXSXLR==="+productionPlantName);
 												 /*Quy tac Update: Trung ca ten
 												 & dia chi; hoac Trung ten,
 												 khac dia chi; hoac Trung dia
@@ -336,6 +355,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 														&& lstProductionPlantCount1.size() > 0) {
 													objProductionPlant = lstProductionPlantCount1.get(0);
 													flagUpdate = true;
+													_log.info("3.1");
 												} else {
 													List<VRProductionPlant> lstProductionPlantCount2 = VRProductionPlantLocalServiceUtil
 															.findByproductionPlantName_PPAddress(1, applicantProfileId,
@@ -344,6 +364,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 															&& lstProductionPlantCount2.size() > 0) {
 														objProductionPlant = lstProductionPlantCount2.get(0);
 														flagUpdate = true;
+														_log.info("3.2");
 													} else {
 														List<VRProductionPlant> lstProductionPlantCount3 = VRProductionPlantLocalServiceUtil
 																.findByproductionPlantRep_PPAddress(1,
@@ -354,13 +375,15 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 																&& lstProductionPlantCount3.size() > 0) {
 															objProductionPlant = lstProductionPlantCount3.get(0);
 															flagUpdate = true;
+															_log.info("3.3");
 														} else {
 															flagUpdate = false;
+															_log.info("3.4");
 														}
 													}
 												}
 
-												if (flagUpdate == false) {
+												if (flagUpdate == false) {													
 													objProductionPlant = new VRProductionPlantImpl();
 													long VRProductionPlantId = CounterLocalServiceUtil
 															.increment(VRProductionPlant.class.getName());
@@ -369,6 +392,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 													objProductionPlant.setProductionPlantCode(
 															registrationClient.getApplicantIdNo() + "."
 																	+ VRProductionPlantId + "");
+													_log.info("3.5");
 												}
 
 												objProductionPlant.setMtCore(1);
@@ -378,10 +402,42 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 												objProductionPlant.setProductionPlantName(productionPlantName);
 												objProductionPlant.setProductionPlantAddress(productionPlantAddress);
 												objProductionPlant.setProductionPlantStateCode("VN");
-												// objProductionPlant.setProductionPlantStateName("");
+												objProductionPlant.setProductionPlantStateName("Vietnam");
 												objProductionPlant.setProductionPlantProvinceCode(
 														registrationClient.getCityCode());
-												// objProductionPlant.setProductionPlantProvinceName("");
+												try {
+													String provinceName = getDictItemName(groupId, "ADMINISTRATIVE_REGION", registrationClient.getCityCode());
+													if (Validator.isNotNull(registrationClient.getCityCode()) && Validator.isNotNull(productionPlantAddress)) {
+														Integer lastPoint = productionPlantAddress.lastIndexOf (' ');
+														if (lastPoint > 3) {
+															String[] arrSplit_2 = provinceName.split("\\s");
+															String lastTwoWordsOfProvince= arrSplit_2[arrSplit_2.length-2] + " " + arrSplit_2[arrSplit_2.length-1]; 
+															_log.info("productionPlantAddress.lastIndexOf (' ')" + lastPoint + "===lastTwoWordsOfProvince=="+lastTwoWordsOfProvince);
+															if ( productionPlantAddress.toLowerCase().contains(lastTwoWordsOfProvince.toLowerCase())) {
+																objProductionPlant.setProductionPlantProvinceName(provinceName);
+															} else {
+																List <DictItem> lstDictItemProvince = DictItemLocalServiceUtil.findByF_dictCollectionId_parentItemId(1, 0);
+																for (DictItem objProvince : lstDictItemProvince) {
+																	String[] arrSplit_3 = objProvince.getItemName().split("\\s");
+																	lastTwoWordsOfProvince= arrSplit_3[arrSplit_3.length-2] + " " + arrSplit_3[arrSplit_3.length-1];
+																	
+																	if ( productionPlantAddress.toLowerCase().contains(lastTwoWordsOfProvince.toLowerCase())) {
+																		objProductionPlant.setProductionPlantProvinceName(objProvince.getItemName());
+																		objProductionPlant.setProductionPlantProvinceCode(objProvince.getItemCode());
+																	} 
+																}
+																
+															}
+														} 
+													}
+													if (Validator.isNotNull(registrationClient.getCityCode()) && Validator.isNull(objProductionPlant.getProductionPlantProvinceName()))
+													{															
+														objProductionPlant.setProductionPlantProvinceName(provinceName);
+													}
+												} catch (Exception e) {													
+													// TODO: handle exception
+												}
+
 												objProductionPlant.setProductionPlantEmail(email_xuong);
 												objProductionPlant.setProductionPlantRepresentative(
 														productionPlantRepresentative);
@@ -389,12 +445,15 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 														productionPlantRepresentativeTitle);
 												objProductionPlant.setProductionPlantType("TN");
 												objProductionPlant.setProductionPlantStatus(1 + "");
+												objProductionPlant.setRegistrationId(regForm.getRegistrationId());
 
 												if (flagUpdate == true) {
+													_log.info("3.6");
 
 													VRProductionPlantLocalServiceUtil
 															.updateVRProductionPlant(objProductionPlant);
 												} else {
+													_log.info("3.7");
 													VRProductionPlantLocalServiceUtil
 															.addVRProductionPlant(objProductionPlant);
 												}
@@ -402,6 +461,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 											}
 
 										} catch (Exception e) {
+											_log.info("3.x");
 											// TODO: handle exception
 										}
 									}
@@ -571,6 +631,21 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 		}
 
 		return groupId;
+	}
+	
+	protected String getDictItemName(long groupId, String collectionCode, String itemCode) {
+
+		DictCollection dc = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode(collectionCode, groupId);
+		
+		if (Validator.isNotNull(dc)) {
+			DictItem it = DictItemLocalServiceUtil.fetchByF_dictItemCode(itemCode, dc.getPrimaryKey(), groupId);
+
+			return it.getItemName();
+
+		} else {
+			return StringPool.BLANK;
+		}
+
 	}
 
 	@Activate

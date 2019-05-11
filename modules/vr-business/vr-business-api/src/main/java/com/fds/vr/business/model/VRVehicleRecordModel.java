@@ -91,6 +91,20 @@ public interface VRVehicleRecordModel extends BaseModel<VRVehicleRecord> {
 	public void setMtCore(long mtCore);
 
 	/**
+	 * Returns the issue ID of this vr vehicle record.
+	 *
+	 * @return the issue ID of this vr vehicle record
+	 */
+	public long getIssueId();
+
+	/**
+	 * Sets the issue ID of this vr vehicle record.
+	 *
+	 * @param issueId the issue ID of this vr vehicle record
+	 */
+	public void setIssueId(long issueId);
+
+	/**
 	 * Returns the issue vehicle certificate ID of this vr vehicle record.
 	 *
 	 * @return the issue vehicle certificate ID of this vr vehicle record

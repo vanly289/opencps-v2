@@ -41,6 +41,13 @@ public class VRCOPProductTypeSoap implements Serializable {
 		soapModel.setVehicleClass(model.getVehicleClass());
 		soapModel.setVehicleTypeCode(model.getVehicleTypeCode());
 		soapModel.setVehicleTypeDescription(model.getVehicleTypeDescription());
+		soapModel.setProductClassificationCode(model.getProductClassificationCode());
+		soapModel.setProductClassificationDescription(model.getProductClassificationDescription());
+		soapModel.setTrademarkName(model.getTrademarkName());
+		soapModel.setCommercialName(model.getCommercialName());
+		soapModel.setModelCode(model.getModelCode());
+		soapModel.setDesignSymbolNo(model.getDesignSymbolNo());
+		soapModel.setRemarks(model.getRemarks());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 
@@ -161,6 +168,63 @@ public class VRCOPProductTypeSoap implements Serializable {
 		_vehicleTypeDescription = vehicleTypeDescription;
 	}
 
+	public String getProductClassificationCode() {
+		return _productClassificationCode;
+	}
+
+	public void setProductClassificationCode(String productClassificationCode) {
+		_productClassificationCode = productClassificationCode;
+	}
+
+	public String getProductClassificationDescription() {
+		return _productClassificationDescription;
+	}
+
+	public void setProductClassificationDescription(
+		String productClassificationDescription) {
+		_productClassificationDescription = productClassificationDescription;
+	}
+
+	public String getTrademarkName() {
+		return _trademarkName;
+	}
+
+	public void setTrademarkName(String trademarkName) {
+		_trademarkName = trademarkName;
+	}
+
+	public String getCommercialName() {
+		return _commercialName;
+	}
+
+	public void setCommercialName(String commercialName) {
+		_commercialName = commercialName;
+	}
+
+	public String getModelCode() {
+		return _modelCode;
+	}
+
+	public void setModelCode(String modelCode) {
+		_modelCode = modelCode;
+	}
+
+	public String getDesignSymbolNo() {
+		return _designSymbolNo;
+	}
+
+	public void setDesignSymbolNo(String designSymbolNo) {
+		_designSymbolNo = designSymbolNo;
+	}
+
+	public String getRemarks() {
+		return _remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		_remarks = remarks;
+	}
+
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -185,6 +249,13 @@ public class VRCOPProductTypeSoap implements Serializable {
 	private String _vehicleClass;
 	private String _vehicleTypeCode;
 	private String _vehicleTypeDescription;
+	private String _productClassificationCode;
+	private String _productClassificationDescription;
+	private String _trademarkName;
+	private String _commercialName;
+	private String _modelCode;
+	private String _designSymbolNo;
+	private String _remarks;
 	private Date _modifyDate;
 	private Date _syncDate;
 }

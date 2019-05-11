@@ -77,6 +77,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 			{ "designSymbolNo", Types.VARCHAR },
 			{ "productionCountryCode", Types.VARCHAR },
 			{ "equipmentStatus", Types.VARCHAR },
+			{ "expireDate", Types.TIMESTAMP },
 			{ "notes", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
@@ -98,12 +99,13 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		TABLE_COLUMNS_MAP.put("designSymbolNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionCountryCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("equipmentStatus", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("expireDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("notes", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productionplantequipment (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productionplantequipment (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,expireDate DATE null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productionplantequipment";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlantEquipment.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplantequipment.modifyDate DESC";
@@ -176,6 +178,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("productionCountryCode", getProductionCountryCode());
 		attributes.put("equipmentStatus", getEquipmentStatus());
+		attributes.put("expireDate", getExpireDate());
 		attributes.put("notes", getNotes());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
@@ -271,6 +274,12 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 		if (equipmentStatus != null) {
 			setEquipmentStatus(equipmentStatus);
+		}
+
+		Date expireDate = (Date)attributes.get("expireDate");
+
+		if (expireDate != null) {
+			setExpireDate(expireDate);
 		}
 
 		String notes = (String)attributes.get("notes");
@@ -507,6 +516,16 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	}
 
 	@Override
+	public Date getExpireDate() {
+		return _expireDate;
+	}
+
+	@Override
+	public void setExpireDate(Date expireDate) {
+		_expireDate = expireDate;
+	}
+
+	@Override
 	public String getNotes() {
 		if (_notes == null) {
 			return StringPool.BLANK;
@@ -588,6 +607,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		vrProductionPlantEquipmentImpl.setDesignSymbolNo(getDesignSymbolNo());
 		vrProductionPlantEquipmentImpl.setProductionCountryCode(getProductionCountryCode());
 		vrProductionPlantEquipmentImpl.setEquipmentStatus(getEquipmentStatus());
+		vrProductionPlantEquipmentImpl.setExpireDate(getExpireDate());
 		vrProductionPlantEquipmentImpl.setNotes(getNotes());
 		vrProductionPlantEquipmentImpl.setModifyDate(getModifyDate());
 		vrProductionPlantEquipmentImpl.setSyncDate(getSyncDate());
@@ -759,6 +779,15 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 			vrProductionPlantEquipmentCacheModel.equipmentStatus = null;
 		}
 
+		Date expireDate = getExpireDate();
+
+		if (expireDate != null) {
+			vrProductionPlantEquipmentCacheModel.expireDate = expireDate.getTime();
+		}
+		else {
+			vrProductionPlantEquipmentCacheModel.expireDate = Long.MIN_VALUE;
+		}
+
 		vrProductionPlantEquipmentCacheModel.notes = getNotes();
 
 		String notes = vrProductionPlantEquipmentCacheModel.notes;
@@ -790,7 +819,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -820,6 +849,8 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		sb.append(getProductionCountryCode());
 		sb.append(", equipmentStatus=");
 		sb.append(getEquipmentStatus());
+		sb.append(", expireDate=");
+		sb.append(getExpireDate());
 		sb.append(", notes=");
 		sb.append(getNotes());
 		sb.append(", modifyDate=");
@@ -833,7 +864,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductionPlantEquipment");
@@ -896,6 +927,10 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		sb.append(getEquipmentStatus());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>expireDate</column-name><column-value><![CDATA[");
+		sb.append(getExpireDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>notes</column-name><column-value><![CDATA[");
 		sb.append(getNotes());
 		sb.append("]]></column-value></column>");
@@ -935,6 +970,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	private String _designSymbolNo;
 	private String _productionCountryCode;
 	private String _equipmentStatus;
+	private Date _expireDate;
 	private String _notes;
 	private Date _modifyDate;
 	private Date _syncDate;

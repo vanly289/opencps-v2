@@ -80,6 +80,7 @@ public class RegistrationUtils {
 			model.setGovAgencyName(doc.get(RegistrationTerm.GOV_AGENCY_NAME));
 			model.setRegistrationState(GetterUtil.getInteger(doc.get(RegistrationTerm.REGISTRATIONSTATE)));
 			model.setRegistrationClass(doc.get(RegistrationTerm.REGISTRATION_CLASS));
+			model.setRepresentativeEnterprise(doc.get(RegistrationTerm.REPRESENTATIVE_ENTERPRISE));
 			model.setSubmitting(GetterUtil.getBoolean(doc.get(RegistrationTerm.SUBMITTING)));
 			model.setRemarks(doc.get(RegistrationTerm.REMARKS));
 			model.setMarkasdeleted(GetterUtil.getInteger(doc.get(RegistrationTerm.MARK_AS_DELETED)));
@@ -124,6 +125,7 @@ public class RegistrationUtils {
 			model.setGovAgencyName(registration.getGovAgencyName());
 			model.setRegistrationState(registration.getRegistrationState());
 			model.setRegistrationClass(registration.getRegistrationClass());
+			model.setRepresentativeEnterprise(registration.getRepresentativeEnterprise());
 			model.setSubmitting(registration.getSubmitting());
 			model.setRemarks(registration.getRemarks());
 			model.setMarkasdeleted(registration.getMarkasdeleted());
@@ -155,6 +157,7 @@ public class RegistrationUtils {
 		model.setGovAgencyCode(registration.getGovAgencyCode());
 		model.setRegistrationState(registration.getRegistrationState());
 		model.setRegistrationClass(registration.getRegistrationClass());
+		model.setRepresentativeEnterprise(registration.getRepresentativeEnterprise());
 		model.setRemarks(registration.getRemarks());
 		model.setMarkasdeleted(registration.getMarkasdeleted());
 
@@ -207,6 +210,7 @@ public class RegistrationUtils {
 			model.setGovAgencyName(registration.getGovAgencyName());
 			model.setRegistrationState(registration.getRegistrationState());
 			model.setRegistrationClass(registration.getRegistrationClass());
+			model.setRepresentativeEnterprise(registration.getRepresentativeEnterprise());
 			model.setSubmitting(registration.isSubmitting());
 			model.setRemarks(registration.getRemarks());
 			model.setMarkasdeleted(registration.getMarkasdeleted());
@@ -254,6 +258,7 @@ public class RegistrationUtils {
 			model.setGovAgencyName(registration.getGovAgencyName());
 			model.setRegistrationState(registration.getRegistrationState());
 			model.setRegistrationClass(registration.getRegistrationClass());
+			model.setRepresentativeEnterprise(registration.getRepresentativeEnterprise());
 			model.setSubmitting(registration.isSubmitting());
 			model.setRemarks(registration.getRemarks());
 			model.setMarkasdeleted(registration.getMarkasdeleted());

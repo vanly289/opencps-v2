@@ -922,6 +922,7 @@ public class VRProductionPlantEmployeePersistenceImpl
 		vrProductionPlantEmployeeImpl.setSequenceNo(vrProductionPlantEmployee.getSequenceNo());
 		vrProductionPlantEmployeeImpl.setEmployeeName(vrProductionPlantEmployee.getEmployeeName());
 		vrProductionPlantEmployeeImpl.setEmployeeCertificateNo(vrProductionPlantEmployee.getEmployeeCertificateNo());
+		vrProductionPlantEmployeeImpl.setTrainningAt(vrProductionPlantEmployee.getTrainningAt());
 		vrProductionPlantEmployeeImpl.setModifyDate(vrProductionPlantEmployee.getModifyDate());
 		vrProductionPlantEmployeeImpl.setSyncDate(vrProductionPlantEmployee.getSyncDate());
 

@@ -105,6 +105,21 @@ public interface VRCOPReportRepositoryModel extends BaseModel<VRCOPReportReposit
 	public void setApplicantProfileId(long applicantProfileId);
 
 	/**
+	 * Returns the applicant code of this vrcop report repository.
+	 *
+	 * @return the applicant code of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getApplicantCode();
+
+	/**
+	 * Sets the applicant code of this vrcop report repository.
+	 *
+	 * @param applicantCode the applicant code of this vrcop report repository
+	 */
+	public void setApplicantCode(String applicantCode);
+
+	/**
 	 * Returns the applicant name of this vrcop report repository.
 	 *
 	 * @return the applicant name of this vrcop report repository
@@ -135,18 +150,19 @@ public interface VRCOPReportRepositoryModel extends BaseModel<VRCOPReportReposit
 	public void setApplicantAddress(String applicantAddress);
 
 	/**
-	 * Returns the overseas manufacturer ID of this vrcop report repository.
+	 * Returns the overseas manufacturer code of this vrcop report repository.
 	 *
-	 * @return the overseas manufacturer ID of this vrcop report repository
+	 * @return the overseas manufacturer code of this vrcop report repository
 	 */
-	public long getOverseasManufacturerId();
+	@AutoEscape
+	public String getOverseasManufacturerCode();
 
 	/**
-	 * Sets the overseas manufacturer ID of this vrcop report repository.
+	 * Sets the overseas manufacturer code of this vrcop report repository.
 	 *
-	 * @param overseasManufacturerId the overseas manufacturer ID of this vrcop report repository
+	 * @param overseasManufacturerCode the overseas manufacturer code of this vrcop report repository
 	 */
-	public void setOverseasManufacturerId(long overseasManufacturerId);
+	public void setOverseasManufacturerCode(String overseasManufacturerCode);
 
 	/**
 	 * Returns the overseas manufacturer name of this vrcop report repository.
@@ -384,6 +400,20 @@ public interface VRCOPReportRepositoryModel extends BaseModel<VRCOPReportReposit
 	 * @param copReportExpiredDate the cop report expired date of this vrcop report repository
 	 */
 	public void setCopReportExpiredDate(Date copReportExpiredDate);
+
+	/**
+	 * Returns the cop file entry ID of this vrcop report repository.
+	 *
+	 * @return the cop file entry ID of this vrcop report repository
+	 */
+	public long getCOPFileEntryId();
+
+	/**
+	 * Sets the cop file entry ID of this vrcop report repository.
+	 *
+	 * @param COPFileEntryId the cop file entry ID of this vrcop report repository
+	 */
+	public void setCOPFileEntryId(long COPFileEntryId);
 
 	/**
 	 * Returns the modify date of this vrcop report repository.

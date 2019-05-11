@@ -164,6 +164,21 @@ public interface VRCOPProductionPlantEmployeeModel extends BaseModel<VRCOPProduc
 	public void setEmployeeCertificateNo(String employeeCertificateNo);
 
 	/**
+	 * Returns the trainning at of this vrcop production plant employee.
+	 *
+	 * @return the trainning at of this vrcop production plant employee
+	 */
+	@AutoEscape
+	public String getTrainningAt();
+
+	/**
+	 * Sets the trainning at of this vrcop production plant employee.
+	 *
+	 * @param trainningAt the trainning at of this vrcop production plant employee
+	 */
+	public void setTrainningAt(String trainningAt);
+
+	/**
 	 * Returns the modify date of this vrcop production plant employee.
 	 *
 	 * @return the modify date of this vrcop production plant employee

@@ -66,7 +66,7 @@ public class VRIssueVehiclecertificateCacheModel implements CacheModel<VRIssueVe
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -84,20 +84,16 @@ public class VRIssueVehiclecertificateCacheModel implements CacheModel<VRIssueVe
 		sb.append(totalQuantity);
 		sb.append(", unitPrice=");
 		sb.append(unitPrice);
+		sb.append(", totalProduct=");
+		sb.append(totalProduct);
 		sb.append(", certificaterecordno=");
 		sb.append(certificaterecordno);
 		sb.append(", productionexamreportno=");
 		sb.append(productionexamreportno);
-		sb.append(", productyear=");
-		sb.append(productyear);
-		sb.append(", productmonth=");
-		sb.append(productmonth);
-		sb.append(", totalstamp=");
-		sb.append(totalstamp);
-		sb.append(", totalproduct=");
-		sb.append(totalproduct);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
+		sb.append(", syncDate=");
+		sb.append(syncDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -115,6 +111,7 @@ public class VRIssueVehiclecertificateCacheModel implements CacheModel<VRIssueVe
 		vrIssueVehiclecertificateImpl.setVehiclePrice(vehiclePrice);
 		vrIssueVehiclecertificateImpl.setTotalQuantity(totalQuantity);
 		vrIssueVehiclecertificateImpl.setUnitPrice(unitPrice);
+		vrIssueVehiclecertificateImpl.setTotalProduct(totalProduct);
 
 		if (certificaterecordno == null) {
 			vrIssueVehiclecertificateImpl.setCertificaterecordno(StringPool.BLANK);
@@ -130,22 +127,18 @@ public class VRIssueVehiclecertificateCacheModel implements CacheModel<VRIssueVe
 			vrIssueVehiclecertificateImpl.setProductionexamreportno(productionexamreportno);
 		}
 
-		if (productyear == null) {
-			vrIssueVehiclecertificateImpl.setProductyear(StringPool.BLANK);
-		}
-		else {
-			vrIssueVehiclecertificateImpl.setProductyear(productyear);
-		}
-
-		vrIssueVehiclecertificateImpl.setProductmonth(productmonth);
-		vrIssueVehiclecertificateImpl.setTotalstamp(totalstamp);
-		vrIssueVehiclecertificateImpl.setTotalproduct(totalproduct);
-
 		if (modifyDate == Long.MIN_VALUE) {
 			vrIssueVehiclecertificateImpl.setModifyDate(null);
 		}
 		else {
 			vrIssueVehiclecertificateImpl.setModifyDate(new Date(modifyDate));
+		}
+
+		if (syncDate == Long.MIN_VALUE) {
+			vrIssueVehiclecertificateImpl.setSyncDate(null);
+		}
+		else {
+			vrIssueVehiclecertificateImpl.setSyncDate(new Date(syncDate));
 		}
 
 		vrIssueVehiclecertificateImpl.resetOriginalValues();
@@ -170,16 +163,12 @@ public class VRIssueVehiclecertificateCacheModel implements CacheModel<VRIssueVe
 		totalQuantity = objectInput.readLong();
 
 		unitPrice = objectInput.readLong();
+
+		totalProduct = objectInput.readInt();
 		certificaterecordno = objectInput.readUTF();
 		productionexamreportno = objectInput.readUTF();
-		productyear = objectInput.readUTF();
-
-		productmonth = objectInput.readInt();
-
-		totalstamp = objectInput.readInt();
-
-		totalproduct = objectInput.readInt();
 		modifyDate = objectInput.readLong();
+		syncDate = objectInput.readLong();
 	}
 
 	@Override
@@ -201,6 +190,8 @@ public class VRIssueVehiclecertificateCacheModel implements CacheModel<VRIssueVe
 
 		objectOutput.writeLong(unitPrice);
 
+		objectOutput.writeInt(totalProduct);
+
 		if (certificaterecordno == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -215,19 +206,8 @@ public class VRIssueVehiclecertificateCacheModel implements CacheModel<VRIssueVe
 			objectOutput.writeUTF(productionexamreportno);
 		}
 
-		if (productyear == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(productyear);
-		}
-
-		objectOutput.writeInt(productmonth);
-
-		objectOutput.writeInt(totalstamp);
-
-		objectOutput.writeInt(totalproduct);
 		objectOutput.writeLong(modifyDate);
+		objectOutput.writeLong(syncDate);
 	}
 
 	public long id;
@@ -238,11 +218,9 @@ public class VRIssueVehiclecertificateCacheModel implements CacheModel<VRIssueVe
 	public long vehiclePrice;
 	public long totalQuantity;
 	public long unitPrice;
+	public int totalProduct;
 	public String certificaterecordno;
 	public String productionexamreportno;
-	public String productyear;
-	public int productmonth;
-	public int totalstamp;
-	public int totalproduct;
 	public long modifyDate;
+	public long syncDate;
 }

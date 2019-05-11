@@ -37,9 +37,10 @@ public class VRCOPReportRepositorySoap implements Serializable {
 		soapModel.setId(model.getId());
 		soapModel.setMtCore(model.getMtCore());
 		soapModel.setApplicantProfileId(model.getApplicantProfileId());
+		soapModel.setApplicantCode(model.getApplicantCode());
 		soapModel.setApplicantName(model.getApplicantName());
 		soapModel.setApplicantAddress(model.getApplicantAddress());
-		soapModel.setOverseasManufacturerId(model.getOverseasManufacturerId());
+		soapModel.setOverseasManufacturerCode(model.getOverseasManufacturerCode());
 		soapModel.setOverseasManufacturerName(model.getOverseasManufacturerName());
 		soapModel.setOverseasManufacturerAddress(model.getOverseasManufacturerAddress());
 		soapModel.setProductionPlantId(model.getProductionPlantId());
@@ -56,6 +57,7 @@ public class VRCOPReportRepositorySoap implements Serializable {
 		soapModel.setCopReportDate(model.getCopReportDate());
 		soapModel.setCopReportApprovedDate(model.getCopReportApprovedDate());
 		soapModel.setCopReportExpiredDate(model.getCopReportExpiredDate());
+		soapModel.setCOPFileEntryId(model.getCOPFileEntryId());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 
@@ -137,6 +139,14 @@ public class VRCOPReportRepositorySoap implements Serializable {
 		_applicantProfileId = applicantProfileId;
 	}
 
+	public String getApplicantCode() {
+		return _applicantCode;
+	}
+
+	public void setApplicantCode(String applicantCode) {
+		_applicantCode = applicantCode;
+	}
+
 	public String getApplicantName() {
 		return _applicantName;
 	}
@@ -153,12 +163,12 @@ public class VRCOPReportRepositorySoap implements Serializable {
 		_applicantAddress = applicantAddress;
 	}
 
-	public long getOverseasManufacturerId() {
-		return _overseasManufacturerId;
+	public String getOverseasManufacturerCode() {
+		return _overseasManufacturerCode;
 	}
 
-	public void setOverseasManufacturerId(long overseasManufacturerId) {
-		_overseasManufacturerId = overseasManufacturerId;
+	public void setOverseasManufacturerCode(String overseasManufacturerCode) {
+		_overseasManufacturerCode = overseasManufacturerCode;
 	}
 
 	public String getOverseasManufacturerName() {
@@ -290,6 +300,14 @@ public class VRCOPReportRepositorySoap implements Serializable {
 		_copReportExpiredDate = copReportExpiredDate;
 	}
 
+	public long getCOPFileEntryId() {
+		return _COPFileEntryId;
+	}
+
+	public void setCOPFileEntryId(long COPFileEntryId) {
+		_COPFileEntryId = COPFileEntryId;
+	}
+
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -309,9 +327,10 @@ public class VRCOPReportRepositorySoap implements Serializable {
 	private long _id;
 	private long _mtCore;
 	private long _applicantProfileId;
+	private String _applicantCode;
 	private String _applicantName;
 	private String _applicantAddress;
-	private long _overseasManufacturerId;
+	private String _overseasManufacturerCode;
 	private String _overseasManufacturerName;
 	private String _overseasManufacturerAddress;
 	private long _productionPlantId;
@@ -328,6 +347,7 @@ public class VRCOPReportRepositorySoap implements Serializable {
 	private Date _copReportDate;
 	private Date _copReportApprovedDate;
 	private Date _copReportExpiredDate;
+	private long _COPFileEntryId;
 	private Date _modifyDate;
 	private Date _syncDate;
 }

@@ -244,9 +244,9 @@ public class VRIssueEquipmentCertificateCacheModel implements CacheModel<VRIssue
 
 		mtcore = objectInput.readInt();
 
-		issueId = objectInput.readInt();
+		issueId = objectInput.readLong();
 
-		issueVehicleCertificateId = objectInput.readInt();
+		issueVehicleCertificateId = objectInput.readLong();
 		vehiclecertificaterecordno = objectInput.readUTF();
 		equipmentName = objectInput.readUTF();
 		equipmentType = objectInput.readUTF();
@@ -280,9 +280,9 @@ public class VRIssueEquipmentCertificateCacheModel implements CacheModel<VRIssue
 
 		objectOutput.writeInt(mtcore);
 
-		objectOutput.writeInt(issueId);
+		objectOutput.writeLong(issueId);
 
-		objectOutput.writeInt(issueVehicleCertificateId);
+		objectOutput.writeLong(issueVehicleCertificateId);
 
 		if (vehiclecertificaterecordno == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -384,8 +384,8 @@ public class VRIssueEquipmentCertificateCacheModel implements CacheModel<VRIssue
 
 	public long id;
 	public int mtcore;
-	public int issueId;
-	public int issueVehicleCertificateId;
+	public long issueId;
+	public long issueVehicleCertificateId;
 	public String vehiclecertificaterecordno;
 	public String equipmentName;
 	public String equipmentType;

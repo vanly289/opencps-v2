@@ -703,7 +703,11 @@ public class DictCollectionActions implements DictcollectionInterface {
 			hits = DictItemLocalServiceUtil.luceneSearchEngine(
 				params, sorts, start, end, searchContext);
 
-			result.put("data", hits.toList());
+			if (Validator.isNotNull(hits)) {
+				result.put("data", hits.toList());
+			} else {
+				result.put("data", "");
+			}
 
 			long total = DictItemLocalServiceUtil.countLuceneSearchEngine(
 				params, searchContext);

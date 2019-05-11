@@ -66,7 +66,7 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -80,6 +80,8 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 		sb.append(employeeName);
 		sb.append(", employeeCertificateNo=");
 		sb.append(employeeCertificateNo);
+		sb.append(", trainningAt=");
+		sb.append(trainningAt);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -112,6 +114,13 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 			vrProductionPlantEmployeeImpl.setEmployeeCertificateNo(employeeCertificateNo);
 		}
 
+		if (trainningAt == null) {
+			vrProductionPlantEmployeeImpl.setTrainningAt(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantEmployeeImpl.setTrainningAt(trainningAt);
+		}
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrProductionPlantEmployeeImpl.setModifyDate(null);
 		}
@@ -142,6 +151,7 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 		sequenceNo = objectInput.readLong();
 		employeeName = objectInput.readUTF();
 		employeeCertificateNo = objectInput.readUTF();
+		trainningAt = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -171,6 +181,13 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 			objectOutput.writeUTF(employeeCertificateNo);
 		}
 
+		if (trainningAt == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(trainningAt);
+		}
+
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -181,6 +198,7 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 	public long sequenceNo;
 	public String employeeName;
 	public String employeeCertificateNo;
+	public String trainningAt;
 	public long modifyDate;
 	public long syncDate;
 }

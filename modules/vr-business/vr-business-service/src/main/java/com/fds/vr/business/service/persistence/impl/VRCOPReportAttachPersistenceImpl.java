@@ -1537,7 +1537,9 @@ public class VRCOPReportAttachPersistenceImpl extends BasePersistenceImpl<VRCOPR
 		vrcopReportAttachImpl.setCopReportRepositoryID(vrcopReportAttach.getCopReportRepositoryID());
 		vrcopReportAttachImpl.setCopReportNo(vrcopReportAttach.getCopReportNo());
 		vrcopReportAttachImpl.setSequenceNo(vrcopReportAttach.getSequenceNo());
-		vrcopReportAttachImpl.setAttachFileURL(vrcopReportAttach.getAttachFileURL());
+		vrcopReportAttachImpl.setDocName(vrcopReportAttach.getDocName());
+		vrcopReportAttachImpl.setDocNo(vrcopReportAttach.getDocNo());
+		vrcopReportAttachImpl.setRemarks(vrcopReportAttach.getRemarks());
 		vrcopReportAttachImpl.setModifyDate(vrcopReportAttach.getModifyDate());
 		vrcopReportAttachImpl.setSyncDate(vrcopReportAttach.getSyncDate());
 

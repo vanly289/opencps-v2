@@ -173,11 +173,11 @@ public class VRInputStampbookSoap implements Serializable {
 		_serialStartNo = serialStartNo;
 	}
 
-	public String getSerialEndNo() {
+	public long getSerialEndNo() {
 		return _serialEndNo;
 	}
 
-	public void setSerialEndNo(String serialEndNo) {
+	public void setSerialEndNo(long serialEndNo) {
 		_serialEndNo = serialEndNo;
 	}
 
@@ -293,7 +293,7 @@ public class VRInputStampbookSoap implements Serializable {
 	private String _stampType;
 	private String _stampShortNo;
 	private long _serialStartNo;
-	private String _serialEndNo;
+	private long _serialEndNo;
 	private long _subTotalInDocument;
 	private long _subTotalQuantities;
 	private long _units;

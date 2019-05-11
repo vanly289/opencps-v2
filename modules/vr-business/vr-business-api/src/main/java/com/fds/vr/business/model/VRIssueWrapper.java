@@ -112,6 +112,9 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 		attributes.put("leadername", getLeadername());
 		attributes.put("applicantmaker", getApplicantmaker());
 		attributes.put("applicantchecker", getApplicantchecker());
+		attributes.put("inspectorId", getInspectorId());
+		attributes.put("issueInspectorId", getIssueInspectorId());
+		attributes.put("verifyInspectorId", getVerifyInspectorId());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -455,6 +458,24 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 
 		if (applicantchecker != null) {
 			setApplicantchecker(applicantchecker);
+		}
+
+		Long inspectorId = (Long)attributes.get("inspectorId");
+
+		if (inspectorId != null) {
+			setInspectorId(inspectorId);
+		}
+
+		Long issueInspectorId = (Long)attributes.get("issueInspectorId");
+
+		if (issueInspectorId != null) {
+			setIssueInspectorId(issueInspectorId);
+		}
+
+		Long verifyInspectorId = (Long)attributes.get("verifyInspectorId");
+
+		if (verifyInspectorId != null) {
+			setVerifyInspectorId(verifyInspectorId);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -1066,6 +1087,26 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	}
 
 	/**
+	* Returns the inspector ID of this vr issue.
+	*
+	* @return the inspector ID of this vr issue
+	*/
+	@Override
+	public long getInspectorId() {
+		return _vrIssue.getInspectorId();
+	}
+
+	/**
+	* Returns the issue inspector ID of this vr issue.
+	*
+	* @return the issue inspector ID of this vr issue
+	*/
+	@Override
+	public long getIssueInspectorId() {
+		return _vrIssue.getIssueInspectorId();
+	}
+
+	/**
 	* Returns the mt core of this vr issue.
 	*
 	* @return the mt core of this vr issue
@@ -1103,6 +1144,16 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public long getTotalInDocument() {
 		return _vrIssue.getTotalInDocument();
+	}
+
+	/**
+	* Returns the verify inspector ID of this vr issue.
+	*
+	* @return the verify inspector ID of this vr issue
+	*/
+	@Override
+	public long getVerifyInspectorId() {
+		return _vrIssue.getVerifyInspectorId();
 	}
 
 	@Override
@@ -1424,6 +1475,16 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	}
 
 	/**
+	* Sets the inspector ID of this vr issue.
+	*
+	* @param inspectorId the inspector ID of this vr issue
+	*/
+	@Override
+	public void setInspectorId(long inspectorId) {
+		_vrIssue.setInspectorId(inspectorId);
+	}
+
+	/**
 	* Sets the inspectorcode of this vr issue.
 	*
 	* @param inspectorcode the inspectorcode of this vr issue
@@ -1451,6 +1512,16 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public void setIssueCorporationId(java.lang.String issueCorporationId) {
 		_vrIssue.setIssueCorporationId(issueCorporationId);
+	}
+
+	/**
+	* Sets the issue inspector ID of this vr issue.
+	*
+	* @param issueInspectorId the issue inspector ID of this vr issue
+	*/
+	@Override
+	public void setIssueInspectorId(long issueInspectorId) {
+		_vrIssue.setIssueInspectorId(issueInspectorId);
 	}
 
 	/**
@@ -1712,6 +1783,16 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public void setVerifyCorporationId(java.lang.String verifyCorporationId) {
 		_vrIssue.setVerifyCorporationId(verifyCorporationId);
+	}
+
+	/**
+	* Sets the verify inspector ID of this vr issue.
+	*
+	* @param verifyInspectorId the verify inspector ID of this vr issue
+	*/
+	@Override
+	public void setVerifyInspectorId(long verifyInspectorId) {
+		_vrIssue.setVerifyInspectorId(verifyInspectorId);
 	}
 
 	@Override

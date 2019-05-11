@@ -933,6 +933,7 @@ public class VRProductionPlantEquipmentPersistenceImpl
 		vrProductionPlantEquipmentImpl.setDesignSymbolNo(vrProductionPlantEquipment.getDesignSymbolNo());
 		vrProductionPlantEquipmentImpl.setProductionCountryCode(vrProductionPlantEquipment.getProductionCountryCode());
 		vrProductionPlantEquipmentImpl.setEquipmentStatus(vrProductionPlantEquipment.getEquipmentStatus());
+		vrProductionPlantEquipmentImpl.setExpireDate(vrProductionPlantEquipment.getExpireDate());
 		vrProductionPlantEquipmentImpl.setNotes(vrProductionPlantEquipment.getNotes());
 		vrProductionPlantEquipmentImpl.setModifyDate(vrProductionPlantEquipment.getModifyDate());
 		vrProductionPlantEquipmentImpl.setSyncDate(vrProductionPlantEquipment.getSyncDate());
