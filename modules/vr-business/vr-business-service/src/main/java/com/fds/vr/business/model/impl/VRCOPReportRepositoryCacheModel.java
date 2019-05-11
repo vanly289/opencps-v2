@@ -66,7 +66,7 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -74,12 +74,14 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 		sb.append(mtCore);
 		sb.append(", applicantProfileId=");
 		sb.append(applicantProfileId);
+		sb.append(", applicantCode=");
+		sb.append(applicantCode);
 		sb.append(", applicantName=");
 		sb.append(applicantName);
 		sb.append(", applicantAddress=");
 		sb.append(applicantAddress);
-		sb.append(", overseasManufacturerId=");
-		sb.append(overseasManufacturerId);
+		sb.append(", overseasManufacturerCode=");
+		sb.append(overseasManufacturerCode);
 		sb.append(", overseasManufacturerName=");
 		sb.append(overseasManufacturerName);
 		sb.append(", overseasManufacturerAddress=");
@@ -112,6 +114,8 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 		sb.append(copReportApprovedDate);
 		sb.append(", copReportExpiredDate=");
 		sb.append(copReportExpiredDate);
+		sb.append(", COPFileEntryId=");
+		sb.append(COPFileEntryId);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -129,6 +133,13 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 		vrcopReportRepositoryImpl.setMtCore(mtCore);
 		vrcopReportRepositoryImpl.setApplicantProfileId(applicantProfileId);
 
+		if (applicantCode == null) {
+			vrcopReportRepositoryImpl.setApplicantCode(StringPool.BLANK);
+		}
+		else {
+			vrcopReportRepositoryImpl.setApplicantCode(applicantCode);
+		}
+
 		if (applicantName == null) {
 			vrcopReportRepositoryImpl.setApplicantName(StringPool.BLANK);
 		}
@@ -143,7 +154,12 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 			vrcopReportRepositoryImpl.setApplicantAddress(applicantAddress);
 		}
 
-		vrcopReportRepositoryImpl.setOverseasManufacturerId(overseasManufacturerId);
+		if (overseasManufacturerCode == null) {
+			vrcopReportRepositoryImpl.setOverseasManufacturerCode(StringPool.BLANK);
+		}
+		else {
+			vrcopReportRepositoryImpl.setOverseasManufacturerCode(overseasManufacturerCode);
+		}
 
 		if (overseasManufacturerName == null) {
 			vrcopReportRepositoryImpl.setOverseasManufacturerName(StringPool.BLANK);
@@ -254,6 +270,8 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 					copReportExpiredDate));
 		}
 
+		vrcopReportRepositoryImpl.setCOPFileEntryId(COPFileEntryId);
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrcopReportRepositoryImpl.setModifyDate(null);
 		}
@@ -280,10 +298,10 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 		mtCore = objectInput.readLong();
 
 		applicantProfileId = objectInput.readLong();
+		applicantCode = objectInput.readUTF();
 		applicantName = objectInput.readUTF();
 		applicantAddress = objectInput.readUTF();
-
-		overseasManufacturerId = objectInput.readLong();
+		overseasManufacturerCode = objectInput.readUTF();
 		overseasManufacturerName = objectInput.readUTF();
 		overseasManufacturerAddress = objectInput.readUTF();
 
@@ -301,6 +319,8 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 		copReportDate = objectInput.readLong();
 		copReportApprovedDate = objectInput.readLong();
 		copReportExpiredDate = objectInput.readLong();
+
+		COPFileEntryId = objectInput.readLong();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -313,6 +333,13 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 		objectOutput.writeLong(mtCore);
 
 		objectOutput.writeLong(applicantProfileId);
+
+		if (applicantCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantCode);
+		}
 
 		if (applicantName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -328,7 +355,12 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 			objectOutput.writeUTF(applicantAddress);
 		}
 
-		objectOutput.writeLong(overseasManufacturerId);
+		if (overseasManufacturerCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(overseasManufacturerCode);
+		}
 
 		if (overseasManufacturerName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -419,6 +451,8 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 		objectOutput.writeLong(copReportDate);
 		objectOutput.writeLong(copReportApprovedDate);
 		objectOutput.writeLong(copReportExpiredDate);
+
+		objectOutput.writeLong(COPFileEntryId);
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -426,9 +460,10 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 	public long id;
 	public long mtCore;
 	public long applicantProfileId;
+	public String applicantCode;
 	public String applicantName;
 	public String applicantAddress;
-	public long overseasManufacturerId;
+	public String overseasManufacturerCode;
 	public String overseasManufacturerName;
 	public String overseasManufacturerAddress;
 	public long productionPlantId;
@@ -445,6 +480,7 @@ public class VRCOPReportRepositoryCacheModel implements CacheModel<VRCOPReportRe
 	public long copReportDate;
 	public long copReportApprovedDate;
 	public long copReportExpiredDate;
+	public long COPFileEntryId;
 	public long modifyDate;
 	public long syncDate;
 }

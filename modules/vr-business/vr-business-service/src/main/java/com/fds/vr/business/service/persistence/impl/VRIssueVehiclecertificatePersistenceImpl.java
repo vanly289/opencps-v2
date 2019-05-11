@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -2124,13 +2125,11 @@ public class VRIssueVehiclecertificatePersistenceImpl
 		vrIssueVehiclecertificateImpl.setVehiclePrice(vrIssueVehiclecertificate.getVehiclePrice());
 		vrIssueVehiclecertificateImpl.setTotalQuantity(vrIssueVehiclecertificate.getTotalQuantity());
 		vrIssueVehiclecertificateImpl.setUnitPrice(vrIssueVehiclecertificate.getUnitPrice());
+		vrIssueVehiclecertificateImpl.setTotalProduct(vrIssueVehiclecertificate.getTotalProduct());
 		vrIssueVehiclecertificateImpl.setCertificaterecordno(vrIssueVehiclecertificate.getCertificaterecordno());
 		vrIssueVehiclecertificateImpl.setProductionexamreportno(vrIssueVehiclecertificate.getProductionexamreportno());
-		vrIssueVehiclecertificateImpl.setProductyear(vrIssueVehiclecertificate.getProductyear());
-		vrIssueVehiclecertificateImpl.setProductmonth(vrIssueVehiclecertificate.getProductmonth());
-		vrIssueVehiclecertificateImpl.setTotalstamp(vrIssueVehiclecertificate.getTotalstamp());
-		vrIssueVehiclecertificateImpl.setTotalproduct(vrIssueVehiclecertificate.getTotalproduct());
 		vrIssueVehiclecertificateImpl.setModifyDate(vrIssueVehiclecertificate.getModifyDate());
+		vrIssueVehiclecertificateImpl.setSyncDate(vrIssueVehiclecertificate.getSyncDate());
 
 		return vrIssueVehiclecertificateImpl;
 	}
@@ -2519,6 +2518,11 @@ public class VRIssueVehiclecertificatePersistenceImpl
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return VRIssueVehiclecertificateModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2550,4 +2554,7 @@ public class VRIssueVehiclecertificatePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No VRIssueVehiclecertificate exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No VRIssueVehiclecertificate exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(VRIssueVehiclecertificatePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"totalProduct"
+			});
 }

@@ -153,7 +153,12 @@ public class VRClearingStampbookCacheModel implements CacheModel<VRClearingStamp
 			vrClearingStampbookImpl.setCertificateDate(new Date(certificateDate));
 		}
 
-		vrClearingStampbookImpl.setVehicleClass(vehicleClass);
+		if (vehicleClass == null) {
+			vrClearingStampbookImpl.setVehicleClass(StringPool.BLANK);
+		}
+		else {
+			vrClearingStampbookImpl.setVehicleClass(vehicleClass);
+		}
 
 		if (stampType == null) {
 			vrClearingStampbookImpl.setStampType(StringPool.BLANK);
@@ -237,8 +242,7 @@ public class VRClearingStampbookCacheModel implements CacheModel<VRClearingStamp
 		certificateId = objectInput.readLong();
 		certificateNumber = objectInput.readUTF();
 		certificateDate = objectInput.readLong();
-
-		vehicleClass = objectInput.readLong();
+		vehicleClass = objectInput.readUTF();
 		stampType = objectInput.readUTF();
 		stampShortNo = objectInput.readUTF();
 		serialStartNo = objectInput.readUTF();
@@ -294,7 +298,12 @@ public class VRClearingStampbookCacheModel implements CacheModel<VRClearingStamp
 
 		objectOutput.writeLong(certificateDate);
 
-		objectOutput.writeLong(vehicleClass);
+		if (vehicleClass == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(vehicleClass);
+		}
 
 		if (stampType == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -364,7 +373,7 @@ public class VRClearingStampbookCacheModel implements CacheModel<VRClearingStamp
 	public long certificateId;
 	public String certificateNumber;
 	public long certificateDate;
-	public long vehicleClass;
+	public String vehicleClass;
 	public String stampType;
 	public String stampShortNo;
 	public String serialStartNo;

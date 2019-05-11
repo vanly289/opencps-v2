@@ -1561,6 +1561,7 @@ public class VRCOPProductionPlantEmployeePersistenceImpl
 		vrcopProductionPlantEmployeeImpl.setSequenceNo(vrcopProductionPlantEmployee.getSequenceNo());
 		vrcopProductionPlantEmployeeImpl.setEmployeeName(vrcopProductionPlantEmployee.getEmployeeName());
 		vrcopProductionPlantEmployeeImpl.setEmployeeCertificateNo(vrcopProductionPlantEmployee.getEmployeeCertificateNo());
+		vrcopProductionPlantEmployeeImpl.setTrainningAt(vrcopProductionPlantEmployee.getTrainningAt());
 		vrcopProductionPlantEmployeeImpl.setModifyDate(vrcopProductionPlantEmployee.getModifyDate());
 		vrcopProductionPlantEmployeeImpl.setSyncDate(vrcopProductionPlantEmployee.getSyncDate());
 

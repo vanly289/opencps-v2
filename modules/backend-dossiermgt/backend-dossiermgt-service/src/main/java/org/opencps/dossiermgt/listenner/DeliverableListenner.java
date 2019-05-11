@@ -1,6 +1,5 @@
 package org.opencps.dossiermgt.listenner;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,16 +24,12 @@ import org.osgi.service.component.annotations.Component;
 
 import com.fds.vr.business.action.util.ConvertJONObjectUtils;
 import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.VRApplicantProfileHistory;
 import com.fds.vr.business.model.VRConfigTechSpec;
 import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.model.VRRegistration;
 import com.fds.vr.business.model.VRVehicleSpecification;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
-import com.fds.vr.business.model.impl.VRApplicantProfileHistoryImpl;
-import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
 import com.fds.vr.business.model.impl.VRVehicleSpecificationImpl;
-import com.fds.vr.business.service.VRApplicantProfileHistoryLocalServiceUtil;
 import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
 import com.fds.vr.business.service.VRConfigTechSpecLocalServiceUtil;
 import com.fds.vr.business.service.VRDossierFileLocalServiceUtil;
@@ -53,7 +48,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -155,6 +149,9 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				return "";
 			}
 			if ((mtCore == 1) && (Validator.isNotNull(applicant)) && (Validator.isNull(appProfile)) ) {
+				_log.info("VRApplicantProfile is NULL");
+				return "";
+				/*
 				// 2. Insert vr_applicantprofile
 				String markupDesigner = StringPool.BLANK; // 1: CSTK
 				String markupDomesticsManufacturer = StringPool.BLANK; // 2: CSSX TN
@@ -165,6 +162,21 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				SimpleDateFormat formatDateShort = new SimpleDateFormat("dd/MM/yyyy");
 				String applicantCeremonyDate = formatDateShort
 						.format(applicant.getApplicantIdDate());
+				
+				RegistrationForm registrationFormTTC = RegistrationFormLocalServiceUtil
+						.getByRegIdAndFormNo(registration.getRegistrationId(), "TTCDN");
+
+				String applicantBusinessType = StringPool.BLANK;
+				if (registrationFormTTC != null && registrationFormTTC.getFormData().length() > 1) {
+					JSONObject formJson = JSONFactoryUtil
+							.createJSONObject(registrationFormTTC.getFormData());
+					applicantBusinessType = formJson.getString("loai_hinh_doanh_nghiep");
+					markupCorporation = formJson.getString("doi_tuong");
+					markupDesigner = markupCorporation.contains("1") ? "1" : "0";
+					markupDomesticsManufacturer = markupCorporation.contains("2") ? "1" : "0";
+					markupImporter = markupCorporation.contains("3") ? "1" : "0";
+				}
+
 				
 				appProfile = new VRApplicantProfileImpl();
 				appProfile.setId(CounterLocalServiceUtil.increment(VRApplicantProfile.class.getName()));
@@ -178,7 +190,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				appProfile.setApplicantPhone(applicant.getContactTelNo());
 				appProfile.setApplicantEmail(applicant.getContactEmail());
 				appProfile.setApplicantFax("---");
-				appProfile.setApplicantBusinessType("---"); // Lay tu json
+				appProfile.setApplicantBusinessType(applicantBusinessType); // Lay tu json
 				appProfile.setApplicantRepresentative(applicant.getContactName());
 				appProfile
 						.setApplicantRepresentativeTitle(applicant.getRepresentativeEnterprise());
@@ -211,7 +223,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				appProfileHistory.setApplicantPhone(applicant.getContactTelNo());
 				appProfileHistory.setApplicantEmail(applicant.getContactEmail());
 				appProfileHistory.setApplicantFax("---");
-				appProfileHistory.setApplicantBusinessType("---");
+				appProfileHistory.setApplicantBusinessType(applicantBusinessType);
 				appProfileHistory.setApplicantRepresentative(applicant.getContactName());
 				appProfileHistory
 						.setApplicantRepresentativeTitle(applicant.getRepresentativeEnterprise());
@@ -233,7 +245,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 
 				VRApplicantProfileHistoryLocalServiceUtil.addVRApplicantProfileHistory(appProfileHistory);
 
-			}
+			*/}
 			String businessTypeCode = dossierDeliverableModel.getDeliverableType();
 			switch (businessTypeCode) {
 			case "GCN_TDTK_XCG":  //Tham dinh thiet ke Xe co gioi
@@ -248,27 +260,47 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 					
 					if (vrVehicleTypeCertificateId > 0 ) {
 						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "1");
-					}					
+						VRVehicleTypeCertificateLocalServiceUtil
+						.updateVRTechnicalSpec_ALL(mapValues, vrVehicleTypeCertificateId, vrVehicleTypeCertificate.getDossierId(), "", vrVehicleTypeCertificate.getDossierNo(), 
+								vrVehicleTypeCertificate.getModifyDate(), vrVehicleTypeCertificate.getVehicleClass(), vrVehicleTypeCertificate.getDeliverableCode());
+					}
+					
 				}
 				break;				
 			case "TT302011BGTVTTDTKXMCD": //Tham dinh thiet ke Xe may chuyen dung
 				
 				break;		
 			case "TT302011BGTVTKTSPMXCG":  //Kiem tra san pham mau Xe co gioi
-//				if (mtCore == 1) {
-//					
-//					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
-//							.updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
-//	
-//					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
-//					
-//					if (vrVehicleTypeCertificateId > 0 ) {
-//						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "21");
-//					}					
-//				}
+				if (mtCore == 1) {
+					
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+	
+					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+					
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "21");
+						VRVehicleTypeCertificateLocalServiceUtil
+						.updateVRTechnicalSpec_ALL(mapValues, vrVehicleTypeCertificateId, vrVehicleTypeCertificate.getDossierId(), "", vrVehicleTypeCertificate.getDossierNo(), 
+								vrVehicleTypeCertificate.getModifyDate(), vrVehicleTypeCertificate.getVehicleClass(), vrVehicleTypeCertificate.getDeliverableCode());
+					}
+					
+				}
 				break;				
 			case "TT302011BGTVTKTSPMXBBCN": //Kiem tra san pham mau Xe cho nguoi bon banh co gan dong co
-
+				if (mtCore == 1) {
+					
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.updateTT302011BGTVTKTSPMXBBCN_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+					
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCN", "21");
+						VRVehicleTypeCertificateLocalServiceUtil
+						.updateVRTechnicalSpec_ALL(mapValues, vrVehicleTypeCertificateId, vrVehicleTypeCertificate.getDossierId(), "", vrVehicleTypeCertificate.getDossierNo(), 
+								vrVehicleTypeCertificate.getModifyDate(), vrVehicleTypeCertificate.getVehicleClass(), vrVehicleTypeCertificate.getDeliverableCode());
+					}					
+				}
 				break;
 			case "TT302011BGTVTCOP": //Danh gia COP
 				
@@ -294,14 +326,28 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
 					
 					if (vrVehicleTypeCertificateId > 0 ) {
-						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "21");
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "LKXCG", "21");
+						VRVehicleTypeCertificateLocalServiceUtil
+						.updateVRTechnicalSpec_ALL(mapValues, vrVehicleTypeCertificateId, vrVehicleTypeCertificate.getDossierId(), "", vrVehicleTypeCertificate.getDossierNo(), 
+								vrVehicleTypeCertificate.getModifyDate(), vrVehicleTypeCertificate.getVehicleClass(), vrVehicleTypeCertificate.getDeliverableCode());
 					}					
 				}
 				break;				
 			case "TT302011BGTVTCNCLKLLKXM": //Chung nhan chat luong kieu loai linh kien Xe mo to, xe gan may
-
-				
-				break;				
+				if (mtCore == 1) {
+					
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.updateTT302011BGTVTCNCLKLLKXM_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+					
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "LKXMY", "21");
+						VRVehicleTypeCertificateLocalServiceUtil
+						.updateVRTechnicalSpec_ALL(mapValues, vrVehicleTypeCertificateId, vrVehicleTypeCertificate.getDossierId(), "", vrVehicleTypeCertificate.getDossierNo(), 
+								vrVehicleTypeCertificate.getModifyDate(), vrVehicleTypeCertificate.getVehicleClass(), vrVehicleTypeCertificate.getDeliverableCode());
+					}					
+				}
+				break;		
 			case "TT302011BGTVTCNCLKLTXXCG": //Chung nhan chat luong kieu loai toan xe Xe co gioi
 				if (mtCore == 1) {
 					
@@ -312,20 +358,75 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 					
 					if (vrVehicleTypeCertificateId > 0 ) {
 						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCG", "21");
+						VRVehicleTypeCertificateLocalServiceUtil
+						.updateVRTechnicalSpec_ALL(mapValues, vrVehicleTypeCertificateId, vrVehicleTypeCertificate.getDossierId(), "", vrVehicleTypeCertificate.getDossierNo(), 
+								vrVehicleTypeCertificate.getModifyDate(), vrVehicleTypeCertificate.getVehicleClass(), vrVehicleTypeCertificate.getDeliverableCode());
 					}					
 				}
 				break;				
 			case "TT302011BGTVTCNCLKLTXXMTGM": //Chung nhan chat luong kieu loai toan xe Xe mo to, xe gan may
-				
+				if (mtCore == 1) {
+					
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.updateTT302011BGTVTCNCLKLTXXMTGM_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+	
+					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+					
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XMY", "21");
+						VRVehicleTypeCertificateLocalServiceUtil
+						.updateVRTechnicalSpec_ALL(mapValues, vrVehicleTypeCertificateId, vrVehicleTypeCertificate.getDossierId(), "", vrVehicleTypeCertificate.getDossierNo(), 
+								vrVehicleTypeCertificate.getModifyDate(), vrVehicleTypeCertificate.getVehicleClass(), vrVehicleTypeCertificate.getDeliverableCode());
+					}					
+				}
 				break;				
 			case "TT302011BGTVTCNCLKLTXXDD": //Chung nhan chat luong kieu loai toan xe Xe dap dien
-				
+				if (mtCore == 1) {
+					
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.updateTT302011BGTVTCNCLKLTXXDD_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+	
+					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+					
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XDD", "21");
+						VRVehicleTypeCertificateLocalServiceUtil
+						.updateVRTechnicalSpec_ALL(mapValues, vrVehicleTypeCertificateId, vrVehicleTypeCertificate.getDossierId(), "", vrVehicleTypeCertificate.getDossierNo(), 
+								vrVehicleTypeCertificate.getModifyDate(), vrVehicleTypeCertificate.getVehicleClass(), vrVehicleTypeCertificate.getDeliverableCode());
+					}					
+				}
 				break;				
 			case "TT302011BGTVTCNCLKLTXXBBCN": //Chung nhan chat luong kieu loai toan xe Xe cho nguoi bon banh co gan dong co
-				
+				if (mtCore == 1) {
+					
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.updateTT302011BGTVTCNCLKLTXXBBCN_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+	
+					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+					
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCN", "21");
+						VRVehicleTypeCertificateLocalServiceUtil
+						.updateVRTechnicalSpec_ALL(mapValues, vrVehicleTypeCertificateId, vrVehicleTypeCertificate.getDossierId(), "", vrVehicleTypeCertificate.getDossierNo(), 
+								vrVehicleTypeCertificate.getModifyDate(), vrVehicleTypeCertificate.getVehicleClass(), vrVehicleTypeCertificate.getDeliverableCode());
+					}					
+				}
 				break;				
 			case "TT302011BGTVTCNCLKLTXXBBCH": //Chung nhan chat luong kieu loai toan xe Xe cho hang bon banh co gan dong co
-				
+				if (mtCore == 1) {
+					
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.updateTT302011BGTVTCNCLKLTXXBBCH_VehicleTypeCertificate(mapValues, applicant.getApplicantIdDate(), appProfile, dossierFile);
+	
+					long vrVehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
+					
+					if (vrVehicleTypeCertificateId > 0 ) {
+						updateVehicleSpecification(mapValues, vrVehicleTypeCertificateId, modifiedDate, "XCH", "21");
+						VRVehicleTypeCertificateLocalServiceUtil
+						.updateVRTechnicalSpec_ALL(mapValues, vrVehicleTypeCertificateId, vrVehicleTypeCertificate.getDossierId(), "", vrVehicleTypeCertificate.getDossierNo(), 
+								vrVehicleTypeCertificate.getModifyDate(), vrVehicleTypeCertificate.getVehicleClass(), vrVehicleTypeCertificate.getDeliverableCode());
+					}					
+				}
 				break;	
 			case "TT302011BGTVTCPPXCG": //Cap phat va su dung phieu kiem tra chat luong xuat xuong Xe co gioi
 				
@@ -431,7 +532,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 				specification.setSpecificationGroup(Integer.toString(configTechSpec.getSpecificationGroup()));
 				specification.setSpecificationDataCollectionID(configTechSpec.getSpecificationDataCollectionId());
 				specification.setSpecificationResult(specificationResult);
-				specification.setSyncDate(GetterUtil.getDate(modifiedDate, new SimpleDateFormat("dd:MM:yyyy HH:mm:ss")));
+				specification.setSyncDate(modifiedDate);
 				
 				if (isnew) {
 					VRVehicleSpecificationLocalServiceUtil.addVRVehicleSpecification(specification);

@@ -284,6 +284,20 @@ public interface VRCOPProductionPlantEquipmentModel extends BaseModel<VRCOPProdu
 	public void setEquipmentStatus(String equipmentStatus);
 
 	/**
+	 * Returns the expire date of this vrcop production plant equipment.
+	 *
+	 * @return the expire date of this vrcop production plant equipment
+	 */
+	public Date getExpireDate();
+
+	/**
+	 * Sets the expire date of this vrcop production plant equipment.
+	 *
+	 * @param expireDate the expire date of this vrcop production plant equipment
+	 */
+	public void setExpireDate(Date expireDate);
+
+	/**
 	 * Returns the notes of this vrcop production plant equipment.
 	 *
 	 * @return the notes of this vrcop production plant equipment

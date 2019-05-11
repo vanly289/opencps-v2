@@ -175,6 +175,20 @@ public interface VRIssueVehiclecertificateModel extends BaseModel<VRIssueVehicle
 	public void setUnitPrice(long unitPrice);
 
 	/**
+	 * Returns the total product of this vr issue vehiclecertificate.
+	 *
+	 * @return the total product of this vr issue vehiclecertificate
+	 */
+	public int getTotalProduct();
+
+	/**
+	 * Sets the total product of this vr issue vehiclecertificate.
+	 *
+	 * @param totalProduct the total product of this vr issue vehiclecertificate
+	 */
+	public void setTotalProduct(int totalProduct);
+
+	/**
 	 * Returns the certificaterecordno of this vr issue vehiclecertificate.
 	 *
 	 * @return the certificaterecordno of this vr issue vehiclecertificate
@@ -205,63 +219,6 @@ public interface VRIssueVehiclecertificateModel extends BaseModel<VRIssueVehicle
 	public void setProductionexamreportno(String productionexamreportno);
 
 	/**
-	 * Returns the productyear of this vr issue vehiclecertificate.
-	 *
-	 * @return the productyear of this vr issue vehiclecertificate
-	 */
-	@AutoEscape
-	public String getProductyear();
-
-	/**
-	 * Sets the productyear of this vr issue vehiclecertificate.
-	 *
-	 * @param productyear the productyear of this vr issue vehiclecertificate
-	 */
-	public void setProductyear(String productyear);
-
-	/**
-	 * Returns the productmonth of this vr issue vehiclecertificate.
-	 *
-	 * @return the productmonth of this vr issue vehiclecertificate
-	 */
-	public int getProductmonth();
-
-	/**
-	 * Sets the productmonth of this vr issue vehiclecertificate.
-	 *
-	 * @param productmonth the productmonth of this vr issue vehiclecertificate
-	 */
-	public void setProductmonth(int productmonth);
-
-	/**
-	 * Returns the totalstamp of this vr issue vehiclecertificate.
-	 *
-	 * @return the totalstamp of this vr issue vehiclecertificate
-	 */
-	public int getTotalstamp();
-
-	/**
-	 * Sets the totalstamp of this vr issue vehiclecertificate.
-	 *
-	 * @param totalstamp the totalstamp of this vr issue vehiclecertificate
-	 */
-	public void setTotalstamp(int totalstamp);
-
-	/**
-	 * Returns the totalproduct of this vr issue vehiclecertificate.
-	 *
-	 * @return the totalproduct of this vr issue vehiclecertificate
-	 */
-	public int getTotalproduct();
-
-	/**
-	 * Sets the totalproduct of this vr issue vehiclecertificate.
-	 *
-	 * @param totalproduct the totalproduct of this vr issue vehiclecertificate
-	 */
-	public void setTotalproduct(int totalproduct);
-
-	/**
 	 * Returns the modify date of this vr issue vehiclecertificate.
 	 *
 	 * @return the modify date of this vr issue vehiclecertificate
@@ -274,6 +231,20 @@ public interface VRIssueVehiclecertificateModel extends BaseModel<VRIssueVehicle
 	 * @param modifyDate the modify date of this vr issue vehiclecertificate
 	 */
 	public void setModifyDate(Date modifyDate);
+
+	/**
+	 * Returns the sync date of this vr issue vehiclecertificate.
+	 *
+	 * @return the sync date of this vr issue vehiclecertificate
+	 */
+	public Date getSyncDate();
+
+	/**
+	 * Sets the sync date of this vr issue vehiclecertificate.
+	 *
+	 * @param syncDate the sync date of this vr issue vehiclecertificate
+	 */
+	public void setSyncDate(Date syncDate);
 
 	@Override
 	public boolean isNew();

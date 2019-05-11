@@ -164,6 +164,112 @@ public interface VRProductTypeModel extends BaseModel<VRProductType> {
 	public void setVehicleTypeDescription(String vehicleTypeDescription);
 
 	/**
+	 * Returns the product classification code of this vr product type.
+	 *
+	 * @return the product classification code of this vr product type
+	 */
+	@AutoEscape
+	public String getProductClassificationCode();
+
+	/**
+	 * Sets the product classification code of this vr product type.
+	 *
+	 * @param productClassificationCode the product classification code of this vr product type
+	 */
+	public void setProductClassificationCode(String productClassificationCode);
+
+	/**
+	 * Returns the product classification description of this vr product type.
+	 *
+	 * @return the product classification description of this vr product type
+	 */
+	@AutoEscape
+	public String getProductClassificationDescription();
+
+	/**
+	 * Sets the product classification description of this vr product type.
+	 *
+	 * @param productClassificationDescription the product classification description of this vr product type
+	 */
+	public void setProductClassificationDescription(
+		String productClassificationDescription);
+
+	/**
+	 * Returns the trademark of this vr product type.
+	 *
+	 * @return the trademark of this vr product type
+	 */
+	@AutoEscape
+	public String getTrademark();
+
+	/**
+	 * Sets the trademark of this vr product type.
+	 *
+	 * @param trademark the trademark of this vr product type
+	 */
+	public void setTrademark(String trademark);
+
+	/**
+	 * Returns the trademark name of this vr product type.
+	 *
+	 * @return the trademark name of this vr product type
+	 */
+	@AutoEscape
+	public String getTrademarkName();
+
+	/**
+	 * Sets the trademark name of this vr product type.
+	 *
+	 * @param trademarkName the trademark name of this vr product type
+	 */
+	public void setTrademarkName(String trademarkName);
+
+	/**
+	 * Returns the commercial name of this vr product type.
+	 *
+	 * @return the commercial name of this vr product type
+	 */
+	@AutoEscape
+	public String getCommercialName();
+
+	/**
+	 * Sets the commercial name of this vr product type.
+	 *
+	 * @param commercialName the commercial name of this vr product type
+	 */
+	public void setCommercialName(String commercialName);
+
+	/**
+	 * Returns the model code of this vr product type.
+	 *
+	 * @return the model code of this vr product type
+	 */
+	@AutoEscape
+	public String getModelCode();
+
+	/**
+	 * Sets the model code of this vr product type.
+	 *
+	 * @param modelCode the model code of this vr product type
+	 */
+	public void setModelCode(String modelCode);
+
+	/**
+	 * Returns the design symbol no of this vr product type.
+	 *
+	 * @return the design symbol no of this vr product type
+	 */
+	@AutoEscape
+	public String getDesignSymbolNo();
+
+	/**
+	 * Sets the design symbol no of this vr product type.
+	 *
+	 * @param designSymbolNo the design symbol no of this vr product type
+	 */
+	public void setDesignSymbolNo(String designSymbolNo);
+
+	/**
 	 * Returns the modify date of this vr product type.
 	 *
 	 * @return the modify date of this vr product type

@@ -91,7 +91,7 @@ public class VRCOPReportAttachLocalServiceImpl
 		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("")));
 		object.setCopReportNo(mapValues.get(""));
 		object.setSequenceNo(Long.valueOf(mapValues.get("")));
-		object.setAttachFileURL(mapValues.get(""));
+		//object.setAttachFileURL(mapValues.get(""));
 
 		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
 

@@ -45,27 +45,32 @@ public class RegistrationActionsImpl implements RegistrationActions {
 			throws SystemException, PortalException {
 		List<Registration> listRegistration = RegistrationLocalServiceUtil.getRegistrationByGID_UID(groupId,
 				serviceContext.getUserId());
-		_log.info("listRegistration: "+listRegistration.size());
+		//_log.info("listRegistration: "+listRegistration.size());
 		// registration moi nhat se thiet lap flag markasdeleted = 1; Chi khi duyet moi chuyen ve gia tri 0;
-		markasdeleted = 1; 
+		markasdeleted = 0; 
+		
 		if (listRegistration.size() == 0) {
+			// _log.info("2. markasdeleted = 1");
 			return RegistrationLocalServiceUtil.insert(groupId, companyId, applicantName, applicantIdType,
 					applicantIdNo, applicantIdDate, address, cityCode, cityName, districtCode, districtName, wardCode,
 					wardName, contactName, contactTelNo, contactEmail, govAgencyCode, govAgencyName, 0, 
 					Validator.isNotNull(registrationClass) ? registrationClass.toString(): StringPool.BLANK,
 					representativeEnterprise, markasdeleted, remarks, serviceContext);
+			
 		} else {
 			Registration registration = listRegistration.get(0);
 			int state = registration.getRegistrationState();
-			_log.info("registration: "+registration.getRegistrationId());
-			_log.info("state: "+state);
+			//_log.info("registration: "+registration.getRegistrationId());
+			//_log.info("state: "+state);
 			if (state == 2) {
+				//_log.info("3. markasdeleted = 1");
 				return RegistrationLocalServiceUtil.insert(groupId, companyId, applicantName, applicantIdType,
 						applicantIdNo, applicantIdDate, address, cityCode, cityName, districtCode, districtName,
 						wardCode, wardName, contactName, contactTelNo, contactEmail, govAgencyCode, govAgencyName, 0,
 						Validator.isNotNull(registrationClass) ? registrationClass.toString() : StringPool.BLANK,
 						representativeEnterprise, markasdeleted, remarks, serviceContext);
 			} else {
+				//_log.info("4. return registration;");
 				return registration;
 			}
 		}
@@ -112,23 +117,34 @@ public class RegistrationActionsImpl implements RegistrationActions {
 		if (registrationState == 2 || registrationState == 3) {			
 			addLog("", groupId, userId, registrationId, content, lstRegistrationFormchange);
 		}
-	
-		if (registrationState == 2) {			
+		markasdeleted = 0;
+		if (registrationState == 2) {
 			// Find all Registrations with exacted applicantIdNo: update markasdeleted from 0 to 1
 			// Registration moi nhat khi duoc duyet se chuyen flag markasdeleted ve gia tri 0;
-			List<Registration> oldReg =  RegistrationLocalServiceUtil.findByREG_APPNO_markasdeleted(groupId, applicantIdNo, 0);
-			if (oldReg != null && oldReg.size() > 0) {
+			Registration registration = RegistrationLocalServiceUtil.fetchRegistration(registrationId);
+			List<Registration> oldReg =  RegistrationLocalServiceUtil.findByREG_APPNO_markasdeleted(groupId, registration.getApplicantIdNo(), markasdeleted);
+			_log.info("groupId==="+groupId+"===applicantIdNo==="+registration.getApplicantIdNo()+"====findByREG_APPNO_markasdeleted.size()===="+oldReg.size());
+			if (Validator.isNotNull(oldReg) && oldReg.size() > 0) {
+				_log.info("1. Find all Registrations with exacted applicantIdNo: update markasdeleted from 0 to 1");
+				_log.info("2. Latest approved registration: update markasdeleted up to 0;");
 				for (Registration oldregistration : oldReg) {
-					oldregistration.setMarkasdeleted(1);
+					oldregistration.setMarkasdeleted(1);					
 					RegistrationLocalServiceUtil.updateRegistration(oldregistration);
+					long resGroupId = 55217;
+					Registration registrationServer = RegistrationLocalServiceUtil
+							.fetchRegistrationByUuidAndGroupId(oldregistration.getUuid(), resGroupId);
+
+					if (registrationServer != null) {
+						registrationServer.setMarkasdeleted(1);					
+						RegistrationLocalServiceUtil.updateRegistration(registrationServer);
+					}
 				}
-			}
-			markasdeleted = 0;	
+			}				
 			remarks = StringPool.BLANK; // reset
 			
-		} else {
+		} /*else {
 			markasdeleted = 1;
-		}
+		}*/
 
 		return RegistrationLocalServiceUtil.updateRegistration(groupId, registrationId, applicantName, applicantIdType,
 				applicantIdNo, applicantIdDate, address, cityCode, cityName, districtCode, districtName, wardCode,

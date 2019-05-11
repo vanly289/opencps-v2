@@ -114,6 +114,14 @@ public interface VRInputStampbookLocalService extends BaseLocalService,
 	public VRInputStampbook getVRInputStampbook(long id)
 		throws PortalException;
 
+	public VRInputStampbook updateInputStambook(long id, long mtCore,
+		long inputSheetId, long bookId, java.lang.String vehicleClass,
+		java.lang.String stampType, java.lang.String stampShortNo,
+		long serialStartNo, long serialEndNo, long subTotalInDocument,
+		long subTotalQuantities, long units, long unitPrice, long totalAmount,
+		long totalInUse, long totalNotUsed, long sum1, long sum2, long sum3,
+		java.lang.String remark) throws PortalException, SystemException;
+
 	/**
 	* Updates the vr input stampbook in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

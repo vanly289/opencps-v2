@@ -35,6 +35,7 @@ public class VRVehicleRecordSoap implements Serializable {
 
 		soapModel.setId(model.getId());
 		soapModel.setMtCore(model.getMtCore());
+		soapModel.setIssueId(model.getIssueId());
 		soapModel.setIssueVehicleCertificateId(model.getIssueVehicleCertificateId());
 		soapModel.setDossierId(model.getDossierId());
 		soapModel.setApplicantProfileId(model.getApplicantProfileId());
@@ -127,6 +128,14 @@ public class VRVehicleRecordSoap implements Serializable {
 
 	public void setMtCore(long mtCore) {
 		_mtCore = mtCore;
+	}
+
+	public long getIssueId() {
+		return _issueId;
+	}
+
+	public void setIssueId(long issueId) {
+		_issueId = issueId;
 	}
 
 	public long getIssueVehicleCertificateId() {
@@ -323,6 +332,7 @@ public class VRVehicleRecordSoap implements Serializable {
 
 	private long _id;
 	private long _mtCore;
+	private long _issueId;
 	private long _issueVehicleCertificateId;
 	private long _dossierId;
 	private long _applicantProfileId;

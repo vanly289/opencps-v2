@@ -93,7 +93,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByIssueVehicleCertificateId",
 			new String[] {
-				Integer.class.getName(),
+				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -104,7 +104,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 			VRIssueEquipmentCertificateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByIssueVehicleCertificateId",
-			new String[] { Integer.class.getName() },
+			new String[] { Long.class.getName() },
 			VRIssueEquipmentCertificateModelImpl.ISSUEVEHICLECERTIFICATEID_COLUMN_BITMASK |
 			VRIssueEquipmentCertificateModelImpl.SYNCDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_ISSUEVEHICLECERTIFICATEID =
@@ -112,7 +112,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 			VRIssueEquipmentCertificateModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByIssueVehicleCertificateId",
-			new String[] { Integer.class.getName() });
+			new String[] { Long.class.getName() });
 
 	/**
 	 * Returns all the vr issue equipment certificates where issueVehicleCertificateId = &#63;.
@@ -122,7 +122,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 */
 	@Override
 	public List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId) {
+		long issueVehicleCertificateId) {
 		return findByIssueVehicleCertificateId(issueVehicleCertificateId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -141,7 +141,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 */
 	@Override
 	public List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId, int start, int end) {
+		long issueVehicleCertificateId, int start, int end) {
 		return findByIssueVehicleCertificateId(issueVehicleCertificateId,
 			start, end, null);
 	}
@@ -161,7 +161,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 */
 	@Override
 	public List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId, int start, int end,
+		long issueVehicleCertificateId, int start, int end,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator) {
 		return findByIssueVehicleCertificateId(issueVehicleCertificateId,
 			start, end, orderByComparator, true);
@@ -183,7 +183,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 */
 	@Override
 	public List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId, int start, int end,
+		long issueVehicleCertificateId, int start, int end,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -299,7 +299,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 */
 	@Override
 	public VRIssueEquipmentCertificate findByIssueVehicleCertificateId_First(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator)
 		throws NoSuchVRIssueEquipmentCertificateException {
 		VRIssueEquipmentCertificate vrIssueEquipmentCertificate = fetchByIssueVehicleCertificateId_First(issueVehicleCertificateId,
@@ -330,7 +330,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 */
 	@Override
 	public VRIssueEquipmentCertificate fetchByIssueVehicleCertificateId_First(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator) {
 		List<VRIssueEquipmentCertificate> list = findByIssueVehicleCertificateId(issueVehicleCertificateId,
 				0, 1, orderByComparator);
@@ -352,7 +352,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 */
 	@Override
 	public VRIssueEquipmentCertificate findByIssueVehicleCertificateId_Last(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator)
 		throws NoSuchVRIssueEquipmentCertificateException {
 		VRIssueEquipmentCertificate vrIssueEquipmentCertificate = fetchByIssueVehicleCertificateId_Last(issueVehicleCertificateId,
@@ -383,7 +383,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 */
 	@Override
 	public VRIssueEquipmentCertificate fetchByIssueVehicleCertificateId_Last(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator) {
 		int count = countByIssueVehicleCertificateId(issueVehicleCertificateId);
 
@@ -412,7 +412,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 */
 	@Override
 	public VRIssueEquipmentCertificate[] findByIssueVehicleCertificateId_PrevAndNext(
-		long id, int issueVehicleCertificateId,
+		long id, long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator)
 		throws NoSuchVRIssueEquipmentCertificateException {
 		VRIssueEquipmentCertificate vrIssueEquipmentCertificate = findByPrimaryKey(id);
@@ -447,7 +447,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	protected VRIssueEquipmentCertificate getByIssueVehicleCertificateId_PrevAndNext(
 		Session session,
 		VRIssueEquipmentCertificate vrIssueEquipmentCertificate,
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		OrderByComparator<VRIssueEquipmentCertificate> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -559,7 +559,8 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 * @param issueVehicleCertificateId the issue vehicle certificate ID
 	 */
 	@Override
-	public void removeByIssueVehicleCertificateId(int issueVehicleCertificateId) {
+	public void removeByIssueVehicleCertificateId(
+		long issueVehicleCertificateId) {
 		for (VRIssueEquipmentCertificate vrIssueEquipmentCertificate : findByIssueVehicleCertificateId(
 				issueVehicleCertificateId, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
@@ -574,7 +575,7 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 	 * @return the number of matching vr issue equipment certificates
 	 */
 	@Override
-	public int countByIssueVehicleCertificateId(int issueVehicleCertificateId) {
+	public int countByIssueVehicleCertificateId(long issueVehicleCertificateId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_ISSUEVEHICLECERTIFICATEID;
 
 		Object[] finderArgs = new Object[] { issueVehicleCertificateId };

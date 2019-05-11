@@ -105,13 +105,13 @@ public class VRIssueEquipmentCertificateWrapper
 			setMtcore(mtcore);
 		}
 
-		Integer issueId = (Integer)attributes.get("issueId");
+		Long issueId = (Long)attributes.get("issueId");
 
 		if (issueId != null) {
 			setIssueId(issueId);
 		}
 
-		Integer issueVehicleCertificateId = (Integer)attributes.get(
+		Long issueVehicleCertificateId = (Long)attributes.get(
 				"issueVehicleCertificateId");
 
 		if (issueVehicleCertificateId != null) {
@@ -290,26 +290,6 @@ public class VRIssueEquipmentCertificateWrapper
 	@Override
 	public int getEquipmentCertificateRecordId() {
 		return _vrIssueEquipmentCertificate.getEquipmentCertificateRecordId();
-	}
-
-	/**
-	* Returns the issue ID of this vr issue equipment certificate.
-	*
-	* @return the issue ID of this vr issue equipment certificate
-	*/
-	@Override
-	public int getIssueId() {
-		return _vrIssueEquipmentCertificate.getIssueId();
-	}
-
-	/**
-	* Returns the issue vehicle certificate ID of this vr issue equipment certificate.
-	*
-	* @return the issue vehicle certificate ID of this vr issue equipment certificate
-	*/
-	@Override
-	public int getIssueVehicleCertificateId() {
-		return _vrIssueEquipmentCertificate.getIssueVehicleCertificateId();
 	}
 
 	/**
@@ -538,6 +518,26 @@ public class VRIssueEquipmentCertificateWrapper
 	}
 
 	/**
+	* Returns the issue ID of this vr issue equipment certificate.
+	*
+	* @return the issue ID of this vr issue equipment certificate
+	*/
+	@Override
+	public long getIssueId() {
+		return _vrIssueEquipmentCertificate.getIssueId();
+	}
+
+	/**
+	* Returns the issue vehicle certificate ID of this vr issue equipment certificate.
+	*
+	* @return the issue vehicle certificate ID of this vr issue equipment certificate
+	*/
+	@Override
+	public long getIssueVehicleCertificateId() {
+		return _vrIssueEquipmentCertificate.getIssueVehicleCertificateId();
+	}
+
+	/**
 	* Returns the primary key of this vr issue equipment certificate.
 	*
 	* @return the primary key of this vr issue equipment certificate
@@ -692,7 +692,7 @@ public class VRIssueEquipmentCertificateWrapper
 	* @param issueId the issue ID of this vr issue equipment certificate
 	*/
 	@Override
-	public void setIssueId(int issueId) {
+	public void setIssueId(long issueId) {
 		_vrIssueEquipmentCertificate.setIssueId(issueId);
 	}
 
@@ -702,7 +702,7 @@ public class VRIssueEquipmentCertificateWrapper
 	* @param issueVehicleCertificateId the issue vehicle certificate ID of this vr issue equipment certificate
 	*/
 	@Override
-	public void setIssueVehicleCertificateId(int issueVehicleCertificateId) {
+	public void setIssueVehicleCertificateId(long issueVehicleCertificateId) {
 		_vrIssueEquipmentCertificate.setIssueVehicleCertificateId(issueVehicleCertificateId);
 	}
 

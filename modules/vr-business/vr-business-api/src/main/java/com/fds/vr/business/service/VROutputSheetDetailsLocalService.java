@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -113,6 +114,17 @@ public interface VROutputSheetDetailsLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VROutputSheetDetails getVROutputSheetDetails(long id)
 		throws PortalException;
+
+	public VROutputSheetDetails updateOutputSheetDetails(long id, long mtCore,
+		long inputSheetId, long outputSheetId, long bookId,
+		long issueVehicleCertificateId, long certificateId,
+		java.lang.String certificateNumber, Date certificateDate,
+		java.lang.String vehicleClass, java.lang.String stampType,
+		java.lang.String stampShortNo, long serialStartNo, long serialEndNo,
+		long subTotalInDocument, long subTotalQuantities, long unitPrice,
+		long totalAmount, long totalInUse, long totalNotUsed, long totalLost,
+		long totalCancelled, long totalReturned, java.lang.String remark)
+		throws PortalException, SystemException;
 
 	/**
 	* Updates the vr output sheet details in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

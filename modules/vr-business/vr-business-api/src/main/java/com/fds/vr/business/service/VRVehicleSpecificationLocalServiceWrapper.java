@@ -298,6 +298,76 @@ public class VRVehicleSpecificationLocalServiceWrapper
 	}
 
 	@Override
+	public void updateVRTechnicalSpec_LKXCG(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		java.util.Date modifyDate, java.lang.String deliverableCode) {
+		_vrVehicleSpecificationLocalService.updateVRTechnicalSpec_LKXCG(strChungChi,
+			vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo,
+			modifyDate, deliverableCode);
+	}
+
+	@Override
+	public void updateVRTechnicalSpec_LKXMY(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		java.util.Date modifyDate, java.lang.String deliverableCode) {
+		_vrVehicleSpecificationLocalService.updateVRTechnicalSpec_LKXMY(strChungChi,
+			vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo,
+			modifyDate, deliverableCode);
+	}
+
+	@Override
+	public void updateVRTechnicalSpec_XCG(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		java.util.Date modifyDate, java.lang.String deliverableCode) {
+		_vrVehicleSpecificationLocalService.updateVRTechnicalSpec_XCG(strChungChi,
+			vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo,
+			modifyDate, deliverableCode);
+	}
+
+	@Override
+	public void updateVRTechnicalSpec_XCH(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		java.util.Date modifyDate, java.lang.String deliverableCode) {
+		_vrVehicleSpecificationLocalService.updateVRTechnicalSpec_XCH(strChungChi,
+			vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo,
+			modifyDate, deliverableCode);
+	}
+
+	@Override
+	public void updateVRTechnicalSpec_XCN(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		java.util.Date modifyDate, java.lang.String deliverableCode) {
+		_vrVehicleSpecificationLocalService.updateVRTechnicalSpec_XCN(strChungChi,
+			vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo,
+			modifyDate, deliverableCode);
+	}
+
+	@Override
+	public void updateVRTechnicalSpec_XDD(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		java.util.Date modifyDate, java.lang.String deliverableCode) {
+		_vrVehicleSpecificationLocalService.updateVRTechnicalSpec_XDD(strChungChi,
+			vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo,
+			modifyDate, deliverableCode);
+	}
+
+	@Override
+	public void updateVRTechnicalSpec_XMY(java.lang.String strChungChi,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		java.util.Date modifyDate, java.lang.String deliverableCode) {
+		_vrVehicleSpecificationLocalService.updateVRTechnicalSpec_XMY(strChungChi,
+			vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo,
+			modifyDate, deliverableCode);
+	}
+
+	@Override
 	public VRVehicleSpecificationLocalService getWrappedService() {
 		return _vrVehicleSpecificationLocalService;
 	}

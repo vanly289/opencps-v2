@@ -194,14 +194,15 @@ public interface VRClearingStampbookModel extends BaseModel<VRClearingStampbook>
 	 *
 	 * @return the vehicle class of this vr clearing stampbook
 	 */
-	public long getVehicleClass();
+	@AutoEscape
+	public String getVehicleClass();
 
 	/**
 	 * Sets the vehicle class of this vr clearing stampbook.
 	 *
 	 * @param vehicleClass the vehicle class of this vr clearing stampbook
 	 */
-	public void setVehicleClass(long vehicleClass);
+	public void setVehicleClass(String vehicleClass);
 
 	/**
 	 * Returns the stamp type of this vr clearing stampbook.

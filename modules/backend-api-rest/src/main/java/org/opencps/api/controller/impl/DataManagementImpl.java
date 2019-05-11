@@ -84,8 +84,8 @@ public class DataManagementImpl implements DataManagement {
 		DictCollectionResults result = new DictCollectionResults();
 
 		try {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
-			if (query.getEnd() == 0) {
 				query.setStart(-1);
 
 				query.setEnd(-1);
@@ -506,8 +506,7 @@ public class DataManagementImpl implements DataManagement {
 		searchContext.setCompanyId(company.getCompanyId());
 
 		try {
-
-			if (query.getEnd() == 0) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 
@@ -1116,8 +1115,7 @@ public class DataManagementImpl implements DataManagement {
 		searchContext.setCompanyId(company.getCompanyId());
 
 		try {
-
-			if (query.getEnd() == 0) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 
@@ -1134,9 +1132,14 @@ public class DataManagementImpl implements DataManagement {
 			params.put("groupId", groupId);
 			params.put("keywords", query.getKeywords());
 			params.put("itemLv", query.getLevel());
-			params.put(DictItemTerm.PARENT_ITEM_CODE, query.getParent());
 			params.put(DictItemTerm.DICT_COLLECTION_CODE, code);
-
+			
+			if (Validator.isNotNull(query.getParent()) && query.getParent().equalsIgnoreCase("0")) {
+				params.put(DictItemTerm.PARENT_ITEM_ID, query.getParent());
+			} else {
+				params.put(DictItemTerm.PARENT_ITEM_CODE, query.getParent());
+			}
+			
 			Sort[] sorts = new Sort[] {
 					SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE, false) };
 
@@ -2010,17 +2013,9 @@ public class DataManagementImpl implements DataManagement {
 			Locale locale, User user, ServiceContext serviceContext,
 			org.opencps.api.datamgtsync.model.DataSearchModel query) {
 
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
 
-		if (Validator.isNotNull(query.getStart())) {
-			start = Integer.valueOf(query.getStart());
-		}
-
-		if (Validator.isNotNull(query.getEnd())) {
-			end = Integer.valueOf(query.getEnd());
-		}
 		try {
+			
 			Date date = new Date(query.getLastSync());
 
 			org.opencps.api.datamgtsync.model.DictCollectionResults result = new org.opencps.api.datamgtsync.model.DictCollectionResults();
@@ -2029,11 +2024,18 @@ public class DataManagementImpl implements DataManagement {
 
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
 
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
+
+				query.setStart(-1);
+
+				query.setEnd(-1);
+
+			}
 			List<DictCollection> lstCollections = dictItemDataUtil.getListDictCollectionsOlderThanDate(user.getUserId(),
-					company.getCompanyId(), groupId, date, start, end, serviceContext);
+					company.getCompanyId(), groupId, date, query.getStart(), query.getEnd(), serviceContext);
 
 			long total = dictItemDataUtil.countDictCollectionsOlderThanDate(user.getUserId(), company.getCompanyId(),
-					groupId, date, start, end, serviceContext);
+					groupId, date, query.getStart(), query.getEnd(), serviceContext);
 
 			result.setTotal(total);
 
@@ -2056,16 +2058,6 @@ public class DataManagementImpl implements DataManagement {
 	public Response getSyncDictItems(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, org.opencps.api.datamgtsync.model.DataSearchModel query) {
 
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		if (Validator.isNotNull(query.getStart())) {
-			start = Integer.valueOf(query.getStart());
-		}
-
-		if (Validator.isNotNull(query.getEnd())) {
-			end = Integer.valueOf(query.getEnd());
-		}
 		try {
 			Date date = new Date(query.getLastSync());
 
@@ -2074,12 +2066,18 @@ public class DataManagementImpl implements DataManagement {
 			DictcollectionInterface dictItemDataUtil = new DictCollectionActions();
 
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
+				query.setStart(-1);
+
+				query.setEnd(-1);
+
+			}
 			List<DictItem> lstItems = dictItemDataUtil.getListDictItemsOlderThanDate(user.getUserId(),
-					company.getCompanyId(), groupId, date, start, end, serviceContext);
+					company.getCompanyId(), groupId, date, query.getStart(), query.getEnd(), serviceContext);
 
 			long total = dictItemDataUtil.countDictItemsOlderThanDate(user.getUserId(), company.getCompanyId(), groupId,
-					date, start, end, serviceContext);
+					date, query.getStart(), query.getEnd(), serviceContext);
 
 			result.setTotal(total);
 
@@ -2250,16 +2248,6 @@ public class DataManagementImpl implements DataManagement {
 	public Response getSyncDictGroups(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, org.opencps.api.datamgtsync.model.DataSearchModel query) {
 
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		if (Validator.isNotNull(query.getStart())) {
-			start = Integer.valueOf(query.getStart());
-		}
-
-		if (Validator.isNotNull(query.getEnd())) {
-			end = Integer.valueOf(query.getEnd());
-		}
 		try {
 			Date date = new Date(query.getLastSync());
 
@@ -2268,12 +2256,20 @@ public class DataManagementImpl implements DataManagement {
 			DictcollectionInterface dictItemDataUtil = new DictCollectionActions();
 
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+			
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
+				query.setStart(-1);
+
+				query.setEnd(-1);
+
+			}
+			
 			List<DictGroup> lstGroups = dictItemDataUtil.getListDictGroupsOlderThanDate(user.getUserId(),
-					company.getCompanyId(), groupId, date, start, end, serviceContext);
+					company.getCompanyId(), groupId, date, query.getStart(), query.getEnd(), serviceContext);
 
 			long total = dictItemDataUtil.countDictGroupsOlderThanDate(user.getUserId(), company.getCompanyId(),
-					groupId, date, start, end, serviceContext);
+					groupId, date, query.getStart(), query.getEnd(), serviceContext);
 
 			result.setTotal(total);
 
@@ -2391,16 +2387,6 @@ public class DataManagementImpl implements DataManagement {
 			Locale locale, User user, ServiceContext serviceContext,
 			org.opencps.api.datamgtsync.model.DataSearchModel query) {
 
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		if (Validator.isNotNull(query.getStart())) {
-			start = Integer.valueOf(query.getStart());
-		}
-
-		if (Validator.isNotNull(query.getEnd())) {
-			end = Integer.valueOf(query.getEnd());
-		}
 		try {
 			Date date = new Date(query.getLastSync());
 
@@ -2409,12 +2395,20 @@ public class DataManagementImpl implements DataManagement {
 			DictcollectionInterface dictItemDataUtil = new DictCollectionActions();
 
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+			
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
+				query.setStart(-1);
+
+				query.setEnd(-1);
+
+			}
+			
 			List<DictItemGroup> lstItems = dictItemDataUtil.getListDictItemGroupsOlderThanDate(user.getUserId(),
-					company.getCompanyId(), groupId, date, start, end, serviceContext);
+					company.getCompanyId(), groupId, date, query.getStart(), query.getEnd(), serviceContext);
 
 			long total = dictItemDataUtil.countDictItemGroupsOlderThanDate(user.getUserId(), company.getCompanyId(),
-					groupId, date, start, end, serviceContext);
+					groupId, date, query.getStart(), query.getEnd(), serviceContext);
 
 			result.setTotal(total);
 

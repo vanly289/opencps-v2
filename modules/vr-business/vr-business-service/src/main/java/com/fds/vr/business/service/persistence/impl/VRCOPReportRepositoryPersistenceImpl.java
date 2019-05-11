@@ -3347,9 +3347,10 @@ public class VRCOPReportRepositoryPersistenceImpl extends BasePersistenceImpl<VR
 		vrcopReportRepositoryImpl.setId(vrcopReportRepository.getId());
 		vrcopReportRepositoryImpl.setMtCore(vrcopReportRepository.getMtCore());
 		vrcopReportRepositoryImpl.setApplicantProfileId(vrcopReportRepository.getApplicantProfileId());
+		vrcopReportRepositoryImpl.setApplicantCode(vrcopReportRepository.getApplicantCode());
 		vrcopReportRepositoryImpl.setApplicantName(vrcopReportRepository.getApplicantName());
 		vrcopReportRepositoryImpl.setApplicantAddress(vrcopReportRepository.getApplicantAddress());
-		vrcopReportRepositoryImpl.setOverseasManufacturerId(vrcopReportRepository.getOverseasManufacturerId());
+		vrcopReportRepositoryImpl.setOverseasManufacturerCode(vrcopReportRepository.getOverseasManufacturerCode());
 		vrcopReportRepositoryImpl.setOverseasManufacturerName(vrcopReportRepository.getOverseasManufacturerName());
 		vrcopReportRepositoryImpl.setOverseasManufacturerAddress(vrcopReportRepository.getOverseasManufacturerAddress());
 		vrcopReportRepositoryImpl.setProductionPlantId(vrcopReportRepository.getProductionPlantId());
@@ -3366,6 +3367,7 @@ public class VRCOPReportRepositoryPersistenceImpl extends BasePersistenceImpl<VR
 		vrcopReportRepositoryImpl.setCopReportDate(vrcopReportRepository.getCopReportDate());
 		vrcopReportRepositoryImpl.setCopReportApprovedDate(vrcopReportRepository.getCopReportApprovedDate());
 		vrcopReportRepositoryImpl.setCopReportExpiredDate(vrcopReportRepository.getCopReportExpiredDate());
+		vrcopReportRepositoryImpl.setCOPFileEntryId(vrcopReportRepository.getCOPFileEntryId());
 		vrcopReportRepositoryImpl.setModifyDate(vrcopReportRepository.getModifyDate());
 		vrcopReportRepositoryImpl.setSyncDate(vrcopReportRepository.getSyncDate());
 

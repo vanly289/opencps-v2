@@ -72,11 +72,11 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 			{ "certificateId", Types.BIGINT },
 			{ "certificateNumber", Types.VARCHAR },
 			{ "certificateDate", Types.TIMESTAMP },
-			{ "vehicleClass", Types.BIGINT },
+			{ "vehicleClass", Types.VARCHAR },
 			{ "stampType", Types.VARCHAR },
 			{ "stampShortNo", Types.VARCHAR },
-			{ "serialStartNo", Types.VARCHAR },
-			{ "serialEndNo", Types.VARCHAR },
+			{ "serialStartNo", Types.BIGINT },
+			{ "serialEndNo", Types.BIGINT },
 			{ "subTotalInDocument", Types.BIGINT },
 			{ "subTotalQuantities", Types.BIGINT },
 			{ "unitPrice", Types.BIGINT },
@@ -102,11 +102,11 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 		TABLE_COLUMNS_MAP.put("certificateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("certificateNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("certificateDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("vehicleClass", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("vehicleClass", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("stampType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("stampShortNo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("serialStartNo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("serialEndNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("serialStartNo", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("serialEndNo", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("subTotalInDocument", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("subTotalQuantities", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("unitPrice", Types.BIGINT);
@@ -121,7 +121,7 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_outputsheetdetails (id LONG not null primary key,mtCore LONG,inputSheetId LONG,outputSheetId LONG,bookId LONG,issueVehicleCertificateId LONG,certificateId LONG,certificateNumber VARCHAR(75) null,certificateDate DATE null,vehicleClass LONG,stampType VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialStartNo VARCHAR(75) null,serialEndNo VARCHAR(75) null,subTotalInDocument LONG,subTotalQuantities LONG,unitPrice LONG,totalAmount LONG,totalInUse LONG,totalNotUsed LONG,totalLost LONG,totalCancelled LONG,totalReturned LONG,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_outputsheetdetails (id LONG not null primary key,mtCore LONG,inputSheetId LONG,outputSheetId LONG,bookId LONG,issueVehicleCertificateId LONG,certificateId LONG,certificateNumber VARCHAR(75) null,certificateDate DATE null,vehicleClass VARCHAR(75) null,stampType VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialStartNo LONG,serialEndNo LONG,subTotalInDocument LONG,subTotalQuantities LONG,unitPrice LONG,totalAmount LONG,totalInUse LONG,totalNotUsed LONG,totalLost LONG,totalCancelled LONG,totalReturned LONG,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_outputsheetdetails";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrOutputSheetDetails.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_outputsheetdetails.modifyDate DESC";
@@ -277,7 +277,7 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 			setCertificateDate(certificateDate);
 		}
 
-		Long vehicleClass = (Long)attributes.get("vehicleClass");
+		String vehicleClass = (String)attributes.get("vehicleClass");
 
 		if (vehicleClass != null) {
 			setVehicleClass(vehicleClass);
@@ -295,13 +295,13 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 			setStampShortNo(stampShortNo);
 		}
 
-		String serialStartNo = (String)attributes.get("serialStartNo");
+		Long serialStartNo = (Long)attributes.get("serialStartNo");
 
 		if (serialStartNo != null) {
 			setSerialStartNo(serialStartNo);
 		}
 
-		String serialEndNo = (String)attributes.get("serialEndNo");
+		Long serialEndNo = (Long)attributes.get("serialEndNo");
 
 		if (serialEndNo != null) {
 			setSerialEndNo(serialEndNo);
@@ -558,12 +558,17 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 	}
 
 	@Override
-	public long getVehicleClass() {
-		return _vehicleClass;
+	public String getVehicleClass() {
+		if (_vehicleClass == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _vehicleClass;
+		}
 	}
 
 	@Override
-	public void setVehicleClass(long vehicleClass) {
+	public void setVehicleClass(String vehicleClass) {
 		_vehicleClass = vehicleClass;
 	}
 
@@ -608,32 +613,22 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 	}
 
 	@Override
-	public String getSerialStartNo() {
-		if (_serialStartNo == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _serialStartNo;
-		}
+	public long getSerialStartNo() {
+		return _serialStartNo;
 	}
 
 	@Override
-	public void setSerialStartNo(String serialStartNo) {
+	public void setSerialStartNo(long serialStartNo) {
 		_serialStartNo = serialStartNo;
 	}
 
 	@Override
-	public String getSerialEndNo() {
-		if (_serialEndNo == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _serialEndNo;
-		}
+	public long getSerialEndNo() {
+		return _serialEndNo;
 	}
 
 	@Override
-	public void setSerialEndNo(String serialEndNo) {
+	public void setSerialEndNo(long serialEndNo) {
 		_serialEndNo = serialEndNo;
 	}
 
@@ -952,6 +947,12 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 
 		vrOutputSheetDetailsCacheModel.vehicleClass = getVehicleClass();
 
+		String vehicleClass = vrOutputSheetDetailsCacheModel.vehicleClass;
+
+		if ((vehicleClass != null) && (vehicleClass.length() == 0)) {
+			vrOutputSheetDetailsCacheModel.vehicleClass = null;
+		}
+
 		vrOutputSheetDetailsCacheModel.stampType = getStampType();
 
 		String stampType = vrOutputSheetDetailsCacheModel.stampType;
@@ -970,19 +971,7 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 
 		vrOutputSheetDetailsCacheModel.serialStartNo = getSerialStartNo();
 
-		String serialStartNo = vrOutputSheetDetailsCacheModel.serialStartNo;
-
-		if ((serialStartNo != null) && (serialStartNo.length() == 0)) {
-			vrOutputSheetDetailsCacheModel.serialStartNo = null;
-		}
-
 		vrOutputSheetDetailsCacheModel.serialEndNo = getSerialEndNo();
-
-		String serialEndNo = vrOutputSheetDetailsCacheModel.serialEndNo;
-
-		if ((serialEndNo != null) && (serialEndNo.length() == 0)) {
-			vrOutputSheetDetailsCacheModel.serialEndNo = null;
-		}
 
 		vrOutputSheetDetailsCacheModel.subTotalInDocument = getSubTotalInDocument();
 
@@ -1236,12 +1225,12 @@ public class VROutputSheetDetailsModelImpl extends BaseModelImpl<VROutputSheetDe
 	private String _certificateNumber;
 	private String _originalCertificateNumber;
 	private Date _certificateDate;
-	private long _vehicleClass;
+	private String _vehicleClass;
 	private String _stampType;
 	private String _originalStampType;
 	private String _stampShortNo;
-	private String _serialStartNo;
-	private String _serialEndNo;
+	private long _serialStartNo;
+	private long _serialEndNo;
 	private long _subTotalInDocument;
 	private long _subTotalQuantities;
 	private long _unitPrice;

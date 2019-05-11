@@ -66,6 +66,15 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 		attributes.put("vehicleClass", getVehicleClass());
 		attributes.put("vehicleTypeCode", getVehicleTypeCode());
 		attributes.put("vehicleTypeDescription", getVehicleTypeDescription());
+		attributes.put("productClassificationCode",
+			getProductClassificationCode());
+		attributes.put("productClassificationDescription",
+			getProductClassificationDescription());
+		attributes.put("trademarkName", getTrademarkName());
+		attributes.put("commercialName", getCommercialName());
+		attributes.put("modelCode", getModelCode());
+		attributes.put("designSymbolNo", getDesignSymbolNo());
+		attributes.put("remarks", getRemarks());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -122,6 +131,50 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 
 		if (vehicleTypeDescription != null) {
 			setVehicleTypeDescription(vehicleTypeDescription);
+		}
+
+		String productClassificationCode = (String)attributes.get(
+				"productClassificationCode");
+
+		if (productClassificationCode != null) {
+			setProductClassificationCode(productClassificationCode);
+		}
+
+		String productClassificationDescription = (String)attributes.get(
+				"productClassificationDescription");
+
+		if (productClassificationDescription != null) {
+			setProductClassificationDescription(productClassificationDescription);
+		}
+
+		String trademarkName = (String)attributes.get("trademarkName");
+
+		if (trademarkName != null) {
+			setTrademarkName(trademarkName);
+		}
+
+		String commercialName = (String)attributes.get("commercialName");
+
+		if (commercialName != null) {
+			setCommercialName(commercialName);
+		}
+
+		String modelCode = (String)attributes.get("modelCode");
+
+		if (modelCode != null) {
+			setModelCode(modelCode);
+		}
+
+		String designSymbolNo = (String)attributes.get("designSymbolNo");
+
+		if (designSymbolNo != null) {
+			setDesignSymbolNo(designSymbolNo);
+		}
+
+		String remarks = (String)attributes.get("remarks");
+
+		if (remarks != null) {
+			setRemarks(remarks);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -193,6 +246,16 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 	}
 
 	/**
+	* Returns the commercial name of this vrcop product type.
+	*
+	* @return the commercial name of this vrcop product type
+	*/
+	@Override
+	public java.lang.String getCommercialName() {
+		return _vrcopProductType.getCommercialName();
+	}
+
+	/**
 	* Returns the cop report no of this vrcop product type.
 	*
 	* @return the cop report no of this vrcop product type
@@ -200,6 +263,66 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 	@Override
 	public java.lang.String getCopReportNo() {
 		return _vrcopProductType.getCopReportNo();
+	}
+
+	/**
+	* Returns the design symbol no of this vrcop product type.
+	*
+	* @return the design symbol no of this vrcop product type
+	*/
+	@Override
+	public java.lang.String getDesignSymbolNo() {
+		return _vrcopProductType.getDesignSymbolNo();
+	}
+
+	/**
+	* Returns the model code of this vrcop product type.
+	*
+	* @return the model code of this vrcop product type
+	*/
+	@Override
+	public java.lang.String getModelCode() {
+		return _vrcopProductType.getModelCode();
+	}
+
+	/**
+	* Returns the product classification code of this vrcop product type.
+	*
+	* @return the product classification code of this vrcop product type
+	*/
+	@Override
+	public java.lang.String getProductClassificationCode() {
+		return _vrcopProductType.getProductClassificationCode();
+	}
+
+	/**
+	* Returns the product classification description of this vrcop product type.
+	*
+	* @return the product classification description of this vrcop product type
+	*/
+	@Override
+	public java.lang.String getProductClassificationDescription() {
+		return _vrcopProductType.getProductClassificationDescription();
+	}
+
+	/**
+	* Returns the remarks of this vrcop product type.
+	*
+	* @return the remarks of this vrcop product type
+	*/
+	@Override
+	public java.lang.String getRemarks() {
+		return _vrcopProductType.getRemarks();
+	}
+
+	/**
+	* Returns the trademark name of this vrcop product type.
+	*
+	* @return the trademark name of this vrcop product type
+	*/
+	@Override
+	public java.lang.String getTrademarkName() {
+		return _vrcopProductType.getTrademarkName();
 	}
 
 	/**
@@ -323,6 +446,16 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 	}
 
 	/**
+	* Sets the commercial name of this vrcop product type.
+	*
+	* @param commercialName the commercial name of this vrcop product type
+	*/
+	@Override
+	public void setCommercialName(java.lang.String commercialName) {
+		_vrcopProductType.setCommercialName(commercialName);
+	}
+
+	/**
 	* Sets the cop report no of this vrcop product type.
 	*
 	* @param copReportNo the cop report no of this vrcop product type
@@ -340,6 +473,16 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 	@Override
 	public void setCopReportRepositoryID(long copReportRepositoryID) {
 		_vrcopProductType.setCopReportRepositoryID(copReportRepositoryID);
+	}
+
+	/**
+	* Sets the design symbol no of this vrcop product type.
+	*
+	* @param designSymbolNo the design symbol no of this vrcop product type
+	*/
+	@Override
+	public void setDesignSymbolNo(java.lang.String designSymbolNo) {
+		_vrcopProductType.setDesignSymbolNo(designSymbolNo);
 	}
 
 	@Override
@@ -366,6 +509,16 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 	@Override
 	public void setId(long id) {
 		_vrcopProductType.setId(id);
+	}
+
+	/**
+	* Sets the model code of this vrcop product type.
+	*
+	* @param modelCode the model code of this vrcop product type
+	*/
+	@Override
+	public void setModelCode(java.lang.String modelCode) {
+		_vrcopProductType.setModelCode(modelCode);
 	}
 
 	/**
@@ -409,6 +562,38 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 	}
 
 	/**
+	* Sets the product classification code of this vrcop product type.
+	*
+	* @param productClassificationCode the product classification code of this vrcop product type
+	*/
+	@Override
+	public void setProductClassificationCode(
+		java.lang.String productClassificationCode) {
+		_vrcopProductType.setProductClassificationCode(productClassificationCode);
+	}
+
+	/**
+	* Sets the product classification description of this vrcop product type.
+	*
+	* @param productClassificationDescription the product classification description of this vrcop product type
+	*/
+	@Override
+	public void setProductClassificationDescription(
+		java.lang.String productClassificationDescription) {
+		_vrcopProductType.setProductClassificationDescription(productClassificationDescription);
+	}
+
+	/**
+	* Sets the remarks of this vrcop product type.
+	*
+	* @param remarks the remarks of this vrcop product type
+	*/
+	@Override
+	public void setRemarks(java.lang.String remarks) {
+		_vrcopProductType.setRemarks(remarks);
+	}
+
+	/**
 	* Sets the sequence no of this vrcop product type.
 	*
 	* @param sequenceNo the sequence no of this vrcop product type
@@ -426,6 +611,16 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_vrcopProductType.setSyncDate(syncDate);
+	}
+
+	/**
+	* Sets the trademark name of this vrcop product type.
+	*
+	* @param trademarkName the trademark name of this vrcop product type
+	*/
+	@Override
+	public void setTrademarkName(java.lang.String trademarkName) {
+		_vrcopProductType.setTrademarkName(trademarkName);
 	}
 
 	/**

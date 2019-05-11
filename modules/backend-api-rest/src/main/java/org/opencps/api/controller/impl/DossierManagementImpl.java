@@ -285,8 +285,7 @@ public class DossierManagementImpl implements DossierManagement {
 			// _log.info("3");
 			dossierPermission.hasGetDossiers(groupId, user.getUserId(), query.getSecetKey());
 
-			// _log.info("31" + query.getEnd());
-			if (query.getEnd() == 0) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 
@@ -1431,7 +1430,7 @@ public class DossierManagementImpl implements DossierManagement {
 				dossierPermission.hasGetDossiers(groupId, user.getUserId(), query.getSecetKey());
 			}
 
-			if (query.getEnd() == 0) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 
@@ -1564,7 +1563,7 @@ public class DossierManagementImpl implements DossierManagement {
 				dossierPermission.hasGetDossiers(groupId, user.getUserId(), query.getSecetKey());
 			}
 
-			if (query.getEnd() == 0) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 

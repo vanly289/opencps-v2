@@ -120,7 +120,7 @@ public class VRCOPReportRepositoryLocalServiceImpl
 		object.setApplicantProfileId(Long.valueOf(mapValues.get("")));
 		object.setApplicantName(mapValues.get(""));
 		object.setApplicantAddress(mapValues.get(""));
-		object.setOverseasManufacturerId(Long.valueOf(mapValues.get("")));
+		object.setOverseasManufacturerCode(mapValues.get(""));
 		object.setOverseasManufacturerName(mapValues.get(""));
 		object.setOverseasManufacturerAddress(mapValues.get(""));
 		object.setProductionPlantId(Long.valueOf(mapValues.get("")));

@@ -42,13 +42,11 @@ public class VRIssueVehiclecertificateSoap implements Serializable {
 		soapModel.setVehiclePrice(model.getVehiclePrice());
 		soapModel.setTotalQuantity(model.getTotalQuantity());
 		soapModel.setUnitPrice(model.getUnitPrice());
+		soapModel.setTotalProduct(model.getTotalProduct());
 		soapModel.setCertificaterecordno(model.getCertificaterecordno());
 		soapModel.setProductionexamreportno(model.getProductionexamreportno());
-		soapModel.setProductyear(model.getProductyear());
-		soapModel.setProductmonth(model.getProductmonth());
-		soapModel.setTotalstamp(model.getTotalstamp());
-		soapModel.setTotalproduct(model.getTotalproduct());
 		soapModel.setModifyDate(model.getModifyDate());
+		soapModel.setSyncDate(model.getSyncDate());
 
 		return soapModel;
 	}
@@ -168,6 +166,14 @@ public class VRIssueVehiclecertificateSoap implements Serializable {
 		_unitPrice = unitPrice;
 	}
 
+	public int getTotalProduct() {
+		return _totalProduct;
+	}
+
+	public void setTotalProduct(int totalProduct) {
+		_totalProduct = totalProduct;
+	}
+
 	public String getCertificaterecordno() {
 		return _certificaterecordno;
 	}
@@ -184,44 +190,20 @@ public class VRIssueVehiclecertificateSoap implements Serializable {
 		_productionexamreportno = productionexamreportno;
 	}
 
-	public String getProductyear() {
-		return _productyear;
-	}
-
-	public void setProductyear(String productyear) {
-		_productyear = productyear;
-	}
-
-	public int getProductmonth() {
-		return _productmonth;
-	}
-
-	public void setProductmonth(int productmonth) {
-		_productmonth = productmonth;
-	}
-
-	public int getTotalstamp() {
-		return _totalstamp;
-	}
-
-	public void setTotalstamp(int totalstamp) {
-		_totalstamp = totalstamp;
-	}
-
-	public int getTotalproduct() {
-		return _totalproduct;
-	}
-
-	public void setTotalproduct(int totalproduct) {
-		_totalproduct = totalproduct;
-	}
-
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
 
 	public void setModifyDate(Date modifyDate) {
 		_modifyDate = modifyDate;
+	}
+
+	public Date getSyncDate() {
+		return _syncDate;
+	}
+
+	public void setSyncDate(Date syncDate) {
+		_syncDate = syncDate;
 	}
 
 	private long _id;
@@ -232,11 +214,9 @@ public class VRIssueVehiclecertificateSoap implements Serializable {
 	private long _vehiclePrice;
 	private long _totalQuantity;
 	private long _unitPrice;
+	private int _totalProduct;
 	private String _certificaterecordno;
 	private String _productionexamreportno;
-	private String _productyear;
-	private int _productmonth;
-	private int _totalstamp;
-	private int _totalproduct;
 	private Date _modifyDate;
+	private Date _syncDate;
 }

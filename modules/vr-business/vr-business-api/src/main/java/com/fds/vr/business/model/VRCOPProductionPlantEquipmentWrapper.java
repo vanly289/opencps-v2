@@ -75,6 +75,7 @@ public class VRCOPProductionPlantEquipmentWrapper
 		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("productionCountryCode", getProductionCountryCode());
 		attributes.put("equipmentStatus", getEquipmentStatus());
+		attributes.put("expireDate", getExpireDate());
 		attributes.put("notes", getNotes());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
@@ -174,6 +175,12 @@ public class VRCOPProductionPlantEquipmentWrapper
 
 		if (equipmentStatus != null) {
 			setEquipmentStatus(equipmentStatus);
+		}
+
+		Date expireDate = (Date)attributes.get("expireDate");
+
+		if (expireDate != null) {
+			setExpireDate(expireDate);
 		}
 
 		String notes = (String)attributes.get("notes");
@@ -382,6 +389,16 @@ public class VRCOPProductionPlantEquipmentWrapper
 	}
 
 	/**
+	* Returns the expire date of this vrcop production plant equipment.
+	*
+	* @return the expire date of this vrcop production plant equipment
+	*/
+	@Override
+	public Date getExpireDate() {
+		return _vrcopProductionPlantEquipment.getExpireDate();
+	}
+
+	/**
 	* Returns the modify date of this vrcop production plant equipment.
 	*
 	* @return the modify date of this vrcop production plant equipment
@@ -555,6 +572,16 @@ public class VRCOPProductionPlantEquipmentWrapper
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_vrcopProductionPlantEquipment.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the expire date of this vrcop production plant equipment.
+	*
+	* @param expireDate the expire date of this vrcop production plant equipment
+	*/
+	@Override
+	public void setExpireDate(Date expireDate) {
+		_vrcopProductionPlantEquipment.setExpireDate(expireDate);
 	}
 
 	/**

@@ -149,6 +149,21 @@ public interface VRProductionPlantEmployeeModel extends BaseModel<VRProductionPl
 	public void setEmployeeCertificateNo(String employeeCertificateNo);
 
 	/**
+	 * Returns the trainning at of this vr production plant employee.
+	 *
+	 * @return the trainning at of this vr production plant employee
+	 */
+	@AutoEscape
+	public String getTrainningAt();
+
+	/**
+	 * Sets the trainning at of this vr production plant employee.
+	 *
+	 * @param trainningAt the trainning at of this vr production plant employee
+	 */
+	public void setTrainningAt(String trainningAt);
+
+	/**
 	 * Returns the modify date of this vr production plant employee.
 	 *
 	 * @return the modify date of this vr production plant employee

@@ -71,7 +71,7 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 			{ "stampType", Types.VARCHAR },
 			{ "stampShortNo", Types.VARCHAR },
 			{ "serialStartNo", Types.BIGINT },
-			{ "serialEndNo", Types.VARCHAR },
+			{ "serialEndNo", Types.BIGINT },
 			{ "subTotalInDocument", Types.BIGINT },
 			{ "subTotalQuantities", Types.BIGINT },
 			{ "units", Types.BIGINT },
@@ -97,7 +97,7 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 		TABLE_COLUMNS_MAP.put("stampType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("stampShortNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("serialStartNo", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("serialEndNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("serialEndNo", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("subTotalInDocument", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("subTotalQuantities", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("units", Types.BIGINT);
@@ -113,7 +113,7 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_inputstampbook (id LONG not null primary key,mtCore LONG,inputSheetId LONG,bookId LONG,vehicleClass VARCHAR(75) null,stampType VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialStartNo LONG,serialEndNo VARCHAR(75) null,subTotalInDocument LONG,subTotalQuantities LONG,units LONG,unitPrice LONG,totalAmount LONG,totalInUse LONG,totalNotUsed LONG,sum1 LONG,sum2 LONG,sum3 LONG,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_inputstampbook (id LONG not null primary key,mtCore LONG,inputSheetId LONG,bookId LONG,vehicleClass VARCHAR(75) null,stampType VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialStartNo LONG,serialEndNo LONG,subTotalInDocument LONG,subTotalQuantities LONG,units LONG,unitPrice LONG,totalAmount LONG,totalInUse LONG,totalNotUsed LONG,sum1 LONG,sum2 LONG,sum3 LONG,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_inputstampbook";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrInputStampbook.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_inputstampbook.modifyDate DESC";
@@ -253,7 +253,7 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 			setSerialStartNo(serialStartNo);
 		}
 
-		String serialEndNo = (String)attributes.get("serialEndNo");
+		Long serialEndNo = (Long)attributes.get("serialEndNo");
 
 		if (serialEndNo != null) {
 			setSerialEndNo(serialEndNo);
@@ -480,17 +480,12 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 	}
 
 	@Override
-	public String getSerialEndNo() {
-		if (_serialEndNo == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _serialEndNo;
-		}
+	public long getSerialEndNo() {
+		return _serialEndNo;
 	}
 
 	@Override
-	public void setSerialEndNo(String serialEndNo) {
+	public void setSerialEndNo(long serialEndNo) {
 		_serialEndNo = serialEndNo;
 	}
 
@@ -804,12 +799,6 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 
 		vrInputStampbookCacheModel.serialEndNo = getSerialEndNo();
 
-		String serialEndNo = vrInputStampbookCacheModel.serialEndNo;
-
-		if ((serialEndNo != null) && (serialEndNo.length() == 0)) {
-			vrInputStampbookCacheModel.serialEndNo = null;
-		}
-
 		vrInputStampbookCacheModel.subTotalInDocument = getSubTotalInDocument();
 
 		vrInputStampbookCacheModel.subTotalQuantities = getSubTotalQuantities();
@@ -1033,7 +1022,7 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 	private String _originalStampType;
 	private String _stampShortNo;
 	private long _serialStartNo;
-	private String _serialEndNo;
+	private long _serialEndNo;
 	private long _subTotalInDocument;
 	private long _subTotalQuantities;
 	private long _units;

@@ -72,7 +72,7 @@ public class VRClearingStampbookModelImpl extends BaseModelImpl<VRClearingStampb
 			{ "certificateId", Types.BIGINT },
 			{ "certificateNumber", Types.VARCHAR },
 			{ "certificateDate", Types.TIMESTAMP },
-			{ "vehicleClass", Types.BIGINT },
+			{ "vehicleClass", Types.VARCHAR },
 			{ "stampType", Types.VARCHAR },
 			{ "stampShortNo", Types.VARCHAR },
 			{ "serialStartNo", Types.VARCHAR },
@@ -103,7 +103,7 @@ public class VRClearingStampbookModelImpl extends BaseModelImpl<VRClearingStampb
 		TABLE_COLUMNS_MAP.put("certificateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("certificateNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("certificateDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("vehicleClass", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("vehicleClass", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("stampType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("stampShortNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("serialStartNo", Types.VARCHAR);
@@ -123,7 +123,7 @@ public class VRClearingStampbookModelImpl extends BaseModelImpl<VRClearingStampb
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_clearingstampbook (id LONG not null primary key,mtCore LONG,debitNoteId LONG,inputSheetId LONG,outputSheetId LONG,bookId LONG,certificateId LONG,certificateNumber VARCHAR(75) null,certificateDate DATE null,vehicleClass LONG,stampType VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialStartNo VARCHAR(75) null,serialEndNo VARCHAR(75) null,subTotalInDocument LONG,subTotalQuantities LONG,vehiclePrice LONG,unitPrice LONG,totalAmount LONG,totalInUse LONG,totalNotUsed LONG,totalLost LONG,totalCancelled LONG,totalReturned LONG,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_clearingstampbook (id LONG not null primary key,mtCore LONG,debitNoteId LONG,inputSheetId LONG,outputSheetId LONG,bookId LONG,certificateId LONG,certificateNumber VARCHAR(75) null,certificateDate DATE null,vehicleClass VARCHAR(75) null,stampType VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialStartNo VARCHAR(75) null,serialEndNo VARCHAR(75) null,subTotalInDocument LONG,subTotalQuantities LONG,vehiclePrice LONG,unitPrice LONG,totalAmount LONG,totalInUse LONG,totalNotUsed LONG,totalLost LONG,totalCancelled LONG,totalReturned LONG,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_clearingstampbook";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrClearingStampbook.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_clearingstampbook.modifyDate DESC";
@@ -278,7 +278,7 @@ public class VRClearingStampbookModelImpl extends BaseModelImpl<VRClearingStampb
 			setCertificateDate(certificateDate);
 		}
 
-		Long vehicleClass = (Long)attributes.get("vehicleClass");
+		String vehicleClass = (String)attributes.get("vehicleClass");
 
 		if (vehicleClass != null) {
 			setVehicleClass(vehicleClass);
@@ -565,12 +565,17 @@ public class VRClearingStampbookModelImpl extends BaseModelImpl<VRClearingStampb
 	}
 
 	@Override
-	public long getVehicleClass() {
-		return _vehicleClass;
+	public String getVehicleClass() {
+		if (_vehicleClass == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _vehicleClass;
+		}
 	}
 
 	@Override
-	public void setVehicleClass(long vehicleClass) {
+	public void setVehicleClass(String vehicleClass) {
 		_vehicleClass = vehicleClass;
 	}
 
@@ -970,6 +975,12 @@ public class VRClearingStampbookModelImpl extends BaseModelImpl<VRClearingStampb
 
 		vrClearingStampbookCacheModel.vehicleClass = getVehicleClass();
 
+		String vehicleClass = vrClearingStampbookCacheModel.vehicleClass;
+
+		if ((vehicleClass != null) && (vehicleClass.length() == 0)) {
+			vrClearingStampbookCacheModel.vehicleClass = null;
+		}
+
 		vrClearingStampbookCacheModel.stampType = getStampType();
 
 		String stampType = vrClearingStampbookCacheModel.stampType;
@@ -1262,7 +1273,7 @@ public class VRClearingStampbookModelImpl extends BaseModelImpl<VRClearingStampb
 	private String _certificateNumber;
 	private String _originalCertificateNumber;
 	private Date _certificateDate;
-	private long _vehicleClass;
+	private String _vehicleClass;
 	private String _stampType;
 	private String _originalStampType;
 	private String _stampShortNo;

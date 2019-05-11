@@ -41,6 +41,17 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.fds.vr.business.service.impl.VRVehicleTypeCertificateLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean updateVRTechnicalSpec_ALL(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
+		long vrVehicleTypeCertificateId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo,
+		java.util.Date modifyDate, java.lang.String VehicleClass,
+		java.lang.String deliverableCode) {
+		return getService()
+				   .updateVRTechnicalSpec_ALL(mapValues,
+			vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo,
+			modifyDate, VehicleClass, deliverableCode);
+	}
 
 	/**
 	* Adds the vr vehicle type certificate to the database. Also notifies the appropriate model listeners.
@@ -155,38 +166,38 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLLKXM_VehicleTypeCertificate(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		java.util.Date modifiedDate,
-		com.fds.vr.business.model.VRRegistration registration,
+		java.util.Date applicantIdDate,
+		com.fds.vr.business.model.VRApplicantProfile appProfile,
 		com.fds.vr.business.model.VRDossierFile dossierFile)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTT302011BGTVTCNCLKLLKXM_VehicleTypeCertificate(mapValues,
-			modifiedDate, registration, dossierFile);
+			applicantIdDate, appProfile, dossierFile);
 	}
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXBBCH_VehicleTypeCertificate(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		java.util.Date modifiedDate,
-		com.fds.vr.business.model.VRRegistration registration,
+		java.util.Date applicantIdDate,
+		com.fds.vr.business.model.VRApplicantProfile appProfile,
 		com.fds.vr.business.model.VRDossierFile dossierFile)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTT302011BGTVTCNCLKLTXXBBCH_VehicleTypeCertificate(mapValues,
-			modifiedDate, registration, dossierFile);
+			applicantIdDate, appProfile, dossierFile);
 	}
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXBBCN_VehicleTypeCertificate(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		java.util.Date modifiedDate,
-		com.fds.vr.business.model.VRRegistration registration,
+		java.util.Date applicantIdDate,
+		com.fds.vr.business.model.VRApplicantProfile appProfile,
 		com.fds.vr.business.model.VRDossierFile dossierFile)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTT302011BGTVTCNCLKLTXXBBCN_VehicleTypeCertificate(mapValues,
-			modifiedDate, registration, dossierFile);
+			applicantIdDate, appProfile, dossierFile);
 	}
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXCG_VehicleTypeCertificate(
@@ -203,26 +214,26 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXDD_VehicleTypeCertificate(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		java.util.Date modifiedDate,
-		com.fds.vr.business.model.VRRegistration registration,
+		java.util.Date applicantIdDate,
+		com.fds.vr.business.model.VRApplicantProfile appProfile,
 		com.fds.vr.business.model.VRDossierFile dossierFile)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTT302011BGTVTCNCLKLTXXDD_VehicleTypeCertificate(mapValues,
-			modifiedDate, registration, dossierFile);
+			applicantIdDate, appProfile, dossierFile);
 	}
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXMTGM_VehicleTypeCertificate(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		java.util.Date modifiedDate,
-		com.fds.vr.business.model.VRRegistration registration,
+		java.util.Date applicantIdDate,
+		com.fds.vr.business.model.VRApplicantProfile appProfile,
 		com.fds.vr.business.model.VRDossierFile dossierFile)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTT302011BGTVTCNCLKLTXXMTGM_VehicleTypeCertificate(mapValues,
-			modifiedDate, registration, dossierFile);
+			applicantIdDate, appProfile, dossierFile);
 	}
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTCOP_VehicleTypeCertificate(
@@ -239,14 +250,14 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXBBCN_VehicleTypeCertificate(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		java.util.Date modifiedDate,
-		com.fds.vr.business.model.VRRegistration registration,
+		java.util.Date applicantIdDate,
+		com.fds.vr.business.model.VRApplicantProfile appProfile,
 		com.fds.vr.business.model.VRDossierFile dossierFile)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTT302011BGTVTKTSPMXBBCN_VehicleTypeCertificate(mapValues,
-			modifiedDate, registration, dossierFile);
+			applicantIdDate, appProfile, dossierFile);
 	}
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(
@@ -259,18 +270,6 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 		return getService()
 				   .updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(mapValues,
 			applicantIdDate, appProfile, dossierFile);
-	}
-
-	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(
-		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		java.util.Date modifiedDate,
-		com.fds.vr.business.model.VRRegistration registration,
-		com.fds.vr.business.model.VRDossierFile dossierFile)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(mapValues,
-			modifiedDate, registration, dossierFile);
 	}
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTKTTBLANDAU_VehicleTypeCertificate(
@@ -295,18 +294,6 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 		return getService()
 				   .updateTT302011BGTVTTDTKXMCD_VehicleTypeCertificate(mapValues,
 			applicantIdDate, appProfile, dossierFile);
-	}
-
-	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTTDTKXMCD_VehicleTypeCertificate(
-		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues,
-		java.util.Date modifiedDate,
-		com.fds.vr.business.model.VRRegistration registration,
-		com.fds.vr.business.model.VRDossierFile dossierFile)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateTT302011BGTVTTDTKXMCD_VehicleTypeCertificate(mapValues,
-			modifiedDate, registration, dossierFile);
 	}
 
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate updateTT302011BGTVTTTKXCG_VehicleTypeCertificate(

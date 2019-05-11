@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -109,6 +110,16 @@ public interface VRInputSheetLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRInputSheet getVRInputSheet(long id) throws PortalException;
+
+	public VRInputSheet updateInputSheet(long id, long mtCore,
+		java.lang.String inputSheetNo, Date inputSheetDate,
+		java.lang.String originalDocumentNo, java.lang.String corporationId,
+		long inputSheetType, java.lang.String maker, java.lang.String checker,
+		java.lang.String approver, java.lang.String deliveryName,
+		java.lang.String inventoryName, java.lang.String inventoryPlace,
+		Date inventoryDate, java.lang.String bookIDList, long isApproval,
+		long totalQuantities, long totalAmount, java.lang.String amountInWords,
+		java.lang.String remark) throws PortalException, SystemException;
 
 	/**
 	* Updates the vr input sheet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

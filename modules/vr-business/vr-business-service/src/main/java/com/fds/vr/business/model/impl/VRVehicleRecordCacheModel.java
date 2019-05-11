@@ -66,12 +66,14 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{id=");
 		sb.append(id);
 		sb.append(", mtCore=");
 		sb.append(mtCore);
+		sb.append(", issueId=");
+		sb.append(issueId);
 		sb.append(", issueVehicleCertificateId=");
 		sb.append(issueVehicleCertificateId);
 		sb.append(", dossierId=");
@@ -131,6 +133,7 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 
 		vrVehicleRecordImpl.setId(id);
 		vrVehicleRecordImpl.setMtCore(mtCore);
+		vrVehicleRecordImpl.setIssueId(issueId);
 		vrVehicleRecordImpl.setIssueVehicleCertificateId(issueVehicleCertificateId);
 		vrVehicleRecordImpl.setDossierId(dossierId);
 		vrVehicleRecordImpl.setApplicantProfileId(applicantProfileId);
@@ -271,6 +274,8 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 
 		mtCore = objectInput.readLong();
 
+		issueId = objectInput.readLong();
+
 		issueVehicleCertificateId = objectInput.readLong();
 
 		dossierId = objectInput.readLong();
@@ -309,6 +314,8 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 		objectOutput.writeLong(id);
 
 		objectOutput.writeLong(mtCore);
+
+		objectOutput.writeLong(issueId);
 
 		objectOutput.writeLong(issueVehicleCertificateId);
 
@@ -424,6 +431,7 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 
 	public long id;
 	public long mtCore;
+	public long issueId;
 	public long issueVehicleCertificateId;
 	public long dossierId;
 	public long applicantProfileId;

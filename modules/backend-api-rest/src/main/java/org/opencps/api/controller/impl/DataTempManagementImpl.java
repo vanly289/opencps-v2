@@ -75,7 +75,8 @@ public class DataTempManagementImpl implements DataTempManagement {
 		DictCollectionTempResults result = new DictCollectionTempResults();
 				
 		try {
-			if (Validator.isNull(query.getEnd())) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
+
 				query.setStart(-1);
 
 				query.setEnd(-1);
@@ -616,8 +617,7 @@ public class DataTempManagementImpl implements DataTempManagement {
 		searchContext.setCompanyId(company.getCompanyId());
 
 		try {
-
-			if (Validator.isNull(query.getEnd())) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 
@@ -1275,8 +1275,7 @@ public class DataTempManagementImpl implements DataTempManagement {
 		long startTime = System.currentTimeMillis();
 		_log.info("START Time: "+ startTime);
 		try {
-
-			if (Validator.isNull(query.getEnd())) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 
@@ -1292,15 +1291,23 @@ public class DataTempManagementImpl implements DataTempManagement {
 
 			params.put("groupId", groupId);
 			params.put("keywords", query.getKeywords());
-			params.put("itemLv", query.getLevel());
-			params.put(DictItemTerm.PARENT_ITEM_CODE, query.getParent());
+			params.put("itemLv", query.getLevel());			
 			params.put(DictItemTerm.DICT_COLLECTION_CODE, code);
 
+			if (Validator.isNotNull(query.getParent()) && query.getParent().equalsIgnoreCase("0")) {
+				params.put(DictItemTerm.PARENT_ITEM_ID, query.getParent());
+			} else {
+				params.put(DictItemTerm.PARENT_ITEM_CODE, query.getParent());
+			}
+			
 			Sort[] sorts = new Sort[] {
 					SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE, false) };
 			_log.info("START Part1: "+ (System.currentTimeMillis()- startTime));
+			_log.info("==user.getUserId()=="+user.getUserId()+"=== company.getCompanyId()==" + company.getCompanyId() + "==groupId==" + groupId
+					+ "params=="+params + "== sorts=="+ sorts+ "== query.getStart()=="+ query.getStart()+ "==query.getEnd()==" + query.getEnd() + "== serviceContext: " + serviceContext);
 			JSONObject jsonData = dictItemDataUtil.getDictItemsTemp(user.getUserId(), company.getCompanyId(), groupId,
 					params, sorts, query.getStart(), query.getEnd(), serviceContext);
+			
 			_log.info("START Part2: "+ (System.currentTimeMillis()- startTime));
 			result.setTotal(jsonData.getLong("total"));
 			result.getDictItemTempModel()
