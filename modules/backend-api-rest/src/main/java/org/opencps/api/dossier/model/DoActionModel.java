@@ -43,7 +43,8 @@ import javax.xml.bind.annotation.XmlType;
     "actionUser",
     "actionNote",
     "assignUserId",
-    "isSynAction"
+    "isSynAction",
+    "payment"
 })
 @XmlRootElement(name = "DoActionModel")
 public class DoActionModel {
@@ -58,6 +59,8 @@ public class DoActionModel {
     protected int assignUserId;
 	@FormParam(value = "isSynAction")
     protected int isSynAction;
+	@FormParam(value = "payment")
+	protected String payment;
 
     public int getIsSynAction() {
 		return isSynAction;
@@ -162,5 +165,13 @@ public class DoActionModel {
     public void setAssignUserId(Integer value) {
         this.assignUserId = value;
     }
+
+	public String getPayment() {
+		return payment;
+	}
+
+	public void setPayment(String payment) {
+		this.payment = payment;
+	}
 
 }

@@ -1422,6 +1422,71 @@ public class VRApplicantProfileUtil {
 	}
 
 	/**
+	* Returns the vr applicant profile where mtCore = &#63; and applicantCode = &#63; or throws a {@link NoSuchVRApplicantProfileException} if it could not be found.
+	*
+	* @param mtCore the mt core
+	* @param applicantCode the applicant code
+	* @return the matching vr applicant profile
+	* @throws NoSuchVRApplicantProfileException if a matching vr applicant profile could not be found
+	*/
+	public static VRApplicantProfile findByMT_APP_CODE(long mtCore,
+		java.lang.String applicantCode)
+		throws com.fds.vr.business.exception.NoSuchVRApplicantProfileException {
+		return getPersistence().findByMT_APP_CODE(mtCore, applicantCode);
+	}
+
+	/**
+	* Returns the vr applicant profile where mtCore = &#63; and applicantCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param mtCore the mt core
+	* @param applicantCode the applicant code
+	* @return the matching vr applicant profile, or <code>null</code> if a matching vr applicant profile could not be found
+	*/
+	public static VRApplicantProfile fetchByMT_APP_CODE(long mtCore,
+		java.lang.String applicantCode) {
+		return getPersistence().fetchByMT_APP_CODE(mtCore, applicantCode);
+	}
+
+	/**
+	* Returns the vr applicant profile where mtCore = &#63; and applicantCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param mtCore the mt core
+	* @param applicantCode the applicant code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vr applicant profile, or <code>null</code> if a matching vr applicant profile could not be found
+	*/
+	public static VRApplicantProfile fetchByMT_APP_CODE(long mtCore,
+		java.lang.String applicantCode, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByMT_APP_CODE(mtCore, applicantCode, retrieveFromCache);
+	}
+
+	/**
+	* Removes the vr applicant profile where mtCore = &#63; and applicantCode = &#63; from the database.
+	*
+	* @param mtCore the mt core
+	* @param applicantCode the applicant code
+	* @return the vr applicant profile that was removed
+	*/
+	public static VRApplicantProfile removeByMT_APP_CODE(long mtCore,
+		java.lang.String applicantCode)
+		throws com.fds.vr.business.exception.NoSuchVRApplicantProfileException {
+		return getPersistence().removeByMT_APP_CODE(mtCore, applicantCode);
+	}
+
+	/**
+	* Returns the number of vr applicant profiles where mtCore = &#63; and applicantCode = &#63;.
+	*
+	* @param mtCore the mt core
+	* @param applicantCode the applicant code
+	* @return the number of matching vr applicant profiles
+	*/
+	public static int countByMT_APP_CODE(long mtCore,
+		java.lang.String applicantCode) {
+		return getPersistence().countByMT_APP_CODE(mtCore, applicantCode);
+	}
+
+	/**
 	* Caches the vr applicant profile in the entity cache if it is enabled.
 	*
 	* @param vrApplicantProfile the vr applicant profile

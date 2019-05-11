@@ -77,10 +77,10 @@ public class DictItemTempIndexer extends BaseIndexer<DictItemTemp> {
 		document.addNumberSortable(DictItemTempTerm.LEVEL, dictItem.getLevel());
 		document.addTextSortable(DictItemTempTerm.META_DATA, dictItem.getMetaData());
 		document.addNumber(DictItemTempTerm.STATUS, dictItem.getStatus());
-		
-		DictCollectionTemp dictCollection = DictCollectionTempLocalServiceUtil.fetchDictCollectionTemp(dictItem.getDictCollectionId());
-		if(Validator.isNotNull(dictCollection)){
-			document.addTextSortable(DictItemTempTerm.DICT_COLLECTION_CODE, dictCollection.getCollectionCode());
+
+		DictCollectionTemp dictCollectionTemp = DictCollectionTempLocalServiceUtil.getDictCollectionTemp(dictItem.getDictCollectionId());
+		if(Validator.isNotNull(dictCollectionTemp)){
+			document.addTextSortable(DictItemTempTerm.DICT_COLLECTION_CODE, dictCollectionTemp.getCollectionCode());
 		}
 		
 		String parentCode = StringPool.BLANK;

@@ -6,6 +6,7 @@ import java.util.List;
 import org.opencps.dossiermgt.action.PaymentFileActions;
 import org.opencps.dossiermgt.action.impl.PaymentFileActionsImpl;
 import org.opencps.dossiermgt.constants.DossierStatusConstants;
+import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.PaymentFile;
@@ -20,6 +21,7 @@ import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
 
+import com.fds.vr.business.model.VRVehicleTypeCertificate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 public class DossierMgtUtils {
 
 	private static final Log _log = LogFactoryUtil.getLog(DossierMgtUtils.class);
+	private static final long VALUE_CONVERT_DATE_TIMESTAMP = 1000 * 60 * 60 * 24;
 
 	//LamTV: Process get process option
 	public static ProcessOption getProcessOption(String serviceInfoCode, String govAgencyCode, String dossierTemplateNo,
@@ -251,4 +254,79 @@ public class DossierMgtUtils {
 			}
 		}
 	}
+
+	// Condition active or not active
+	public static String checkConditionState(List<VRVehicleTypeCertificate> certTypeList) {
+
+		int lengthCert = certTypeList.size();
+		Date now = new Date();
+		if (lengthCert == 1) {
+			VRVehicleTypeCertificate typeCert = certTypeList.get(0);
+			String expiredStatus = typeCert.getExpiredStatus();
+			if (expiredStatus.equals(DossierTerm.EXPIRED_STATUS_NOT_ACTIVE) ) {
+				return SpecialCharacterUtils.splitSpecial(typeCert.getDossierNo());
+			} else {
+				Date copReportExpireDate = typeCert.getCopReportExpireDate();
+				if (copReportExpireDate != null) {
+					long subExpiredTime = copReportExpireDate.getTime() - now.getTime();
+					long daySubTime = subExpiredTime / VALUE_CONVERT_DATE_TIMESTAMP;
+					if (daySubTime <= 30) {
+						return SpecialCharacterUtils.splitSpecial(typeCert.getDossierNo());
+					} else {
+						Date certificateRecordExpireDate = typeCert.getCopReportExpireDate();
+						if (certificateRecordExpireDate != null) {
+							long subCertExpiredTime = certificateRecordExpireDate.getTime() - now.getTime();
+							long dayCertSubTime = subCertExpiredTime / VALUE_CONVERT_DATE_TIMESTAMP;
+							if (dayCertSubTime <= 30) {
+								return SpecialCharacterUtils.splitSpecial(typeCert.getDossierNo());
+							}
+						}
+					}
+				}
+			}
+		} else {
+			StringBuilder sb = new StringBuilder();
+			for (VRVehicleTypeCertificate typeCert : certTypeList) {
+				if (typeCert.getExpiredStatus().equals(DossierTerm.EXPIRED_STATUS_NOT_ACTIVE)) {
+					if (sb.length() == 0) {
+						sb.append(SpecialCharacterUtils.splitSpecial(typeCert.getDossierNo()));
+					} else {
+						sb.append(StringPool.COMMA);
+						sb.append(SpecialCharacterUtils.splitSpecial(typeCert.getDossierNo()));
+					}
+				} else {
+					Date copReportExpireDate = typeCert.getCopReportExpireDate();
+					if (copReportExpireDate != null) {
+						long subExpiredTime = copReportExpireDate.getTime() - now.getTime();
+						long daySubTime = subExpiredTime / VALUE_CONVERT_DATE_TIMESTAMP;
+						if (daySubTime <= 30) {
+							if (sb.length() == 0) {
+								sb.append(SpecialCharacterUtils.splitSpecial(typeCert.getDossierNo()));
+							} else {
+								sb.append(StringPool.COMMA);
+								sb.append(SpecialCharacterUtils.splitSpecial(typeCert.getDossierNo()));
+							}
+						} else {
+							Date certificateRecordExpireDate = typeCert.getCopReportExpireDate();
+							if (certificateRecordExpireDate != null) {
+								long subCertExpiredTime = certificateRecordExpireDate.getTime() - now.getTime();
+								long dayCertSubTime = subCertExpiredTime / VALUE_CONVERT_DATE_TIMESTAMP;
+								if (dayCertSubTime <= 30) {
+									if (sb.length() == 0) {
+										sb.append(SpecialCharacterUtils.splitSpecial(typeCert.getDossierNo()));
+									} else {
+										sb.append(StringPool.COMMA);
+										sb.append(SpecialCharacterUtils.splitSpecial(typeCert.getDossierNo()));
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			return sb.toString();
+		}
+		return StringPool.BLANK;
+	}
+
 }

@@ -1119,6 +1119,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 //		_log.info("STATUS_REG Local Search: "+statusReg);
 		Long notStatusReg = GetterUtil.getLong(params.get(DossierTerm.NOT_STATUS_REG));
 //		_log.info("notStatusReg_REG Local Search: "+notStatusReg);
+		String dossierNoExpired = GetterUtil.getString(params.get(DossierTerm.DOSSIER_NO_EXPIRED));
 
 		Indexer<Dossier> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Dossier.class);
 
@@ -1244,6 +1245,30 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			query.addField(DossierTerm.SUBMITTING);
 
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+
+		if (Validator.isNotNull(dossierNoExpired)) {
+			String[] dossierNoList = StringUtil.split(dossierNoExpired);
+
+			if (dossierNoList != null && dossierNoList.length > 0) {
+				BooleanQuery subQuery = new BooleanQueryImpl();
+				for (int i = 0; i < dossierNoList.length; i++) {
+					MultiMatchQuery query = new MultiMatchQuery(dossierNoList[i]);
+
+					query.addField(DossierTerm.DOSSIER_NO_SEARCH);
+
+					subQuery.add(query, BooleanClauseOccur.SHOULD);
+				}
+
+				booleanQuery.add(subQuery, BooleanClauseOccur.MUST);
+
+			} else {
+				MultiMatchQuery query = new MultiMatchQuery(dossierNoExpired);
+
+				query.addFields(DossierTerm.DOSSIER_NO_SEARCH);
+
+				booleanQuery.add(query, BooleanClauseOccur.MUST);
+			}
 		}
 
 		if (Validator.isNotNull(status)) {
@@ -1587,6 +1612,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 		Long statusReg = GetterUtil.getLong(params.get(DossierTerm.STATUS_REG));
 		Long notStatusReg = GetterUtil.getLong(params.get(DossierTerm.NOT_STATUS_REG));
 //		_log.info("statusReg: "+statusReg);
+		String dossierNoExpired = GetterUtil.getString(params.get(DossierTerm.DOSSIER_NO_EXPIRED));
 
 		Indexer<Dossier> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Dossier.class);
 
@@ -1697,6 +1723,30 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			query.addField(DossierTerm.SUBMITTING);
 
 			booleanQuery.add(query, BooleanClauseOccur.MUST);
+		}
+
+		if (Validator.isNotNull(dossierNoExpired)) {
+			String[] dossierNoList = StringUtil.split(dossierNoExpired);
+
+			if (dossierNoList != null && dossierNoList.length > 0) {
+				BooleanQuery subQuery = new BooleanQueryImpl();
+				for (int i = 0; i < dossierNoList.length; i++) {
+					MultiMatchQuery query = new MultiMatchQuery(dossierNoList[i]);
+
+					query.addField(DossierTerm.DOSSIER_NO_SEARCH);
+
+					subQuery.add(query, BooleanClauseOccur.SHOULD);
+				}
+
+				booleanQuery.add(subQuery, BooleanClauseOccur.MUST);
+
+			} else {
+				MultiMatchQuery query = new MultiMatchQuery(dossierNoExpired);
+
+				query.addFields(DossierTerm.DOSSIER_NO_SEARCH);
+
+				booleanQuery.add(query, BooleanClauseOccur.MUST);
+			}
 		}
 
 		if (Validator.isNotNull(status)) {

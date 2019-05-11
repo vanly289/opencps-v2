@@ -120,10 +120,9 @@ public interface VROutputSheetDetailsLocalService extends BaseLocalService,
 		long issueVehicleCertificateId, long certificateId,
 		java.lang.String certificateNumber, Date certificateDate,
 		java.lang.String vehicleClass, java.lang.String stampType,
-		java.lang.String stampShortNo, java.lang.String serialStartNo,
-		java.lang.String serialEndNo, long subTotalInDocument,
-		long subTotalQuantities, long unitPrice, long totalAmount,
-		long totalInUse, long totalNotUsed, long totalLost,
+		java.lang.String stampShortNo, long serialStartNo, long serialEndNo,
+		long subTotalInDocument, long subTotalQuantities, long unitPrice,
+		long totalAmount, long totalInUse, long totalNotUsed, long totalLost,
 		long totalCancelled, long totalReturned, java.lang.String remark)
 		throws PortalException, SystemException;
 

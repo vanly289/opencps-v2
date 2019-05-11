@@ -111,6 +111,11 @@ public class VRCOPReportRepositoryLocalServiceUtil {
 		return getService().getVRCOPReportRepository(id);
 	}
 
+	public static com.fds.vr.business.model.VRCOPReportRepository updateCOPReportRepository(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return getService().updateCOPReportRepository(mapValues);
+	}
+
 	/**
 	* Updates the vrcop report repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

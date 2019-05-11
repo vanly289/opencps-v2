@@ -106,6 +106,11 @@ public class VRCOPProductionPlantEquipmentLocalServiceUtil {
 		return getService().getVRCOPProductionPlantEquipment(id);
 	}
 
+	public static com.fds.vr.business.model.VRCOPProductionPlantEquipment updateCOPProductionPlantEquipment(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return getService().updateCOPProductionPlantEquipment(mapValues);
+	}
+
 	/**
 	* Updates the vrcop production plant equipment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

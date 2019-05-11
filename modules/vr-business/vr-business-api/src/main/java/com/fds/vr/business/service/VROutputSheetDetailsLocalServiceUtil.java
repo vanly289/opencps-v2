@@ -109,10 +109,9 @@ public class VROutputSheetDetailsLocalServiceUtil {
 		long bookId, long issueVehicleCertificateId, long certificateId,
 		java.lang.String certificateNumber, java.util.Date certificateDate,
 		java.lang.String vehicleClass, java.lang.String stampType,
-		java.lang.String stampShortNo, java.lang.String serialStartNo,
-		java.lang.String serialEndNo, long subTotalInDocument,
-		long subTotalQuantities, long unitPrice, long totalAmount,
-		long totalInUse, long totalNotUsed, long totalLost,
+		java.lang.String stampShortNo, long serialStartNo, long serialEndNo,
+		long subTotalInDocument, long subTotalQuantities, long unitPrice,
+		long totalAmount, long totalInUse, long totalNotUsed, long totalLost,
 		long totalCancelled, long totalReturned, java.lang.String remark)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -286,18 +286,18 @@ public class PaymentFileLocalServiceUtil {
 	*/
 	public static org.opencps.dossiermgt.model.PaymentFile createPaymentFiles(
 		long userId, long groupId, long dossierId,
-		java.lang.String referenceUid, java.lang.String govAgencyCode,
-		java.lang.String govAgencyName, java.lang.String applicantName,
-		java.lang.String applicantIdNo, java.lang.String paymentFee,
+		java.lang.String referenceUid, java.lang.String paymentFee,
 		long paymentAmount, java.lang.String paymentNote,
 		java.lang.String epaymentProfile, java.lang.String bankInfo,
+		int paymentStatus, java.lang.String paymentMethod,
+		java.lang.String paymentFormData,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .createPaymentFiles(userId, groupId, dossierId,
-			referenceUid, govAgencyCode, govAgencyName, applicantName,
-			applicantIdNo, paymentFee, paymentAmount, paymentNote,
-			epaymentProfile, bankInfo, serviceContext);
+			referenceUid, paymentFee, paymentAmount, paymentNote,
+			epaymentProfile, bankInfo, paymentStatus, paymentMethod,
+			paymentFormData, serviceContext);
 	}
 
 	/**
@@ -344,6 +344,11 @@ public class PaymentFileLocalServiceUtil {
 	public static org.opencps.dossiermgt.model.PaymentFile fetchPaymentFileByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return getService().fetchPaymentFileByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static org.opencps.dossiermgt.model.PaymentFile getByG_ID(
+		long groupId, long dossierId) {
+		return getService().getByG_ID(groupId, dossierId);
 	}
 
 	/**
@@ -393,6 +398,13 @@ public class PaymentFileLocalServiceUtil {
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPaymentFileByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static org.opencps.dossiermgt.model.PaymentFile updateApplicantFeeAmount(
+		long paymentFileId, int requestPayment, java.lang.String paymentNote) {
+		return getService()
+				   .updateApplicantFeeAmount(paymentFileId, requestPayment,
+			paymentNote);
 	}
 
 	/**

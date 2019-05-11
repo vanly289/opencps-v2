@@ -368,21 +368,14 @@ public interface ProcessActionModel extends BaseModel<ProcessAction>,
 	 *
 	 * @return the request payment of this process action
 	 */
-	public boolean getRequestPayment();
+	public int getRequestPayment();
 
 	/**
-	 * Returns <code>true</code> if this process action is request payment.
-	 *
-	 * @return <code>true</code> if this process action is request payment; <code>false</code> otherwise
-	 */
-	public boolean isRequestPayment();
-
-	/**
-	 * Sets whether this process action is request payment.
+	 * Sets the request payment of this process action.
 	 *
 	 * @param requestPayment the request payment of this process action
 	 */
-	public void setRequestPayment(boolean requestPayment);
+	public void setRequestPayment(int requestPayment);
 
 	/**
 	 * Returns the payment fee of this process action.

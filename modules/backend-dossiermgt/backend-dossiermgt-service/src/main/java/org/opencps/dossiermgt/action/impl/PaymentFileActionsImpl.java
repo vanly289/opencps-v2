@@ -1,20 +1,16 @@
 package org.opencps.dossiermgt.action.impl;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.opencps.dossiermgt.action.PaymentFileActions;
-import org.opencps.dossiermgt.action.util.PaymentUrlGenerator;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.constants.PaymentFileTerm;
 import org.opencps.dossiermgt.model.Dossier;
-import org.opencps.dossiermgt.model.PaymentConfig;
 import org.opencps.dossiermgt.model.PaymentFile;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
-import org.opencps.dossiermgt.service.PaymentConfigLocalServiceUtil;
 import org.opencps.dossiermgt.service.PaymentFileLocalServiceUtil;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -83,10 +79,10 @@ public class PaymentFileActionsImpl implements PaymentFileActions {
 	 */
 	@Override
 	public PaymentFile createPaymentFile(long userId, long groupId, long dossierId, String referenceUid,
-			String govAgencyCode, String govAgencyName, String applicantName, String applicantIdNo, String paymentFee,
-			long paymentAmount, String paymentNote, String epaymentProfile, String bankInfo,
-			ServiceContext serviceContext) throws PortalException {
-		_log.info("boom boom");
+			String paymentFee, long paymentAmount, String paymentNote, String epaymentProfile, String bankInfo,
+			int paymentStatus, String paymentMethod, String paymentFormData, ServiceContext serviceContext)
+			throws PortalException {
+		//_log.info("boom boom");
 		if (Validator.isNull(referenceUid)) {
 			referenceUid = PortalUUIDUtil.generate();
 		}
@@ -94,16 +90,15 @@ public class PaymentFileActionsImpl implements PaymentFileActions {
 		try {
 
 			PaymentFile result = PaymentFileLocalServiceUtil.createPaymentFiles(userId, groupId, dossierId,
-					referenceUid, govAgencyCode, govAgencyName, applicantName, applicantIdNo, paymentFee, paymentAmount,
-					paymentNote, epaymentProfile, bankInfo, serviceContext);
+					referenceUid, paymentFee, paymentAmount, paymentNote, epaymentProfile, bankInfo, paymentStatus,
+					paymentMethod, paymentFormData, serviceContext);
 
 			return result;
 
 		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			_log.info("boom boom");
-			_log.info(e);
-			e.printStackTrace();
+			_log.debug(e);
+			//_log.error(e);
+//			e.printStackTrace();
 			throw new PortalException();
 		}
 

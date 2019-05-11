@@ -989,6 +989,56 @@ public interface PaymentFilePersistence extends BasePersistence<PaymentFile> {
 	public int countByDID_ISN(long dossierId, boolean isNew);
 
 	/**
+	* Returns the payment file where groupId = &#63; and dossierId = &#63; or throws a {@link NoSuchPaymentFileException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param dossierId the dossier ID
+	* @return the matching payment file
+	* @throws NoSuchPaymentFileException if a matching payment file could not be found
+	*/
+	public PaymentFile findByG_ID(long groupId, long dossierId)
+		throws NoSuchPaymentFileException;
+
+	/**
+	* Returns the payment file where groupId = &#63; and dossierId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param dossierId the dossier ID
+	* @return the matching payment file, or <code>null</code> if a matching payment file could not be found
+	*/
+	public PaymentFile fetchByG_ID(long groupId, long dossierId);
+
+	/**
+	* Returns the payment file where groupId = &#63; and dossierId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param dossierId the dossier ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching payment file, or <code>null</code> if a matching payment file could not be found
+	*/
+	public PaymentFile fetchByG_ID(long groupId, long dossierId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the payment file where groupId = &#63; and dossierId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param dossierId the dossier ID
+	* @return the payment file that was removed
+	*/
+	public PaymentFile removeByG_ID(long groupId, long dossierId)
+		throws NoSuchPaymentFileException;
+
+	/**
+	* Returns the number of payment files where groupId = &#63; and dossierId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param dossierId the dossier ID
+	* @return the number of matching payment files
+	*/
+	public int countByG_ID(long groupId, long dossierId);
+
+	/**
 	* Caches the payment file in the entity cache if it is enabled.
 	*
 	* @param paymentFile the payment file

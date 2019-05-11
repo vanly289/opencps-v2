@@ -55,7 +55,7 @@ public class VROutputSheetDetailsLocalServiceImpl
 	public VROutputSheetDetails updateOutputSheetDetails(long id, long mtCore, long inputSheetId, 
 			long outputSheetId, long bookId, long issueVehicleCertificateId, long certificateId,
 			String certificateNumber, Date certificateDate, String vehicleClass, String stampType,
-			String stampShortNo, String serialStartNo, String serialEndNo, long subTotalInDocument,
+			String stampShortNo, long serialStartNo, long serialEndNo, long subTotalInDocument,
 			long subTotalQuantities, long unitPrice, long totalAmount, long totalInUse, long totalNotUsed,
 			long totalLost, long totalCancelled, long totalReturned, String remark)
 		throws PortalException, SystemException {

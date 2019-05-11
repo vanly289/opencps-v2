@@ -102,6 +102,12 @@ public class VRCOPProdEquipmentLocalServiceWrapper
 		return _vrcopProdEquipmentLocalService.getVRCOPProdEquipment(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRCOPProdEquipment updateCOPProdEquipment(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return _vrcopProdEquipmentLocalService.updateCOPProdEquipment(mapValues);
+	}
+
 	/**
 	* Updates the vrcop prod equipment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

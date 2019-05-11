@@ -51,7 +51,7 @@ public class VRInputStampbookLocalServiceImpl
 	
 	public VRInputStampbook updateInputStambook(long id, long mtCore, long inputSheetId, 
 			long bookId, String vehicleClass, String stampType, 
-			String stampShortNo, long serialStartNo, String serialEndNo, 
+			String stampShortNo, long serialStartNo, long serialEndNo, 
 			long subTotalInDocument, long subTotalQuantities, long units, 
 			long unitPrice, long totalAmount, long totalInUse, long totalNotUsed, 
 			long sum1, long sum2, long sum3, String remark)

@@ -302,7 +302,7 @@ public class DossierPullScheduler_bk extends BaseSchedulerEntryMessageListener {
 
 					actions.doAction(syncServiceProcess.getGroupId(), desDossier, option, processAction,
 							processAction.getActionCode(), applicantName, applicantNote, assignedUserId,
-							systemUser.getUserId(), StringPool.BLANK, serviceContext);
+							systemUser.getUserId(), StringPool.BLANK, StringPool.BLANK, serviceContext);
 
 				} catch (Exception e) {
 					_log.info(e);
@@ -415,7 +415,7 @@ public class DossierPullScheduler_bk extends BaseSchedulerEntryMessageListener {
 						actions.doAction(syncServiceProcess.getGroupId(), desDossier, option, processAction,
 								processAction.getActionCode(), applicantName, applicantNote,
 								processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
-								serviceContext);
+								StringPool.BLANK, serviceContext);
 
 					} else {
 						desDossier.setSubmitting(true);
@@ -515,12 +515,12 @@ public class DossierPullScheduler_bk extends BaseSchedulerEntryMessageListener {
 					object.getString("referenceUid"));
 
 			if (Validator.isNull(paymentFile)) {
-				paymentFile = actions.createPaymentFile(context.getUserId(), groupId, dossierId,
-						object.getString("referenceUid"), object.getString("govAgencyCode "),
-						object.getString("govAgencyName"), object.getString("applicantName"),
-						object.getString("applicantIdNo"), object.getString("paymentFee"),
-						object.getLong("paymentAmount"), object.getString("paymentNote"),
-						object.getString("epaymentProfile"), object.getString("bankInfo"), context);
+//				paymentFile = actions.createPaymentFile(context.getUserId(), groupId, dossierId,
+//						object.getString("referenceUid"), object.getString("govAgencyCode "),
+//						object.getString("govAgencyName"), object.getString("applicantName"),
+//						object.getString("applicantIdNo"), object.getString("paymentFee"),
+//						object.getLong("paymentAmount"), object.getString("paymentNote"),
+//						object.getString("epaymentProfile"), object.getString("bankInfo"), context);
 			}
 			//
 			// paymentFile.setPaymentStatus(object.getInt("paymentStatus"));

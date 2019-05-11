@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.service.base.VRProductionPlantLocalServiceBaseImpl;
 
@@ -66,6 +67,16 @@ public class VRProductionPlantLocalServiceImpl
 		object.setSyncDate(now);
 
 		// Add other fields
+		object.setMtCore(Long.valueOf(mapValues.get("")));
+		object.setMappingMA_CTY(mapValues.get(""));
+		object.setMappingTEN_CTY(mapValues.get(""));
+		object.setMappingDIA_CHI_CTY(mapValues.get(""));
+		object.setMappingMA_XUONG_LR(mapValues.get(""));
+		object.setMappingTEN_XUONG_LR(mapValues.get(""));
+		object.setMappingDIA_CHI_XUONG_LR(mapValues.get(""));
+		object.setMappingNote(mapValues.get(""));
+		object.setMappingStatus(mapValues.get(""));
+
 		object.setProductionPlantCode(mapValues.get(""));
 		object.setProductionPlantName(mapValues.get(""));
 		object.setProductionPlantAddress(mapValues.get(""));
@@ -88,18 +99,17 @@ public class VRProductionPlantLocalServiceImpl
 		object.setProductionPlantEmployeesNote(mapValues.get(""));
 		object.setProductionPlantEquipmentsNote(mapValues.get(""));
 		object.setProductionPlantProdEquipmentsNote(mapValues.get(""));
-		//TODO
+		object.setRegistrationId(Long.valueOf(mapValues.get("")));
 		object.setApplicantProfileId(Long.valueOf(mapValues.get("")));
-//		object.setLatestCOPReportDate(DATEEEEEEE);
+		object.setLatestCOPReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
 		object.setLatestCOPReportResult(mapValues.get(""));
-//		object.setNextCOPReportDate(DATEEEEEEEEEE);
-//		object.setModifyDate(DATEEEEEEE);
+		object.setNextCOPReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+		object.setSyncDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
 
 		return vrProductionPlantPersistence.update(object);
 	}
-	
-	
-	
+
 	public List<VRProductionPlant> findBymappingStatus(long mtCore, String mappingStatus){
 		return vrProductionPlantPersistence.findBymappingStatus(mtCore, mappingStatus);
 	}

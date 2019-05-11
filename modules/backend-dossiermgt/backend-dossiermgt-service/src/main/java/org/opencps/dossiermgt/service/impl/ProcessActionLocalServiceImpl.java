@@ -87,7 +87,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 	@Indexable(type = IndexableType.REINDEX)
 	public ProcessAction updateProcessAction(long groupId, long processActionId, long serviceProcessId,
 			String preStepCode, String postStepCode, String autoEvent, String preCondition, String actionCode,
-			String actionName, boolean allowAssignUser, long assignUserId, boolean requestPayment, String paymentFee,
+			String actionName, boolean allowAssignUser, long assignUserId, int requestPayment, String paymentFee,
 			String createDossierFiles, String returnDossierFiles, String makeBriefNote, String syncActionCode,
 			boolean rollbackable, boolean createDossierNo, boolean eSignature, String configNote,
 			String dossierTemplateNo, ServiceContext context) throws PortalException {
@@ -179,7 +179,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 	@Indexable(type = IndexableType.REINDEX)
 	public ProcessAction updateProcessAction(long groupId, long processActionId, long serviceProcessId,
 			String preStepCode, String postStepCode, String autoEvent, String preCondition, String actionCode,
-			String actionName, boolean allowAssignUser, long assignUserId, boolean requestPayment, String paymentFee,
+			String actionName, boolean allowAssignUser, long assignUserId, int requestPayment, String paymentFee,
 			String createDossierFiles, String returnDossierFiles, String makeBriefNote, String syncActionCode,
 			boolean rollbackable, boolean createDossierNo, boolean eSignature, ServiceContext context)
 			throws PortalException {
@@ -265,7 +265,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 	@Indexable(type = IndexableType.REINDEX)
 	public ProcessAction updateProcessAction(long groupId, long processActionId, long serviceProcessId,
 			String preStepCode, String postStepCode, String autoEvent, String preCondition, String actionCode,
-			String actionName, boolean allowAssignUser, long assignUserId, boolean requestPayment, String paymentFee,
+			String actionName, boolean allowAssignUser, long assignUserId, int requestPayment, String paymentFee,
 			String createDossierFiles, String returnDossierFiles, String makeBriefNote, String syncActionCode,
 			boolean rollbackable, ServiceContext context) throws PortalException {
 
@@ -523,7 +523,7 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 
 	private void validateAdd(long groupId, long serviceProcessId, String preStepCode, String postStepCode,
 			String autoEvent, String preCondition, String actionCode, String actionName, boolean allowAssignUser,
-			long assignUserId, boolean requestPayment, String paymentFee, String createDossierFiles,
+			long assignUserId, int requestPayment, String paymentFee, String createDossierFiles,
 			String returnDossierFiles, String makeBriefNote, String syncActionCode, boolean rollbackable)
 			throws PortalException {
 
@@ -538,9 +538,9 @@ public class ProcessActionLocalServiceImpl extends ProcessActionLocalServiceBase
 			throw new InvalidPostStepCodeException("InvalidPostStepCodeException");
 		}
 
-		if (requestPayment && Validator.isNull(paymentFee)) {
-			throw new RequiredPaymentFeeException("RequiredPaymentFeeException");
-		}
+//		if (requestPayment) {
+//			throw new RequiredPaymentFeeException("RequiredPaymentFeeException");
+//		}
 
 /*		if (allowAssignUser && Validator.isNull(assignUserId)) {
 			throw new RequiredAssignUserIdException("RequiredAssignUserIdException");

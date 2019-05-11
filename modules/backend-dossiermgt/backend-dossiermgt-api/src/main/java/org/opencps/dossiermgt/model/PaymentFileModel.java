@@ -554,6 +554,51 @@ public interface PaymentFileModel extends BaseModel<PaymentFile>, GroupedModel,
 	 */
 	public void setInvoiceFileEntryId(long invoiceFileEntryId);
 
+	/**
+	 * Returns the invoice payload of this payment file.
+	 *
+	 * @return the invoice payload of this payment file
+	 */
+	@AutoEscape
+	public String getInvoicePayload();
+
+	/**
+	 * Sets the invoice payload of this payment file.
+	 *
+	 * @param invoicePayload the invoice payload of this payment file
+	 */
+	public void setInvoicePayload(String invoicePayload);
+
+	/**
+	 * Returns the einvoice of this payment file.
+	 *
+	 * @return the einvoice of this payment file
+	 */
+	@AutoEscape
+	public String getEinvoice();
+
+	/**
+	 * Sets the einvoice of this payment file.
+	 *
+	 * @param einvoice the einvoice of this payment file
+	 */
+	public void setEinvoice(String einvoice);
+
+	/**
+	 * Returns the payment form data of this payment file.
+	 *
+	 * @return the payment form data of this payment file
+	 */
+	@AutoEscape
+	public String getPaymentFormData();
+
+	/**
+	 * Sets the payment form data of this payment file.
+	 *
+	 * @param paymentFormData the payment form data of this payment file
+	 */
+	public void setPaymentFormData(String paymentFormData);
+
 	@Override
 	public boolean isNew();
 

@@ -292,6 +292,11 @@ public class PaymentConfigLocalServiceUtil {
 		return getService().fetchPaymentConfigByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static org.opencps.dossiermgt.model.PaymentConfig getByInvoiceTemplateNo(
+		long groupId, java.lang.String invoiceTemplateNo) {
+		return getService().getByInvoiceTemplateNo(groupId, invoiceTemplateNo);
+	}
+
 	/**
 	* Returns the payment config with the primary key.
 	*

@@ -111,6 +111,12 @@ public class VRCOPReportRepositoryLocalServiceWrapper
 		return _vrcopReportRepositoryLocalService.getVRCOPReportRepository(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRCOPReportRepository updateCOPReportRepository(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return _vrcopReportRepositoryLocalService.updateCOPReportRepository(mapValues);
+	}
+
 	/**
 	* Updates the vrcop report repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

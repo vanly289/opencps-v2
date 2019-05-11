@@ -122,15 +122,6 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 				}
 			}
 
-//			for (int i = 0; i < array.length(); i++) {
-//				JSONObject object = array.getJSONObject(i);
-//				try {
-//					pullDossier(company, object, systemUser);
-//				} catch (Exception e) {
-//					_log.error(object.get(DossierTerm.DOSSIER_ID), e);
-//				}
-//			}
-
 		} catch (Exception e) {
 		}
 		isRunningPull = false;
@@ -239,7 +230,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 						_log.info("========serviceProcessId=======" + serviceProcessId + "=======GETPROCESSACTION************" + processAction.getActionName());
 						actions.doAction(desGroupId, desDossier, option, processAction, processAction.getActionCode(),
 								applicantName, applicantNote, processAction.getAssignUserId(), systemUser.getUserId(),
-								StringPool.BLANK, serviceContext);
+								StringPool.BLANK, StringPool.BLANK, serviceContext);
 					}
 					
 				} catch (Exception e) {
@@ -330,7 +321,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 						actions.doAction(desGroupId, desDossier, option, processAction,
 								processAction.getActionCode(), applicantName, applicantNote,
 								processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
-								serviceContext);
+								StringPool.BLANK, serviceContext);
 
 					} else {
 						desDossier.setSubmitting(true);
@@ -430,11 +421,11 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 			if (Validator.isNull(paymentFile)) {
 				paymentFile = actions.createPaymentFile(context.getUserId(), groupId, dossierId,
-						object.getString("referenceUid"), object.getString("govAgencyCode "),
-						object.getString("govAgencyName"), object.getString("applicantName"),
-						object.getString("applicantIdNo"), object.getString("paymentFee"),
+						object.getString("referenceUid"), object.getString("paymentFee"),
 						object.getLong("paymentAmount"), object.getString("paymentNote"),
-						object.getString("epaymentProfile"), object.getString("bankInfo"), context);
+						object.getString("epaymentProfile"), object.getString("bankInfo"),
+						object.getInt("paymentStatus"), object.getString("paymentMethod"),
+						object.getString("paymentFormData"), context);
 			}
 			//
 			// paymentFile.setPaymentStatus(object.getInt("paymentStatus"));

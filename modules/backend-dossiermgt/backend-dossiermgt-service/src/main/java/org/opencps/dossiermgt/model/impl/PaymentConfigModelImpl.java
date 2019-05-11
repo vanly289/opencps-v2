@@ -84,7 +84,8 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 			{ "invoiceLastNo", Types.VARCHAR },
 			{ "invoiceForm", Types.VARCHAR },
 			{ "bankInfo", Types.VARCHAR },
-			{ "epaymentConfig", Types.VARCHAR }
+			{ "epaymentConfig", Types.VARCHAR },
+			{ "invoiceDetailForm", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -106,9 +107,10 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 		TABLE_COLUMNS_MAP.put("invoiceForm", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("bankInfo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("epaymentConfig", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("invoiceDetailForm", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table opencps_paymentconfig (uuid_ VARCHAR(75) null,paymentConfigId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,govAgencyCode VARCHAR(75) null,govAgencyName VARCHAR(75) null,govAgencyTaxNo VARCHAR(75) null,invoiceTemplateNo VARCHAR(75) null,invoiceIssueNo VARCHAR(75) null,invoiceLastNo VARCHAR(75) null,invoiceForm VARCHAR(75) null,bankInfo VARCHAR(75) null,epaymentConfig VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table opencps_paymentconfig (uuid_ VARCHAR(75) null,paymentConfigId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,govAgencyCode VARCHAR(75) null,govAgencyName VARCHAR(75) null,govAgencyTaxNo VARCHAR(75) null,invoiceTemplateNo VARCHAR(75) null,invoiceIssueNo VARCHAR(75) null,invoiceLastNo VARCHAR(75) null,invoiceForm VARCHAR(75) null,bankInfo VARCHAR(75) null,epaymentConfig VARCHAR(75) null,invoiceDetailForm VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table opencps_paymentconfig";
 	public static final String ORDER_BY_JPQL = " ORDER BY paymentConfig.paymentConfigId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY opencps_paymentconfig.paymentConfigId ASC";
@@ -127,8 +129,9 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GOVAGENCYCODE_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long PAYMENTCONFIGID_COLUMN_BITMASK = 16L;
+	public static final long INVOICETEMPLATENO_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long PAYMENTCONFIGID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(org.opencps.backend.dossiermgt.service.util.ServiceProps.get(
 				"lock.expiration.time.org.opencps.dossiermgt.model.PaymentConfig"));
 
@@ -186,6 +189,7 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 		attributes.put("invoiceForm", getInvoiceForm());
 		attributes.put("bankInfo", getBankInfo());
 		attributes.put("epaymentConfig", getEpaymentConfig());
+		attributes.put("invoiceDetailForm", getInvoiceDetailForm());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -295,6 +299,12 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 
 		if (epaymentConfig != null) {
 			setEpaymentConfig(epaymentConfig);
+		}
+
+		String invoiceDetailForm = (String)attributes.get("invoiceDetailForm");
+
+		if (invoiceDetailForm != null) {
+			setInvoiceDetailForm(invoiceDetailForm);
 		}
 	}
 
@@ -509,7 +519,17 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 
 	@Override
 	public void setInvoiceTemplateNo(String invoiceTemplateNo) {
+		_columnBitmask |= INVOICETEMPLATENO_COLUMN_BITMASK;
+
+		if (_originalInvoiceTemplateNo == null) {
+			_originalInvoiceTemplateNo = _invoiceTemplateNo;
+		}
+
 		_invoiceTemplateNo = invoiceTemplateNo;
+	}
+
+	public String getOriginalInvoiceTemplateNo() {
+		return GetterUtil.getString(_originalInvoiceTemplateNo);
 	}
 
 	@Override
@@ -588,6 +608,21 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 	}
 
 	@Override
+	public String getInvoiceDetailForm() {
+		if (_invoiceDetailForm == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _invoiceDetailForm;
+		}
+	}
+
+	@Override
+	public void setInvoiceDetailForm(String invoiceDetailForm) {
+		_invoiceDetailForm = invoiceDetailForm;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				PaymentConfig.class.getName()));
@@ -641,6 +676,7 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 		paymentConfigImpl.setInvoiceForm(getInvoiceForm());
 		paymentConfigImpl.setBankInfo(getBankInfo());
 		paymentConfigImpl.setEpaymentConfig(getEpaymentConfig());
+		paymentConfigImpl.setInvoiceDetailForm(getInvoiceDetailForm());
 
 		paymentConfigImpl.resetOriginalValues();
 
@@ -716,6 +752,8 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 		paymentConfigModelImpl._setModifiedDate = false;
 
 		paymentConfigModelImpl._originalGovAgencyCode = paymentConfigModelImpl._govAgencyCode;
+
+		paymentConfigModelImpl._originalInvoiceTemplateNo = paymentConfigModelImpl._invoiceTemplateNo;
 
 		paymentConfigModelImpl._columnBitmask = 0;
 	}
@@ -838,12 +876,20 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 			paymentConfigCacheModel.epaymentConfig = null;
 		}
 
+		paymentConfigCacheModel.invoiceDetailForm = getInvoiceDetailForm();
+
+		String invoiceDetailForm = paymentConfigCacheModel.invoiceDetailForm;
+
+		if ((invoiceDetailForm != null) && (invoiceDetailForm.length() == 0)) {
+			paymentConfigCacheModel.invoiceDetailForm = null;
+		}
+
 		return paymentConfigCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -879,6 +925,8 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 		sb.append(getBankInfo());
 		sb.append(", epaymentConfig=");
 		sb.append(getEpaymentConfig());
+		sb.append(", invoiceDetailForm=");
+		sb.append(getInvoiceDetailForm());
 		sb.append("}");
 
 		return sb.toString();
@@ -886,7 +934,7 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("org.opencps.dossiermgt.model.PaymentConfig");
@@ -960,6 +1008,10 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 			"<column><column-name>epaymentConfig</column-name><column-value><![CDATA[");
 		sb.append(getEpaymentConfig());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>invoiceDetailForm</column-name><column-value><![CDATA[");
+		sb.append(getInvoiceDetailForm());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -989,11 +1041,13 @@ public class PaymentConfigModelImpl extends BaseModelImpl<PaymentConfig>
 	private String _govAgencyName;
 	private String _govAgencyTaxNo;
 	private String _invoiceTemplateNo;
+	private String _originalInvoiceTemplateNo;
 	private String _invoiceIssueNo;
 	private String _invoiceLastNo;
 	private String _invoiceForm;
 	private String _bankInfo;
 	private String _epaymentConfig;
+	private String _invoiceDetailForm;
 	private long _columnBitmask;
 	private PaymentConfig _escapedModel;
 }

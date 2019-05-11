@@ -102,6 +102,12 @@ public class VRProductionPlantEmployeeLocalServiceWrapper
 		return _vrProductionPlantEmployeeLocalService.getVRProductionPlantEmployee(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductionPlantEmployee updateProductionPlantEmployee(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return _vrProductionPlantEmployeeLocalService.updateProductionPlantEmployee(mapValues);
+	}
+
 	/**
 	* Updates the vr production plant employee in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

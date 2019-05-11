@@ -1,30 +1,35 @@
 package org.opencps.dossiermgt.listenner;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.opencps.datamgt.model.DictCollection;
+import org.opencps.datamgt.model.DictItem;
+import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
+import org.opencps.datamgt.service.DictItemLocalServiceUtil;
+import org.opencps.dossiermgt.exception.NoSuchDossierFileException;
 import org.opencps.dossiermgt.model.Deliverable;
-import org.opencps.dossiermgt.model.RegistrationForm;
+import org.opencps.dossiermgt.model.Dossier;
+import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
-import org.opencps.dossiermgt.service.RegistrationFormLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
+import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
+import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 import org.opencps.usermgt.model.Applicant;
 import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 import com.fds.vr.business.action.util.ConvertJONObjectUtils;
 import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.VRApplicantProfileHistory;
 import com.fds.vr.business.model.VRConfigTechSpec;
 import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.model.VRRegistration;
 import com.fds.vr.business.model.VRVehicleSpecification;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
-import com.fds.vr.business.model.impl.VRApplicantProfileHistoryImpl;
-import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
 import com.fds.vr.business.model.impl.VRVehicleSpecificationImpl;
-import com.fds.vr.business.service.VRApplicantProfileHistoryLocalServiceUtil;
 import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
 import com.fds.vr.business.service.VRConfigTechSpecLocalServiceUtil;
 import com.fds.vr.business.service.VRDossierFileLocalServiceUtil;
@@ -35,6 +40,7 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -42,7 +48,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -62,7 +67,8 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 			String businessResult = UpdateVrBusiness(model, mtCore);
 			_log.info("====businessTypeCode====" + businessTypeCode + "==businessResult==" + businessResult);
 			
-			
+			//Process update VR_COP
+			String COPbusinessResult = updateVrCOPBusiness(model, mtCore);
 			
 		} catch (Exception e) {
 			_log.error(e);
@@ -83,7 +89,8 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 			String businessResult = UpdateVrBusiness(model, mtCore);
 			_log.info("====businessTypeCode====" + businessTypeCode + "==businessResult==" + businessResult);
 			
-			
+			//Process update VR_COP
+			String COPbusinessResult = updateVrCOPBusiness(model, mtCore);
 			
 		} catch (Exception e) {
 			_log.error(e);
@@ -542,4 +549,166 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 		}
 	}
 
+	private String updateVrCOPBusiness(Deliverable model, int mtCore) throws NoSuchDossierFileException, JSONException {
+		
+		DossierFile dossierFile = DossierFileLocalServiceUtil.getByDeliverableCode(model.getDeliverableCode());
+		Dossier dossier = null;
+		if (dossierFile != null) {
+			long dossierId = dossierFile.getDossierId();
+			if (dossierId > 0) {
+				dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+			}
+		}
+		// Process vr_copreportrepository
+		Map<String, String> mapReport = new HashMap<>();
+		if (dossier != null) {
+			String applicantIdNo = dossier.getApplicantIdNo();
+			VRApplicantProfile appProFile = VRApplicantProfileLocalServiceUtil.findByMT_APP_CODE(mtCore, applicantIdNo);
+			if (appProFile != null) {
+				mapReport.put("applicantProfileId", String.valueOf(appProFile.getId()));
+				mapReport.put("applicantCode", appProFile.getApplicantCode());
+				mapReport.put("applicantName", appProFile.getApplicantName());
+				mapReport.put("applicantAddress", appProFile.getApplicantAddress());
+			}
+			DossierFile dossierFileReportDN = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(
+					dossier.getDossierId(), "TT302011BGTVTCOPTTDN", 1, false,
+					new DossierFileComparator(false, "createDate", Date.class));
+			String formData = dossierFileReportDN != null ? dossierFileReportDN.getFormData(): StringPool.BLANK;
+			if (Validator.isNotNull(formData)) {
+				JSONObject jsonData = JSONFactoryUtil.createJSONObject(formData);
+				if (jsonData.has("list_COP_TrongNuoc_NuocNgoai") && jsonData.getString("list_COP_TrongNuoc_NuocNgoai").equalsIgnoreCase("NN")) {
+					DictCollection collection = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode("VR86", dossier.getGroupId());
+
+					DictItem dictItem = DictItemLocalServiceUtil.fetchByF_dictItemCode(jsonData.getString("ma_so_xuong"),
+							collection.getDictCollectionId(), dossier.getGroupId());
+					//
+					DictItem dictItemParent = DictItemLocalServiceUtil.fetchDictItem(dictItem.getParentItemId());
+					if (dictItemParent != null) {
+						mapReport.put("overseasManufacturerCode", dictItemParent.getItemCode());
+						mapReport.put("overseasManufacturerName", dictItemParent.getItemName());
+						mapReport.put("overseasManufacturerAddress", dictItemParent.getItemNameEN());
+					}
+				}
+			}
+			//
+			DossierFile dossierFileReportKQ = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(
+					dossier.getDossierId(), "TT302011BGTVTCOPTBKQ", 2, false,
+					new DossierFileComparator(false, "createDate", Date.class));
+			String formDataKQ = dossierFileReportKQ != null ? dossierFileReportKQ.getFormData(): StringPool.BLANK;
+			if (Validator.isNotNull(formDataKQ)) {
+				JSONObject jsonDataKQ = JSONFactoryUtil.createJSONObject(formDataKQ);
+				mapReport.put("productionPlantCode", jsonDataKQ.getString("ma_so_xuong"));
+				mapReport.put("productionPlantName", jsonDataKQ.getString("ten_xuong_san_xuat"));
+				mapReport.put("productionPlantAddress", jsonDataKQ.getString("dia_chi_xuong_san_xuat"));
+				mapReport.put("copReportNo", jsonDataKQ.getString("so_thong_bao"));
+				
+				mapReport.put("copReportStatus", jsonDataKQ.getString("ket_luan"));
+				mapReport.put("copReportType", jsonDataKQ.getString("loai_ho_so_cop"));
+				mapReport.put("copReportMetadata", jsonDataKQ.getString("formData"));
+				//
+				mapReport.put("copReportSignName", jsonDataKQ.getString("nguoi_ky_tb"));
+				mapReport.put("copReportSignTitle", jsonDataKQ.getString("chuc_danh_ky"));
+				mapReport.put("copReportSignPlace", "");
+				mapReport.put("copReportDate", jsonDataKQ.getString("ngay_bao_cao"));
+				mapReport.put("copReportApprovedDate", jsonDataKQ.getString("ngay_bao_cao"));
+			}
+			//
+			DossierFile dossierFileReportCOP = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(
+					dossier.getDossierId(), "BCKQDGCOP", 2, false,
+					new DossierFileComparator(false, "createDate", Date.class));
+			String formDataCOP = dossierFileReportCOP != null ? dossierFileReportCOP.getFormData(): StringPool.BLANK;
+			if (Validator.isNotNull(formDataCOP)) {
+				JSONObject jsonDataCOP = JSONFactoryUtil.createJSONObject(formDataCOP);
+				mapReport.put("COPReportExpiredDate", jsonDataCOP.getString("han_kiem_tra"));
+			}
+
+			// n many table 
+			// process table vr_COPProductionPlantProdEquipment
+			if (Validator.isNotNull(formData)) {
+				JSONObject jsonData = JSONFactoryUtil.createJSONObject(formData);
+				// process table vr_COPProductionPlantProdEquipment
+				Map<String, String> mapProdEquipment = new HashMap<>();
+				if (jsonData.has("thiet_bi_san_xuat_chinh")) {
+					JSONArray equimentArr = JSONFactoryUtil.createJSONArray("thiet_bi_san_xuat_chinh");
+					for (int i = 0; i < equimentArr.length(); i++) {
+						JSONObject jsonEquiment = equimentArr.getJSONObject(i);
+						mapProdEquipment.put("mtCore", String.valueOf(1));
+
+						mapProdEquipment.put("copReportRepositoryID", String.valueOf("ti nua them"));
+						mapProdEquipment.put("copReportNo", "so_thong_bao");
+						mapProdEquipment.put("sequenceNo", String.valueOf(i));
+						mapProdEquipment.put("equipmentCode", jsonEquiment.getString("so_luong_pl2"));
+						mapProdEquipment.put("equipmentName", jsonEquiment.getString("ten_thiet_bi_pl2"));
+						mapProdEquipment.put("trademarkName", jsonEquiment.getString("nhan_hieu_pl2"));
+						mapProdEquipment.put("productionCountryCode", jsonEquiment.getString("nuoc_san_xuat_pl2"));
+						mapProdEquipment.put("equipmentStatus", jsonEquiment.getString("tinh_trang_pl2"));
+						mapProdEquipment.put("notes", jsonEquiment.getString("ghi_chu_pl2"));
+						
+					}
+				}
+				//
+				// process table vr_COPProductionPlantEquipment
+				Map<String, String> mapPlantEquipment = new HashMap<>();
+				if (jsonData.has("thiet_bi_kiem_tra_chinh")) {
+					JSONArray equimentArr = JSONFactoryUtil.createJSONArray("thiet_bi_kiem_tra_chinh");
+					for (int i = 0; i < equimentArr.length(); i++) {
+						JSONObject jsonEquiment = equimentArr.getJSONObject(i);
+						mapProdEquipment.put("mtCore", String.valueOf(1));
+
+						mapProdEquipment.put("copReportRepositoryID", String.valueOf("ti nua them"));
+						mapProdEquipment.put("copReportNo", "so_thong_bao");
+						mapProdEquipment.put("sequenceNo", String.valueOf(i));
+						
+						mapProdEquipment.put("equipmentCode", jsonEquiment.getString("so_luong_pl3"));
+						mapProdEquipment.put("equipmentName", jsonEquiment.getString("ten_thiet_bi_pl3"));
+						mapProdEquipment.put("trademarkName", jsonEquiment.getString("nhan_hieu_pl3"));
+						mapProdEquipment.put("productionCountryCode", jsonEquiment.getString("nuoc_san_xuat_pl3"));
+						mapProdEquipment.put("equipmentStatus", jsonEquiment.getString("tinh_trang_pl3"));
+						mapProdEquipment.put("ngay_hieu_luc_pl3", jsonEquiment.getString("ngay_hieu_luc_pl3"));
+						mapProdEquipment.put("notes", jsonEquiment.getString("ghi_chu_pl3"));
+						
+					}
+				}
+				//
+				// process table vr_COPProductionPlantEmployee
+				Map<String, String> mapPlantEmployee = new HashMap<>();
+				if (jsonData.has("danh_sach_nhan_vien")) {
+					JSONArray equimentArr = JSONFactoryUtil.createJSONArray("danh_sach_nhan_vien");
+					for (int i = 0; i < equimentArr.length(); i++) {
+						JSONObject jsonEquiment = equimentArr.getJSONObject(i);
+						mapProdEquipment.put("mtCore", String.valueOf(1));
+
+						mapProdEquipment.put("copReportRepositoryID", String.valueOf("ti nua them"));
+						mapProdEquipment.put("copReportNo", "so_thong_bao");
+						mapProdEquipment.put("sequenceNo", String.valueOf(i));
+						
+						mapProdEquipment.put("employeeName", jsonEquiment.getString("ho_ten_pl1"));
+						mapProdEquipment.put("employeeCertificateNo", jsonEquiment.getString("chung_chi_pl1"));
+						mapProdEquipment.put("noi dao tao", jsonEquiment.getString("noi_dao_tao_pl1"));
+					}
+				}
+				//
+				// process table vr_COPReport_attach
+				Map<String, String> mapReportAttach = new HashMap<>();
+				if (jsonData.has("danh_sach_tai_lieu")) {
+					JSONArray equimentArr = JSONFactoryUtil.createJSONArray("danh_sach_tai_lieu");
+					for (int i = 0; i < equimentArr.length(); i++) {
+						JSONObject jsonEquiment = equimentArr.getJSONObject(i);
+						mapProdEquipment.put("mtCore", String.valueOf(1));
+
+						mapProdEquipment.put("copReportRepositoryID", String.valueOf("ti nua them"));
+						mapProdEquipment.put("copReportNo", "so_thong_bao");
+						mapProdEquipment.put("sequenceNo", String.valueOf(i));
+						
+						mapProdEquipment.put("attachFileURL", jsonEquiment.getString("ho_ten_pl1"));
+					}
+				}
+			}
+		}
+
+		
+		
+		
+		return null;
+	}
 }

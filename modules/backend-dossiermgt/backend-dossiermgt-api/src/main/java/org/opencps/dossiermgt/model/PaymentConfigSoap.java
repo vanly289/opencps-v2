@@ -50,6 +50,7 @@ public class PaymentConfigSoap implements Serializable {
 		soapModel.setInvoiceForm(model.getInvoiceForm());
 		soapModel.setBankInfo(model.getBankInfo());
 		soapModel.setEpaymentConfig(model.getEpaymentConfig());
+		soapModel.setInvoiceDetailForm(model.getInvoiceDetailForm());
 
 		return soapModel;
 	}
@@ -238,6 +239,14 @@ public class PaymentConfigSoap implements Serializable {
 		_epaymentConfig = epaymentConfig;
 	}
 
+	public String getInvoiceDetailForm() {
+		return _invoiceDetailForm;
+	}
+
+	public void setInvoiceDetailForm(String invoiceDetailForm) {
+		_invoiceDetailForm = invoiceDetailForm;
+	}
+
 	private String _uuid;
 	private long _paymentConfigId;
 	private long _groupId;
@@ -255,4 +264,5 @@ public class PaymentConfigSoap implements Serializable {
 	private String _invoiceForm;
 	private String _bankInfo;
 	private String _epaymentConfig;
+	private String _invoiceDetailForm;
 }

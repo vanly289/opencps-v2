@@ -299,7 +299,7 @@ public class ProcessActionCacheModel implements CacheModel<ProcessAction>,
 
 		assignUserId = objectInput.readLong();
 
-		requestPayment = objectInput.readBoolean();
+		requestPayment = objectInput.readInt();
 		paymentFee = objectInput.readUTF();
 		createDossierFiles = objectInput.readUTF();
 		returnDossierFiles = objectInput.readUTF();
@@ -391,7 +391,7 @@ public class ProcessActionCacheModel implements CacheModel<ProcessAction>,
 
 		objectOutput.writeLong(assignUserId);
 
-		objectOutput.writeBoolean(requestPayment);
+		objectOutput.writeInt(requestPayment);
 
 		if (paymentFee == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -466,7 +466,7 @@ public class ProcessActionCacheModel implements CacheModel<ProcessAction>,
 	public String actionName;
 	public boolean allowAssignUser;
 	public long assignUserId;
-	public boolean requestPayment;
+	public int requestPayment;
 	public String paymentFee;
 	public String createDossierFiles;
 	public String returnDossierFiles;
