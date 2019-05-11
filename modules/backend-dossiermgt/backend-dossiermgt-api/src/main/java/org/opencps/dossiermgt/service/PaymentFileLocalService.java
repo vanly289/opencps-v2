@@ -264,12 +264,11 @@ public interface PaymentFileLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public PaymentFile createPaymentFiles(long userId, long groupId,
 		long dossierId, java.lang.String referenceUid,
-		java.lang.String govAgencyCode, java.lang.String govAgencyName,
-		java.lang.String applicantName, java.lang.String applicantIdNo,
 		java.lang.String paymentFee, long paymentAmount,
 		java.lang.String paymentNote, java.lang.String epaymentProfile,
-		java.lang.String bankInfo, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String bankInfo, int paymentStatus,
+		java.lang.String paymentMethod, java.lang.String paymentFormData,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Deletes the payment file with the primary key from the database. Also notifies the appropriate model listeners.
@@ -306,6 +305,9 @@ public interface PaymentFileLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PaymentFile fetchPaymentFileByUuidAndGroupId(java.lang.String uuid,
 		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PaymentFile getByG_ID(long groupId, long dossierId);
 
 	/**
 	* Get info Epayment Profile
@@ -347,6 +349,10 @@ public interface PaymentFileLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PaymentFile getPaymentFileByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public PaymentFile updateApplicantFeeAmount(long paymentFileId,
+		int requestPayment, java.lang.String paymentNote);
 
 	/**
 	* Update info Epayment Profile

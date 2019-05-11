@@ -98,7 +98,10 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 			{ "invoiceTemplateNo", Types.VARCHAR },
 			{ "invoiceIssueNo", Types.VARCHAR },
 			{ "invoiceNo", Types.VARCHAR },
-			{ "invoiceFileEntryId", Types.BIGINT }
+			{ "invoiceFileEntryId", Types.BIGINT },
+			{ "invoicePayload", Types.VARCHAR },
+			{ "einvoice", Types.VARCHAR },
+			{ "paymentFormData", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -134,9 +137,12 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 		TABLE_COLUMNS_MAP.put("invoiceIssueNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("invoiceNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("invoiceFileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("invoicePayload", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("einvoice", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("paymentFormData", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table opencps_paymentfile (uuid_ VARCHAR(75) null,paymentFileId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dossierId LONG,referenceUid VARCHAR(75) null,govAgencyCode VARCHAR(75) null,govAgencyName VARCHAR(75) null,isNew BOOLEAN,paymentFee VARCHAR(75) null,paymentAmount LONG,paymentNote VARCHAR(75) null,epaymentProfile VARCHAR(75) null,bankInfo VARCHAR(75) null,paymentStatus INTEGER,paymentMethod VARCHAR(75) null,confirmDatetime DATE null,confirmPayload VARCHAR(75) null,confirmFileEntryId LONG,confirmNote VARCHAR(75) null,approveDatetime DATE null,accountUserName VARCHAR(75) null,govAgencyTaxNo VARCHAR(75) null,invoiceTemplateNo VARCHAR(75) null,invoiceIssueNo VARCHAR(75) null,invoiceNo VARCHAR(75) null,invoiceFileEntryId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table opencps_paymentfile (uuid_ VARCHAR(75) null,paymentFileId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dossierId LONG,referenceUid VARCHAR(75) null,govAgencyCode VARCHAR(75) null,govAgencyName VARCHAR(75) null,isNew BOOLEAN,paymentFee VARCHAR(75) null,paymentAmount LONG,paymentNote VARCHAR(75) null,epaymentProfile VARCHAR(75) null,bankInfo VARCHAR(75) null,paymentStatus INTEGER,paymentMethod VARCHAR(75) null,confirmDatetime DATE null,confirmPayload VARCHAR(75) null,confirmFileEntryId LONG,confirmNote VARCHAR(75) null,approveDatetime DATE null,accountUserName VARCHAR(75) null,govAgencyTaxNo VARCHAR(75) null,invoiceTemplateNo VARCHAR(75) null,invoiceIssueNo VARCHAR(75) null,invoiceNo VARCHAR(75) null,invoiceFileEntryId LONG,invoicePayload VARCHAR(75) null,einvoice VARCHAR(75) null,paymentFormData VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table opencps_paymentfile";
 	public static final String ORDER_BY_JPQL = " ORDER BY paymentFile.paymentFileId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY opencps_paymentfile.paymentFileId ASC";
@@ -230,6 +236,9 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 		attributes.put("invoiceIssueNo", getInvoiceIssueNo());
 		attributes.put("invoiceNo", getInvoiceNo());
 		attributes.put("invoiceFileEntryId", getInvoiceFileEntryId());
+		attributes.put("invoicePayload", getInvoicePayload());
+		attributes.put("einvoice", getEinvoice());
+		attributes.put("paymentFormData", getPaymentFormData());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -423,6 +432,24 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 
 		if (invoiceFileEntryId != null) {
 			setInvoiceFileEntryId(invoiceFileEntryId);
+		}
+
+		String invoicePayload = (String)attributes.get("invoicePayload");
+
+		if (invoicePayload != null) {
+			setInvoicePayload(invoicePayload);
+		}
+
+		String einvoice = (String)attributes.get("einvoice");
+
+		if (einvoice != null) {
+			setEinvoice(einvoice);
+		}
+
+		String paymentFormData = (String)attributes.get("paymentFormData");
+
+		if (paymentFormData != null) {
+			setPaymentFormData(paymentFormData);
 		}
 	}
 
@@ -915,6 +942,51 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 	}
 
 	@Override
+	public String getInvoicePayload() {
+		if (_invoicePayload == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _invoicePayload;
+		}
+	}
+
+	@Override
+	public void setInvoicePayload(String invoicePayload) {
+		_invoicePayload = invoicePayload;
+	}
+
+	@Override
+	public String getEinvoice() {
+		if (_einvoice == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _einvoice;
+		}
+	}
+
+	@Override
+	public void setEinvoice(String einvoice) {
+		_einvoice = einvoice;
+	}
+
+	@Override
+	public String getPaymentFormData() {
+		if (_paymentFormData == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _paymentFormData;
+		}
+	}
+
+	@Override
+	public void setPaymentFormData(String paymentFormData) {
+		_paymentFormData = paymentFormData;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				PaymentFile.class.getName()));
@@ -982,6 +1054,9 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 		paymentFileImpl.setInvoiceIssueNo(getInvoiceIssueNo());
 		paymentFileImpl.setInvoiceNo(getInvoiceNo());
 		paymentFileImpl.setInvoiceFileEntryId(getInvoiceFileEntryId());
+		paymentFileImpl.setInvoicePayload(getInvoicePayload());
+		paymentFileImpl.setEinvoice(getEinvoice());
+		paymentFileImpl.setPaymentFormData(getPaymentFormData());
 
 		paymentFileImpl.resetOriginalValues();
 
@@ -1265,12 +1340,36 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 
 		paymentFileCacheModel.invoiceFileEntryId = getInvoiceFileEntryId();
 
+		paymentFileCacheModel.invoicePayload = getInvoicePayload();
+
+		String invoicePayload = paymentFileCacheModel.invoicePayload;
+
+		if ((invoicePayload != null) && (invoicePayload.length() == 0)) {
+			paymentFileCacheModel.invoicePayload = null;
+		}
+
+		paymentFileCacheModel.einvoice = getEinvoice();
+
+		String einvoice = paymentFileCacheModel.einvoice;
+
+		if ((einvoice != null) && (einvoice.length() == 0)) {
+			paymentFileCacheModel.einvoice = null;
+		}
+
+		paymentFileCacheModel.paymentFormData = getPaymentFormData();
+
+		String paymentFormData = paymentFileCacheModel.paymentFormData;
+
+		if ((paymentFormData != null) && (paymentFormData.length() == 0)) {
+			paymentFileCacheModel.paymentFormData = null;
+		}
+
 		return paymentFileCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1334,6 +1433,12 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 		sb.append(getInvoiceNo());
 		sb.append(", invoiceFileEntryId=");
 		sb.append(getInvoiceFileEntryId());
+		sb.append(", invoicePayload=");
+		sb.append(getInvoicePayload());
+		sb.append(", einvoice=");
+		sb.append(getEinvoice());
+		sb.append(", paymentFormData=");
+		sb.append(getPaymentFormData());
 		sb.append("}");
 
 		return sb.toString();
@@ -1341,7 +1446,7 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(97);
+		StringBundler sb = new StringBundler(106);
 
 		sb.append("<model><model-name>");
 		sb.append("org.opencps.dossiermgt.model.PaymentFile");
@@ -1471,6 +1576,18 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 			"<column><column-name>invoiceFileEntryId</column-name><column-value><![CDATA[");
 		sb.append(getInvoiceFileEntryId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>invoicePayload</column-name><column-value><![CDATA[");
+		sb.append(getInvoicePayload());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>einvoice</column-name><column-value><![CDATA[");
+		sb.append(getEinvoice());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>paymentFormData</column-name><column-value><![CDATA[");
+		sb.append(getPaymentFormData());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1523,6 +1640,9 @@ public class PaymentFileModelImpl extends BaseModelImpl<PaymentFile>
 	private String _invoiceIssueNo;
 	private String _invoiceNo;
 	private long _invoiceFileEntryId;
+	private String _invoicePayload;
+	private String _einvoice;
+	private String _paymentFormData;
 	private long _columnBitmask;
 	private PaymentFile _escapedModel;
 }

@@ -83,6 +83,7 @@ import com.fds.vr.business.service.persistence.VRProductionPlantFinder;
 import com.fds.vr.business.service.persistence.VRProductionPlantPersistence;
 import com.fds.vr.business.service.persistence.VRProductionPlantProdEquipmentFinder;
 import com.fds.vr.business.service.persistence.VRProductionPlantProdEquipmentPersistence;
+import com.fds.vr.business.service.persistence.VRProductionPlantSupplierPersistence;
 import com.fds.vr.business.service.persistence.VRRPDossierStatisticsFinder;
 import com.fds.vr.business.service.persistence.VRRPDossierStatisticsPersistence;
 import com.fds.vr.business.service.persistence.VRRegistrationPersistence;
@@ -2271,6 +2272,44 @@ public abstract class VRCertificateProgressFileLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the vr production plant supplier local service.
+	 *
+	 * @return the vr production plant supplier local service
+	 */
+	public com.fds.vr.business.service.VRProductionPlantSupplierLocalService getVRProductionPlantSupplierLocalService() {
+		return vrProductionPlantSupplierLocalService;
+	}
+
+	/**
+	 * Sets the vr production plant supplier local service.
+	 *
+	 * @param vrProductionPlantSupplierLocalService the vr production plant supplier local service
+	 */
+	public void setVRProductionPlantSupplierLocalService(
+		com.fds.vr.business.service.VRProductionPlantSupplierLocalService vrProductionPlantSupplierLocalService) {
+		this.vrProductionPlantSupplierLocalService = vrProductionPlantSupplierLocalService;
+	}
+
+	/**
+	 * Returns the vr production plant supplier persistence.
+	 *
+	 * @return the vr production plant supplier persistence
+	 */
+	public VRProductionPlantSupplierPersistence getVRProductionPlantSupplierPersistence() {
+		return vrProductionPlantSupplierPersistence;
+	}
+
+	/**
+	 * Sets the vr production plant supplier persistence.
+	 *
+	 * @param vrProductionPlantSupplierPersistence the vr production plant supplier persistence
+	 */
+	public void setVRProductionPlantSupplierPersistence(
+		VRProductionPlantSupplierPersistence vrProductionPlantSupplierPersistence) {
+		this.vrProductionPlantSupplierPersistence = vrProductionPlantSupplierPersistence;
+	}
+
+	/**
 	 * Returns the vr product line local service.
 	 *
 	 * @return the vr product line local service
@@ -3846,6 +3885,10 @@ public abstract class VRCertificateProgressFileLocalServiceBaseImpl
 	protected VRProductionPlantProdEquipmentPersistence vrProductionPlantProdEquipmentPersistence;
 	@BeanReference(type = VRProductionPlantProdEquipmentFinder.class)
 	protected VRProductionPlantProdEquipmentFinder vrProductionPlantProdEquipmentFinder;
+	@BeanReference(type = com.fds.vr.business.service.VRProductionPlantSupplierLocalService.class)
+	protected com.fds.vr.business.service.VRProductionPlantSupplierLocalService vrProductionPlantSupplierLocalService;
+	@BeanReference(type = VRProductionPlantSupplierPersistence.class)
+	protected VRProductionPlantSupplierPersistence vrProductionPlantSupplierPersistence;
 	@BeanReference(type = com.fds.vr.business.service.VRProductLineLocalService.class)
 	protected com.fds.vr.business.service.VRProductLineLocalService vrProductLineLocalService;
 	@BeanReference(type = VRProductLinePersistence.class)

@@ -104,6 +104,9 @@ public interface VRApplicantProfileLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRApplicantProfile fetchVRApplicantProfile(long id);
 
+	public VRApplicantProfile findByMT_APP_CODE(long mtCore,
+		java.lang.String applicantCode);
+
 	/**
 	* Returns the vr applicant profile with the primary key.
 	*

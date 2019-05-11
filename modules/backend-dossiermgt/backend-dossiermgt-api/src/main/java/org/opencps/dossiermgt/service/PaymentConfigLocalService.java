@@ -267,6 +267,10 @@ public interface PaymentConfigLocalService extends BaseLocalService,
 	public PaymentConfig fetchPaymentConfigByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PaymentConfig getByInvoiceTemplateNo(long groupId,
+		java.lang.String invoiceTemplateNo);
+
 	/**
 	* Returns the payment config with the primary key.
 	*

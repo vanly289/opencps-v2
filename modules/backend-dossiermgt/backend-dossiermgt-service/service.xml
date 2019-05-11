@@ -648,6 +648,9 @@
 		<column name="invoiceIssueNo" type="String" />
 		<column name="invoiceNo" type="String" />
 		<column name="invoiceFileEntryId" type="long" />
+		<column name="invoicePayload" type="String" />
+		<column name="einvoice" type="String" />
+		<column name="paymentFormData" type="String" />
 
 		<!-- Order -->
 
@@ -674,7 +677,10 @@
 			<finder-column name="dossierId" />
 			<finder-column name="isNew" />
 		</finder>
-
+		<finder return-type="PaymentFile" name="G_ID">
+			<finder-column name="groupId" />
+			<finder-column name="dossierId" />
+		</finder>
 	</entity>
 
 	<entity name="PaymentConfig" table="opencps_paymentconfig"
@@ -707,6 +713,7 @@
 		<column name="invoiceForm" type="String" />
 		<column name="bankInfo" type="String" />
 		<column name="epaymentConfig" type="String" />
+		<column name="invoiceDetailForm" type="String" />
 
 		<!-- Order -->
 
@@ -719,7 +726,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="govAgencyCode" />
 		</finder>
-
+		<finder return-type="PaymentConfig" name="G_ITN">
+			<finder-column name="groupId" />
+			<finder-column name="invoiceTemplateNo" />
+		</finder>
 		<!-- References -->
 
 	</entity>
@@ -956,7 +966,7 @@
 		<column name="actionName" type="String" />
 		<column name="allowAssignUser" type="boolean" />
 		<column name="assignUserId" type="long" />
-		<column name="requestPayment" type="boolean" />
+		<column name="requestPayment" type="int" />
 		<column name="paymentFee" type="String" />
 		<column name="createDossierFiles" type="String" />
 		<column name="returnDossierFiles" type="String" />
@@ -1167,8 +1177,8 @@
 		<column name="serverNo" type="String" />
 
 		<order>
-			<order-column name="dossierId" order-by="asc" />
-			<order-column name="method" order-by="asc" />
+			<order-column name="dossierId" order-by="desc" />
+			<order-column name="method" order-by="desc" />
 		</order>
 		
 		<finder return-type="DossierSync" name="F_D_M_CPK_FR">

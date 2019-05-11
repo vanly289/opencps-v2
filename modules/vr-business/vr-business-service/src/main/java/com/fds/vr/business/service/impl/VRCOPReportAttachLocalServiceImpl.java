@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPReportAttach;
+import com.fds.vr.business.model.VRCOPReportRepository;
 import com.fds.vr.business.service.base.VRCOPReportAttachLocalServiceBaseImpl;
 
 /**
@@ -72,6 +74,29 @@ public class VRCOPReportAttachLocalServiceImpl
 		return new ArrayList<VRCOPReportAttach>();
 		
 	}
-	
+
+	public VRCOPReportAttach updateCOPReportAttach(LinkedHashMap<String, String> mapValues) {
+		
+		Date now = new Date();
+
+		long vrCOPReportAttachId = counterLocalService.increment(VRCOPReportAttach.class.getName());
+
+		VRCOPReportAttach object = vrcopReportAttachPersistence.create(vrCOPReportAttachId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+
+		// Add other fields
+		object.setMtCore(Long.valueOf(mapValues.get("")));
+		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("")));
+		object.setCopReportNo(mapValues.get(""));
+		object.setSequenceNo(Long.valueOf(mapValues.get("")));
+		object.setAttachFileURL(mapValues.get(""));
+
+		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+
+		return vrcopReportAttachPersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRCOPReportAttachLocalServiceImpl.class);
 }

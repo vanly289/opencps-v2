@@ -22,7 +22,7 @@ import java.util.List;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-
+import com.fds.vr.business.exception.NoSuchVRApplicantProfileException;
 import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.VRRPDossierStatistics;
 import com.fds.vr.business.service.base.VRApplicantProfileLocalServiceBaseImpl;
@@ -183,6 +183,14 @@ public class VRApplicantProfileLocalServiceImpl
 		}
 		return new ArrayList<VRApplicantProfile>();
 		
+	}
+
+	public VRApplicantProfile findByMT_APP_CODE(long mtCore, String applicantCode) {
+		try {
+			return vrApplicantProfilePersistence.findByMT_APP_CODE(mtCore, applicantCode);
+		} catch (NoSuchVRApplicantProfileException e) {
+			return null;
+		}
 	}
 	
 	private Log _log = LogFactoryUtil.getLog(VRApplicantProfileLocalServiceImpl.class);

@@ -145,7 +145,7 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 								dossierActions.doAction(dossier.getGroupId(), dossier, option, processAction,
 										processAction.getActionCode(), userActionName, StringPool.BLANK,
 										processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
-										serviceContext);
+										StringPool.BLANK, serviceContext);
 							}
 						}
 						
@@ -188,7 +188,7 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 								dossierActions.doAction(dossier.getGroupId(), dossier, option, processAction,
 										processAction.getActionCode(), userActionName, processAction.getActionName(),
 										processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
-										serviceContext);
+										StringPool.BLANK, serviceContext);
 							}
 						}
 						

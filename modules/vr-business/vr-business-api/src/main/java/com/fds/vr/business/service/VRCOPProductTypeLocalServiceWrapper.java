@@ -102,6 +102,12 @@ public class VRCOPProductTypeLocalServiceWrapper
 		return _vrcopProductTypeLocalService.getVRCOPProductType(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRCOPProductType updateCOPProductType(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return _vrcopProductTypeLocalService.updateCOPProductType(mapValues);
+	}
+
 	/**
 	* Updates the vrcop product type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

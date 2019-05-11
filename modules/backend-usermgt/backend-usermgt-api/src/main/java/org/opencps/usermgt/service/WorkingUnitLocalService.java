@@ -279,6 +279,10 @@ public interface WorkingUnitLocalService extends BaseLocalService,
 	public WorkingUnit deleteWorkingUnit(WorkingUnit workingUnit);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WorkingUnit fetchByF_govAgencyCode(long groupId,
+		java.lang.String govAgencyCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WorkingUnit fetchWorkingUnit(long workingUnitId);
 
 	/**

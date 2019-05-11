@@ -10,6 +10,7 @@ import javax.ws.rs.core.Application;
 
 import org.osgi.service.component.annotations.Component;
 
+import backend.postal.api.rest.controller.impl.EInvoiceManagementImpl;
 import backend.postal.api.rest.controller.impl.VNPostManagementImpl;
 
 /**
@@ -23,6 +24,7 @@ public class BackendPostalApiRestApplication extends Application {
 		Set<Object> singletons = new HashSet<Object>();
 		// add REST endpoints (resources)
 		singletons.add(new VNPostManagementImpl());
+		singletons.add(new EInvoiceManagementImpl());
 		return singletons;
 	}
 }

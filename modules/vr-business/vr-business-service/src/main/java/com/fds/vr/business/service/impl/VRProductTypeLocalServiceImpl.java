@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRProductLine;
 import com.fds.vr.business.model.VRProductType;
 import com.fds.vr.business.service.base.VRProductTypeLocalServiceBaseImpl;
 
@@ -62,7 +64,29 @@ public class VRProductTypeLocalServiceImpl
 		
 	}
 
+	public VRProductType updateProductType(LinkedHashMap<String, String> mapValues) {
+		
+		Date now = new Date();
 
-	
+		long vrProductTypeId = counterLocalService.increment(VRProductType.class.getName());
+
+		VRProductType object = vrProductTypePersistence.create(vrProductTypeId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+
+		// Add other fields
+		object.setMtCore(Long.valueOf(mapValues.get("")));
+		object.setProductPlantID(Long.valueOf(mapValues.get("")));
+		object.setSequenceNo(Long.valueOf(mapValues.get("")));
+		object.setVehicleClass(mapValues.get(""));
+		object.setVehicleTypeCode(mapValues.get(""));
+		object.setVehicleTypeDescription(mapValues.get(""));
+
+		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+
+		return vrProductTypePersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRProductTypeLocalServiceImpl.class);
 }

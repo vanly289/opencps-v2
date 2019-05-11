@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPProdEquipment;
 import com.fds.vr.business.service.base.VRCOPProdEquipmentLocalServiceBaseImpl;
 
@@ -71,5 +71,39 @@ public class VRCOPProdEquipmentLocalServiceImpl
 		return new ArrayList<VRCOPProdEquipment>();
 		
 	}
+
+	public VRCOPProdEquipment updateCOPProdEquipment(LinkedHashMap<String, String> mapValues) {
+		
+		Date now = new Date();
+
+		long vrCOPProdEquipmentId = counterLocalService.increment(VRCOPProdEquipment.class.getName());
+
+		VRCOPProdEquipment object = vrcopProdEquipmentPersistence.create(vrCOPProdEquipmentId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+
+		// Add other fields
+		object.setMtCore(Long.valueOf(mapValues.get("")));
+		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("")));
+		object.setCopReportNo(mapValues.get(""));
+		object.setSequenceNo(Long.valueOf(mapValues.get("")));
+		object.setEquipmentCode(mapValues.get(""));
+		object.setEquipmentName(mapValues.get(""));
+		object.setEquipmentType(mapValues.get(""));
+		object.setTrademark(mapValues.get(""));
+		object.setTrademarkName(mapValues.get(""));
+		object.setCommercialName(mapValues.get(""));
+		object.setModelCode(mapValues.get(""));
+		object.setDesignSymbolNo(mapValues.get(""));
+		object.setProductionCountryCode(mapValues.get(""));
+		object.setEquipmentStatus(mapValues.get(""));
+		object.setNotes(mapValues.get(""));
+
+		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+
+		return vrcopProdEquipmentPersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRCOPProdEquipmentLocalServiceImpl.class);
 }

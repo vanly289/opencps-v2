@@ -834,9 +834,9 @@ public class DossierManagementImpl implements DossierManagement {
 						if (input.getIsSynAction() == 1) {
 							//_log.info(JSONFactoryUtil.looseSerialize(input));
 							_log.info("Call in SynAction **********8 ===========");
-							dossierAction = actions.doAction(groupId, dossier,
-									option, proAction, input.getActionCode(), input.getActionUser(),
-									input.getActionNote(), input.getAssignUserId(), 0l, subUsers, serviceContext);
+							dossierAction = actions.doAction(groupId, dossier, option, proAction, input.getActionCode(),
+									input.getActionUser(), input.getActionNote(), input.getAssignUserId(), 0l, subUsers,
+									input.getPayment(), serviceContext);
 		
 						} else {
 							if (!auth.isAuth(serviceContext)) {
@@ -846,9 +846,9 @@ public class DossierManagementImpl implements DossierManagement {
 							_log.info("input.getActionCode(): " + input.getActionCode());
 							_log.info("action.getProcessActionId(): " + proAction.getProcessActionId());
 							_log.info("input.getActionUser(): " + input.getActionUser());
-							dossierAction = actions.doAction(groupId, dossier, option, proAction,
-									input.getActionCode(), input.getActionUser(), input.getActionNote(), input.getAssignUserId(),
-									user.getUserId(), subUsers, serviceContext);
+							dossierAction = actions.doAction(groupId, dossier, option, proAction, input.getActionCode(),
+									input.getActionUser(), input.getActionNote(), input.getAssignUserId(),
+									user.getUserId(), subUsers, input.getPayment(), serviceContext);
 						}
 					}
 				}

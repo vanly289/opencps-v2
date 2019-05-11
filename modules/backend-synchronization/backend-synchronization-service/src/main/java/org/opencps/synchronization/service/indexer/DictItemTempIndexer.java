@@ -78,16 +78,16 @@ public class DictItemTempIndexer extends BaseIndexer<DictItemTemp> {
 		document.addTextSortable(DictItemTempTerm.META_DATA, dictItem.getMetaData());
 		document.addNumber(DictItemTempTerm.STATUS, dictItem.getStatus());
 		
-		DictCollection dictCollection = DictCollectionLocalServiceUtil.fetchDictCollection(dictItem.getDictCollectionId());
-		if(Validator.isNotNull(dictCollection)){
-			document.addTextSortable(DictItemTempTerm.DICT_COLLECTION_CODE, dictCollection.getCollectionCode());
+		DictCollectionTemp dictCollectionTemp = DictCollectionTempLocalServiceUtil.getDictCollectionTemp(dictItem.getDictCollectionId());
+		if(Validator.isNotNull(dictCollectionTemp)){
+			document.addTextSortable(DictItemTempTerm.DICT_COLLECTION_CODE, dictCollectionTemp.getCollectionCode());
 		}
 		
 		String parentCode = StringPool.BLANK;
 		String parentItemName = StringPool.BLANK;
 		String parentItemNameEN = StringPool.BLANK;
 		if(dictItem.getParentItemId() > 0){
-			DictItem parentItem = DictItemLocalServiceUtil.fetchDictItem(dictItem.getParentItemId());
+			DictItemTemp parentItem = DictItemTempLocalServiceUtil.fetchDictItemTemp(dictItem.getParentItemId());
 			if (Validator.isNotNull(parentItem) && Validator.isNotNull(parentItem.getItemCode())) {
 				parentCode = parentItem.getItemCode();
 				parentItemName = parentItem.getItemName();

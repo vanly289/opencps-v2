@@ -91,6 +91,9 @@ public class PaymentFileWrapper implements PaymentFile,
 		attributes.put("invoiceIssueNo", getInvoiceIssueNo());
 		attributes.put("invoiceNo", getInvoiceNo());
 		attributes.put("invoiceFileEntryId", getInvoiceFileEntryId());
+		attributes.put("invoicePayload", getInvoicePayload());
+		attributes.put("einvoice", getEinvoice());
+		attributes.put("paymentFormData", getPaymentFormData());
 
 		return attributes;
 	}
@@ -282,6 +285,24 @@ public class PaymentFileWrapper implements PaymentFile,
 		if (invoiceFileEntryId != null) {
 			setInvoiceFileEntryId(invoiceFileEntryId);
 		}
+
+		String invoicePayload = (String)attributes.get("invoicePayload");
+
+		if (invoicePayload != null) {
+			setInvoicePayload(invoicePayload);
+		}
+
+		String einvoice = (String)attributes.get("einvoice");
+
+		if (einvoice != null) {
+			setEinvoice(einvoice);
+		}
+
+		String paymentFormData = (String)attributes.get("paymentFormData");
+
+		if (paymentFormData != null) {
+			setPaymentFormData(paymentFormData);
+		}
 	}
 
 	@Override
@@ -410,6 +431,16 @@ public class PaymentFileWrapper implements PaymentFile,
 	}
 
 	/**
+	* Returns the einvoice of this payment file.
+	*
+	* @return the einvoice of this payment file
+	*/
+	@Override
+	public java.lang.String getEinvoice() {
+		return _paymentFile.getEinvoice();
+	}
+
+	/**
 	* Returns the epayment profile of this payment file.
 	*
 	* @return the epayment profile of this payment file
@@ -470,6 +501,16 @@ public class PaymentFileWrapper implements PaymentFile,
 	}
 
 	/**
+	* Returns the invoice payload of this payment file.
+	*
+	* @return the invoice payload of this payment file
+	*/
+	@Override
+	public java.lang.String getInvoicePayload() {
+		return _paymentFile.getInvoicePayload();
+	}
+
+	/**
 	* Returns the invoice template no of this payment file.
 	*
 	* @return the invoice template no of this payment file
@@ -487,6 +528,16 @@ public class PaymentFileWrapper implements PaymentFile,
 	@Override
 	public java.lang.String getPaymentFee() {
 		return _paymentFile.getPaymentFee();
+	}
+
+	/**
+	* Returns the payment form data of this payment file.
+	*
+	* @return the payment form data of this payment file
+	*/
+	@Override
+	public java.lang.String getPaymentFormData() {
+		return _paymentFile.getPaymentFormData();
 	}
 
 	/**
@@ -800,6 +851,16 @@ public class PaymentFileWrapper implements PaymentFile,
 	}
 
 	/**
+	* Sets the einvoice of this payment file.
+	*
+	* @param einvoice the einvoice of this payment file
+	*/
+	@Override
+	public void setEinvoice(java.lang.String einvoice) {
+		_paymentFile.setEinvoice(einvoice);
+	}
+
+	/**
 	* Sets the epayment profile of this payment file.
 	*
 	* @param epaymentProfile the epayment profile of this payment file
@@ -896,6 +957,16 @@ public class PaymentFileWrapper implements PaymentFile,
 	}
 
 	/**
+	* Sets the invoice payload of this payment file.
+	*
+	* @param invoicePayload the invoice payload of this payment file
+	*/
+	@Override
+	public void setInvoicePayload(java.lang.String invoicePayload) {
+		_paymentFile.setInvoicePayload(invoicePayload);
+	}
+
+	/**
 	* Sets the invoice template no of this payment file.
 	*
 	* @param invoiceTemplateNo the invoice template no of this payment file
@@ -958,6 +1029,16 @@ public class PaymentFileWrapper implements PaymentFile,
 	@Override
 	public void setPaymentFileId(long paymentFileId) {
 		_paymentFile.setPaymentFileId(paymentFileId);
+	}
+
+	/**
+	* Sets the payment form data of this payment file.
+	*
+	* @param paymentFormData the payment form data of this payment file
+	*/
+	@Override
+	public void setPaymentFormData(java.lang.String paymentFormData) {
+		_paymentFile.setPaymentFormData(paymentFormData);
 	}
 
 	/**

@@ -97,7 +97,7 @@ public class ProcessActionInputModel {
 	@FormParam("assignUserName")
     protected String assignUserName;
 	@FormParam("requestPayment")
-    protected String requestPayment;
+    protected Integer requestPayment;
 	@FormParam("paymentFee")
     protected String paymentFee;
 	@FormParam("createDossierFiles")
@@ -400,7 +400,7 @@ public class ProcessActionInputModel {
      *     {@link String }
      *     
      */
-    public String getRequestPayment() {
+    public Integer getRequestPayment() {
         return requestPayment;
     }
 
@@ -412,7 +412,7 @@ public class ProcessActionInputModel {
      *     {@link String }
      *     
      */
-    public void setRequestPayment(String value) {
+    public void setRequestPayment(Integer value) {
         this.requestPayment = value;
     }
 

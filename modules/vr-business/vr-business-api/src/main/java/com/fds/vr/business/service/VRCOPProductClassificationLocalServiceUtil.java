@@ -106,6 +106,11 @@ public class VRCOPProductClassificationLocalServiceUtil {
 		return getService().getVRCOPProductClassification(id);
 	}
 
+	public static com.fds.vr.business.model.VRCOPProductClassification updateCOPProductClassification(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return getService().updateCOPProductClassification(mapValues);
+	}
+
 	/**
 	* Updates the vrcop product classification in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

@@ -77,6 +77,7 @@ public class PaymentConfigWrapper implements PaymentConfig,
 		attributes.put("invoiceForm", getInvoiceForm());
 		attributes.put("bankInfo", getBankInfo());
 		attributes.put("epaymentConfig", getEpaymentConfig());
+		attributes.put("invoiceDetailForm", getInvoiceDetailForm());
 
 		return attributes;
 	}
@@ -184,6 +185,12 @@ public class PaymentConfigWrapper implements PaymentConfig,
 		if (epaymentConfig != null) {
 			setEpaymentConfig(epaymentConfig);
 		}
+
+		String invoiceDetailForm = (String)attributes.get("invoiceDetailForm");
+
+		if (invoiceDetailForm != null) {
+			setInvoiceDetailForm(invoiceDetailForm);
+		}
 	}
 
 	@Override
@@ -289,6 +296,16 @@ public class PaymentConfigWrapper implements PaymentConfig,
 	@Override
 	public java.lang.String getGovAgencyTaxNo() {
 		return _paymentConfig.getGovAgencyTaxNo();
+	}
+
+	/**
+	* Returns the invoice detail form of this payment config.
+	*
+	* @return the invoice detail form of this payment config
+	*/
+	@Override
+	public java.lang.String getInvoiceDetailForm() {
+		return _paymentConfig.getInvoiceDetailForm();
 	}
 
 	/**
@@ -545,6 +562,16 @@ public class PaymentConfigWrapper implements PaymentConfig,
 	@Override
 	public void setGroupId(long groupId) {
 		_paymentConfig.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the invoice detail form of this payment config.
+	*
+	* @param invoiceDetailForm the invoice detail form of this payment config
+	*/
+	@Override
+	public void setInvoiceDetailForm(java.lang.String invoiceDetailForm) {
+		_paymentConfig.setInvoiceDetailForm(invoiceDetailForm);
 	}
 
 	/**

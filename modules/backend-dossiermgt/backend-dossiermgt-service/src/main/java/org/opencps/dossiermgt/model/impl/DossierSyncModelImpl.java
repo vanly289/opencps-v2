@@ -106,8 +106,8 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 
 	public static final String TABLE_SQL_CREATE = "create table opencps_dossiersync (uuid_ VARCHAR(75) null,dossierSyncId LONG not null primary key,companyId LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dossierId LONG,dossierReferenceUid VARCHAR(75) null,createDossier BOOLEAN,method INTEGER,classPK LONG,fileReferenceUid VARCHAR(75) null,serverNo VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table opencps_dossiersync";
-	public static final String ORDER_BY_JPQL = " ORDER BY dossierSync.dossierId ASC, dossierSync.method ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY opencps_dossiersync.dossierId ASC, opencps_dossiersync.method ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY dossierSync.dossierId DESC, dossierSync.method DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY opencps_dossiersync.dossierId DESC, opencps_dossiersync.method DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -657,6 +657,8 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 			value = 0;
 		}
 
+		value = value * -1;
+
 		if (value != 0) {
 			return value;
 		}
@@ -670,6 +672,8 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 		else {
 			value = 0;
 		}
+
+		value = value * -1;
 
 		if (value != 0) {
 			return value;

@@ -32,9 +32,9 @@ public interface PaymentFileActions {
 	 * @return PaymentFile
 	 */
 	public PaymentFile createPaymentFile(long userId, long groupId, long dossierId, String referenceUid,
-			String govAgencyCode, String govAgencyName, String applicantName, String applicantIdNo, String paymentFee,
-			long paymentAmount, String paymentNote, String epaymentProfile, String bankInfo,
-			ServiceContext serviceContext) throws PortalException;
+			String paymentFee, long paymentAmount, String paymentNote, String epaymentProfile, String bankInfo,
+			int paymentStatus, String paymentMethod, String paymentFormData, ServiceContext serviceContext)
+			throws PortalException;
 
 	/**
 	 * Get detail PaymentFile of DossierId and referenceUid

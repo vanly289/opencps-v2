@@ -102,6 +102,12 @@ public class VRCOPProductLineLocalServiceWrapper
 		return _vrcopProductLineLocalService.getVRCOPProductLine(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRCOPProductLine updateCOPProductLine(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return _vrcopProductLineLocalService.updateCOPProductLine(mapValues);
+	}
+
 	/**
 	* Updates the vrcop product line in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
