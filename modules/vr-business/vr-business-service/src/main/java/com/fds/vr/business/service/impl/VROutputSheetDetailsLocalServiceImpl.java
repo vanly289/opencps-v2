@@ -52,6 +52,51 @@ public class VROutputSheetDetailsLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VROutputSheetDetailsLocalServiceUtil} to access the vr output sheet details local service.
 	 */
 	
+	public VROutputSheetDetails updateOutputSheetDetails(long id, long mtCore, long inputSheetId, 
+			long outputSheetId, long bookId, long issueVehicleCertificateId, long certificateId,
+			String certificateNumber, Date certificateDate, String vehicleClass, String stampType,
+			String stampShortNo, String serialStartNo, String serialEndNo, long subTotalInDocument,
+			long subTotalQuantities, long unitPrice, long totalAmount, long totalInUse, long totalNotUsed,
+			long totalLost, long totalCancelled, long totalReturned, String remark)
+		throws PortalException, SystemException {
+		
+		VROutputSheetDetails outputSheetDetails = null;
+		
+		if(id > 0) {
+			outputSheetDetails = vrOutputSheetDetailsPersistence.findByPrimaryKey(id);
+		} else {
+			id = counterLocalService.increment(VROutputSheetDetails.class.getName());
+			outputSheetDetails = vrOutputSheetDetailsPersistence.create(id);
+		}
+		
+		outputSheetDetails.setModifyDate(new Date());
+		outputSheetDetails.setMtCore(mtCore);
+		outputSheetDetails.setInputSheetId(inputSheetId);
+		outputSheetDetails.setOutputSheetId(outputSheetId);
+		outputSheetDetails.setBookId(bookId);
+		outputSheetDetails.setIssueVehicleCertificateId(issueVehicleCertificateId);
+		outputSheetDetails.setCertificateId(certificateId);
+		outputSheetDetails.setCertificateNumber(certificateNumber);
+		outputSheetDetails.setCertificateDate(certificateDate);
+		outputSheetDetails.setVehicleClass(vehicleClass);
+		outputSheetDetails.setStampType(stampType);
+		outputSheetDetails.setStampShortNo(stampShortNo);
+		outputSheetDetails.setSerialStartNo(serialStartNo);
+		outputSheetDetails.setSerialEndNo(serialEndNo);
+		outputSheetDetails.setSubTotalInDocument(subTotalInDocument);
+		outputSheetDetails.setSubTotalQuantities(subTotalQuantities);
+		outputSheetDetails.setUnitPrice(unitPrice);
+		outputSheetDetails.setTotalAmount(totalAmount);
+		outputSheetDetails.setTotalInUse(totalInUse);
+		outputSheetDetails.setTotalNotUsed(totalNotUsed);
+		outputSheetDetails.setTotalLost(totalLost);
+		outputSheetDetails.setTotalCancelled(totalCancelled);
+		outputSheetDetails.setTotalReturned(totalReturned);
+		outputSheetDetails.setRemark(remark);
+		
+		return vrOutputSheetDetailsPersistence.update(outputSheetDetails);
+	}
+	
 	public List<VROutputSheetDetails> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {
 		try {
 			return vrOutputSheetDetailsPersistence.findByInputSheetId(mtCore, inputSheetId);

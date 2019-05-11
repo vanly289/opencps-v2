@@ -152,7 +152,12 @@ public class VROutputSheetDetailsCacheModel implements CacheModel<VROutputSheetD
 					certificateDate));
 		}
 
-		vrOutputSheetDetailsImpl.setVehicleClass(vehicleClass);
+		if (vehicleClass == null) {
+			vrOutputSheetDetailsImpl.setVehicleClass(StringPool.BLANK);
+		}
+		else {
+			vrOutputSheetDetailsImpl.setVehicleClass(vehicleClass);
+		}
 
 		if (stampType == null) {
 			vrOutputSheetDetailsImpl.setStampType(StringPool.BLANK);
@@ -223,8 +228,7 @@ public class VROutputSheetDetailsCacheModel implements CacheModel<VROutputSheetD
 		certificateId = objectInput.readLong();
 		certificateNumber = objectInput.readUTF();
 		certificateDate = objectInput.readLong();
-
-		vehicleClass = objectInput.readLong();
+		vehicleClass = objectInput.readUTF();
 		stampType = objectInput.readUTF();
 		stampShortNo = objectInput.readUTF();
 
@@ -280,7 +284,12 @@ public class VROutputSheetDetailsCacheModel implements CacheModel<VROutputSheetD
 
 		objectOutput.writeLong(certificateDate);
 
-		objectOutput.writeLong(vehicleClass);
+		if (vehicleClass == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(vehicleClass);
+		}
 
 		if (stampType == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -338,7 +347,7 @@ public class VROutputSheetDetailsCacheModel implements CacheModel<VROutputSheetD
 	public long certificateId;
 	public String certificateNumber;
 	public long certificateDate;
-	public long vehicleClass;
+	public String vehicleClass;
 	public String stampType;
 	public String stampShortNo;
 	public long serialStartNo;

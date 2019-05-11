@@ -194,14 +194,15 @@ public interface VROutputSheetDetailsModel extends BaseModel<VROutputSheetDetail
 	 *
 	 * @return the vehicle class of this vr output sheet details
 	 */
-	public long getVehicleClass();
+	@AutoEscape
+	public String getVehicleClass();
 
 	/**
 	 * Sets the vehicle class of this vr output sheet details.
 	 *
 	 * @param vehicleClass the vehicle class of this vr output sheet details
 	 */
-	public void setVehicleClass(long vehicleClass);
+	public void setVehicleClass(String vehicleClass);
 
 	/**
 	 * Returns the stamp type of this vr output sheet details.

@@ -15,17 +15,14 @@
 package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.fds.vr.business.model.VROutputSheet;
 import com.fds.vr.business.service.base.VROutputSheetLocalServiceBaseImpl;
 
@@ -51,6 +48,55 @@ public class VROutputSheetLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VROutputSheetLocalServiceUtil} to access the vr output sheet local service.
 	 */
+	
+	public VROutputSheet updateOutputSheet(long id, long mtCore, String outputSheetNo, 
+			Date outputSheetDate, String originalDocumentNo, String supplierCorporationId,
+			long outputSheetType, String maker, String checker, 
+			String approver, String receiverName, String receiverPlace, 
+			String receiverRequest, String inventoryName, String inventoryPlace, 
+			Date inventoryDate, long dossierId, long issueId, String purchaserId, String purchaserCorporationId, 
+			String bookIDList, long isApproval, long totalQuantities, long totalAmount, String amountInWords, String remark)
+		throws PortalException, SystemException {
+		
+		VROutputSheet outputSheet = null;
+		
+		if(id > 0) {
+			outputSheet = vrOutputSheetPersistence.findByPrimaryKey(id);
+		} else {
+			id = counterLocalService.increment(VROutputSheet.class.getName());
+			outputSheet = vrOutputSheetPersistence.create(id);
+		}
+		
+		outputSheet.setModifyDate(new Date());
+		outputSheet.setMtCore(mtCore);
+		outputSheet.setOutputSheetNo(outputSheetNo);
+		outputSheet.setOutputSheetDate(outputSheetDate);
+		outputSheet.setOriginalDocumentNo(originalDocumentNo);
+		outputSheet.setSupplierCorporationId(supplierCorporationId);
+		outputSheet.setOutputSheetType(outputSheetType);
+		outputSheet.setMaker(maker);
+		outputSheet.setChecker(checker);
+		outputSheet.setApprover(approver);
+		outputSheet.setReceiverName(receiverName);
+		outputSheet.setReceiverPlace(receiverPlace);
+		outputSheet.setReceiverRequest(receiverRequest);
+		outputSheet.setInventoryName(inventoryName);
+		outputSheet.setInventoryPlace(inventoryPlace);
+		outputSheet.setInventoryDate(inventoryDate);
+		outputSheet.setDossierId(dossierId);
+		outputSheet.setIssueId(issueId);
+		outputSheet.setPurchaserId(purchaserId);
+		outputSheet.setPurchaserCorporationId(purchaserCorporationId);
+		outputSheet.setBookIDList(bookIDList);
+		outputSheet.setIsApproval(isApproval);
+		outputSheet.setTotalQuantities(totalQuantities);
+		outputSheet.setTotalAmount(totalAmount);
+		outputSheet.setAmountInWords(amountInWords);
+		outputSheet.setRemark(remark);
+		
+		return vrOutputSheetPersistence.update(outputSheet);
+		
+	}
 	
 	public List<VROutputSheet> findByinputSheetNo(long mtCore, String outputSheetNo) throws PortalException, SystemException {
 		try {

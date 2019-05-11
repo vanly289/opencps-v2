@@ -1644,7 +1644,7 @@
 		<column name="certificateId" type="long" db-name="certificateId"/>
 		<column name="certificateNumber" type="String" db-name="certificateNumber"/>
 		<column name="certificateDate" type="Date" db-name="certificateDate"/>
-		<column name="vehicleClass" type="long" db-name="vehicleClass"/>
+		<column name="vehicleClass" type="String" db-name="vehicleClass"/>
 		<column name="stampType" type="String" db-name="stampType"/>
 		<column name="stampShortNo" type="String" db-name="stampShortNo"/>
 		<column name="serialStartNo" type="long" db-name="serialStartNo"/>
@@ -1724,7 +1724,7 @@
 		<column name="certificateId" type="long" db-name="certificateId"/>
 		<column name="certificateNumber" type="String" db-name="certificateNumber"/>
 		<column name="certificateDate" type="Date" db-name="certificateDate"/>
-		<column name="vehicleClass" type="long" db-name="vehicleClass"/>
+		<column name="vehicleClass" type="String" db-name="vehicleClass"/>
 		<column name="stampType" type="String" db-name="stampType"/>
 		<column name="stampShortNo" type="String" db-name="stampShortNo"/>
 		<column name="serialStartNo" type="String" db-name="serialStartNo"/>

@@ -110,6 +110,15 @@ public interface VRInventoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRInventory getVRInventory(long id) throws PortalException;
 
+	public VRInventory updateInventory(long id, long mtCore, long yearofPeriod,
+		java.lang.String previousPeriod, java.lang.String previousPeriodCode,
+		long bookId, java.lang.String vehicleClass, java.lang.String stampType,
+		java.lang.String stampShortNo, java.lang.String serialStartNo,
+		java.lang.String serialEndNo, long totalQuantities, long totalInUse,
+		long totalNotUsed, java.lang.String remark,
+		java.lang.String corporationId, long checkType, long checkStatus)
+		throws PortalException, SystemException;
+
 	/**
 	* Updates the vr inventory in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

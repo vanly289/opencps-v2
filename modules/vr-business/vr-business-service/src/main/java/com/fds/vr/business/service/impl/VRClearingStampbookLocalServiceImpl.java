@@ -53,6 +53,53 @@ public class VRClearingStampbookLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRClearingStampbookLocalServiceUtil} to access the vr clearing stampbook local service.
 	 */
 	
+	public VRClearingStampbook updateClearingStambook(long id, long mtCore, long debitNoteId, 
+			long inputSheetId, long outputSheetId, long bookId, long certificateId, String certificateNumber,
+			Date certificateDate, String vehicleClass, String stampType, String stampShortNo, String serialStartNo,
+			String serialEndNo, long subTotalInDocument, long subTotalQuantities, long vehiclePrice,
+			long unitPrice, long totalAmount, long totalInUse, long totalNotUsed, long totalLost,
+			long totalCancelled, long totalReturned, String remark)
+		throws PortalException, SystemException {
+		
+		VRClearingStampbook clearingStambook = null;
+		
+		if(id > 0) {
+			clearingStambook = vrClearingStampbookPersistence.findByPrimaryKey(id);
+		} else {
+			id = counterLocalService.increment(VRClearingStampbook.class.getName());
+			clearingStambook = vrClearingStampbookPersistence.create(id);
+		}
+		
+		clearingStambook.setModifyDate(new Date());
+		clearingStambook.setMtCore(mtCore);
+		clearingStambook.setDebitNoteId(debitNoteId);
+		clearingStambook.setInputSheetId(inputSheetId);
+		clearingStambook.setOutputSheetId(outputSheetId);
+		clearingStambook.setBookId(bookId);
+		clearingStambook.setCertificateId(certificateId);
+		clearingStambook.setCertificateNumber(certificateNumber);
+		clearingStambook.setCertificateDate(certificateDate);
+		clearingStambook.setVehicleClass(vehicleClass);
+		clearingStambook.setStampType(stampType);
+		clearingStambook.setStampShortNo(stampShortNo);
+		clearingStambook.setSerialStartNo(serialStartNo);
+		clearingStambook.setSerialEndNo(serialEndNo);
+		clearingStambook.setSubTotalInDocument(subTotalInDocument);
+		clearingStambook.setSubTotalQuantities(subTotalQuantities);
+		clearingStambook.setVehiclePrice(vehiclePrice);
+		clearingStambook.setUnitPrice(unitPrice);
+		clearingStambook.setTotalAmount(totalAmount);
+		clearingStambook.setTotalInUse(totalInUse);
+		clearingStambook.setTotalNotUsed(totalNotUsed);
+		clearingStambook.setTotalLost(totalLost);
+		clearingStambook.setTotalCancelled(totalCancelled);
+		clearingStambook.setTotalReturned(totalReturned);
+		clearingStambook.setRemark(remark);
+		
+		return vrClearingStampbookPersistence.update(clearingStambook);
+		
+	}
+	
 	public List<VRClearingStampbook> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {
 		try {
 			return vrClearingStampbookPersistence.findByInputSheetId(mtCore, inputSheetId);

@@ -147,7 +147,7 @@ public class VROutputSheetDetailsWrapper implements VROutputSheetDetails,
 			setCertificateDate(certificateDate);
 		}
 
-		Long vehicleClass = (Long)attributes.get("vehicleClass");
+		String vehicleClass = (String)attributes.get("vehicleClass");
 
 		if (vehicleClass != null) {
 			setVehicleClass(vehicleClass);
@@ -343,6 +343,16 @@ public class VROutputSheetDetailsWrapper implements VROutputSheetDetails,
 	@Override
 	public java.lang.String getStampType() {
 		return _vrOutputSheetDetails.getStampType();
+	}
+
+	/**
+	* Returns the vehicle class of this vr output sheet details.
+	*
+	* @return the vehicle class of this vr output sheet details
+	*/
+	@Override
+	public java.lang.String getVehicleClass() {
+		return _vrOutputSheetDetails.getVehicleClass();
 	}
 
 	@Override
@@ -573,16 +583,6 @@ public class VROutputSheetDetailsWrapper implements VROutputSheetDetails,
 	@Override
 	public long getUnitPrice() {
 		return _vrOutputSheetDetails.getUnitPrice();
-	}
-
-	/**
-	* Returns the vehicle class of this vr output sheet details.
-	*
-	* @return the vehicle class of this vr output sheet details
-	*/
-	@Override
-	public long getVehicleClass() {
-		return _vrOutputSheetDetails.getVehicleClass();
 	}
 
 	@Override
@@ -887,7 +887,7 @@ public class VROutputSheetDetailsWrapper implements VROutputSheetDetails,
 	* @param vehicleClass the vehicle class of this vr output sheet details
 	*/
 	@Override
-	public void setVehicleClass(long vehicleClass) {
+	public void setVehicleClass(java.lang.String vehicleClass) {
 		_vrOutputSheetDetails.setVehicleClass(vehicleClass);
 	}
 

@@ -102,6 +102,28 @@ public class VRClearingStampbookLocalServiceWrapper
 		return _vrClearingStampbookLocalService.getVRClearingStampbook(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRClearingStampbook updateClearingStambook(
+		long id, long mtCore, long debitNoteId, long inputSheetId,
+		long outputSheetId, long bookId, long certificateId,
+		java.lang.String certificateNumber, java.util.Date certificateDate,
+		java.lang.String vehicleClass, java.lang.String stampType,
+		java.lang.String stampShortNo, java.lang.String serialStartNo,
+		java.lang.String serialEndNo, long subTotalInDocument,
+		long subTotalQuantities, long vehiclePrice, long unitPrice,
+		long totalAmount, long totalInUse, long totalNotUsed, long totalLost,
+		long totalCancelled, long totalReturned, java.lang.String remark)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrClearingStampbookLocalService.updateClearingStambook(id,
+			mtCore, debitNoteId, inputSheetId, outputSheetId, bookId,
+			certificateId, certificateNumber, certificateDate, vehicleClass,
+			stampType, stampShortNo, serialStartNo, serialEndNo,
+			subTotalInDocument, subTotalQuantities, vehiclePrice, unitPrice,
+			totalAmount, totalInUse, totalNotUsed, totalLost, totalCancelled,
+			totalReturned, remark);
+	}
+
 	/**
 	* Updates the vr clearing stampbook in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

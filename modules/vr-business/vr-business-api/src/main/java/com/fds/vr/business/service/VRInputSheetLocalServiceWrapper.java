@@ -99,6 +99,26 @@ public class VRInputSheetLocalServiceWrapper implements VRInputSheetLocalService
 		return _vrInputSheetLocalService.getVRInputSheet(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRInputSheet updateInputSheet(long id,
+		long mtCore, java.lang.String inputSheetNo,
+		java.util.Date inputSheetDate, java.lang.String originalDocumentNo,
+		java.lang.String corporationId, long inputSheetType,
+		java.lang.String maker, java.lang.String checker,
+		java.lang.String approver, java.lang.String deliveryName,
+		java.lang.String inventoryName, java.lang.String inventoryPlace,
+		java.util.Date inventoryDate, java.lang.String bookIDList,
+		long isApproval, long totalQuantities, long totalAmount,
+		java.lang.String amountInWords, java.lang.String remark)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInputSheetLocalService.updateInputSheet(id, mtCore,
+			inputSheetNo, inputSheetDate, originalDocumentNo, corporationId,
+			inputSheetType, maker, checker, approver, deliveryName,
+			inventoryName, inventoryPlace, inventoryDate, bookIDList,
+			isApproval, totalQuantities, totalAmount, amountInWords, remark);
+	}
+
 	/**
 	* Updates the vr input sheet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

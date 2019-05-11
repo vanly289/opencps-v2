@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -113,6 +114,20 @@ public interface VRInputStampbookDetailsLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRInputStampbookDetails getVRInputStampbookDetails(long id)
 		throws PortalException;
+
+	public VRInputStampbookDetails updateInputStampbookDetails(long id,
+		long mtCore, java.lang.String stampSerialNo, long sequenceNo,
+		long dossierId, long certificateId, java.lang.String certificateNumber,
+		Date certificateDate, long vehicleRecordId, java.lang.String frameNo,
+		java.lang.String BoxNo, java.lang.String vinNo,
+		java.lang.String engineNo, long copies, long markupFulfill,
+		java.lang.String replacedSerialNo, java.lang.String remark,
+		long inputSheetId, long bookId, java.lang.String purchaserId,
+		java.lang.String corporationId, long issuingStatus,
+		long clearingStatus, long stampStatus, Date issuingDate,
+		Date printingDate, Date noticeofLostDate, Date noticeofCancelDate,
+		Date noticeofReturnDate, Date clearingDate,
+		long clearingAdvancePaymentID) throws PortalException, SystemException;
 
 	/**
 	* Updates the vr input stampbook details in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

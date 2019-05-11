@@ -145,7 +145,7 @@ public class VRClearingStampbookWrapper implements VRClearingStampbook,
 			setCertificateDate(certificateDate);
 		}
 
-		Long vehicleClass = (Long)attributes.get("vehicleClass");
+		String vehicleClass = (String)attributes.get("vehicleClass");
 
 		if (vehicleClass != null) {
 			setVehicleClass(vehicleClass);
@@ -369,6 +369,16 @@ public class VRClearingStampbookWrapper implements VRClearingStampbook,
 		return _vrClearingStampbook.getStampType();
 	}
 
+	/**
+	* Returns the vehicle class of this vr clearing stampbook.
+	*
+	* @return the vehicle class of this vr clearing stampbook
+	*/
+	@Override
+	public java.lang.String getVehicleClass() {
+		return _vrClearingStampbook.getVehicleClass();
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _vrClearingStampbook.toString();
@@ -577,16 +587,6 @@ public class VRClearingStampbookWrapper implements VRClearingStampbook,
 	@Override
 	public long getUnitPrice() {
 		return _vrClearingStampbook.getUnitPrice();
-	}
-
-	/**
-	* Returns the vehicle class of this vr clearing stampbook.
-	*
-	* @return the vehicle class of this vr clearing stampbook
-	*/
-	@Override
-	public long getVehicleClass() {
-		return _vrClearingStampbook.getVehicleClass();
 	}
 
 	/**
@@ -901,7 +901,7 @@ public class VRClearingStampbookWrapper implements VRClearingStampbook,
 	* @param vehicleClass the vehicle class of this vr clearing stampbook
 	*/
 	@Override
-	public void setVehicleClass(long vehicleClass) {
+	public void setVehicleClass(java.lang.String vehicleClass) {
 		_vrClearingStampbook.setVehicleClass(vehicleClass);
 	}
 
