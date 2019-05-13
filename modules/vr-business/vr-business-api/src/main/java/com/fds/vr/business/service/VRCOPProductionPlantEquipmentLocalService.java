@@ -36,8 +36,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for VRCOPProductionPlantEquipment. Methods of this
@@ -118,7 +118,7 @@ public interface VRCOPProductionPlantEquipmentLocalService
 		long id) throws PortalException;
 
 	public VRCOPProductionPlantEquipment updateCOPProductionPlantEquipment(
-		LinkedHashMap<java.lang.String, java.lang.String> mapValues);
+		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 
 	/**
 	* Updates the vrcop production plant equipment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

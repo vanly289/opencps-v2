@@ -87,6 +87,9 @@ public class PaymentFileIndexer extends BaseIndexer<PaymentFile> {
 		document.addTextSortable(PaymentFileTerm.INVOICE_TEMPLATE_NO, object.getInvoiceTemplateNo());
 		document.addTextSortable(PaymentFileTerm.INVOICE_ISSUE_NO, object.getInvoiceIssueNo());
 		document.addTextSortable(PaymentFileTerm.INVOICE_NO, object.getInvoiceNo());
+		
+		document.addTextSortable(PaymentFileTerm.E_INVOICE, object.getEinvoice());
+		document.addTextSortable(PaymentFileTerm.PAYMENT_FORM_DATA, object.getPaymentFormData());
 
 		// Add text fields of dossierId
 		try {

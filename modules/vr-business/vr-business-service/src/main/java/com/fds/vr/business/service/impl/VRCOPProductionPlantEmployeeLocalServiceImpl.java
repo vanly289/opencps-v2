@@ -14,20 +14,20 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPProductionPlantEmployee;
 import com.fds.vr.business.service.base.VRCOPProductionPlantEmployeeLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vrcop production plant employee local service.
@@ -73,7 +73,7 @@ public class VRCOPProductionPlantEmployeeLocalServiceImpl
 		
 	}
 
-	public VRCOPProductionPlantEmployee updateCOPProductionPlantEmployee(LinkedHashMap<String, String> mapValues) {
+	public VRCOPProductionPlantEmployee updateCOPProductionPlantEmployee(Map<String, String> mapValues, int mtCore) {
 		
 		Date now = new Date();
 
@@ -83,16 +83,16 @@ public class VRCOPProductionPlantEmployeeLocalServiceImpl
 
 		/// Add audit fields
 		object.setSyncDate(now);
+		object.setModifyDate(now);
 
 		// Add other fields
-		object.setMtCore(Long.valueOf(mapValues.get("")));
-		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("")));
-		object.setCopReportNo(mapValues.get(""));
-		object.setSequenceNo(Long.valueOf(mapValues.get("")));
-		object.setEmployeeName(mapValues.get(""));
-		object.setEmployeeCertificateNo(mapValues.get(""));
-
-		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+		object.setMtCore(mtCore);
+		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("copReportRepositoryId")));
+		object.setCopReportNo(mapValues.get("copReportNo"));
+		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
+		object.setEmployeeName(mapValues.get("employeeName"));
+		object.setEmployeeCertificateNo(mapValues.get("employeeCertificateNo"));
+		object.setTrainningAt(mapValues.get("trainningAt"));
 
 		return vrcopProductionPlantEmployeePersistence.update(object);
 	}

@@ -105,8 +105,8 @@ public class VRProductTypeLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRProductType updateProductType(
-		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
-		return getService().updateProductType(mapValues);
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return getService().updateProductType(mapValues, mtCore);
 	}
 
 	/**
@@ -260,6 +260,10 @@ public class VRProductTypeLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteByproductPlantId(long mtCore, long productPlantId) {
+		getService().deleteByproductPlantId(mtCore, productPlantId);
 	}
 
 	public static VRProductTypeLocalService getService() {

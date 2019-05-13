@@ -104,8 +104,9 @@ public class VRCOPProdEquipmentLocalServiceWrapper
 
 	@Override
 	public com.fds.vr.business.model.VRCOPProdEquipment updateCOPProdEquipment(
-		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
-		return _vrcopProdEquipmentLocalService.updateCOPProdEquipment(mapValues);
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return _vrcopProdEquipmentLocalService.updateCOPProdEquipment(mapValues,
+			mtCore);
 	}
 
 	/**

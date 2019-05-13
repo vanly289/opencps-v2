@@ -37,6 +37,7 @@ import org.opencps.communication.model.ServerConfig;
 import org.opencps.communication.service.ServerConfigLocalServiceUtil;
 import org.w3c.dom.NodeList;
 
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -69,12 +70,13 @@ public class EInvoiceManagementImpl implements EInvoiceManagement {
 						&& configJSON.getBoolean(InvoiceTerm.SERVER_ACTIVE)) {
 					config = new InvoiceServerConfigModel(configJSON.getString(InvoiceTerm.SERVER_ENDPOINTURL),
 							configJSON.getBoolean(InvoiceTerm.SERVER_ACTIVE));
+					break;
 				}
 			}
 		} catch (JSONException e) {
 			_log.debug(e);
 		}
-		
+		_log.info("config: "+JSONFactoryUtil.looseSerialize(config));
 		if(config == null) {
 			return null;
 		}

@@ -154,9 +154,9 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		attributes.put("copReportRepositoryID", getCopReportRepositoryID());
 		attributes.put("copReportNo", getCopReportNo());
 		attributes.put("sequenceNo", getSequenceNo());
-		attributes.put("DocName", getDocName());
-		attributes.put("DocNo", getDocNo());
-		attributes.put("Remarks", getRemarks());
+		attributes.put("docName", getDocName());
+		attributes.put("docNo", getDocNo());
+		attributes.put("remarks", getRemarks());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -199,22 +199,22 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 			setSequenceNo(sequenceNo);
 		}
 
-		String DocName = (String)attributes.get("DocName");
+		String docName = (String)attributes.get("docName");
 
-		if (DocName != null) {
-			setDocName(DocName);
+		if (docName != null) {
+			setDocName(docName);
 		}
 
-		String DocNo = (String)attributes.get("DocNo");
+		String docNo = (String)attributes.get("docNo");
 
-		if (DocNo != null) {
-			setDocNo(DocNo);
+		if (docNo != null) {
+			setDocNo(docNo);
 		}
 
-		String Remarks = (String)attributes.get("Remarks");
+		String remarks = (String)attributes.get("remarks");
 
-		if (Remarks != null) {
-			setRemarks(Remarks);
+		if (remarks != null) {
+			setRemarks(remarks);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -321,47 +321,47 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 
 	@Override
 	public String getDocName() {
-		if (_DocName == null) {
+		if (_docName == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _DocName;
+			return _docName;
 		}
 	}
 
 	@Override
-	public void setDocName(String DocName) {
-		_DocName = DocName;
+	public void setDocName(String docName) {
+		_docName = docName;
 	}
 
 	@Override
 	public String getDocNo() {
-		if (_DocNo == null) {
+		if (_docNo == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _DocNo;
+			return _docNo;
 		}
 	}
 
 	@Override
-	public void setDocNo(String DocNo) {
-		_DocNo = DocNo;
+	public void setDocNo(String docNo) {
+		_docNo = docNo;
 	}
 
 	@Override
 	public String getRemarks() {
-		if (_Remarks == null) {
+		if (_remarks == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _Remarks;
+			return _remarks;
 		}
 	}
 
 	@Override
-	public void setRemarks(String Remarks) {
-		_Remarks = Remarks;
+	public void setRemarks(String remarks) {
+		_remarks = remarks;
 	}
 
 	@Override
@@ -523,28 +523,28 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 
 		vrcopReportAttachCacheModel.sequenceNo = getSequenceNo();
 
-		vrcopReportAttachCacheModel.DocName = getDocName();
+		vrcopReportAttachCacheModel.docName = getDocName();
 
-		String DocName = vrcopReportAttachCacheModel.DocName;
+		String docName = vrcopReportAttachCacheModel.docName;
 
-		if ((DocName != null) && (DocName.length() == 0)) {
-			vrcopReportAttachCacheModel.DocName = null;
+		if ((docName != null) && (docName.length() == 0)) {
+			vrcopReportAttachCacheModel.docName = null;
 		}
 
-		vrcopReportAttachCacheModel.DocNo = getDocNo();
+		vrcopReportAttachCacheModel.docNo = getDocNo();
 
-		String DocNo = vrcopReportAttachCacheModel.DocNo;
+		String docNo = vrcopReportAttachCacheModel.docNo;
 
-		if ((DocNo != null) && (DocNo.length() == 0)) {
-			vrcopReportAttachCacheModel.DocNo = null;
+		if ((docNo != null) && (docNo.length() == 0)) {
+			vrcopReportAttachCacheModel.docNo = null;
 		}
 
-		vrcopReportAttachCacheModel.Remarks = getRemarks();
+		vrcopReportAttachCacheModel.remarks = getRemarks();
 
-		String Remarks = vrcopReportAttachCacheModel.Remarks;
+		String remarks = vrcopReportAttachCacheModel.remarks;
 
-		if ((Remarks != null) && (Remarks.length() == 0)) {
-			vrcopReportAttachCacheModel.Remarks = null;
+		if ((remarks != null) && (remarks.length() == 0)) {
+			vrcopReportAttachCacheModel.remarks = null;
 		}
 
 		Date modifyDate = getModifyDate();
@@ -582,11 +582,11 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		sb.append(getCopReportNo());
 		sb.append(", sequenceNo=");
 		sb.append(getSequenceNo());
-		sb.append(", DocName=");
+		sb.append(", docName=");
 		sb.append(getDocName());
-		sb.append(", DocNo=");
+		sb.append(", docNo=");
 		sb.append(getDocNo());
-		sb.append(", Remarks=");
+		sb.append(", remarks=");
 		sb.append(getRemarks());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
@@ -626,15 +626,15 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		sb.append(getSequenceNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>DocName</column-name><column-value><![CDATA[");
+			"<column><column-name>docName</column-name><column-value><![CDATA[");
 		sb.append(getDocName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>DocNo</column-name><column-value><![CDATA[");
+			"<column><column-name>docNo</column-name><column-value><![CDATA[");
 		sb.append(getDocNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>Remarks</column-name><column-value><![CDATA[");
+			"<column><column-name>remarks</column-name><column-value><![CDATA[");
 		sb.append(getRemarks());
 		sb.append("]]></column-value></column>");
 		sb.append(
@@ -665,9 +665,9 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 	private String _copReportNo;
 	private String _originalCopReportNo;
 	private long _sequenceNo;
-	private String _DocName;
-	private String _DocNo;
-	private String _Remarks;
+	private String _docName;
+	private String _docNo;
+	private String _remarks;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;
