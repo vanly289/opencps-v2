@@ -184,4 +184,8 @@ public class ServerConfigLocalServiceImpl extends ServerConfigLocalServiceBaseIm
 		return serverConfigPersistence.findByCF_GID(groupId);
 	}
 
+	public List<ServerConfig> getByProtocol(long groupId, String protocol) {
+		return serverConfigPersistence.findByG_P(groupId, protocol);
+	}
+
 }

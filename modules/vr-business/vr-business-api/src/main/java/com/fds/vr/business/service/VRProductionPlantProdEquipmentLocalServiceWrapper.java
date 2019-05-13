@@ -102,6 +102,12 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 		return _vrProductionPlantProdEquipmentLocalService.getVRProductionPlantProdEquipment(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductionPlantProdEquipment updateProductionPlantEmployee(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return _vrProductionPlantProdEquipmentLocalService.updateProductionPlantEmployee(mapValues);
+	}
+
 	/**
 	* Updates the vr production plant prod equipment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

@@ -134,19 +134,49 @@ public interface VRCOPReportAttachModel extends BaseModel<VRCOPReportAttach> {
 	public void setSequenceNo(long sequenceNo);
 
 	/**
-	 * Returns the attach file url of this vrcop report attach.
+	 * Returns the doc name of this vrcop report attach.
 	 *
-	 * @return the attach file url of this vrcop report attach
+	 * @return the doc name of this vrcop report attach
 	 */
 	@AutoEscape
-	public String getAttachFileURL();
+	public String getDocName();
 
 	/**
-	 * Sets the attach file url of this vrcop report attach.
+	 * Sets the doc name of this vrcop report attach.
 	 *
-	 * @param attachFileURL the attach file url of this vrcop report attach
+	 * @param DocName the doc name of this vrcop report attach
 	 */
-	public void setAttachFileURL(String attachFileURL);
+	public void setDocName(String DocName);
+
+	/**
+	 * Returns the doc no of this vrcop report attach.
+	 *
+	 * @return the doc no of this vrcop report attach
+	 */
+	@AutoEscape
+	public String getDocNo();
+
+	/**
+	 * Sets the doc no of this vrcop report attach.
+	 *
+	 * @param DocNo the doc no of this vrcop report attach
+	 */
+	public void setDocNo(String DocNo);
+
+	/**
+	 * Returns the remarks of this vrcop report attach.
+	 *
+	 * @return the remarks of this vrcop report attach
+	 */
+	@AutoEscape
+	public String getRemarks();
+
+	/**
+	 * Sets the remarks of this vrcop report attach.
+	 *
+	 * @param Remarks the remarks of this vrcop report attach
+	 */
+	public void setRemarks(String Remarks);
 
 	/**
 	 * Returns the modify date of this vrcop report attach.

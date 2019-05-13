@@ -311,6 +311,13 @@ public class PaymentConfigLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public org.opencps.dossiermgt.model.PaymentConfig getByInvoiceTemplateNo(
+		long groupId, java.lang.String invoiceTemplateNo) {
+		return _paymentConfigLocalService.getByInvoiceTemplateNo(groupId,
+			invoiceTemplateNo);
+	}
+
 	/**
 	* Returns the payment config with the primary key.
 	*

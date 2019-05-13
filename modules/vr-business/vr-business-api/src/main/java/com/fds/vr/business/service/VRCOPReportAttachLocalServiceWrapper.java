@@ -102,6 +102,12 @@ public class VRCOPReportAttachLocalServiceWrapper
 		return _vrcopReportAttachLocalService.getVRCOPReportAttach(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRCOPReportAttach updateCOPReportAttach(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return _vrcopReportAttachLocalService.updateCOPReportAttach(mapValues);
+	}
+
 	/**
 	* Updates the vrcop report attach in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

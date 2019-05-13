@@ -67,7 +67,7 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -97,6 +97,8 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 		sb.append(productionCountryCode);
 		sb.append(", equipmentStatus=");
 		sb.append(equipmentStatus);
+		sb.append(", expireDate=");
+		sb.append(expireDate);
 		sb.append(", notes=");
 		sb.append(notes);
 		sb.append(", modifyDate=");
@@ -187,6 +189,13 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 			vrProductionPlantEquipmentImpl.setEquipmentStatus(equipmentStatus);
 		}
 
+		if (expireDate == Long.MIN_VALUE) {
+			vrProductionPlantEquipmentImpl.setExpireDate(null);
+		}
+		else {
+			vrProductionPlantEquipmentImpl.setExpireDate(new Date(expireDate));
+		}
+
 		if (notes == null) {
 			vrProductionPlantEquipmentImpl.setNotes(StringPool.BLANK);
 		}
@@ -232,6 +241,7 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 		designSymbolNo = objectInput.readUTF();
 		productionCountryCode = objectInput.readUTF();
 		equipmentStatus = objectInput.readUTF();
+		expireDate = objectInput.readLong();
 		notes = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
@@ -318,6 +328,8 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 			objectOutput.writeUTF(equipmentStatus);
 		}
 
+		objectOutput.writeLong(expireDate);
+
 		if (notes == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -343,6 +355,7 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 	public String designSymbolNo;
 	public String productionCountryCode;
 	public String equipmentStatus;
+	public long expireDate;
 	public String notes;
 	public long modifyDate;
 	public long syncDate;

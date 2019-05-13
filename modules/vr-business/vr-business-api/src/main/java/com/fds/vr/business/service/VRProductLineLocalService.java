@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -109,6 +110,9 @@ public interface VRProductLineLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRProductLine getVRProductLine(long id) throws PortalException;
+
+	public VRProductLine updateProductLine(
+		LinkedHashMap<java.lang.String, java.lang.String> mapValues);
 
 	/**
 	* Updates the vr product line in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

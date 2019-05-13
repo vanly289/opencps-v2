@@ -174,6 +174,7 @@ public class StatisticManagementImpl implements StatisticManagement {
 			params.put(Field.USER_ID, String.valueOf(userId));
 			params.put(DossierTerm.OWNER, String.valueOf(true));
 			params.put(DossierTerm.NOT_STATUS_REG, notStatusReg);
+			params.put(DossierTerm.STATE, query.getState());
 
 			JSONObject jsonData = actions.getDossierCountTodoPermission(user.getUserId(), company.getCompanyId(), groupId, params,
 					null, serviceContext);

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPProductionPlantEmployee;
 import com.fds.vr.business.service.base.VRCOPProductionPlantEmployeeLocalServiceBaseImpl;
 
@@ -72,7 +72,30 @@ public class VRCOPProductionPlantEmployeeLocalServiceImpl
 		return new ArrayList<VRCOPProductionPlantEmployee>();
 		
 	}
-	
+
+	public VRCOPProductionPlantEmployee updateCOPProductionPlantEmployee(LinkedHashMap<String, String> mapValues) {
+		
+		Date now = new Date();
+
+		long vrCOPProductionPlantEmployeeId = counterLocalService.increment(VRCOPProductionPlantEmployee.class.getName());
+
+		VRCOPProductionPlantEmployee object = vrcopProductionPlantEmployeePersistence.create(vrCOPProductionPlantEmployeeId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+
+		// Add other fields
+		object.setMtCore(Long.valueOf(mapValues.get("")));
+		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("")));
+		object.setCopReportNo(mapValues.get(""));
+		object.setSequenceNo(Long.valueOf(mapValues.get("")));
+		object.setEmployeeName(mapValues.get(""));
+		object.setEmployeeCertificateNo(mapValues.get(""));
+
+		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+
+		return vrcopProductionPlantEmployeePersistence.update(object);
+	}
 
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductionPlantEmployeeLocalServiceImpl.class);
 }

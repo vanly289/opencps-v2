@@ -66,7 +66,7 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -84,6 +84,20 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 		sb.append(vehicleTypeCode);
 		sb.append(", vehicleTypeDescription=");
 		sb.append(vehicleTypeDescription);
+		sb.append(", productClassificationCode=");
+		sb.append(productClassificationCode);
+		sb.append(", productClassificationDescription=");
+		sb.append(productClassificationDescription);
+		sb.append(", trademarkName=");
+		sb.append(trademarkName);
+		sb.append(", commercialName=");
+		sb.append(commercialName);
+		sb.append(", modelCode=");
+		sb.append(modelCode);
+		sb.append(", designSymbolNo=");
+		sb.append(designSymbolNo);
+		sb.append(", remarks=");
+		sb.append(remarks);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -131,6 +145,55 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 			vrcopProductTypeImpl.setVehicleTypeDescription(vehicleTypeDescription);
 		}
 
+		if (productClassificationCode == null) {
+			vrcopProductTypeImpl.setProductClassificationCode(StringPool.BLANK);
+		}
+		else {
+			vrcopProductTypeImpl.setProductClassificationCode(productClassificationCode);
+		}
+
+		if (productClassificationDescription == null) {
+			vrcopProductTypeImpl.setProductClassificationDescription(StringPool.BLANK);
+		}
+		else {
+			vrcopProductTypeImpl.setProductClassificationDescription(productClassificationDescription);
+		}
+
+		if (trademarkName == null) {
+			vrcopProductTypeImpl.setTrademarkName(StringPool.BLANK);
+		}
+		else {
+			vrcopProductTypeImpl.setTrademarkName(trademarkName);
+		}
+
+		if (commercialName == null) {
+			vrcopProductTypeImpl.setCommercialName(StringPool.BLANK);
+		}
+		else {
+			vrcopProductTypeImpl.setCommercialName(commercialName);
+		}
+
+		if (modelCode == null) {
+			vrcopProductTypeImpl.setModelCode(StringPool.BLANK);
+		}
+		else {
+			vrcopProductTypeImpl.setModelCode(modelCode);
+		}
+
+		if (designSymbolNo == null) {
+			vrcopProductTypeImpl.setDesignSymbolNo(StringPool.BLANK);
+		}
+		else {
+			vrcopProductTypeImpl.setDesignSymbolNo(designSymbolNo);
+		}
+
+		if (remarks == null) {
+			vrcopProductTypeImpl.setRemarks(StringPool.BLANK);
+		}
+		else {
+			vrcopProductTypeImpl.setRemarks(remarks);
+		}
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrcopProductTypeImpl.setModifyDate(null);
 		}
@@ -163,6 +226,13 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 		vehicleClass = objectInput.readUTF();
 		vehicleTypeCode = objectInput.readUTF();
 		vehicleTypeDescription = objectInput.readUTF();
+		productClassificationCode = objectInput.readUTF();
+		productClassificationDescription = objectInput.readUTF();
+		trademarkName = objectInput.readUTF();
+		commercialName = objectInput.readUTF();
+		modelCode = objectInput.readUTF();
+		designSymbolNo = objectInput.readUTF();
+		remarks = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -206,6 +276,55 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 			objectOutput.writeUTF(vehicleTypeDescription);
 		}
 
+		if (productClassificationCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productClassificationCode);
+		}
+
+		if (productClassificationDescription == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productClassificationDescription);
+		}
+
+		if (trademarkName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(trademarkName);
+		}
+
+		if (commercialName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(commercialName);
+		}
+
+		if (modelCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(modelCode);
+		}
+
+		if (designSymbolNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(designSymbolNo);
+		}
+
+		if (remarks == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(remarks);
+		}
+
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -218,6 +337,13 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 	public String vehicleClass;
 	public String vehicleTypeCode;
 	public String vehicleTypeDescription;
+	public String productClassificationCode;
+	public String productClassificationDescription;
+	public String trademarkName;
+	public String commercialName;
+	public String modelCode;
+	public String designSymbolNo;
+	public String remarks;
 	public long modifyDate;
 	public long syncDate;
 }

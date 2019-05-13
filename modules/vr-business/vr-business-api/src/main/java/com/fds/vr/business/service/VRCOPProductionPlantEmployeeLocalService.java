@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -115,6 +116,9 @@ public interface VRCOPProductionPlantEmployeeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRCOPProductionPlantEmployee getVRCOPProductionPlantEmployee(long id)
 		throws PortalException;
+
+	public VRCOPProductionPlantEmployee updateCOPProductionPlantEmployee(
+		LinkedHashMap<java.lang.String, java.lang.String> mapValues);
 
 	/**
 	* Updates the vrcop production plant employee in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

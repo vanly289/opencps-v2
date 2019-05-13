@@ -179,6 +179,112 @@ public interface VRCOPProductTypeModel extends BaseModel<VRCOPProductType> {
 	public void setVehicleTypeDescription(String vehicleTypeDescription);
 
 	/**
+	 * Returns the product classification code of this vrcop product type.
+	 *
+	 * @return the product classification code of this vrcop product type
+	 */
+	@AutoEscape
+	public String getProductClassificationCode();
+
+	/**
+	 * Sets the product classification code of this vrcop product type.
+	 *
+	 * @param productClassificationCode the product classification code of this vrcop product type
+	 */
+	public void setProductClassificationCode(String productClassificationCode);
+
+	/**
+	 * Returns the product classification description of this vrcop product type.
+	 *
+	 * @return the product classification description of this vrcop product type
+	 */
+	@AutoEscape
+	public String getProductClassificationDescription();
+
+	/**
+	 * Sets the product classification description of this vrcop product type.
+	 *
+	 * @param productClassificationDescription the product classification description of this vrcop product type
+	 */
+	public void setProductClassificationDescription(
+		String productClassificationDescription);
+
+	/**
+	 * Returns the trademark name of this vrcop product type.
+	 *
+	 * @return the trademark name of this vrcop product type
+	 */
+	@AutoEscape
+	public String getTrademarkName();
+
+	/**
+	 * Sets the trademark name of this vrcop product type.
+	 *
+	 * @param trademarkName the trademark name of this vrcop product type
+	 */
+	public void setTrademarkName(String trademarkName);
+
+	/**
+	 * Returns the commercial name of this vrcop product type.
+	 *
+	 * @return the commercial name of this vrcop product type
+	 */
+	@AutoEscape
+	public String getCommercialName();
+
+	/**
+	 * Sets the commercial name of this vrcop product type.
+	 *
+	 * @param commercialName the commercial name of this vrcop product type
+	 */
+	public void setCommercialName(String commercialName);
+
+	/**
+	 * Returns the model code of this vrcop product type.
+	 *
+	 * @return the model code of this vrcop product type
+	 */
+	@AutoEscape
+	public String getModelCode();
+
+	/**
+	 * Sets the model code of this vrcop product type.
+	 *
+	 * @param modelCode the model code of this vrcop product type
+	 */
+	public void setModelCode(String modelCode);
+
+	/**
+	 * Returns the design symbol no of this vrcop product type.
+	 *
+	 * @return the design symbol no of this vrcop product type
+	 */
+	@AutoEscape
+	public String getDesignSymbolNo();
+
+	/**
+	 * Sets the design symbol no of this vrcop product type.
+	 *
+	 * @param designSymbolNo the design symbol no of this vrcop product type
+	 */
+	public void setDesignSymbolNo(String designSymbolNo);
+
+	/**
+	 * Returns the remarks of this vrcop product type.
+	 *
+	 * @return the remarks of this vrcop product type
+	 */
+	@AutoEscape
+	public String getRemarks();
+
+	/**
+	 * Sets the remarks of this vrcop product type.
+	 *
+	 * @param remarks the remarks of this vrcop product type
+	 */
+	public void setRemarks(String remarks);
+
+	/**
 	 * Returns the modify date of this vrcop product type.
 	 *
 	 * @return the modify date of this vrcop product type

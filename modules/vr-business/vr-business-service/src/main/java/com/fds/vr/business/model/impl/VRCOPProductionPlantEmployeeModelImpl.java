@@ -70,6 +70,7 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 			{ "sequenceNo", Types.BIGINT },
 			{ "employeeName", Types.VARCHAR },
 			{ "employeeCertificateNo", Types.VARCHAR },
+			{ "trainningAt", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -83,11 +84,12 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		TABLE_COLUMNS_MAP.put("sequenceNo", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("employeeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("employeeCertificateNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("trainningAt", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copproductionplantemployee (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,employeeName VARCHAR(75) null,employeeCertificateNo VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copproductionplantemployee (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,employeeName VARCHAR(75) null,employeeCertificateNo VARCHAR(75) null,trainningAt VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copproductionplantemployee";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopProductionPlantEmployee.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copproductionplantemployee.modifyDate DESC";
@@ -154,6 +156,7 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		attributes.put("sequenceNo", getSequenceNo());
 		attributes.put("employeeName", getEmployeeName());
 		attributes.put("employeeCertificateNo", getEmployeeCertificateNo());
+		attributes.put("trainningAt", getTrainningAt());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -207,6 +210,12 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 
 		if (employeeCertificateNo != null) {
 			setEmployeeCertificateNo(employeeCertificateNo);
+		}
+
+		String trainningAt = (String)attributes.get("trainningAt");
+
+		if (trainningAt != null) {
+			setTrainningAt(trainningAt);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -342,6 +351,21 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 	}
 
 	@Override
+	public String getTrainningAt() {
+		if (_trainningAt == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _trainningAt;
+		}
+	}
+
+	@Override
+	public void setTrainningAt(String trainningAt) {
+		_trainningAt = trainningAt;
+	}
+
+	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -401,6 +425,7 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		vrcopProductionPlantEmployeeImpl.setSequenceNo(getSequenceNo());
 		vrcopProductionPlantEmployeeImpl.setEmployeeName(getEmployeeName());
 		vrcopProductionPlantEmployeeImpl.setEmployeeCertificateNo(getEmployeeCertificateNo());
+		vrcopProductionPlantEmployeeImpl.setTrainningAt(getTrainningAt());
 		vrcopProductionPlantEmployeeImpl.setModifyDate(getModifyDate());
 		vrcopProductionPlantEmployeeImpl.setSyncDate(getSyncDate());
 
@@ -519,6 +544,14 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 			vrcopProductionPlantEmployeeCacheModel.employeeCertificateNo = null;
 		}
 
+		vrcopProductionPlantEmployeeCacheModel.trainningAt = getTrainningAt();
+
+		String trainningAt = vrcopProductionPlantEmployeeCacheModel.trainningAt;
+
+		if ((trainningAt != null) && (trainningAt.length() == 0)) {
+			vrcopProductionPlantEmployeeCacheModel.trainningAt = null;
+		}
+
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -542,7 +575,7 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -558,6 +591,8 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		sb.append(getEmployeeName());
 		sb.append(", employeeCertificateNo=");
 		sb.append(getEmployeeCertificateNo());
+		sb.append(", trainningAt=");
+		sb.append(getTrainningAt());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -569,7 +604,7 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPProductionPlantEmployee");
@@ -604,6 +639,10 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		sb.append(getEmployeeCertificateNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>trainningAt</column-name><column-value><![CDATA[");
+		sb.append(getTrainningAt());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
@@ -633,6 +672,7 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 	private long _sequenceNo;
 	private String _employeeName;
 	private String _employeeCertificateNo;
+	private String _trainningAt;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

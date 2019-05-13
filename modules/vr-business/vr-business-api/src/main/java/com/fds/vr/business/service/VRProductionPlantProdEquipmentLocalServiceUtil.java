@@ -106,6 +106,11 @@ public class VRProductionPlantProdEquipmentLocalServiceUtil {
 		return getService().getVRProductionPlantProdEquipment(id);
 	}
 
+	public static com.fds.vr.business.model.VRProductionPlantProdEquipment updateProductionPlantEmployee(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return getService().updateProductionPlantEmployee(mapValues);
+	}
+
 	/**
 	* Updates the vr production plant prod equipment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

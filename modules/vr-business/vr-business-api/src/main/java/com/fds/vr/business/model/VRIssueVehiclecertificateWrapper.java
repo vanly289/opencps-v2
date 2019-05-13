@@ -68,13 +68,11 @@ public class VRIssueVehiclecertificateWrapper
 		attributes.put("vehiclePrice", getVehiclePrice());
 		attributes.put("totalQuantity", getTotalQuantity());
 		attributes.put("unitPrice", getUnitPrice());
+		attributes.put("totalProduct", getTotalProduct());
 		attributes.put("certificaterecordno", getCertificaterecordno());
 		attributes.put("productionexamreportno", getProductionexamreportno());
-		attributes.put("productyear", getProductyear());
-		attributes.put("productmonth", getProductmonth());
-		attributes.put("totalstamp", getTotalstamp());
-		attributes.put("totalproduct", getTotalproduct());
 		attributes.put("modifyDate", getModifyDate());
+		attributes.put("syncDate", getSyncDate());
 
 		return attributes;
 	}
@@ -129,6 +127,12 @@ public class VRIssueVehiclecertificateWrapper
 			setUnitPrice(unitPrice);
 		}
 
+		Integer totalProduct = (Integer)attributes.get("totalProduct");
+
+		if (totalProduct != null) {
+			setTotalProduct(totalProduct);
+		}
+
 		String certificaterecordno = (String)attributes.get(
 				"certificaterecordno");
 
@@ -143,34 +147,16 @@ public class VRIssueVehiclecertificateWrapper
 			setProductionexamreportno(productionexamreportno);
 		}
 
-		String productyear = (String)attributes.get("productyear");
-
-		if (productyear != null) {
-			setProductyear(productyear);
-		}
-
-		Integer productmonth = (Integer)attributes.get("productmonth");
-
-		if (productmonth != null) {
-			setProductmonth(productmonth);
-		}
-
-		Integer totalstamp = (Integer)attributes.get("totalstamp");
-
-		if (totalstamp != null) {
-			setTotalstamp(totalstamp);
-		}
-
-		Integer totalproduct = (Integer)attributes.get("totalproduct");
-
-		if (totalproduct != null) {
-			setTotalproduct(totalproduct);
-		}
-
 		Date modifyDate = (Date)attributes.get("modifyDate");
 
 		if (modifyDate != null) {
 			setModifyDate(modifyDate);
+		}
+
+		Date syncDate = (Date)attributes.get("syncDate");
+
+		if (syncDate != null) {
+			setSyncDate(syncDate);
 		}
 	}
 
@@ -215,33 +201,13 @@ public class VRIssueVehiclecertificateWrapper
 	}
 
 	/**
-	* Returns the productmonth of this vr issue vehiclecertificate.
+	* Returns the total product of this vr issue vehiclecertificate.
 	*
-	* @return the productmonth of this vr issue vehiclecertificate
+	* @return the total product of this vr issue vehiclecertificate
 	*/
 	@Override
-	public int getProductmonth() {
-		return _vrIssueVehiclecertificate.getProductmonth();
-	}
-
-	/**
-	* Returns the totalproduct of this vr issue vehiclecertificate.
-	*
-	* @return the totalproduct of this vr issue vehiclecertificate
-	*/
-	@Override
-	public int getTotalproduct() {
-		return _vrIssueVehiclecertificate.getTotalproduct();
-	}
-
-	/**
-	* Returns the totalstamp of this vr issue vehiclecertificate.
-	*
-	* @return the totalstamp of this vr issue vehiclecertificate
-	*/
-	@Override
-	public int getTotalstamp() {
-		return _vrIssueVehiclecertificate.getTotalstamp();
+	public int getTotalProduct() {
+		return _vrIssueVehiclecertificate.getTotalProduct();
 	}
 
 	@Override
@@ -279,16 +245,6 @@ public class VRIssueVehiclecertificateWrapper
 		return _vrIssueVehiclecertificate.getProductionexamreportno();
 	}
 
-	/**
-	* Returns the productyear of this vr issue vehiclecertificate.
-	*
-	* @return the productyear of this vr issue vehiclecertificate
-	*/
-	@Override
-	public java.lang.String getProductyear() {
-		return _vrIssueVehiclecertificate.getProductyear();
-	}
-
 	@Override
 	public java.lang.String toString() {
 		return _vrIssueVehiclecertificate.toString();
@@ -307,6 +263,16 @@ public class VRIssueVehiclecertificateWrapper
 	@Override
 	public Date getModifyDate() {
 		return _vrIssueVehiclecertificate.getModifyDate();
+	}
+
+	/**
+	* Returns the sync date of this vr issue vehiclecertificate.
+	*
+	* @return the sync date of this vr issue vehiclecertificate
+	*/
+	@Override
+	public Date getSyncDate() {
+		return _vrIssueVehiclecertificate.getSyncDate();
 	}
 
 	/**
@@ -527,23 +493,23 @@ public class VRIssueVehiclecertificateWrapper
 	}
 
 	/**
-	* Sets the productmonth of this vr issue vehiclecertificate.
+	* Sets the sync date of this vr issue vehiclecertificate.
 	*
-	* @param productmonth the productmonth of this vr issue vehiclecertificate
+	* @param syncDate the sync date of this vr issue vehiclecertificate
 	*/
 	@Override
-	public void setProductmonth(int productmonth) {
-		_vrIssueVehiclecertificate.setProductmonth(productmonth);
+	public void setSyncDate(Date syncDate) {
+		_vrIssueVehiclecertificate.setSyncDate(syncDate);
 	}
 
 	/**
-	* Sets the productyear of this vr issue vehiclecertificate.
+	* Sets the total product of this vr issue vehiclecertificate.
 	*
-	* @param productyear the productyear of this vr issue vehiclecertificate
+	* @param totalProduct the total product of this vr issue vehiclecertificate
 	*/
 	@Override
-	public void setProductyear(java.lang.String productyear) {
-		_vrIssueVehiclecertificate.setProductyear(productyear);
+	public void setTotalProduct(int totalProduct) {
+		_vrIssueVehiclecertificate.setTotalProduct(totalProduct);
 	}
 
 	/**
@@ -554,26 +520,6 @@ public class VRIssueVehiclecertificateWrapper
 	@Override
 	public void setTotalQuantity(long totalQuantity) {
 		_vrIssueVehiclecertificate.setTotalQuantity(totalQuantity);
-	}
-
-	/**
-	* Sets the totalproduct of this vr issue vehiclecertificate.
-	*
-	* @param totalproduct the totalproduct of this vr issue vehiclecertificate
-	*/
-	@Override
-	public void setTotalproduct(int totalproduct) {
-		_vrIssueVehiclecertificate.setTotalproduct(totalproduct);
-	}
-
-	/**
-	* Sets the totalstamp of this vr issue vehiclecertificate.
-	*
-	* @param totalstamp the totalstamp of this vr issue vehiclecertificate
-	*/
-	@Override
-	public void setTotalstamp(int totalstamp) {
-		_vrIssueVehiclecertificate.setTotalstamp(totalstamp);
 	}
 
 	/**

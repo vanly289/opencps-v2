@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -4320,6 +4321,278 @@ public class VRApplicantProfilePersistenceImpl extends BasePersistenceImpl<VRApp
 		"vrApplicantProfile.applicantStatus = ?";
 	private static final String _FINDER_COLUMN_APPLICANTSTATUS_APPLICANTSTATUS_3 =
 		"(vrApplicantProfile.applicantStatus IS NULL OR vrApplicantProfile.applicantStatus = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_MT_APP_CODE = new FinderPath(VRApplicantProfileModelImpl.ENTITY_CACHE_ENABLED,
+			VRApplicantProfileModelImpl.FINDER_CACHE_ENABLED,
+			VRApplicantProfileImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByMT_APP_CODE",
+			new String[] { Long.class.getName(), String.class.getName() },
+			VRApplicantProfileModelImpl.MTCORE_COLUMN_BITMASK |
+			VRApplicantProfileModelImpl.APPLICANTCODE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_MT_APP_CODE = new FinderPath(VRApplicantProfileModelImpl.ENTITY_CACHE_ENABLED,
+			VRApplicantProfileModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMT_APP_CODE",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the vr applicant profile where mtCore = &#63; and applicantCode = &#63; or throws a {@link NoSuchVRApplicantProfileException} if it could not be found.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @return the matching vr applicant profile
+	 * @throws NoSuchVRApplicantProfileException if a matching vr applicant profile could not be found
+	 */
+	@Override
+	public VRApplicantProfile findByMT_APP_CODE(long mtCore,
+		String applicantCode) throws NoSuchVRApplicantProfileException {
+		VRApplicantProfile vrApplicantProfile = fetchByMT_APP_CODE(mtCore,
+				applicantCode);
+
+		if (vrApplicantProfile == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("mtCore=");
+			msg.append(mtCore);
+
+			msg.append(", applicantCode=");
+			msg.append(applicantCode);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchVRApplicantProfileException(msg.toString());
+		}
+
+		return vrApplicantProfile;
+	}
+
+	/**
+	 * Returns the vr applicant profile where mtCore = &#63; and applicantCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @return the matching vr applicant profile, or <code>null</code> if a matching vr applicant profile could not be found
+	 */
+	@Override
+	public VRApplicantProfile fetchByMT_APP_CODE(long mtCore,
+		String applicantCode) {
+		return fetchByMT_APP_CODE(mtCore, applicantCode, true);
+	}
+
+	/**
+	 * Returns the vr applicant profile where mtCore = &#63; and applicantCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching vr applicant profile, or <code>null</code> if a matching vr applicant profile could not be found
+	 */
+	@Override
+	public VRApplicantProfile fetchByMT_APP_CODE(long mtCore,
+		String applicantCode, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { mtCore, applicantCode };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_MT_APP_CODE,
+					finderArgs, this);
+		}
+
+		if (result instanceof VRApplicantProfile) {
+			VRApplicantProfile vrApplicantProfile = (VRApplicantProfile)result;
+
+			if ((mtCore != vrApplicantProfile.getMtCore()) ||
+					!Objects.equals(applicantCode,
+						vrApplicantProfile.getApplicantCode())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_VRAPPLICANTPROFILE_WHERE);
+
+			query.append(_FINDER_COLUMN_MT_APP_CODE_MTCORE_2);
+
+			boolean bindApplicantCode = false;
+
+			if (applicantCode == null) {
+				query.append(_FINDER_COLUMN_MT_APP_CODE_APPLICANTCODE_1);
+			}
+			else if (applicantCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_MT_APP_CODE_APPLICANTCODE_3);
+			}
+			else {
+				bindApplicantCode = true;
+
+				query.append(_FINDER_COLUMN_MT_APP_CODE_APPLICANTCODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(mtCore);
+
+				if (bindApplicantCode) {
+					qPos.add(applicantCode);
+				}
+
+				List<VRApplicantProfile> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_MT_APP_CODE,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"VRApplicantProfilePersistenceImpl.fetchByMT_APP_CODE(long, String, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					VRApplicantProfile vrApplicantProfile = list.get(0);
+
+					result = vrApplicantProfile;
+
+					cacheResult(vrApplicantProfile);
+
+					if ((vrApplicantProfile.getMtCore() != mtCore) ||
+							(vrApplicantProfile.getApplicantCode() == null) ||
+							!vrApplicantProfile.getApplicantCode()
+												   .equals(applicantCode)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_MT_APP_CODE,
+							finderArgs, vrApplicantProfile);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_MT_APP_CODE,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (VRApplicantProfile)result;
+		}
+	}
+
+	/**
+	 * Removes the vr applicant profile where mtCore = &#63; and applicantCode = &#63; from the database.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @return the vr applicant profile that was removed
+	 */
+	@Override
+	public VRApplicantProfile removeByMT_APP_CODE(long mtCore,
+		String applicantCode) throws NoSuchVRApplicantProfileException {
+		VRApplicantProfile vrApplicantProfile = findByMT_APP_CODE(mtCore,
+				applicantCode);
+
+		return remove(vrApplicantProfile);
+	}
+
+	/**
+	 * Returns the number of vr applicant profiles where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @return the number of matching vr applicant profiles
+	 */
+	@Override
+	public int countByMT_APP_CODE(long mtCore, String applicantCode) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_MT_APP_CODE;
+
+		Object[] finderArgs = new Object[] { mtCore, applicantCode };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_VRAPPLICANTPROFILE_WHERE);
+
+			query.append(_FINDER_COLUMN_MT_APP_CODE_MTCORE_2);
+
+			boolean bindApplicantCode = false;
+
+			if (applicantCode == null) {
+				query.append(_FINDER_COLUMN_MT_APP_CODE_APPLICANTCODE_1);
+			}
+			else if (applicantCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_MT_APP_CODE_APPLICANTCODE_3);
+			}
+			else {
+				bindApplicantCode = true;
+
+				query.append(_FINDER_COLUMN_MT_APP_CODE_APPLICANTCODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(mtCore);
+
+				if (bindApplicantCode) {
+					qPos.add(applicantCode);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_MT_APP_CODE_MTCORE_2 = "vrApplicantProfile.mtCore = ? AND ";
+	private static final String _FINDER_COLUMN_MT_APP_CODE_APPLICANTCODE_1 = "vrApplicantProfile.applicantCode IS NULL";
+	private static final String _FINDER_COLUMN_MT_APP_CODE_APPLICANTCODE_2 = "vrApplicantProfile.applicantCode = ?";
+	private static final String _FINDER_COLUMN_MT_APP_CODE_APPLICANTCODE_3 = "(vrApplicantProfile.applicantCode IS NULL OR vrApplicantProfile.applicantCode = '')";
 
 	public VRApplicantProfilePersistenceImpl() {
 		setModelClass(VRApplicantProfile.class);
@@ -4335,6 +4608,12 @@ public class VRApplicantProfilePersistenceImpl extends BasePersistenceImpl<VRApp
 		entityCache.putResult(VRApplicantProfileModelImpl.ENTITY_CACHE_ENABLED,
 			VRApplicantProfileImpl.class, vrApplicantProfile.getPrimaryKey(),
 			vrApplicantProfile);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_MT_APP_CODE,
+			new Object[] {
+				vrApplicantProfile.getMtCore(),
+				vrApplicantProfile.getApplicantCode()
+			}, vrApplicantProfile);
 
 		vrApplicantProfile.resetOriginalValues();
 	}
@@ -4389,6 +4668,9 @@ public class VRApplicantProfilePersistenceImpl extends BasePersistenceImpl<VRApp
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((VRApplicantProfileModelImpl)vrApplicantProfile,
+			true);
 	}
 
 	@Override
@@ -4399,6 +4681,47 @@ public class VRApplicantProfilePersistenceImpl extends BasePersistenceImpl<VRApp
 		for (VRApplicantProfile vrApplicantProfile : vrApplicantProfiles) {
 			entityCache.removeResult(VRApplicantProfileModelImpl.ENTITY_CACHE_ENABLED,
 				VRApplicantProfileImpl.class, vrApplicantProfile.getPrimaryKey());
+
+			clearUniqueFindersCache((VRApplicantProfileModelImpl)vrApplicantProfile,
+				true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		VRApplicantProfileModelImpl vrApplicantProfileModelImpl) {
+		Object[] args = new Object[] {
+				vrApplicantProfileModelImpl.getMtCore(),
+				vrApplicantProfileModelImpl.getApplicantCode()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_MT_APP_CODE, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_MT_APP_CODE, args,
+			vrApplicantProfileModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		VRApplicantProfileModelImpl vrApplicantProfileModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					vrApplicantProfileModelImpl.getMtCore(),
+					vrApplicantProfileModelImpl.getApplicantCode()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_MT_APP_CODE, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_MT_APP_CODE, args);
+		}
+
+		if ((vrApplicantProfileModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_MT_APP_CODE.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					vrApplicantProfileModelImpl.getOriginalMtCore(),
+					vrApplicantProfileModelImpl.getOriginalApplicantCode()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_MT_APP_CODE, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_MT_APP_CODE, args);
 		}
 	}
 
@@ -4705,6 +5028,9 @@ public class VRApplicantProfilePersistenceImpl extends BasePersistenceImpl<VRApp
 		entityCache.putResult(VRApplicantProfileModelImpl.ENTITY_CACHE_ENABLED,
 			VRApplicantProfileImpl.class, vrApplicantProfile.getPrimaryKey(),
 			vrApplicantProfile, false);
+
+		clearUniqueFindersCache(vrApplicantProfileModelImpl, false);
+		cacheUniqueFindersCache(vrApplicantProfileModelImpl);
 
 		vrApplicantProfile.resetOriginalValues();
 

@@ -39,6 +39,7 @@ public class ServerConfigManagementImpl implements ServerConfigManagement {
 			User user, ServiceContext serviceContext, ServerConfigSearchModel query) {
 
 		BackendAuth auth = new BackendAuthImpl();
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
 
 		try {
 			if (!auth.isAuth(serviceContext)) {
@@ -50,12 +51,12 @@ public class ServerConfigManagementImpl implements ServerConfigManagement {
 				query.setEnd(-1);
 			}
 
-			int count = ServerConfigLocalServiceUtil.getServerConfigsCount();
-
-			List<ServerConfig> configs = ServerConfigLocalServiceUtil.getServerConfigs(query.getStart(),
-					query.getEnd());
-
+			List<ServerConfig> configs = ServerConfigLocalServiceUtil.getGroupId(groupId);
 			ServerConfigResultsModel results = new ServerConfigResultsModel();
+			int count = 0;
+			if (configs != null) {
+				count = configs.size();
+			}
 
 			results.setTotal(count);
 			results.getData().addAll(ServerConfigUtils.mappingTOData(configs));
@@ -92,7 +93,7 @@ public class ServerConfigManagementImpl implements ServerConfigManagement {
 			}
 
 			ServerConfig config = ServerConfigLocalServiceUtil.updateServerConfig(groupId, 0l, input.getServerNo(),
-					input.getServerName(), input.getProtocol(), StringPool.BLANK, new Date(), serviceContext);
+					input.getServerName(), input.getProtocol(), input.getConfigs(), new Date(), serviceContext);
 
 			ServerConfigDetailModel result = ServerConfigUtils.mappingToDetailModel(config);
 

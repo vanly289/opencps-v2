@@ -29,6 +29,7 @@ public class PaymentFileTerm {
 	public static final String INVOICE_ISSUE_NO	= "invoiceIssueNo";
 	public static final String INVOICE_NO	= "invoiceNo";
 	public static final String INVOICE_FILE_ENTRY_ID	= "invoiceFileEntryId";
+	public static final String ADVANCE_AMOUNT = "advanceAmount";
 	//Search payment file
 	public static final String SERVICE = "sevice";
 	public static final String AGENCY = "agency";
@@ -39,5 +40,9 @@ public class PaymentFileTerm {
 	public static final String COUNTER = "counter";
 	public static final String SERVICE_CODE = "serviceCode";
 	public static final String SERVICE_NAME = "serviceName";
+
+	public static final int PAYMENT_STATUS_REQUEST = 0;
+	public static final int PAYMENT_STATUS_CONFIRM = 1;
+	public static final int PAYMENT_STATUS_APPROVED = 2;
 
 }

@@ -392,31 +392,68 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 //			_log.info("dataHandle.getContentType: "+dataHandler.getContentType());
 //			_log.info("sourceFileName: "+dataHandler.getName());
 			DossierFileActions action = new DossierFileActionsImpl();
-			
-			
-			_log.info("__Start add file at:" + new Date());
 
-			DossierFile dossierFile = action.addDossierFile(groupId, dossier.getDossierId(), referenceUid,
-					dossierTemplateNo, dossierPartNo, fileTemplateNo, displayName, dataHandler.getName(), 0,
-					dataHandler.getInputStream(), fileType, isSync, serviceContext);
-			
-			_log.info("__End add file at:" + new Date());
-			
-			if(Validator.isNotNull(formData)) {
-				dossierFile.setFormData(formData);
+			DossierFile dossierFile = null;
+			DossierFile oldDossierFile = null;
+			if (Validator.isNotNull(referenceUid)) {
+				oldDossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(dossier.getDossierId(), referenceUid);
 			}
-			
-			_log.info("__Start update dossier file at:" + new Date());
+			if (oldDossierFile != null) {
+				if (dataHandler != null && dataHandler.getInputStream() != null) {
+					dossierFile = action.updateDossierFile(groupId, dossier.getDossierId(), referenceUid, displayName,
+							dataHandler.getInputStream(), serviceContext);
+				} else {
+					dossierFile = action.updateDossierFile(groupId, dossier.getDossierId(), referenceUid, displayName,
+							null, serviceContext);
+				}
+					
+				_log.info("__End add file at:" + new Date());
+				
+				if(Validator.isNotNull(formData)) {
+					dossierFile.setFormData(formData);
+				}
+				_log.info("__Start update dossier file at:" + new Date());
 
-			DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+				DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
 
-			_log.info("__End update dossier file at:" + new Date());
+				_log.info("__End update dossier file at:" + new Date());
 
-			DossierFileModel result = DossierFileUtils.mappingToDossierFileModel(dossierFile);
-			
-			_log.info("__End bind to dossierFile" + new Date());
+				DossierFileModel result = DossierFileUtils.mappingToDossierFileModel(dossierFile);
+				
+				_log.info("__End bind to dossierFile" + new Date());
 
-			return Response.status(200).entity(result).build();
+				return Response.status(200).entity(result).build();
+			}
+			else {
+				_log.info("__Start add file at:" + new Date());
+				
+				if (dataHandler != null && dataHandler.getInputStream() != null) {
+					dossierFile = action.addDossierFile(groupId, dossier.getDossierId(), referenceUid, dossierTemplateNo,
+							dossierPartNo, fileTemplateNo, displayName, dataHandler.getName(), 0,
+							dataHandler.getInputStream(), fileType, isSync, serviceContext);
+				} else {
+					dossierFile = action.addDossierFile(groupId, dossier.getDossierId(), referenceUid, dossierTemplateNo,
+							dossierPartNo, fileTemplateNo, displayName, displayName, 0, null, fileType, isSync,
+							serviceContext);
+				}
+				
+				_log.info("__End add file at:" + new Date());
+				
+				if(Validator.isNotNull(formData)) {
+					dossierFile.setFormData(formData);
+				}
+				_log.info("__Start update dossier file at:" + new Date());
+	
+				DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+	
+				_log.info("__End update dossier file at:" + new Date());
+	
+				DossierFileModel result = DossierFileUtils.mappingToDossierFileModel(dossierFile);
+				
+				_log.info("__End bind to dossierFile" + new Date());
+	
+				return Response.status(200).entity(result).build();
+			}
 
 		} catch (Exception e) {
 			return processException(e);

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the VRProductionPlantEmployee service. Represents a row in the &quot;vr_productplantemployee&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the VRProductionPlantEmployee service. Represents a row in the &quot;vr_productionplantemployee&quot; database table, with each column mapped to a property of this class.
  *
  * @author LamTV
  * @see VRProductionPlantEmployeeModel

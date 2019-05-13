@@ -66,7 +66,7 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -82,6 +82,20 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 		sb.append(vehicleTypeCode);
 		sb.append(", vehicleTypeDescription=");
 		sb.append(vehicleTypeDescription);
+		sb.append(", productClassificationCode=");
+		sb.append(productClassificationCode);
+		sb.append(", productClassificationDescription=");
+		sb.append(productClassificationDescription);
+		sb.append(", trademark=");
+		sb.append(trademark);
+		sb.append(", trademarkName=");
+		sb.append(trademarkName);
+		sb.append(", commercialName=");
+		sb.append(commercialName);
+		sb.append(", modelCode=");
+		sb.append(modelCode);
+		sb.append(", designSymbolNo=");
+		sb.append(designSymbolNo);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -121,6 +135,55 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 			vrProductTypeImpl.setVehicleTypeDescription(vehicleTypeDescription);
 		}
 
+		if (productClassificationCode == null) {
+			vrProductTypeImpl.setProductClassificationCode(StringPool.BLANK);
+		}
+		else {
+			vrProductTypeImpl.setProductClassificationCode(productClassificationCode);
+		}
+
+		if (productClassificationDescription == null) {
+			vrProductTypeImpl.setProductClassificationDescription(StringPool.BLANK);
+		}
+		else {
+			vrProductTypeImpl.setProductClassificationDescription(productClassificationDescription);
+		}
+
+		if (trademark == null) {
+			vrProductTypeImpl.setTrademark(StringPool.BLANK);
+		}
+		else {
+			vrProductTypeImpl.setTrademark(trademark);
+		}
+
+		if (trademarkName == null) {
+			vrProductTypeImpl.setTrademarkName(StringPool.BLANK);
+		}
+		else {
+			vrProductTypeImpl.setTrademarkName(trademarkName);
+		}
+
+		if (commercialName == null) {
+			vrProductTypeImpl.setCommercialName(StringPool.BLANK);
+		}
+		else {
+			vrProductTypeImpl.setCommercialName(commercialName);
+		}
+
+		if (modelCode == null) {
+			vrProductTypeImpl.setModelCode(StringPool.BLANK);
+		}
+		else {
+			vrProductTypeImpl.setModelCode(modelCode);
+		}
+
+		if (designSymbolNo == null) {
+			vrProductTypeImpl.setDesignSymbolNo(StringPool.BLANK);
+		}
+		else {
+			vrProductTypeImpl.setDesignSymbolNo(designSymbolNo);
+		}
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrProductTypeImpl.setModifyDate(null);
 		}
@@ -152,6 +215,13 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 		vehicleClass = objectInput.readUTF();
 		vehicleTypeCode = objectInput.readUTF();
 		vehicleTypeDescription = objectInput.readUTF();
+		productClassificationCode = objectInput.readUTF();
+		productClassificationDescription = objectInput.readUTF();
+		trademark = objectInput.readUTF();
+		trademarkName = objectInput.readUTF();
+		commercialName = objectInput.readUTF();
+		modelCode = objectInput.readUTF();
+		designSymbolNo = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -188,6 +258,55 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 			objectOutput.writeUTF(vehicleTypeDescription);
 		}
 
+		if (productClassificationCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productClassificationCode);
+		}
+
+		if (productClassificationDescription == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productClassificationDescription);
+		}
+
+		if (trademark == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(trademark);
+		}
+
+		if (trademarkName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(trademarkName);
+		}
+
+		if (commercialName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(commercialName);
+		}
+
+		if (modelCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(modelCode);
+		}
+
+		if (designSymbolNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(designSymbolNo);
+		}
+
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -199,6 +318,13 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 	public String vehicleClass;
 	public String vehicleTypeCode;
 	public String vehicleTypeDescription;
+	public String productClassificationCode;
+	public String productClassificationDescription;
+	public String trademark;
+	public String trademarkName;
+	public String commercialName;
+	public String modelCode;
+	public String designSymbolNo;
 	public long modifyDate;
 	public long syncDate;
 }

@@ -117,6 +117,9 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 			{ "leadername", Types.VARCHAR },
 			{ "applicantmaker", Types.VARCHAR },
 			{ "applicantchecker", Types.VARCHAR },
+			{ "inspectorId", Types.BIGINT },
+			{ "issueInspectorId", Types.BIGINT },
+			{ "verifyInspectorId", Types.BIGINT },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -177,11 +180,14 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		TABLE_COLUMNS_MAP.put("leadername", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantmaker", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantchecker", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("inspectorId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("issueInspectorId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("verifyInspectorId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_issue (id LONG not null primary key,mtCore LONG,dossierId LONG,stampIssueNo VARCHAR(75) null,appliedDate DATE null,approvedDate DATE null,vehicleClass VARCHAR(75) null,applicantProfileId LONG,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,applicantRepresentative VARCHAR(75) null,applicantRepresentativeTitle VARCHAR(75) null,applicantEmail VARCHAR(75) null,applicantPhone VARCHAR(75) null,applicantFax VARCHAR(75) null,applicantContactName VARCHAR(75) null,applicantContactEmail VARCHAR(75) null,applicantContactPhone VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,remarks VARCHAR(75) null,methodOfIssue VARCHAR(75) null,totalInDocument LONG,issueCorporationId VARCHAR(75) null,verifyCorporationId VARCHAR(75) null,digitalissuestatus VARCHAR(75) null,issueType VARCHAR(75) null,averageSTBQuantity INTEGER,maxMonthQuantity INTEGER,averageSTMQuantity INTEGER,accumulatedMonthQuantity INTEGER,totalInUse INTEGER,totalCancelled INTEGER,totalLost INTEGER,totalNotUsed INTEGER,totalReturned INTEGER,flow VARCHAR(75) null,examinationRequired VARCHAR(75) null,examinationPeriod VARCHAR(75) null,examinationLastTime DATE null,copresult VARCHAR(75) null,copreportno VARCHAR(75) null,copreportdate DATE null,postreview VARCHAR(75) null,postreviewrecordno VARCHAR(75) null,postreviewrecorddate DATE null,corporationId VARCHAR(75) null,inspectorcode VARCHAR(75) null,inspectorname VARCHAR(75) null,leadername VARCHAR(75) null,applicantmaker VARCHAR(75) null,applicantchecker VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_issue (id LONG not null primary key,mtCore LONG,dossierId LONG,stampIssueNo VARCHAR(75) null,appliedDate DATE null,approvedDate DATE null,vehicleClass VARCHAR(75) null,applicantProfileId LONG,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,applicantRepresentative VARCHAR(75) null,applicantRepresentativeTitle VARCHAR(75) null,applicantEmail VARCHAR(75) null,applicantPhone VARCHAR(75) null,applicantFax VARCHAR(75) null,applicantContactName VARCHAR(75) null,applicantContactEmail VARCHAR(75) null,applicantContactPhone VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,remarks VARCHAR(75) null,methodOfIssue VARCHAR(75) null,totalInDocument LONG,issueCorporationId VARCHAR(75) null,verifyCorporationId VARCHAR(75) null,digitalissuestatus VARCHAR(75) null,issueType VARCHAR(75) null,averageSTBQuantity INTEGER,maxMonthQuantity INTEGER,averageSTMQuantity INTEGER,accumulatedMonthQuantity INTEGER,totalInUse INTEGER,totalCancelled INTEGER,totalLost INTEGER,totalNotUsed INTEGER,totalReturned INTEGER,flow VARCHAR(75) null,examinationRequired VARCHAR(75) null,examinationPeriod VARCHAR(75) null,examinationLastTime DATE null,copresult VARCHAR(75) null,copreportno VARCHAR(75) null,copreportdate DATE null,postreview VARCHAR(75) null,postreviewrecordno VARCHAR(75) null,postreviewrecorddate DATE null,corporationId VARCHAR(75) null,inspectorcode VARCHAR(75) null,inspectorname VARCHAR(75) null,leadername VARCHAR(75) null,applicantmaker VARCHAR(75) null,applicantchecker VARCHAR(75) null,inspectorId LONG,issueInspectorId LONG,verifyInspectorId LONG,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_issue";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrIssue.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_issue.modifyDate DESC";
@@ -302,6 +308,9 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		attributes.put("leadername", getLeadername());
 		attributes.put("applicantmaker", getApplicantmaker());
 		attributes.put("applicantchecker", getApplicantchecker());
+		attributes.put("inspectorId", getInspectorId());
+		attributes.put("issueInspectorId", getIssueInspectorId());
+		attributes.put("verifyInspectorId", getVerifyInspectorId());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -648,6 +657,24 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 
 		if (applicantchecker != null) {
 			setApplicantchecker(applicantchecker);
+		}
+
+		Long inspectorId = (Long)attributes.get("inspectorId");
+
+		if (inspectorId != null) {
+			setInspectorId(inspectorId);
+		}
+
+		Long issueInspectorId = (Long)attributes.get("issueInspectorId");
+
+		if (issueInspectorId != null) {
+			setIssueInspectorId(issueInspectorId);
+		}
+
+		Long verifyInspectorId = (Long)attributes.get("verifyInspectorId");
+
+		if (verifyInspectorId != null) {
+			setVerifyInspectorId(verifyInspectorId);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -1473,6 +1500,36 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 	}
 
 	@Override
+	public long getInspectorId() {
+		return _inspectorId;
+	}
+
+	@Override
+	public void setInspectorId(long inspectorId) {
+		_inspectorId = inspectorId;
+	}
+
+	@Override
+	public long getIssueInspectorId() {
+		return _issueInspectorId;
+	}
+
+	@Override
+	public void setIssueInspectorId(long issueInspectorId) {
+		_issueInspectorId = issueInspectorId;
+	}
+
+	@Override
+	public long getVerifyInspectorId() {
+		return _verifyInspectorId;
+	}
+
+	@Override
+	public void setVerifyInspectorId(long verifyInspectorId) {
+		_verifyInspectorId = verifyInspectorId;
+	}
+
+	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -1579,6 +1636,9 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		vrIssueImpl.setLeadername(getLeadername());
 		vrIssueImpl.setApplicantmaker(getApplicantmaker());
 		vrIssueImpl.setApplicantchecker(getApplicantchecker());
+		vrIssueImpl.setInspectorId(getInspectorId());
+		vrIssueImpl.setIssueInspectorId(getIssueInspectorId());
+		vrIssueImpl.setVerifyInspectorId(getVerifyInspectorId());
 		vrIssueImpl.setModifyDate(getModifyDate());
 		vrIssueImpl.setSyncDate(getSyncDate());
 
@@ -2033,6 +2093,12 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 			vrIssueCacheModel.applicantchecker = null;
 		}
 
+		vrIssueCacheModel.inspectorId = getInspectorId();
+
+		vrIssueCacheModel.issueInspectorId = getIssueInspectorId();
+
+		vrIssueCacheModel.verifyInspectorId = getVerifyInspectorId();
+
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -2056,7 +2122,7 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(113);
+		StringBundler sb = new StringBundler(119);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -2166,6 +2232,12 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		sb.append(getApplicantmaker());
 		sb.append(", applicantchecker=");
 		sb.append(getApplicantchecker());
+		sb.append(", inspectorId=");
+		sb.append(getInspectorId());
+		sb.append(", issueInspectorId=");
+		sb.append(getIssueInspectorId());
+		sb.append(", verifyInspectorId=");
+		sb.append(getVerifyInspectorId());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -2177,7 +2249,7 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(172);
+		StringBundler sb = new StringBundler(181);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRIssue");
@@ -2400,6 +2472,18 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		sb.append(getApplicantchecker());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>inspectorId</column-name><column-value><![CDATA[");
+		sb.append(getInspectorId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>issueInspectorId</column-name><column-value><![CDATA[");
+		sb.append(getIssueInspectorId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>verifyInspectorId</column-name><column-value><![CDATA[");
+		sb.append(getVerifyInspectorId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
@@ -2484,6 +2568,9 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 	private String _leadername;
 	private String _applicantmaker;
 	private String _applicantchecker;
+	private long _inspectorId;
+	private long _issueInspectorId;
+	private long _verifyInspectorId;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

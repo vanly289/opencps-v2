@@ -66,7 +66,7 @@ public class PaymentConfigCacheModel implements CacheModel<PaymentConfig>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -102,6 +102,8 @@ public class PaymentConfigCacheModel implements CacheModel<PaymentConfig>,
 		sb.append(bankInfo);
 		sb.append(", epaymentConfig=");
 		sb.append(epaymentConfig);
+		sb.append(", invoiceDetailForm=");
+		sb.append(invoiceDetailForm);
 		sb.append("}");
 
 		return sb.toString();
@@ -207,6 +209,13 @@ public class PaymentConfigCacheModel implements CacheModel<PaymentConfig>,
 			paymentConfigImpl.setEpaymentConfig(epaymentConfig);
 		}
 
+		if (invoiceDetailForm == null) {
+			paymentConfigImpl.setInvoiceDetailForm(StringPool.BLANK);
+		}
+		else {
+			paymentConfigImpl.setInvoiceDetailForm(invoiceDetailForm);
+		}
+
 		paymentConfigImpl.resetOriginalValues();
 
 		return paymentConfigImpl;
@@ -235,6 +244,7 @@ public class PaymentConfigCacheModel implements CacheModel<PaymentConfig>,
 		invoiceForm = objectInput.readUTF();
 		bankInfo = objectInput.readUTF();
 		epaymentConfig = objectInput.readUTF();
+		invoiceDetailForm = objectInput.readUTF();
 	}
 
 	@Override
@@ -327,6 +337,13 @@ public class PaymentConfigCacheModel implements CacheModel<PaymentConfig>,
 		else {
 			objectOutput.writeUTF(epaymentConfig);
 		}
+
+		if (invoiceDetailForm == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(invoiceDetailForm);
+		}
 	}
 
 	public String uuid;
@@ -346,4 +363,5 @@ public class PaymentConfigCacheModel implements CacheModel<PaymentConfig>,
 	public String invoiceForm;
 	public String bankInfo;
 	public String epaymentConfig;
+	public String invoiceDetailForm;
 }

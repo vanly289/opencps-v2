@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRCOPProductLine;
 import com.fds.vr.business.model.VRCOPProductType;
 import com.fds.vr.business.service.base.VRCOPProductTypeLocalServiceBaseImpl;
 
@@ -71,6 +73,31 @@ public class VRCOPProductTypeLocalServiceImpl
 		return new ArrayList<VRCOPProductType>();
 		
 	}
-	
+
+	public VRCOPProductType updateCOPProductType(LinkedHashMap<String, String> mapValues) {
+		
+		Date now = new Date();
+
+		long vrCOPProductTypeId = counterLocalService.increment(VRCOPProductType.class.getName());
+
+		VRCOPProductType object = vrcopProductTypePersistence.create(vrCOPProductTypeId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+
+		// Add other fields
+		object.setMtCore(Long.valueOf(mapValues.get("")));
+		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("")));
+		object.setCopReportNo(mapValues.get(""));
+		object.setSequenceNo(Long.valueOf(mapValues.get("")));
+		object.setVehicleClass(mapValues.get(""));
+		object.setVehicleTypeCode(mapValues.get(""));
+		object.setVehicleTypeDescription(mapValues.get(""));
+
+		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+
+		return vrcopProductTypePersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductTypeLocalServiceImpl.class);
 }

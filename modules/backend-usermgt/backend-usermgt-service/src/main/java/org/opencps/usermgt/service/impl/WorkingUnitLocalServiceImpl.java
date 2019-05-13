@@ -487,7 +487,11 @@ public class WorkingUnitLocalServiceImpl extends WorkingUnitLocalServiceBaseImpl
 			throw new NotFoundException();
 		}
 	}
-	
+
+	public WorkingUnit fetchByF_govAgencyCode(long groupId, String govAgencyCode) {
+		return workingUnitPersistence.fetchByF_govAgencyCode(groupId, govAgencyCode);
+	}
+
 	public WorkingUnit getWorkingUnitbyGidandWid(long groupId, long workingUnitId){
 		return workingUnitPersistence.fetchByF_WID(groupId, workingUnitId);
 	}

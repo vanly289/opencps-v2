@@ -62,9 +62,10 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
 		attributes.put("applicantProfileId", getApplicantProfileId());
+		attributes.put("applicantCode", getApplicantCode());
 		attributes.put("applicantName", getApplicantName());
 		attributes.put("applicantAddress", getApplicantAddress());
-		attributes.put("overseasManufacturerId", getOverseasManufacturerId());
+		attributes.put("overseasManufacturerCode", getOverseasManufacturerCode());
 		attributes.put("overseasManufacturerName", getOverseasManufacturerName());
 		attributes.put("overseasManufacturerAddress",
 			getOverseasManufacturerAddress());
@@ -82,6 +83,7 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 		attributes.put("copReportDate", getCopReportDate());
 		attributes.put("copReportApprovedDate", getCopReportApprovedDate());
 		attributes.put("copReportExpiredDate", getCopReportExpiredDate());
+		attributes.put("COPFileEntryId", getCOPFileEntryId());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -108,6 +110,12 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 			setApplicantProfileId(applicantProfileId);
 		}
 
+		String applicantCode = (String)attributes.get("applicantCode");
+
+		if (applicantCode != null) {
+			setApplicantCode(applicantCode);
+		}
+
 		String applicantName = (String)attributes.get("applicantName");
 
 		if (applicantName != null) {
@@ -120,11 +128,11 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 			setApplicantAddress(applicantAddress);
 		}
 
-		Long overseasManufacturerId = (Long)attributes.get(
-				"overseasManufacturerId");
+		String overseasManufacturerCode = (String)attributes.get(
+				"overseasManufacturerCode");
 
-		if (overseasManufacturerId != null) {
-			setOverseasManufacturerId(overseasManufacturerId);
+		if (overseasManufacturerCode != null) {
+			setOverseasManufacturerCode(overseasManufacturerCode);
 		}
 
 		String overseasManufacturerName = (String)attributes.get(
@@ -229,6 +237,12 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 			setCopReportExpiredDate(copReportExpiredDate);
 		}
 
+		Long COPFileEntryId = (Long)attributes.get("COPFileEntryId");
+
+		if (COPFileEntryId != null) {
+			setCOPFileEntryId(COPFileEntryId);
+		}
+
 		Date modifyDate = (Date)attributes.get("modifyDate");
 
 		if (modifyDate != null) {
@@ -305,6 +319,16 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public java.lang.String getApplicantAddress() {
 		return _vrcopReportRepository.getApplicantAddress();
+	}
+
+	/**
+	* Returns the applicant code of this vrcop report repository.
+	*
+	* @return the applicant code of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getApplicantCode() {
+		return _vrcopReportRepository.getApplicantCode();
 	}
 
 	/**
@@ -395,6 +419,16 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public java.lang.String getOverseasManufacturerAddress() {
 		return _vrcopReportRepository.getOverseasManufacturerAddress();
+	}
+
+	/**
+	* Returns the overseas manufacturer code of this vrcop report repository.
+	*
+	* @return the overseas manufacturer code of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getOverseasManufacturerCode() {
+		return _vrcopReportRepository.getOverseasManufacturerCode();
 	}
 
 	/**
@@ -508,6 +542,16 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Returns the cop file entry ID of this vrcop report repository.
+	*
+	* @return the cop file entry ID of this vrcop report repository
+	*/
+	@Override
+	public long getCOPFileEntryId() {
+		return _vrcopReportRepository.getCOPFileEntryId();
+	}
+
+	/**
 	* Returns the ID of this vrcop report repository.
 	*
 	* @return the ID of this vrcop report repository
@@ -525,16 +569,6 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public long getMtCore() {
 		return _vrcopReportRepository.getMtCore();
-	}
-
-	/**
-	* Returns the overseas manufacturer ID of this vrcop report repository.
-	*
-	* @return the overseas manufacturer ID of this vrcop report repository
-	*/
-	@Override
-	public long getOverseasManufacturerId() {
-		return _vrcopReportRepository.getOverseasManufacturerId();
 	}
 
 	/**
@@ -573,6 +607,16 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Sets the applicant code of this vrcop report repository.
+	*
+	* @param applicantCode the applicant code of this vrcop report repository
+	*/
+	@Override
+	public void setApplicantCode(java.lang.String applicantCode) {
+		_vrcopReportRepository.setApplicantCode(applicantCode);
+	}
+
+	/**
 	* Sets the applicant name of this vrcop report repository.
 	*
 	* @param applicantName the applicant name of this vrcop report repository
@@ -590,6 +634,16 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public void setApplicantProfileId(long applicantProfileId) {
 		_vrcopReportRepository.setApplicantProfileId(applicantProfileId);
+	}
+
+	/**
+	* Sets the cop file entry ID of this vrcop report repository.
+	*
+	* @param COPFileEntryId the cop file entry ID of this vrcop report repository
+	*/
+	@Override
+	public void setCOPFileEntryId(long COPFileEntryId) {
+		_vrcopReportRepository.setCOPFileEntryId(COPFileEntryId);
 	}
 
 	@Override
@@ -760,13 +814,14 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
-	* Sets the overseas manufacturer ID of this vrcop report repository.
+	* Sets the overseas manufacturer code of this vrcop report repository.
 	*
-	* @param overseasManufacturerId the overseas manufacturer ID of this vrcop report repository
+	* @param overseasManufacturerCode the overseas manufacturer code of this vrcop report repository
 	*/
 	@Override
-	public void setOverseasManufacturerId(long overseasManufacturerId) {
-		_vrcopReportRepository.setOverseasManufacturerId(overseasManufacturerId);
+	public void setOverseasManufacturerCode(
+		java.lang.String overseasManufacturerCode) {
+		_vrcopReportRepository.setOverseasManufacturerCode(overseasManufacturerCode);
 	}
 
 	/**

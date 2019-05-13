@@ -71,6 +71,9 @@ public class RegistrationIndexer extends BaseIndexer<Registration> {
 		document.addKeywordSortable(RegistrationTerm.REGISTRATION_CLASS, object.getRegistrationClass());
 		document.addNumberSortable(RegistrationTerm.REGISTRATIONSTATE, object.getRegistrationState());
 		document.addKeywordSortable(RegistrationTerm.SUBMITTING, Boolean.toString(object.getSubmitting()));
+		document.addKeywordSortable(RegistrationTerm.REPRESENTATIVE_ENTERPRISE, object.getRepresentativeEnterprise());
+		document.addKeywordSortable(RegistrationTerm.REMARKS, object.getRemarks());
+		document.addNumberSortable(RegistrationTerm.MARK_AS_DELETED, object.getMarkasdeleted());
 
 		return document;
 	}

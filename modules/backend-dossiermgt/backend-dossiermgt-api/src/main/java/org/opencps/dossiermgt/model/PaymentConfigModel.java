@@ -345,6 +345,21 @@ public interface PaymentConfigModel extends BaseModel<PaymentConfig>,
 	 */
 	public void setEpaymentConfig(String epaymentConfig);
 
+	/**
+	 * Returns the invoice detail form of this payment config.
+	 *
+	 * @return the invoice detail form of this payment config
+	 */
+	@AutoEscape
+	public String getInvoiceDetailForm();
+
+	/**
+	 * Sets the invoice detail form of this payment config.
+	 *
+	 * @param invoiceDetailForm the invoice detail form of this payment config
+	 */
+	public void setInvoiceDetailForm(String invoiceDetailForm);
+
 	@Override
 	public boolean isNew();
 

@@ -253,15 +253,11 @@ public class ProcessActionSoap implements Serializable {
 		_assignUserId = assignUserId;
 	}
 
-	public boolean getRequestPayment() {
+	public int getRequestPayment() {
 		return _requestPayment;
 	}
 
-	public boolean isRequestPayment() {
-		return _requestPayment;
-	}
-
-	public void setRequestPayment(boolean requestPayment) {
+	public void setRequestPayment(int requestPayment) {
 		_requestPayment = requestPayment;
 	}
 
@@ -374,7 +370,7 @@ public class ProcessActionSoap implements Serializable {
 	private String _actionName;
 	private boolean _allowAssignUser;
 	private long _assignUserId;
-	private boolean _requestPayment;
+	private int _requestPayment;
 	private String _paymentFee;
 	private String _createDossierFiles;
 	private String _returnDossierFiles;

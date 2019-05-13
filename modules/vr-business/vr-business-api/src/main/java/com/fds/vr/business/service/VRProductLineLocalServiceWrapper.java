@@ -100,6 +100,12 @@ public class VRProductLineLocalServiceWrapper
 		return _vrProductLineLocalService.getVRProductLine(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductLine updateProductLine(
+		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
+		return _vrProductLineLocalService.updateProductLine(mapValues);
+	}
+
 	/**
 	* Updates the vr product line in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

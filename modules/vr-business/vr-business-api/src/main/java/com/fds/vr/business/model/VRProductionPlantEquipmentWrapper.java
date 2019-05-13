@@ -74,6 +74,7 @@ public class VRProductionPlantEquipmentWrapper
 		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("productionCountryCode", getProductionCountryCode());
 		attributes.put("equipmentStatus", getEquipmentStatus());
+		attributes.put("expireDate", getExpireDate());
 		attributes.put("notes", getNotes());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
@@ -166,6 +167,12 @@ public class VRProductionPlantEquipmentWrapper
 
 		if (equipmentStatus != null) {
 			setEquipmentStatus(equipmentStatus);
+		}
+
+		Date expireDate = (Date)attributes.get("expireDate");
+
+		if (expireDate != null) {
+			setExpireDate(expireDate);
 		}
 
 		String notes = (String)attributes.get("notes");
@@ -363,6 +370,16 @@ public class VRProductionPlantEquipmentWrapper
 	}
 
 	/**
+	* Returns the expire date of this vr production plant equipment.
+	*
+	* @return the expire date of this vr production plant equipment
+	*/
+	@Override
+	public Date getExpireDate() {
+		return _vrProductionPlantEquipment.getExpireDate();
+	}
+
+	/**
 	* Returns the modify date of this vr production plant equipment.
 	*
 	* @return the modify date of this vr production plant equipment
@@ -516,6 +533,16 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_vrProductionPlantEquipment.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the expire date of this vr production plant equipment.
+	*
+	* @param expireDate the expire date of this vr production plant equipment
+	*/
+	@Override
+	public void setExpireDate(Date expireDate) {
+		_vrProductionPlantEquipment.setExpireDate(expireDate);
 	}
 
 	/**

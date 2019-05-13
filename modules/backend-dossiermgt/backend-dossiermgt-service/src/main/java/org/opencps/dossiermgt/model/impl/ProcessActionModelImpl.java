@@ -86,7 +86,7 @@ public class ProcessActionModelImpl extends BaseModelImpl<ProcessAction>
 			{ "actionName", Types.VARCHAR },
 			{ "allowAssignUser", Types.BOOLEAN },
 			{ "assignUserId", Types.BIGINT },
-			{ "requestPayment", Types.BOOLEAN },
+			{ "requestPayment", Types.INTEGER },
 			{ "paymentFee", Types.VARCHAR },
 			{ "createDossierFiles", Types.VARCHAR },
 			{ "returnDossierFiles", Types.VARCHAR },
@@ -118,7 +118,7 @@ public class ProcessActionModelImpl extends BaseModelImpl<ProcessAction>
 		TABLE_COLUMNS_MAP.put("actionName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("allowAssignUser", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("assignUserId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("requestPayment", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("requestPayment", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("paymentFee", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDossierFiles", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("returnDossierFiles", Types.VARCHAR);
@@ -131,7 +131,7 @@ public class ProcessActionModelImpl extends BaseModelImpl<ProcessAction>
 		TABLE_COLUMNS_MAP.put("dossierTemplateNo", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table opencps_processaction (uuid_ VARCHAR(75) null,processActionId LONG not null primary key,companyId LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,serviceProcessId LONG,preStepCode VARCHAR(75) null,postStepCode VARCHAR(75) null,autoEvent VARCHAR(75) null,preCondition VARCHAR(75) null,actionCode VARCHAR(75) null,actionName VARCHAR(75) null,allowAssignUser BOOLEAN,assignUserId LONG,requestPayment BOOLEAN,paymentFee VARCHAR(75) null,createDossierFiles VARCHAR(75) null,returnDossierFiles VARCHAR(75) null,makeBriefNote VARCHAR(75) null,syncActionCode VARCHAR(75) null,rollbackable BOOLEAN,createDossierNo BOOLEAN,eSignature BOOLEAN,configNote VARCHAR(75) null,dossierTemplateNo VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table opencps_processaction (uuid_ VARCHAR(75) null,processActionId LONG not null primary key,companyId LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,serviceProcessId LONG,preStepCode VARCHAR(75) null,postStepCode VARCHAR(75) null,autoEvent VARCHAR(75) null,preCondition VARCHAR(75) null,actionCode VARCHAR(75) null,actionName VARCHAR(75) null,allowAssignUser BOOLEAN,assignUserId LONG,requestPayment INTEGER,paymentFee VARCHAR(75) null,createDossierFiles VARCHAR(75) null,returnDossierFiles VARCHAR(75) null,makeBriefNote VARCHAR(75) null,syncActionCode VARCHAR(75) null,rollbackable BOOLEAN,createDossierNo BOOLEAN,eSignature BOOLEAN,configNote VARCHAR(75) null,dossierTemplateNo VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table opencps_processaction";
 	public static final String ORDER_BY_JPQL = " ORDER BY processAction.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY opencps_processaction.createDate ASC";
@@ -336,7 +336,7 @@ public class ProcessActionModelImpl extends BaseModelImpl<ProcessAction>
 			setAssignUserId(assignUserId);
 		}
 
-		Boolean requestPayment = (Boolean)attributes.get("requestPayment");
+		Integer requestPayment = (Integer)attributes.get("requestPayment");
 
 		if (requestPayment != null) {
 			setRequestPayment(requestPayment);
@@ -753,17 +753,12 @@ public class ProcessActionModelImpl extends BaseModelImpl<ProcessAction>
 	}
 
 	@Override
-	public boolean getRequestPayment() {
+	public int getRequestPayment() {
 		return _requestPayment;
 	}
 
 	@Override
-	public boolean isRequestPayment() {
-		return _requestPayment;
-	}
-
-	@Override
-	public void setRequestPayment(boolean requestPayment) {
+	public void setRequestPayment(int requestPayment) {
 		_requestPayment = requestPayment;
 	}
 
@@ -1464,7 +1459,7 @@ public class ProcessActionModelImpl extends BaseModelImpl<ProcessAction>
 	private String _originalActionName;
 	private boolean _allowAssignUser;
 	private long _assignUserId;
-	private boolean _requestPayment;
+	private int _requestPayment;
 	private String _paymentFee;
 	private String _createDossierFiles;
 	private String _returnDossierFiles;

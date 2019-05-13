@@ -3915,6 +3915,7 @@ public class VRVehicleRecordPersistenceImpl extends BasePersistenceImpl<VRVehicl
 
 		vrVehicleRecordImpl.setId(vrVehicleRecord.getId());
 		vrVehicleRecordImpl.setMtCore(vrVehicleRecord.getMtCore());
+		vrVehicleRecordImpl.setIssueId(vrVehicleRecord.getIssueId());
 		vrVehicleRecordImpl.setIssueVehicleCertificateId(vrVehicleRecord.getIssueVehicleCertificateId());
 		vrVehicleRecordImpl.setDossierId(vrVehicleRecord.getDossierId());
 		vrVehicleRecordImpl.setApplicantProfileId(vrVehicleRecord.getApplicantProfileId());

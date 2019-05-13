@@ -109,4 +109,9 @@ public class DossierTerm {
 	public static final String STATUS_REG = "statusReg";
 	public static final String NOT_STATUS_REG = "notStatusReg";
 	public static final String LOCK_STATE = "lockState";
+	public static final String DOSSIER_NO_EXPIRED = "dossierNoExpired";
+
+	public static final String EXPIRED_STATUS_NOT_ACTIVE = "0";
+	public static final String EXPIRED_STATUS_ACTIVE = "1";
+	public static final String EXPIRED_STATUS_WATTING = "2";
 }

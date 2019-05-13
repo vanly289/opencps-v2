@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the VRProductType service. Represents a row in the &quot;vr_productiontype&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the VRProductType service. Represents a row in the &quot;vr_producttype&quot; database table, with each column mapped to a property of this class.
  *
  * @author LamTV
  * @see VRProductTypeModel

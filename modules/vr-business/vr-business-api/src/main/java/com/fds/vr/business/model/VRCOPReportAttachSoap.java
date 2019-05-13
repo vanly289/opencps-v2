@@ -38,7 +38,9 @@ public class VRCOPReportAttachSoap implements Serializable {
 		soapModel.setCopReportRepositoryID(model.getCopReportRepositoryID());
 		soapModel.setCopReportNo(model.getCopReportNo());
 		soapModel.setSequenceNo(model.getSequenceNo());
-		soapModel.setAttachFileURL(model.getAttachFileURL());
+		soapModel.setDocName(model.getDocName());
+		soapModel.setDocNo(model.getDocNo());
+		soapModel.setRemarks(model.getRemarks());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 
@@ -136,12 +138,28 @@ public class VRCOPReportAttachSoap implements Serializable {
 		_sequenceNo = sequenceNo;
 	}
 
-	public String getAttachFileURL() {
-		return _attachFileURL;
+	public String getDocName() {
+		return _DocName;
 	}
 
-	public void setAttachFileURL(String attachFileURL) {
-		_attachFileURL = attachFileURL;
+	public void setDocName(String DocName) {
+		_DocName = DocName;
+	}
+
+	public String getDocNo() {
+		return _DocNo;
+	}
+
+	public void setDocNo(String DocNo) {
+		_DocNo = DocNo;
+	}
+
+	public String getRemarks() {
+		return _Remarks;
+	}
+
+	public void setRemarks(String Remarks) {
+		_Remarks = Remarks;
 	}
 
 	public Date getModifyDate() {
@@ -165,7 +183,9 @@ public class VRCOPReportAttachSoap implements Serializable {
 	private long _copReportRepositoryID;
 	private String _copReportNo;
 	private long _sequenceNo;
-	private String _attachFileURL;
+	private String _DocName;
+	private String _DocNo;
+	private String _Remarks;
 	private Date _modifyDate;
 	private Date _syncDate;
 }

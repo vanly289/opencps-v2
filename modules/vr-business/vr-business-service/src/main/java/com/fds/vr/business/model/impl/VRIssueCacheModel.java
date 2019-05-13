@@ -65,7 +65,7 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(113);
+		StringBundler sb = new StringBundler(119);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -175,6 +175,12 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		sb.append(applicantmaker);
 		sb.append(", applicantchecker=");
 		sb.append(applicantchecker);
+		sb.append(", inspectorId=");
+		sb.append(inspectorId);
+		sb.append(", issueInspectorId=");
+		sb.append(issueInspectorId);
+		sb.append(", verifyInspectorId=");
+		sb.append(verifyInspectorId);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -481,6 +487,10 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 			vrIssueImpl.setApplicantchecker(applicantchecker);
 		}
 
+		vrIssueImpl.setInspectorId(inspectorId);
+		vrIssueImpl.setIssueInspectorId(issueInspectorId);
+		vrIssueImpl.setVerifyInspectorId(verifyInspectorId);
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrIssueImpl.setModifyDate(null);
 		}
@@ -570,6 +580,12 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		leadername = objectInput.readUTF();
 		applicantmaker = objectInput.readUTF();
 		applicantchecker = objectInput.readUTF();
+
+		inspectorId = objectInput.readLong();
+
+		issueInspectorId = objectInput.readLong();
+
+		verifyInspectorId = objectInput.readLong();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -854,6 +870,11 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 			objectOutput.writeUTF(applicantchecker);
 		}
 
+		objectOutput.writeLong(inspectorId);
+
+		objectOutput.writeLong(issueInspectorId);
+
+		objectOutput.writeLong(verifyInspectorId);
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -912,6 +933,9 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 	public String leadername;
 	public String applicantmaker;
 	public String applicantchecker;
+	public long inspectorId;
+	public long issueInspectorId;
+	public long verifyInspectorId;
 	public long modifyDate;
 	public long syncDate;
 }
