@@ -103,9 +103,10 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 	}
 
 	@Override
-	public com.fds.vr.business.model.VRProductionPlantProdEquipment updateProductionPlantEmployee(
-		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
-		return _vrProductionPlantProdEquipmentLocalService.updateProductionPlantEmployee(mapValues);
+	public com.fds.vr.business.model.VRProductionPlantProdEquipment updateProductionPlantProdEquipment(
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return _vrProductionPlantProdEquipmentLocalService.updateProductionPlantProdEquipment(mapValues,
+			mtCore);
 	}
 
 	/**
@@ -278,6 +279,12 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _vrProductionPlantProdEquipmentLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteByproductPlantID(long mtCore, long productPlantId) {
+		_vrProductionPlantProdEquipmentLocalService.deleteByproductPlantID(mtCore,
+			productPlantId);
 	}
 
 	@Override

@@ -63,9 +63,9 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 		attributes.put("copReportRepositoryID", getCopReportRepositoryID());
 		attributes.put("copReportNo", getCopReportNo());
 		attributes.put("sequenceNo", getSequenceNo());
-		attributes.put("DocName", getDocName());
-		attributes.put("DocNo", getDocNo());
-		attributes.put("Remarks", getRemarks());
+		attributes.put("docName", getDocName());
+		attributes.put("docNo", getDocNo());
+		attributes.put("remarks", getRemarks());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -105,22 +105,22 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 			setSequenceNo(sequenceNo);
 		}
 
-		String DocName = (String)attributes.get("DocName");
+		String docName = (String)attributes.get("docName");
 
-		if (DocName != null) {
-			setDocName(DocName);
+		if (docName != null) {
+			setDocName(docName);
 		}
 
-		String DocNo = (String)attributes.get("DocNo");
+		String docNo = (String)attributes.get("docNo");
 
-		if (DocNo != null) {
-			setDocNo(DocNo);
+		if (docNo != null) {
+			setDocNo(docNo);
 		}
 
-		String Remarks = (String)attributes.get("Remarks");
+		String remarks = (String)attributes.get("remarks");
 
-		if (Remarks != null) {
-			setRemarks(Remarks);
+		if (remarks != null) {
+			setRemarks(remarks);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -344,21 +344,21 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 	/**
 	* Sets the doc name of this vrcop report attach.
 	*
-	* @param DocName the doc name of this vrcop report attach
+	* @param docName the doc name of this vrcop report attach
 	*/
 	@Override
-	public void setDocName(java.lang.String DocName) {
-		_vrcopReportAttach.setDocName(DocName);
+	public void setDocName(java.lang.String docName) {
+		_vrcopReportAttach.setDocName(docName);
 	}
 
 	/**
 	* Sets the doc no of this vrcop report attach.
 	*
-	* @param DocNo the doc no of this vrcop report attach
+	* @param docNo the doc no of this vrcop report attach
 	*/
 	@Override
-	public void setDocNo(java.lang.String DocNo) {
-		_vrcopReportAttach.setDocNo(DocNo);
+	public void setDocNo(java.lang.String docNo) {
+		_vrcopReportAttach.setDocNo(docNo);
 	}
 
 	@Override
@@ -430,11 +430,11 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 	/**
 	* Sets the remarks of this vrcop report attach.
 	*
-	* @param Remarks the remarks of this vrcop report attach
+	* @param remarks the remarks of this vrcop report attach
 	*/
 	@Override
-	public void setRemarks(java.lang.String Remarks) {
-		_vrcopReportAttach.setRemarks(Remarks);
+	public void setRemarks(java.lang.String remarks) {
+		_vrcopReportAttach.setRemarks(remarks);
 	}
 
 	/**

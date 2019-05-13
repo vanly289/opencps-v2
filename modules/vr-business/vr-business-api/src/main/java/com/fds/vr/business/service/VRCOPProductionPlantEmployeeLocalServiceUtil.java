@@ -107,8 +107,8 @@ public class VRCOPProductionPlantEmployeeLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRCOPProductionPlantEmployee updateCOPProductionPlantEmployee(
-		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
-		return getService().updateCOPProductionPlantEmployee(mapValues);
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return getService().updateCOPProductionPlantEmployee(mapValues, mtCore);
 	}
 
 	/**

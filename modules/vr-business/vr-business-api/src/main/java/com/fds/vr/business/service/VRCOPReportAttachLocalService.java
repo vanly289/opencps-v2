@@ -36,8 +36,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for VRCOPReportAttach. Methods of this
@@ -116,7 +116,7 @@ public interface VRCOPReportAttachLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public VRCOPReportAttach updateCOPReportAttach(
-		LinkedHashMap<java.lang.String, java.lang.String> mapValues);
+		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 
 	/**
 	* Updates the vrcop report attach in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

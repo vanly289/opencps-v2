@@ -1196,9 +1196,9 @@
 		<column name="copReportRepositoryID" type="long" db-name="copReportRepositoryID"/>
 		<column name="copReportNo" type="String" db-name="copReportNo"/>
 		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
-		<column name="DocName" type="String" db-name="DocName"/>
-		<column name="DocNo" type="String" db-name="DocNo"/>
-		<column name="Remarks" type="String" db-name="Remarks"/>
+		<column name="docName" type="String" db-name="DocName"/>
+		<column name="docNo" type="String" db-name="DocNo"/>
+		<column name="remarks" type="String" db-name="Remarks"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		<!-- Filter -->

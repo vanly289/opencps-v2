@@ -14,22 +14,20 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRCOPReportRepository;
+import com.fds.vr.business.service.base.VRCOPReportRepositoryLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.action.util.ConvertFormatDate;
-import com.fds.vr.business.model.VRCOPReportRepository;
-import com.fds.vr.business.model.VRProductType;
-import com.fds.vr.business.service.base.VRCOPReportRepositoryLocalServiceBaseImpl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vrcop report repository local service.
@@ -104,7 +102,7 @@ public class VRCOPReportRepositoryLocalServiceImpl
 		
 	}
 
-	public VRCOPReportRepository updateCOPReportRepository(LinkedHashMap<String, String> mapValues) {
+	public VRCOPReportRepository updateCOPReportRepository(Map<String, String> mapValues, int mtCore) {
 		
 		Date now = new Date();
 
@@ -114,31 +112,30 @@ public class VRCOPReportRepositoryLocalServiceImpl
 
 		/// Add audit fields
 		object.setSyncDate(now);
+		object.setModifyDate(now);
 
 		// Add other fields
-		object.setMtCore(Long.valueOf(mapValues.get("")));
-		object.setApplicantProfileId(Long.valueOf(mapValues.get("")));
-		object.setApplicantName(mapValues.get(""));
-		object.setApplicantAddress(mapValues.get(""));
-		object.setOverseasManufacturerCode(mapValues.get(""));
-		object.setOverseasManufacturerName(mapValues.get(""));
-		object.setOverseasManufacturerAddress(mapValues.get(""));
-		object.setProductionPlantId(Long.valueOf(mapValues.get("")));
-		object.setProductionPlantCode(mapValues.get(""));
-		object.setProductionPlantName(mapValues.get(""));
-		object.setProductionPlantAddress(mapValues.get(""));
-		object.setCopReportNo(mapValues.get(""));
-		object.setCopReportStatus(mapValues.get(""));
-		object.setCopReportType(mapValues.get(""));
-		object.setCopReportMetadata(mapValues.get(""));
-		object.setCopReportSignName(mapValues.get(""));
-		object.setCopReportSignTitle(mapValues.get(""));
-		object.setCopReportSignPlace(mapValues.get(""));
-		object.setCopReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
-		object.setCopReportApprovedDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
-		object.setCopReportExpiredDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
-
-		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+		object.setMtCore(mtCore);
+		object.setApplicantProfileId(Long.valueOf(mapValues.get("applicantProfileId")));
+		object.setApplicantName(mapValues.get("applicantName"));
+		object.setApplicantAddress(mapValues.get("applicantAddress"));
+		object.setOverseasManufacturerCode(mapValues.get("overseasManufacturerCode"));
+		object.setOverseasManufacturerName(mapValues.get("overseasManufacturerName"));
+		object.setOverseasManufacturerAddress(mapValues.get("overseasManufacturerAddress"));
+		object.setProductionPlantId(Long.valueOf(mapValues.get("productionPlantId")));
+		object.setProductionPlantCode(mapValues.get("productionPlantCode"));
+		object.setProductionPlantName(mapValues.get("productionPlantName"));
+		object.setProductionPlantAddress(mapValues.get("productionPlantAddress"));
+		object.setCopReportNo(mapValues.get("copReportNo"));
+		object.setCopReportStatus(mapValues.get("copReportStatus"));
+		object.setCopReportType(mapValues.get("copReportType"));
+		object.setCopReportMetadata(mapValues.get("copReportMetadata"));
+		object.setCopReportSignName(mapValues.get("copReportSignName"));
+		object.setCopReportSignTitle(mapValues.get("copReportSignTitle"));
+		object.setCopReportSignPlace(mapValues.get("copReportSignPlace"));
+		object.setCopReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("copReportDate")));
+		object.setCopReportApprovedDate(ConvertFormatDate.parseStringToDate(mapValues.get("copReportApprovedDate")));
+		object.setCopReportExpiredDate(ConvertFormatDate.parseStringToDate(mapValues.get("copReportExpiredDate")));
 
 		return vrcopReportRepositoryPersistence.update(object);
 	}

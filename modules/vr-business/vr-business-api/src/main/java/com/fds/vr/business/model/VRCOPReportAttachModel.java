@@ -144,9 +144,9 @@ public interface VRCOPReportAttachModel extends BaseModel<VRCOPReportAttach> {
 	/**
 	 * Sets the doc name of this vrcop report attach.
 	 *
-	 * @param DocName the doc name of this vrcop report attach
+	 * @param docName the doc name of this vrcop report attach
 	 */
-	public void setDocName(String DocName);
+	public void setDocName(String docName);
 
 	/**
 	 * Returns the doc no of this vrcop report attach.
@@ -159,9 +159,9 @@ public interface VRCOPReportAttachModel extends BaseModel<VRCOPReportAttach> {
 	/**
 	 * Sets the doc no of this vrcop report attach.
 	 *
-	 * @param DocNo the doc no of this vrcop report attach
+	 * @param docNo the doc no of this vrcop report attach
 	 */
-	public void setDocNo(String DocNo);
+	public void setDocNo(String docNo);
 
 	/**
 	 * Returns the remarks of this vrcop report attach.
@@ -174,9 +174,9 @@ public interface VRCOPReportAttachModel extends BaseModel<VRCOPReportAttach> {
 	/**
 	 * Sets the remarks of this vrcop report attach.
 	 *
-	 * @param Remarks the remarks of this vrcop report attach
+	 * @param remarks the remarks of this vrcop report attach
 	 */
-	public void setRemarks(String Remarks);
+	public void setRemarks(String remarks);
 
 	/**
 	 * Returns the modify date of this vrcop report attach.
