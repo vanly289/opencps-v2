@@ -20,11 +20,18 @@ import com.fds.vr.business.service.persistence.VRCOPReportAttachPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Set;
+
 /**
  * @author LamTV
  * @generated
  */
 public class VRCOPReportAttachFinderBaseImpl extends BasePersistenceImpl<VRCOPReportAttach> {
+	@Override
+	public Set<String> getBadColumnNames() {
+		return getVRCOPReportAttachPersistence().getBadColumnNames();
+	}
+
 	/**
 	 * Returns the vrcop report attach persistence.
 	 *

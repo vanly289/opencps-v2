@@ -105,8 +105,8 @@ public class VRCOPReportAttachLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRCOPReportAttach updateCOPReportAttach(
-		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
-		return getService().updateCOPReportAttach(mapValues);
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return getService().updateCOPReportAttach(mapValues, mtCore);
 	}
 
 	/**

@@ -361,7 +361,7 @@ public class PaymentFileUtils {
 				model.setInvoiceFileSize(0L);
 			}
 
-			
+			model.seteInvoice(doc.get(PaymentFileTerm.E_INVOICE));
 			model.setBriefNote(dossier.getBriefNote());
 
 			results.add(model);

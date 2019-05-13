@@ -139,27 +139,27 @@ public class VRCOPReportAttachSoap implements Serializable {
 	}
 
 	public String getDocName() {
-		return _DocName;
+		return _docName;
 	}
 
-	public void setDocName(String DocName) {
-		_DocName = DocName;
+	public void setDocName(String docName) {
+		_docName = docName;
 	}
 
 	public String getDocNo() {
-		return _DocNo;
+		return _docNo;
 	}
 
-	public void setDocNo(String DocNo) {
-		_DocNo = DocNo;
+	public void setDocNo(String docNo) {
+		_docNo = docNo;
 	}
 
 	public String getRemarks() {
-		return _Remarks;
+		return _remarks;
 	}
 
-	public void setRemarks(String Remarks) {
-		_Remarks = Remarks;
+	public void setRemarks(String remarks) {
+		_remarks = remarks;
 	}
 
 	public Date getModifyDate() {
@@ -183,9 +183,9 @@ public class VRCOPReportAttachSoap implements Serializable {
 	private long _copReportRepositoryID;
 	private String _copReportNo;
 	private long _sequenceNo;
-	private String _DocName;
-	private String _DocNo;
-	private String _Remarks;
+	private String _docName;
+	private String _docNo;
+	private String _remarks;
 	private Date _modifyDate;
 	private Date _syncDate;
 }

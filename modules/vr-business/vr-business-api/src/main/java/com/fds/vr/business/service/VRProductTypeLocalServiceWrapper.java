@@ -102,8 +102,8 @@ public class VRProductTypeLocalServiceWrapper
 
 	@Override
 	public com.fds.vr.business.model.VRProductType updateProductType(
-		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
-		return _vrProductTypeLocalService.updateProductType(mapValues);
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return _vrProductTypeLocalService.updateProductType(mapValues, mtCore);
 	}
 
 	/**
@@ -274,6 +274,11 @@ public class VRProductTypeLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _vrProductTypeLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteByproductPlantId(long mtCore, long productPlantId) {
+		_vrProductTypeLocalService.deleteByproductPlantId(mtCore, productPlantId);
 	}
 
 	@Override

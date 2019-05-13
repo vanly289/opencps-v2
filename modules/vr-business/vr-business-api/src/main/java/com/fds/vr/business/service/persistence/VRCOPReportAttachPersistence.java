@@ -459,4 +459,7 @@ public interface VRCOPReportAttachPersistence extends BasePersistence<VRCOPRepor
 	* @return the number of vrcop report attachs
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

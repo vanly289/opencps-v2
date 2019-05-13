@@ -112,8 +112,8 @@ public class VRCOPReportRepositoryLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRCOPReportRepository updateCOPReportRepository(
-		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
-		return getService().updateCOPReportRepository(mapValues);
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return getService().updateCOPReportRepository(mapValues, mtCore);
 	}
 
 	/**
