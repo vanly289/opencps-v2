@@ -211,19 +211,19 @@ public class VRClearingStampbookSoap implements Serializable {
 		_stampShortNo = stampShortNo;
 	}
 
-	public String getSerialStartNo() {
+	public long getSerialStartNo() {
 		return _serialStartNo;
 	}
 
-	public void setSerialStartNo(String serialStartNo) {
+	public void setSerialStartNo(long serialStartNo) {
 		_serialStartNo = serialStartNo;
 	}
 
-	public String getSerialEndNo() {
+	public long getSerialEndNo() {
 		return _serialEndNo;
 	}
 
-	public void setSerialEndNo(String serialEndNo) {
+	public void setSerialEndNo(long serialEndNo) {
 		_serialEndNo = serialEndNo;
 	}
 
@@ -343,8 +343,8 @@ public class VRClearingStampbookSoap implements Serializable {
 	private String _vehicleClass;
 	private String _stampType;
 	private String _stampShortNo;
-	private String _serialStartNo;
-	private String _serialEndNo;
+	private long _serialStartNo;
+	private long _serialEndNo;
 	private long _subTotalInDocument;
 	private long _subTotalQuantities;
 	private long _vehiclePrice;

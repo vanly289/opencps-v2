@@ -105,15 +105,18 @@ public class VROutputSheetDetailsLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VROutputSheetDetails updateOutputSheetDetails(
-		long id, long mtCore, long inputSheetId, long outputSheetId,
-		long bookId, long issueVehicleCertificateId, long certificateId,
+		long id, long mtCore, java.lang.Long inputSheetId,
+		java.lang.Long outputSheetId, java.lang.Long bookId,
+		java.lang.Long issueVehicleCertificateId, java.lang.Long certificateId,
 		java.lang.String certificateNumber, java.util.Date certificateDate,
 		java.lang.String vehicleClass, java.lang.String stampType,
-		java.lang.String stampShortNo, java.lang.String serialStartNo,
-		java.lang.String serialEndNo, long subTotalInDocument,
-		long subTotalQuantities, long unitPrice, long totalAmount,
-		long totalInUse, long totalNotUsed, long totalLost,
-		long totalCancelled, long totalReturned, java.lang.String remark)
+		java.lang.String stampShortNo, java.lang.Long serialStartNo,
+		java.lang.Long serialEndNo, java.lang.Long subTotalInDocument,
+		java.lang.Long subTotalQuantities, java.lang.Long unitPrice,
+		java.lang.Long totalAmount, java.lang.Long totalInUse,
+		java.lang.Long totalNotUsed, java.lang.Long totalLost,
+		java.lang.Long totalCancelled, java.lang.Long totalReturned,
+		java.lang.String remark)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()

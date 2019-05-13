@@ -182,15 +182,14 @@ public interface VRInputStampbookModel extends BaseModel<VRInputStampbook> {
 	 *
 	 * @return the serial end no of this vr input stampbook
 	 */
-	@AutoEscape
-	public String getSerialEndNo();
+	public long getSerialEndNo();
 
 	/**
 	 * Sets the serial end no of this vr input stampbook.
 	 *
 	 * @param serialEndNo the serial end no of this vr input stampbook
 	 */
-	public void setSerialEndNo(String serialEndNo);
+	public void setSerialEndNo(long serialEndNo);
 
 	/**
 	 * Returns the sub total in document of this vr input stampbook.

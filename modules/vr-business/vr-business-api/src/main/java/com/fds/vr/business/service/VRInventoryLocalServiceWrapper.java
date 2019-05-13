@@ -101,13 +101,15 @@ public class VRInventoryLocalServiceWrapper implements VRInventoryLocalService,
 
 	@Override
 	public com.fds.vr.business.model.VRInventory updateInventory(long id,
-		long mtCore, long yearofPeriod, java.lang.String previousPeriod,
-		java.lang.String previousPeriodCode, long bookId,
-		java.lang.String vehicleClass, java.lang.String stampType,
-		java.lang.String stampShortNo, java.lang.String serialStartNo,
-		java.lang.String serialEndNo, long totalQuantities, long totalInUse,
-		long totalNotUsed, java.lang.String remark,
-		java.lang.String corporationId, long checkType, long checkStatus)
+		long mtCore, java.lang.Long yearofPeriod,
+		java.lang.String previousPeriod, java.lang.String previousPeriodCode,
+		java.lang.Long bookId, java.lang.String vehicleClass,
+		java.lang.String stampType, java.lang.String stampShortNo,
+		java.lang.Long serialStartNo, java.lang.Long serialEndNo,
+		java.lang.Long totalQuantities, java.lang.Long totalInUse,
+		java.lang.Long totalNotUsed, java.lang.String remark,
+		java.lang.Long corporationId, java.lang.Long checkType,
+		java.lang.Long checkStatus)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _vrInventoryLocalService.updateInventory(id, mtCore,
@@ -261,7 +263,7 @@ public class VRInventoryLocalServiceWrapper implements VRInventoryLocalService,
 
 	@Override
 	public java.util.List<com.fds.vr.business.model.VRInventory> findByYearofPeriodAndCorporationId(
-		long mtCore, long yearofPeriod, java.lang.String corporationId)
+		long mtCore, long yearofPeriod, long corporationId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _vrInventoryLocalService.findByYearofPeriodAndCorporationId(mtCore,

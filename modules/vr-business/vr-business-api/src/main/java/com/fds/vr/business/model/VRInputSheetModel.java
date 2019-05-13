@@ -139,15 +139,14 @@ public interface VRInputSheetModel extends BaseModel<VRInputSheet> {
 	 *
 	 * @return the corporation ID of this vr input sheet
 	 */
-	@AutoEscape
-	public String getCorporationId();
+	public long getCorporationId();
 
 	/**
 	 * Sets the corporation ID of this vr input sheet.
 	 *
 	 * @param corporationId the corporation ID of this vr input sheet
 	 */
-	public void setCorporationId(String corporationId);
+	public void setCorporationId(long corporationId);
 
 	/**
 	 * Returns the input sheet type of this vr input sheet.

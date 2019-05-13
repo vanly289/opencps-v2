@@ -358,7 +358,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @return the matching vr input stampbook detailses
 	*/
 	public java.util.List<VRInputStampbookDetails> findBycorporationId(
-		long mtCore, java.lang.String corporationId);
+		long mtCore, long corporationId);
 
 	/**
 	* Returns a range of all the vr input stampbook detailses where mtCore = &#63; and corporationId = &#63;.
@@ -374,7 +374,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @return the range of matching vr input stampbook detailses
 	*/
 	public java.util.List<VRInputStampbookDetails> findBycorporationId(
-		long mtCore, java.lang.String corporationId, int start, int end);
+		long mtCore, long corporationId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the vr input stampbook detailses where mtCore = &#63; and corporationId = &#63;.
@@ -391,7 +391,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @return the ordered range of matching vr input stampbook detailses
 	*/
 	public java.util.List<VRInputStampbookDetails> findBycorporationId(
-		long mtCore, java.lang.String corporationId, int start, int end,
+		long mtCore, long corporationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputStampbookDetails> orderByComparator);
 
 	/**
@@ -410,7 +410,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @return the ordered range of matching vr input stampbook detailses
 	*/
 	public java.util.List<VRInputStampbookDetails> findBycorporationId(
-		long mtCore, java.lang.String corporationId, int start, int end,
+		long mtCore, long corporationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputStampbookDetails> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -424,7 +424,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @throws NoSuchVRInputStampbookDetailsException if a matching vr input stampbook details could not be found
 	*/
 	public VRInputStampbookDetails findBycorporationId_First(long mtCore,
-		java.lang.String corporationId,
+		long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputStampbookDetails> orderByComparator)
 		throws NoSuchVRInputStampbookDetailsException;
 
@@ -437,7 +437,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @return the first matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
 	*/
 	public VRInputStampbookDetails fetchBycorporationId_First(long mtCore,
-		java.lang.String corporationId,
+		long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputStampbookDetails> orderByComparator);
 
 	/**
@@ -450,7 +450,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @throws NoSuchVRInputStampbookDetailsException if a matching vr input stampbook details could not be found
 	*/
 	public VRInputStampbookDetails findBycorporationId_Last(long mtCore,
-		java.lang.String corporationId,
+		long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputStampbookDetails> orderByComparator)
 		throws NoSuchVRInputStampbookDetailsException;
 
@@ -463,7 +463,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @return the last matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
 	*/
 	public VRInputStampbookDetails fetchBycorporationId_Last(long mtCore,
-		java.lang.String corporationId,
+		long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputStampbookDetails> orderByComparator);
 
 	/**
@@ -477,7 +477,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @throws NoSuchVRInputStampbookDetailsException if a vr input stampbook details with the primary key could not be found
 	*/
 	public VRInputStampbookDetails[] findBycorporationId_PrevAndNext(long id,
-		long mtCore, java.lang.String corporationId,
+		long mtCore, long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputStampbookDetails> orderByComparator)
 		throws NoSuchVRInputStampbookDetailsException;
 
@@ -487,8 +487,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @param mtCore the mt core
 	* @param corporationId the corporation ID
 	*/
-	public void removeBycorporationId(long mtCore,
-		java.lang.String corporationId);
+	public void removeBycorporationId(long mtCore, long corporationId);
 
 	/**
 	* Returns the number of vr input stampbook detailses where mtCore = &#63; and corporationId = &#63;.
@@ -497,7 +496,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @param corporationId the corporation ID
 	* @return the number of matching vr input stampbook detailses
 	*/
-	public int countBycorporationId(long mtCore, java.lang.String corporationId);
+	public int countBycorporationId(long mtCore, long corporationId);
 
 	/**
 	* Returns all the vr input stampbook detailses where mtCore = &#63; and dossierId = &#63;.
@@ -1214,4 +1213,7 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	* @return the number of vr input stampbook detailses
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

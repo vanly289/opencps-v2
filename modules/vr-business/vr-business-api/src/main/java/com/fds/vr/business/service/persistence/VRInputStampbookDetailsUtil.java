@@ -509,7 +509,7 @@ public class VRInputStampbookDetailsUtil {
 	* @return the matching vr input stampbook detailses
 	*/
 	public static List<VRInputStampbookDetails> findBycorporationId(
-		long mtCore, java.lang.String corporationId) {
+		long mtCore, long corporationId) {
 		return getPersistence().findBycorporationId(mtCore, corporationId);
 	}
 
@@ -527,7 +527,7 @@ public class VRInputStampbookDetailsUtil {
 	* @return the range of matching vr input stampbook detailses
 	*/
 	public static List<VRInputStampbookDetails> findBycorporationId(
-		long mtCore, java.lang.String corporationId, int start, int end) {
+		long mtCore, long corporationId, int start, int end) {
 		return getPersistence()
 				   .findBycorporationId(mtCore, corporationId, start, end);
 	}
@@ -547,7 +547,7 @@ public class VRInputStampbookDetailsUtil {
 	* @return the ordered range of matching vr input stampbook detailses
 	*/
 	public static List<VRInputStampbookDetails> findBycorporationId(
-		long mtCore, java.lang.String corporationId, int start, int end,
+		long mtCore, long corporationId, int start, int end,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator) {
 		return getPersistence()
 				   .findBycorporationId(mtCore, corporationId, start, end,
@@ -570,7 +570,7 @@ public class VRInputStampbookDetailsUtil {
 	* @return the ordered range of matching vr input stampbook detailses
 	*/
 	public static List<VRInputStampbookDetails> findBycorporationId(
-		long mtCore, java.lang.String corporationId, int start, int end,
+		long mtCore, long corporationId, int start, int end,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -588,7 +588,7 @@ public class VRInputStampbookDetailsUtil {
 	* @throws NoSuchVRInputStampbookDetailsException if a matching vr input stampbook details could not be found
 	*/
 	public static VRInputStampbookDetails findBycorporationId_First(
-		long mtCore, java.lang.String corporationId,
+		long mtCore, long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInputStampbookDetailsException {
 		return getPersistence()
@@ -605,7 +605,7 @@ public class VRInputStampbookDetailsUtil {
 	* @return the first matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
 	*/
 	public static VRInputStampbookDetails fetchBycorporationId_First(
-		long mtCore, java.lang.String corporationId,
+		long mtCore, long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator) {
 		return getPersistence()
 				   .fetchBycorporationId_First(mtCore, corporationId,
@@ -622,7 +622,7 @@ public class VRInputStampbookDetailsUtil {
 	* @throws NoSuchVRInputStampbookDetailsException if a matching vr input stampbook details could not be found
 	*/
 	public static VRInputStampbookDetails findBycorporationId_Last(
-		long mtCore, java.lang.String corporationId,
+		long mtCore, long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInputStampbookDetailsException {
 		return getPersistence()
@@ -639,7 +639,7 @@ public class VRInputStampbookDetailsUtil {
 	* @return the last matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
 	*/
 	public static VRInputStampbookDetails fetchBycorporationId_Last(
-		long mtCore, java.lang.String corporationId,
+		long mtCore, long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator) {
 		return getPersistence()
 				   .fetchBycorporationId_Last(mtCore, corporationId,
@@ -657,7 +657,7 @@ public class VRInputStampbookDetailsUtil {
 	* @throws NoSuchVRInputStampbookDetailsException if a vr input stampbook details with the primary key could not be found
 	*/
 	public static VRInputStampbookDetails[] findBycorporationId_PrevAndNext(
-		long id, long mtCore, java.lang.String corporationId,
+		long id, long mtCore, long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInputStampbookDetailsException {
 		return getPersistence()
@@ -671,8 +671,7 @@ public class VRInputStampbookDetailsUtil {
 	* @param mtCore the mt core
 	* @param corporationId the corporation ID
 	*/
-	public static void removeBycorporationId(long mtCore,
-		java.lang.String corporationId) {
+	public static void removeBycorporationId(long mtCore, long corporationId) {
 		getPersistence().removeBycorporationId(mtCore, corporationId);
 	}
 
@@ -683,8 +682,7 @@ public class VRInputStampbookDetailsUtil {
 	* @param corporationId the corporation ID
 	* @return the number of matching vr input stampbook detailses
 	*/
-	public static int countBycorporationId(long mtCore,
-		java.lang.String corporationId) {
+	public static int countBycorporationId(long mtCore, long corporationId) {
 		return getPersistence().countBycorporationId(mtCore, corporationId);
 	}
 
@@ -1577,6 +1575,10 @@ public class VRInputStampbookDetailsUtil {
 	*/
 	public static int countAll() {
 		return getPersistence().countAll();
+	}
+
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
 	}
 
 	public static VRInputStampbookDetailsPersistence getPersistence() {

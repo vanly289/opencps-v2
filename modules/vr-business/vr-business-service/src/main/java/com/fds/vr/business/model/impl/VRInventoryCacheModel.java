@@ -158,20 +158,8 @@ public class VRInventoryCacheModel implements CacheModel<VRInventory>,
 			vrInventoryImpl.setStampShortNo(stampShortNo);
 		}
 
-		if (serialStartNo == null) {
-			vrInventoryImpl.setSerialStartNo(StringPool.BLANK);
-		}
-		else {
-			vrInventoryImpl.setSerialStartNo(serialStartNo);
-		}
-
-		if (serialEndNo == null) {
-			vrInventoryImpl.setSerialEndNo(StringPool.BLANK);
-		}
-		else {
-			vrInventoryImpl.setSerialEndNo(serialEndNo);
-		}
-
+		vrInventoryImpl.setSerialStartNo(serialStartNo);
+		vrInventoryImpl.setSerialEndNo(serialEndNo);
 		vrInventoryImpl.setTotalQuantities(totalQuantities);
 		vrInventoryImpl.setTotalInUse(totalInUse);
 		vrInventoryImpl.setTotalNotUsed(totalNotUsed);
@@ -183,13 +171,7 @@ public class VRInventoryCacheModel implements CacheModel<VRInventory>,
 			vrInventoryImpl.setRemark(remark);
 		}
 
-		if (corporationId == null) {
-			vrInventoryImpl.setCorporationId(StringPool.BLANK);
-		}
-		else {
-			vrInventoryImpl.setCorporationId(corporationId);
-		}
-
+		vrInventoryImpl.setCorporationId(corporationId);
 		vrInventoryImpl.setCheckType(checkType);
 		vrInventoryImpl.setCheckStatus(checkStatus);
 
@@ -226,8 +208,10 @@ public class VRInventoryCacheModel implements CacheModel<VRInventory>,
 		vehicleClass = objectInput.readUTF();
 		stampType = objectInput.readUTF();
 		stampShortNo = objectInput.readUTF();
-		serialStartNo = objectInput.readUTF();
-		serialEndNo = objectInput.readUTF();
+
+		serialStartNo = objectInput.readLong();
+
+		serialEndNo = objectInput.readLong();
 
 		totalQuantities = objectInput.readLong();
 
@@ -235,7 +219,8 @@ public class VRInventoryCacheModel implements CacheModel<VRInventory>,
 
 		totalNotUsed = objectInput.readLong();
 		remark = objectInput.readUTF();
-		corporationId = objectInput.readUTF();
+
+		corporationId = objectInput.readLong();
 
 		checkType = objectInput.readLong();
 
@@ -290,19 +275,9 @@ public class VRInventoryCacheModel implements CacheModel<VRInventory>,
 			objectOutput.writeUTF(stampShortNo);
 		}
 
-		if (serialStartNo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(serialStartNo);
-		}
+		objectOutput.writeLong(serialStartNo);
 
-		if (serialEndNo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(serialEndNo);
-		}
+		objectOutput.writeLong(serialEndNo);
 
 		objectOutput.writeLong(totalQuantities);
 
@@ -317,12 +292,7 @@ public class VRInventoryCacheModel implements CacheModel<VRInventory>,
 			objectOutput.writeUTF(remark);
 		}
 
-		if (corporationId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(corporationId);
-		}
+		objectOutput.writeLong(corporationId);
 
 		objectOutput.writeLong(checkType);
 
@@ -340,13 +310,13 @@ public class VRInventoryCacheModel implements CacheModel<VRInventory>,
 	public String vehicleClass;
 	public String stampType;
 	public String stampShortNo;
-	public String serialStartNo;
-	public String serialEndNo;
+	public long serialStartNo;
+	public long serialEndNo;
 	public long totalQuantities;
 	public long totalInUse;
 	public long totalNotUsed;
 	public String remark;
-	public String corporationId;
+	public long corporationId;
 	public long checkType;
 	public long checkStatus;
 	public long modifyDate;

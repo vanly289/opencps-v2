@@ -22,6 +22,7 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.fds.vr.business.model.VRInputSheet;
 import com.fds.vr.business.service.base.VRInputSheetLocalServiceBaseImpl;
@@ -50,11 +51,11 @@ public class VRInputSheetLocalServiceImpl
 	 */
 	
 	public VRInputSheet updateInputSheet(long id, long mtCore, String inputSheetNo, 
-			Date inputSheetDate, String originalDocumentNo, String corporationId, 
-			long inputSheetType, String maker, String checker, 
+			Date inputSheetDate, String originalDocumentNo, Long corporationId, 
+			Long inputSheetType, String maker, String checker, 
 			String approver, String deliveryName, String inventoryName, 
-			String inventoryPlace, Date inventoryDate, String bookIDList, long isApproval, 
-			long totalQuantities, long totalAmount, String amountInWords, String remark)
+			String inventoryPlace, Date inventoryDate, String bookIDList, Long isApproval, 
+			Long totalQuantities, Long totalAmount, String amountInWords, String remark, String stampbooks)
 		throws PortalException, SystemException {
 		
 		VRInputSheet inputSheet = null;
@@ -68,24 +69,62 @@ public class VRInputSheetLocalServiceImpl
 		
 		inputSheet.setModifyDate(new Date());
 		inputSheet.setMtCore(mtCore);
-		inputSheet.setInputSheetNo(inputSheetNo);
-		inputSheet.setInputSheetDate(inputSheetDate);
-		inputSheet.setOriginalDocumentNo(originalDocumentNo);
-		inputSheet.setCorporationId(corporationId);
-		inputSheet.setInputSheetType(inputSheetType);
-		inputSheet.setMaker(maker);
-		inputSheet.setChecker(checker);
-		inputSheet.setApprover(approver);
-		inputSheet.setDeliveryName(deliveryName);
-		inputSheet.setInventoryName(inventoryName);
-		inputSheet.setInventoryPlace(inventoryPlace);
-		inputSheet.setInventoryDate(inventoryDate);
-		inputSheet.setBookIDList(bookIDList);
-		inputSheet.setIsApproval(isApproval);
-		inputSheet.setTotalQuantities(totalQuantities);
-		inputSheet.setTotalAmount(totalAmount);
-		inputSheet.setAmountInWords(amountInWords);
-		inputSheet.setRemark(remark);
+		
+		if(Validator.isNotNull(inputSheetNo))
+			inputSheet.setInputSheetNo(inputSheetNo);
+		
+		if(Validator.isNotNull(inputSheetDate))
+			inputSheet.setInputSheetDate(inputSheetDate);
+		
+		if(Validator.isNotNull(originalDocumentNo))
+			inputSheet.setOriginalDocumentNo(originalDocumentNo);
+		
+		if(Validator.isNotNull(corporationId))
+			inputSheet.setCorporationId(corporationId);
+			
+		if(Validator.isNotNull(inputSheetType))
+			inputSheet.setInputSheetType(inputSheetType);
+		
+		if(Validator.isNotNull(maker))
+			inputSheet.setMaker(maker);
+		
+		if(Validator.isNotNull(checker))
+			inputSheet.setChecker(checker);
+		
+		if(Validator.isNotNull(approver))
+			inputSheet.setApprover(approver);
+		
+		if(Validator.isNotNull(deliveryName))
+			inputSheet.setDeliveryName(deliveryName);
+		
+		if(Validator.isNotNull(inventoryName))
+			inputSheet.setInventoryName(inventoryName);
+		
+		if(Validator.isNotNull(inventoryPlace))
+			inputSheet.setInventoryPlace(inventoryPlace);
+		
+		if(Validator.isNotNull(inventoryDate))
+			inputSheet.setInventoryDate(inventoryDate);
+		
+		if(Validator.isNotNull(bookIDList))
+			inputSheet.setBookIDList(bookIDList);
+		
+		if(Validator.isNotNull(isApproval))
+			inputSheet.setIsApproval(isApproval);
+		
+		if(Validator.isNotNull(totalQuantities))
+			inputSheet.setTotalQuantities(totalQuantities);
+		
+		if(Validator.isNotNull(totalAmount))
+			inputSheet.setTotalAmount(totalAmount);
+		
+		if(Validator.isNotNull(amountInWords))
+			inputSheet.setAmountInWords(amountInWords);
+		
+		if(Validator.isNotNull(remark))
+			inputSheet.setRemark(remark);
+		
+		vrInputStampbookLocalService.updateJSONArrayInputStambook(id, corporationId, inputSheetType, stampbooks, isApproval);
 		
 		return vrInputSheetPersistence.update(inputSheet);
 	}
@@ -96,12 +135,11 @@ public class VRInputSheetLocalServiceImpl
 		} catch (Exception e) {
 			_log.error(e);
 		}
-		return new ArrayList<VRInputSheet>();
 		
+		return new ArrayList<VRInputSheet>();
 	}
 
-
-	public List<VRInputSheet> findBycorporationId(long mtCore, String corporationId) throws PortalException, SystemException {
+	public List<VRInputSheet> findBycorporationId(long mtCore, long corporationId) throws PortalException, SystemException {
 		try {
 			return vrInputSheetPersistence.findBycorporationId(mtCore, corporationId);
 		} catch (Exception e) {

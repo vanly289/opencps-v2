@@ -113,13 +113,15 @@ public interface VRInputSheetLocalService extends BaseLocalService,
 
 	public VRInputSheet updateInputSheet(long id, long mtCore,
 		java.lang.String inputSheetNo, Date inputSheetDate,
-		java.lang.String originalDocumentNo, java.lang.String corporationId,
-		long inputSheetType, java.lang.String maker, java.lang.String checker,
-		java.lang.String approver, java.lang.String deliveryName,
-		java.lang.String inventoryName, java.lang.String inventoryPlace,
-		Date inventoryDate, java.lang.String bookIDList, long isApproval,
-		long totalQuantities, long totalAmount, java.lang.String amountInWords,
-		java.lang.String remark) throws PortalException, SystemException;
+		java.lang.String originalDocumentNo, java.lang.Long corporationId,
+		java.lang.Long inputSheetType, java.lang.String maker,
+		java.lang.String checker, java.lang.String approver,
+		java.lang.String deliveryName, java.lang.String inventoryName,
+		java.lang.String inventoryPlace, Date inventoryDate,
+		java.lang.String bookIDList, java.lang.Long isApproval,
+		java.lang.Long totalQuantities, java.lang.Long totalAmount,
+		java.lang.String amountInWords, java.lang.String remark,
+		java.lang.String stampbooks) throws PortalException, SystemException;
 
 	/**
 	* Updates the vr input sheet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -205,7 +207,7 @@ public interface VRInputSheetLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	public List<VRInputSheet> findBycorporationId(long mtCore,
-		java.lang.String corporationId) throws PortalException, SystemException;
+		long corporationId) throws PortalException, SystemException;
 
 	public List<VRInputSheet> findByinputSheetNo(long mtCore,
 		java.lang.String inputSheetNo) throws PortalException, SystemException;

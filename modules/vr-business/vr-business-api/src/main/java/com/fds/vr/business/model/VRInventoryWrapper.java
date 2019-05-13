@@ -138,13 +138,13 @@ public class VRInventoryWrapper implements VRInventory,
 			setStampShortNo(stampShortNo);
 		}
 
-		String serialStartNo = (String)attributes.get("serialStartNo");
+		Long serialStartNo = (Long)attributes.get("serialStartNo");
 
 		if (serialStartNo != null) {
 			setSerialStartNo(serialStartNo);
 		}
 
-		String serialEndNo = (String)attributes.get("serialEndNo");
+		Long serialEndNo = (Long)attributes.get("serialEndNo");
 
 		if (serialEndNo != null) {
 			setSerialEndNo(serialEndNo);
@@ -174,7 +174,7 @@ public class VRInventoryWrapper implements VRInventory,
 			setRemark(remark);
 		}
 
-		String corporationId = (String)attributes.get("corporationId");
+		Long corporationId = (Long)attributes.get("corporationId");
 
 		if (corporationId != null) {
 			setCorporationId(corporationId);
@@ -261,16 +261,6 @@ public class VRInventoryWrapper implements VRInventory,
 	}
 
 	/**
-	* Returns the corporation ID of this vr inventory.
-	*
-	* @return the corporation ID of this vr inventory
-	*/
-	@Override
-	public java.lang.String getCorporationId() {
-		return _vrInventory.getCorporationId();
-	}
-
-	/**
 	* Returns the previous period of this vr inventory.
 	*
 	* @return the previous period of this vr inventory
@@ -298,26 +288,6 @@ public class VRInventoryWrapper implements VRInventory,
 	@Override
 	public java.lang.String getRemark() {
 		return _vrInventory.getRemark();
-	}
-
-	/**
-	* Returns the serial end no of this vr inventory.
-	*
-	* @return the serial end no of this vr inventory
-	*/
-	@Override
-	public java.lang.String getSerialEndNo() {
-		return _vrInventory.getSerialEndNo();
-	}
-
-	/**
-	* Returns the serial start no of this vr inventory.
-	*
-	* @return the serial start no of this vr inventory
-	*/
-	@Override
-	public java.lang.String getSerialStartNo() {
-		return _vrInventory.getSerialStartNo();
 	}
 
 	/**
@@ -411,6 +381,16 @@ public class VRInventoryWrapper implements VRInventory,
 	}
 
 	/**
+	* Returns the corporation ID of this vr inventory.
+	*
+	* @return the corporation ID of this vr inventory
+	*/
+	@Override
+	public long getCorporationId() {
+		return _vrInventory.getCorporationId();
+	}
+
+	/**
 	* Returns the ID of this vr inventory.
 	*
 	* @return the ID of this vr inventory
@@ -438,6 +418,26 @@ public class VRInventoryWrapper implements VRInventory,
 	@Override
 	public long getPrimaryKey() {
 		return _vrInventory.getPrimaryKey();
+	}
+
+	/**
+	* Returns the serial end no of this vr inventory.
+	*
+	* @return the serial end no of this vr inventory
+	*/
+	@Override
+	public long getSerialEndNo() {
+		return _vrInventory.getSerialEndNo();
+	}
+
+	/**
+	* Returns the serial start no of this vr inventory.
+	*
+	* @return the serial start no of this vr inventory
+	*/
+	@Override
+	public long getSerialStartNo() {
+		return _vrInventory.getSerialStartNo();
 	}
 
 	/**
@@ -526,7 +526,7 @@ public class VRInventoryWrapper implements VRInventory,
 	* @param corporationId the corporation ID of this vr inventory
 	*/
 	@Override
-	public void setCorporationId(java.lang.String corporationId) {
+	public void setCorporationId(long corporationId) {
 		_vrInventory.setCorporationId(corporationId);
 	}
 
@@ -632,7 +632,7 @@ public class VRInventoryWrapper implements VRInventory,
 	* @param serialEndNo the serial end no of this vr inventory
 	*/
 	@Override
-	public void setSerialEndNo(java.lang.String serialEndNo) {
+	public void setSerialEndNo(long serialEndNo) {
 		_vrInventory.setSerialEndNo(serialEndNo);
 	}
 
@@ -642,7 +642,7 @@ public class VRInventoryWrapper implements VRInventory,
 	* @param serialStartNo the serial start no of this vr inventory
 	*/
 	@Override
-	public void setSerialStartNo(java.lang.String serialStartNo) {
+	public void setSerialStartNo(long serialStartNo) {
 		_vrInventory.setSerialStartNo(serialStartNo);
 	}
 

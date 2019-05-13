@@ -115,12 +115,15 @@ public interface VRInputStampbookLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public VRInputStampbook updateInputStambook(long id, long mtCore,
-		long inputSheetId, long bookId, java.lang.String vehicleClass,
+		long inputSheetId, java.lang.Long corporationId,
+		java.lang.Long inputSheetType, java.lang.String vehicleClass,
 		java.lang.String stampType, java.lang.String stampShortNo,
-		long serialStartNo, java.lang.String serialEndNo,
-		long subTotalInDocument, long subTotalQuantities, long units,
-		long unitPrice, long totalAmount, long totalInUse, long totalNotUsed,
-		long sum1, long sum2, long sum3, java.lang.String remark)
+		java.lang.Long serialStartNo, java.lang.Long serialEndNo,
+		java.lang.Long subTotalInDocument, java.lang.Long subTotalQuantities,
+		java.lang.Long units, java.lang.Long unitPrice,
+		java.lang.Long totalAmount, java.lang.Long totalInUse,
+		java.lang.Long totalNotUsed, java.lang.Long sum1, java.lang.Long sum2,
+		java.lang.Long sum3, java.lang.String remark, java.lang.Long isApproval)
 		throws PortalException, SystemException;
 
 	/**
@@ -248,4 +251,9 @@ public interface VRInputStampbookLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateJSONArrayInputStambook(long inputSheetId,
+		java.lang.Long corporationId, java.lang.Long inputSheetType,
+		java.lang.String stampbooks, java.lang.Long isApproval)
+		throws PortalException, SystemException;
 }

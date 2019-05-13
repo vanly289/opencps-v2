@@ -107,15 +107,16 @@ public class VROutputSheetLocalServiceUtil {
 	public static com.fds.vr.business.model.VROutputSheet updateOutputSheet(
 		long id, long mtCore, java.lang.String outputSheetNo,
 		java.util.Date outputSheetDate, java.lang.String originalDocumentNo,
-		java.lang.String supplierCorporationId, long outputSheetType,
+		java.lang.String supplierCorporationId, java.lang.Long outputSheetType,
 		java.lang.String maker, java.lang.String checker,
 		java.lang.String approver, java.lang.String receiverName,
 		java.lang.String receiverPlace, java.lang.String receiverRequest,
 		java.lang.String inventoryName, java.lang.String inventoryPlace,
-		java.util.Date inventoryDate, long dossierId, long issueId,
-		java.lang.String purchaserId, java.lang.String purchaserCorporationId,
-		java.lang.String bookIDList, long isApproval, long totalQuantities,
-		long totalAmount, java.lang.String amountInWords,
+		java.util.Date inventoryDate, java.lang.Long dossierId,
+		java.lang.Long issueId, java.lang.String purchaserId,
+		java.lang.String purchaserCorporationId, java.lang.String bookIDList,
+		java.lang.Long isApproval, java.lang.Long totalQuantities,
+		java.lang.Long totalAmount, java.lang.String amountInWords,
 		java.lang.String remark)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
