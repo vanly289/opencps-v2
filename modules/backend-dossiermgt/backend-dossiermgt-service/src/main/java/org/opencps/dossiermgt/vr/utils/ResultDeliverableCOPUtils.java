@@ -261,7 +261,7 @@ public class ResultDeliverableCOPUtils {
 						mapCOP = new HashMap<>();
 						JSONObject jsonEquiment = equimentArr.getJSONObject(i);
 
-						mapCOP.put("copReportRepositoryID", String.valueOf(copReport.getId()));
+						mapCOP.put("copReportRepositoryId", String.valueOf(copReport.getId()));
 						mapCOP.put("copReportNo", "so_thong_bao");
 						mapCOP.put("sequenceNo", String.valueOf(i));
 						mapCOP.put("equipmentCode", jsonEquiment.getString("so_luong_pl3"));
@@ -283,7 +283,7 @@ public class ResultDeliverableCOPUtils {
 						mapCOP = new HashMap<>();
 						JSONObject jsonEmployee = employeeArr.getJSONObject(i);
 
-						mapCOP.put("copReportRepositoryID", String.valueOf("ti nua them"));
+						mapCOP.put("copReportRepositoryId", String.valueOf("ti nua them"));
 						mapCOP.put("copReportNo", "so_thong_bao");
 						mapCOP.put("sequenceNo", String.valueOf(i));
 						mapCOP.put("employeeName", jsonEmployee.getString("ho_ten_pl1"));

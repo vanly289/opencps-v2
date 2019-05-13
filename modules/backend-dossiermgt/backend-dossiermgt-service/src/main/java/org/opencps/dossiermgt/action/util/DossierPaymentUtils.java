@@ -286,6 +286,8 @@ public class DossierPaymentUtils {
 					if (matcherName.find()) {
 						valueReturnTotal = getDossierPaymentTotal(returnPaymentTotal, formulaTotal, matcherName,
 								paymentJSON);
+					} else {
+						valueReturnTotal = paymentData.getLong("formula");
 					}
 					paymentJSON.put(paymentTypeTotal, valueReturnTotal);
 				}

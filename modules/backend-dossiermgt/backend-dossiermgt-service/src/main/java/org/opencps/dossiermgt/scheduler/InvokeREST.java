@@ -104,7 +104,7 @@ public class InvokeREST {
 
 			conn.setRequestProperty("Accept", accept);
 			conn.setRequestProperty("groupId", String.valueOf(groupId));
-			_log.info("groupId: "+groupId);
+			_log.info("groupId CALL POST API: "+groupId);
 
 			if (!properties.isEmpty()) {
 				for (Map.Entry m : properties.entrySet()) {

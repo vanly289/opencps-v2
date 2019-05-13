@@ -1492,7 +1492,7 @@ public class DossierActionsImpl implements DossierActions {
 				if(Validator.isNotNull(proAction.getPreCondition())) {
 					intpaymentMethod = checkPaymentMethodinPrecondition(proAction.getPreCondition());
 				}
-				
+				intpaymentMethod = 1;
 				if(oldPaymentFile != null){
 					
 					//_log.info("SONDT oldPaymentFile REQUESTPAYMENT 5 ===========================  " + JSONFactoryUtil.looseSerialize(oldPaymentFile));
@@ -1501,6 +1501,7 @@ public class DossierActionsImpl implements DossierActions {
 					String baseUrl = RESTFulConfiguration.SERVER_PATH_BASE;
 					HashMap<String, String> properties = new HashMap<String, String>();
 					
+					_log.info("START CALL POST API CINVOICEUrl");
 					resultObj = callRest.callPostAPI(groupId, HttpMethod.POST, "application/json", baseUrl,
 							CINVOICEUrl, "", "", properties, params, context);
 					
@@ -1512,8 +1513,17 @@ public class DossierActionsImpl implements DossierActions {
 					if (intpaymentMethod != 0) {
 						paymentMethod = checkPaymentMethod(intpaymentMethod);
 					}
-					if(Validator.isNotNull(resultObj)) {
-						oldPaymentFile.setEinvoice(resultObj.toString());
+					// C_Invoice
+					if(Validator.isNotNull(resultObj) && resultObj.getLong("status") == 200) {
+						String message = resultObj.getString("message");
+						if (Validator.isNotNull(message)) {
+							String[] splitMessage = message.split("#");
+							JSONObject resultInvoice = JSONFactoryUtil.createJSONObject();
+							resultInvoice.put("EInvoiceNo", splitMessage[1]);
+							resultInvoice.put("EInvoiceSearch", splitMessage[3]);
+							//
+							oldPaymentFile.setEinvoice(resultInvoice.toString());
+						}
 						oldPaymentFile.setInvoicePayload(params.toString());
 						if (Validator.isNotNull(paymentMethod)) {
 							oldPaymentFile.setPaymentMethod(paymentMethod);
@@ -3379,18 +3389,23 @@ public class DossierActionsImpl implements DossierActions {
 		params.put("maNthue", "01"); 
 		params.put("kieuSo", "G"); 
 		params.put("maKhackHang", Long.toString(dossier.getUserId()));
-		params.put("ten", dossier.getApplicantName()); 
-		params.put("phone", dossier.getContactTelNo());
-		if(dossier.getApplicantIdType().contentEquals("business")) {
-			params.put("tax", dossier.getApplicantIdNo()); 
-		} else {
-			params.put("tax", "");
-		}
+		params.put("ten", dossier.getApplicantName());
+		//TODO
+		//params.put("phone", dossier.getContactTelNo());
+		params.put("phone", "0983025123");
+//		if(dossier.getApplicantIdType().contentEquals("business")) {
+//			params.put("tax", dossier.getApplicantIdNo()); 
+//		} else {
+//			params.put("tax", "");
+//		}
+		params.put("tax", "0311123290");
 		params.put("dchi", address); 
 		params.put("maTk", ""); 
 		params.put("tenNh", ""); 
 		params.put("mailH", GetterUtil.getString(dossier.getContactEmail()));
-		params.put("phoneH", GetterUtil.getString(dossier.getContactTelNo()));
+		//TODO
+		//params.put("phoneH", GetterUtil.getString(dossier.getContactTelNo()));
+		params.put("phoneH", "0983025123");
 		params.put("tenM", GetterUtil.getString(dossier.getApplicantName()));
 		params.put("maKhL", "K");
 		params.put("maNt", "VND");
@@ -3407,7 +3422,8 @@ public class DossierActionsImpl implements DossierActions {
 		params.put("noidung", dossier.getDossierNo());
 		params.put("tien", Long.toString(oldPaymentFile.getPaymentAmount()));
 		params.put("ttoan", Long.toString(oldPaymentFile.getPaymentAmount()));
-		params.put("maVtDetail", dossier.getDossierNo());
+		//TODO
+		params.put("maVtDetail", dossier.getDossierNo().replace("/", "."));
 		params.put("tenDetail", GetterUtil.getString(dossier.getServiceName()));
 		params.put("dvtDetail", "bo");
 		params.put("luongDetail", "1");
