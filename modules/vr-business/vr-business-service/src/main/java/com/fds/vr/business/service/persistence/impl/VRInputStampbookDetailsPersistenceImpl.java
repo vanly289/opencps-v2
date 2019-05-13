@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -1250,7 +1251,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 			VRInputStampbookDetailsImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBycorporationId",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -1260,14 +1261,14 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 			VRInputStampbookDetailsModelImpl.FINDER_CACHE_ENABLED,
 			VRInputStampbookDetailsImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBycorporationId",
-			new String[] { Long.class.getName(), String.class.getName() },
+			new String[] { Long.class.getName(), Long.class.getName() },
 			VRInputStampbookDetailsModelImpl.MTCORE_COLUMN_BITMASK |
 			VRInputStampbookDetailsModelImpl.CORPORATIONID_COLUMN_BITMASK |
 			VRInputStampbookDetailsModelImpl.MODIFYDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_CORPORATIONID = new FinderPath(VRInputStampbookDetailsModelImpl.ENTITY_CACHE_ENABLED,
 			VRInputStampbookDetailsModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBycorporationId",
-			new String[] { Long.class.getName(), String.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns all the vr input stampbook detailses where mtCore = &#63; and corporationId = &#63;.
@@ -1278,7 +1279,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public List<VRInputStampbookDetails> findBycorporationId(long mtCore,
-		String corporationId) {
+		long corporationId) {
 		return findBycorporationId(mtCore, corporationId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1298,7 +1299,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public List<VRInputStampbookDetails> findBycorporationId(long mtCore,
-		String corporationId, int start, int end) {
+		long corporationId, int start, int end) {
 		return findBycorporationId(mtCore, corporationId, start, end, null);
 	}
 
@@ -1318,7 +1319,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public List<VRInputStampbookDetails> findBycorporationId(long mtCore,
-		String corporationId, int start, int end,
+		long corporationId, int start, int end,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator) {
 		return findBycorporationId(mtCore, corporationId, start, end,
 			orderByComparator, true);
@@ -1341,7 +1342,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public List<VRInputStampbookDetails> findBycorporationId(long mtCore,
-		String corporationId, int start, int end,
+		long corporationId, int start, int end,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -1372,8 +1373,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 			if ((list != null) && !list.isEmpty()) {
 				for (VRInputStampbookDetails vrInputStampbookDetails : list) {
 					if ((mtCore != vrInputStampbookDetails.getMtCore()) ||
-							!Objects.equals(corporationId,
-								vrInputStampbookDetails.getCorporationId())) {
+							(corporationId != vrInputStampbookDetails.getCorporationId())) {
 						list = null;
 
 						break;
@@ -1397,19 +1397,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 
 			query.append(_FINDER_COLUMN_CORPORATIONID_MTCORE_2);
 
-			boolean bindCorporationId = false;
-
-			if (corporationId == null) {
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_1);
-			}
-			else if (corporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_3);
-			}
-			else {
-				bindCorporationId = true;
-
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1433,9 +1421,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 
 				qPos.add(mtCore);
 
-				if (bindCorporationId) {
-					qPos.add(corporationId);
-				}
+				qPos.add(corporationId);
 
 				if (!pagination) {
 					list = (List<VRInputStampbookDetails>)QueryUtil.list(q,
@@ -1478,7 +1464,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public VRInputStampbookDetails findBycorporationId_First(long mtCore,
-		String corporationId,
+		long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator)
 		throws NoSuchVRInputStampbookDetailsException {
 		VRInputStampbookDetails vrInputStampbookDetails = fetchBycorporationId_First(mtCore,
@@ -1513,7 +1499,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public VRInputStampbookDetails fetchBycorporationId_First(long mtCore,
-		String corporationId,
+		long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator) {
 		List<VRInputStampbookDetails> list = findBycorporationId(mtCore,
 				corporationId, 0, 1, orderByComparator);
@@ -1536,7 +1522,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public VRInputStampbookDetails findBycorporationId_Last(long mtCore,
-		String corporationId,
+		long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator)
 		throws NoSuchVRInputStampbookDetailsException {
 		VRInputStampbookDetails vrInputStampbookDetails = fetchBycorporationId_Last(mtCore,
@@ -1571,7 +1557,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public VRInputStampbookDetails fetchBycorporationId_Last(long mtCore,
-		String corporationId,
+		long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator) {
 		int count = countBycorporationId(mtCore, corporationId);
 
@@ -1601,7 +1587,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public VRInputStampbookDetails[] findBycorporationId_PrevAndNext(long id,
-		long mtCore, String corporationId,
+		long mtCore, long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator)
 		throws NoSuchVRInputStampbookDetailsException {
 		VRInputStampbookDetails vrInputStampbookDetails = findByPrimaryKey(id);
@@ -1635,7 +1621,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 
 	protected VRInputStampbookDetails getBycorporationId_PrevAndNext(
 		Session session, VRInputStampbookDetails vrInputStampbookDetails,
-		long mtCore, String corporationId,
+		long mtCore, long corporationId,
 		OrderByComparator<VRInputStampbookDetails> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -1653,19 +1639,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 
 		query.append(_FINDER_COLUMN_CORPORATIONID_MTCORE_2);
 
-		boolean bindCorporationId = false;
-
-		if (corporationId == null) {
-			query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_1);
-		}
-		else if (corporationId.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_3);
-		}
-		else {
-			bindCorporationId = true;
-
-			query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
-		}
+		query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1737,9 +1711,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 
 		qPos.add(mtCore);
 
-		if (bindCorporationId) {
-			qPos.add(corporationId);
-		}
+		qPos.add(corporationId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(vrInputStampbookDetails);
@@ -1766,7 +1738,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 * @param corporationId the corporation ID
 	 */
 	@Override
-	public void removeBycorporationId(long mtCore, String corporationId) {
+	public void removeBycorporationId(long mtCore, long corporationId) {
 		for (VRInputStampbookDetails vrInputStampbookDetails : findBycorporationId(
 				mtCore, corporationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null)) {
@@ -1782,7 +1754,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	 * @return the number of matching vr input stampbook detailses
 	 */
 	@Override
-	public int countBycorporationId(long mtCore, String corporationId) {
+	public int countBycorporationId(long mtCore, long corporationId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_CORPORATIONID;
 
 		Object[] finderArgs = new Object[] { mtCore, corporationId };
@@ -1796,19 +1768,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 
 			query.append(_FINDER_COLUMN_CORPORATIONID_MTCORE_2);
 
-			boolean bindCorporationId = false;
-
-			if (corporationId == null) {
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_1);
-			}
-			else if (corporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_3);
-			}
-			else {
-				bindCorporationId = true;
-
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
 
 			String sql = query.toString();
 
@@ -1823,9 +1783,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 
 				qPos.add(mtCore);
 
-				if (bindCorporationId) {
-					qPos.add(corporationId);
-				}
+				qPos.add(corporationId);
 
 				count = (Long)q.uniqueResult();
 
@@ -1845,9 +1803,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	private static final String _FINDER_COLUMN_CORPORATIONID_MTCORE_2 = "vrInputStampbookDetails.mtCore = ? AND ";
-	private static final String _FINDER_COLUMN_CORPORATIONID_CORPORATIONID_1 = "vrInputStampbookDetails.corporationId IS NULL";
 	private static final String _FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2 = "vrInputStampbookDetails.corporationId = ?";
-	private static final String _FINDER_COLUMN_CORPORATIONID_CORPORATIONID_3 = "(vrInputStampbookDetails.corporationId IS NULL OR vrInputStampbookDetails.corporationId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_DOSSIERID =
 		new FinderPath(VRInputStampbookDetailsModelImpl.ENTITY_CACHE_ENABLED,
 			VRInputStampbookDetailsModelImpl.FINDER_CACHE_ENABLED,
@@ -4963,6 +4919,11 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return VRInputStampbookDetailsModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -4994,4 +4955,7 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No VRInputStampbookDetails exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No VRInputStampbookDetails exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(VRInputStampbookDetailsPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"boxNo"
+			});
 }

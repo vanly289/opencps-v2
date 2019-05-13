@@ -174,20 +174,8 @@ public class VRClearingStampbookCacheModel implements CacheModel<VRClearingStamp
 			vrClearingStampbookImpl.setStampShortNo(stampShortNo);
 		}
 
-		if (serialStartNo == null) {
-			vrClearingStampbookImpl.setSerialStartNo(StringPool.BLANK);
-		}
-		else {
-			vrClearingStampbookImpl.setSerialStartNo(serialStartNo);
-		}
-
-		if (serialEndNo == null) {
-			vrClearingStampbookImpl.setSerialEndNo(StringPool.BLANK);
-		}
-		else {
-			vrClearingStampbookImpl.setSerialEndNo(serialEndNo);
-		}
-
+		vrClearingStampbookImpl.setSerialStartNo(serialStartNo);
+		vrClearingStampbookImpl.setSerialEndNo(serialEndNo);
 		vrClearingStampbookImpl.setSubTotalInDocument(subTotalInDocument);
 		vrClearingStampbookImpl.setSubTotalQuantities(subTotalQuantities);
 		vrClearingStampbookImpl.setVehiclePrice(vehiclePrice);
@@ -245,8 +233,10 @@ public class VRClearingStampbookCacheModel implements CacheModel<VRClearingStamp
 		vehicleClass = objectInput.readUTF();
 		stampType = objectInput.readUTF();
 		stampShortNo = objectInput.readUTF();
-		serialStartNo = objectInput.readUTF();
-		serialEndNo = objectInput.readUTF();
+
+		serialStartNo = objectInput.readLong();
+
+		serialEndNo = objectInput.readLong();
 
 		subTotalInDocument = objectInput.readLong();
 
@@ -319,19 +309,9 @@ public class VRClearingStampbookCacheModel implements CacheModel<VRClearingStamp
 			objectOutput.writeUTF(stampShortNo);
 		}
 
-		if (serialStartNo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(serialStartNo);
-		}
+		objectOutput.writeLong(serialStartNo);
 
-		if (serialEndNo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(serialEndNo);
-		}
+		objectOutput.writeLong(serialEndNo);
 
 		objectOutput.writeLong(subTotalInDocument);
 
@@ -376,8 +356,8 @@ public class VRClearingStampbookCacheModel implements CacheModel<VRClearingStamp
 	public String vehicleClass;
 	public String stampType;
 	public String stampShortNo;
-	public String serialStartNo;
-	public String serialEndNo;
+	public long serialStartNo;
+	public long serialEndNo;
 	public long subTotalInDocument;
 	public long subTotalQuantities;
 	public long vehiclePrice;

@@ -72,13 +72,13 @@ public class VRInventoryModelImpl extends BaseModelImpl<VRInventory>
 			{ "vehicleClass", Types.VARCHAR },
 			{ "stampType", Types.VARCHAR },
 			{ "stampShortNo", Types.VARCHAR },
-			{ "serialStartNo", Types.VARCHAR },
-			{ "serialEndNo", Types.VARCHAR },
+			{ "serialStartNo", Types.BIGINT },
+			{ "serialEndNo", Types.BIGINT },
 			{ "totalQuantities", Types.BIGINT },
 			{ "totalInUse", Types.BIGINT },
 			{ "totalNotUsed", Types.BIGINT },
 			{ "remark", Types.VARCHAR },
-			{ "corporationId", Types.VARCHAR },
+			{ "corporationId", Types.BIGINT },
 			{ "checkType", Types.BIGINT },
 			{ "checkStatus", Types.BIGINT },
 			{ "modifyDate", Types.TIMESTAMP },
@@ -96,20 +96,20 @@ public class VRInventoryModelImpl extends BaseModelImpl<VRInventory>
 		TABLE_COLUMNS_MAP.put("vehicleClass", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("stampType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("stampShortNo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("serialStartNo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("serialEndNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("serialStartNo", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("serialEndNo", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("totalQuantities", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("totalInUse", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("totalNotUsed", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("remark", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("corporationId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("corporationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("checkType", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("checkStatus", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_inventory (id LONG not null primary key,mtCore LONG,yearofPeriod LONG,previousPeriod VARCHAR(75) null,previousPeriodCode VARCHAR(75) null,bookId LONG,vehicleClass VARCHAR(75) null,stampType VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialStartNo VARCHAR(75) null,serialEndNo VARCHAR(75) null,totalQuantities LONG,totalInUse LONG,totalNotUsed LONG,remark VARCHAR(75) null,corporationId VARCHAR(75) null,checkType LONG,checkStatus LONG,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_inventory (id LONG not null primary key,mtCore LONG,yearofPeriod LONG,previousPeriod VARCHAR(75) null,previousPeriodCode VARCHAR(75) null,bookId LONG,vehicleClass VARCHAR(75) null,stampType VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialStartNo LONG,serialEndNo LONG,totalQuantities LONG,totalInUse LONG,totalNotUsed LONG,remark VARCHAR(75) null,corporationId LONG,checkType LONG,checkStatus LONG,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_inventory";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrInventory.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_inventory.modifyDate DESC";
@@ -256,13 +256,13 @@ public class VRInventoryModelImpl extends BaseModelImpl<VRInventory>
 			setStampShortNo(stampShortNo);
 		}
 
-		String serialStartNo = (String)attributes.get("serialStartNo");
+		Long serialStartNo = (Long)attributes.get("serialStartNo");
 
 		if (serialStartNo != null) {
 			setSerialStartNo(serialStartNo);
 		}
 
-		String serialEndNo = (String)attributes.get("serialEndNo");
+		Long serialEndNo = (Long)attributes.get("serialEndNo");
 
 		if (serialEndNo != null) {
 			setSerialEndNo(serialEndNo);
@@ -292,7 +292,7 @@ public class VRInventoryModelImpl extends BaseModelImpl<VRInventory>
 			setRemark(remark);
 		}
 
-		String corporationId = (String)attributes.get("corporationId");
+		Long corporationId = (Long)attributes.get("corporationId");
 
 		if (corporationId != null) {
 			setCorporationId(corporationId);
@@ -485,32 +485,22 @@ public class VRInventoryModelImpl extends BaseModelImpl<VRInventory>
 	}
 
 	@Override
-	public String getSerialStartNo() {
-		if (_serialStartNo == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _serialStartNo;
-		}
+	public long getSerialStartNo() {
+		return _serialStartNo;
 	}
 
 	@Override
-	public void setSerialStartNo(String serialStartNo) {
+	public void setSerialStartNo(long serialStartNo) {
 		_serialStartNo = serialStartNo;
 	}
 
 	@Override
-	public String getSerialEndNo() {
-		if (_serialEndNo == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _serialEndNo;
-		}
+	public long getSerialEndNo() {
+		return _serialEndNo;
 	}
 
 	@Override
-	public void setSerialEndNo(String serialEndNo) {
+	public void setSerialEndNo(long serialEndNo) {
 		_serialEndNo = serialEndNo;
 	}
 
@@ -560,28 +550,25 @@ public class VRInventoryModelImpl extends BaseModelImpl<VRInventory>
 	}
 
 	@Override
-	public String getCorporationId() {
-		if (_corporationId == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _corporationId;
-		}
+	public long getCorporationId() {
+		return _corporationId;
 	}
 
 	@Override
-	public void setCorporationId(String corporationId) {
+	public void setCorporationId(long corporationId) {
 		_columnBitmask |= CORPORATIONID_COLUMN_BITMASK;
 
-		if (_originalCorporationId == null) {
+		if (!_setOriginalCorporationId) {
+			_setOriginalCorporationId = true;
+
 			_originalCorporationId = _corporationId;
 		}
 
 		_corporationId = corporationId;
 	}
 
-	public String getOriginalCorporationId() {
-		return GetterUtil.getString(_originalCorporationId);
+	public long getOriginalCorporationId() {
+		return _originalCorporationId;
 	}
 
 	@Override
@@ -779,6 +766,8 @@ public class VRInventoryModelImpl extends BaseModelImpl<VRInventory>
 
 		vrInventoryModelImpl._originalCorporationId = vrInventoryModelImpl._corporationId;
 
+		vrInventoryModelImpl._setOriginalCorporationId = false;
+
 		vrInventoryModelImpl._originalCheckType = vrInventoryModelImpl._checkType;
 
 		vrInventoryModelImpl._setOriginalCheckType = false;
@@ -844,19 +833,7 @@ public class VRInventoryModelImpl extends BaseModelImpl<VRInventory>
 
 		vrInventoryCacheModel.serialStartNo = getSerialStartNo();
 
-		String serialStartNo = vrInventoryCacheModel.serialStartNo;
-
-		if ((serialStartNo != null) && (serialStartNo.length() == 0)) {
-			vrInventoryCacheModel.serialStartNo = null;
-		}
-
 		vrInventoryCacheModel.serialEndNo = getSerialEndNo();
-
-		String serialEndNo = vrInventoryCacheModel.serialEndNo;
-
-		if ((serialEndNo != null) && (serialEndNo.length() == 0)) {
-			vrInventoryCacheModel.serialEndNo = null;
-		}
 
 		vrInventoryCacheModel.totalQuantities = getTotalQuantities();
 
@@ -873,12 +850,6 @@ public class VRInventoryModelImpl extends BaseModelImpl<VRInventory>
 		}
 
 		vrInventoryCacheModel.corporationId = getCorporationId();
-
-		String corporationId = vrInventoryCacheModel.corporationId;
-
-		if ((corporationId != null) && (corporationId.length() == 0)) {
-			vrInventoryCacheModel.corporationId = null;
-		}
 
 		vrInventoryCacheModel.checkType = getCheckType();
 
@@ -1068,14 +1039,15 @@ public class VRInventoryModelImpl extends BaseModelImpl<VRInventory>
 	private String _originalVehicleClass;
 	private String _stampType;
 	private String _stampShortNo;
-	private String _serialStartNo;
-	private String _serialEndNo;
+	private long _serialStartNo;
+	private long _serialEndNo;
 	private long _totalQuantities;
 	private long _totalInUse;
 	private long _totalNotUsed;
 	private String _remark;
-	private String _corporationId;
-	private String _originalCorporationId;
+	private long _corporationId;
+	private long _originalCorporationId;
+	private boolean _setOriginalCorporationId;
 	private long _checkType;
 	private long _originalCheckType;
 	private boolean _setOriginalCheckType;

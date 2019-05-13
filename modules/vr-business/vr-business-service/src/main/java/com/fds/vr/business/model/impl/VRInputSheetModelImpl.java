@@ -68,7 +68,7 @@ public class VRInputSheetModelImpl extends BaseModelImpl<VRInputSheet>
 			{ "inputSheetNo", Types.VARCHAR },
 			{ "inputSheetDate", Types.TIMESTAMP },
 			{ "originalDocumentNo", Types.VARCHAR },
-			{ "corporationId", Types.VARCHAR },
+			{ "corporationId", Types.BIGINT },
 			{ "inputSheetType", Types.BIGINT },
 			{ "maker", Types.VARCHAR },
 			{ "checker", Types.VARCHAR },
@@ -94,7 +94,7 @@ public class VRInputSheetModelImpl extends BaseModelImpl<VRInputSheet>
 		TABLE_COLUMNS_MAP.put("inputSheetNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("inputSheetDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("originalDocumentNo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("corporationId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("corporationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("inputSheetType", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("maker", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("checker", Types.VARCHAR);
@@ -113,7 +113,7 @@ public class VRInputSheetModelImpl extends BaseModelImpl<VRInputSheet>
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_inputsheet (id LONG not null primary key,mtCore LONG,inputSheetNo VARCHAR(75) null,inputSheetDate DATE null,originalDocumentNo VARCHAR(75) null,corporationId VARCHAR(75) null,inputSheetType LONG,maker VARCHAR(75) null,checker VARCHAR(75) null,approver VARCHAR(75) null,deliveryName VARCHAR(75) null,inventoryName VARCHAR(75) null,inventoryPlace VARCHAR(75) null,inventoryDate DATE null,bookIDList VARCHAR(75) null,isApproval LONG,totalQuantities LONG,totalAmount LONG,amountInWords VARCHAR(75) null,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_inputsheet (id LONG not null primary key,mtCore LONG,inputSheetNo VARCHAR(75) null,inputSheetDate DATE null,originalDocumentNo VARCHAR(75) null,corporationId LONG,inputSheetType LONG,maker VARCHAR(75) null,checker VARCHAR(75) null,approver VARCHAR(75) null,deliveryName VARCHAR(75) null,inventoryName VARCHAR(75) null,inventoryPlace VARCHAR(75) null,inventoryDate DATE null,bookIDList VARCHAR(75) null,isApproval LONG,totalQuantities LONG,totalAmount LONG,amountInWords VARCHAR(75) null,remark VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_inputsheet";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrInputSheet.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_inputsheet.modifyDate DESC";
@@ -235,7 +235,7 @@ public class VRInputSheetModelImpl extends BaseModelImpl<VRInputSheet>
 			setOriginalDocumentNo(originalDocumentNo);
 		}
 
-		String corporationId = (String)attributes.get("corporationId");
+		Long corporationId = (Long)attributes.get("corporationId");
 
 		if (corporationId != null) {
 			setCorporationId(corporationId);
@@ -421,28 +421,25 @@ public class VRInputSheetModelImpl extends BaseModelImpl<VRInputSheet>
 	}
 
 	@Override
-	public String getCorporationId() {
-		if (_corporationId == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _corporationId;
-		}
+	public long getCorporationId() {
+		return _corporationId;
 	}
 
 	@Override
-	public void setCorporationId(String corporationId) {
+	public void setCorporationId(long corporationId) {
 		_columnBitmask |= CORPORATIONID_COLUMN_BITMASK;
 
-		if (_originalCorporationId == null) {
+		if (!_setOriginalCorporationId) {
+			_setOriginalCorporationId = true;
+
 			_originalCorporationId = _corporationId;
 		}
 
 		_corporationId = corporationId;
 	}
 
-	public String getOriginalCorporationId() {
-		return GetterUtil.getString(_originalCorporationId);
+	public long getOriginalCorporationId() {
+		return _originalCorporationId;
 	}
 
 	@Override
@@ -787,6 +784,8 @@ public class VRInputSheetModelImpl extends BaseModelImpl<VRInputSheet>
 
 		vrInputSheetModelImpl._originalCorporationId = vrInputSheetModelImpl._corporationId;
 
+		vrInputSheetModelImpl._setOriginalCorporationId = false;
+
 		vrInputSheetModelImpl._originalInputSheetType = vrInputSheetModelImpl._inputSheetType;
 
 		vrInputSheetModelImpl._setOriginalInputSheetType = false;
@@ -828,12 +827,6 @@ public class VRInputSheetModelImpl extends BaseModelImpl<VRInputSheet>
 		}
 
 		vrInputSheetCacheModel.corporationId = getCorporationId();
-
-		String corporationId = vrInputSheetCacheModel.corporationId;
-
-		if ((corporationId != null) && (corporationId.length() == 0)) {
-			vrInputSheetCacheModel.corporationId = null;
-		}
 
 		vrInputSheetCacheModel.inputSheetType = getInputSheetType();
 
@@ -1112,8 +1105,9 @@ public class VRInputSheetModelImpl extends BaseModelImpl<VRInputSheet>
 	private String _originalInputSheetNo;
 	private Date _inputSheetDate;
 	private String _originalDocumentNo;
-	private String _corporationId;
-	private String _originalCorporationId;
+	private long _corporationId;
+	private long _originalCorporationId;
+	private boolean _setOriginalCorporationId;
 	private long _inputSheetType;
 	private long _originalInputSheetType;
 	private boolean _setOriginalInputSheetType;

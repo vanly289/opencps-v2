@@ -197,7 +197,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @return the matching vr input sheets
 	*/
 	public java.util.List<VRInputSheet> findBycorporationId(long mtCore,
-		java.lang.String corporationId);
+		long corporationId);
 
 	/**
 	* Returns a range of all the vr input sheets where mtCore = &#63; and corporationId = &#63;.
@@ -213,7 +213,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @return the range of matching vr input sheets
 	*/
 	public java.util.List<VRInputSheet> findBycorporationId(long mtCore,
-		java.lang.String corporationId, int start, int end);
+		long corporationId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the vr input sheets where mtCore = &#63; and corporationId = &#63;.
@@ -230,7 +230,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @return the ordered range of matching vr input sheets
 	*/
 	public java.util.List<VRInputSheet> findBycorporationId(long mtCore,
-		java.lang.String corporationId, int start, int end,
+		long corporationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputSheet> orderByComparator);
 
 	/**
@@ -249,7 +249,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @return the ordered range of matching vr input sheets
 	*/
 	public java.util.List<VRInputSheet> findBycorporationId(long mtCore,
-		java.lang.String corporationId, int start, int end,
+		long corporationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputSheet> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -263,7 +263,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @throws NoSuchVRInputSheetException if a matching vr input sheet could not be found
 	*/
 	public VRInputSheet findBycorporationId_First(long mtCore,
-		java.lang.String corporationId,
+		long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputSheet> orderByComparator)
 		throws NoSuchVRInputSheetException;
 
@@ -276,7 +276,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @return the first matching vr input sheet, or <code>null</code> if a matching vr input sheet could not be found
 	*/
 	public VRInputSheet fetchBycorporationId_First(long mtCore,
-		java.lang.String corporationId,
+		long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputSheet> orderByComparator);
 
 	/**
@@ -289,7 +289,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @throws NoSuchVRInputSheetException if a matching vr input sheet could not be found
 	*/
 	public VRInputSheet findBycorporationId_Last(long mtCore,
-		java.lang.String corporationId,
+		long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputSheet> orderByComparator)
 		throws NoSuchVRInputSheetException;
 
@@ -302,7 +302,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @return the last matching vr input sheet, or <code>null</code> if a matching vr input sheet could not be found
 	*/
 	public VRInputSheet fetchBycorporationId_Last(long mtCore,
-		java.lang.String corporationId,
+		long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputSheet> orderByComparator);
 
 	/**
@@ -316,7 +316,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @throws NoSuchVRInputSheetException if a vr input sheet with the primary key could not be found
 	*/
 	public VRInputSheet[] findBycorporationId_PrevAndNext(long id, long mtCore,
-		java.lang.String corporationId,
+		long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInputSheet> orderByComparator)
 		throws NoSuchVRInputSheetException;
 
@@ -326,8 +326,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @param mtCore the mt core
 	* @param corporationId the corporation ID
 	*/
-	public void removeBycorporationId(long mtCore,
-		java.lang.String corporationId);
+	public void removeBycorporationId(long mtCore, long corporationId);
 
 	/**
 	* Returns the number of vr input sheets where mtCore = &#63; and corporationId = &#63;.
@@ -336,7 +335,7 @@ public interface VRInputSheetPersistence extends BasePersistence<VRInputSheet> {
 	* @param corporationId the corporation ID
 	* @return the number of matching vr input sheets
 	*/
-	public int countBycorporationId(long mtCore, java.lang.String corporationId);
+	public int countBycorporationId(long mtCore, long corporationId);
 
 	/**
 	* Returns all the vr input sheets where mtCore = &#63; and inputSheetType = &#63;.

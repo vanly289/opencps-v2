@@ -116,18 +116,21 @@ public interface VRInputStampbookDetailsLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public VRInputStampbookDetails updateInputStampbookDetails(long id,
-		long mtCore, java.lang.String stampSerialNo, long sequenceNo,
-		long dossierId, long certificateId, java.lang.String certificateNumber,
-		Date certificateDate, long vehicleRecordId, java.lang.String frameNo,
-		java.lang.String BoxNo, java.lang.String vinNo,
-		java.lang.String engineNo, long copies, long markupFulfill,
-		java.lang.String replacedSerialNo, java.lang.String remark,
-		long inputSheetId, long bookId, java.lang.String purchaserId,
-		java.lang.String corporationId, long issuingStatus,
-		long clearingStatus, long stampStatus, Date issuingDate,
-		Date printingDate, Date noticeofLostDate, Date noticeofCancelDate,
-		Date noticeofReturnDate, Date clearingDate,
-		long clearingAdvancePaymentID) throws PortalException, SystemException;
+		long mtCore, java.lang.String stampSerialNo, java.lang.Long sequenceNo,
+		java.lang.Long dossierId, java.lang.Long certificateId,
+		java.lang.String certificateNumber, Date certificateDate,
+		java.lang.Long vehicleRecordId, java.lang.String frameNo,
+		java.lang.String boxNo, java.lang.String vinNo,
+		java.lang.String engineNo, java.lang.Long copies,
+		java.lang.Long markupFulfill, java.lang.String replacedSerialNo,
+		java.lang.String remark, java.lang.Long inputSheetId,
+		java.lang.Long bookId, java.lang.String purchaserId,
+		java.lang.Long corporationId, java.lang.Long issuingStatus,
+		java.lang.Long clearingStatus, java.lang.Long stampStatus,
+		Date issuingDate, Date printingDate, Date noticeofLostDate,
+		Date noticeofCancelDate, Date noticeofReturnDate, Date clearingDate,
+		java.lang.Long clearingAdvancePaymentID)
+		throws PortalException, SystemException;
 
 	/**
 	* Updates the vr input stampbook details in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -228,7 +231,7 @@ public interface VRInputStampbookDetailsLocalService extends BaseLocalService,
 		throws PortalException, SystemException;
 
 	public List<VRInputStampbookDetails> findBycorporationId(long mtCore,
-		java.lang.String corporationId) throws PortalException, SystemException;
+		long corporationId) throws PortalException, SystemException;
 
 	public List<VRInputStampbookDetails> findBydossierId(long mtCore,
 		long dossierId) throws PortalException, SystemException;

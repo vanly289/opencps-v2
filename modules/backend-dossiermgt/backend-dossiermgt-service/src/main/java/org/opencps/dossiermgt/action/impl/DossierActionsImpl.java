@@ -1488,11 +1488,10 @@ public class DossierActionsImpl implements DossierActions {
 				Map<String, Object> params = new HashMap<>();
 				//_log.info("SONDT payment REQUESTPAYMENT 5: DOSSIERID ========= "+ dossier.getDossierId());
 				PaymentFile oldPaymentFile = PaymentFileLocalServiceUtil.getByG_ID(groupId, dossier.getDossierId());
-				int intpaymentMethod = 0;
-				if(Validator.isNotNull(proAction.getPreCondition())) {
-					intpaymentMethod = checkPaymentMethodinPrecondition(proAction.getPreCondition());
-				}
-				intpaymentMethod = 1;
+				int intpaymentMethod = 1; // KeyPay
+				//if(Validator.isNotNull(proAction.getPreCondition())) {
+				//	intpaymentMethod = checkPaymentMethodinPrecondition(proAction.getPreCondition());
+				//}
 				if(oldPaymentFile != null){
 					
 					//_log.info("SONDT oldPaymentFile REQUESTPAYMENT 5 ===========================  " + JSONFactoryUtil.looseSerialize(oldPaymentFile));

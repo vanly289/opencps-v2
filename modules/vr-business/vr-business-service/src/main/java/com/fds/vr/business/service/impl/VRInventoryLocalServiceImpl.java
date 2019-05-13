@@ -22,6 +22,7 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.fds.vr.business.model.VRInventory;
 import com.fds.vr.business.service.base.VRInventoryLocalServiceBaseImpl;
@@ -48,9 +49,9 @@ public class VRInventoryLocalServiceImpl extends VRInventoryLocalServiceBaseImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRInventoryLocalServiceUtil} to access the vr inventory local service.
 	 */
 	
-	public VRInventory updateInventory(long id, long mtCore, long yearofPeriod, String previousPeriod, String previousPeriodCode, 
-			long bookId, String vehicleClass, String stampType, String stampShortNo, String serialStartNo, String serialEndNo,
-			long totalQuantities, long totalInUse, long totalNotUsed, String remark, String corporationId, long checkType, long checkStatus) 
+	public VRInventory updateInventory(long id, long mtCore, Long yearofPeriod, String previousPeriod, String previousPeriodCode, 
+			Long bookId, String vehicleClass, String stampType, String stampShortNo, Long serialStartNo, Long serialEndNo,
+			Long totalQuantities, Long totalInUse, Long totalNotUsed, String remark, Long corporationId, Long checkType, Long checkStatus) 
 		throws PortalException, SystemException {
 				
 		
@@ -65,22 +66,54 @@ public class VRInventoryLocalServiceImpl extends VRInventoryLocalServiceBaseImpl
 		
 		vrInventory.setModifyDate(new Date());
 		vrInventory.setMtCore(mtCore);
-		vrInventory.setYearofPeriod(yearofPeriod);
-		vrInventory.setPreviousPeriod(previousPeriod);
-		vrInventory.setPreviousPeriod(previousPeriodCode);
-		vrInventory.setBookId(bookId);
-		vrInventory.setVehicleClass(vehicleClass);
-		vrInventory.setStampType(stampType);
-		vrInventory.setStampShortNo(stampShortNo);
-		vrInventory.setSerialStartNo(serialStartNo);
-		vrInventory.setSerialEndNo(serialEndNo);
-		vrInventory.setTotalQuantities(totalQuantities);
-		vrInventory.setTotalInUse(totalInUse);
-		vrInventory.setTotalNotUsed(totalNotUsed);
-		vrInventory.setRemark(remark);
-		vrInventory.setCorporationId(corporationId);
-		vrInventory.setCheckType(checkType);
-		vrInventory.setCheckStatus(checkStatus);
+		
+		if(Validator.isNotNull(yearofPeriod))	
+			vrInventory.setYearofPeriod(yearofPeriod);
+		
+		if(Validator.isNotNull(previousPeriod))
+			vrInventory.setPreviousPeriod(previousPeriod);
+		
+		if(Validator.isNotNull(previousPeriodCode))
+			vrInventory.setPreviousPeriod(previousPeriodCode);
+		
+		if(Validator.isNotNull(bookId))
+			vrInventory.setBookId(bookId);
+		
+		if(Validator.isNotNull(vehicleClass))
+			vrInventory.setVehicleClass(vehicleClass);
+		
+		if(Validator.isNotNull(stampType))
+			vrInventory.setStampType(stampType);
+		
+		if(Validator.isNotNull(stampShortNo))
+			vrInventory.setStampShortNo(stampShortNo);
+		
+		if(Validator.isNotNull(serialStartNo))
+			vrInventory.setSerialStartNo(serialStartNo);
+		
+		if(Validator.isNotNull(serialEndNo))
+			vrInventory.setSerialEndNo(serialEndNo);
+		
+		if(Validator.isNotNull(totalQuantities))
+			vrInventory.setTotalQuantities(totalQuantities);
+		
+		if(Validator.isNotNull(totalInUse))
+			vrInventory.setTotalInUse(totalInUse);
+		
+		if(Validator.isNotNull(totalNotUsed))
+			vrInventory.setTotalNotUsed(totalNotUsed);
+		
+		if(Validator.isNotNull(remark))
+			vrInventory.setRemark(remark);
+		
+		if(Validator.isNotNull(corporationId))
+			vrInventory.setCorporationId(corporationId);
+		
+		if(Validator.isNotNull(checkType))
+			vrInventory.setCheckType(checkType);
+		
+		if(Validator.isNotNull(checkStatus))
+			vrInventory.setCheckStatus(checkStatus);
 		
 		return vrInventoryPersistence.update(vrInventory);
 	}
@@ -96,7 +129,7 @@ public class VRInventoryLocalServiceImpl extends VRInventoryLocalServiceBaseImpl
 	}
 
 
-	public List<VRInventory> findByYearofPeriodAndCorporationId(long mtCore, long yearofPeriod, String corporationId) throws PortalException, SystemException {
+	public List<VRInventory> findByYearofPeriodAndCorporationId(long mtCore, long yearofPeriod, long corporationId) throws PortalException, SystemException {
 		try {
 			return vrInventoryPersistence.findByYearofPeriodAndCorporationId(mtCore, yearofPeriod, corporationId);
 		} catch (Exception e) {

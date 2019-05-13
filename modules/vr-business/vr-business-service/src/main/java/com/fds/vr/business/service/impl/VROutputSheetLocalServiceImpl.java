@@ -22,6 +22,7 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.fds.vr.business.model.VROutputSheet;
 import com.fds.vr.business.service.base.VROutputSheetLocalServiceBaseImpl;
@@ -51,11 +52,11 @@ public class VROutputSheetLocalServiceImpl
 	
 	public VROutputSheet updateOutputSheet(long id, long mtCore, String outputSheetNo, 
 			Date outputSheetDate, String originalDocumentNo, String supplierCorporationId,
-			long outputSheetType, String maker, String checker, 
+			Long outputSheetType, String maker, String checker, 
 			String approver, String receiverName, String receiverPlace, 
 			String receiverRequest, String inventoryName, String inventoryPlace, 
-			Date inventoryDate, long dossierId, long issueId, String purchaserId, String purchaserCorporationId, 
-			String bookIDList, long isApproval, long totalQuantities, long totalAmount, String amountInWords, String remark)
+			Date inventoryDate, Long dossierId, Long issueId, String purchaserId, String purchaserCorporationId, 
+			String bookIDList, Long isApproval, Long totalQuantities, Long totalAmount, String amountInWords, String remark)
 		throws PortalException, SystemException {
 		
 		VROutputSheet outputSheet = null;
@@ -69,30 +70,78 @@ public class VROutputSheetLocalServiceImpl
 		
 		outputSheet.setModifyDate(new Date());
 		outputSheet.setMtCore(mtCore);
-		outputSheet.setOutputSheetNo(outputSheetNo);
-		outputSheet.setOutputSheetDate(outputSheetDate);
-		outputSheet.setOriginalDocumentNo(originalDocumentNo);
-		outputSheet.setSupplierCorporationId(supplierCorporationId);
-		outputSheet.setOutputSheetType(outputSheetType);
-		outputSheet.setMaker(maker);
-		outputSheet.setChecker(checker);
-		outputSheet.setApprover(approver);
-		outputSheet.setReceiverName(receiverName);
-		outputSheet.setReceiverPlace(receiverPlace);
-		outputSheet.setReceiverRequest(receiverRequest);
-		outputSheet.setInventoryName(inventoryName);
-		outputSheet.setInventoryPlace(inventoryPlace);
-		outputSheet.setInventoryDate(inventoryDate);
-		outputSheet.setDossierId(dossierId);
-		outputSheet.setIssueId(issueId);
-		outputSheet.setPurchaserId(purchaserId);
-		outputSheet.setPurchaserCorporationId(purchaserCorporationId);
-		outputSheet.setBookIDList(bookIDList);
-		outputSheet.setIsApproval(isApproval);
-		outputSheet.setTotalQuantities(totalQuantities);
-		outputSheet.setTotalAmount(totalAmount);
-		outputSheet.setAmountInWords(amountInWords);
-		outputSheet.setRemark(remark);
+		
+		if(Validator.isNotNull(outputSheetNo))
+			outputSheet.setOutputSheetNo(outputSheetNo);
+		
+		if(Validator.isNotNull(outputSheetDate))
+			outputSheet.setOutputSheetDate(outputSheetDate);
+		
+		if(Validator.isNotNull(originalDocumentNo))
+			outputSheet.setOriginalDocumentNo(originalDocumentNo);
+		
+		if(Validator.isNotNull(supplierCorporationId))
+			outputSheet.setSupplierCorporationId(supplierCorporationId);
+		
+		if(Validator.isNotNull(outputSheetType))
+			outputSheet.setOutputSheetType(outputSheetType);
+		
+		if(Validator.isNotNull(maker))
+			outputSheet.setMaker(maker);
+		
+		if(Validator.isNotNull(checker))
+			outputSheet.setChecker(checker);
+		
+		if(Validator.isNotNull(approver))
+			outputSheet.setApprover(approver);
+		
+		if(Validator.isNotNull(receiverName))
+			outputSheet.setReceiverName(receiverName);
+		
+		if(Validator.isNotNull(receiverPlace))
+			outputSheet.setReceiverPlace(receiverPlace);
+		
+		if(Validator.isNotNull(receiverRequest))
+			outputSheet.setReceiverRequest(receiverRequest);
+		
+		if(Validator.isNotNull(inventoryName))
+			outputSheet.setInventoryName(inventoryName);
+		
+		if(Validator.isNotNull(inventoryPlace))
+			outputSheet.setInventoryPlace(inventoryPlace);
+		
+		if(Validator.isNotNull(inventoryDate))
+			outputSheet.setInventoryDate(inventoryDate);
+		
+		if(Validator.isNotNull(dossierId))
+			outputSheet.setDossierId(dossierId);
+		
+		if(Validator.isNotNull(issueId))
+			outputSheet.setIssueId(issueId);
+		
+		if(Validator.isNotNull(purchaserId))
+			outputSheet.setPurchaserId(purchaserId);
+		
+		if(Validator.isNotNull(purchaserCorporationId))
+			outputSheet.setPurchaserCorporationId(purchaserCorporationId);
+		
+		if(Validator.isNotNull(bookIDList))
+			outputSheet.setBookIDList(bookIDList);
+		
+		if(Validator.isNotNull(isApproval))
+			outputSheet.setIsApproval(isApproval);
+		
+		if(Validator.isNotNull(totalQuantities))
+			outputSheet.setTotalQuantities(totalQuantities);
+		
+		if(Validator.isNotNull(totalAmount))
+			outputSheet.setTotalAmount(totalAmount);
+		
+		if(Validator.isNotNull(amountInWords))
+			outputSheet.setAmountInWords(amountInWords);
+		
+		if(Validator.isNotNull(remark))
+			outputSheet.setRemark(remark);
 		
 		return vrOutputSheetPersistence.update(outputSheet);
 		

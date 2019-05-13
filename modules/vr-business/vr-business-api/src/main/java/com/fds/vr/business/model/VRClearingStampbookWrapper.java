@@ -163,13 +163,13 @@ public class VRClearingStampbookWrapper implements VRClearingStampbook,
 			setStampShortNo(stampShortNo);
 		}
 
-		String serialStartNo = (String)attributes.get("serialStartNo");
+		Long serialStartNo = (Long)attributes.get("serialStartNo");
 
 		if (serialStartNo != null) {
 			setSerialStartNo(serialStartNo);
 		}
 
-		String serialEndNo = (String)attributes.get("serialEndNo");
+		Long serialEndNo = (Long)attributes.get("serialEndNo");
 
 		if (serialEndNo != null) {
 			setSerialEndNo(serialEndNo);
@@ -330,26 +330,6 @@ public class VRClearingStampbookWrapper implements VRClearingStampbook,
 	}
 
 	/**
-	* Returns the serial end no of this vr clearing stampbook.
-	*
-	* @return the serial end no of this vr clearing stampbook
-	*/
-	@Override
-	public java.lang.String getSerialEndNo() {
-		return _vrClearingStampbook.getSerialEndNo();
-	}
-
-	/**
-	* Returns the serial start no of this vr clearing stampbook.
-	*
-	* @return the serial start no of this vr clearing stampbook
-	*/
-	@Override
-	public java.lang.String getSerialStartNo() {
-		return _vrClearingStampbook.getSerialStartNo();
-	}
-
-	/**
 	* Returns the stamp short no of this vr clearing stampbook.
 	*
 	* @return the stamp short no of this vr clearing stampbook
@@ -497,6 +477,26 @@ public class VRClearingStampbookWrapper implements VRClearingStampbook,
 	@Override
 	public long getPrimaryKey() {
 		return _vrClearingStampbook.getPrimaryKey();
+	}
+
+	/**
+	* Returns the serial end no of this vr clearing stampbook.
+	*
+	* @return the serial end no of this vr clearing stampbook
+	*/
+	@Override
+	public long getSerialEndNo() {
+		return _vrClearingStampbook.getSerialEndNo();
+	}
+
+	/**
+	* Returns the serial start no of this vr clearing stampbook.
+	*
+	* @return the serial start no of this vr clearing stampbook
+	*/
+	@Override
+	public long getSerialStartNo() {
+		return _vrClearingStampbook.getSerialStartNo();
 	}
 
 	/**
@@ -761,7 +761,7 @@ public class VRClearingStampbookWrapper implements VRClearingStampbook,
 	* @param serialEndNo the serial end no of this vr clearing stampbook
 	*/
 	@Override
-	public void setSerialEndNo(java.lang.String serialEndNo) {
+	public void setSerialEndNo(long serialEndNo) {
 		_vrClearingStampbook.setSerialEndNo(serialEndNo);
 	}
 
@@ -771,7 +771,7 @@ public class VRClearingStampbookWrapper implements VRClearingStampbook,
 	* @param serialStartNo the serial start no of this vr clearing stampbook
 	*/
 	@Override
-	public void setSerialStartNo(java.lang.String serialStartNo) {
+	public void setSerialStartNo(long serialStartNo) {
 		_vrClearingStampbook.setSerialStartNo(serialStartNo);
 	}
 

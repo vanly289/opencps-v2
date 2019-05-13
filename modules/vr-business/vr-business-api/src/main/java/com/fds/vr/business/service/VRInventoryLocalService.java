@@ -110,13 +110,15 @@ public interface VRInventoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRInventory getVRInventory(long id) throws PortalException;
 
-	public VRInventory updateInventory(long id, long mtCore, long yearofPeriod,
-		java.lang.String previousPeriod, java.lang.String previousPeriodCode,
-		long bookId, java.lang.String vehicleClass, java.lang.String stampType,
-		java.lang.String stampShortNo, java.lang.String serialStartNo,
-		java.lang.String serialEndNo, long totalQuantities, long totalInUse,
-		long totalNotUsed, java.lang.String remark,
-		java.lang.String corporationId, long checkType, long checkStatus)
+	public VRInventory updateInventory(long id, long mtCore,
+		java.lang.Long yearofPeriod, java.lang.String previousPeriod,
+		java.lang.String previousPeriodCode, java.lang.Long bookId,
+		java.lang.String vehicleClass, java.lang.String stampType,
+		java.lang.String stampShortNo, java.lang.Long serialStartNo,
+		java.lang.Long serialEndNo, java.lang.Long totalQuantities,
+		java.lang.Long totalInUse, java.lang.Long totalNotUsed,
+		java.lang.String remark, java.lang.Long corporationId,
+		java.lang.Long checkType, java.lang.Long checkStatus)
 		throws PortalException, SystemException;
 
 	/**
@@ -213,7 +215,7 @@ public interface VRInventoryLocalService extends BaseLocalService,
 		throws PortalException, SystemException;
 
 	public List<VRInventory> findByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, java.lang.String corporationId)
+		long yearofPeriod, long corporationId)
 		throws PortalException, SystemException;
 
 	public List<VRInventory> findByYearofPeriodAndVehicleClass(long mtCore,

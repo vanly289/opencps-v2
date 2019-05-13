@@ -16,16 +16,14 @@ package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.fds.vr.business.model.VROutputSheetDetails;
 import com.fds.vr.business.service.base.VROutputSheetDetailsLocalServiceBaseImpl;
 
@@ -52,12 +50,12 @@ public class VROutputSheetDetailsLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VROutputSheetDetailsLocalServiceUtil} to access the vr output sheet details local service.
 	 */
 	
-	public VROutputSheetDetails updateOutputSheetDetails(long id, long mtCore, long inputSheetId, 
-			long outputSheetId, long bookId, long issueVehicleCertificateId, long certificateId,
+	public VROutputSheetDetails updateOutputSheetDetails(long id, long mtCore, Long inputSheetId, 
+			Long outputSheetId, Long bookId, Long issueVehicleCertificateId, Long certificateId,
 			String certificateNumber, Date certificateDate, String vehicleClass, String stampType,
-			String stampShortNo, long serialStartNo, long serialEndNo, long subTotalInDocument,
-			long subTotalQuantities, long unitPrice, long totalAmount, long totalInUse, long totalNotUsed,
-			long totalLost, long totalCancelled, long totalReturned, String remark)
+			String stampShortNo, Long serialStartNo, Long serialEndNo, Long subTotalInDocument,
+			Long subTotalQuantities, Long unitPrice, Long totalAmount, Long totalInUse, Long totalNotUsed,
+			Long totalLost, Long totalCancelled, Long totalReturned, String remark)
 		throws PortalException, SystemException {
 		
 		VROutputSheetDetails outputSheetDetails = null;
@@ -71,28 +69,70 @@ public class VROutputSheetDetailsLocalServiceImpl
 		
 		outputSheetDetails.setModifyDate(new Date());
 		outputSheetDetails.setMtCore(mtCore);
-		outputSheetDetails.setInputSheetId(inputSheetId);
 		outputSheetDetails.setOutputSheetId(outputSheetId);
-		outputSheetDetails.setBookId(bookId);
-		outputSheetDetails.setIssueVehicleCertificateId(issueVehicleCertificateId);
-		outputSheetDetails.setCertificateId(certificateId);
-		outputSheetDetails.setCertificateNumber(certificateNumber);
-		outputSheetDetails.setCertificateDate(certificateDate);
-		outputSheetDetails.setVehicleClass(vehicleClass);
-		outputSheetDetails.setStampType(stampType);
-		outputSheetDetails.setStampShortNo(stampShortNo);
-		outputSheetDetails.setSerialStartNo(serialStartNo);
-		outputSheetDetails.setSerialEndNo(serialEndNo);
-		outputSheetDetails.setSubTotalInDocument(subTotalInDocument);
-		outputSheetDetails.setSubTotalQuantities(subTotalQuantities);
-		outputSheetDetails.setUnitPrice(unitPrice);
-		outputSheetDetails.setTotalAmount(totalAmount);
-		outputSheetDetails.setTotalInUse(totalInUse);
-		outputSheetDetails.setTotalNotUsed(totalNotUsed);
-		outputSheetDetails.setTotalLost(totalLost);
-		outputSheetDetails.setTotalCancelled(totalCancelled);
-		outputSheetDetails.setTotalReturned(totalReturned);
-		outputSheetDetails.setRemark(remark);
+		
+		if(Validator.isNotNull(inputSheetId))
+			outputSheetDetails.setInputSheetId(inputSheetId);
+		
+		if(Validator.isNotNull(bookId))
+			outputSheetDetails.setBookId(bookId);
+		
+		if(Validator.isNotNull(issueVehicleCertificateId))
+			outputSheetDetails.setIssueVehicleCertificateId(issueVehicleCertificateId);
+		
+		if(Validator.isNotNull(certificateId))
+			outputSheetDetails.setCertificateId(certificateId);
+		
+		if(Validator.isNotNull(certificateNumber))
+			outputSheetDetails.setCertificateNumber(certificateNumber);
+		
+		if(Validator.isNotNull(certificateDate))
+			outputSheetDetails.setCertificateDate(certificateDate);
+		
+		if(Validator.isNotNull(vehicleClass))
+			outputSheetDetails.setVehicleClass(vehicleClass);
+
+		if(Validator.isNotNull(stampType))
+			outputSheetDetails.setStampType(stampType);
+		
+		if(Validator.isNotNull(stampShortNo))
+			outputSheetDetails.setStampShortNo(stampShortNo);
+		
+		if(Validator.isNotNull(serialStartNo))
+			outputSheetDetails.setSerialStartNo(serialStartNo);
+		
+		if(Validator.isNotNull(serialEndNo))
+			outputSheetDetails.setSerialEndNo(serialEndNo);
+		
+		if(Validator.isNotNull(subTotalInDocument))
+			outputSheetDetails.setSubTotalInDocument(subTotalInDocument);
+		
+		if(Validator.isNotNull(subTotalQuantities))
+			outputSheetDetails.setSubTotalQuantities(subTotalQuantities);
+		
+		if(Validator.isNotNull(unitPrice))
+			outputSheetDetails.setUnitPrice(unitPrice);
+		
+		if(Validator.isNotNull(totalAmount))
+			outputSheetDetails.setTotalAmount(totalAmount);
+		
+		if(Validator.isNotNull(totalInUse))
+			outputSheetDetails.setTotalInUse(totalInUse);
+		
+		if(Validator.isNotNull(totalNotUsed))
+			outputSheetDetails.setTotalNotUsed(totalNotUsed);
+		
+		if(Validator.isNotNull(totalLost))
+			outputSheetDetails.setTotalLost(totalLost);
+		
+		if(Validator.isNotNull(totalCancelled))
+			outputSheetDetails.setTotalCancelled(totalCancelled);
+		
+		if(Validator.isNotNull(totalReturned))
+			outputSheetDetails.setTotalReturned(totalReturned);
+		
+		if(Validator.isNotNull(remark))
+			outputSheetDetails.setRemark(remark);
 		
 		return vrOutputSheetDetailsPersistence.update(outputSheetDetails);
 	}

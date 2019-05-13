@@ -1353,13 +1353,13 @@
 		<column name="vehicleClass" type="String" db-name="vehicleClass"/>
 		<column name="stampType" type="String" db-name="stampType"/>
 		<column name="stampShortNo" type="String" db-name="stampShortNo"/>
-		<column name="serialStartNo" type="String" db-name="serialStartNo"/>
-		<column name="serialEndNo" type="String" db-name="serialEndNo"/>
+		<column name="serialStartNo" type="long" db-name="serialStartNo"/>
+		<column name="serialEndNo" type="long" db-name="serialEndNo"/>
 		<column name="totalQuantities" type="long" db-name="totalQuantities"/>
 		<column name="totalInUse" type="long" db-name="totalInUse"/>
 		<column name="totalNotUsed" type="long" db-name="totalNotUsed"/>
 		<column name="remark" type="String" db-name="remark"/>
-		<column name="corporationId" type="String" db-name="corporationId"/>
+		<column name="corporationId" type="long" db-name="corporationId"/>
 		<column name="checkType" type="long" db-name="checkType"/>
 		<column name="checkStatus" type="long" db-name="checkStatus"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
@@ -1412,7 +1412,7 @@
 		<column name="inputSheetNo" type="String" db-name="inputSheetNo"/>
 		<column name="inputSheetDate" type="Date" db-name="inputSheetDate"/>
 		<column name="originalDocumentNo" type="String" db-name="originalDocumentNo"/>
-		<column name="corporationId" type="String" db-name="corporationId"/>
+		<column name="corporationId" type="long" db-name="corporationId"/>
 		<column name="inputSheetType" type="long" db-name="inputSheetType"/>
 		<column name="maker" type="String" db-name="maker"/>
 		<column name="checker" type="String" db-name="checker"/>
@@ -1513,7 +1513,7 @@
 		<column name="certificateDate" type="Date" db-name="certificateDate"/>
 		<column name="vehicleRecordId" type="long" db-name="vehicleRecordId"/>
 		<column name="frameNo" type="String" db-name="frameNo"/>
-		<column name="BoxNo" type="String" db-name="BoxNo"/>
+		<column name="boxNo" type="String" db-name="BoxNo"/>
 		<column name="vinNo" type="String" db-name="vinNo"/>
 		<column name="engineNo" type="String" db-name="engineNo"/>
 		<column name="qrCode" type="String" db-name="qrCode"/>
@@ -1524,7 +1524,7 @@
 		<column name="inputSheetId" type="long" db-name="inputSheetId"/>
 		<column name="bookId" type="long" db-name="bookId"/>
 		<column name="purchaserId" type="String" db-name="purchaserId"/>
-		<column name="corporationId" type="String" db-name="corporationId"/>
+		<column name="corporationId" type="long" db-name="corporationId"/>
 		<column name="issuingStatus" type="long" db-name="issuingStatus"/>
 		<column name="clearingStatus" type="long" db-name="clearingStatus"/>
 		<column name="stampStatus" type="long" db-name="stampStatus"/>
@@ -1731,8 +1731,8 @@
 		<column name="vehicleClass" type="String" db-name="vehicleClass"/>
 		<column name="stampType" type="String" db-name="stampType"/>
 		<column name="stampShortNo" type="String" db-name="stampShortNo"/>
-		<column name="serialStartNo" type="String" db-name="serialStartNo"/>
-		<column name="serialEndNo" type="String" db-name="serialEndNo"/>
+		<column name="serialStartNo" type="long" db-name="serialStartNo"/>
+		<column name="serialEndNo" type="long" db-name="serialEndNo"/>
 		<column name="subTotalInDocument" type="long" db-name="subTotalInDocument"/>
 		<column name="subTotalQuantities" type="long" db-name="subTotalQuantities"/>
 		<column name="vehiclePrice" type="long" db-name="vehiclePrice"/>

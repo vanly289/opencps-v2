@@ -20,11 +20,19 @@ import com.fds.vr.business.service.persistence.VRInputStampbookDetailsPersistenc
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Set;
+
 /**
  * @author LamTV
  * @generated
  */
 public class VRInputStampbookDetailsFinderBaseImpl extends BasePersistenceImpl<VRInputStampbookDetails> {
+	@Override
+	public Set<String> getBadColumnNames() {
+		return getVRInputStampbookDetailsPersistence()
+				   .getBadColumnNames();
+	}
+
 	/**
 	 * Returns the vr input stampbook details persistence.
 	 *

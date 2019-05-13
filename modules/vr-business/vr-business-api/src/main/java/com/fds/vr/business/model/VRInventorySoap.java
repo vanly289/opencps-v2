@@ -177,19 +177,19 @@ public class VRInventorySoap implements Serializable {
 		_stampShortNo = stampShortNo;
 	}
 
-	public String getSerialStartNo() {
+	public long getSerialStartNo() {
 		return _serialStartNo;
 	}
 
-	public void setSerialStartNo(String serialStartNo) {
+	public void setSerialStartNo(long serialStartNo) {
 		_serialStartNo = serialStartNo;
 	}
 
-	public String getSerialEndNo() {
+	public long getSerialEndNo() {
 		return _serialEndNo;
 	}
 
-	public void setSerialEndNo(String serialEndNo) {
+	public void setSerialEndNo(long serialEndNo) {
 		_serialEndNo = serialEndNo;
 	}
 
@@ -225,11 +225,11 @@ public class VRInventorySoap implements Serializable {
 		_remark = remark;
 	}
 
-	public String getCorporationId() {
+	public long getCorporationId() {
 		return _corporationId;
 	}
 
-	public void setCorporationId(String corporationId) {
+	public void setCorporationId(long corporationId) {
 		_corporationId = corporationId;
 	}
 
@@ -274,13 +274,13 @@ public class VRInventorySoap implements Serializable {
 	private String _vehicleClass;
 	private String _stampType;
 	private String _stampShortNo;
-	private String _serialStartNo;
-	private String _serialEndNo;
+	private long _serialStartNo;
+	private long _serialEndNo;
 	private long _totalQuantities;
 	private long _totalInUse;
 	private long _totalNotUsed;
 	private String _remark;
-	private String _corporationId;
+	private long _corporationId;
 	private long _checkType;
 	private long _checkStatus;
 	private Date _modifyDate;
