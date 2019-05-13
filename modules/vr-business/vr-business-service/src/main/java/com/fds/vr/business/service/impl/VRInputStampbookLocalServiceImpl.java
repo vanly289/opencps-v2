@@ -16,6 +16,7 @@ package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -127,13 +128,15 @@ public class VRInputStampbookLocalServiceImpl
 			inputStambook.setRemark(remark);
 		
 		if(isApproval != null && isApproval == 1) {	//phieu nhap da duyet
+			long year = Calendar.getInstance().get(Calendar.YEAR);
+			
 			// update inventory
-			vrInventoryLocalService.updateInventory(0l, 1l, null, null, null,
+			vrInventoryLocalService.updateInventory(0l, 1l, year, null, null,
 					bookId, vehicleClass, stampType, stampShortNo, serialStartNo, serialEndNo, null,
 					totalInUse, totalNotUsed, remark, corporationId, inputSheetType, 0l);
 			
-			for(long sequenNo = serialStartNo ; sequenNo < serialEndNo ; sequenNo ++) {
-				String stampSerialNo = String.format("%06d", sequenNo);
+			for(long sequenNo = serialStartNo ; sequenNo <= serialEndNo ; sequenNo ++) {
+				String stampSerialNo = stampShortNo + String.format("%06d", sequenNo);
 				// update stampbookdetails
 				vrInputStampbookDetailsLocalService.updateInputStampbookDetails(0l, 1l, stampSerialNo, sequenNo,
 						null, null, null, null, null, null, null,
@@ -218,6 +221,17 @@ public class VRInputStampbookLocalServiceImpl
 		} catch (Exception e) {
 			_log.error(e);
 		}
+		return new ArrayList<VRInputStampbook>();
+		
+	}
+	
+	public List<VRInputStampbook> findBySum3GreaterThan() throws PortalException, SystemException {
+		try {
+			return vrInputStampbookPersistence.findBySum3GreaterThan(0l);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		
 		return new ArrayList<VRInputStampbook>();
 		
 	}

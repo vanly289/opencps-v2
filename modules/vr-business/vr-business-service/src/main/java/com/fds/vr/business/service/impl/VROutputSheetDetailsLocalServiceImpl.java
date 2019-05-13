@@ -17,9 +17,15 @@ package com.fds.vr.business.service.impl;
 import aQute.bnd.annotation.ProviderType;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import org.opencps.datamgt.utils.DateTimeUtils;
+
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -135,6 +141,62 @@ public class VROutputSheetDetailsLocalServiceImpl
 			outputSheetDetails.setRemark(remark);
 		
 		return vrOutputSheetDetailsPersistence.update(outputSheetDetails);
+	}
+	
+	public void updateJSONArray(long outputSheetId, Long corporationId, 
+			Long outputSheetType, String details, Long isApproval)
+			throws PortalException, SystemException {
+		
+		if(Validator.isNotNull(details)) {
+			JSONArray detailsArr = JSONFactoryUtil.createJSONArray(details);
+			
+			List<VROutputSheetDetails> outputSheetDetails = vrOutputSheetDetailsLocalService.findByOutputSheetId(1l, outputSheetId);
+			
+			// them moi
+			long year = Calendar.getInstance().get(Calendar.YEAR);
+			for (int i = 0; i < detailsArr.length(); ++i) {
+				JSONObject json = detailsArr.getJSONObject(i);
+	
+				Long bookId = json.getLong("bookId");
+				Long issueVehicleCertificateId = json.getLong("issueVehicleCertificateId");
+				Long certificateId = json.getLong("certificateId");
+				String certificateNumber = json.getString("certificateNumber");
+				Date certificateDate = DateTimeUtils.convertStringToDateAPI(json.getString("certificateDate"));
+				String vehicleClass = json.getString("vehicleClass");
+				String stampType = json.getString("stampType");
+				String stampShortNo = json.getString("stampShortNo");
+				Long serialStartNo = json.getLong("serialStartNo");
+				Long serialEndNo = json.getLong("serialEndNo");
+				Long subTotalInDocument = json.getLong("subTotalInDocument");
+				Long subTotalQuantities = json.getLong("subTotalQuantities");
+				Long unitPrice = json.getLong("unitPrice");
+				Long totalAmount = json.getLong("totalAmount");
+				Long totalInUse = json.getLong("totalInUse");
+				Long totalNotUsed = json.getLong("totalNotUsed");
+				Long totalLost = json.getLong("totalLost");
+				Long totalCancelled = json.getLong("totalCancelled");
+				Long totalReturned = json.getLong("totalReturned");
+				String remark = json.getString("remark");
+	
+				vrOutputSheetDetailsLocalService.updateOutputSheetDetails(0l, 1l, null, outputSheetId,
+						bookId, issueVehicleCertificateId, certificateId, certificateNumber, certificateDate,
+						vehicleClass, stampType, stampShortNo, serialStartNo, serialEndNo, subTotalInDocument,
+						subTotalQuantities, unitPrice, totalAmount, totalInUse, totalNotUsed, totalLost, totalCancelled,
+						totalReturned, remark);
+				
+				if(isApproval == 1) { // duyet 
+					vrInventoryLocalService.updateInventory(0l, 1l, year, null,
+							null, bookId, vehicleClass, stampType, stampShortNo, serialStartNo,
+							serialEndNo, null, totalInUse, totalNotUsed, remark, corporationId, outputSheetType,
+							null);
+				}
+			}
+			
+			// xoa cu
+			for(VROutputSheetDetails outputSheetDetail : outputSheetDetails) {
+				vrOutputSheetDetailsPersistence.remove(outputSheetDetail);
+			}
+		}
 	}
 	
 	public List<VROutputSheetDetails> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {

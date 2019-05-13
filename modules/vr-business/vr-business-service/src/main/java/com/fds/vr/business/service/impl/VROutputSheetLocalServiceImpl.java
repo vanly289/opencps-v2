@@ -51,12 +51,12 @@ public class VROutputSheetLocalServiceImpl
 	 */
 	
 	public VROutputSheet updateOutputSheet(long id, long mtCore, String outputSheetNo, 
-			Date outputSheetDate, String originalDocumentNo, String supplierCorporationId,
+			Date outputSheetDate, String originalDocumentNo, Long supplierCorporationId,
 			Long outputSheetType, String maker, String checker, 
 			String approver, String receiverName, String receiverPlace, 
 			String receiverRequest, String inventoryName, String inventoryPlace, 
-			Date inventoryDate, Long dossierId, Long issueId, String purchaserId, String purchaserCorporationId, 
-			String bookIDList, Long isApproval, Long totalQuantities, Long totalAmount, String amountInWords, String remark)
+			Date inventoryDate, Long dossierId, Long issueId, Long purchaserId, Long purchaserCorporationId, 
+			String bookIDList, Long isApproval, Long totalQuantities, Long totalAmount, String amountInWords, String remark, String details)
 		throws PortalException, SystemException {
 		
 		VROutputSheet outputSheet = null;
@@ -143,6 +143,11 @@ public class VROutputSheetLocalServiceImpl
 		if(Validator.isNotNull(remark))
 			outputSheet.setRemark(remark);
 		
+		if(isApproval == 1) {
+			Long corporationId = outputSheetType == 2 ? purchaserCorporationId : purchaserId;
+			vrOutputSheetDetailsLocalService.updateJSONArray(id, corporationId, outputSheetType, details, isApproval);
+		}
+		
 		return vrOutputSheetPersistence.update(outputSheet);
 		
 	}
@@ -158,7 +163,7 @@ public class VROutputSheetLocalServiceImpl
 	}
 
 
-	public List<VROutputSheet> findBypurchaserCorporationId(long mtCore, String purchaserCorporationId) throws PortalException, SystemException {
+	public List<VROutputSheet> findBypurchaserCorporationId(long mtCore, long purchaserCorporationId) throws PortalException, SystemException {
 		try {
 			return vrOutputSheetPersistence.findBypurchaserCorporationId(mtCore, purchaserCorporationId);
 		} catch (Exception e) {
@@ -168,7 +173,7 @@ public class VROutputSheetLocalServiceImpl
 		
 	}
 	
-	public List<VROutputSheet> findBysupplierCorporationId(long mtCore, String supplierCorporationId) throws PortalException, SystemException {
+	public List<VROutputSheet> findBysupplierCorporationId(long mtCore, long supplierCorporationId) throws PortalException, SystemException {
 		try {
 			return vrOutputSheetPersistence.findBysupplierCorporationId(mtCore, supplierCorporationId);
 		} catch (Exception e) {

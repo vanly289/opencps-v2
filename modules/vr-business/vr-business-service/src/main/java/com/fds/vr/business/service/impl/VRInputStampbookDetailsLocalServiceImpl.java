@@ -71,28 +71,28 @@ public class VRInputStampbookDetailsLocalServiceImpl
 		inputStampbookDetails.setModifyDate(new Date());
 		inputStampbookDetails.setMtCore(mtCore);
 		
-		if(Validator.isNotNull(remark))
+		if(Validator.isNotNull(stampSerialNo))
 			inputStampbookDetails.setStampSerialNo(stampSerialNo);
 		
-		if(Validator.isNotNull(remark))
+		if(Validator.isNotNull(sequenceNo))
 			inputStampbookDetails.setSequenceNo(sequenceNo);
 		
-		if(Validator.isNotNull(remark))
+		if(Validator.isNotNull(dossierId))
 			inputStampbookDetails.setDossierId(dossierId);
 		
-		if(Validator.isNotNull(remark))
+		if(Validator.isNotNull(certificateId))
 			inputStampbookDetails.setCertificateId(certificateId);
 		
-		if(Validator.isNotNull(remark))
+		if(Validator.isNotNull(certificateNumber))
 			inputStampbookDetails.setCertificateNumber(certificateNumber);
 		
-		if(Validator.isNotNull(remark))
+		if(Validator.isNotNull(certificateDate))
 			inputStampbookDetails.setCertificateDate(certificateDate);
 		
-		if(Validator.isNotNull(remark))
+		if(Validator.isNotNull(vehicleRecordId))
 			inputStampbookDetails.setVehicleRecordId(vehicleRecordId);
 		
-		if(Validator.isNotNull(remark))
+		if(Validator.isNotNull(frameNo))
 			inputStampbookDetails.setFrameNo(frameNo);
 		
 		if(Validator.isNotNull(boxNo))
@@ -231,6 +231,10 @@ public class VRInputStampbookDetailsLocalServiceImpl
 		}
 		return new ArrayList<VRInputStampbookDetails>();
 		
+	}
+	
+	public Long[] findStartNoEndNoBySequence(long inputStampbookId) {
+		return vrInputStampbookDetailsFinder.findStartNoEndNoBySequence(inputStampbookId);
 	}
 
 	

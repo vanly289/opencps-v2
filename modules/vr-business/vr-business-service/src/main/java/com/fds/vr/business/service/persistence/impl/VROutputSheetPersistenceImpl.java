@@ -684,7 +684,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 			VROutputSheetImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findBypurchaserCorporationId",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -694,7 +694,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 			VROutputSheetModelImpl.FINDER_CACHE_ENABLED,
 			VROutputSheetImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findBypurchaserCorporationId",
-			new String[] { Long.class.getName(), String.class.getName() },
+			new String[] { Long.class.getName(), Long.class.getName() },
 			VROutputSheetModelImpl.MTCORE_COLUMN_BITMASK |
 			VROutputSheetModelImpl.PURCHASERCORPORATIONID_COLUMN_BITMASK |
 			VROutputSheetModelImpl.MODIFYDATE_COLUMN_BITMASK);
@@ -702,7 +702,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 			VROutputSheetModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countBypurchaserCorporationId",
-			new String[] { Long.class.getName(), String.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns all the vr output sheets where mtCore = &#63; and purchaserCorporationId = &#63;.
@@ -713,7 +713,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public List<VROutputSheet> findBypurchaserCorporationId(long mtCore,
-		String purchaserCorporationId) {
+		long purchaserCorporationId) {
 		return findBypurchaserCorporationId(mtCore, purchaserCorporationId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -733,7 +733,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public List<VROutputSheet> findBypurchaserCorporationId(long mtCore,
-		String purchaserCorporationId, int start, int end) {
+		long purchaserCorporationId, int start, int end) {
 		return findBypurchaserCorporationId(mtCore, purchaserCorporationId,
 			start, end, null);
 	}
@@ -754,7 +754,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public List<VROutputSheet> findBypurchaserCorporationId(long mtCore,
-		String purchaserCorporationId, int start, int end,
+		long purchaserCorporationId, int start, int end,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		return findBypurchaserCorporationId(mtCore, purchaserCorporationId,
 			start, end, orderByComparator, true);
@@ -777,7 +777,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public List<VROutputSheet> findBypurchaserCorporationId(long mtCore,
-		String purchaserCorporationId, int start, int end,
+		long purchaserCorporationId, int start, int end,
 		OrderByComparator<VROutputSheet> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -808,8 +808,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 			if ((list != null) && !list.isEmpty()) {
 				for (VROutputSheet vrOutputSheet : list) {
 					if ((mtCore != vrOutputSheet.getMtCore()) ||
-							!Objects.equals(purchaserCorporationId,
-								vrOutputSheet.getPurchaserCorporationId())) {
+							(purchaserCorporationId != vrOutputSheet.getPurchaserCorporationId())) {
 						list = null;
 
 						break;
@@ -833,19 +832,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 			query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_MTCORE_2);
 
-			boolean bindPurchaserCorporationId = false;
-
-			if (purchaserCorporationId == null) {
-				query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_1);
-			}
-			else if (purchaserCorporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_3);
-			}
-			else {
-				bindPurchaserCorporationId = true;
-
-				query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -869,9 +856,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 				qPos.add(mtCore);
 
-				if (bindPurchaserCorporationId) {
-					qPos.add(purchaserCorporationId);
-				}
+				qPos.add(purchaserCorporationId);
 
 				if (!pagination) {
 					list = (List<VROutputSheet>)QueryUtil.list(q, getDialect(),
@@ -914,7 +899,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet findBypurchaserCorporationId_First(long mtCore,
-		String purchaserCorporationId,
+		long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException {
 		VROutputSheet vrOutputSheet = fetchBypurchaserCorporationId_First(mtCore,
@@ -949,7 +934,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet fetchBypurchaserCorporationId_First(long mtCore,
-		String purchaserCorporationId,
+		long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		List<VROutputSheet> list = findBypurchaserCorporationId(mtCore,
 				purchaserCorporationId, 0, 1, orderByComparator);
@@ -972,7 +957,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet findBypurchaserCorporationId_Last(long mtCore,
-		String purchaserCorporationId,
+		long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException {
 		VROutputSheet vrOutputSheet = fetchBypurchaserCorporationId_Last(mtCore,
@@ -1007,7 +992,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet fetchBypurchaserCorporationId_Last(long mtCore,
-		String purchaserCorporationId,
+		long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		int count = countBypurchaserCorporationId(mtCore, purchaserCorporationId);
 
@@ -1037,7 +1022,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet[] findBypurchaserCorporationId_PrevAndNext(long id,
-		long mtCore, String purchaserCorporationId,
+		long mtCore, long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException {
 		VROutputSheet vrOutputSheet = findByPrimaryKey(id);
@@ -1071,7 +1056,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 	protected VROutputSheet getBypurchaserCorporationId_PrevAndNext(
 		Session session, VROutputSheet vrOutputSheet, long mtCore,
-		String purchaserCorporationId,
+		long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1088,19 +1073,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 		query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_MTCORE_2);
 
-		boolean bindPurchaserCorporationId = false;
-
-		if (purchaserCorporationId == null) {
-			query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_1);
-		}
-		else if (purchaserCorporationId.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_3);
-		}
-		else {
-			bindPurchaserCorporationId = true;
-
-			query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_2);
-		}
+		query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1172,9 +1145,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 		qPos.add(mtCore);
 
-		if (bindPurchaserCorporationId) {
-			qPos.add(purchaserCorporationId);
-		}
+		qPos.add(purchaserCorporationId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(vrOutputSheet);
@@ -1202,7 +1173,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public void removeBypurchaserCorporationId(long mtCore,
-		String purchaserCorporationId) {
+		long purchaserCorporationId) {
 		for (VROutputSheet vrOutputSheet : findBypurchaserCorporationId(
 				mtCore, purchaserCorporationId, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
@@ -1219,7 +1190,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public int countBypurchaserCorporationId(long mtCore,
-		String purchaserCorporationId) {
+		long purchaserCorporationId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_PURCHASERCORPORATIONID;
 
 		Object[] finderArgs = new Object[] { mtCore, purchaserCorporationId };
@@ -1233,19 +1204,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 			query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_MTCORE_2);
 
-			boolean bindPurchaserCorporationId = false;
-
-			if (purchaserCorporationId == null) {
-				query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_1);
-			}
-			else if (purchaserCorporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_3);
-			}
-			else {
-				bindPurchaserCorporationId = true;
-
-				query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_2);
 
 			String sql = query.toString();
 
@@ -1260,9 +1219,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 				qPos.add(mtCore);
 
-				if (bindPurchaserCorporationId) {
-					qPos.add(purchaserCorporationId);
-				}
+				qPos.add(purchaserCorporationId);
 
 				count = (Long)q.uniqueResult();
 
@@ -1282,19 +1239,15 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	}
 
 	private static final String _FINDER_COLUMN_PURCHASERCORPORATIONID_MTCORE_2 = "vrOutputSheet.mtCore = ? AND ";
-	private static final String _FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_1 =
-		"vrOutputSheet.purchaserCorporationId IS NULL";
 	private static final String _FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_2 =
 		"vrOutputSheet.purchaserCorporationId = ?";
-	private static final String _FINDER_COLUMN_PURCHASERCORPORATIONID_PURCHASERCORPORATIONID_3 =
-		"(vrOutputSheet.purchaserCorporationId IS NULL OR vrOutputSheet.purchaserCorporationId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SUPPLIERCORPORATIONID =
 		new FinderPath(VROutputSheetModelImpl.ENTITY_CACHE_ENABLED,
 			VROutputSheetModelImpl.FINDER_CACHE_ENABLED,
 			VROutputSheetImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findBysupplierCorporationId",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -1304,7 +1257,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 			VROutputSheetModelImpl.FINDER_CACHE_ENABLED,
 			VROutputSheetImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findBysupplierCorporationId",
-			new String[] { Long.class.getName(), String.class.getName() },
+			new String[] { Long.class.getName(), Long.class.getName() },
 			VROutputSheetModelImpl.MTCORE_COLUMN_BITMASK |
 			VROutputSheetModelImpl.SUPPLIERCORPORATIONID_COLUMN_BITMASK |
 			VROutputSheetModelImpl.MODIFYDATE_COLUMN_BITMASK);
@@ -1312,7 +1265,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 			VROutputSheetModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countBysupplierCorporationId",
-			new String[] { Long.class.getName(), String.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns all the vr output sheets where mtCore = &#63; and supplierCorporationId = &#63;.
@@ -1323,7 +1276,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public List<VROutputSheet> findBysupplierCorporationId(long mtCore,
-		String supplierCorporationId) {
+		long supplierCorporationId) {
 		return findBysupplierCorporationId(mtCore, supplierCorporationId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -1343,7 +1296,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public List<VROutputSheet> findBysupplierCorporationId(long mtCore,
-		String supplierCorporationId, int start, int end) {
+		long supplierCorporationId, int start, int end) {
 		return findBysupplierCorporationId(mtCore, supplierCorporationId,
 			start, end, null);
 	}
@@ -1364,7 +1317,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public List<VROutputSheet> findBysupplierCorporationId(long mtCore,
-		String supplierCorporationId, int start, int end,
+		long supplierCorporationId, int start, int end,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		return findBysupplierCorporationId(mtCore, supplierCorporationId,
 			start, end, orderByComparator, true);
@@ -1387,7 +1340,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public List<VROutputSheet> findBysupplierCorporationId(long mtCore,
-		String supplierCorporationId, int start, int end,
+		long supplierCorporationId, int start, int end,
 		OrderByComparator<VROutputSheet> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -1418,8 +1371,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 			if ((list != null) && !list.isEmpty()) {
 				for (VROutputSheet vrOutputSheet : list) {
 					if ((mtCore != vrOutputSheet.getMtCore()) ||
-							!Objects.equals(supplierCorporationId,
-								vrOutputSheet.getSupplierCorporationId())) {
+							(supplierCorporationId != vrOutputSheet.getSupplierCorporationId())) {
 						list = null;
 
 						break;
@@ -1443,19 +1395,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 			query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_MTCORE_2);
 
-			boolean bindSupplierCorporationId = false;
-
-			if (supplierCorporationId == null) {
-				query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_1);
-			}
-			else if (supplierCorporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_3);
-			}
-			else {
-				bindSupplierCorporationId = true;
-
-				query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1479,9 +1419,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 				qPos.add(mtCore);
 
-				if (bindSupplierCorporationId) {
-					qPos.add(supplierCorporationId);
-				}
+				qPos.add(supplierCorporationId);
 
 				if (!pagination) {
 					list = (List<VROutputSheet>)QueryUtil.list(q, getDialect(),
@@ -1524,7 +1462,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet findBysupplierCorporationId_First(long mtCore,
-		String supplierCorporationId,
+		long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException {
 		VROutputSheet vrOutputSheet = fetchBysupplierCorporationId_First(mtCore,
@@ -1559,7 +1497,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet fetchBysupplierCorporationId_First(long mtCore,
-		String supplierCorporationId,
+		long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		List<VROutputSheet> list = findBysupplierCorporationId(mtCore,
 				supplierCorporationId, 0, 1, orderByComparator);
@@ -1582,7 +1520,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet findBysupplierCorporationId_Last(long mtCore,
-		String supplierCorporationId,
+		long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException {
 		VROutputSheet vrOutputSheet = fetchBysupplierCorporationId_Last(mtCore,
@@ -1617,7 +1555,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet fetchBysupplierCorporationId_Last(long mtCore,
-		String supplierCorporationId,
+		long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		int count = countBysupplierCorporationId(mtCore, supplierCorporationId);
 
@@ -1647,7 +1585,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public VROutputSheet[] findBysupplierCorporationId_PrevAndNext(long id,
-		long mtCore, String supplierCorporationId,
+		long mtCore, long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException {
 		VROutputSheet vrOutputSheet = findByPrimaryKey(id);
@@ -1681,7 +1619,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 	protected VROutputSheet getBysupplierCorporationId_PrevAndNext(
 		Session session, VROutputSheet vrOutputSheet, long mtCore,
-		String supplierCorporationId,
+		long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1698,19 +1636,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 		query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_MTCORE_2);
 
-		boolean bindSupplierCorporationId = false;
-
-		if (supplierCorporationId == null) {
-			query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_1);
-		}
-		else if (supplierCorporationId.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_3);
-		}
-		else {
-			bindSupplierCorporationId = true;
-
-			query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_2);
-		}
+		query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1782,9 +1708,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 		qPos.add(mtCore);
 
-		if (bindSupplierCorporationId) {
-			qPos.add(supplierCorporationId);
-		}
+		qPos.add(supplierCorporationId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(vrOutputSheet);
@@ -1812,7 +1736,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public void removeBysupplierCorporationId(long mtCore,
-		String supplierCorporationId) {
+		long supplierCorporationId) {
 		for (VROutputSheet vrOutputSheet : findBysupplierCorporationId(mtCore,
 				supplierCorporationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null)) {
@@ -1829,7 +1753,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	 */
 	@Override
 	public int countBysupplierCorporationId(long mtCore,
-		String supplierCorporationId) {
+		long supplierCorporationId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_SUPPLIERCORPORATIONID;
 
 		Object[] finderArgs = new Object[] { mtCore, supplierCorporationId };
@@ -1843,19 +1767,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 			query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_MTCORE_2);
 
-			boolean bindSupplierCorporationId = false;
-
-			if (supplierCorporationId == null) {
-				query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_1);
-			}
-			else if (supplierCorporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_3);
-			}
-			else {
-				bindSupplierCorporationId = true;
-
-				query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_2);
 
 			String sql = query.toString();
 
@@ -1870,9 +1782,7 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 
 				qPos.add(mtCore);
 
-				if (bindSupplierCorporationId) {
-					qPos.add(supplierCorporationId);
-				}
+				qPos.add(supplierCorporationId);
 
 				count = (Long)q.uniqueResult();
 
@@ -1892,12 +1802,8 @@ public class VROutputSheetPersistenceImpl extends BasePersistenceImpl<VROutputSh
 	}
 
 	private static final String _FINDER_COLUMN_SUPPLIERCORPORATIONID_MTCORE_2 = "vrOutputSheet.mtCore = ? AND ";
-	private static final String _FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_1 =
-		"vrOutputSheet.supplierCorporationId IS NULL";
 	private static final String _FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_2 =
 		"vrOutputSheet.supplierCorporationId = ?";
-	private static final String _FINDER_COLUMN_SUPPLIERCORPORATIONID_SUPPLIERCORPORATIONID_3 =
-		"(vrOutputSheet.supplierCorporationId IS NULL OR vrOutputSheet.supplierCorporationId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_DOSSIERID =
 		new FinderPath(VROutputSheetModelImpl.ENTITY_CACHE_ENABLED,
 			VROutputSheetModelImpl.FINDER_CACHE_ENABLED,

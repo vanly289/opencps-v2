@@ -133,7 +133,8 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 	public static final long INPUTSHEETID_COLUMN_BITMASK = 2L;
 	public static final long MTCORE_COLUMN_BITMASK = 4L;
 	public static final long STAMPTYPE_COLUMN_BITMASK = 8L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 16L;
+	public static final long SUM3_COLUMN_BITMASK = 16L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRInputStampbook"));
 
@@ -586,7 +587,19 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 
 	@Override
 	public void setSum3(long sum3) {
+		_columnBitmask |= SUM3_COLUMN_BITMASK;
+
+		if (!_setOriginalSum3) {
+			_setOriginalSum3 = true;
+
+			_originalSum3 = _sum3;
+		}
+
 		_sum3 = sum3;
+	}
+
+	public long getOriginalSum3() {
+		return _originalSum3;
 	}
 
 	@Override
@@ -755,6 +768,10 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 		vrInputStampbookModelImpl._setOriginalBookId = false;
 
 		vrInputStampbookModelImpl._originalStampType = vrInputStampbookModelImpl._stampType;
+
+		vrInputStampbookModelImpl._originalSum3 = vrInputStampbookModelImpl._sum3;
+
+		vrInputStampbookModelImpl._setOriginalSum3 = false;
 
 		vrInputStampbookModelImpl._columnBitmask = 0;
 	}
@@ -1033,6 +1050,8 @@ public class VRInputStampbookModelImpl extends BaseModelImpl<VRInputStampbook>
 	private long _sum1;
 	private long _sum2;
 	private long _sum3;
+	private long _originalSum3;
+	private boolean _setOriginalSum3;
 	private String _remark;
 	private Date _modifyDate;
 	private Date _syncDate;

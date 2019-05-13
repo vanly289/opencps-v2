@@ -1495,6 +1495,9 @@
 			<finder-column name="bookId"></finder-column>
 			<finder-column name="stampType"></finder-column>
 		</finder>
+		<finder return-type="Collection" name="Sum3GreaterThan">
+			<finder-column name="sum3" comparator="&gt;"/>
+		</finder>
 		
 	</entity>
 
@@ -1584,7 +1587,7 @@
 		<column name="outputSheetNo" type="String" db-name="outputSheetNo"/>
 		<column name="outputSheetDate" type="Date" db-name="outputSheetDate"/>
 		<column name="originalDocumentNo" type="String" db-name="originalDocumentNo"/>
-		<column name="supplierCorporationId" type="String" db-name="supplierCorporationId"/>
+		<column name="supplierCorporationId" type="long" db-name="supplierCorporationId"/>
 		<column name="outputSheetType" type="long" db-name="outputSheetType"/>
 		<column name="maker" type="String" db-name="maker"/>
 		<column name="checker" type="String" db-name="checker"/>
@@ -1597,8 +1600,8 @@
 		<column name="inventoryDate" type="Date" db-name="inventoryDate"/>
 		<column name="dossierId" type="long" db-name="dossierId"/>
 		<column name="issueId" type="long" db-name="issueId"/>
-		<column name="purchaserId" type="String" db-name="purchaserId"/>
-		<column name="purchaserCorporationId" type="String" db-name="purchaserCorporationId"/>
+		<column name="purchaserId" type="long" db-name="purchaserId"/>
+		<column name="purchaserCorporationId" type="long" db-name="purchaserCorporationId"/>
 		<column name="bookIDList" type="String" db-name="bookIDList"/>
 		<column name="isApproval" type="long" db-name="isApproval"/>
 		<column name="totalQuantities" type="long" db-name="totalQuantities"/>

@@ -2,6 +2,7 @@ package com.fds.vr.application;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.ws.rs.ApplicationPath;
@@ -23,10 +24,13 @@ import javax.ws.rs.core.Response;
 import org.osgi.service.component.annotations.Component;
 
 import com.fds.vr.business.model.VRInputSheet;
+import com.fds.vr.business.model.VRInputStampbook;
+import com.fds.vr.business.model.VRInventory;
 import com.fds.vr.business.model.VROutputSheet;
-import com.fds.vr.business.model.VROutputSheetDetails;
 import com.fds.vr.business.service.VRInputSheetLocalServiceUtil;
+import com.fds.vr.business.service.VRInputStampbookDetailsLocalServiceUtil;
 import com.fds.vr.business.service.VRInputStampbookLocalServiceUtil;
+import com.fds.vr.business.service.VRInventoryLocalServiceUtil;
 import com.fds.vr.business.service.VROutputSheetDetailsLocalServiceUtil;
 import com.fds.vr.business.service.VROutputSheetLocalServiceUtil;
 import com.fds.vr.util.DateTimeUtils;
@@ -41,6 +45,73 @@ public class StampBookApplication extends Application {
 public Set<Object> getSingletons() {
 		
 		return Collections.<Object>singleton(this);
+	}
+
+	@GET
+	@Path("/inventory/{yearofPeriod}/{corporationId}")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getInventory(@Context HttpHeaders header,
+			@PathParam("corporationId") Long corporationId,@PathParam("yearofPeriod") Long yearofPeriod) {
+		
+		
+		JSONObject jsObj = JSONFactoryUtil.createJSONObject();
+		try {
+			List<VRInventory> inventory = VRInventoryLocalServiceUtil.findByYearofPeriodAndCorporationId(
+					1, yearofPeriod, corporationId);
+			
+			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(inventory)).build();
+		} catch (Exception e) {
+			_log.error(e);
+			jsObj.put("status", "error");
+			jsObj.put("msg", e.getClass().getName());
+			return Response.status(500).entity(jsObj.toString()).build();
+		}
+	}
+	
+	@GET
+	@Path("/inputStampbooks")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getInputStampbooks(@Context HttpHeaders header) {
+		
+		
+		JSONObject jsObj = JSONFactoryUtil.createJSONObject();
+		try {
+			List<VRInputStampbook> inputStambooks = VRInputStampbookLocalServiceUtil.findBySum3GreaterThan();
+			
+			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(inputStambooks)).build();
+		} catch (Exception e) {
+			_log.error(e);
+			jsObj.put("status", "error");
+			jsObj.put("msg", e.getClass().getName());
+			return Response.status(500).entity(jsObj.toString()).build();
+		}
+	}
+	
+	@GET
+	@Path("/inputStampbookDetails/{inputStampbookId}/startEndSequenceNo")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getInputStampbookDetails(@Context HttpHeaders header, @PathParam("inputStampbookId") long inputStampbookId) {
+		
+		
+		JSONObject jsObj = JSONFactoryUtil.createJSONObject();
+		try {
+			Long[] startEndSequenceNo = VRInputStampbookDetailsLocalServiceUtil.findStartNoEndNoBySequence(inputStampbookId);
+			
+			if(startEndSequenceNo != null) {
+				jsObj.put("start", startEndSequenceNo[0]);
+				jsObj.put("end", startEndSequenceNo[1]);
+			}
+			
+			return Response.status(200).entity(jsObj.toString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+			jsObj.put("status", "error");
+			jsObj.put("msg", e.getClass().getName());
+			return Response.status(500).entity(jsObj.toString()).build();
+		}
 	}
 
 	@POST
@@ -114,46 +185,23 @@ public Set<Object> getSingletons() {
 		}
 	}
 	
-	@DELETE
-	@Path("/inputstampbooks/{id}")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response deleteStampBook(@Context HttpHeaders header,
-			@PathParam("id") long stampbookId) {
-	
-		// long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
-	
-		JSONObject jsObj = JSONFactoryUtil.createJSONObject();
-		try {
-			VRInputStampbookLocalServiceUtil.deleteVRInputStampbook(stampbookId);
-			jsObj.put("status", "done");
-			
-			return Response.status(200).entity(jsObj.toString()).build();
-		} catch (Exception e) {
-			_log.error(e);
-			jsObj.put("status", "error");
-			jsObj.put("msg", e.getClass().getName());
-			return Response.status(500).entity(jsObj.toString()).build();
-		}
-	}
-	
 	@POST
 	@Path("/outputsheet")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addOutputSheet(@Context HttpHeaders header,
 			@FormParam("outputSheetNo") String outputSheetNo, @FormParam("outputSheetDate") String outputSheetDate, 
-			@FormParam("originalDocumentNo") String originalDocumentNo, @FormParam("supplierCorporationId") String supplierCorporationId,
+			@FormParam("originalDocumentNo") String originalDocumentNo, @FormParam("supplierCorporationId") Long supplierCorporationId,
 			@FormParam("outputSheetType") Long outputSheetType, @FormParam("maker") String maker,
 			@FormParam("checker") String checker, @FormParam("approver") String approver,
 			@FormParam("receiverName") String receiverName, @FormParam("receiverPlace") String receiverPlace,
 			@FormParam("receiverRequest") String receiverRequest, @FormParam("inventoryName") String inventoryName,
 			@FormParam("inventoryPlace") String inventoryPlace, @FormParam("inventoryDate") String inventoryDate,
 			@FormParam("dossierId") Long dossierId, @FormParam("issueId") Long issueId,
-			@FormParam("purchaserId") String purchaserId, @FormParam("purchaserCorporationId") String purchaserCorporationId,
+			@FormParam("purchaserId") Long purchaserId, @FormParam("purchaserCorporationId") Long purchaserCorporationId,
 			@FormParam("bookIDList") String bookIDList, @FormParam("isApproval") Long isApproval,
 			@FormParam("totalQuantities") Long totalQuantities, @FormParam("totalAmount") Long totalAmount,
-			@FormParam("amountInWords") String amountInWords, @FormParam("remark") String remark) {
+			@FormParam("amountInWords") String amountInWords, @FormParam("remark") String remark, @FormParam("details") String details) {
 	
 		// long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
 	
@@ -166,7 +214,7 @@ public Set<Object> getSingletons() {
 					_outputSheetDate, originalDocumentNo, supplierCorporationId, outputSheetType, maker, checker,
 					approver, receiverName, receiverPlace, receiverRequest, inventoryName, inventoryPlace,
 					_inventoryDate, dossierId, issueId, purchaserId, purchaserCorporationId, bookIDList, isApproval,
-					totalQuantities, totalAmount, amountInWords, remark);
+					totalQuantities, totalAmount, amountInWords, remark, details);
 			
 			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(outputSheet)).build();
 		} catch (Exception e) {
@@ -183,17 +231,17 @@ public Set<Object> getSingletons() {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response updateOutputSheet(@Context HttpHeaders header, @PathParam("id") long id, 
 			@FormParam("outputSheetNo") String outputSheetNo, @FormParam("outputSheetDate") String outputSheetDate, 
-			@FormParam("originalDocumentNo") String originalDocumentNo, @FormParam("supplierCorporationId") String supplierCorporationId,
+			@FormParam("originalDocumentNo") String originalDocumentNo, @FormParam("supplierCorporationId") Long supplierCorporationId,
 			@FormParam("outputSheetType") Long outputSheetType, @FormParam("maker") String maker,
 			@FormParam("checker") String checker, @FormParam("approver") String approver,
 			@FormParam("receiverName") String receiverName, @FormParam("receiverPlace") String receiverPlace,
 			@FormParam("receiverRequest") String receiverRequest, @FormParam("inventoryName") String inventoryName,
 			@FormParam("inventoryPlace") String inventoryPlace, @FormParam("inventoryDate") String inventoryDate,
 			@FormParam("dossierId") Long dossierId, @FormParam("issueId") Long issueId,
-			@FormParam("purchaserId") String purchaserId, @FormParam("purchaserCorporationId") String purchaserCorporationId,
+			@FormParam("purchaserId") Long purchaserId, @FormParam("purchaserCorporationId") Long purchaserCorporationId,
 			@FormParam("bookIDList") String bookIDList, @FormParam("isApproval") Long isApproval,
 			@FormParam("totalQuantities") Long totalQuantities, @FormParam("totalAmount") Long totalAmount,
-			@FormParam("amountInWords") String amountInWords, @FormParam("remark") String remark) {
+			@FormParam("amountInWords") String amountInWords, @FormParam("remark") String remark, @FormParam("details") String details) {
 	
 		// long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
 	
@@ -206,83 +254,9 @@ public Set<Object> getSingletons() {
 					_outputSheetDate, originalDocumentNo, supplierCorporationId, outputSheetType, maker, checker,
 					approver, receiverName, receiverPlace, receiverRequest, inventoryName, inventoryPlace,
 					_inventoryDate, dossierId, issueId, purchaserId, purchaserCorporationId, bookIDList, isApproval,
-					totalQuantities, totalAmount, amountInWords, remark);
+					totalQuantities, totalAmount, amountInWords, remark, details);
 			
 			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(outputSheet)).build();
-		} catch (Exception e) {
-			_log.error(e);
-			jsObj.put("status", "error");
-			jsObj.put("msg", e.getClass().getName());
-			return Response.status(500).entity(jsObj.toString()).build();
-		}
-	}
-	
-	@POST
-	@Path("/outputsheet/{id}/details")
-	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addOutputSheetDetails(@Context HttpHeaders header, @PathParam("id") long outputSheetId,
-			@FormParam("inputSheetId") Long inputSheetId, @FormParam("bookId") Long bookId, 
-			@FormParam("issueVehicleCertificateId") Long issueVehicleCertificateId, @FormParam("certificateId") Long certificateId,
-			@FormParam("certificateNumber") String certificateNumber, @FormParam("certificateDate") String certificateDate,
-			@FormParam("vehicleClass") String vehicleClass, @FormParam("stampType") String stampType,
-			@FormParam("stampShortNo") String stampShortNo, @FormParam("serialStartNo") Long serialStartNo,
-			@FormParam("serialEndNo") Long serialEndNo, @FormParam("subTotalInDocument") Long subTotalInDocument,
-			@FormParam("subTotalQuantities") Long subTotalQuantities, @FormParam("unitPrice") Long unitPrice,
-			@FormParam("totalAmount") Long totalAmount, @FormParam("totalInUse") Long totalInUse,
-			@FormParam("totalNotUsed") Long totalNotUsed, @FormParam("totalLost") Long totalLost,
-			@FormParam("totalCancelled") Long totalCancelled, @FormParam("totalReturned") Long totalReturned, @FormParam("remark") String remark
-			) {
-	
-		// long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
-	
-		JSONObject jsObj = JSONFactoryUtil.createJSONObject();
-		try {
-			Date _certificateDate = DateTimeUtils.stringToDate(certificateDate);
-			
-			VROutputSheetDetails outputSheetDetails = VROutputSheetDetailsLocalServiceUtil.updateOutputSheetDetails(0l, 1l,
-					inputSheetId, outputSheetId, bookId, issueVehicleCertificateId, certificateId, certificateNumber,
-					_certificateDate, vehicleClass, stampType, stampShortNo, serialStartNo, serialEndNo,
-					subTotalInDocument, subTotalQuantities, unitPrice, totalAmount, totalInUse, totalNotUsed, totalLost,
-					totalCancelled, totalReturned, remark);
-			
-			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(outputSheetDetails)).build();
-		} catch (Exception e) {
-			_log.error(e);
-			jsObj.put("status", "error");
-			jsObj.put("msg", e.getClass().getName());
-			return Response.status(500).entity(jsObj.toString()).build();
-		}
-	}
-	
-	@PUT
-	@Path("/outputsheet/{id}/details/{outputsheetDetailId}")
-	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response updateOutputSheetDetails(@Context HttpHeaders header, @PathParam("id") long outputSheetId, @PathParam("outputsheetDetailId") long outputsheetDetailId,
-			@FormParam("inputSheetId") Long inputSheetId, @FormParam("bookId") Long bookId, 
-			@FormParam("issueVehicleCertificateId") Long issueVehicleCertificateId, @FormParam("certificateId") Long certificateId,
-			@FormParam("certificateNumber") String certificateNumber, @FormParam("certificateDate") String certificateDate,
-			@FormParam("vehicleClass") String vehicleClass, @FormParam("stampType") String stampType,
-			@FormParam("stampShortNo") String stampShortNo, @FormParam("serialStartNo") Long serialStartNo,
-			@FormParam("serialEndNo") Long serialEndNo, @FormParam("subTotalInDocument") Long subTotalInDocument,
-			@FormParam("subTotalQuantities") Long subTotalQuantities, @FormParam("unitPrice") Long unitPrice,
-			@FormParam("totalAmount") Long totalAmount, @FormParam("totalInUse") Long totalInUse,
-			@FormParam("totalNotUsed") Long totalNotUsed, @FormParam("totalLost") Long totalLost,
-			@FormParam("totalCancelled") Long totalCancelled, @FormParam("totalReturned") Long totalReturned, @FormParam("remark") String remark
-			) {
-	
-		JSONObject jsObj = JSONFactoryUtil.createJSONObject();
-		try {
-			Date _certificateDate = DateTimeUtils.stringToDate(certificateDate);
-			
-			VROutputSheetDetails outputSheetDetails = VROutputSheetDetailsLocalServiceUtil.updateOutputSheetDetails(outputsheetDetailId, 1l,
-					inputSheetId, outputSheetId, bookId, issueVehicleCertificateId, certificateId, certificateNumber,
-					_certificateDate, vehicleClass, stampType, stampShortNo, serialStartNo, serialEndNo,
-					subTotalInDocument, subTotalQuantities, unitPrice, totalAmount, totalInUse, totalNotUsed, totalLost,
-					totalCancelled, totalReturned, remark);
-			
-			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(outputSheetDetails)).build();
 		} catch (Exception e) {
 			_log.error(e);
 			jsObj.put("status", "error");
