@@ -108,8 +108,8 @@ public class VRClearingStampbookLocalServiceWrapper
 		long outputSheetId, long bookId, long certificateId,
 		java.lang.String certificateNumber, java.util.Date certificateDate,
 		java.lang.String vehicleClass, java.lang.String stampType,
-		java.lang.String stampShortNo, java.lang.String serialStartNo,
-		java.lang.String serialEndNo, long subTotalInDocument,
+		java.lang.String stampShortNo, java.lang.Long serialStartNo,
+		java.lang.Long serialEndNo, long subTotalInDocument,
 		long subTotalQuantities, long vehiclePrice, long unitPrice,
 		long totalAmount, long totalInUse, long totalNotUsed, long totalLost,
 		long totalCancelled, long totalReturned, java.lang.String remark)

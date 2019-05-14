@@ -2994,9 +2994,10 @@ public class DossierActionsImpl implements DossierActions {
 								total += count;
 							}
 							//
-							if (state.equals(RT_EXPIRING)) {
+							if (statusState.equals(RT_EXPIRING)) {
+								String[] expireStatusArr = new String[]{DossierTerm.EXPIRED_STATUS_NOT_ACTIVE, DossierTerm.EXPIRED_STATUS_ACTIVE};
 								List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
-										.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_ACTIVE); // get to status = 0 or 1
+										.findByF_EXP_STATUS(expireStatusArr); // get to status = 0 or 1
 								if (certTypeList != null && certTypeList.size() > 0) {
 									String strDossierNo = DossierMgtUtils.checkConditionState(certTypeList);
 									_log.info("strDossierNo: " + strDossierNo);

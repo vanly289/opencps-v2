@@ -3454,6 +3454,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 		return new ArrayList<VRVehicleTypeCertificate>();
 		
 	}
+
+	public List<VRVehicleTypeCertificate> findByF_EXP_STATUS(String[] expiredStatus) throws PortalException, SystemException {
+
+			return vrVehicleTypeCertificatePersistence.findByF_EXP_STATUS(expiredStatus);
+	}
 	
 	public List<VRVehicleTypeCertificate> findByExpiredstatusAndServiceCode(String expiredStatus, String serviceCode) throws PortalException, SystemException {
 		try {

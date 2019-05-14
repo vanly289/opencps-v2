@@ -220,6 +220,9 @@ public interface VRInputStampbookLocalService extends BaseLocalService,
 		long mtCore, long inputSheetId, long bookId, java.lang.String stampType)
 		throws PortalException, SystemException;
 
+	public List<VRInputStampbook> findBySum3GreaterThan()
+		throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr input stampbooks.
 	*

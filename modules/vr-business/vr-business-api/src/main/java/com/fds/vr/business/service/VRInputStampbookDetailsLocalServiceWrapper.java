@@ -185,6 +185,11 @@ public class VRInputStampbookDetailsLocalServiceWrapper
 		return _vrInputStampbookDetailsLocalService.getVRInputStampbookDetailsesCount();
 	}
 
+	@Override
+	public java.lang.Long[] findStartNoEndNoBySequence(long inputStampbookId) {
+		return _vrInputStampbookDetailsLocalService.findStartNoEndNoBySequence(inputStampbookId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

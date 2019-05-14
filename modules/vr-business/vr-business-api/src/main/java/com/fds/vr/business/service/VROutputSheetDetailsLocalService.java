@@ -277,4 +277,9 @@ public interface VROutputSheetDetailsLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateJSONArray(long outputSheetId,
+		java.lang.Long corporationId, java.lang.Long outputSheetType,
+		java.lang.String details, java.lang.Long isApproval)
+		throws PortalException, SystemException;
 }

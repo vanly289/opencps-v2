@@ -345,6 +345,16 @@ public class VROutputSheetDetailsLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void updateJSONArray(long outputSheetId,
+		java.lang.Long corporationId, java.lang.Long outputSheetType,
+		java.lang.String details, java.lang.Long isApproval)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateJSONArray(outputSheetId, corporationId, outputSheetType,
+			details, isApproval);
+	}
+
 	public static VROutputSheetDetailsLocalService getService() {
 		return _serviceTracker.getService();
 	}

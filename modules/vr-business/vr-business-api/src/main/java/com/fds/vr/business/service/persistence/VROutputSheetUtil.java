@@ -306,7 +306,7 @@ public class VROutputSheetUtil {
 	* @return the matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBypurchaserCorporationId(
-		long mtCore, java.lang.String purchaserCorporationId) {
+		long mtCore, long purchaserCorporationId) {
 		return getPersistence()
 				   .findBypurchaserCorporationId(mtCore, purchaserCorporationId);
 	}
@@ -325,7 +325,7 @@ public class VROutputSheetUtil {
 	* @return the range of matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBypurchaserCorporationId(
-		long mtCore, java.lang.String purchaserCorporationId, int start, int end) {
+		long mtCore, long purchaserCorporationId, int start, int end) {
 		return getPersistence()
 				   .findBypurchaserCorporationId(mtCore,
 			purchaserCorporationId, start, end);
@@ -346,8 +346,8 @@ public class VROutputSheetUtil {
 	* @return the ordered range of matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBypurchaserCorporationId(
-		long mtCore, java.lang.String purchaserCorporationId, int start,
-		int end, OrderByComparator<VROutputSheet> orderByComparator) {
+		long mtCore, long purchaserCorporationId, int start, int end,
+		OrderByComparator<VROutputSheet> orderByComparator) {
 		return getPersistence()
 				   .findBypurchaserCorporationId(mtCore,
 			purchaserCorporationId, start, end, orderByComparator);
@@ -369,8 +369,8 @@ public class VROutputSheetUtil {
 	* @return the ordered range of matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBypurchaserCorporationId(
-		long mtCore, java.lang.String purchaserCorporationId, int start,
-		int end, OrderByComparator<VROutputSheet> orderByComparator,
+		long mtCore, long purchaserCorporationId, int start, int end,
+		OrderByComparator<VROutputSheet> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findBypurchaserCorporationId(mtCore,
@@ -388,7 +388,7 @@ public class VROutputSheetUtil {
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet findBypurchaserCorporationId_First(
-		long mtCore, java.lang.String purchaserCorporationId,
+		long mtCore, long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVROutputSheetException {
 		return getPersistence()
@@ -405,7 +405,7 @@ public class VROutputSheetUtil {
 	* @return the first matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet fetchBypurchaserCorporationId_First(
-		long mtCore, java.lang.String purchaserCorporationId,
+		long mtCore, long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		return getPersistence()
 				   .fetchBypurchaserCorporationId_First(mtCore,
@@ -422,7 +422,7 @@ public class VROutputSheetUtil {
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet findBypurchaserCorporationId_Last(long mtCore,
-		java.lang.String purchaserCorporationId,
+		long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVROutputSheetException {
 		return getPersistence()
@@ -439,7 +439,7 @@ public class VROutputSheetUtil {
 	* @return the last matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet fetchBypurchaserCorporationId_Last(
-		long mtCore, java.lang.String purchaserCorporationId,
+		long mtCore, long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		return getPersistence()
 				   .fetchBypurchaserCorporationId_Last(mtCore,
@@ -457,7 +457,7 @@ public class VROutputSheetUtil {
 	* @throws NoSuchVROutputSheetException if a vr output sheet with the primary key could not be found
 	*/
 	public static VROutputSheet[] findBypurchaserCorporationId_PrevAndNext(
-		long id, long mtCore, java.lang.String purchaserCorporationId,
+		long id, long mtCore, long purchaserCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVROutputSheetException {
 		return getPersistence()
@@ -472,7 +472,7 @@ public class VROutputSheetUtil {
 	* @param purchaserCorporationId the purchaser corporation ID
 	*/
 	public static void removeBypurchaserCorporationId(long mtCore,
-		java.lang.String purchaserCorporationId) {
+		long purchaserCorporationId) {
 		getPersistence()
 			.removeBypurchaserCorporationId(mtCore, purchaserCorporationId);
 	}
@@ -485,7 +485,7 @@ public class VROutputSheetUtil {
 	* @return the number of matching vr output sheets
 	*/
 	public static int countBypurchaserCorporationId(long mtCore,
-		java.lang.String purchaserCorporationId) {
+		long purchaserCorporationId) {
 		return getPersistence()
 				   .countBypurchaserCorporationId(mtCore, purchaserCorporationId);
 	}
@@ -498,7 +498,7 @@ public class VROutputSheetUtil {
 	* @return the matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBysupplierCorporationId(long mtCore,
-		java.lang.String supplierCorporationId) {
+		long supplierCorporationId) {
 		return getPersistence()
 				   .findBysupplierCorporationId(mtCore, supplierCorporationId);
 	}
@@ -517,7 +517,7 @@ public class VROutputSheetUtil {
 	* @return the range of matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBysupplierCorporationId(long mtCore,
-		java.lang.String supplierCorporationId, int start, int end) {
+		long supplierCorporationId, int start, int end) {
 		return getPersistence()
 				   .findBysupplierCorporationId(mtCore, supplierCorporationId,
 			start, end);
@@ -538,7 +538,7 @@ public class VROutputSheetUtil {
 	* @return the ordered range of matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBysupplierCorporationId(long mtCore,
-		java.lang.String supplierCorporationId, int start, int end,
+		long supplierCorporationId, int start, int end,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		return getPersistence()
 				   .findBysupplierCorporationId(mtCore, supplierCorporationId,
@@ -561,7 +561,7 @@ public class VROutputSheetUtil {
 	* @return the ordered range of matching vr output sheets
 	*/
 	public static List<VROutputSheet> findBysupplierCorporationId(long mtCore,
-		java.lang.String supplierCorporationId, int start, int end,
+		long supplierCorporationId, int start, int end,
 		OrderByComparator<VROutputSheet> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -579,7 +579,7 @@ public class VROutputSheetUtil {
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet findBysupplierCorporationId_First(long mtCore,
-		java.lang.String supplierCorporationId,
+		long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVROutputSheetException {
 		return getPersistence()
@@ -596,7 +596,7 @@ public class VROutputSheetUtil {
 	* @return the first matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet fetchBysupplierCorporationId_First(
-		long mtCore, java.lang.String supplierCorporationId,
+		long mtCore, long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		return getPersistence()
 				   .fetchBysupplierCorporationId_First(mtCore,
@@ -613,7 +613,7 @@ public class VROutputSheetUtil {
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet findBysupplierCorporationId_Last(long mtCore,
-		java.lang.String supplierCorporationId,
+		long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVROutputSheetException {
 		return getPersistence()
@@ -630,7 +630,7 @@ public class VROutputSheetUtil {
 	* @return the last matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
 	public static VROutputSheet fetchBysupplierCorporationId_Last(long mtCore,
-		java.lang.String supplierCorporationId,
+		long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator) {
 		return getPersistence()
 				   .fetchBysupplierCorporationId_Last(mtCore,
@@ -648,7 +648,7 @@ public class VROutputSheetUtil {
 	* @throws NoSuchVROutputSheetException if a vr output sheet with the primary key could not be found
 	*/
 	public static VROutputSheet[] findBysupplierCorporationId_PrevAndNext(
-		long id, long mtCore, java.lang.String supplierCorporationId,
+		long id, long mtCore, long supplierCorporationId,
 		OrderByComparator<VROutputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVROutputSheetException {
 		return getPersistence()
@@ -663,7 +663,7 @@ public class VROutputSheetUtil {
 	* @param supplierCorporationId the supplier corporation ID
 	*/
 	public static void removeBysupplierCorporationId(long mtCore,
-		java.lang.String supplierCorporationId) {
+		long supplierCorporationId) {
 		getPersistence()
 			.removeBysupplierCorporationId(mtCore, supplierCorporationId);
 	}
@@ -676,7 +676,7 @@ public class VROutputSheetUtil {
 	* @return the number of matching vr output sheets
 	*/
 	public static int countBysupplierCorporationId(long mtCore,
-		java.lang.String supplierCorporationId) {
+		long supplierCorporationId) {
 		return getPersistence()
 				   .countBysupplierCorporationId(mtCore, supplierCorporationId);
 	}
