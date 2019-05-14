@@ -194,20 +194,26 @@ public class VRInputStampbookLocalServiceImpl
 		}
 	}
 	
-	public VRInputStampbook updateByOutputSheet(long bookId, long subTotalInDocument, long serialStartNo, long serialEndNo, long corporationId, long outputSheetType) throws PortalException, SystemException {
+	public VRInputStampbook updateByOutputSheet(long bookId, long subTotalInDocument, long serialStartNo, long serialEndNo, Long purchaserId, Long corporationId, long outputSheetType) throws PortalException, SystemException {
 		VRInputStampbook inputStambook = vrInputStampbookPersistence.findByPrimaryKey(bookId);
 		
-		long newSum3 = inputStambook.getSum3() - subTotalInDocument;
-		long newSum2 = inputStambook.getSum2() + subTotalInDocument;
+		if(outputSheetType == 5) {	// CHO DOI
+			long newSum3 = inputStambook.getSum3() - subTotalInDocument;
+			long newSum2 = inputStambook.getSum2() + subTotalInDocument;
+			
+			inputStambook.setSum3(newSum3);
+			inputStambook.setSum2(newSum2);
+		} else if(outputSheetType == 4 || outputSheetType == 6) {	
+			long newSum1 = inputStambook.getSum1() + subTotalInDocument;
+			inputStambook.setSum1(newSum1);
+		}
 		
-		inputStambook.setSum3(newSum3);
-		inputStambook.setSum2(newSum2);
 		inputStambook.setModifyDate(new Date());
 		
 		for(long sequenNo = serialStartNo ; sequenNo <= serialEndNo ; sequenNo ++) {
 			long issuingStatus = outputSheetType == 5 ? 1 : 2;	// 1 chua cap phat - dang o doi, 2 cap phat cho cssx
 			
-			vrInputStampbookDetailsLocalService.updateByOutputSheet(bookId, sequenNo, corporationId, issuingStatus);
+			vrInputStampbookDetailsLocalService.updateByOutputSheet(bookId, outputSheetType, sequenNo, purchaserId, corporationId, issuingStatus);
 		}
 		
 		return vrInputStampbookPersistence.update(inputStambook);

@@ -37,7 +37,6 @@ import com.fds.vr.business.service.VRIssueLocalServiceUtil;
 import com.fds.vr.business.service.VROutputSheetDetailsLocalServiceUtil;
 import com.fds.vr.business.service.VROutputSheetLocalServiceUtil;
 import com.fds.vr.util.DateTimeUtils;
-import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -379,7 +378,7 @@ public Set<Object> getSingletons() {
 	}
 	
 	@GET
-	@Path("/issues/{id}/stampbook/{corporationId}")
+	@Path("/issues/{id}/stampbook")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getOutputSheetsByIssue(@Context HttpHeaders header, 
@@ -391,9 +390,7 @@ public Set<Object> getSingletons() {
 		try {
 			VRIssue issue = VRIssueLocalServiceUtil.getVRIssue(issueId);
 			
-			String vehicleClass = issue.getVehicleClass();
-			
-			List<Object[]> books = VRInputStampbookDetailsLocalServiceUtil.findStampbookByVehicleClass(vehicleClass, corporationId);
+			List<Object[]> books = VRInputStampbookDetailsLocalServiceUtil.findStampbookByVehicleClass(issue.getVehicleClass(), issue.getIssueCorporationId());
 			
 			JSONArray results = JSONFactoryUtil.createJSONArray();
 			
@@ -408,7 +405,7 @@ public Set<Object> getSingletons() {
 				results.put(tmp);
 			}
 			
-			return Response.status(200).entity(results).build();
+			return Response.status(200).entity(results.toString()).build();
 		} catch (Exception e) {
 			_log.error(e);
 			jsObj.put("status", "error");

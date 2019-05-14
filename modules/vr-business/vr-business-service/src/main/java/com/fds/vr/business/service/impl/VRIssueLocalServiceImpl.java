@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.exception.NoSuchVRIssueException;
 import com.fds.vr.business.model.VRIssue;
 import com.fds.vr.business.service.base.VRIssueLocalServiceBaseImpl;
 
@@ -141,6 +142,15 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		}
 		return new ArrayList<VRIssue>();
 		
+	}
+	
+	public VRIssue updateDigitalIssueStatus(long id, int digitalIssueStatus) throws PortalException {
+		VRIssue vrIssue = vrIssuePersistence.findByPrimaryKey(id);
+		
+		vrIssue.setDigitalissuestatus(digitalIssueStatus);
+		vrIssue.setModifyDate(new Date());
+		
+		return vrIssuePersistence.update(vrIssue);
 	}
 	
 	private Log _log = LogFactoryUtil.getLog(VRIssueLocalServiceImpl.class);
