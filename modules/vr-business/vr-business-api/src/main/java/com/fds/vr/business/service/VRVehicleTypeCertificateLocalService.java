@@ -294,6 +294,14 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRVehicleTypeCertificate> finByF_APP_VH_EXP(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus);
+
+	public List<VRVehicleTypeCertificate> finByF_APP_VH_EXP_CERTNO(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certNo);
+
 	public List<VRVehicleTypeCertificate> findByApplicantAndProductionPlant(
 		java.lang.String applicantIdNo, java.lang.String productionPlantCode)
 		throws PortalException, SystemException;
