@@ -334,7 +334,10 @@
 			<finder-column name="productionPlantName" />
 			<finder-column name="productionPlantAddress" />			
 		</finder>
-		
+		<finder return-type="Collection" name="F_EXP_STATUS">
+			<finder-column name="expiredStatus" arrayable-operator="OR"/>
+		</finder>
+
 	</entity>
 
 	<entity name="VRVehicleSpecification" local-service="true" table="vr_vehiclespecification"

@@ -197,7 +197,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBypurchaserCorporationId(
-		long mtCore, java.lang.String purchaserCorporationId);
+		long mtCore, long purchaserCorporationId);
 
 	/**
 	* Returns a range of all the vr output sheets where mtCore = &#63; and purchaserCorporationId = &#63;.
@@ -213,7 +213,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the range of matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBypurchaserCorporationId(
-		long mtCore, java.lang.String purchaserCorporationId, int start, int end);
+		long mtCore, long purchaserCorporationId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the vr output sheets where mtCore = &#63; and purchaserCorporationId = &#63;.
@@ -230,8 +230,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the ordered range of matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBypurchaserCorporationId(
-		long mtCore, java.lang.String purchaserCorporationId, int start,
-		int end,
+		long mtCore, long purchaserCorporationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator);
 
 	/**
@@ -250,8 +249,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the ordered range of matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBypurchaserCorporationId(
-		long mtCore, java.lang.String purchaserCorporationId, int start,
-		int end,
+		long mtCore, long purchaserCorporationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -265,7 +263,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
 	public VROutputSheet findBypurchaserCorporationId_First(long mtCore,
-		java.lang.String purchaserCorporationId,
+		long purchaserCorporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException;
 
@@ -278,7 +276,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the first matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
 	public VROutputSheet fetchBypurchaserCorporationId_First(long mtCore,
-		java.lang.String purchaserCorporationId,
+		long purchaserCorporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator);
 
 	/**
@@ -291,7 +289,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
 	public VROutputSheet findBypurchaserCorporationId_Last(long mtCore,
-		java.lang.String purchaserCorporationId,
+		long purchaserCorporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException;
 
@@ -304,7 +302,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the last matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
 	public VROutputSheet fetchBypurchaserCorporationId_Last(long mtCore,
-		java.lang.String purchaserCorporationId,
+		long purchaserCorporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator);
 
 	/**
@@ -318,7 +316,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @throws NoSuchVROutputSheetException if a vr output sheet with the primary key could not be found
 	*/
 	public VROutputSheet[] findBypurchaserCorporationId_PrevAndNext(long id,
-		long mtCore, java.lang.String purchaserCorporationId,
+		long mtCore, long purchaserCorporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException;
 
@@ -329,7 +327,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @param purchaserCorporationId the purchaser corporation ID
 	*/
 	public void removeBypurchaserCorporationId(long mtCore,
-		java.lang.String purchaserCorporationId);
+		long purchaserCorporationId);
 
 	/**
 	* Returns the number of vr output sheets where mtCore = &#63; and purchaserCorporationId = &#63;.
@@ -339,7 +337,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the number of matching vr output sheets
 	*/
 	public int countBypurchaserCorporationId(long mtCore,
-		java.lang.String purchaserCorporationId);
+		long purchaserCorporationId);
 
 	/**
 	* Returns all the vr output sheets where mtCore = &#63; and supplierCorporationId = &#63;.
@@ -349,7 +347,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBysupplierCorporationId(
-		long mtCore, java.lang.String supplierCorporationId);
+		long mtCore, long supplierCorporationId);
 
 	/**
 	* Returns a range of all the vr output sheets where mtCore = &#63; and supplierCorporationId = &#63;.
@@ -365,7 +363,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the range of matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBysupplierCorporationId(
-		long mtCore, java.lang.String supplierCorporationId, int start, int end);
+		long mtCore, long supplierCorporationId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the vr output sheets where mtCore = &#63; and supplierCorporationId = &#63;.
@@ -382,8 +380,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the ordered range of matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBysupplierCorporationId(
-		long mtCore, java.lang.String supplierCorporationId, int start,
-		int end,
+		long mtCore, long supplierCorporationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator);
 
 	/**
@@ -402,8 +399,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the ordered range of matching vr output sheets
 	*/
 	public java.util.List<VROutputSheet> findBysupplierCorporationId(
-		long mtCore, java.lang.String supplierCorporationId, int start,
-		int end,
+		long mtCore, long supplierCorporationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -417,7 +413,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
 	public VROutputSheet findBysupplierCorporationId_First(long mtCore,
-		java.lang.String supplierCorporationId,
+		long supplierCorporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException;
 
@@ -430,7 +426,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the first matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
 	public VROutputSheet fetchBysupplierCorporationId_First(long mtCore,
-		java.lang.String supplierCorporationId,
+		long supplierCorporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator);
 
 	/**
@@ -443,7 +439,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @throws NoSuchVROutputSheetException if a matching vr output sheet could not be found
 	*/
 	public VROutputSheet findBysupplierCorporationId_Last(long mtCore,
-		java.lang.String supplierCorporationId,
+		long supplierCorporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException;
 
@@ -456,7 +452,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the last matching vr output sheet, or <code>null</code> if a matching vr output sheet could not be found
 	*/
 	public VROutputSheet fetchBysupplierCorporationId_Last(long mtCore,
-		java.lang.String supplierCorporationId,
+		long supplierCorporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator);
 
 	/**
@@ -470,7 +466,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @throws NoSuchVROutputSheetException if a vr output sheet with the primary key could not be found
 	*/
 	public VROutputSheet[] findBysupplierCorporationId_PrevAndNext(long id,
-		long mtCore, java.lang.String supplierCorporationId,
+		long mtCore, long supplierCorporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VROutputSheet> orderByComparator)
 		throws NoSuchVROutputSheetException;
 
@@ -481,7 +477,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @param supplierCorporationId the supplier corporation ID
 	*/
 	public void removeBysupplierCorporationId(long mtCore,
-		java.lang.String supplierCorporationId);
+		long supplierCorporationId);
 
 	/**
 	* Returns the number of vr output sheets where mtCore = &#63; and supplierCorporationId = &#63;.
@@ -491,7 +487,7 @@ public interface VROutputSheetPersistence extends BasePersistence<VROutputSheet>
 	* @return the number of matching vr output sheets
 	*/
 	public int countBysupplierCorporationId(long mtCore,
-		java.lang.String supplierCorporationId);
+		long supplierCorporationId);
 
 	/**
 	* Returns all the vr output sheets where mtCore = &#63; and dossierId = &#63;.

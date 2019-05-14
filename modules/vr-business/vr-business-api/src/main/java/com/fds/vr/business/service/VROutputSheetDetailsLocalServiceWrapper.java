@@ -372,6 +372,16 @@ public class VROutputSheetDetailsLocalServiceWrapper
 	}
 
 	@Override
+	public void updateJSONArray(long outputSheetId,
+		java.lang.Long corporationId, java.lang.Long outputSheetType,
+		java.lang.String details, java.lang.Long isApproval)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_vrOutputSheetDetailsLocalService.updateJSONArray(outputSheetId,
+			corporationId, outputSheetType, details, isApproval);
+	}
+
+	@Override
 	public VROutputSheetDetailsLocalService getWrappedService() {
 		return _vrOutputSheetDetailsLocalService;
 	}

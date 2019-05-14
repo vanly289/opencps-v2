@@ -170,6 +170,8 @@ public interface VRInputStampbookDetailsLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVRInputStampbookDetailsesCount();
 
+	public java.lang.Long[] findStartNoEndNoBySequence(long inputStampbookId);
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -350,6 +350,10 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 		java.lang.String expiredStatus, java.lang.String serviceCode)
 		throws PortalException, SystemException;
 
+	public List<VRVehicleTypeCertificate> findByF_EXP_STATUS(
+		java.lang.String[] expiredStatus)
+		throws PortalException, SystemException;
+
 	public List<VRVehicleTypeCertificate> findByInspectionRecordNo(
 		java.lang.String inspectionRecordNo)
 		throws PortalException, SystemException;

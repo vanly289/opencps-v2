@@ -268,6 +268,13 @@ public class VRInputStampbookLocalServiceWrapper
 			inputSheetId, bookId, stampType);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInputStampbook> findBySum3GreaterThan()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInputStampbookLocalService.findBySum3GreaterThan();
+	}
+
 	/**
 	* Returns a range of all the vr input stampbooks.
 	*
