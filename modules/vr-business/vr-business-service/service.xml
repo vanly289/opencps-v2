@@ -334,7 +334,21 @@
 			<finder-column name="productionPlantName" />
 			<finder-column name="productionPlantAddress" />			
 		</finder>
-		
+		<finder return-type="Collection" name="F_EXP_STATUS">
+			<finder-column name="expiredStatus" arrayable-operator="OR"/>
+		</finder>
+		<finder return-type="Collection" name="F_APP_VH_EXP">
+			<finder-column name="applicantIdNo" />
+			<finder-column name="vehicleClass" />
+			<finder-column name="expiredStatus" />
+		</finder>
+		<finder return-type="Collection" name="F_APP_VH_EXP_CERTNO">
+			<finder-column name="applicantIdNo" />
+			<finder-column name="vehicleClass" />
+			<finder-column name="expiredStatus" />
+			<finder-column name="certificateRecordNo" />
+		</finder>
+
 	</entity>
 
 	<entity name="VRVehicleSpecification" local-service="true" table="vr_vehiclespecification"

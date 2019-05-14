@@ -435,6 +435,22 @@ public class VRVehicleTypeCertificateLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleTypeCertificate> finByF_APP_VH_EXP(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus) {
+		return _vrVehicleTypeCertificateLocalService.finByF_APP_VH_EXP(applicantIdNo,
+			vehicleClass, expiredStatus);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleTypeCertificate> finByF_APP_VH_EXP_CERTNO(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certNo) {
+		return _vrVehicleTypeCertificateLocalService.finByF_APP_VH_EXP_CERTNO(applicantIdNo,
+			vehicleClass, expiredStatus, certNo);
+	}
+
+	@Override
 	public java.util.List<com.fds.vr.business.model.VRVehicleTypeCertificate> findByApplicantAndProductionPlant(
 		java.lang.String applicantIdNo, java.lang.String productionPlantCode)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -567,6 +583,14 @@ public class VRVehicleTypeCertificateLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _vrVehicleTypeCertificateLocalService.findByExpiredstatusAndServiceCode(expiredStatus,
 			serviceCode);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleTypeCertificate> findByF_EXP_STATUS(
+		java.lang.String[] expiredStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrVehicleTypeCertificateLocalService.findByF_EXP_STATUS(expiredStatus);
 	}
 
 	@Override

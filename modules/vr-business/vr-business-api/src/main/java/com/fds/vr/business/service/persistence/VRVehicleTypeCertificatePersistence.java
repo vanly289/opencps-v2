@@ -3784,6 +3784,571 @@ public interface VRVehicleTypeCertificatePersistence extends BasePersistence<VRV
 		java.lang.String productionPlantAddress);
 
 	/**
+	* Returns all the vr vehicle type certificates where expiredStatus = &#63;.
+	*
+	* @param expiredStatus the expired status
+	* @return the matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_EXP_STATUS(
+		java.lang.String expiredStatus);
+
+	/**
+	* Returns a range of all the vr vehicle type certificates where expiredStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param expiredStatus the expired status
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @return the range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_EXP_STATUS(
+		java.lang.String expiredStatus, int start, int end);
+
+	/**
+	* Returns an ordered range of all the vr vehicle type certificates where expiredStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param expiredStatus the expired status
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_EXP_STATUS(
+		java.lang.String expiredStatus, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the vr vehicle type certificates where expiredStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param expiredStatus the expired status
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_EXP_STATUS(
+		java.lang.String expiredStatus, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first vr vehicle type certificate in the ordered set where expiredStatus = &#63;.
+	*
+	* @param expiredStatus the expired status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr vehicle type certificate
+	* @throws NoSuchVRVehicleTypeCertificateException if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate findByF_EXP_STATUS_First(
+		java.lang.String expiredStatus,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException;
+
+	/**
+	* Returns the first vr vehicle type certificate in the ordered set where expiredStatus = &#63;.
+	*
+	* @param expiredStatus the expired status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr vehicle type certificate, or <code>null</code> if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate fetchByF_EXP_STATUS_First(
+		java.lang.String expiredStatus,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator);
+
+	/**
+	* Returns the last vr vehicle type certificate in the ordered set where expiredStatus = &#63;.
+	*
+	* @param expiredStatus the expired status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr vehicle type certificate
+	* @throws NoSuchVRVehicleTypeCertificateException if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate findByF_EXP_STATUS_Last(
+		java.lang.String expiredStatus,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException;
+
+	/**
+	* Returns the last vr vehicle type certificate in the ordered set where expiredStatus = &#63;.
+	*
+	* @param expiredStatus the expired status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr vehicle type certificate, or <code>null</code> if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate fetchByF_EXP_STATUS_Last(
+		java.lang.String expiredStatus,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator);
+
+	/**
+	* Returns the vr vehicle type certificates before and after the current vr vehicle type certificate in the ordered set where expiredStatus = &#63;.
+	*
+	* @param id the primary key of the current vr vehicle type certificate
+	* @param expiredStatus the expired status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next vr vehicle type certificate
+	* @throws NoSuchVRVehicleTypeCertificateException if a vr vehicle type certificate with the primary key could not be found
+	*/
+	public VRVehicleTypeCertificate[] findByF_EXP_STATUS_PrevAndNext(long id,
+		java.lang.String expiredStatus,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException;
+
+	/**
+	* Returns all the vr vehicle type certificates where expiredStatus = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param expiredStatuses the expired statuses
+	* @return the matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_EXP_STATUS(
+		java.lang.String[] expiredStatuses);
+
+	/**
+	* Returns a range of all the vr vehicle type certificates where expiredStatus = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param expiredStatuses the expired statuses
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @return the range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_EXP_STATUS(
+		java.lang.String[] expiredStatuses, int start, int end);
+
+	/**
+	* Returns an ordered range of all the vr vehicle type certificates where expiredStatus = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param expiredStatuses the expired statuses
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_EXP_STATUS(
+		java.lang.String[] expiredStatuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the vr vehicle type certificates where expiredStatus = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param expiredStatus the expired status
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_EXP_STATUS(
+		java.lang.String[] expiredStatuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes all the vr vehicle type certificates where expiredStatus = &#63; from the database.
+	*
+	* @param expiredStatus the expired status
+	*/
+	public void removeByF_EXP_STATUS(java.lang.String expiredStatus);
+
+	/**
+	* Returns the number of vr vehicle type certificates where expiredStatus = &#63;.
+	*
+	* @param expiredStatus the expired status
+	* @return the number of matching vr vehicle type certificates
+	*/
+	public int countByF_EXP_STATUS(java.lang.String expiredStatus);
+
+	/**
+	* Returns the number of vr vehicle type certificates where expiredStatus = any &#63;.
+	*
+	* @param expiredStatuses the expired statuses
+	* @return the number of matching vr vehicle type certificates
+	*/
+	public int countByF_EXP_STATUS(java.lang.String[] expiredStatuses);
+
+	/**
+	* Returns all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @return the matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_APP_VH_EXP(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus);
+
+	/**
+	* Returns a range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @return the range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_APP_VH_EXP(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, int start, int end);
+
+	/**
+	* Returns an ordered range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_APP_VH_EXP(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_APP_VH_EXP(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr vehicle type certificate
+	* @throws NoSuchVRVehicleTypeCertificateException if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate findByF_APP_VH_EXP_First(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException;
+
+	/**
+	* Returns the first vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr vehicle type certificate, or <code>null</code> if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate fetchByF_APP_VH_EXP_First(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator);
+
+	/**
+	* Returns the last vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr vehicle type certificate
+	* @throws NoSuchVRVehicleTypeCertificateException if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate findByF_APP_VH_EXP_Last(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException;
+
+	/**
+	* Returns the last vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr vehicle type certificate, or <code>null</code> if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate fetchByF_APP_VH_EXP_Last(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator);
+
+	/**
+	* Returns the vr vehicle type certificates before and after the current vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	*
+	* @param id the primary key of the current vr vehicle type certificate
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next vr vehicle type certificate
+	* @throws NoSuchVRVehicleTypeCertificateException if a vr vehicle type certificate with the primary key could not be found
+	*/
+	public VRVehicleTypeCertificate[] findByF_APP_VH_EXP_PrevAndNext(long id,
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException;
+
+	/**
+	* Removes all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; from the database.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	*/
+	public void removeByF_APP_VH_EXP(java.lang.String applicantIdNo,
+		java.lang.String vehicleClass, java.lang.String expiredStatus);
+
+	/**
+	* Returns the number of vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @return the number of matching vr vehicle type certificates
+	*/
+	public int countByF_APP_VH_EXP(java.lang.String applicantIdNo,
+		java.lang.String vehicleClass, java.lang.String expiredStatus);
+
+	/**
+	* Returns all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	* @return the matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_APP_VH_EXP_CERTNO(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certificateRecordNo);
+
+	/**
+	* Returns a range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @return the range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_APP_VH_EXP_CERTNO(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certificateRecordNo,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_APP_VH_EXP_CERTNO(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certificateRecordNo,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	* @param start the lower bound of the range of vr vehicle type certificates
+	* @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vr vehicle type certificates
+	*/
+	public java.util.List<VRVehicleTypeCertificate> findByF_APP_VH_EXP_CERTNO(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certificateRecordNo,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr vehicle type certificate
+	* @throws NoSuchVRVehicleTypeCertificateException if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate findByF_APP_VH_EXP_CERTNO_First(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certificateRecordNo,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException;
+
+	/**
+	* Returns the first vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr vehicle type certificate, or <code>null</code> if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate fetchByF_APP_VH_EXP_CERTNO_First(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certificateRecordNo,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator);
+
+	/**
+	* Returns the last vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr vehicle type certificate
+	* @throws NoSuchVRVehicleTypeCertificateException if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate findByF_APP_VH_EXP_CERTNO_Last(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certificateRecordNo,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException;
+
+	/**
+	* Returns the last vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr vehicle type certificate, or <code>null</code> if a matching vr vehicle type certificate could not be found
+	*/
+	public VRVehicleTypeCertificate fetchByF_APP_VH_EXP_CERTNO_Last(
+		java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certificateRecordNo,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator);
+
+	/**
+	* Returns the vr vehicle type certificates before and after the current vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	*
+	* @param id the primary key of the current vr vehicle type certificate
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next vr vehicle type certificate
+	* @throws NoSuchVRVehicleTypeCertificateException if a vr vehicle type certificate with the primary key could not be found
+	*/
+	public VRVehicleTypeCertificate[] findByF_APP_VH_EXP_CERTNO_PrevAndNext(
+		long id, java.lang.String applicantIdNo, java.lang.String vehicleClass,
+		java.lang.String expiredStatus, java.lang.String certificateRecordNo,
+		com.liferay.portal.kernel.util.OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException;
+
+	/**
+	* Removes all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63; from the database.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	*/
+	public void removeByF_APP_VH_EXP_CERTNO(java.lang.String applicantIdNo,
+		java.lang.String vehicleClass, java.lang.String expiredStatus,
+		java.lang.String certificateRecordNo);
+
+	/**
+	* Returns the number of vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	*
+	* @param applicantIdNo the applicant ID no
+	* @param vehicleClass the vehicle class
+	* @param expiredStatus the expired status
+	* @param certificateRecordNo the certificate record no
+	* @return the number of matching vr vehicle type certificates
+	*/
+	public int countByF_APP_VH_EXP_CERTNO(java.lang.String applicantIdNo,
+		java.lang.String vehicleClass, java.lang.String expiredStatus,
+		java.lang.String certificateRecordNo);
+
+	/**
 	* Caches the vr vehicle type certificate in the entity cache if it is enabled.
 	*
 	* @param vrVehicleTypeCertificate the vr vehicle type certificate

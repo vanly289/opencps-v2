@@ -1,34 +1,5 @@
 package com.fds.vr.application;
 
-import com.fds.vr.business.action.ILCertificateActions;
-import com.fds.vr.business.action.VRActions;
-import com.fds.vr.business.action.impl.DictItemUtil;
-import com.fds.vr.business.action.impl.ILCertificateActionsImpl;
-import com.fds.vr.business.action.impl.VRActionsImpl;
-import com.fds.vr.business.action.util.ConvertFormatDate;
-import com.fds.vr.business.model.VRReport;
-import com.fds.vr.business.service.VRReportLocalServiceUtil;
-import com.fds.vr.ilcertificate.model.ILCBGuardModel;
-import com.fds.vr.ilcertificate.model.ILCBGuardResultModel;
-import com.fds.vr.ilcertificate.model.ILCertificateModel;
-import com.fds.vr.ilcertificate.model.ILCertificateResultModel;
-import com.fds.vr.util.ILCertificateUtils;
-import com.liferay.counter.kernel.model.Counter;
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -59,6 +30,31 @@ import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import com.fds.vr.business.action.VRActions;
+import com.fds.vr.business.action.impl.DictItemUtil;
+import com.fds.vr.business.action.impl.VRActionsImpl;
+import com.fds.vr.business.model.VRReport;
+import com.fds.vr.business.model.VRVehicleTypeCertificate;
+import com.fds.vr.business.service.VRReportLocalServiceUtil;
+import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
+import com.fds.vr.model.VRVehicleTypeCertificateResultModel;
+import com.fds.vr.util.VRVehicleCertificateUtils;
+import com.liferay.counter.kernel.model.Counter;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author admin
@@ -563,238 +559,39 @@ public class VRRestApplication extends Application {
 	}
 
 	/** Process search result - START */
-	// Search document acceptable
-//	@GET
-//	@Path("/certDoc")
-//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-//	public Response getDocAccept(@Context HttpHeaders header, @QueryParam("keywords") String keywords,
-//			@QueryParam("serviceCode") String serviceCode, @QueryParam("govAgencyCode") String govAgencyCode,
-//			@QueryParam("routeCode") String routeCode, @QueryParam("fromDate") String fromDate,
-//			@QueryParam("toDate") String toDate, @QueryParam("start") int start, @QueryParam("limit") int limit) {
-//
-//		ILCertificateActions actions = new ILCertificateActionsImpl();
-//
-//		try {
-//			// Process key search
-//			String keySearch = StringPool.BLANK;
-//			String serviceSearch = StringPool.BLANK;
-//			String govCodeSearch = StringPool.BLANK;
-//			String routeCodeSearch = StringPool.BLANK;
-//			String fromDateSearch = StringPool.BLANK;
-//			String toDateSearch = StringPool.BLANK;
-//			if (Validator.isNotNull(keywords)) {
-//				keySearch = keywords.toLowerCase() + "%";
-//			}
-//			if (Validator.isNotNull(serviceCode)) {
-//				if (serviceCode.contains(StringPool.COMMA)) {
-//					String[] serviceSplit = StringUtil.split(serviceCode, StringPool.COMMA);
-//					if (serviceSplit != null && serviceSplit.length > 0) {
-//						StringBuilder sb = new StringBuilder();
-//						int lenghtService = serviceSplit.length;
-//						for (int i = 0; i < lenghtService; i++) {
-//							if (i == 0) {
-//								sb.append(StringPool.APOSTROPHE);
-//								sb.append(serviceSplit[i]);
-//								sb.append(StringPool.APOSTROPHE);
-//							} else {
-//								sb.append(StringPool.COMMA);
-//								sb.append(StringPool.APOSTROPHE);
-//								sb.append(serviceSplit[i]);
-//								sb.append(StringPool.APOSTROPHE);
-//							}
-//						}
-//						serviceSearch = sb.toString();
-//					}
-//				} else {
-//					serviceSearch = StringPool.APOSTROPHE + serviceCode.toLowerCase() + StringPool.APOSTROPHE;
-//				}
-//			}
-//			_log.info("serviceSearch: " + serviceSearch);
-//			if (Validator.isNotNull(govAgencyCode)) {
-//				govCodeSearch = govAgencyCode.toLowerCase();
-//			}
-//			if (Validator.isNotNull(routeCode)) {
-//				routeCodeSearch = routeCode.toLowerCase();
-//			}
-//			if (Validator.isNotNull(fromDate)) {
-//				fromDate = ConvertFormatDate.formatDateSQL(fromDate);
-//			}
-//			if (Validator.isNotNull(toDate)) {
-//				toDateSearch = ConvertFormatDate.formatDateSQL(toDate);
-//			}
-//
-//			JSONObject jsonData = actions.getDocAcceptList(keySearch, serviceSearch, govCodeSearch, routeCodeSearch,
-//					fromDateSearch, toDateSearch, start, limit);
-//
-//			ILCertificateResultModel result = new ILCertificateResultModel();
-//			// List<ILCertificateModel> certModelList =
-//			// ILCertificateUtils.mappingToResultCertificate(certList);
-//			if (jsonData != null && jsonData.getInt("total") > 0) {
-//				result.setTotal(jsonData.getInt("total"));
-//				result.getData().addAll(
-//						ILCertificateUtils.mappingToResultCertificate((List<ILCertificate>) jsonData.get("data")));
-//			} else {
-//				result.setTotal(0);
-//			}
-//
-//			return Response.status(200).entity(result).build();
-//
-//		} catch (Exception e) {
-//			_log.error(e);
-//			return Response.status(500).entity(e.getMessage()).build();
-//
-//		}
-//
-//	}
+	@GET
+	@Path("/certificate/vehicleClass")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getVehicleCertByApplicant(@Context HttpHeaders header,
+			@QueryParam("applicantIdNo") String applicantIdNo, @QueryParam("vehicleClass") String vehicleClass,
+			@QueryParam("expiredStatus") String expiredStatus, @QueryParam("certificateNo") String certificateNo) {
 
-	/** Process search result - END */
+		try {
+			List<VRVehicleTypeCertificate> certList = null;
+			VRVehicleTypeCertificateResultModel result = new VRVehicleTypeCertificateResultModel();
+			if (Validator.isNotNull(certificateNo)) {
+				certList = VRVehicleTypeCertificateLocalServiceUtil.finByF_APP_VH_EXP_CERTNO(applicantIdNo,
+						vehicleClass, expiredStatus, certificateNo);
+			} else {
+				certList = VRVehicleTypeCertificateLocalServiceUtil.finByF_APP_VH_EXP(applicantIdNo, vehicleClass,
+						expiredStatus);
+			}
 
-	// Get detail certificate info
-//	@GET
-//	@Path("/certDoc/{id}")
-//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-//	public Response getDetailCert(@Context HttpHeaders header, @PathParam("id") String id) {
-//
-//		ILCertificateActions actions = new ILCertificateActionsImpl();
-//		long certificateId = Long.valueOf(id);
-//
-//		try {
-//			// Process key search
-//
-//			ILCertificate certInfo = actions.getDetailCert(certificateId);
-//
-//			ILCertificateModel result = ILCertificateUtils.mappingToDetailCertificate(certInfo);
-//
-//			return Response.status(200).entity(result).build();
-//
-//		} catch (Exception e) {
-//			_log.error(e);
-//			return Response.status(500).entity(e.getMessage()).build();
-//
-//		}
-//
-//	}
+			if (certList != null && certList.size() > 0) {
+				result.setTotal(certList.size());
+				result.getData().addAll(VRVehicleCertificateUtils.mappingToResultCertificate(certList));
+			} else {
+				result.setTotal(0);
+			}
+			return Response.status(200).entity(result).build();
 
-//	@GET
-//	@Path("/certDoc/borderGuard/{registrationNumber}")
-//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-//	public Response getBorderGuardList(@Context HttpHeaders header,
-//			@PathParam("registrationNumber") String registrationNumber) {
-//
-//		ILCertificateActions actions = new ILCertificateActionsImpl();
-//
-//		try {
-//			// Process key search
-//			List<ILVehicleCustomsBorderGuard> cbGuardList = actions.getBorderGuardList(registrationNumber);
-//			ILCBGuardResultModel result = new ILCBGuardResultModel();
-//
-//			if (cbGuardList != null && cbGuardList.size() > 0) {
-//				result.setRegistrationNumber(registrationNumber);
-//				result.getData().addAll(ILCertificateUtils.mappingToResultCBGuard(cbGuardList));
-//			} else {
-//				result.setRegistrationNumber(registrationNumber);
-//			}
-//			return Response.status(200).entity(result).build();
-//
-//		} catch (Exception e) {
-//			_log.error(e);
-//			return Response.status(500).entity(e.getMessage()).build();
-//
-//		}
-//
-//	}
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity("error").build();
+		}
 
-//	@POST
-//	@Path("/certDoc/borderGuard/{registrationNumber}")
-//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-//	public Response addCustomBorderGuard(@Context HttpHeaders header,
-//			@PathParam("registrationNumber") String registrationNumber,
-//			@FormParam("expImpGateType") String expImpGateType, @FormParam("expImpGate") String expImpGate,
-//			@FormParam("driverName") String driverName, @FormParam("driverLicenceNo") String driverLicenceNo,
-//			@FormParam("registrationDate") String registrationDate) {
-//
-//		ILCertificateActions actions = new ILCertificateActionsImpl();
-//
-//		try {
-//			Date regDate = null;
-//			_log.info("registrationDate:" + registrationDate);
-//			if (Validator.isNotNull(registrationDate)) {
-//				regDate = ConvertFormatDate.parseStringToDate(registrationDate, ConvertFormatDate._NORMAL_DATE);
-//				_log.info("regDate:" + regDate);
-//			}
-//			ILVehicleCustomsBorderGuard cbGuardInput = actions.addCustomBorderGuard(registrationNumber, expImpGateType,
-//					expImpGate, driverName, driverLicenceNo, regDate);
-//
-//			ILCBGuardModel result = ILCertificateUtils.mappingToDetailCBGuard(cbGuardInput);
-//
-//			return Response.status(200).entity(result).build();
-//
-//		} catch (Exception e) {
-//			_log.error(e);
-//			return Response.status(500).entity(e.getMessage()).build();
-//
-//		}
-//
-//	}
+	}
 
-//	@GET
-//	@Path("/certDoc/applicant")
-//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-//	public Response getCertByApplicant(@Context HttpHeaders header, @QueryParam("applicantIdNo") String applicantIdNo,
-//			@QueryParam("registrationNumber") String registrationNumber,
-//			@QueryParam("serviceCode") String serviceCode) {
-//
-//		ILCertificateActions actions = new ILCertificateActionsImpl();
-//
-//		try {
-//			// Process key search
-//			String applicant = StringPool.BLANK;
-//			String regSearch = StringPool.BLANK;
-//			String serviceSearch = StringPool.BLANK;
-//
-//			if (Validator.isNotNull(applicantIdNo)) {
-//				applicant = applicantIdNo.toLowerCase();
-//			}
-//			_log.info("applicantIdNo: " + applicantIdNo);
-//			_log.info("applicant: " + applicant);
-//			if (Validator.isNotNull(serviceCode)) {
-//				serviceSearch = serviceCode.toLowerCase();
-//			}
-//			_log.info("serviceCode: " + serviceCode);
-//			_log.info("serviceSearch: " + serviceSearch);
-//			if (Validator.isNotNull(registrationNumber)) {
-//				regSearch = registrationNumber.toLowerCase();
-//				_log.info("registrationNumber: " + registrationNumber);
-//				_log.info("regSearch: " + regSearch);
-//				ILCertificate certInfo = actions.getCertByValidFrom(serviceSearch, applicantIdNo, registrationNumber);
-//				ILCertificateModel result = null;
-//				if (certInfo != null) {
-//					result = ILCertificateUtils.mappingToDetailCertificate(certInfo);
-//				}
-//
-//				return Response.status(200).entity(result).build();
-//			} else {
-//				JSONObject jsonData = actions.getCertByApplicant(serviceSearch, applicant);
-//				ILCertificateResultModel result = new ILCertificateResultModel();
-//				// List<ILCertificateModel> certModelList =
-//				// ILCertificateUtils.mappingToResultCertificate(certList);
-//				if (jsonData != null && jsonData.getInt("total") > 0) {
-//					result.setTotal(jsonData.getInt("total"));
-//					result.getData().addAll(
-//							ILCertificateUtils.mappingToResultCertificate((List<ILCertificate>) jsonData.get("data")));
-//				} else {
-//					result.setTotal(0);
-//				}
-//				return Response.status(200).entity(result).build();
-//			}
-//
-//		} catch (Exception e) {
-//			_log.error(e);
-//			return Response.status(500).entity(e.getMessage()).build();
-//
-//		}
-//	}
 
 	@GET
 	@Produces("text/plain")
