@@ -65,4 +65,37 @@ public class VRInputStampbookDetailsFinderImpl extends VRInputStampbookDetailsFi
 		
 		return null;
 	}
+	
+	public List<Object[]> findStampbookByVehicleClass(String vehicleClass, long corporationId) {
+		Session session = null;
+		try {
+			session = openSession();
+			
+			StringBuilder query = new StringBuilder();
+			query.append("SELECT vr_inputstampbook.bookId, vr_inputstampbook.stampShortNo, MIN(vr_inputstampbookdetails.sequenceNo) AS start, MAX(vr_inputstampbookdetails.sequenceNo) AS end FROM vr_inputstampbook  ");
+			query.append("LEFT JOIN vr_inputstampbookdetails  ");
+			query.append("ON vr_inputstampbook.id = vr_inputstampbookdetails.bookid ");
+			query.append("WHERE (vr_inputstampbookdetails.issuingStatus = 0 OR vr_inputstampbookdetails.issuingStatus = 1) AND vr_inputstampbook.vehicleClass = ? AND vr_inputstampbookdetails.corporationId = ? GROUP BY vr_inputstampbook.bookid ");
+			
+					
+			SQLQuery q = session.createSQLQuery(query.toString());
+			q.setCacheable(false);
+			q.addScalar("bookId", Type.LONG);
+			q.addScalar("stampShortNo", Type.STRING);
+			q.addScalar("start", Type.LONG);
+			q.addScalar("end", Type.LONG);
+			
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(vehicleClass);
+			qPos.add(corporationId);
+			
+			return (List<Object[]>) QueryUtil.list(q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		} catch (Exception e) {
+			_log.error(e);
+		} finally {
+			closeSession(session);
+		}
+		
+		return null;
+	}
 }

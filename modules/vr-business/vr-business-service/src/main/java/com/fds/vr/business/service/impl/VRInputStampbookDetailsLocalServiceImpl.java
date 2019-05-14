@@ -247,7 +247,11 @@ public class VRInputStampbookDetailsLocalServiceImpl
 	public Long[] findStartNoEndNoBySequence(long inputStampbookId) {
 		return vrInputStampbookDetailsFinder.findStartNoEndNoBySequence(inputStampbookId);
 	}
-
+	
+	public List findStampbookByVehicleClass(String vehicleClass, long corporationId) {
+		return vrInputStampbookDetailsFinder.findStampbookByVehicleClass(vehicleClass, corporationId);
+	}
+	
 	
 	private Log _log = LogFactoryUtil.getLog(VRInputStampbookDetailsLocalServiceBaseImpl.class);
 }

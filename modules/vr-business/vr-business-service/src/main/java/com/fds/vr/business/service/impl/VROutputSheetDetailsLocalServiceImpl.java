@@ -158,6 +158,7 @@ public class VROutputSheetDetailsLocalServiceImpl
 				JSONObject json = detailsArr.getJSONObject(i);
 	
 				Long bookId = json.getLong("bookId");
+				Long inputSheetId = json.getLong("inputSheetId");
 				Long issueVehicleCertificateId = json.getLong("issueVehicleCertificateId");
 				Long certificateId = json.getLong("certificateId");
 				String certificateNumber = json.getString("certificateNumber");
@@ -178,7 +179,7 @@ public class VROutputSheetDetailsLocalServiceImpl
 				Long totalReturned = json.getLong("totalReturned");
 				String remark = json.getString("remark");
 	
-				vrOutputSheetDetailsLocalService.updateOutputSheetDetails(0l, 1l, null, outputSheetId,
+				vrOutputSheetDetailsLocalService.updateOutputSheetDetails(0l, 1l, inputSheetId, outputSheetId,
 						bookId, issueVehicleCertificateId, certificateId, certificateNumber, certificateDate,
 						vehicleClass, stampType, stampShortNo, serialStartNo, serialEndNo, subTotalInDocument,
 						subTotalQuantities, unitPrice, totalAmount, totalInUse, totalNotUsed, totalLost, totalCancelled,

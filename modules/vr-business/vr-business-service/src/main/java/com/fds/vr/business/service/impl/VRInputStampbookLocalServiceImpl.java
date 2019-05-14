@@ -198,12 +198,14 @@ public class VRInputStampbookLocalServiceImpl
 		VRInputStampbook inputStambook = vrInputStampbookPersistence.findByPrimaryKey(bookId);
 		
 		long newSum3 = inputStambook.getSum3() - subTotalInDocument;
+		long newSum2 = inputStambook.getSum2() + subTotalInDocument;
 		
 		inputStambook.setSum3(newSum3);
+		inputStambook.setSum2(newSum2);
 		inputStambook.setModifyDate(new Date());
 		
 		for(long sequenNo = serialStartNo ; sequenNo <= serialEndNo ; sequenNo ++) {
-			long issuingStatus = outputSheetType == 2 ? 1 : 2;	// 1 chua cap phat - dang o doi, 2 cap phat cho cssx
+			long issuingStatus = outputSheetType == 5 ? 1 : 2;	// 1 chua cap phat - dang o doi, 2 cap phat cho cssx
 			
 			vrInputStampbookDetailsLocalService.updateByOutputSheet(bookId, sequenNo, corporationId, issuingStatus);
 		}

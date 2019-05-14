@@ -15,6 +15,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -26,18 +27,23 @@ import org.osgi.service.component.annotations.Component;
 import com.fds.vr.business.model.VRInputSheet;
 import com.fds.vr.business.model.VRInputStampbook;
 import com.fds.vr.business.model.VRInventory;
+import com.fds.vr.business.model.VRIssue;
 import com.fds.vr.business.model.VROutputSheet;
 import com.fds.vr.business.service.VRInputSheetLocalServiceUtil;
 import com.fds.vr.business.service.VRInputStampbookDetailsLocalServiceUtil;
 import com.fds.vr.business.service.VRInputStampbookLocalServiceUtil;
 import com.fds.vr.business.service.VRInventoryLocalServiceUtil;
+import com.fds.vr.business.service.VRIssueLocalServiceUtil;
 import com.fds.vr.business.service.VROutputSheetDetailsLocalServiceUtil;
 import com.fds.vr.business.service.VROutputSheetLocalServiceUtil;
 import com.fds.vr.util.DateTimeUtils;
+import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 @ApplicationPath("/vr-stamp")
 @Component(immediate = true, service = Application.class)
@@ -113,6 +119,30 @@ public Set<Object> getSingletons() {
 			return Response.status(500).entity(jsObj.toString()).build();
 		}
 	}
+	
+	@GET
+	@Path("/inputsheet")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getInputSheets(@Context HttpHeaders header, @QueryParam("start") int start, @QueryParam("end") int end) {
+		
+		
+		JSONObject jsObj = JSONFactoryUtil.createJSONObject();
+		try {
+			List<VRInputSheet> results = VRInputSheetLocalServiceUtil.getVRInputSheets(start, end);
+			int total = VRInputSheetLocalServiceUtil.getVRInputSheetsCount();
+			
+			jsObj.put("total", total);
+			jsObj.put("data", JSONFactoryUtil.looseSerialize(results));
+			
+			return Response.status(200).entity(jsObj.toString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+			jsObj.put("status", "error");
+			jsObj.put("msg", e.getClass().getName());
+			return Response.status(500).entity(jsObj.toString()).build();
+		}
+	}
 
 	@POST
 	@Path("/inputsheet")
@@ -177,6 +207,30 @@ public Set<Object> getSingletons() {
 					totalAmount, amountInWords, remark, stampbooks);
 			
 			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(inputSheet)).build();
+		} catch (Exception e) {
+			_log.error(e);
+			jsObj.put("status", "error");
+			jsObj.put("msg", e.getClass().getName());
+			return Response.status(500).entity(jsObj.toString()).build();
+		}
+	}
+	
+	@GET
+	@Path("/outputsheet")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getOutputSheets(@Context HttpHeaders header, @QueryParam("start") int start, @QueryParam("end") int end) {
+		
+		
+		JSONObject jsObj = JSONFactoryUtil.createJSONObject();
+		try {
+			List<VROutputSheet> results = VROutputSheetLocalServiceUtil.getVROutputSheets(start, end);
+			int total = VROutputSheetLocalServiceUtil.getVROutputSheetsCount();
+			
+			jsObj.put("total", total);
+			jsObj.put("data", JSONFactoryUtil.looseSerialize(results));
+			
+			return Response.status(200).entity(jsObj.toString()).build();
 		} catch (Exception e) {
 			_log.error(e);
 			jsObj.put("status", "error");
@@ -278,6 +332,83 @@ public Set<Object> getSingletons() {
 			jsObj.put("status", "done");
 			
 			return Response.status(200).entity(jsObj.toString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+			jsObj.put("status", "error");
+			jsObj.put("msg", e.getClass().getName());
+			return Response.status(500).entity(jsObj.toString()).build();
+		}
+	}
+	
+	@GET
+	@Path("/issues")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getIssues(@Context HttpHeaders header, 
+			@QueryParam("issueCorporationId") int issueCorporationId, @QueryParam("digitalIssueStatus") int digitalIssueStatus,
+			@QueryParam("start") int start, @QueryParam("end") int end) {
+		
+		
+		JSONObject jsObj = JSONFactoryUtil.createJSONObject();
+		try {
+			List<VRIssue> results = VRIssueLocalServiceUtil.findByIC_IS(issueCorporationId, digitalIssueStatus);
+			
+			// get issue . vehicleclass
+			
+			// if MethodOfIssue = 10 khong quan tam vr_issue_vehiclecertificate, vr_vehiclerecord, TotalInDocument
+			
+			// if MethodOfIssue = 20, 30 vr_issue_vehiclecertificate.totalquantity
+			
+			// vr_issue_vehiclecertificate
+			
+			// vr_vehiclerecord
+			
+			// lay inputstampbook where totalInDocument > sum1 and vehicleClass = issue.vehicleclass
+			
+			// lay inputstampbookDetails where bookId = inputstampbook.bookId 
+			// and inputstampbook.corporationId = workingUnitId and issuingStatus = 0 or = 1
+			// startNo = min(sequenceNo) , endNo = max(sequenceNo) 
+			
+			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(results)).build();
+		} catch (Exception e) {
+			_log.error(e);
+			jsObj.put("status", "error");
+			jsObj.put("msg", e.getClass().getName());
+			return Response.status(500).entity(jsObj.toString()).build();
+		}
+	}
+	
+	@GET
+	@Path("/issues/{id}/stampbook/{corporationId}")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getOutputSheetsByIssue(@Context HttpHeaders header, 
+			@PathParam("id") long issueId, @PathParam("corporationId") long corporationId,
+			@QueryParam("start") int start, @QueryParam("end") int end) {
+		
+		
+		JSONObject jsObj = JSONFactoryUtil.createJSONObject();
+		try {
+			VRIssue issue = VRIssueLocalServiceUtil.getVRIssue(issueId);
+			
+			String vehicleClass = issue.getVehicleClass();
+			
+			List<Object[]> books = VRInputStampbookDetailsLocalServiceUtil.findStampbookByVehicleClass(vehicleClass, corporationId);
+			
+			JSONArray results = JSONFactoryUtil.createJSONArray();
+			
+			for(Object[] obj : books) {
+				JSONObject tmp = JSONFactoryUtil.createJSONObject();
+				
+				tmp.put("bookId", GetterUtil.getLong(obj[0]));
+				tmp.put("stampShortNo", GetterUtil.getString(obj[1]));
+				tmp.put("start", GetterUtil.getLong(obj[2]));
+				tmp.put("end", GetterUtil.getLong(obj[3]));
+				
+				results.put(tmp);
+			}
+			
+			return Response.status(200).entity(results).build();
 		} catch (Exception e) {
 			_log.error(e);
 			jsObj.put("status", "error");

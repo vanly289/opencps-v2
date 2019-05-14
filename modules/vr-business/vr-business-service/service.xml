@@ -1915,9 +1915,9 @@
 		<column name="remarks" type="String" db-name="remarks"/>
 		<column name="methodOfIssue" type="String" db-name="methodOfIssue"/>
 		<column name="totalInDocument" type="long" db-name="totalInDocument"/>
-		<column name="issueCorporationId" type="String" db-name="issueCorporationId"/>
+		<column name="issueCorporationId" type="long" db-name="issueCorporationId"/>
 		<column name="verifyCorporationId" type="String" db-name="verifyCorporationId"/>
-		<column name="digitalissuestatus" type="String" db-name="digitalissuestatus"/>
+		<column name="digitalissuestatus" type="int" db-name="digitalissuestatus"/>
 		
 		<!-- add new -->
 		<column type="String" name="issueType"/>
@@ -1990,6 +1990,10 @@
 		<finder return-type="Collection" name="copreportno">
 			<finder-column name="mtCore"></finder-column>						
 			<finder-column name="copreportno"></finder-column>
+		</finder>
+		<finder return-type="Collection" name="IC_IS">
+			<finder-column name="issueCorporationId"></finder-column>
+			<finder-column name="digitalissuestatus"></finder-column>
 		</finder>
 	</entity>
 

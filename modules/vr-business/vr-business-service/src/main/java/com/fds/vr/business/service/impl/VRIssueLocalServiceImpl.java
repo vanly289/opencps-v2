@@ -92,7 +92,7 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		
 	}
 	
-	public List<VRIssue> findByissueCorporationId(long mtCore, String issueCorporationId) throws PortalException, SystemException {
+	public List<VRIssue> findByissueCorporationId(long mtCore, long issueCorporationId) throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findByissueCorporationId(mtCore, issueCorporationId);
 		} catch (Exception e) {
@@ -126,6 +126,16 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 	public List<VRIssue> findBycopreportno(long mtCore, String copreportno) throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findBycopreportno(mtCore, copreportno);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRIssue>();
+		
+	}
+	
+	public List<VRIssue> findByIC_IS(long issueCorporationId, int digitalIssueStatus) throws PortalException, SystemException {
+		try {
+			return vrIssuePersistence.findByIC_IS(issueCorporationId, digitalIssueStatus);
 		} catch (Exception e) {
 			_log.error(e);
 		}
