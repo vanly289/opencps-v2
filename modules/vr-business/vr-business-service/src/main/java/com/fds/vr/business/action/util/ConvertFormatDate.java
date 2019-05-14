@@ -16,6 +16,7 @@ public class ConvertFormatDate {
 
 	public static final String _NORMAL_DATE = "dd/MM/yyyy";
 	public static final String PATTERN_DATE = "dd-MM-yyyy HH:mm:ss";
+	public static final String _NORMAL_DATE_TIME = "dd/MM/yyyy HH:mm:ss";
 
 	public static String formatDateSQL(String dateInput) {
 

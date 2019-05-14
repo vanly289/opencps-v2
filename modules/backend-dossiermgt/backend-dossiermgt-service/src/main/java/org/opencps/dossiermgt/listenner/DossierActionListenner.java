@@ -205,9 +205,6 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 				// Cap nhat thong tin ho so CAP PHAT PHIEU
 				IssueContentUtils issueContent = new IssueContentUtils();
 				issueContent.updateVRIssueCertificate(model);
-								
-				
-						
 				
 
 			} catch (SystemException | PortalException e) {

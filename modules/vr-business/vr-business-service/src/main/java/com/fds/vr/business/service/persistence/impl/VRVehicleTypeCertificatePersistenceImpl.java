@@ -16659,6 +16659,1599 @@ public class VRVehicleTypeCertificatePersistenceImpl extends BasePersistenceImpl
 	private static final String _FINDER_COLUMN_F_EXP_STATUS_EXPIREDSTATUS_1 = "vrVehicleTypeCertificate.expiredStatus IS NULL";
 	private static final String _FINDER_COLUMN_F_EXP_STATUS_EXPIREDSTATUS_2 = "vrVehicleTypeCertificate.expiredStatus = ?";
 	private static final String _FINDER_COLUMN_F_EXP_STATUS_EXPIREDSTATUS_3 = "(vrVehicleTypeCertificate.expiredStatus IS NULL OR vrVehicleTypeCertificate.expiredStatus = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_F_APP_VH_EXP =
+		new FinderPath(VRVehicleTypeCertificateModelImpl.ENTITY_CACHE_ENABLED,
+			VRVehicleTypeCertificateModelImpl.FINDER_CACHE_ENABLED,
+			VRVehicleTypeCertificateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_APP_VH_EXP",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_APP_VH_EXP =
+		new FinderPath(VRVehicleTypeCertificateModelImpl.ENTITY_CACHE_ENABLED,
+			VRVehicleTypeCertificateModelImpl.FINDER_CACHE_ENABLED,
+			VRVehicleTypeCertificateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_APP_VH_EXP",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			VRVehicleTypeCertificateModelImpl.APPLICANTIDNO_COLUMN_BITMASK |
+			VRVehicleTypeCertificateModelImpl.VEHICLECLASS_COLUMN_BITMASK |
+			VRVehicleTypeCertificateModelImpl.EXPIREDSTATUS_COLUMN_BITMASK |
+			VRVehicleTypeCertificateModelImpl.MODIFYDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_F_APP_VH_EXP = new FinderPath(VRVehicleTypeCertificateModelImpl.ENTITY_CACHE_ENABLED,
+			VRVehicleTypeCertificateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_APP_VH_EXP",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName()
+			});
+
+	/**
+	 * Returns all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @return the matching vr vehicle type certificates
+	 */
+	@Override
+	public List<VRVehicleTypeCertificate> findByF_APP_VH_EXP(
+		String applicantIdNo, String vehicleClass, String expiredStatus) {
+		return findByF_APP_VH_EXP(applicantIdNo, vehicleClass, expiredStatus,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param start the lower bound of the range of vr vehicle type certificates
+	 * @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	 * @return the range of matching vr vehicle type certificates
+	 */
+	@Override
+	public List<VRVehicleTypeCertificate> findByF_APP_VH_EXP(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		int start, int end) {
+		return findByF_APP_VH_EXP(applicantIdNo, vehicleClass, expiredStatus,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param start the lower bound of the range of vr vehicle type certificates
+	 * @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching vr vehicle type certificates
+	 */
+	@Override
+	public List<VRVehicleTypeCertificate> findByF_APP_VH_EXP(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		int start, int end,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator) {
+		return findByF_APP_VH_EXP(applicantIdNo, vehicleClass, expiredStatus,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param start the lower bound of the range of vr vehicle type certificates
+	 * @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching vr vehicle type certificates
+	 */
+	@Override
+	public List<VRVehicleTypeCertificate> findByF_APP_VH_EXP(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		int start, int end,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_APP_VH_EXP;
+			finderArgs = new Object[] { applicantIdNo, vehicleClass, expiredStatus };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_F_APP_VH_EXP;
+			finderArgs = new Object[] {
+					applicantIdNo, vehicleClass, expiredStatus,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<VRVehicleTypeCertificate> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<VRVehicleTypeCertificate>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (VRVehicleTypeCertificate vrVehicleTypeCertificate : list) {
+					if (!Objects.equals(applicantIdNo,
+								vrVehicleTypeCertificate.getApplicantIdNo()) ||
+							!Objects.equals(vehicleClass,
+								vrVehicleTypeCertificate.getVehicleClass()) ||
+							!Objects.equals(expiredStatus,
+								vrVehicleTypeCertificate.getExpiredStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_VRVEHICLETYPECERTIFICATE_WHERE);
+
+			boolean bindApplicantIdNo = false;
+
+			if (applicantIdNo == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_1);
+			}
+			else if (applicantIdNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_3);
+			}
+			else {
+				bindApplicantIdNo = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_2);
+			}
+
+			boolean bindVehicleClass = false;
+
+			if (vehicleClass == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_1);
+			}
+			else if (vehicleClass.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_3);
+			}
+			else {
+				bindVehicleClass = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_2);
+			}
+
+			boolean bindExpiredStatus = false;
+
+			if (expiredStatus == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_1);
+			}
+			else if (expiredStatus.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_3);
+			}
+			else {
+				bindExpiredStatus = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(VRVehicleTypeCertificateModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindApplicantIdNo) {
+					qPos.add(applicantIdNo);
+				}
+
+				if (bindVehicleClass) {
+					qPos.add(vehicleClass);
+				}
+
+				if (bindExpiredStatus) {
+					qPos.add(expiredStatus);
+				}
+
+				if (!pagination) {
+					list = (List<VRVehicleTypeCertificate>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<VRVehicleTypeCertificate>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vr vehicle type certificate
+	 * @throws NoSuchVRVehicleTypeCertificateException if a matching vr vehicle type certificate could not be found
+	 */
+	@Override
+	public VRVehicleTypeCertificate findByF_APP_VH_EXP_First(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException {
+		VRVehicleTypeCertificate vrVehicleTypeCertificate = fetchByF_APP_VH_EXP_First(applicantIdNo,
+				vehicleClass, expiredStatus, orderByComparator);
+
+		if (vrVehicleTypeCertificate != null) {
+			return vrVehicleTypeCertificate;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("applicantIdNo=");
+		msg.append(applicantIdNo);
+
+		msg.append(", vehicleClass=");
+		msg.append(vehicleClass);
+
+		msg.append(", expiredStatus=");
+		msg.append(expiredStatus);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRVehicleTypeCertificateException(msg.toString());
+	}
+
+	/**
+	 * Returns the first vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vr vehicle type certificate, or <code>null</code> if a matching vr vehicle type certificate could not be found
+	 */
+	@Override
+	public VRVehicleTypeCertificate fetchByF_APP_VH_EXP_First(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator) {
+		List<VRVehicleTypeCertificate> list = findByF_APP_VH_EXP(applicantIdNo,
+				vehicleClass, expiredStatus, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vr vehicle type certificate
+	 * @throws NoSuchVRVehicleTypeCertificateException if a matching vr vehicle type certificate could not be found
+	 */
+	@Override
+	public VRVehicleTypeCertificate findByF_APP_VH_EXP_Last(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException {
+		VRVehicleTypeCertificate vrVehicleTypeCertificate = fetchByF_APP_VH_EXP_Last(applicantIdNo,
+				vehicleClass, expiredStatus, orderByComparator);
+
+		if (vrVehicleTypeCertificate != null) {
+			return vrVehicleTypeCertificate;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("applicantIdNo=");
+		msg.append(applicantIdNo);
+
+		msg.append(", vehicleClass=");
+		msg.append(vehicleClass);
+
+		msg.append(", expiredStatus=");
+		msg.append(expiredStatus);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRVehicleTypeCertificateException(msg.toString());
+	}
+
+	/**
+	 * Returns the last vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vr vehicle type certificate, or <code>null</code> if a matching vr vehicle type certificate could not be found
+	 */
+	@Override
+	public VRVehicleTypeCertificate fetchByF_APP_VH_EXP_Last(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator) {
+		int count = countByF_APP_VH_EXP(applicantIdNo, vehicleClass,
+				expiredStatus);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<VRVehicleTypeCertificate> list = findByF_APP_VH_EXP(applicantIdNo,
+				vehicleClass, expiredStatus, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the vr vehicle type certificates before and after the current vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	 *
+	 * @param id the primary key of the current vr vehicle type certificate
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next vr vehicle type certificate
+	 * @throws NoSuchVRVehicleTypeCertificateException if a vr vehicle type certificate with the primary key could not be found
+	 */
+	@Override
+	public VRVehicleTypeCertificate[] findByF_APP_VH_EXP_PrevAndNext(long id,
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException {
+		VRVehicleTypeCertificate vrVehicleTypeCertificate = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			VRVehicleTypeCertificate[] array = new VRVehicleTypeCertificateImpl[3];
+
+			array[0] = getByF_APP_VH_EXP_PrevAndNext(session,
+					vrVehicleTypeCertificate, applicantIdNo, vehicleClass,
+					expiredStatus, orderByComparator, true);
+
+			array[1] = vrVehicleTypeCertificate;
+
+			array[2] = getByF_APP_VH_EXP_PrevAndNext(session,
+					vrVehicleTypeCertificate, applicantIdNo, vehicleClass,
+					expiredStatus, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected VRVehicleTypeCertificate getByF_APP_VH_EXP_PrevAndNext(
+		Session session, VRVehicleTypeCertificate vrVehicleTypeCertificate,
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_VRVEHICLETYPECERTIFICATE_WHERE);
+
+		boolean bindApplicantIdNo = false;
+
+		if (applicantIdNo == null) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_1);
+		}
+		else if (applicantIdNo.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_3);
+		}
+		else {
+			bindApplicantIdNo = true;
+
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_2);
+		}
+
+		boolean bindVehicleClass = false;
+
+		if (vehicleClass == null) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_1);
+		}
+		else if (vehicleClass.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_3);
+		}
+		else {
+			bindVehicleClass = true;
+
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_2);
+		}
+
+		boolean bindExpiredStatus = false;
+
+		if (expiredStatus == null) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_1);
+		}
+		else if (expiredStatus.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_3);
+		}
+		else {
+			bindExpiredStatus = true;
+
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(VRVehicleTypeCertificateModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindApplicantIdNo) {
+			qPos.add(applicantIdNo);
+		}
+
+		if (bindVehicleClass) {
+			qPos.add(vehicleClass);
+		}
+
+		if (bindExpiredStatus) {
+			qPos.add(expiredStatus);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(vrVehicleTypeCertificate);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<VRVehicleTypeCertificate> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; from the database.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 */
+	@Override
+	public void removeByF_APP_VH_EXP(String applicantIdNo, String vehicleClass,
+		String expiredStatus) {
+		for (VRVehicleTypeCertificate vrVehicleTypeCertificate : findByF_APP_VH_EXP(
+				applicantIdNo, vehicleClass, expiredStatus, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(vrVehicleTypeCertificate);
+		}
+	}
+
+	/**
+	 * Returns the number of vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @return the number of matching vr vehicle type certificates
+	 */
+	@Override
+	public int countByF_APP_VH_EXP(String applicantIdNo, String vehicleClass,
+		String expiredStatus) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_F_APP_VH_EXP;
+
+		Object[] finderArgs = new Object[] {
+				applicantIdNo, vehicleClass, expiredStatus
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_VRVEHICLETYPECERTIFICATE_WHERE);
+
+			boolean bindApplicantIdNo = false;
+
+			if (applicantIdNo == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_1);
+			}
+			else if (applicantIdNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_3);
+			}
+			else {
+				bindApplicantIdNo = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_2);
+			}
+
+			boolean bindVehicleClass = false;
+
+			if (vehicleClass == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_1);
+			}
+			else if (vehicleClass.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_3);
+			}
+			else {
+				bindVehicleClass = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_2);
+			}
+
+			boolean bindExpiredStatus = false;
+
+			if (expiredStatus == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_1);
+			}
+			else if (expiredStatus.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_3);
+			}
+			else {
+				bindExpiredStatus = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindApplicantIdNo) {
+					qPos.add(applicantIdNo);
+				}
+
+				if (bindVehicleClass) {
+					qPos.add(vehicleClass);
+				}
+
+				if (bindExpiredStatus) {
+					qPos.add(expiredStatus);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_1 = "vrVehicleTypeCertificate.applicantIdNo IS NULL AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_2 = "vrVehicleTypeCertificate.applicantIdNo = ? AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_APPLICANTIDNO_3 = "(vrVehicleTypeCertificate.applicantIdNo IS NULL OR vrVehicleTypeCertificate.applicantIdNo = '') AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_1 = "vrVehicleTypeCertificate.vehicleClass IS NULL AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_2 = "vrVehicleTypeCertificate.vehicleClass = ? AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_VEHICLECLASS_3 = "(vrVehicleTypeCertificate.vehicleClass IS NULL OR vrVehicleTypeCertificate.vehicleClass = '') AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_1 = "vrVehicleTypeCertificate.expiredStatus IS NULL";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_2 = "vrVehicleTypeCertificate.expiredStatus = ?";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_EXPIREDSTATUS_3 = "(vrVehicleTypeCertificate.expiredStatus IS NULL OR vrVehicleTypeCertificate.expiredStatus = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_F_APP_VH_EXP_CERTNO =
+		new FinderPath(VRVehicleTypeCertificateModelImpl.ENTITY_CACHE_ENABLED,
+			VRVehicleTypeCertificateModelImpl.FINDER_CACHE_ENABLED,
+			VRVehicleTypeCertificateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByF_APP_VH_EXP_CERTNO",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_APP_VH_EXP_CERTNO =
+		new FinderPath(VRVehicleTypeCertificateModelImpl.ENTITY_CACHE_ENABLED,
+			VRVehicleTypeCertificateModelImpl.FINDER_CACHE_ENABLED,
+			VRVehicleTypeCertificateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByF_APP_VH_EXP_CERTNO",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName(), String.class.getName()
+			},
+			VRVehicleTypeCertificateModelImpl.APPLICANTIDNO_COLUMN_BITMASK |
+			VRVehicleTypeCertificateModelImpl.VEHICLECLASS_COLUMN_BITMASK |
+			VRVehicleTypeCertificateModelImpl.EXPIREDSTATUS_COLUMN_BITMASK |
+			VRVehicleTypeCertificateModelImpl.CERTIFICATERECORDNO_COLUMN_BITMASK |
+			VRVehicleTypeCertificateModelImpl.MODIFYDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_F_APP_VH_EXP_CERTNO = new FinderPath(VRVehicleTypeCertificateModelImpl.ENTITY_CACHE_ENABLED,
+			VRVehicleTypeCertificateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByF_APP_VH_EXP_CERTNO",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName(), String.class.getName()
+			});
+
+	/**
+	 * Returns all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 * @return the matching vr vehicle type certificates
+	 */
+	@Override
+	public List<VRVehicleTypeCertificate> findByF_APP_VH_EXP_CERTNO(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		String certificateRecordNo) {
+		return findByF_APP_VH_EXP_CERTNO(applicantIdNo, vehicleClass,
+			expiredStatus, certificateRecordNo, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 * @param start the lower bound of the range of vr vehicle type certificates
+	 * @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	 * @return the range of matching vr vehicle type certificates
+	 */
+	@Override
+	public List<VRVehicleTypeCertificate> findByF_APP_VH_EXP_CERTNO(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		String certificateRecordNo, int start, int end) {
+		return findByF_APP_VH_EXP_CERTNO(applicantIdNo, vehicleClass,
+			expiredStatus, certificateRecordNo, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 * @param start the lower bound of the range of vr vehicle type certificates
+	 * @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching vr vehicle type certificates
+	 */
+	@Override
+	public List<VRVehicleTypeCertificate> findByF_APP_VH_EXP_CERTNO(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		String certificateRecordNo, int start, int end,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator) {
+		return findByF_APP_VH_EXP_CERTNO(applicantIdNo, vehicleClass,
+			expiredStatus, certificateRecordNo, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleTypeCertificateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 * @param start the lower bound of the range of vr vehicle type certificates
+	 * @param end the upper bound of the range of vr vehicle type certificates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching vr vehicle type certificates
+	 */
+	@Override
+	public List<VRVehicleTypeCertificate> findByF_APP_VH_EXP_CERTNO(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		String certificateRecordNo, int start, int end,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_APP_VH_EXP_CERTNO;
+			finderArgs = new Object[] {
+					applicantIdNo, vehicleClass, expiredStatus,
+					certificateRecordNo
+				};
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_F_APP_VH_EXP_CERTNO;
+			finderArgs = new Object[] {
+					applicantIdNo, vehicleClass, expiredStatus,
+					certificateRecordNo,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<VRVehicleTypeCertificate> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<VRVehicleTypeCertificate>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (VRVehicleTypeCertificate vrVehicleTypeCertificate : list) {
+					if (!Objects.equals(applicantIdNo,
+								vrVehicleTypeCertificate.getApplicantIdNo()) ||
+							!Objects.equals(vehicleClass,
+								vrVehicleTypeCertificate.getVehicleClass()) ||
+							!Objects.equals(expiredStatus,
+								vrVehicleTypeCertificate.getExpiredStatus()) ||
+							!Objects.equals(certificateRecordNo,
+								vrVehicleTypeCertificate.getCertificateRecordNo())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(6 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_VRVEHICLETYPECERTIFICATE_WHERE);
+
+			boolean bindApplicantIdNo = false;
+
+			if (applicantIdNo == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_1);
+			}
+			else if (applicantIdNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_3);
+			}
+			else {
+				bindApplicantIdNo = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_2);
+			}
+
+			boolean bindVehicleClass = false;
+
+			if (vehicleClass == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_1);
+			}
+			else if (vehicleClass.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_3);
+			}
+			else {
+				bindVehicleClass = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_2);
+			}
+
+			boolean bindExpiredStatus = false;
+
+			if (expiredStatus == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_1);
+			}
+			else if (expiredStatus.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_3);
+			}
+			else {
+				bindExpiredStatus = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_2);
+			}
+
+			boolean bindCertificateRecordNo = false;
+
+			if (certificateRecordNo == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_1);
+			}
+			else if (certificateRecordNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_3);
+			}
+			else {
+				bindCertificateRecordNo = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(VRVehicleTypeCertificateModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindApplicantIdNo) {
+					qPos.add(applicantIdNo);
+				}
+
+				if (bindVehicleClass) {
+					qPos.add(vehicleClass);
+				}
+
+				if (bindExpiredStatus) {
+					qPos.add(expiredStatus);
+				}
+
+				if (bindCertificateRecordNo) {
+					qPos.add(certificateRecordNo);
+				}
+
+				if (!pagination) {
+					list = (List<VRVehicleTypeCertificate>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<VRVehicleTypeCertificate>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vr vehicle type certificate
+	 * @throws NoSuchVRVehicleTypeCertificateException if a matching vr vehicle type certificate could not be found
+	 */
+	@Override
+	public VRVehicleTypeCertificate findByF_APP_VH_EXP_CERTNO_First(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		String certificateRecordNo,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException {
+		VRVehicleTypeCertificate vrVehicleTypeCertificate = fetchByF_APP_VH_EXP_CERTNO_First(applicantIdNo,
+				vehicleClass, expiredStatus, certificateRecordNo,
+				orderByComparator);
+
+		if (vrVehicleTypeCertificate != null) {
+			return vrVehicleTypeCertificate;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("applicantIdNo=");
+		msg.append(applicantIdNo);
+
+		msg.append(", vehicleClass=");
+		msg.append(vehicleClass);
+
+		msg.append(", expiredStatus=");
+		msg.append(expiredStatus);
+
+		msg.append(", certificateRecordNo=");
+		msg.append(certificateRecordNo);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRVehicleTypeCertificateException(msg.toString());
+	}
+
+	/**
+	 * Returns the first vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vr vehicle type certificate, or <code>null</code> if a matching vr vehicle type certificate could not be found
+	 */
+	@Override
+	public VRVehicleTypeCertificate fetchByF_APP_VH_EXP_CERTNO_First(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		String certificateRecordNo,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator) {
+		List<VRVehicleTypeCertificate> list = findByF_APP_VH_EXP_CERTNO(applicantIdNo,
+				vehicleClass, expiredStatus, certificateRecordNo, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vr vehicle type certificate
+	 * @throws NoSuchVRVehicleTypeCertificateException if a matching vr vehicle type certificate could not be found
+	 */
+	@Override
+	public VRVehicleTypeCertificate findByF_APP_VH_EXP_CERTNO_Last(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		String certificateRecordNo,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException {
+		VRVehicleTypeCertificate vrVehicleTypeCertificate = fetchByF_APP_VH_EXP_CERTNO_Last(applicantIdNo,
+				vehicleClass, expiredStatus, certificateRecordNo,
+				orderByComparator);
+
+		if (vrVehicleTypeCertificate != null) {
+			return vrVehicleTypeCertificate;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("applicantIdNo=");
+		msg.append(applicantIdNo);
+
+		msg.append(", vehicleClass=");
+		msg.append(vehicleClass);
+
+		msg.append(", expiredStatus=");
+		msg.append(expiredStatus);
+
+		msg.append(", certificateRecordNo=");
+		msg.append(certificateRecordNo);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRVehicleTypeCertificateException(msg.toString());
+	}
+
+	/**
+	 * Returns the last vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vr vehicle type certificate, or <code>null</code> if a matching vr vehicle type certificate could not be found
+	 */
+	@Override
+	public VRVehicleTypeCertificate fetchByF_APP_VH_EXP_CERTNO_Last(
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		String certificateRecordNo,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator) {
+		int count = countByF_APP_VH_EXP_CERTNO(applicantIdNo, vehicleClass,
+				expiredStatus, certificateRecordNo);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<VRVehicleTypeCertificate> list = findByF_APP_VH_EXP_CERTNO(applicantIdNo,
+				vehicleClass, expiredStatus, certificateRecordNo, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the vr vehicle type certificates before and after the current vr vehicle type certificate in the ordered set where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	 *
+	 * @param id the primary key of the current vr vehicle type certificate
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next vr vehicle type certificate
+	 * @throws NoSuchVRVehicleTypeCertificateException if a vr vehicle type certificate with the primary key could not be found
+	 */
+	@Override
+	public VRVehicleTypeCertificate[] findByF_APP_VH_EXP_CERTNO_PrevAndNext(
+		long id, String applicantIdNo, String vehicleClass,
+		String expiredStatus, String certificateRecordNo,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator)
+		throws NoSuchVRVehicleTypeCertificateException {
+		VRVehicleTypeCertificate vrVehicleTypeCertificate = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			VRVehicleTypeCertificate[] array = new VRVehicleTypeCertificateImpl[3];
+
+			array[0] = getByF_APP_VH_EXP_CERTNO_PrevAndNext(session,
+					vrVehicleTypeCertificate, applicantIdNo, vehicleClass,
+					expiredStatus, certificateRecordNo, orderByComparator, true);
+
+			array[1] = vrVehicleTypeCertificate;
+
+			array[2] = getByF_APP_VH_EXP_CERTNO_PrevAndNext(session,
+					vrVehicleTypeCertificate, applicantIdNo, vehicleClass,
+					expiredStatus, certificateRecordNo, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected VRVehicleTypeCertificate getByF_APP_VH_EXP_CERTNO_PrevAndNext(
+		Session session, VRVehicleTypeCertificate vrVehicleTypeCertificate,
+		String applicantIdNo, String vehicleClass, String expiredStatus,
+		String certificateRecordNo,
+		OrderByComparator<VRVehicleTypeCertificate> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		query.append(_SQL_SELECT_VRVEHICLETYPECERTIFICATE_WHERE);
+
+		boolean bindApplicantIdNo = false;
+
+		if (applicantIdNo == null) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_1);
+		}
+		else if (applicantIdNo.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_3);
+		}
+		else {
+			bindApplicantIdNo = true;
+
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_2);
+		}
+
+		boolean bindVehicleClass = false;
+
+		if (vehicleClass == null) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_1);
+		}
+		else if (vehicleClass.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_3);
+		}
+		else {
+			bindVehicleClass = true;
+
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_2);
+		}
+
+		boolean bindExpiredStatus = false;
+
+		if (expiredStatus == null) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_1);
+		}
+		else if (expiredStatus.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_3);
+		}
+		else {
+			bindExpiredStatus = true;
+
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_2);
+		}
+
+		boolean bindCertificateRecordNo = false;
+
+		if (certificateRecordNo == null) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_1);
+		}
+		else if (certificateRecordNo.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_3);
+		}
+		else {
+			bindCertificateRecordNo = true;
+
+			query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(VRVehicleTypeCertificateModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindApplicantIdNo) {
+			qPos.add(applicantIdNo);
+		}
+
+		if (bindVehicleClass) {
+			qPos.add(vehicleClass);
+		}
+
+		if (bindExpiredStatus) {
+			qPos.add(expiredStatus);
+		}
+
+		if (bindCertificateRecordNo) {
+			qPos.add(certificateRecordNo);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(vrVehicleTypeCertificate);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<VRVehicleTypeCertificate> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63; from the database.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 */
+	@Override
+	public void removeByF_APP_VH_EXP_CERTNO(String applicantIdNo,
+		String vehicleClass, String expiredStatus, String certificateRecordNo) {
+		for (VRVehicleTypeCertificate vrVehicleTypeCertificate : findByF_APP_VH_EXP_CERTNO(
+				applicantIdNo, vehicleClass, expiredStatus,
+				certificateRecordNo, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(vrVehicleTypeCertificate);
+		}
+	}
+
+	/**
+	 * Returns the number of vr vehicle type certificates where applicantIdNo = &#63; and vehicleClass = &#63; and expiredStatus = &#63; and certificateRecordNo = &#63;.
+	 *
+	 * @param applicantIdNo the applicant ID no
+	 * @param vehicleClass the vehicle class
+	 * @param expiredStatus the expired status
+	 * @param certificateRecordNo the certificate record no
+	 * @return the number of matching vr vehicle type certificates
+	 */
+	@Override
+	public int countByF_APP_VH_EXP_CERTNO(String applicantIdNo,
+		String vehicleClass, String expiredStatus, String certificateRecordNo) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_F_APP_VH_EXP_CERTNO;
+
+		Object[] finderArgs = new Object[] {
+				applicantIdNo, vehicleClass, expiredStatus, certificateRecordNo
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_VRVEHICLETYPECERTIFICATE_WHERE);
+
+			boolean bindApplicantIdNo = false;
+
+			if (applicantIdNo == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_1);
+			}
+			else if (applicantIdNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_3);
+			}
+			else {
+				bindApplicantIdNo = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_2);
+			}
+
+			boolean bindVehicleClass = false;
+
+			if (vehicleClass == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_1);
+			}
+			else if (vehicleClass.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_3);
+			}
+			else {
+				bindVehicleClass = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_2);
+			}
+
+			boolean bindExpiredStatus = false;
+
+			if (expiredStatus == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_1);
+			}
+			else if (expiredStatus.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_3);
+			}
+			else {
+				bindExpiredStatus = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_2);
+			}
+
+			boolean bindCertificateRecordNo = false;
+
+			if (certificateRecordNo == null) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_1);
+			}
+			else if (certificateRecordNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_3);
+			}
+			else {
+				bindCertificateRecordNo = true;
+
+				query.append(_FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindApplicantIdNo) {
+					qPos.add(applicantIdNo);
+				}
+
+				if (bindVehicleClass) {
+					qPos.add(vehicleClass);
+				}
+
+				if (bindExpiredStatus) {
+					qPos.add(expiredStatus);
+				}
+
+				if (bindCertificateRecordNo) {
+					qPos.add(certificateRecordNo);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_1 =
+		"vrVehicleTypeCertificate.applicantIdNo IS NULL AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_2 =
+		"vrVehicleTypeCertificate.applicantIdNo = ? AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_APPLICANTIDNO_3 =
+		"(vrVehicleTypeCertificate.applicantIdNo IS NULL OR vrVehicleTypeCertificate.applicantIdNo = '') AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_1 =
+		"vrVehicleTypeCertificate.vehicleClass IS NULL AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_2 =
+		"vrVehicleTypeCertificate.vehicleClass = ? AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_VEHICLECLASS_3 =
+		"(vrVehicleTypeCertificate.vehicleClass IS NULL OR vrVehicleTypeCertificate.vehicleClass = '') AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_1 =
+		"vrVehicleTypeCertificate.expiredStatus IS NULL AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_2 =
+		"vrVehicleTypeCertificate.expiredStatus = ? AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_EXPIREDSTATUS_3 =
+		"(vrVehicleTypeCertificate.expiredStatus IS NULL OR vrVehicleTypeCertificate.expiredStatus = '') AND ";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_1 =
+		"vrVehicleTypeCertificate.certificateRecordNo IS NULL";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_2 =
+		"vrVehicleTypeCertificate.certificateRecordNo = ?";
+	private static final String _FINDER_COLUMN_F_APP_VH_EXP_CERTNO_CERTIFICATERECORDNO_3 =
+		"(vrVehicleTypeCertificate.certificateRecordNo IS NULL OR vrVehicleTypeCertificate.certificateRecordNo = '')";
 
 	public VRVehicleTypeCertificatePersistenceImpl() {
 		setModelClass(VRVehicleTypeCertificate.class);
@@ -17447,6 +19040,56 @@ public class VRVehicleTypeCertificatePersistenceImpl extends BasePersistenceImpl
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_F_EXP_STATUS, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_EXP_STATUS,
+					args);
+			}
+
+			if ((vrVehicleTypeCertificateModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_APP_VH_EXP.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						vrVehicleTypeCertificateModelImpl.getOriginalApplicantIdNo(),
+						vrVehicleTypeCertificateModelImpl.getOriginalVehicleClass(),
+						vrVehicleTypeCertificateModelImpl.getOriginalExpiredStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_F_APP_VH_EXP, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_APP_VH_EXP,
+					args);
+
+				args = new Object[] {
+						vrVehicleTypeCertificateModelImpl.getApplicantIdNo(),
+						vrVehicleTypeCertificateModelImpl.getVehicleClass(),
+						vrVehicleTypeCertificateModelImpl.getExpiredStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_F_APP_VH_EXP, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_APP_VH_EXP,
+					args);
+			}
+
+			if ((vrVehicleTypeCertificateModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_APP_VH_EXP_CERTNO.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						vrVehicleTypeCertificateModelImpl.getOriginalApplicantIdNo(),
+						vrVehicleTypeCertificateModelImpl.getOriginalVehicleClass(),
+						vrVehicleTypeCertificateModelImpl.getOriginalExpiredStatus(),
+						vrVehicleTypeCertificateModelImpl.getOriginalCertificateRecordNo()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_F_APP_VH_EXP_CERTNO,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_APP_VH_EXP_CERTNO,
+					args);
+
+				args = new Object[] {
+						vrVehicleTypeCertificateModelImpl.getApplicantIdNo(),
+						vrVehicleTypeCertificateModelImpl.getVehicleClass(),
+						vrVehicleTypeCertificateModelImpl.getExpiredStatus(),
+						vrVehicleTypeCertificateModelImpl.getCertificateRecordNo()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_F_APP_VH_EXP_CERTNO,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_APP_VH_EXP_CERTNO,
 					args);
 			}
 		}

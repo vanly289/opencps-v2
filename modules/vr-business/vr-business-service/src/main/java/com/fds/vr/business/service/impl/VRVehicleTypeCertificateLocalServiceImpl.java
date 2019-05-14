@@ -3600,5 +3600,17 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 		}
 		return true;
 	}
-	
+
+	public List<VRVehicleTypeCertificate> finByF_APP_VH_EXP(String applicantIdNo, String vehicleClass,
+			String expiredStatus) {
+
+		return vrVehicleTypeCertificatePersistence.findByF_APP_VH_EXP(applicantIdNo, vehicleClass, expiredStatus);
+	}
+
+	public List<VRVehicleTypeCertificate> finByF_APP_VH_EXP_CERTNO(String applicantIdNo, String vehicleClass,
+			String expiredStatus, String certNo) {
+
+		return vrVehicleTypeCertificatePersistence.findByF_APP_VH_EXP_CERTNO(applicantIdNo, vehicleClass, expiredStatus, certNo);
+	}
+
 }
