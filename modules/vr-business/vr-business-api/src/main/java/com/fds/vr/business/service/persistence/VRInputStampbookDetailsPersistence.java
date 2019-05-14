@@ -1093,6 +1093,57 @@ public interface VRInputStampbookDetailsPersistence extends BasePersistence<VRIn
 	public int countByvehicleRecordId(long mtCore, long vehicleRecordId);
 
 	/**
+	* Returns the vr input stampbook details where bookId = &#63; and sequenceNo = &#63; or throws a {@link NoSuchVRInputStampbookDetailsException} if it could not be found.
+	*
+	* @param bookId the book ID
+	* @param sequenceNo the sequence no
+	* @return the matching vr input stampbook details
+	* @throws NoSuchVRInputStampbookDetailsException if a matching vr input stampbook details could not be found
+	*/
+	public VRInputStampbookDetails findByBookIdAndSequenceNo(long bookId,
+		long sequenceNo) throws NoSuchVRInputStampbookDetailsException;
+
+	/**
+	* Returns the vr input stampbook details where bookId = &#63; and sequenceNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param bookId the book ID
+	* @param sequenceNo the sequence no
+	* @return the matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
+	*/
+	public VRInputStampbookDetails fetchByBookIdAndSequenceNo(long bookId,
+		long sequenceNo);
+
+	/**
+	* Returns the vr input stampbook details where bookId = &#63; and sequenceNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param bookId the book ID
+	* @param sequenceNo the sequence no
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
+	*/
+	public VRInputStampbookDetails fetchByBookIdAndSequenceNo(long bookId,
+		long sequenceNo, boolean retrieveFromCache);
+
+	/**
+	* Removes the vr input stampbook details where bookId = &#63; and sequenceNo = &#63; from the database.
+	*
+	* @param bookId the book ID
+	* @param sequenceNo the sequence no
+	* @return the vr input stampbook details that was removed
+	*/
+	public VRInputStampbookDetails removeByBookIdAndSequenceNo(long bookId,
+		long sequenceNo) throws NoSuchVRInputStampbookDetailsException;
+
+	/**
+	* Returns the number of vr input stampbook detailses where bookId = &#63; and sequenceNo = &#63;.
+	*
+	* @param bookId the book ID
+	* @param sequenceNo the sequence no
+	* @return the number of matching vr input stampbook detailses
+	*/
+	public int countByBookIdAndSequenceNo(long bookId, long sequenceNo);
+
+	/**
 	* Caches the vr input stampbook details in the entity cache if it is enabled.
 	*
 	* @param vrInputStampbookDetails the vr input stampbook details

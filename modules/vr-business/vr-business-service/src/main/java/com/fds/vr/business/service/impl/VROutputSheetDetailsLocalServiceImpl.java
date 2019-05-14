@@ -184,11 +184,15 @@ public class VROutputSheetDetailsLocalServiceImpl
 						subTotalQuantities, unitPrice, totalAmount, totalInUse, totalNotUsed, totalLost, totalCancelled,
 						totalReturned, remark);
 				
-				if(isApproval == 1) { // duyet 
+				if(isApproval == 1) { 
+					// Khi can bo duyet thi them vao inventory dong thoi tru so luong tuong ung o stampbook
 					vrInventoryLocalService.updateInventory(0l, 1l, year, null,
 							null, bookId, vehicleClass, stampType, stampShortNo, serialStartNo,
-							serialEndNo, null, totalInUse, totalNotUsed, remark, corporationId, outputSheetType,
+							serialEndNo, subTotalInDocument, totalInUse, totalNotUsed, remark, corporationId, outputSheetType,
 							null);
+					
+					// update stampbook
+					vrInputStampbookLocalService.updateByOutputSheet(bookId, subTotalInDocument, serialStartNo, serialEndNo, corporationId, outputSheetType);
 				}
 			}
 			

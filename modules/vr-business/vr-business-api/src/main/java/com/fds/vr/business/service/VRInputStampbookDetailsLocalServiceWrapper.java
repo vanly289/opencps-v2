@@ -103,6 +103,15 @@ public class VRInputStampbookDetailsLocalServiceWrapper
 	}
 
 	@Override
+	public com.fds.vr.business.model.VRInputStampbookDetails updateByOutputSheet(
+		long bookId, long sequenceNo, long corporationId, long issuingStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInputStampbookDetailsLocalService.updateByOutputSheet(bookId,
+			sequenceNo, corporationId, issuingStatus);
+	}
+
+	@Override
 	public com.fds.vr.business.model.VRInputStampbookDetails updateInputStampbookDetails(
 		long id, long mtCore, java.lang.String stampSerialNo,
 		java.lang.Long sequenceNo, java.lang.Long dossierId,
@@ -183,6 +192,11 @@ public class VRInputStampbookDetailsLocalServiceWrapper
 	@Override
 	public int getVRInputStampbookDetailsesCount() {
 		return _vrInputStampbookDetailsLocalService.getVRInputStampbookDetailsesCount();
+	}
+
+	@Override
+	public java.lang.Long[] findStartNoEndNoBySequence(long inputStampbookId) {
+		return _vrInputStampbookDetailsLocalService.findStartNoEndNoBySequence(inputStampbookId);
 	}
 
 	/**

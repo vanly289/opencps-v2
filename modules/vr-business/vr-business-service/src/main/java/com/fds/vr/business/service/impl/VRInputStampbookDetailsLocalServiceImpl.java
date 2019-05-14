@@ -162,6 +162,17 @@ public class VRInputStampbookDetailsLocalServiceImpl
 		
 	}
 	
+	public VRInputStampbookDetails updateByOutputSheet(long bookId, long sequenceNo, long corporationId, long issuingStatus) throws PortalException, SystemException {
+		VRInputStampbookDetails inputStampbookDetails = vrInputStampbookDetailsPersistence.findByBookIdAndSequenceNo(bookId, sequenceNo);
+		
+		inputStampbookDetails.setModifyDate(new Date());
+		inputStampbookDetails.setCorporationId(corporationId);
+		inputStampbookDetails.setIssuingStatus(issuingStatus);
+		inputStampbookDetails.setIssuingDate(new Date());
+		
+		return vrInputStampbookDetailsLocalService.updateVRInputStampbookDetails(inputStampbookDetails);
+	}
+	
 	public List<VRInputStampbookDetails> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {
 		try {
 			return vrInputStampbookDetailsPersistence.findByInputSheetId(mtCore, inputSheetId);

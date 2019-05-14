@@ -115,6 +115,10 @@ public interface VRInputStampbookDetailsLocalService extends BaseLocalService,
 	public VRInputStampbookDetails getVRInputStampbookDetails(long id)
 		throws PortalException;
 
+	public VRInputStampbookDetails updateByOutputSheet(long bookId,
+		long sequenceNo, long corporationId, long issuingStatus)
+		throws PortalException, SystemException;
+
 	public VRInputStampbookDetails updateInputStampbookDetails(long id,
 		long mtCore, java.lang.String stampSerialNo, java.lang.Long sequenceNo,
 		java.lang.Long dossierId, java.lang.Long certificateId,
@@ -169,6 +173,8 @@ public interface VRInputStampbookDetailsLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVRInputStampbookDetailsesCount();
+
+	public java.lang.Long[] findStartNoEndNoBySequence(long inputStampbookId);
 
 	/**
 	* Returns the OSGi service identifier.

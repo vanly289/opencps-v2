@@ -1575,6 +1575,11 @@
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="vehicleRecordId"></finder-column>
 		</finder>
+		<finder return-type="VRInputStampbookDetails" name="BookIdAndSequenceNo">
+			<finder-column name="bookId"></finder-column>			
+			<finder-column name="sequenceNo"></finder-column>
+		</finder>
+		
 	</entity>
 
 	<entity name="VROutputSheet" local-service="true" table="vr_outputsheet"

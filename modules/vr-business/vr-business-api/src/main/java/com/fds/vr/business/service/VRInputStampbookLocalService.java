@@ -114,6 +114,11 @@ public interface VRInputStampbookLocalService extends BaseLocalService,
 	public VRInputStampbook getVRInputStampbook(long id)
 		throws PortalException;
 
+	public VRInputStampbook updateByOutputSheet(long bookId,
+		long subTotalInDocument, long serialStartNo, long serialEndNo,
+		long corporationId, long outputSheetType)
+		throws PortalException, SystemException;
+
 	public VRInputStampbook updateInputStambook(long id, long mtCore,
 		long inputSheetId, java.lang.Long corporationId,
 		java.lang.Long inputSheetType, java.lang.String vehicleClass,
@@ -218,6 +223,9 @@ public interface VRInputStampbookLocalService extends BaseLocalService,
 
 	public List<VRInputStampbook> findByInputSheetIdAndBookIdAndStampType(
 		long mtCore, long inputSheetId, long bookId, java.lang.String stampType)
+		throws PortalException, SystemException;
+
+	public List<VRInputStampbook> findBySum3GreaterThan()
 		throws PortalException, SystemException;
 
 	/**

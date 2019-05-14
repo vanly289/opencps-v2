@@ -132,7 +132,7 @@ public class VRInputStampbookLocalServiceImpl
 			
 			// update inventory
 			vrInventoryLocalService.updateInventory(0l, 1l, year, null, null,
-					bookId, vehicleClass, stampType, stampShortNo, serialStartNo, serialEndNo, null,
+					bookId, vehicleClass, stampType, stampShortNo, serialStartNo, serialEndNo, sum3,
 					totalInUse, totalNotUsed, remark, corporationId, inputSheetType, 0l);
 			
 			for(long sequenNo = serialStartNo ; sequenNo <= serialEndNo ; sequenNo ++) {
@@ -192,6 +192,23 @@ public class VRInputStampbookLocalServiceImpl
 				vrInputStampbookPersistence.remove(inputStambook.getPrimaryKey());
 			}
 		}
+	}
+	
+	public VRInputStampbook updateByOutputSheet(long bookId, long subTotalInDocument, long serialStartNo, long serialEndNo, long corporationId, long outputSheetType) throws PortalException, SystemException {
+		VRInputStampbook inputStambook = vrInputStampbookPersistence.findByPrimaryKey(bookId);
+		
+		long newSum3 = inputStambook.getSum3() - subTotalInDocument;
+		
+		inputStambook.setSum3(newSum3);
+		inputStambook.setModifyDate(new Date());
+		
+		for(long sequenNo = serialStartNo ; sequenNo <= serialEndNo ; sequenNo ++) {
+			long issuingStatus = outputSheetType == 2 ? 1 : 2;	// 1 chua cap phat - dang o doi, 2 cap phat cho cssx
+			
+			vrInputStampbookDetailsLocalService.updateByOutputSheet(bookId, sequenNo, corporationId, issuingStatus);
+		}
+		
+		return vrInputStampbookPersistence.update(inputStambook);
 	}
 	
 	public List<VRInputStampbook> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {

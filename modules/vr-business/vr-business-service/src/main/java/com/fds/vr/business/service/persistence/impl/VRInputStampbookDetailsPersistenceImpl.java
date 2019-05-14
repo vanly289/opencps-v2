@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -4092,6 +4093,246 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_VEHICLERECORDID_MTCORE_2 = "vrInputStampbookDetails.mtCore = ? AND ";
 	private static final String _FINDER_COLUMN_VEHICLERECORDID_VEHICLERECORDID_2 =
 		"vrInputStampbookDetails.vehicleRecordId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO = new FinderPath(VRInputStampbookDetailsModelImpl.ENTITY_CACHE_ENABLED,
+			VRInputStampbookDetailsModelImpl.FINDER_CACHE_ENABLED,
+			VRInputStampbookDetailsImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByBookIdAndSequenceNo",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			VRInputStampbookDetailsModelImpl.BOOKID_COLUMN_BITMASK |
+			VRInputStampbookDetailsModelImpl.SEQUENCENO_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_BOOKIDANDSEQUENCENO = new FinderPath(VRInputStampbookDetailsModelImpl.ENTITY_CACHE_ENABLED,
+			VRInputStampbookDetailsModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByBookIdAndSequenceNo",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns the vr input stampbook details where bookId = &#63; and sequenceNo = &#63; or throws a {@link NoSuchVRInputStampbookDetailsException} if it could not be found.
+	 *
+	 * @param bookId the book ID
+	 * @param sequenceNo the sequence no
+	 * @return the matching vr input stampbook details
+	 * @throws NoSuchVRInputStampbookDetailsException if a matching vr input stampbook details could not be found
+	 */
+	@Override
+	public VRInputStampbookDetails findByBookIdAndSequenceNo(long bookId,
+		long sequenceNo) throws NoSuchVRInputStampbookDetailsException {
+		VRInputStampbookDetails vrInputStampbookDetails = fetchByBookIdAndSequenceNo(bookId,
+				sequenceNo);
+
+		if (vrInputStampbookDetails == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("bookId=");
+			msg.append(bookId);
+
+			msg.append(", sequenceNo=");
+			msg.append(sequenceNo);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchVRInputStampbookDetailsException(msg.toString());
+		}
+
+		return vrInputStampbookDetails;
+	}
+
+	/**
+	 * Returns the vr input stampbook details where bookId = &#63; and sequenceNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param bookId the book ID
+	 * @param sequenceNo the sequence no
+	 * @return the matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
+	 */
+	@Override
+	public VRInputStampbookDetails fetchByBookIdAndSequenceNo(long bookId,
+		long sequenceNo) {
+		return fetchByBookIdAndSequenceNo(bookId, sequenceNo, true);
+	}
+
+	/**
+	 * Returns the vr input stampbook details where bookId = &#63; and sequenceNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param bookId the book ID
+	 * @param sequenceNo the sequence no
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
+	 */
+	@Override
+	public VRInputStampbookDetails fetchByBookIdAndSequenceNo(long bookId,
+		long sequenceNo, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { bookId, sequenceNo };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO,
+					finderArgs, this);
+		}
+
+		if (result instanceof VRInputStampbookDetails) {
+			VRInputStampbookDetails vrInputStampbookDetails = (VRInputStampbookDetails)result;
+
+			if ((bookId != vrInputStampbookDetails.getBookId()) ||
+					(sequenceNo != vrInputStampbookDetails.getSequenceNo())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_VRINPUTSTAMPBOOKDETAILS_WHERE);
+
+			query.append(_FINDER_COLUMN_BOOKIDANDSEQUENCENO_BOOKID_2);
+
+			query.append(_FINDER_COLUMN_BOOKIDANDSEQUENCENO_SEQUENCENO_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(bookId);
+
+				qPos.add(sequenceNo);
+
+				List<VRInputStampbookDetails> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"VRInputStampbookDetailsPersistenceImpl.fetchByBookIdAndSequenceNo(long, long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					VRInputStampbookDetails vrInputStampbookDetails = list.get(0);
+
+					result = vrInputStampbookDetails;
+
+					cacheResult(vrInputStampbookDetails);
+
+					if ((vrInputStampbookDetails.getBookId() != bookId) ||
+							(vrInputStampbookDetails.getSequenceNo() != sequenceNo)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO,
+							finderArgs, vrInputStampbookDetails);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (VRInputStampbookDetails)result;
+		}
+	}
+
+	/**
+	 * Removes the vr input stampbook details where bookId = &#63; and sequenceNo = &#63; from the database.
+	 *
+	 * @param bookId the book ID
+	 * @param sequenceNo the sequence no
+	 * @return the vr input stampbook details that was removed
+	 */
+	@Override
+	public VRInputStampbookDetails removeByBookIdAndSequenceNo(long bookId,
+		long sequenceNo) throws NoSuchVRInputStampbookDetailsException {
+		VRInputStampbookDetails vrInputStampbookDetails = findByBookIdAndSequenceNo(bookId,
+				sequenceNo);
+
+		return remove(vrInputStampbookDetails);
+	}
+
+	/**
+	 * Returns the number of vr input stampbook detailses where bookId = &#63; and sequenceNo = &#63;.
+	 *
+	 * @param bookId the book ID
+	 * @param sequenceNo the sequence no
+	 * @return the number of matching vr input stampbook detailses
+	 */
+	@Override
+	public int countByBookIdAndSequenceNo(long bookId, long sequenceNo) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_BOOKIDANDSEQUENCENO;
+
+		Object[] finderArgs = new Object[] { bookId, sequenceNo };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_VRINPUTSTAMPBOOKDETAILS_WHERE);
+
+			query.append(_FINDER_COLUMN_BOOKIDANDSEQUENCENO_BOOKID_2);
+
+			query.append(_FINDER_COLUMN_BOOKIDANDSEQUENCENO_SEQUENCENO_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(bookId);
+
+				qPos.add(sequenceNo);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_BOOKIDANDSEQUENCENO_BOOKID_2 = "vrInputStampbookDetails.bookId = ? AND ";
+	private static final String _FINDER_COLUMN_BOOKIDANDSEQUENCENO_SEQUENCENO_2 = "vrInputStampbookDetails.sequenceNo = ?";
 
 	public VRInputStampbookDetailsPersistenceImpl() {
 		setModelClass(VRInputStampbookDetails.class);
@@ -4107,6 +4348,12 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 		entityCache.putResult(VRInputStampbookDetailsModelImpl.ENTITY_CACHE_ENABLED,
 			VRInputStampbookDetailsImpl.class,
 			vrInputStampbookDetails.getPrimaryKey(), vrInputStampbookDetails);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO,
+			new Object[] {
+				vrInputStampbookDetails.getBookId(),
+				vrInputStampbookDetails.getSequenceNo()
+			}, vrInputStampbookDetails);
 
 		vrInputStampbookDetails.resetOriginalValues();
 	}
@@ -4163,6 +4410,9 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((VRInputStampbookDetailsModelImpl)vrInputStampbookDetails,
+			true);
 	}
 
 	@Override
@@ -4175,6 +4425,51 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 			entityCache.removeResult(VRInputStampbookDetailsModelImpl.ENTITY_CACHE_ENABLED,
 				VRInputStampbookDetailsImpl.class,
 				vrInputStampbookDetails.getPrimaryKey());
+
+			clearUniqueFindersCache((VRInputStampbookDetailsModelImpl)vrInputStampbookDetails,
+				true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		VRInputStampbookDetailsModelImpl vrInputStampbookDetailsModelImpl) {
+		Object[] args = new Object[] {
+				vrInputStampbookDetailsModelImpl.getBookId(),
+				vrInputStampbookDetailsModelImpl.getSequenceNo()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_BOOKIDANDSEQUENCENO, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO, args,
+			vrInputStampbookDetailsModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		VRInputStampbookDetailsModelImpl vrInputStampbookDetailsModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					vrInputStampbookDetailsModelImpl.getBookId(),
+					vrInputStampbookDetailsModelImpl.getSequenceNo()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_BOOKIDANDSEQUENCENO,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO,
+				args);
+		}
+
+		if ((vrInputStampbookDetailsModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					vrInputStampbookDetailsModelImpl.getOriginalBookId(),
+					vrInputStampbookDetailsModelImpl.getOriginalSequenceNo()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_BOOKIDANDSEQUENCENO,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO,
+				args);
 		}
 	}
 
@@ -4481,6 +4776,9 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 			VRInputStampbookDetailsImpl.class,
 			vrInputStampbookDetails.getPrimaryKey(), vrInputStampbookDetails,
 			false);
+
+		clearUniqueFindersCache(vrInputStampbookDetailsModelImpl, false);
+		cacheUniqueFindersCache(vrInputStampbookDetailsModelImpl);
 
 		vrInputStampbookDetails.resetOriginalValues();
 

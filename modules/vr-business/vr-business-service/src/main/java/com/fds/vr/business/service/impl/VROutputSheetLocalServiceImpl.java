@@ -144,7 +144,7 @@ public class VROutputSheetLocalServiceImpl
 			outputSheet.setRemark(remark);
 		
 		if(isApproval == 1) {
-			Long corporationId = outputSheetType == 2 ? purchaserCorporationId : purchaserId;
+			Long corporationId = (outputSheetType != null && outputSheetType == 2) ? purchaserCorporationId : purchaserId;
 			vrOutputSheetDetailsLocalService.updateJSONArray(id, corporationId, outputSheetType, details, isApproval);
 		}
 		

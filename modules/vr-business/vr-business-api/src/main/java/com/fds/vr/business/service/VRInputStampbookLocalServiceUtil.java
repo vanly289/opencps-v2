@@ -104,6 +104,16 @@ public class VRInputStampbookLocalServiceUtil {
 		return getService().getVRInputStampbook(id);
 	}
 
+	public static com.fds.vr.business.model.VRInputStampbook updateByOutputSheet(
+		long bookId, long subTotalInDocument, long serialStartNo,
+		long serialEndNo, long corporationId, long outputSheetType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateByOutputSheet(bookId, subTotalInDocument,
+			serialStartNo, serialEndNo, corporationId, outputSheetType);
+	}
+
 	public static com.fds.vr.business.model.VRInputStampbook updateInputStambook(
 		long id, long mtCore, long inputSheetId, java.lang.Long corporationId,
 		java.lang.Long inputSheetType, java.lang.String vehicleClass,
@@ -252,6 +262,12 @@ public class VRInputStampbookLocalServiceUtil {
 		return getService()
 				   .findByInputSheetIdAndBookIdAndStampType(mtCore,
 			inputSheetId, bookId, stampType);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRInputStampbook> findBySum3GreaterThan()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findBySum3GreaterThan();
 	}
 
 	/**
