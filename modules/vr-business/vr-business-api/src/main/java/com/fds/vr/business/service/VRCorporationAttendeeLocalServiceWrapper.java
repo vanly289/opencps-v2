@@ -310,6 +310,14 @@ public class VRCorporationAttendeeLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRCorporationAttendee> getVRCorporationByUserId(
+		int mtCore, long userId, java.lang.String fromDateConvert,
+		java.lang.String toDateConvert) {
+		return _vrCorporationAttendeeLocalService.getVRCorporationByUserId(mtCore,
+			userId, fromDateConvert, toDateConvert);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
