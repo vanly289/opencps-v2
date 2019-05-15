@@ -246,6 +246,11 @@ public interface VRCorporationAttendeeLocalService extends BaseLocalService,
 	public List<VRCorporationAttendee> getVRCorporationAttendees(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<VRCorporationAttendee> getVRCorporationByUserId(int mtCore,
+		long userId, java.lang.String fromDateConvert,
+		java.lang.String toDateConvert);
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

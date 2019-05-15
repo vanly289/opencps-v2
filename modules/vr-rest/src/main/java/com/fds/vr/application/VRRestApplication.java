@@ -7,8 +7,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -34,11 +36,15 @@ import org.osgi.service.component.annotations.Reference;
 import com.fds.vr.business.action.VRActions;
 import com.fds.vr.business.action.impl.DictItemUtil;
 import com.fds.vr.business.action.impl.VRActionsImpl;
+import com.fds.vr.business.model.VRCorporationAttendee;
 import com.fds.vr.business.model.VRReport;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
 import com.fds.vr.business.service.VRReportLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
+import com.fds.vr.model.VRCorporationAttendeeResultModel;
 import com.fds.vr.model.VRVehicleTypeCertificateResultModel;
+import com.fds.vr.util.DateTimeUtils;
+import com.fds.vr.util.VRCorporationAttendeeUtils;
 import com.fds.vr.util.VRVehicleCertificateUtils;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
@@ -50,7 +56,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -592,6 +601,35 @@ public class VRRestApplication extends Application {
 
 	}
 
+	@GET
+	@Path("users/{id}/personalEvents")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCorporationByUserId(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @PathParam("id") long id, @QueryParam("fromDate") String fromDate,
+			@QueryParam("toDate") String toDate, @QueryParam("start") String start, @QueryParam("start") String end) {
+
+		try {
+
+			VRActions actions = new VRActionsImpl();
+			VRCorporationAttendeeResultModel result = new VRCorporationAttendeeResultModel();
+
+			List<VRCorporationAttendee> corporationList = actions.getVRCorporationByUserId(1, id, fromDate, toDate);
+
+			if (corporationList != null && corporationList.size() > 0) {
+				result.setTotal(corporationList.size());
+				result.getData().addAll(VRCorporationAttendeeUtils.mappingToResultCorporation(corporationList));
+			} else {
+				result.setTotal(0);
+			}
+			return Response.status(200).entity(result).build();
+
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity("error").build();
+		}
+
+	}
 
 	@GET
 	@Produces("text/plain")

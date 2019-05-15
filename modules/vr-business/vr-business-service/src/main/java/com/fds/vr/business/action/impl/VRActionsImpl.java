@@ -17,9 +17,11 @@ import org.opencps.datamgt.service.DictItemLocalServiceUtil;
 import com.fds.vr.business.action.VRActions;
 import com.fds.vr.business.constant.VRKeys;
 import com.fds.vr.business.model.VRConfigTechSpec;
+import com.fds.vr.business.model.VRCorporationAttendee;
 import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.model.VRLimitConfigTechSpec;
 import com.fds.vr.business.service.VRConfigTechSpecLocalServiceUtil;
+import com.fds.vr.business.service.VRCorporationAttendeeLocalServiceUtil;
 import com.fds.vr.business.service.VRDossierFileLocalServiceUtil;
 import com.fds.vr.business.service.VRLimitConfigTechSpecLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -841,6 +843,12 @@ public class VRActionsImpl implements VRActions {
 		}
 
 		return dictCollectionId;
+	}
+
+	@Override
+	public List<VRCorporationAttendee> getVRCorporationByUserId(int mtCore, long userId, String fromDateConvert, String toDateConvert) {
+
+		return VRCorporationAttendeeLocalServiceUtil.getVRCorporationByUserId(mtCore, userId, fromDateConvert, toDateConvert);
 	}
 
 	Log _log = LogFactoryUtil.getLog(VRActionsImpl.class);

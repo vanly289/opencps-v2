@@ -33,9 +33,16 @@ import org.opencps.usermgt.action.UserInterface;
 import org.opencps.usermgt.action.impl.JobposActions;
 import org.opencps.usermgt.action.impl.UserActions;
 import org.opencps.usermgt.model.Employee;
+import org.opencps.usermgt.model.EmployeeJobPos;
+import org.opencps.usermgt.model.JobPos;
+import org.opencps.usermgt.model.WorkingUnit;
+import org.opencps.usermgt.service.EmployeeJobPosLocalServiceUtil;
 import org.opencps.usermgt.service.EmployeeLocalServiceUtil;
+import org.opencps.usermgt.service.JobPosLocalServiceUtil;
+import org.opencps.usermgt.service.WorkingUnitLocalServiceUtil;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -569,7 +576,37 @@ public class UserManagementImpl implements UserManagement {
 	@Override
 	public Response getUserWorks(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, long id) {
-		// TODO Auto-generated method stub
+
+		_log.info("start1111");
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		try {
+			Employee employee = EmployeeLocalServiceUtil.fetchByF_mappingUserId(groupId, id);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			if (employee != null) {
+
+				long mainJobPosId = employee.getMainJobPostId();
+				long employeeId = employee.getEmployeeId();
+
+				EmployeeJobPos employeeJobPos = EmployeeJobPosLocalServiceUtil.getEmployeeJobPos(mainJobPosId);
+				JobPos jobPos = JobPosLocalServiceUtil.getJobPos(employeeJobPos.getJobPostId());
+				WorkingUnit workingUnit = WorkingUnitLocalServiceUtil.getWorkingUnit(employeeJobPos.getWorkingUnitId());
+
+				jsonObject.put("employeeId", employeeId);
+				jsonObject.put("emplyeeName", employee.getFullName());
+				jsonObject.put("mainJobPosId", employeeJobPos.getJobPostId());
+				jsonObject.put("mainJobPosName", jobPos.getTitle());
+				jsonObject.put("workingUnitId", workingUnit.getWorkingUnitId());
+				jsonObject.put("workingUnitName", workingUnit.getName());
+				jsonObject.put("userId", employee.getMappingUserId());
+				jsonObject.put("email", employee.getEmail());
+
+				_log.info("jsonObject: "+jsonObject);
+				return Response.status(200).entity(jsonObject.toJSONString()).build();
+			}
+		} catch (Exception e) {
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+
 		return null;
 	}
 
