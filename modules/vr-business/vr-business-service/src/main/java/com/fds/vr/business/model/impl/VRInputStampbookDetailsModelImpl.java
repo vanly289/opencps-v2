@@ -160,8 +160,9 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	public static final long DOSSIERID_COLUMN_BITMASK = 16L;
 	public static final long INPUTSHEETID_COLUMN_BITMASK = 32L;
 	public static final long MTCORE_COLUMN_BITMASK = 64L;
-	public static final long VEHICLERECORDID_COLUMN_BITMASK = 128L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 256L;
+	public static final long SEQUENCENO_COLUMN_BITMASK = 128L;
+	public static final long VEHICLERECORDID_COLUMN_BITMASK = 256L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 512L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRInputStampbookDetails"));
 
@@ -505,7 +506,19 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 
 	@Override
 	public void setSequenceNo(long sequenceNo) {
+		_columnBitmask |= SEQUENCENO_COLUMN_BITMASK;
+
+		if (!_setOriginalSequenceNo) {
+			_setOriginalSequenceNo = true;
+
+			_originalSequenceNo = _sequenceNo;
+		}
+
 		_sequenceNo = sequenceNo;
+	}
+
+	public long getOriginalSequenceNo() {
+		return _originalSequenceNo;
 	}
 
 	@Override
@@ -1069,6 +1082,10 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 
 		vrInputStampbookDetailsModelImpl._setOriginalMtCore = false;
 
+		vrInputStampbookDetailsModelImpl._originalSequenceNo = vrInputStampbookDetailsModelImpl._sequenceNo;
+
+		vrInputStampbookDetailsModelImpl._setOriginalSequenceNo = false;
+
 		vrInputStampbookDetailsModelImpl._originalDossierId = vrInputStampbookDetailsModelImpl._dossierId;
 
 		vrInputStampbookDetailsModelImpl._setOriginalDossierId = false;
@@ -1533,6 +1550,8 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	private boolean _setOriginalMtCore;
 	private String _stampSerialNo;
 	private long _sequenceNo;
+	private long _originalSequenceNo;
+	private boolean _setOriginalSequenceNo;
 	private long _dossierId;
 	private long _originalDossierId;
 	private boolean _setOriginalDossierId;

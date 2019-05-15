@@ -245,6 +245,9 @@ public interface VRInputStampbookDetailsLocalService extends BaseLocalService,
 	public List<VRInputStampbookDetails> findByvehicleRecordId(long mtCore,
 		long vehicleRecordId) throws PortalException, SystemException;
 
+	public List findStampbookByVehicleClass(java.lang.String vehicleClass,
+		long corporationId);
+
 	/**
 	* Returns a range of all the vr input stampbook detailses.
 	*

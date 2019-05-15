@@ -14,20 +14,23 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.exception.NoSuchVRIssueException;
+import com.fds.vr.business.model.VRIssue;
+import com.fds.vr.business.service.base.VRIssueLocalServiceBaseImpl;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.model.VRIssue;
-import com.fds.vr.business.service.base.VRIssueLocalServiceBaseImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr issue local service.
@@ -59,6 +62,14 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		}
 		return new ArrayList<VRIssue>();
 		
+	}
+
+	public VRIssue findByMT_DID(long mtCore, long dossierId) {
+		try {
+			return vrIssuePersistence.findByF_MT_DID(mtCore, dossierId);
+		} catch (NoSuchVRIssueException e) {
+			return null;
+		}
 	}
 
 
@@ -142,6 +153,82 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		return new ArrayList<VRIssue>();
 		
 	}
-	
+
+	public VRIssue updateVRIssue(Map<String, String> mapValue, int mtCore, boolean flagExits) throws NoSuchVRIssueException {
+
+		VRIssue object = null;
+		if (!flagExits) {
+			long idVRIssue = CounterLocalServiceUtil.increment(VRIssue.class.getName());
+			object = vrIssuePersistence.create(idVRIssue);
+		} else {
+			object = vrIssuePersistence.fetchByF_MT_DID(mtCore, Long.valueOf(mapValue.get("dossierId")));
+		}
+		//
+		// create objVRIssue
+		object.setModifyDate(new Date());
+		object.setSyncDate(new Date());
+		
+		object.setMtCore(mtCore);
+		object.setDossierId(GetterUtil.getLong(mapValue.get("dossierId")));
+		object.setStampIssueNo(mapValue.get("stampIssueNo"));
+		object.setAppliedDate(ConvertFormatDate.parseStringToDate(mapValue.get("appliedDate"), ConvertFormatDate.PATTERN_DATE)); // phai lay tu dossierstatistics
+		object.setApprovedDate(new Date()); // phai lay tu dossierstatistics
+		object.setVehicleClass(mapValue.get("issueVehicleClass"));
+		object.setApplicantProfileId(GetterUtil.getLong(mapValue.get("applicantProfileId")));
+		object.setApplicantName(mapValue.get("applicantName"));
+		object.setApplicantAddress(mapValue.get("applicantAddress"));
+		object.setApplicantPhone(mapValue.get("applicantPhone"));
+		object.setApplicantEmail(mapValue.get("applicantEmail"));
+		object.setApplicantFax(mapValue.get("applicantFax"));
+		object.setApplicantRepresentative(mapValue.get("applicantRepresentative"));
+		object.setApplicantRepresentativeTitle(mapValue.get("applicantRepresentativeTitle"));
+		object.setApplicantmaker(mapValue.get("applicantmaker"));
+		object.setApplicantchecker(mapValue.get("applicantchecker"));
+		object.setApplicantContactName(mapValue.get("applicantContactName"));
+		object.setApplicantContactPhone(mapValue.get("applicantContactPhone"));
+		object.setApplicantContactEmail(mapValue.get("applicantContactEmail"));
+		object.setProductionPlantId(GetterUtil.getLong(mapValue.get("productionPlantId")));
+		object.setProductionPlantCode(mapValue.get("productionPlantCode"));
+		object.setProductionPlantName(mapValue.get("productionPlantName"));
+		object.setProductionPlantAddress(mapValue.get("productionPlantAddress"));
+		object.setRemarks(mapValue.get("remarks"));
+		
+		object.setMethodOfIssue(mapValue.get("methodOfIssue"));
+		object.setIssueType(mapValue.get("issueType"));
+		object.setTotalInDocument(GetterUtil.getLong(mapValue.get("totalInDocument")));
+		object.setAverageSTBQuantity(GetterUtil.getInteger(mapValue.get("averageSTBQuantity")));
+		object.setMaxMonthQuantity(GetterUtil.getInteger(mapValue.get("maxMonthQuantity")));
+		object.setAverageSTMQuantity(GetterUtil.getInteger(mapValue.get("averageSTMQuantity")));
+		object.setAccumulatedMonthQuantity(GetterUtil.getInteger(mapValue.get("accumulatedMonthQuantity")));
+		
+		object.setTotalInUse(GetterUtil.getInteger(mapValue.get("totalInUse")));
+		object.setTotalCancelled(GetterUtil.getInteger(mapValue.get("totalCancelled")));
+		object.setTotalLost(GetterUtil.getInteger(mapValue.get("totalLost")));
+		object.setTotalNotUsed(GetterUtil.getInteger(mapValue.get("totalNotUsed")));
+		object.setTotalReturned(GetterUtil.getInteger(mapValue.get("totalReturned")));
+		object.setFlow(mapValue.get("flow"));
+		object.setExaminationRequired(mapValue.get("examinationRequired"));
+		object.setExaminationPeriod(mapValue.get("examinationPeriod"));
+		object.setExaminationLastTime(ConvertFormatDate.parseStringToDate(mapValue.get("examinationLastTime")));
+		object.setCopresult(mapValue.get("copresult"));
+		object.setCopreportno(mapValue.get("copreportno"));
+		object.setCopreportdate(ConvertFormatDate.parseStringToDate(mapValue.get("copreportdate")));
+		object.setPostreview(mapValue.get("postreview"));
+		object.setPostreviewrecordno(mapValue.get("postreviewrecordno"));
+		object.setPostreviewrecorddate(ConvertFormatDate.parseStringToDate(mapValue.get("postreviewrecorddate")));
+		object.setCorporationId(mapValue.get("corporationId"));
+		//object.setInspectorId(inspectorId"));
+		object.setInspectorcode(mapValue.get("inspectorcode"));
+		object.setInspectorname(mapValue.get("inspectorname"));
+		object.setLeadername(mapValue.get("leadername"));
+		object.setIssueCorporationId(GetterUtil.getInteger(mapValue.get("issueCorporationId"))); // Don vi cap phat
+		//object.setIssueInspectorId(issueInspectorId"));
+		object.setVerifyCorporationId(mapValue.get("verifyCorporationId"));
+		//object.setVerifyInspectorId(verifyInspectorId"));
+		object.setDigitalissuestatus(GetterUtil.getInteger(mapValue.get("digitalissuestatus")));
+
+		return vrIssuePersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRIssueLocalServiceImpl.class);
 }

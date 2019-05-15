@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for VRVehicleRecord. Methods of this
@@ -122,6 +123,9 @@ public interface VRVehicleRecordLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public VRVehicleRecord updateVRVehicleRecord(
 		VRVehicleRecord vrVehicleRecord);
+
+	public VRVehicleRecord updateVRVehicleRecord(
+		Map<java.lang.String, java.lang.String> mapValue, int mtCore);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -248,4 +252,7 @@ public interface VRVehicleRecordLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteBydossierId(long mtCore, long dossierId)
+		throws PortalException, SystemException;
 }

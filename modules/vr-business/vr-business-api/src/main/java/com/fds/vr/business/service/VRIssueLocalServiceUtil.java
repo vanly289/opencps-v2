@@ -90,6 +90,11 @@ public class VRIssueLocalServiceUtil {
 		return getService().fetchVRIssue(id);
 	}
 
+	public static com.fds.vr.business.model.VRIssue findByMT_DID(long mtCore,
+		long dossierId) {
+		return getService().findByMT_DID(mtCore, dossierId);
+	}
+
 	/**
 	* Returns the vr issue with the primary key.
 	*
@@ -111,6 +116,13 @@ public class VRIssueLocalServiceUtil {
 	public static com.fds.vr.business.model.VRIssue updateVRIssue(
 		com.fds.vr.business.model.VRIssue vrIssue) {
 		return getService().updateVRIssue(vrIssue);
+	}
+
+	public static com.fds.vr.business.model.VRIssue updateVRIssue(
+		java.util.Map<java.lang.String, java.lang.String> mapValue, int mtCore,
+		boolean flagExits)
+		throws com.fds.vr.business.exception.NoSuchVRIssueException {
+		return getService().updateVRIssue(mapValue, mtCore, flagExits);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -208,6 +220,13 @@ public class VRIssueLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRIssue> findByIC_IS(
+		long issueCorporationId, int digitalIssueStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByIC_IS(issueCorporationId, digitalIssueStatus);
+	}
+
 	public static java.util.List<com.fds.vr.business.model.VRIssue> findByapplicantProfileId(
 		long mtCore, long dossierId, long applicantProfileId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -239,7 +258,7 @@ public class VRIssueLocalServiceUtil {
 	}
 
 	public static java.util.List<com.fds.vr.business.model.VRIssue> findByissueCorporationId(
-		long mtCore, java.lang.String issueCorporationId)
+		long mtCore, long issueCorporationId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().findByissueCorporationId(mtCore, issueCorporationId);

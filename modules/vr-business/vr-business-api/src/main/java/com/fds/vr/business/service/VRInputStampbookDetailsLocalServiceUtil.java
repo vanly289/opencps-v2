@@ -305,6 +305,12 @@ public class VRInputStampbookDetailsLocalServiceUtil {
 		return getService().findByvehicleRecordId(mtCore, vehicleRecordId);
 	}
 
+	public static java.util.List findStampbookByVehicleClass(
+		java.lang.String vehicleClass, long corporationId) {
+		return getService()
+				   .findStampbookByVehicleClass(vehicleClass, corporationId);
+	}
+
 	/**
 	* Returns a range of all the vr input stampbook detailses.
 	*

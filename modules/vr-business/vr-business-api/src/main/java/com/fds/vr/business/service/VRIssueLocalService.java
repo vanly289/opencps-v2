@@ -16,6 +16,7 @@ package com.fds.vr.business.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.fds.vr.business.exception.NoSuchVRIssueException;
 import com.fds.vr.business.model.VRIssue;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for VRIssue. Methods of this
@@ -100,6 +102,8 @@ public interface VRIssueLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRIssue fetchVRIssue(long id);
 
+	public VRIssue findByMT_DID(long mtCore, long dossierId);
+
 	/**
 	* Returns the vr issue with the primary key.
 	*
@@ -118,6 +122,10 @@ public interface VRIssueLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VRIssue updateVRIssue(VRIssue vrIssue);
+
+	public VRIssue updateVRIssue(
+		Map<java.lang.String, java.lang.String> mapValue, int mtCore,
+		boolean flagExits) throws NoSuchVRIssueException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -193,6 +201,9 @@ public interface VRIssueLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRIssue> findByIC_IS(long issueCorporationId,
+		int digitalIssueStatus) throws PortalException, SystemException;
+
 	public List<VRIssue> findByapplicantProfileId(long mtCore, long dossierId,
 		long applicantProfileId) throws PortalException, SystemException;
 
@@ -206,8 +217,7 @@ public interface VRIssueLocalService extends BaseLocalService,
 		throws PortalException, SystemException;
 
 	public List<VRIssue> findByissueCorporationId(long mtCore,
-		java.lang.String issueCorporationId)
-		throws PortalException, SystemException;
+		long issueCorporationId) throws PortalException, SystemException;
 
 	public List<VRIssue> findByproductionPlantId(long mtCore,
 		long productionPlantId) throws PortalException, SystemException;

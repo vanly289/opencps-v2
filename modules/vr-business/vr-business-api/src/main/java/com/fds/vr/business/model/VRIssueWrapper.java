@@ -281,7 +281,7 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 			setTotalInDocument(totalInDocument);
 		}
 
-		String issueCorporationId = (String)attributes.get("issueCorporationId");
+		Long issueCorporationId = (Long)attributes.get("issueCorporationId");
 
 		if (issueCorporationId != null) {
 			setIssueCorporationId(issueCorporationId);
@@ -294,7 +294,8 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 			setVerifyCorporationId(verifyCorporationId);
 		}
 
-		String digitalissuestatus = (String)attributes.get("digitalissuestatus");
+		Integer digitalissuestatus = (Integer)attributes.get(
+				"digitalissuestatus");
 
 		if (digitalissuestatus != null) {
 			setDigitalissuestatus(digitalissuestatus);
@@ -562,6 +563,16 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	}
 
 	/**
+	* Returns the digitalissuestatus of this vr issue.
+	*
+	* @return the digitalissuestatus of this vr issue
+	*/
+	@Override
+	public int getDigitalissuestatus() {
+		return _vrIssue.getDigitalissuestatus();
+	}
+
+	/**
 	* Returns the max month quantity of this vr issue.
 	*
 	* @return the max month quantity of this vr issue
@@ -787,16 +798,6 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	}
 
 	/**
-	* Returns the digitalissuestatus of this vr issue.
-	*
-	* @return the digitalissuestatus of this vr issue
-	*/
-	@Override
-	public java.lang.String getDigitalissuestatus() {
-		return _vrIssue.getDigitalissuestatus();
-	}
-
-	/**
 	* Returns the examination period of this vr issue.
 	*
 	* @return the examination period of this vr issue
@@ -844,16 +845,6 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public java.lang.String getInspectorname() {
 		return _vrIssue.getInspectorname();
-	}
-
-	/**
-	* Returns the issue corporation ID of this vr issue.
-	*
-	* @return the issue corporation ID of this vr issue
-	*/
-	@Override
-	public java.lang.String getIssueCorporationId() {
-		return _vrIssue.getIssueCorporationId();
 	}
 
 	/**
@@ -1094,6 +1085,16 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public long getInspectorId() {
 		return _vrIssue.getInspectorId();
+	}
+
+	/**
+	* Returns the issue corporation ID of this vr issue.
+	*
+	* @return the issue corporation ID of this vr issue
+	*/
+	@Override
+	public long getIssueCorporationId() {
+		return _vrIssue.getIssueCorporationId();
 	}
 
 	/**
@@ -1394,7 +1395,7 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	* @param digitalissuestatus the digitalissuestatus of this vr issue
 	*/
 	@Override
-	public void setDigitalissuestatus(java.lang.String digitalissuestatus) {
+	public void setDigitalissuestatus(int digitalissuestatus) {
 		_vrIssue.setDigitalissuestatus(digitalissuestatus);
 	}
 
@@ -1510,7 +1511,7 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	* @param issueCorporationId the issue corporation ID of this vr issue
 	*/
 	@Override
-	public void setIssueCorporationId(java.lang.String issueCorporationId) {
+	public void setIssueCorporationId(long issueCorporationId) {
 		_vrIssue.setIssueCorporationId(issueCorporationId);
 	}
 
