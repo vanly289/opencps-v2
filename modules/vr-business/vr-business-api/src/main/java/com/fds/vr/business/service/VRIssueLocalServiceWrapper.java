@@ -85,6 +85,12 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 		return _vrIssueLocalService.fetchVRIssue(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRIssue findByMT_DID(long mtCore,
+		long dossierId) {
+		return _vrIssueLocalService.findByMT_DID(mtCore, dossierId);
+	}
+
 	/**
 	* Returns the vr issue with the primary key.
 	*
@@ -98,6 +104,14 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 		return _vrIssueLocalService.getVRIssue(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRIssue updateDigitalIssueStatus(long id,
+		int digitalIssueStatus)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _vrIssueLocalService.updateDigitalIssueStatus(id,
+			digitalIssueStatus);
+	}
+
 	/**
 	* Updates the vr issue in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -108,6 +122,14 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 	public com.fds.vr.business.model.VRIssue updateVRIssue(
 		com.fds.vr.business.model.VRIssue vrIssue) {
 		return _vrIssueLocalService.updateVRIssue(vrIssue);
+	}
+
+	@Override
+	public com.fds.vr.business.model.VRIssue updateVRIssue(
+		java.util.Map<java.lang.String, java.lang.String> mapValue, int mtCore,
+		boolean flagExits)
+		throws com.fds.vr.business.exception.NoSuchVRIssueException {
+		return _vrIssueLocalService.updateVRIssue(mapValue, mtCore, flagExits);
 	}
 
 	@Override
@@ -216,6 +238,15 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 	}
 
 	@Override
+	public java.util.List<com.fds.vr.business.model.VRIssue> findByIC_IS(
+		long issueCorporationId, int digitalIssueStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.findByIC_IS(issueCorporationId,
+			digitalIssueStatus);
+	}
+
+	@Override
 	public java.util.List<com.fds.vr.business.model.VRIssue> findByapplicantProfileId(
 		long mtCore, long dossierId, long applicantProfileId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -250,7 +281,7 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 
 	@Override
 	public java.util.List<com.fds.vr.business.model.VRIssue> findByissueCorporationId(
-		long mtCore, java.lang.String issueCorporationId)
+		long mtCore, long issueCorporationId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _vrIssueLocalService.findByissueCorporationId(mtCore,

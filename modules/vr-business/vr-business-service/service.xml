@@ -1995,6 +1995,10 @@
 			<finder-column name="issueCorporationId"></finder-column>
 			<finder-column name="digitalissuestatus"></finder-column>
 		</finder>
+		 <finder return-type="VRIssue" name="F_MT_DID">
+			<finder-column name="mtCore" />
+			<finder-column name="dossierId" />
+		</finder>
 	</entity>
 
 	<entity name="VRIssueVehiclecertificate" local-service="true" table="vr_issue_vehiclecertificate"

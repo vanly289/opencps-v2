@@ -435,15 +435,14 @@ public interface VRIssueModel extends BaseModel<VRIssue> {
 	 *
 	 * @return the issue corporation ID of this vr issue
 	 */
-	@AutoEscape
-	public String getIssueCorporationId();
+	public long getIssueCorporationId();
 
 	/**
 	 * Sets the issue corporation ID of this vr issue.
 	 *
 	 * @param issueCorporationId the issue corporation ID of this vr issue
 	 */
-	public void setIssueCorporationId(String issueCorporationId);
+	public void setIssueCorporationId(long issueCorporationId);
 
 	/**
 	 * Returns the verify corporation ID of this vr issue.
@@ -465,15 +464,14 @@ public interface VRIssueModel extends BaseModel<VRIssue> {
 	 *
 	 * @return the digitalissuestatus of this vr issue
 	 */
-	@AutoEscape
-	public String getDigitalissuestatus();
+	public int getDigitalissuestatus();
 
 	/**
 	 * Sets the digitalissuestatus of this vr issue.
 	 *
 	 * @param digitalissuestatus the digitalissuestatus of this vr issue
 	 */
-	public void setDigitalissuestatus(String digitalissuestatus);
+	public void setDigitalissuestatus(int digitalissuestatus);
 
 	/**
 	 * Returns the issue type of this vr issue.

@@ -204,7 +204,7 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 				updateVRCorporationAttendee(model);
 				// Cap nhat thong tin ho so CAP PHAT PHIEU
 				IssueContentUtils issueContent = new IssueContentUtils();
-				issueContent.updateVRIssueCertificate(model);
+				issueContent.updateVRIssueCertificate(model, 1);
 				
 
 			} catch (SystemException | PortalException e) {

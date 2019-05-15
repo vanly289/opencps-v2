@@ -19,13 +19,19 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.exception.NoSuchVRIssueException;
+import com.fds.vr.business.model.VRIssue;
 import com.fds.vr.business.model.VRIssueVehiclecertificate;
 import com.fds.vr.business.service.base.VRIssueVehiclecertificateLocalServiceBaseImpl;
 
@@ -61,6 +67,11 @@ public class VRIssueVehiclecertificateLocalServiceImpl
 		
 	}
 
+	public void deleteBydossierId(long mtCore, long dossierId) {
+
+		vrIssueVehiclecertificatePersistence.removeBydossierId(mtCore, dossierId);
+	}
+
 
 	public List<VRIssueVehiclecertificate> findByissueId(long mtCore, long issueId) throws PortalException, SystemException {
 		try {
@@ -81,7 +92,29 @@ public class VRIssueVehiclecertificateLocalServiceImpl
 		return new ArrayList<VRIssueVehiclecertificate>();
 		
 	}
-	
+
+	public VRIssueVehiclecertificate updateVRIssueVehicleCertificate(Map<String, String> mapValue, int mtCore) {
+
+		long idVRIssueCert = CounterLocalServiceUtil.increment(VRIssueVehiclecertificate.class.getName());
+		VRIssueVehiclecertificate object = vrIssueVehiclecertificatePersistence.create(idVRIssueCert);
+
+		// create objVRIssue
+		object.setModifyDate(new Date());
+		object.setSyncDate(new Date());
+		
+		object.setMtCore(mtCore);
+		object.setDossierId(GetterUtil.getLong(mapValue.get("dossierId")));
+		object.setIssueId(GetterUtil.getLong(mapValue.get("issueId")));
+		object.setCertificateId(GetterUtil.getLong(mapValue.get("certificateId")));
+		object.setVehiclePrice(GetterUtil.getLong(mapValue.get("vehiclePrice")));
+		object.setTotalQuantity(GetterUtil.getLong(mapValue.get("totalQuantity")));
+		object.setUnitPrice(GetterUtil.getLong(mapValue.get("unitPrice")));
+		object.setCertificaterecordno(mapValue.get("certificaterecordno"));
+		object.setProductionexamreportno(mapValue.get("productionExamReportNo"));
+		object.setTotalProduct(GetterUtil.getInteger(mapValue.get("totalProduct")));
+
+		return vrIssueVehiclecertificatePersistence.update(object);
+	}
 
 	
 	private Log _log = LogFactoryUtil.getLog(VRIssueVehiclecertificateLocalServiceImpl.class);

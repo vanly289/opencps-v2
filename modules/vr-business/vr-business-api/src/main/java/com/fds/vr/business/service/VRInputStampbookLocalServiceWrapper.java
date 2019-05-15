@@ -105,12 +105,13 @@ public class VRInputStampbookLocalServiceWrapper
 	@Override
 	public com.fds.vr.business.model.VRInputStampbook updateByOutputSheet(
 		long bookId, long subTotalInDocument, long serialStartNo,
-		long serialEndNo, long corporationId, long outputSheetType)
+		long serialEndNo, java.lang.Long purchaserId,
+		java.lang.Long corporationId, long outputSheetType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _vrInputStampbookLocalService.updateByOutputSheet(bookId,
-			subTotalInDocument, serialStartNo, serialEndNo, corporationId,
-			outputSheetType);
+			subTotalInDocument, serialStartNo, serialEndNo, purchaserId,
+			corporationId, outputSheetType);
 	}
 
 	@Override

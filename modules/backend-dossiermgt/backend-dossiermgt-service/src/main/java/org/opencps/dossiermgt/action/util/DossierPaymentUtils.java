@@ -4,14 +4,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.script.ScriptEngine;
+import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import org.opencps.dossiermgt.action.PaymentFileActions;
 import org.opencps.dossiermgt.action.impl.PaymentFileActionsImpl;
@@ -48,123 +52,126 @@ public class DossierPaymentUtils {
 ////				+ " { payment = 2000000 + 50000; } "
 ////				+ "else { payment = #gia_thiet_ke@TT302011BGTVTTTKXMCDPL05 * 0.08 + 50000; }]"
 ////				+ "   ship=0 tax=0  $Lệ phí cấp chứng chỉ và phí thẩm định thiết kế$";
-//		String pattern = "net=[ payment = 2000000;  if (100000 * 0.08 < 2000000)"
-//				+ " { payment = 2000000 + 50000; } "
-//				+ "else { payment = 100000 * 0.08 + 50000; }]";
-//		String pattern2 = "total=[payment = LePhi + shipAmount ]";
+//		//String pattern = "net=[ payment = 2000000;  if (100000 * 0.08 < 2000000)"
+//		//		+ " { payment = 2000000 + 50000; } "
+//		//		+ "else { payment = 100000 * 0.08 + 50000; }]";
+//		//String pattern2 = "total=[payment = LePhi + shipAmount ]";
+//		String pattern = "tong = [payment = 2000000/11 * 10;  if(#100000 * 0.08 < 2000000) "
+//				+ "{ payment = 2000000/11 * 10; } else { payment = 100000 * 0.08 / 11 * 10; }]";
 //
-//		org.json.JSONObject elementJSON = null;
-//		org.json.JSONObject totalJSON = new org.json.JSONObject();
-//		org.json.JSONArray dataArray = new org.json.JSONArray();
-//			elementJSON = new org.json.JSONObject();
-//			elementJSON.put("paymentType", "LePhi");
-//			elementJSON.put("returnPayment", "net");
-//			elementJSON.put("formula", pattern);
-//			dataArray.put(elementJSON);
-//			elementJSON = new org.json.JSONObject();
-//			elementJSON.put("paymentType", "shipAmount");
-//			elementJSON.put("returnPayment", "ship");
-//			elementJSON.put("formula", "10000");
-//			dataArray.put(elementJSON);
+////		org.json.JSONObject elementJSON = null;
+////		org.json.JSONObject totalJSON = new org.json.JSONObject();
+////		org.json.JSONArray dataArray = new org.json.JSONArray();
+////			elementJSON = new org.json.JSONObject();
+////			elementJSON.put("paymentType", "LePhi");
+////			elementJSON.put("returnPayment", "net");
+////			elementJSON.put("formula", pattern);
+////			dataArray.put(elementJSON);
+////			elementJSON = new org.json.JSONObject();
+////			elementJSON.put("paymentType", "shipAmount");
+////			elementJSON.put("returnPayment", "ship");
+////			elementJSON.put("formula", "10000");
+////			dataArray.put(elementJSON);
+////		
+////			totalJSON.put("paymentType", "total");
+////			totalJSON.put("returnPayment", "total");
+////			totalJSON.put("formula", pattern2);
+////			totalJSON.put("dataArr", dataArray);
 //		
-//			totalJSON.put("paymentType", "total");
-//			totalJSON.put("returnPayment", "total");
-//			totalJSON.put("formula", pattern2);
-//			totalJSON.put("dataArr", dataArray);
-//		
-//			String strTotal = totalJSON.toString();
+//			//String strTotal = totalJSON.toString();
 //			// get total payment amount
 //			//JSONObject paymentData = JSONFactoryUtil.createJSONObject(pattern);
-//			org.json.JSONObject paymentData = new org.json.JSONObject(strTotal);
-//			if (Validator.isNotNull(paymentData)) {
+//			//org.json.JSONObject paymentData = new org.json.JSONObject(strTotal);
+//			//org.json.JSONObject paymentData = new org.json.JSONObject(pattern);
+//			//if (Validator.isNotNull(paymentData)) {
 //				
-//				Map<String, Long> mapJSON = null;
-//				if (paymentData.has("dataArr")) {
-//					Object strDataArr = paymentData.get("dataArr");
-//					strDataArr = new JSONTokener(strDataArr.toString()).nextValue();
-//					if (strDataArr instanceof org.json.JSONArray) {
-//						org.json.JSONArray dataArr = (org.json.JSONArray) strDataArr;
-//				    }
-//					org.json.JSONArray dataArr = (org.json.JSONArray) strDataArr;
-//					mapJSON = new HashMap<>();
-//					if (dataArr != null && dataArr.length() > 0) {
-//						for (int i = 0; i < dataArr.length(); i++) {
-//							org.json.JSONObject data = dataArr.getJSONObject(i);
-//							if (Validator.isNotNull(data) && data.has("paymentType")) {
-//								String returnPayment = data.getString("returnPayment");
-//								String formula = data.getString("formula");
-//								if (Validator.isNotNull(returnPayment) && Validator.isNotNull(formula)) {
-//									Pattern patternName = Pattern.compile(PATTERN_DEFAULT);
-//									Matcher matcherName = patternName.matcher(formula);
-//									long valueReturn = 0;
-//									if (matcherName.find()) {
-//										ScriptEngineManager manager = new ScriptEngineManager();
-//
-//										ScriptEngine engine = manager.getEngineByExtension("js");
-//
-//											manager = new ScriptEngineManager();
-//
-//											engine = manager.getEngineByExtension("js");
-//
-//											List<ScriptEngineFactory> factories = manager.getEngineFactories();
-//
-////											for (ScriptEngineFactory ft : factories) {
-////												_log.info("EXTENTISION____" + ft.getExtensions());
-////												_log.info("NAME__" + ft.getEngineName());
-////												_log.info("NAMES___" + ft.getNames());
+//				//Map<String, Long> mapJSON = null;
+////				if (paymentData.has("dataArr")) {
+////					Object strDataArr = paymentData.get("dataArr");
+////					strDataArr = new JSONTokener(strDataArr.toString()).nextValue();
+////					if (strDataArr instanceof org.json.JSONArray) {
+////						org.json.JSONArray dataArr = (org.json.JSONArray) strDataArr;
+////				    }
+////					org.json.JSONArray dataArr = (org.json.JSONArray) strDataArr;
+////					mapJSON = new HashMap<>();
+////					if (dataArr != null && dataArr.length() > 0) {
+////						for (int i = 0; i < dataArr.length(); i++) {
+////							org.json.JSONObject data = dataArr.getJSONObject(i);
+////							if (Validator.isNotNull(data) && data.has("paymentType")) {
+////								String returnPayment = data.getString("returnPayment");
+////								String formula = data.getString("formula");
+////								if (Validator.isNotNull(returnPayment) && Validator.isNotNull(formula)) {
+////									Pattern patternName = Pattern.compile(PATTERN_DEFAULT);
+////									Matcher matcherName = patternName.matcher(formula);
+////									long valueReturn = 0;
+////									if (matcherName.find()) {
+////										ScriptEngineManager manager = new ScriptEngineManager();
+////
+////										ScriptEngine engine = manager.getEngineByExtension("js");
+////
+////											manager = new ScriptEngineManager();
+////
+////											engine = manager.getEngineByExtension("js");
+////
+////											List<ScriptEngineFactory> factories = manager.getEngineFactories();
+////
+//////											for (ScriptEngineFactory ft : factories) {
+//////												_log.info("EXTENTISION____" + ft.getExtensions());
+//////												_log.info("NAME__" + ft.getEngineName());
+//////												_log.info("NAMES___" + ft.getNames());
+//////											}
+////
+//////											for (ScriptEngineFactory se : new ScriptEngineManager().getEngineFactories()) {
+//////												System.out.println("se = " + se.getEngineName());
+//////												System.out.println("se = " + se.getEngineVersion());
+//////												System.out.println("se = " + se.getLanguageName());
+//////												System.out.println("se = " + se.getLanguageVersion());
+//////												System.out.println("se = " + se.getNames());
+//////												System.out.println("se = " + se.getExtensions());
+//////											}
+////
+////											String netScript = matcherName.group(1);
+////
+////											try {
+////
+////												engine.eval(netScript);
+////
+////												valueReturn = GetterUtil.getInteger(engine.get("payment"));
+////												//System.out.println("DossierPaymentUtils.main()" + net);
+////											} catch (ScriptException e) {
+////												e.printStackTrace();
 ////											}
-//
-////											for (ScriptEngineFactory se : new ScriptEngineManager().getEngineFactories()) {
-////												System.out.println("se = " + se.getEngineName());
-////												System.out.println("se = " + se.getEngineVersion());
-////												System.out.println("se = " + se.getLanguageName());
-////												System.out.println("se = " + se.getLanguageVersion());
-////												System.out.println("se = " + se.getNames());
-////												System.out.println("se = " + se.getExtensions());
-////											}
-//
-//											String netScript = matcherName.group(1);
-//
-//											try {
-//
-//												engine.eval(netScript);
-//
-//												valueReturn = GetterUtil.getInteger(engine.get("payment"));
-//												//System.out.println("DossierPaymentUtils.main()" + net);
-//											} catch (ScriptException e) {
-//												e.printStackTrace();
-//											}
-//									} else {
-//										valueReturn = data.getLong("formula");
-//									}
-//									mapJSON.put(data.getString("paymentType"), valueReturn);
-//								}
-//							}
-//						}
-//					}
-//				}
-//				if (mapJSON != null) {
-//					String paymentTypeTotal = paymentData.getString("paymentType");
-//					String returnPaymentTotal = paymentData.getString("returnPayment");
-//					String formulaTotal = paymentData.getString("formula");
-//					if (Validator.isNotNull(returnPaymentTotal) && Validator.isNotNull(formulaTotal)) {
-//						Pattern patternName = Pattern.compile(PATTERN_DEFAULT);
-//						Matcher matcherName = patternName.matcher(formulaTotal);
-//						long valueReturnTotal = 0;
-//						if (matcherName.find()) {
-//							try {
-//								valueReturnTotal = getDossierPaymentTotal(returnPaymentTotal, formulaTotal, matcherName,
-//										mapJSON);
-//							} catch (JSONException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-//						}
-//						mapJSON.put(paymentTypeTotal, valueReturnTotal);
-//					}
-//				}
-//				System.out.println(mapJSON);
-//			}
+////									} else {
+////										valueReturn = data.getLong("formula");
+////									}
+////									mapJSON.put(data.getString("paymentType"), valueReturn);
+////								}
+////							}
+////						}
+////					}
+////				}
+////				if (mapJSON != null) {
+////					String paymentTypeTotal = paymentData.getString("paymentType");
+////					String returnPaymentTotal = paymentData.getString("returnPayment");
+////					String formulaTotal = paymentData.getString("formula");
+////					if (Validator.isNotNull(returnPaymentTotal) && Validator.isNotNull(formulaTotal)) {
+////						Pattern patternName = Pattern.compile(PATTERN_DEFAULT);
+////						Matcher matcherName = patternName.matcher(formulaTotal);
+////						long valueReturnTotal = 0;
+////						if (matcherName.find()) {
+////							try {
+////								valueReturnTotal = getDossierPaymentTotal(returnPaymentTotal, formulaTotal, matcherName,
+////										mapJSON);
+////							} catch (JSONException e) {
+////								// TODO Auto-generated catch block
+////								e.printStackTrace();
+////							}
+////						}
+////						mapJSON.put(paymentTypeTotal, valueReturnTotal);
+////					}
+////				}
+//				//System.out.println(mapJSON);
+//			//}
 //			
 //			
 //			
@@ -261,13 +268,14 @@ public class DossierPaymentUtils {
 							String formula = data.getString("formula");
 							if (Validator.isNotNull(returnPayment) && Validator.isNotNull(formula)) {
 								Pattern patternName = Pattern.compile(PATTERN_DEFAULT);
-								Matcher matcherName = patternName.matcher(formula);
-								long valueReturn = 0;
+								String subPattern = splitPattern(formula);
+								Matcher matcherName = patternName.matcher(subPattern);
+								String valueReturn = "";
 								if (matcherName.find()) {
-									valueReturn = getDossierPaymentElement(returnPayment, formula, matcherName,
+									valueReturn = getDossierPaymentElement(returnPayment, subPattern, matcherName,
 											dossierId, serviceContext);
 								} else {
-									valueReturn = data.getLong("formula");
+									valueReturn = data.getString("formula");
 								}
 								paymentJSON.put(data.getString("paymentType"), valueReturn);
 							}
@@ -281,13 +289,14 @@ public class DossierPaymentUtils {
 				String formulaTotal = paymentData.getString("formula");
 				if (Validator.isNotNull(returnPaymentTotal) && Validator.isNotNull(formulaTotal)) {
 					Pattern patternName = Pattern.compile(PATTERN_DEFAULT);
-					Matcher matcherName = patternName.matcher(formulaTotal);
-					long valueReturnTotal = 0;
+					String subPatternTotal = splitPattern(formulaTotal);
+					Matcher matcherName = patternName.matcher(subPatternTotal);
+					String valueReturnTotal = "";
 					if (matcherName.find()) {
-						valueReturnTotal = getDossierPaymentTotal(returnPaymentTotal, formulaTotal, matcherName,
+						valueReturnTotal = getDossierPaymentTotal(returnPaymentTotal, subPatternTotal, matcherName,
 								paymentJSON);
 					} else {
-						valueReturnTotal = paymentData.getLong("formula");
+						valueReturnTotal = paymentData.getString("formula");
 					}
 					paymentJSON.put(paymentTypeTotal, valueReturnTotal);
 				}
@@ -444,33 +453,21 @@ public class DossierPaymentUtils {
 		return msgPayments;
 	}
 
-	/**
-	 * @param pattern
-	 * @param content
-	 * @return
-	 */
-	private static boolean _checkcontains(String pattern, String content) {
-
-		boolean isContains = false;
-
-		String[] splitPattern = StringUtil.split(pattern, StringPool.SPACE);
-
-		for (String element : splitPattern) {
-			if (Validator.equals(element, content)) {
-				isContains = true;
-				break;
-
+	private static String splitPattern(String pattern){
+		if (Validator.isNotNull(pattern) && pattern.contains("[")) {
+			int indexRegex = pattern.indexOf("[");
+			if (indexRegex != -1) {
+				return pattern.substring(indexRegex);
 			}
 		}
-
-		return isContains;
+		return pattern;
 	}
 
-	private static long getDossierPaymentElement(String returnPayment,String pattern, Matcher matcherName,
+	private static String getDossierPaymentElement(String returnPayment,String pattern, Matcher matcherName,
 			long dossierId, ServiceContext serviceContext) throws JSONException {
 
 		//_log.info("patternName" + patternName);
-		_log.info("matcherName" + matcherName);
+		//_log.info("matcherName" + matcherName);
 		_log.info("pattern" + pattern);
 		_log.info("dossierId" + dossierId);
 
@@ -483,6 +480,7 @@ public class DossierPaymentUtils {
 		while (matcherName.find()) {
 			jsonObject.put(matcherName.group(0).trim(), matcherName.group(0).trim());
 		}
+		//_log.info("jsonObject" + jsonObject.toString());
 
 		if (jsonObject != null) {
 			String result = AutoFillFormData.sampleDataBinding(jsonObject.toString(), dossierId, serviceContext);
@@ -507,6 +505,7 @@ public class DossierPaymentUtils {
 
 		}
 
+		//_log.info("pattern: "+pattern);
 		patternName = Pattern.compile(PATTERN_DEFAULT);
 
 		matcherName = patternName.matcher(pattern);
@@ -519,26 +518,26 @@ public class DossierPaymentUtils {
 
 			String netScript = matcherName.group(1);
 
-			_log.info("NETSCRIPT______" + netScript);
+			//_log.info("NETSCRIPT______" + netScript);
 
 			try {
 
-				_log.info("engine_1" + engine);
-				_log.info("maneger" + manager);
+				//_log.info("engine_1" + engine);
+				//_log.info("maneger" + manager);
 
 				engine.eval(netScript);
-				_log.info("engine_2" + engine);
-				_log.info("net__________" + GetterUtil.getLong(engine.get(returnPayment)));
+				//_log.info("engine_2" + engine);
+				_log.info("net__________" + GetterUtil.getLong(engine.get("payment")));
 
-				return GetterUtil.getLong(engine.get(returnPayment));
+				return String.valueOf(GetterUtil.getLong(engine.get("payment")));
 			} catch (Exception e) {
 				_log.error(e);
 			}
 		}
-		return 0;
+		return "";
 	}
 
-	private static long getDossierPaymentTotal(String returnPaymentTotal, String formulaTotal,
+	private static String getDossierPaymentTotal(String returnPaymentTotal, String formulaTotal,
 			Matcher matcherName, JSONObject paymentJSON) throws JSONException {
 
 		//_log.info("matcherName" + matcherName);
@@ -561,6 +560,7 @@ public class DossierPaymentUtils {
 
 		Pattern patternName = Pattern.compile(PATTERN_DEFAULT);
 
+		//_log.info("formulaTotal: "+formulaTotal);
 		matcherName = patternName.matcher(formulaTotal);
 
 		if (matcherName.find()) {
@@ -580,14 +580,14 @@ public class DossierPaymentUtils {
 
 				engine.eval(netScript);
 				//_log.info("engine_2" + engine);
-				//_log.info("net__________" + GetterUtil.getLong(engine.get(returnPaymentTotal)));
+				_log.info("net__________" + GetterUtil.getLong(engine.get("payment")));
 
-				return GetterUtil.getLong(engine.get(returnPaymentTotal));
+				return String.valueOf(GetterUtil.getLong(engine.get("payment")));
 			} catch (Exception e) {
 				//_log.error(e);
 			}
 		}
-		return 0;
+		return "";
 	}
 
 	public static final String PAY_MESSAGE = "$";

@@ -1,9 +1,11 @@
 package org.opencps.api.controller.impl;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+
 import javax.activation.DataHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
@@ -864,6 +866,20 @@ public class PaymentFileManagementImpl implements PaymentFileManagement {
 						String formReport = paymentConfig.getInvoiceForm();
 
 						JSONObject jsonData = JSONFactoryUtil.createJSONObject(formData);
+						//
+						if (paymentFile != null) {
+							String paymentFormData = paymentFile.getPaymentFormData();
+							if (Validator.isNotNull(paymentFormData)) {
+								JSONObject jsonPaymentFormData = JSONFactoryUtil.createJSONObject(paymentFormData);
+								//
+								Iterator<String> keys = jsonPaymentFormData.keys();
+
+								while (keys.hasNext()) {
+									String key = keys.next();
+									jsonData.put(key, jsonPaymentFormData.getString(key));
+								}
+							}
+						}
 
 						jsonData.put("applicantName", dossier.getApplicantName());
 
