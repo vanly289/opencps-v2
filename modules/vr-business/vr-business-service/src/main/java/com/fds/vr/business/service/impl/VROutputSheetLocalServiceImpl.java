@@ -146,6 +146,10 @@ public class VROutputSheetLocalServiceImpl
 		if(isApproval == 1) {
 			Long corporationId = (outputSheetType != null && outputSheetType == 5) ? purchaserCorporationId : purchaserId;
 			vrOutputSheetDetailsLocalService.updateJSONArray(id, corporationId, outputSheetType, details, isApproval);
+			
+			if(outputSheetType == 4 || outputSheetType == 6) {
+				vrIssueLocalService.updateDigitalIssueStatus(issueId, 9);
+			}
 		}
 		
 		return vrOutputSheetPersistence.update(outputSheet);

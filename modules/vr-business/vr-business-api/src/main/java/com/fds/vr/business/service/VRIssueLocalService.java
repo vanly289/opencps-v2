@@ -114,6 +114,9 @@ public interface VRIssueLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRIssue getVRIssue(long id) throws PortalException;
 
+	public VRIssue updateDigitalIssueStatus(long id, int digitalIssueStatus)
+		throws PortalException;
+
 	/**
 	* Updates the vr issue in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

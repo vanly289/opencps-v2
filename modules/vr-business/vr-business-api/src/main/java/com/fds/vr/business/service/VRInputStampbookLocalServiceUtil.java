@@ -106,12 +106,14 @@ public class VRInputStampbookLocalServiceUtil {
 
 	public static com.fds.vr.business.model.VRInputStampbook updateByOutputSheet(
 		long bookId, long subTotalInDocument, long serialStartNo,
-		long serialEndNo, long corporationId, long outputSheetType)
+		long serialEndNo, java.lang.Long purchaserId,
+		java.lang.Long corporationId, long outputSheetType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateByOutputSheet(bookId, subTotalInDocument,
-			serialStartNo, serialEndNo, corporationId, outputSheetType);
+			serialStartNo, serialEndNo, purchaserId, corporationId,
+			outputSheetType);
 	}
 
 	public static com.fds.vr.business.model.VRInputStampbook updateInputStambook(

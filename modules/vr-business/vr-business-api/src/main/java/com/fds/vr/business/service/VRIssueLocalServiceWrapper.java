@@ -104,6 +104,14 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 		return _vrIssueLocalService.getVRIssue(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRIssue updateDigitalIssueStatus(long id,
+		int digitalIssueStatus)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _vrIssueLocalService.updateDigitalIssueStatus(id,
+			digitalIssueStatus);
+	}
+
 	/**
 	* Updates the vr issue in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

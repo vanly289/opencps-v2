@@ -54,7 +54,7 @@ public class VRInputStampbookDetailsLocalServiceImpl
 			Long sequenceNo, Long dossierId, Long certificateId, String certificateNumber,
 			Date certificateDate, Long vehicleRecordId, String frameNo, String boxNo, String vinNo,
 			String engineNo, Long copies, Long markupFulfill, String replacedSerialNo,
-			String remark, Long inputSheetId, Long bookId, String purchaserId, Long corporationId,
+			String remark, Long inputSheetId, Long bookId, Long purchaserId, Long corporationId,
 			Long issuingStatus, Long clearingStatus, Long stampStatus, Date issuingDate, Date printingDate,
 			Date noticeofLostDate, Date noticeofCancelDate, Date noticeofReturnDate, Date clearingDate, Long clearingAdvancePaymentID)
 		throws PortalException, SystemException {
@@ -123,7 +123,7 @@ public class VRInputStampbookDetailsLocalServiceImpl
 			inputStampbookDetails.setBookId(bookId);
 		
 		if(Validator.isNotNull(purchaserId))
-			inputStampbookDetails.setPurchaserId(purchaserId);
+			inputStampbookDetails.setPurchaserId(String.valueOf(purchaserId));
 		
 		if(Validator.isNotNull(corporationId))
 			inputStampbookDetails.setCorporationId(corporationId);
@@ -162,13 +162,22 @@ public class VRInputStampbookDetailsLocalServiceImpl
 		
 	}
 	
-	public VRInputStampbookDetails updateByOutputSheet(long bookId, long sequenceNo, long corporationId, long issuingStatus) throws PortalException, SystemException {
+	public VRInputStampbookDetails updateByOutputSheet(long bookId, long outputSheetType, long sequenceNo, Long purchaserId, Long corporationId, long issuingStatus) throws PortalException, SystemException {
 		VRInputStampbookDetails inputStampbookDetails = vrInputStampbookDetailsPersistence.findByBookIdAndSequenceNo(bookId, sequenceNo);
 		
 		inputStampbookDetails.setModifyDate(new Date());
-		inputStampbookDetails.setCorporationId(corporationId);
+		
+		if(outputSheetType == 5) {
+			inputStampbookDetails.setCorporationId(corporationId);
+		} else if(outputSheetType == 4 || outputSheetType == 6) {
+			inputStampbookDetails.setPurchaserId(String.valueOf(purchaserId));
+		}
+		
 		inputStampbookDetails.setIssuingStatus(issuingStatus);
-		inputStampbookDetails.setIssuingDate(new Date());
+		
+		if(outputSheetType == 4 || outputSheetType == 6) {
+			inputStampbookDetails.setIssuingDate(new Date());
+		}
 		
 		return vrInputStampbookDetailsLocalService.updateVRInputStampbookDetails(inputStampbookDetails);
 	}

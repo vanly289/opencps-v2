@@ -230,5 +230,14 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		return vrIssuePersistence.update(object);
 	}
 
+	public VRIssue updateDigitalIssueStatus(long id, int digitalIssueStatus) throws PortalException {
+		VRIssue vrIssue = vrIssuePersistence.findByPrimaryKey(id);
+		
+		vrIssue.setDigitalissuestatus(digitalIssueStatus);
+		vrIssue.setModifyDate(new Date());
+		
+		return vrIssuePersistence.update(vrIssue);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRIssueLocalServiceImpl.class);
 }

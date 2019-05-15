@@ -160,6 +160,7 @@ public class VROutputSheetDetailsLocalServiceImpl
 				Long bookId = json.getLong("bookId");
 				Long inputSheetId = json.getLong("inputSheetId");
 				Long issueVehicleCertificateId = json.getLong("issueVehicleCertificateId");
+				Long issueApplicationProfileId = json.getLong("issueApplicationProfileId");
 				Long certificateId = json.getLong("certificateId");
 				String certificateNumber = json.getString("certificateNumber");
 				Date certificateDate = DateTimeUtils.convertStringToDateAPI(json.getString("certificateDate"));
@@ -193,7 +194,7 @@ public class VROutputSheetDetailsLocalServiceImpl
 							null);
 					
 					// update stampbook
-					vrInputStampbookLocalService.updateByOutputSheet(bookId, subTotalInDocument, serialStartNo, serialEndNo, corporationId, outputSheetType);
+					vrInputStampbookLocalService.updateByOutputSheet(bookId, subTotalInDocument, serialStartNo, serialEndNo, issueApplicationProfileId, corporationId, outputSheetType);
 				}
 			}
 			

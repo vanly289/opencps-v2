@@ -116,7 +116,8 @@ public interface VRInputStampbookDetailsLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public VRInputStampbookDetails updateByOutputSheet(long bookId,
-		long sequenceNo, long corporationId, long issuingStatus)
+		long outputSheetType, long sequenceNo, java.lang.Long purchaserId,
+		java.lang.Long corporationId, long issuingStatus)
 		throws PortalException, SystemException;
 
 	public VRInputStampbookDetails updateInputStampbookDetails(long id,
@@ -128,7 +129,7 @@ public interface VRInputStampbookDetailsLocalService extends BaseLocalService,
 		java.lang.String engineNo, java.lang.Long copies,
 		java.lang.Long markupFulfill, java.lang.String replacedSerialNo,
 		java.lang.String remark, java.lang.Long inputSheetId,
-		java.lang.Long bookId, java.lang.String purchaserId,
+		java.lang.Long bookId, java.lang.Long purchaserId,
 		java.lang.Long corporationId, java.lang.Long issuingStatus,
 		java.lang.Long clearingStatus, java.lang.Long stampStatus,
 		Date issuingDate, Date printingDate, Date noticeofLostDate,

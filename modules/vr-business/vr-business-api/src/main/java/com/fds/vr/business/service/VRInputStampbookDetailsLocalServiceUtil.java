@@ -106,12 +106,14 @@ public class VRInputStampbookDetailsLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRInputStampbookDetails updateByOutputSheet(
-		long bookId, long sequenceNo, long corporationId, long issuingStatus)
+		long bookId, long outputSheetType, long sequenceNo,
+		java.lang.Long purchaserId, java.lang.Long corporationId,
+		long issuingStatus)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateByOutputSheet(bookId, sequenceNo, corporationId,
-			issuingStatus);
+				   .updateByOutputSheet(bookId, outputSheetType, sequenceNo,
+			purchaserId, corporationId, issuingStatus);
 	}
 
 	public static com.fds.vr.business.model.VRInputStampbookDetails updateInputStampbookDetails(
@@ -124,7 +126,7 @@ public class VRInputStampbookDetailsLocalServiceUtil {
 		java.lang.Long copies, java.lang.Long markupFulfill,
 		java.lang.String replacedSerialNo, java.lang.String remark,
 		java.lang.Long inputSheetId, java.lang.Long bookId,
-		java.lang.String purchaserId, java.lang.Long corporationId,
+		java.lang.Long purchaserId, java.lang.Long corporationId,
 		java.lang.Long issuingStatus, java.lang.Long clearingStatus,
 		java.lang.Long stampStatus, java.util.Date issuingDate,
 		java.util.Date printingDate, java.util.Date noticeofLostDate,
