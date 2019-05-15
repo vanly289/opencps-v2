@@ -66,7 +66,7 @@ public class PaymentFileCacheModel implements CacheModel<PaymentFile>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -130,6 +130,12 @@ public class PaymentFileCacheModel implements CacheModel<PaymentFile>,
 		sb.append(invoiceNo);
 		sb.append(", invoiceFileEntryId=");
 		sb.append(invoiceFileEntryId);
+		sb.append(", invoicePayload=");
+		sb.append(invoicePayload);
+		sb.append(", einvoice=");
+		sb.append(einvoice);
+		sb.append(", paymentFormData=");
+		sb.append(paymentFormData);
 		sb.append("}");
 
 		return sb.toString();
@@ -303,6 +309,27 @@ public class PaymentFileCacheModel implements CacheModel<PaymentFile>,
 
 		paymentFileImpl.setInvoiceFileEntryId(invoiceFileEntryId);
 
+		if (invoicePayload == null) {
+			paymentFileImpl.setInvoicePayload(StringPool.BLANK);
+		}
+		else {
+			paymentFileImpl.setInvoicePayload(invoicePayload);
+		}
+
+		if (einvoice == null) {
+			paymentFileImpl.setEinvoice(StringPool.BLANK);
+		}
+		else {
+			paymentFileImpl.setEinvoice(einvoice);
+		}
+
+		if (paymentFormData == null) {
+			paymentFileImpl.setPaymentFormData(StringPool.BLANK);
+		}
+		else {
+			paymentFileImpl.setPaymentFormData(paymentFormData);
+		}
+
 		paymentFileImpl.resetOriginalValues();
 
 		return paymentFileImpl;
@@ -351,6 +378,9 @@ public class PaymentFileCacheModel implements CacheModel<PaymentFile>,
 		invoiceNo = objectInput.readUTF();
 
 		invoiceFileEntryId = objectInput.readLong();
+		invoicePayload = objectInput.readUTF();
+		einvoice = objectInput.readUTF();
+		paymentFormData = objectInput.readUTF();
 	}
 
 	@Override
@@ -501,6 +531,27 @@ public class PaymentFileCacheModel implements CacheModel<PaymentFile>,
 		}
 
 		objectOutput.writeLong(invoiceFileEntryId);
+
+		if (invoicePayload == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(invoicePayload);
+		}
+
+		if (einvoice == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(einvoice);
+		}
+
+		if (paymentFormData == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(paymentFormData);
+		}
 	}
 
 	public String uuid;
@@ -534,4 +585,7 @@ public class PaymentFileCacheModel implements CacheModel<PaymentFile>,
 	public String invoiceIssueNo;
 	public String invoiceNo;
 	public long invoiceFileEntryId;
+	public String invoicePayload;
+	public String einvoice;
+	public String paymentFormData;
 }

@@ -122,7 +122,7 @@ public class VROutputSheetWrapper implements VROutputSheet,
 			setOriginalDocumentNo(originalDocumentNo);
 		}
 
-		String supplierCorporationId = (String)attributes.get(
+		Long supplierCorporationId = (Long)attributes.get(
 				"supplierCorporationId");
 
 		if (supplierCorporationId != null) {
@@ -201,13 +201,13 @@ public class VROutputSheetWrapper implements VROutputSheet,
 			setIssueId(issueId);
 		}
 
-		String purchaserId = (String)attributes.get("purchaserId");
+		Long purchaserId = (Long)attributes.get("purchaserId");
 
 		if (purchaserId != null) {
 			setPurchaserId(purchaserId);
 		}
 
-		String purchaserCorporationId = (String)attributes.get(
+		Long purchaserCorporationId = (Long)attributes.get(
 				"purchaserCorporationId");
 
 		if (purchaserCorporationId != null) {
@@ -409,26 +409,6 @@ public class VROutputSheetWrapper implements VROutputSheet,
 	}
 
 	/**
-	* Returns the purchaser corporation ID of this vr output sheet.
-	*
-	* @return the purchaser corporation ID of this vr output sheet
-	*/
-	@Override
-	public java.lang.String getPurchaserCorporationId() {
-		return _vrOutputSheet.getPurchaserCorporationId();
-	}
-
-	/**
-	* Returns the purchaser ID of this vr output sheet.
-	*
-	* @return the purchaser ID of this vr output sheet
-	*/
-	@Override
-	public java.lang.String getPurchaserId() {
-		return _vrOutputSheet.getPurchaserId();
-	}
-
-	/**
 	* Returns the receiver name of this vr output sheet.
 	*
 	* @return the receiver name of this vr output sheet
@@ -466,16 +446,6 @@ public class VROutputSheetWrapper implements VROutputSheet,
 	@Override
 	public java.lang.String getRemark() {
 		return _vrOutputSheet.getRemark();
-	}
-
-	/**
-	* Returns the supplier corporation ID of this vr output sheet.
-	*
-	* @return the supplier corporation ID of this vr output sheet
-	*/
-	@Override
-	public java.lang.String getSupplierCorporationId() {
-		return _vrOutputSheet.getSupplierCorporationId();
 	}
 
 	@Override
@@ -596,6 +566,36 @@ public class VROutputSheetWrapper implements VROutputSheet,
 	@Override
 	public long getPrimaryKey() {
 		return _vrOutputSheet.getPrimaryKey();
+	}
+
+	/**
+	* Returns the purchaser corporation ID of this vr output sheet.
+	*
+	* @return the purchaser corporation ID of this vr output sheet
+	*/
+	@Override
+	public long getPurchaserCorporationId() {
+		return _vrOutputSheet.getPurchaserCorporationId();
+	}
+
+	/**
+	* Returns the purchaser ID of this vr output sheet.
+	*
+	* @return the purchaser ID of this vr output sheet
+	*/
+	@Override
+	public long getPurchaserId() {
+		return _vrOutputSheet.getPurchaserId();
+	}
+
+	/**
+	* Returns the supplier corporation ID of this vr output sheet.
+	*
+	* @return the supplier corporation ID of this vr output sheet
+	*/
+	@Override
+	public long getSupplierCorporationId() {
+		return _vrOutputSheet.getSupplierCorporationId();
 	}
 
 	/**
@@ -850,8 +850,7 @@ public class VROutputSheetWrapper implements VROutputSheet,
 	* @param purchaserCorporationId the purchaser corporation ID of this vr output sheet
 	*/
 	@Override
-	public void setPurchaserCorporationId(
-		java.lang.String purchaserCorporationId) {
+	public void setPurchaserCorporationId(long purchaserCorporationId) {
 		_vrOutputSheet.setPurchaserCorporationId(purchaserCorporationId);
 	}
 
@@ -861,7 +860,7 @@ public class VROutputSheetWrapper implements VROutputSheet,
 	* @param purchaserId the purchaser ID of this vr output sheet
 	*/
 	@Override
-	public void setPurchaserId(java.lang.String purchaserId) {
+	public void setPurchaserId(long purchaserId) {
 		_vrOutputSheet.setPurchaserId(purchaserId);
 	}
 
@@ -911,7 +910,7 @@ public class VROutputSheetWrapper implements VROutputSheet,
 	* @param supplierCorporationId the supplier corporation ID of this vr output sheet
 	*/
 	@Override
-	public void setSupplierCorporationId(java.lang.String supplierCorporationId) {
+	public void setSupplierCorporationId(long supplierCorporationId) {
 		_vrOutputSheet.setSupplierCorporationId(supplierCorporationId);
 	}
 

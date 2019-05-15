@@ -14,20 +14,20 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRProductType;
+import com.fds.vr.business.service.base.VRProductTypeLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.model.VRProductType;
-import com.fds.vr.business.service.base.VRProductTypeLocalServiceBaseImpl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr product type local service.
@@ -62,7 +62,40 @@ public class VRProductTypeLocalServiceImpl
 		
 	}
 
+	public void deleteByproductPlantId(long mtCore, long productPlantId) {
 
-	
+		vrProductTypePersistence.removeByproductPlantID(mtCore, productPlantId);
+	}
+
+	public VRProductType updateProductType(Map<String, String> mapValues, int mtCore) {
+		
+		Date now = new Date();
+
+		long vrProductTypeId = counterLocalService.increment(VRProductType.class.getName());
+
+		VRProductType object = vrProductTypePersistence.create(vrProductTypeId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+		object.setModifyDate(now);
+
+		// Add other fields
+		object.setMtCore(mtCore);
+		object.setProductPlantID(Long.valueOf(mapValues.get("productPlantId")));
+		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
+		object.setVehicleClass(mapValues.get("vehicleClass"));
+		object.setVehicleTypeCode(mapValues.get("vehicleTypeCode"));
+		object.setVehicleTypeDescription(mapValues.get("vehicleTypeDescription"));
+		object.setProductClassificationCode(mapValues.get("productClassificationCode"));
+		object.setProductClassificationDescription(mapValues.get("productClassificationDescription"));
+		object.setTrademark(mapValues.get("trademark"));
+		object.setTrademarkName(mapValues.get("trademarkName"));
+		object.setCommercialName(mapValues.get("commercialName"));
+		object.setModelCode(mapValues.get("modelCode"));
+		object.setDesignSymbolNo(mapValues.get("designSymbolNo"));
+
+		return vrProductTypePersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRProductTypeLocalServiceImpl.class);
 }

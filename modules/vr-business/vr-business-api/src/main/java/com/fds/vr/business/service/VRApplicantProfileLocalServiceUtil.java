@@ -92,6 +92,11 @@ public class VRApplicantProfileLocalServiceUtil {
 		return getService().fetchVRApplicantProfile(id);
 	}
 
+	public static com.fds.vr.business.model.VRApplicantProfile findByMT_APP_CODE(
+		long mtCore, java.lang.String applicantCode) {
+		return getService().findByMT_APP_CODE(mtCore, applicantCode);
+	}
+
 	/**
 	* Returns the vr applicant profile with the primary key.
 	*

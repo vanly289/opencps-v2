@@ -679,7 +679,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 			VRInputSheetModelImpl.FINDER_CACHE_ENABLED, VRInputSheetImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBycorporationId",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -688,14 +688,14 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 		new FinderPath(VRInputSheetModelImpl.ENTITY_CACHE_ENABLED,
 			VRInputSheetModelImpl.FINDER_CACHE_ENABLED, VRInputSheetImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBycorporationId",
-			new String[] { Long.class.getName(), String.class.getName() },
+			new String[] { Long.class.getName(), Long.class.getName() },
 			VRInputSheetModelImpl.MTCORE_COLUMN_BITMASK |
 			VRInputSheetModelImpl.CORPORATIONID_COLUMN_BITMASK |
 			VRInputSheetModelImpl.MODIFYDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_CORPORATIONID = new FinderPath(VRInputSheetModelImpl.ENTITY_CACHE_ENABLED,
 			VRInputSheetModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBycorporationId",
-			new String[] { Long.class.getName(), String.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns all the vr input sheets where mtCore = &#63; and corporationId = &#63;.
@@ -706,7 +706,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 */
 	@Override
 	public List<VRInputSheet> findBycorporationId(long mtCore,
-		String corporationId) {
+		long corporationId) {
 		return findBycorporationId(mtCore, corporationId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -726,7 +726,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 */
 	@Override
 	public List<VRInputSheet> findBycorporationId(long mtCore,
-		String corporationId, int start, int end) {
+		long corporationId, int start, int end) {
 		return findBycorporationId(mtCore, corporationId, start, end, null);
 	}
 
@@ -746,7 +746,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 */
 	@Override
 	public List<VRInputSheet> findBycorporationId(long mtCore,
-		String corporationId, int start, int end,
+		long corporationId, int start, int end,
 		OrderByComparator<VRInputSheet> orderByComparator) {
 		return findBycorporationId(mtCore, corporationId, start, end,
 			orderByComparator, true);
@@ -769,7 +769,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 */
 	@Override
 	public List<VRInputSheet> findBycorporationId(long mtCore,
-		String corporationId, int start, int end,
+		long corporationId, int start, int end,
 		OrderByComparator<VRInputSheet> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -800,8 +800,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 			if ((list != null) && !list.isEmpty()) {
 				for (VRInputSheet vrInputSheet : list) {
 					if ((mtCore != vrInputSheet.getMtCore()) ||
-							!Objects.equals(corporationId,
-								vrInputSheet.getCorporationId())) {
+							(corporationId != vrInputSheet.getCorporationId())) {
 						list = null;
 
 						break;
@@ -825,19 +824,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 
 			query.append(_FINDER_COLUMN_CORPORATIONID_MTCORE_2);
 
-			boolean bindCorporationId = false;
-
-			if (corporationId == null) {
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_1);
-			}
-			else if (corporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_3);
-			}
-			else {
-				bindCorporationId = true;
-
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -861,9 +848,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 
 				qPos.add(mtCore);
 
-				if (bindCorporationId) {
-					qPos.add(corporationId);
-				}
+				qPos.add(corporationId);
 
 				if (!pagination) {
 					list = (List<VRInputSheet>)QueryUtil.list(q, getDialect(),
@@ -906,7 +891,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 */
 	@Override
 	public VRInputSheet findBycorporationId_First(long mtCore,
-		String corporationId, OrderByComparator<VRInputSheet> orderByComparator)
+		long corporationId, OrderByComparator<VRInputSheet> orderByComparator)
 		throws NoSuchVRInputSheetException {
 		VRInputSheet vrInputSheet = fetchBycorporationId_First(mtCore,
 				corporationId, orderByComparator);
@@ -940,7 +925,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 */
 	@Override
 	public VRInputSheet fetchBycorporationId_First(long mtCore,
-		String corporationId, OrderByComparator<VRInputSheet> orderByComparator) {
+		long corporationId, OrderByComparator<VRInputSheet> orderByComparator) {
 		List<VRInputSheet> list = findBycorporationId(mtCore, corporationId, 0,
 				1, orderByComparator);
 
@@ -962,7 +947,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 */
 	@Override
 	public VRInputSheet findBycorporationId_Last(long mtCore,
-		String corporationId, OrderByComparator<VRInputSheet> orderByComparator)
+		long corporationId, OrderByComparator<VRInputSheet> orderByComparator)
 		throws NoSuchVRInputSheetException {
 		VRInputSheet vrInputSheet = fetchBycorporationId_Last(mtCore,
 				corporationId, orderByComparator);
@@ -996,7 +981,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 */
 	@Override
 	public VRInputSheet fetchBycorporationId_Last(long mtCore,
-		String corporationId, OrderByComparator<VRInputSheet> orderByComparator) {
+		long corporationId, OrderByComparator<VRInputSheet> orderByComparator) {
 		int count = countBycorporationId(mtCore, corporationId);
 
 		if (count == 0) {
@@ -1025,7 +1010,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 */
 	@Override
 	public VRInputSheet[] findBycorporationId_PrevAndNext(long id, long mtCore,
-		String corporationId, OrderByComparator<VRInputSheet> orderByComparator)
+		long corporationId, OrderByComparator<VRInputSheet> orderByComparator)
 		throws NoSuchVRInputSheetException {
 		VRInputSheet vrInputSheet = findByPrimaryKey(id);
 
@@ -1055,7 +1040,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	}
 
 	protected VRInputSheet getBycorporationId_PrevAndNext(Session session,
-		VRInputSheet vrInputSheet, long mtCore, String corporationId,
+		VRInputSheet vrInputSheet, long mtCore, long corporationId,
 		OrderByComparator<VRInputSheet> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1072,19 +1057,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 
 		query.append(_FINDER_COLUMN_CORPORATIONID_MTCORE_2);
 
-		boolean bindCorporationId = false;
-
-		if (corporationId == null) {
-			query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_1);
-		}
-		else if (corporationId.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_3);
-		}
-		else {
-			bindCorporationId = true;
-
-			query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
-		}
+		query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1156,9 +1129,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 
 		qPos.add(mtCore);
 
-		if (bindCorporationId) {
-			qPos.add(corporationId);
-		}
+		qPos.add(corporationId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(vrInputSheet);
@@ -1185,7 +1156,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 * @param corporationId the corporation ID
 	 */
 	@Override
-	public void removeBycorporationId(long mtCore, String corporationId) {
+	public void removeBycorporationId(long mtCore, long corporationId) {
 		for (VRInputSheet vrInputSheet : findBycorporationId(mtCore,
 				corporationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(vrInputSheet);
@@ -1200,7 +1171,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	 * @return the number of matching vr input sheets
 	 */
 	@Override
-	public int countBycorporationId(long mtCore, String corporationId) {
+	public int countBycorporationId(long mtCore, long corporationId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_CORPORATIONID;
 
 		Object[] finderArgs = new Object[] { mtCore, corporationId };
@@ -1214,19 +1185,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 
 			query.append(_FINDER_COLUMN_CORPORATIONID_MTCORE_2);
 
-			boolean bindCorporationId = false;
-
-			if (corporationId == null) {
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_1);
-			}
-			else if (corporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_3);
-			}
-			else {
-				bindCorporationId = true;
-
-				query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2);
 
 			String sql = query.toString();
 
@@ -1241,9 +1200,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 
 				qPos.add(mtCore);
 
-				if (bindCorporationId) {
-					qPos.add(corporationId);
-				}
+				qPos.add(corporationId);
 
 				count = (Long)q.uniqueResult();
 
@@ -1263,9 +1220,7 @@ public class VRInputSheetPersistenceImpl extends BasePersistenceImpl<VRInputShee
 	}
 
 	private static final String _FINDER_COLUMN_CORPORATIONID_MTCORE_2 = "vrInputSheet.mtCore = ? AND ";
-	private static final String _FINDER_COLUMN_CORPORATIONID_CORPORATIONID_1 = "vrInputSheet.corporationId IS NULL";
 	private static final String _FINDER_COLUMN_CORPORATIONID_CORPORATIONID_2 = "vrInputSheet.corporationId = ?";
-	private static final String _FINDER_COLUMN_CORPORATIONID_CORPORATIONID_3 = "(vrInputSheet.corporationId IS NULL OR vrInputSheet.corporationId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_INPUTSHEETTYPE =
 		new FinderPath(VRInputSheetModelImpl.ENTITY_CACHE_ENABLED,
 			VRInputSheetModelImpl.FINDER_CACHE_ENABLED, VRInputSheetImpl.class,

@@ -14,20 +14,20 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRCOPReportAttach;
+import com.fds.vr.business.service.base.VRCOPReportAttachLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.model.VRCOPReportAttach;
-import com.fds.vr.business.service.base.VRCOPReportAttachLocalServiceBaseImpl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vrcop report attach local service.
@@ -72,6 +72,30 @@ public class VRCOPReportAttachLocalServiceImpl
 		return new ArrayList<VRCOPReportAttach>();
 		
 	}
-	
+
+	public VRCOPReportAttach updateCOPReportAttach(Map<String, String> mapValues, int mtCore) {
+		
+		Date now = new Date();
+
+		long vrCOPReportAttachId = counterLocalService.increment(VRCOPReportAttach.class.getName());
+
+		VRCOPReportAttach object = vrcopReportAttachPersistence.create(vrCOPReportAttachId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+		object.setModifyDate(now);
+
+		// Add other fields
+		object.setMtCore(mtCore);
+		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("copReportRepositoryId")));
+		object.setCopReportNo(mapValues.get("copReportNo"));
+		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
+		object.setDocNo(mapValues.get("docNo"));
+		object.setDocName(mapValues.get("docName"));
+		object.setRemarks(mapValues.get("remarks"));
+
+		return vrcopReportAttachPersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRCOPReportAttachLocalServiceImpl.class);
 }

@@ -60,6 +60,7 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
+		attributes.put("issueId", getIssueId());
 		attributes.put("issueVehicleCertificateId",
 			getIssueVehicleCertificateId());
 		attributes.put("dossierId", getDossierId());
@@ -101,6 +102,12 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 
 		if (mtCore != null) {
 			setMtCore(mtCore);
+		}
+
+		Long issueId = (Long)attributes.get("issueId");
+
+		if (issueId != null) {
+			setIssueId(issueId);
 		}
 
 		Long issueVehicleCertificateId = (Long)attributes.get(
@@ -536,6 +543,16 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 	}
 
 	/**
+	* Returns the issue ID of this vr vehicle record.
+	*
+	* @return the issue ID of this vr vehicle record
+	*/
+	@Override
+	public long getIssueId() {
+		return _vrVehicleRecord.getIssueId();
+	}
+
+	/**
 	* Returns the issue vehicle certificate ID of this vr vehicle record.
 	*
 	* @return the issue vehicle certificate ID of this vr vehicle record
@@ -729,6 +746,16 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 	@Override
 	public void setId(long id) {
 		_vrVehicleRecord.setId(id);
+	}
+
+	/**
+	* Sets the issue ID of this vr vehicle record.
+	*
+	* @param issueId the issue ID of this vr vehicle record
+	*/
+	@Override
+	public void setIssueId(long issueId) {
+		_vrVehicleRecord.setIssueId(issueId);
 	}
 
 	/**

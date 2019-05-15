@@ -145,13 +145,7 @@ public class VRInputSheetCacheModel implements CacheModel<VRInputSheet>,
 			vrInputSheetImpl.setOriginalDocumentNo(originalDocumentNo);
 		}
 
-		if (corporationId == null) {
-			vrInputSheetImpl.setCorporationId(StringPool.BLANK);
-		}
-		else {
-			vrInputSheetImpl.setCorporationId(corporationId);
-		}
-
+		vrInputSheetImpl.setCorporationId(corporationId);
 		vrInputSheetImpl.setInputSheetType(inputSheetType);
 
 		if (maker == null) {
@@ -255,7 +249,8 @@ public class VRInputSheetCacheModel implements CacheModel<VRInputSheet>,
 		inputSheetNo = objectInput.readUTF();
 		inputSheetDate = objectInput.readLong();
 		originalDocumentNo = objectInput.readUTF();
-		corporationId = objectInput.readUTF();
+
+		corporationId = objectInput.readLong();
 
 		inputSheetType = objectInput.readLong();
 		maker = objectInput.readUTF();
@@ -301,12 +296,7 @@ public class VRInputSheetCacheModel implements CacheModel<VRInputSheet>,
 			objectOutput.writeUTF(originalDocumentNo);
 		}
 
-		if (corporationId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(corporationId);
-		}
+		objectOutput.writeLong(corporationId);
 
 		objectOutput.writeLong(inputSheetType);
 
@@ -390,7 +380,7 @@ public class VRInputSheetCacheModel implements CacheModel<VRInputSheet>,
 	public String inputSheetNo;
 	public long inputSheetDate;
 	public String originalDocumentNo;
-	public String corporationId;
+	public long corporationId;
 	public long inputSheetType;
 	public String maker;
 	public String checker;

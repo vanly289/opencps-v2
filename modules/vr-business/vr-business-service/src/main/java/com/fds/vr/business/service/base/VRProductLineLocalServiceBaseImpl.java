@@ -44,6 +44,7 @@ import com.fds.vr.business.service.persistence.VRCertificateProgressPersistence;
 import com.fds.vr.business.service.persistence.VRClearingStampbookFinder;
 import com.fds.vr.business.service.persistence.VRClearingStampbookPersistence;
 import com.fds.vr.business.service.persistence.VRConfigTechSpecPersistence;
+import com.fds.vr.business.service.persistence.VRCorporationAttendeePersistence;
 import com.fds.vr.business.service.persistence.VRCorporationInspectorFinder;
 import com.fds.vr.business.service.persistence.VRCorporationInspectorPersistence;
 import com.fds.vr.business.service.persistence.VRCorporationViewFinder;
@@ -83,6 +84,7 @@ import com.fds.vr.business.service.persistence.VRProductionPlantFinder;
 import com.fds.vr.business.service.persistence.VRProductionPlantPersistence;
 import com.fds.vr.business.service.persistence.VRProductionPlantProdEquipmentFinder;
 import com.fds.vr.business.service.persistence.VRProductionPlantProdEquipmentPersistence;
+import com.fds.vr.business.service.persistence.VRProductionPlantSupplierPersistence;
 import com.fds.vr.business.service.persistence.VRRPDossierStatisticsFinder;
 import com.fds.vr.business.service.persistence.VRRPDossierStatisticsPersistence;
 import com.fds.vr.business.service.persistence.VRRegistrationPersistence;
@@ -1187,6 +1189,44 @@ public abstract class VRProductLineLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the vr corporation attendee local service.
+	 *
+	 * @return the vr corporation attendee local service
+	 */
+	public com.fds.vr.business.service.VRCorporationAttendeeLocalService getVRCorporationAttendeeLocalService() {
+		return vrCorporationAttendeeLocalService;
+	}
+
+	/**
+	 * Sets the vr corporation attendee local service.
+	 *
+	 * @param vrCorporationAttendeeLocalService the vr corporation attendee local service
+	 */
+	public void setVRCorporationAttendeeLocalService(
+		com.fds.vr.business.service.VRCorporationAttendeeLocalService vrCorporationAttendeeLocalService) {
+		this.vrCorporationAttendeeLocalService = vrCorporationAttendeeLocalService;
+	}
+
+	/**
+	 * Returns the vr corporation attendee persistence.
+	 *
+	 * @return the vr corporation attendee persistence
+	 */
+	public VRCorporationAttendeePersistence getVRCorporationAttendeePersistence() {
+		return vrCorporationAttendeePersistence;
+	}
+
+	/**
+	 * Sets the vr corporation attendee persistence.
+	 *
+	 * @param vrCorporationAttendeePersistence the vr corporation attendee persistence
+	 */
+	public void setVRCorporationAttendeePersistence(
+		VRCorporationAttendeePersistence vrCorporationAttendeePersistence) {
+		this.vrCorporationAttendeePersistence = vrCorporationAttendeePersistence;
+	}
+
+	/**
 	 * Returns the vr corporation inspector local service.
 	 *
 	 * @return the vr corporation inspector local service
@@ -2262,6 +2302,44 @@ public abstract class VRProductLineLocalServiceBaseImpl
 	public void setVRProductionPlantProdEquipmentFinder(
 		VRProductionPlantProdEquipmentFinder vrProductionPlantProdEquipmentFinder) {
 		this.vrProductionPlantProdEquipmentFinder = vrProductionPlantProdEquipmentFinder;
+	}
+
+	/**
+	 * Returns the vr production plant supplier local service.
+	 *
+	 * @return the vr production plant supplier local service
+	 */
+	public com.fds.vr.business.service.VRProductionPlantSupplierLocalService getVRProductionPlantSupplierLocalService() {
+		return vrProductionPlantSupplierLocalService;
+	}
+
+	/**
+	 * Sets the vr production plant supplier local service.
+	 *
+	 * @param vrProductionPlantSupplierLocalService the vr production plant supplier local service
+	 */
+	public void setVRProductionPlantSupplierLocalService(
+		com.fds.vr.business.service.VRProductionPlantSupplierLocalService vrProductionPlantSupplierLocalService) {
+		this.vrProductionPlantSupplierLocalService = vrProductionPlantSupplierLocalService;
+	}
+
+	/**
+	 * Returns the vr production plant supplier persistence.
+	 *
+	 * @return the vr production plant supplier persistence
+	 */
+	public VRProductionPlantSupplierPersistence getVRProductionPlantSupplierPersistence() {
+		return vrProductionPlantSupplierPersistence;
+	}
+
+	/**
+	 * Sets the vr production plant supplier persistence.
+	 *
+	 * @param vrProductionPlantSupplierPersistence the vr production plant supplier persistence
+	 */
+	public void setVRProductionPlantSupplierPersistence(
+		VRProductionPlantSupplierPersistence vrProductionPlantSupplierPersistence) {
+		this.vrProductionPlantSupplierPersistence = vrProductionPlantSupplierPersistence;
 	}
 
 	/**
@@ -3726,6 +3804,10 @@ public abstract class VRProductLineLocalServiceBaseImpl
 	protected VRCOPReportRepositoryPersistence vrcopReportRepositoryPersistence;
 	@BeanReference(type = VRCOPReportRepositoryFinder.class)
 	protected VRCOPReportRepositoryFinder vrcopReportRepositoryFinder;
+	@BeanReference(type = com.fds.vr.business.service.VRCorporationAttendeeLocalService.class)
+	protected com.fds.vr.business.service.VRCorporationAttendeeLocalService vrCorporationAttendeeLocalService;
+	@BeanReference(type = VRCorporationAttendeePersistence.class)
+	protected VRCorporationAttendeePersistence vrCorporationAttendeePersistence;
 	@BeanReference(type = com.fds.vr.business.service.VRCorporationInspectorLocalService.class)
 	protected com.fds.vr.business.service.VRCorporationInspectorLocalService vrCorporationInspectorLocalService;
 	@BeanReference(type = VRCorporationInspectorPersistence.class)
@@ -3840,6 +3922,10 @@ public abstract class VRProductLineLocalServiceBaseImpl
 	protected VRProductionPlantProdEquipmentPersistence vrProductionPlantProdEquipmentPersistence;
 	@BeanReference(type = VRProductionPlantProdEquipmentFinder.class)
 	protected VRProductionPlantProdEquipmentFinder vrProductionPlantProdEquipmentFinder;
+	@BeanReference(type = com.fds.vr.business.service.VRProductionPlantSupplierLocalService.class)
+	protected com.fds.vr.business.service.VRProductionPlantSupplierLocalService vrProductionPlantSupplierLocalService;
+	@BeanReference(type = VRProductionPlantSupplierPersistence.class)
+	protected VRProductionPlantSupplierPersistence vrProductionPlantSupplierPersistence;
 	@BeanReference(type = VRProductLineLocalService.class)
 	protected VRProductLineLocalService vrProductLineLocalService;
 	@BeanReference(type = VRProductLinePersistence.class)

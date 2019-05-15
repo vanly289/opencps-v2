@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -1537,7 +1538,9 @@ public class VRCOPReportAttachPersistenceImpl extends BasePersistenceImpl<VRCOPR
 		vrcopReportAttachImpl.setCopReportRepositoryID(vrcopReportAttach.getCopReportRepositoryID());
 		vrcopReportAttachImpl.setCopReportNo(vrcopReportAttach.getCopReportNo());
 		vrcopReportAttachImpl.setSequenceNo(vrcopReportAttach.getSequenceNo());
-		vrcopReportAttachImpl.setAttachFileURL(vrcopReportAttach.getAttachFileURL());
+		vrcopReportAttachImpl.setDocName(vrcopReportAttach.getDocName());
+		vrcopReportAttachImpl.setDocNo(vrcopReportAttach.getDocNo());
+		vrcopReportAttachImpl.setRemarks(vrcopReportAttach.getRemarks());
 		vrcopReportAttachImpl.setModifyDate(vrcopReportAttach.getModifyDate());
 		vrcopReportAttachImpl.setSyncDate(vrcopReportAttach.getSyncDate());
 
@@ -1926,6 +1929,11 @@ public class VRCOPReportAttachPersistenceImpl extends BasePersistenceImpl<VRCOPR
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return VRCOPReportAttachModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1956,4 +1964,7 @@ public class VRCOPReportAttachPersistenceImpl extends BasePersistenceImpl<VRCOPR
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No VRCOPReportAttach exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No VRCOPReportAttach exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(VRCOPReportAttachPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"docName", "docNo", "remarks"
+			});
 }

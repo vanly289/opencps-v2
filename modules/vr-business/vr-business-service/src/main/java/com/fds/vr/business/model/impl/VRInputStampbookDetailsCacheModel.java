@@ -88,8 +88,8 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 		sb.append(vehicleRecordId);
 		sb.append(", frameNo=");
 		sb.append(frameNo);
-		sb.append(", BoxNo=");
-		sb.append(BoxNo);
+		sb.append(", boxNo=");
+		sb.append(boxNo);
 		sb.append(", vinNo=");
 		sb.append(vinNo);
 		sb.append(", engineNo=");
@@ -183,11 +183,11 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 			vrInputStampbookDetailsImpl.setFrameNo(frameNo);
 		}
 
-		if (BoxNo == null) {
+		if (boxNo == null) {
 			vrInputStampbookDetailsImpl.setBoxNo(StringPool.BLANK);
 		}
 		else {
-			vrInputStampbookDetailsImpl.setBoxNo(BoxNo);
+			vrInputStampbookDetailsImpl.setBoxNo(boxNo);
 		}
 
 		if (vinNo == null) {
@@ -238,13 +238,7 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 			vrInputStampbookDetailsImpl.setPurchaserId(purchaserId);
 		}
 
-		if (corporationId == null) {
-			vrInputStampbookDetailsImpl.setCorporationId(StringPool.BLANK);
-		}
-		else {
-			vrInputStampbookDetailsImpl.setCorporationId(corporationId);
-		}
-
+		vrInputStampbookDetailsImpl.setCorporationId(corporationId);
 		vrInputStampbookDetailsImpl.setIssuingStatus(issuingStatus);
 		vrInputStampbookDetailsImpl.setClearingStatus(clearingStatus);
 		vrInputStampbookDetailsImpl.setStampStatus(stampStatus);
@@ -332,7 +326,7 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 
 		vehicleRecordId = objectInput.readLong();
 		frameNo = objectInput.readUTF();
-		BoxNo = objectInput.readUTF();
+		boxNo = objectInput.readUTF();
 		vinNo = objectInput.readUTF();
 		engineNo = objectInput.readUTF();
 		qrCode = objectInput.readUTF();
@@ -347,7 +341,8 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 
 		bookId = objectInput.readLong();
 		purchaserId = objectInput.readUTF();
-		corporationId = objectInput.readUTF();
+
+		corporationId = objectInput.readLong();
 
 		issuingStatus = objectInput.readLong();
 
@@ -404,11 +399,11 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 			objectOutput.writeUTF(frameNo);
 		}
 
-		if (BoxNo == null) {
+		if (boxNo == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(BoxNo);
+			objectOutput.writeUTF(boxNo);
 		}
 
 		if (vinNo == null) {
@@ -461,12 +456,7 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 			objectOutput.writeUTF(purchaserId);
 		}
 
-		if (corporationId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(corporationId);
-		}
+		objectOutput.writeLong(corporationId);
 
 		objectOutput.writeLong(issuingStatus);
 
@@ -495,7 +485,7 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 	public long certificateDate;
 	public long vehicleRecordId;
 	public String frameNo;
-	public String BoxNo;
+	public String boxNo;
 	public String vinNo;
 	public String engineNo;
 	public String qrCode;
@@ -506,7 +496,7 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 	public long inputSheetId;
 	public long bookId;
 	public String purchaserId;
-	public String corporationId;
+	public long corporationId;
 	public long issuingStatus;
 	public long clearingStatus;
 	public long stampStatus;

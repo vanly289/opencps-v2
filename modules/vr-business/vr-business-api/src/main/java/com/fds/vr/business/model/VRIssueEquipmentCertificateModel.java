@@ -95,28 +95,28 @@ public interface VRIssueEquipmentCertificateModel extends BaseModel<VRIssueEquip
 	 *
 	 * @return the issue ID of this vr issue equipment certificate
 	 */
-	public int getIssueId();
+	public long getIssueId();
 
 	/**
 	 * Sets the issue ID of this vr issue equipment certificate.
 	 *
 	 * @param issueId the issue ID of this vr issue equipment certificate
 	 */
-	public void setIssueId(int issueId);
+	public void setIssueId(long issueId);
 
 	/**
 	 * Returns the issue vehicle certificate ID of this vr issue equipment certificate.
 	 *
 	 * @return the issue vehicle certificate ID of this vr issue equipment certificate
 	 */
-	public int getIssueVehicleCertificateId();
+	public long getIssueVehicleCertificateId();
 
 	/**
 	 * Sets the issue vehicle certificate ID of this vr issue equipment certificate.
 	 *
 	 * @param issueVehicleCertificateId the issue vehicle certificate ID of this vr issue equipment certificate
 	 */
-	public void setIssueVehicleCertificateId(int issueVehicleCertificateId);
+	public void setIssueVehicleCertificateId(long issueVehicleCertificateId);
 
 	/**
 	 * Returns the vehiclecertificaterecordno of this vr issue equipment certificate.

@@ -14,20 +14,19 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.model.VRProductionPlantEmployee;
+import com.fds.vr.business.service.base.VRProductionPlantEmployeeLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.model.VRProductionPlantEmployee;
-import com.fds.vr.business.service.base.VRProductionPlantEmployeeLocalServiceBaseImpl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr production plant employee local service.
@@ -58,10 +57,34 @@ public class VRProductionPlantEmployeeLocalServiceImpl
 			_log.error(e);
 		}
 		return new ArrayList<VRProductionPlantEmployee>();
-		
 	}
 
+	public void deleteByproductPlantId(long mtCore, long productPlantId) {
+		vrProductionPlantEmployeePersistence.removeByproductPlantID(mtCore, productPlantId);
+	}
 
-	
+	public VRProductionPlantEmployee updateProductionPlantEmployee(Map<String, String> mapValues, int mtCore) {
+		
+		Date now = new Date();
+
+		long vrProductionPlantEmployeeId = counterLocalService.increment(VRProductionPlantEmployee.class.getName());
+
+		VRProductionPlantEmployee object = vrProductionPlantEmployeePersistence.create(vrProductionPlantEmployeeId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+		object.setModifyDate(now);
+
+		// Add other fields
+		object.setMtCore(mtCore);
+		object.setProductPlantID(Long.valueOf(mapValues.get("productPlantId")));
+		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
+		object.setEmployeeName(mapValues.get("employeeName"));
+		object.setEmployeeCertificateNo(mapValues.get("employeeCertificateNo"));
+		object.setTrainningAt(mapValues.get("trainningAt"));
+
+		return vrProductionPlantEmployeePersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantEmployeeLocalServiceImpl.class);
 }

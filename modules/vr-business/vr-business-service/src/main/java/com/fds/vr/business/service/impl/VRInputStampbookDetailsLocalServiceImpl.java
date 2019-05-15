@@ -22,6 +22,7 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.fds.vr.business.model.VRInputStampbookDetails;
 import com.fds.vr.business.service.base.VRInputStampbookDetailsLocalServiceBaseImpl;
@@ -50,12 +51,12 @@ public class VRInputStampbookDetailsLocalServiceImpl
 	 */
 	
 	public VRInputStampbookDetails updateInputStampbookDetails(long id, long mtCore, String stampSerialNo, 
-			long sequenceNo, long dossierId, long certificateId, String certificateNumber,
-			Date certificateDate, long vehicleRecordId, String frameNo, String BoxNo, String vinNo,
-			String engineNo, long copies, long markupFulfill, String replacedSerialNo,
-			String remark, long inputSheetId, long bookId, String purchaserId, String corporationId,
-			long issuingStatus, long clearingStatus, long stampStatus, Date issuingDate, Date printingDate,
-			Date noticeofLostDate, Date noticeofCancelDate, Date noticeofReturnDate, Date clearingDate, long clearingAdvancePaymentID)
+			Long sequenceNo, Long dossierId, Long certificateId, String certificateNumber,
+			Date certificateDate, Long vehicleRecordId, String frameNo, String boxNo, String vinNo,
+			String engineNo, Long copies, Long markupFulfill, String replacedSerialNo,
+			String remark, Long inputSheetId, Long bookId, Long purchaserId, Long corporationId,
+			Long issuingStatus, Long clearingStatus, Long stampStatus, Date issuingDate, Date printingDate,
+			Date noticeofLostDate, Date noticeofCancelDate, Date noticeofReturnDate, Date clearingDate, Long clearingAdvancePaymentID)
 		throws PortalException, SystemException {
 		
 		VRInputStampbookDetails inputStampbookDetails = null;
@@ -69,38 +70,116 @@ public class VRInputStampbookDetailsLocalServiceImpl
 		
 		inputStampbookDetails.setModifyDate(new Date());
 		inputStampbookDetails.setMtCore(mtCore);
-		inputStampbookDetails.setStampSerialNo(stampSerialNo);
-		inputStampbookDetails.setSequenceNo(sequenceNo);
-		inputStampbookDetails.setDossierId(dossierId);
-		inputStampbookDetails.setCertificateId(certificateId);
-		inputStampbookDetails.setCertificateNumber(certificateNumber);
-		inputStampbookDetails.setCertificateDate(certificateDate);
-		inputStampbookDetails.setVehicleRecordId(vehicleRecordId);
-		inputStampbookDetails.setFrameNo(frameNo);
-		inputStampbookDetails.setBoxNo(BoxNo);
-		inputStampbookDetails.setVinNo(vinNo);
-		inputStampbookDetails.setEngineNo(engineNo);
-		inputStampbookDetails.setCopies(copies);
-		inputStampbookDetails.setMarkupFulfill(markupFulfill);
-		inputStampbookDetails.setReplacedSerialNo(replacedSerialNo);
-		inputStampbookDetails.setRemark(remark);
-		inputStampbookDetails.setInputSheetId(inputSheetId);
-		inputStampbookDetails.setBookId(bookId);
-		inputStampbookDetails.setPurchaserId(purchaserId);
-		inputStampbookDetails.setCorporationId(corporationId);
-		inputStampbookDetails.setIssuingStatus(issuingStatus);
-		inputStampbookDetails.setClearingStatus(clearingStatus);
-		inputStampbookDetails.setStampStatus(stampStatus);
-		inputStampbookDetails.setIssuingDate(issuingDate);
-		inputStampbookDetails.setPrintingDate(printingDate);
-		inputStampbookDetails.setNoticeofLostDate(noticeofLostDate);
-		inputStampbookDetails.setNoticeofCancelDate(noticeofCancelDate);
-		inputStampbookDetails.setNoticeofReturnDate(noticeofReturnDate);
-		inputStampbookDetails.setClearingDate(clearingDate);
-		inputStampbookDetails.setClearingAdvancePaymentID(clearingAdvancePaymentID);
+		
+		if(Validator.isNotNull(stampSerialNo))
+			inputStampbookDetails.setStampSerialNo(stampSerialNo);
+		
+		if(Validator.isNotNull(sequenceNo))
+			inputStampbookDetails.setSequenceNo(sequenceNo);
+		
+		if(Validator.isNotNull(dossierId))
+			inputStampbookDetails.setDossierId(dossierId);
+		
+		if(Validator.isNotNull(certificateId))
+			inputStampbookDetails.setCertificateId(certificateId);
+		
+		if(Validator.isNotNull(certificateNumber))
+			inputStampbookDetails.setCertificateNumber(certificateNumber);
+		
+		if(Validator.isNotNull(certificateDate))
+			inputStampbookDetails.setCertificateDate(certificateDate);
+		
+		if(Validator.isNotNull(vehicleRecordId))
+			inputStampbookDetails.setVehicleRecordId(vehicleRecordId);
+		
+		if(Validator.isNotNull(frameNo))
+			inputStampbookDetails.setFrameNo(frameNo);
+		
+		if(Validator.isNotNull(boxNo))
+			inputStampbookDetails.setBoxNo(boxNo);
+		
+		if(Validator.isNotNull(vinNo))
+			inputStampbookDetails.setVinNo(vinNo);
+		
+		if(Validator.isNotNull(engineNo))
+			inputStampbookDetails.setEngineNo(engineNo);
+		
+		if(Validator.isNotNull(copies))
+			inputStampbookDetails.setCopies(copies);
+		
+		if(Validator.isNotNull(markupFulfill))
+			inputStampbookDetails.setMarkupFulfill(markupFulfill);
+		
+		if(Validator.isNotNull(replacedSerialNo))
+			inputStampbookDetails.setReplacedSerialNo(replacedSerialNo);
+		
+		if(Validator.isNotNull(remark))
+			inputStampbookDetails.setRemark(remark);
+		
+		if(Validator.isNotNull(inputSheetId))
+			inputStampbookDetails.setInputSheetId(inputSheetId);
+		
+		if(Validator.isNotNull(bookId))
+			inputStampbookDetails.setBookId(bookId);
+		
+		if(Validator.isNotNull(purchaserId))
+			inputStampbookDetails.setPurchaserId(String.valueOf(purchaserId));
+		
+		if(Validator.isNotNull(corporationId))
+			inputStampbookDetails.setCorporationId(corporationId);
+		
+		if(Validator.isNotNull(issuingStatus))
+			inputStampbookDetails.setIssuingStatus(issuingStatus);
+		
+		if(Validator.isNotNull(clearingStatus))
+			inputStampbookDetails.setClearingStatus(clearingStatus);
+		
+		if(Validator.isNotNull(stampStatus))
+			inputStampbookDetails.setStampStatus(stampStatus);
+		
+		if(Validator.isNotNull(issuingDate))
+			inputStampbookDetails.setIssuingDate(issuingDate);
+		
+		if(Validator.isNotNull(printingDate))
+			inputStampbookDetails.setPrintingDate(printingDate);
+		
+		if(Validator.isNotNull(noticeofLostDate))
+			inputStampbookDetails.setNoticeofLostDate(noticeofLostDate);
+		
+		if(Validator.isNotNull(noticeofCancelDate))
+			inputStampbookDetails.setNoticeofCancelDate(noticeofCancelDate);
+		
+		if(Validator.isNotNull(noticeofReturnDate))
+			inputStampbookDetails.setNoticeofReturnDate(noticeofReturnDate);
+		
+		if(Validator.isNotNull(clearingDate))
+			inputStampbookDetails.setClearingDate(clearingDate);
+		
+		if(Validator.isNotNull(clearingAdvancePaymentID))
+			inputStampbookDetails.setClearingAdvancePaymentID(clearingAdvancePaymentID);
 		
 		return vrInputStampbookDetailsPersistence.update(inputStampbookDetails);
 		
+	}
+	
+	public VRInputStampbookDetails updateByOutputSheet(long bookId, long outputSheetType, long sequenceNo, Long purchaserId, Long corporationId, long issuingStatus) throws PortalException, SystemException {
+		VRInputStampbookDetails inputStampbookDetails = vrInputStampbookDetailsPersistence.findByBookIdAndSequenceNo(bookId, sequenceNo);
+		
+		inputStampbookDetails.setModifyDate(new Date());
+		
+		if(outputSheetType == 5) {
+			inputStampbookDetails.setCorporationId(corporationId);
+		} else if(outputSheetType == 4 || outputSheetType == 6) {
+			inputStampbookDetails.setPurchaserId(String.valueOf(purchaserId));
+		}
+		
+		inputStampbookDetails.setIssuingStatus(issuingStatus);
+		
+		if(outputSheetType == 4 || outputSheetType == 6) {
+			inputStampbookDetails.setIssuingDate(new Date());
+		}
+		
+		return vrInputStampbookDetailsLocalService.updateVRInputStampbookDetails(inputStampbookDetails);
 	}
 	
 	public List<VRInputStampbookDetails> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {
@@ -124,7 +203,7 @@ public class VRInputStampbookDetailsLocalServiceImpl
 		
 	}
 	
-	public List<VRInputStampbookDetails> findBycorporationId(long mtCore, String corporationId) throws PortalException, SystemException {
+	public List<VRInputStampbookDetails> findBycorporationId(long mtCore, long corporationId) throws PortalException, SystemException {
 		try {
 			return vrInputStampbookDetailsPersistence.findBycorporationId(mtCore, corporationId);
 		} catch (Exception e) {
@@ -173,7 +252,15 @@ public class VRInputStampbookDetailsLocalServiceImpl
 		return new ArrayList<VRInputStampbookDetails>();
 		
 	}
-
+	
+	public Long[] findStartNoEndNoBySequence(long inputStampbookId) {
+		return vrInputStampbookDetailsFinder.findStartNoEndNoBySequence(inputStampbookId);
+	}
+	
+	public List findStampbookByVehicleClass(String vehicleClass, long corporationId) {
+		return vrInputStampbookDetailsFinder.findStampbookByVehicleClass(vehicleClass, corporationId);
+	}
+	
 	
 	private Log _log = LogFactoryUtil.getLog(VRInputStampbookDetailsLocalServiceBaseImpl.class);
 }

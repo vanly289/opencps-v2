@@ -435,15 +435,14 @@ public interface VRIssueModel extends BaseModel<VRIssue> {
 	 *
 	 * @return the issue corporation ID of this vr issue
 	 */
-	@AutoEscape
-	public String getIssueCorporationId();
+	public long getIssueCorporationId();
 
 	/**
 	 * Sets the issue corporation ID of this vr issue.
 	 *
 	 * @param issueCorporationId the issue corporation ID of this vr issue
 	 */
-	public void setIssueCorporationId(String issueCorporationId);
+	public void setIssueCorporationId(long issueCorporationId);
 
 	/**
 	 * Returns the verify corporation ID of this vr issue.
@@ -465,15 +464,14 @@ public interface VRIssueModel extends BaseModel<VRIssue> {
 	 *
 	 * @return the digitalissuestatus of this vr issue
 	 */
-	@AutoEscape
-	public String getDigitalissuestatus();
+	public int getDigitalissuestatus();
 
 	/**
 	 * Sets the digitalissuestatus of this vr issue.
 	 *
 	 * @param digitalissuestatus the digitalissuestatus of this vr issue
 	 */
-	public void setDigitalissuestatus(String digitalissuestatus);
+	public void setDigitalissuestatus(int digitalissuestatus);
 
 	/**
 	 * Returns the issue type of this vr issue.
@@ -852,6 +850,48 @@ public interface VRIssueModel extends BaseModel<VRIssue> {
 	 * @param applicantchecker the applicantchecker of this vr issue
 	 */
 	public void setApplicantchecker(String applicantchecker);
+
+	/**
+	 * Returns the inspector ID of this vr issue.
+	 *
+	 * @return the inspector ID of this vr issue
+	 */
+	public long getInspectorId();
+
+	/**
+	 * Sets the inspector ID of this vr issue.
+	 *
+	 * @param inspectorId the inspector ID of this vr issue
+	 */
+	public void setInspectorId(long inspectorId);
+
+	/**
+	 * Returns the issue inspector ID of this vr issue.
+	 *
+	 * @return the issue inspector ID of this vr issue
+	 */
+	public long getIssueInspectorId();
+
+	/**
+	 * Sets the issue inspector ID of this vr issue.
+	 *
+	 * @param issueInspectorId the issue inspector ID of this vr issue
+	 */
+	public void setIssueInspectorId(long issueInspectorId);
+
+	/**
+	 * Returns the verify inspector ID of this vr issue.
+	 *
+	 * @return the verify inspector ID of this vr issue
+	 */
+	public long getVerifyInspectorId();
+
+	/**
+	 * Sets the verify inspector ID of this vr issue.
+	 *
+	 * @param verifyInspectorId the verify inspector ID of this vr issue
+	 */
+	public void setVerifyInspectorId(long verifyInspectorId);
 
 	/**
 	 * Returns the modify date of this vr issue.

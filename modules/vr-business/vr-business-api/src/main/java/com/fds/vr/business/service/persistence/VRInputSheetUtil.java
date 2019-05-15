@@ -306,7 +306,7 @@ public class VRInputSheetUtil {
 	* @return the matching vr input sheets
 	*/
 	public static List<VRInputSheet> findBycorporationId(long mtCore,
-		java.lang.String corporationId) {
+		long corporationId) {
 		return getPersistence().findBycorporationId(mtCore, corporationId);
 	}
 
@@ -324,7 +324,7 @@ public class VRInputSheetUtil {
 	* @return the range of matching vr input sheets
 	*/
 	public static List<VRInputSheet> findBycorporationId(long mtCore,
-		java.lang.String corporationId, int start, int end) {
+		long corporationId, int start, int end) {
 		return getPersistence()
 				   .findBycorporationId(mtCore, corporationId, start, end);
 	}
@@ -344,7 +344,7 @@ public class VRInputSheetUtil {
 	* @return the ordered range of matching vr input sheets
 	*/
 	public static List<VRInputSheet> findBycorporationId(long mtCore,
-		java.lang.String corporationId, int start, int end,
+		long corporationId, int start, int end,
 		OrderByComparator<VRInputSheet> orderByComparator) {
 		return getPersistence()
 				   .findBycorporationId(mtCore, corporationId, start, end,
@@ -367,7 +367,7 @@ public class VRInputSheetUtil {
 	* @return the ordered range of matching vr input sheets
 	*/
 	public static List<VRInputSheet> findBycorporationId(long mtCore,
-		java.lang.String corporationId, int start, int end,
+		long corporationId, int start, int end,
 		OrderByComparator<VRInputSheet> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -385,8 +385,7 @@ public class VRInputSheetUtil {
 	* @throws NoSuchVRInputSheetException if a matching vr input sheet could not be found
 	*/
 	public static VRInputSheet findBycorporationId_First(long mtCore,
-		java.lang.String corporationId,
-		OrderByComparator<VRInputSheet> orderByComparator)
+		long corporationId, OrderByComparator<VRInputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInputSheetException {
 		return getPersistence()
 				   .findBycorporationId_First(mtCore, corporationId,
@@ -402,8 +401,7 @@ public class VRInputSheetUtil {
 	* @return the first matching vr input sheet, or <code>null</code> if a matching vr input sheet could not be found
 	*/
 	public static VRInputSheet fetchBycorporationId_First(long mtCore,
-		java.lang.String corporationId,
-		OrderByComparator<VRInputSheet> orderByComparator) {
+		long corporationId, OrderByComparator<VRInputSheet> orderByComparator) {
 		return getPersistence()
 				   .fetchBycorporationId_First(mtCore, corporationId,
 			orderByComparator);
@@ -419,8 +417,7 @@ public class VRInputSheetUtil {
 	* @throws NoSuchVRInputSheetException if a matching vr input sheet could not be found
 	*/
 	public static VRInputSheet findBycorporationId_Last(long mtCore,
-		java.lang.String corporationId,
-		OrderByComparator<VRInputSheet> orderByComparator)
+		long corporationId, OrderByComparator<VRInputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInputSheetException {
 		return getPersistence()
 				   .findBycorporationId_Last(mtCore, corporationId,
@@ -436,8 +433,7 @@ public class VRInputSheetUtil {
 	* @return the last matching vr input sheet, or <code>null</code> if a matching vr input sheet could not be found
 	*/
 	public static VRInputSheet fetchBycorporationId_Last(long mtCore,
-		java.lang.String corporationId,
-		OrderByComparator<VRInputSheet> orderByComparator) {
+		long corporationId, OrderByComparator<VRInputSheet> orderByComparator) {
 		return getPersistence()
 				   .fetchBycorporationId_Last(mtCore, corporationId,
 			orderByComparator);
@@ -454,7 +450,7 @@ public class VRInputSheetUtil {
 	* @throws NoSuchVRInputSheetException if a vr input sheet with the primary key could not be found
 	*/
 	public static VRInputSheet[] findBycorporationId_PrevAndNext(long id,
-		long mtCore, java.lang.String corporationId,
+		long mtCore, long corporationId,
 		OrderByComparator<VRInputSheet> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInputSheetException {
 		return getPersistence()
@@ -468,8 +464,7 @@ public class VRInputSheetUtil {
 	* @param mtCore the mt core
 	* @param corporationId the corporation ID
 	*/
-	public static void removeBycorporationId(long mtCore,
-		java.lang.String corporationId) {
+	public static void removeBycorporationId(long mtCore, long corporationId) {
 		getPersistence().removeBycorporationId(mtCore, corporationId);
 	}
 
@@ -480,8 +475,7 @@ public class VRInputSheetUtil {
 	* @param corporationId the corporation ID
 	* @return the number of matching vr input sheets
 	*/
-	public static int countBycorporationId(long mtCore,
-		java.lang.String corporationId) {
+	public static int countBycorporationId(long mtCore, long corporationId) {
 		return getPersistence().countBycorporationId(mtCore, corporationId);
 	}
 

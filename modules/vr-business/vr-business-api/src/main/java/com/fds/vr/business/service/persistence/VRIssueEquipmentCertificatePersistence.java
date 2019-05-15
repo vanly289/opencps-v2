@@ -48,7 +48,7 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	* @return the matching vr issue equipment certificates
 	*/
 	public java.util.List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId);
+		long issueVehicleCertificateId);
 
 	/**
 	* Returns a range of all the vr issue equipment certificates where issueVehicleCertificateId = &#63;.
@@ -63,7 +63,7 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	* @return the range of matching vr issue equipment certificates
 	*/
 	public java.util.List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId, int start, int end);
+		long issueVehicleCertificateId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the vr issue equipment certificates where issueVehicleCertificateId = &#63;.
@@ -79,7 +79,7 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	* @return the ordered range of matching vr issue equipment certificates
 	*/
 	public java.util.List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId, int start, int end,
+		long issueVehicleCertificateId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VRIssueEquipmentCertificate> orderByComparator);
 
 	/**
@@ -97,7 +97,7 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	* @return the ordered range of matching vr issue equipment certificates
 	*/
 	public java.util.List<VRIssueEquipmentCertificate> findByIssueVehicleCertificateId(
-		int issueVehicleCertificateId, int start, int end,
+		long issueVehicleCertificateId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VRIssueEquipmentCertificate> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -110,7 +110,7 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	* @throws NoSuchVRIssueEquipmentCertificateException if a matching vr issue equipment certificate could not be found
 	*/
 	public VRIssueEquipmentCertificate findByIssueVehicleCertificateId_First(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRIssueEquipmentCertificate> orderByComparator)
 		throws NoSuchVRIssueEquipmentCertificateException;
 
@@ -122,7 +122,7 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	* @return the first matching vr issue equipment certificate, or <code>null</code> if a matching vr issue equipment certificate could not be found
 	*/
 	public VRIssueEquipmentCertificate fetchByIssueVehicleCertificateId_First(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRIssueEquipmentCertificate> orderByComparator);
 
 	/**
@@ -134,7 +134,7 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	* @throws NoSuchVRIssueEquipmentCertificateException if a matching vr issue equipment certificate could not be found
 	*/
 	public VRIssueEquipmentCertificate findByIssueVehicleCertificateId_Last(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRIssueEquipmentCertificate> orderByComparator)
 		throws NoSuchVRIssueEquipmentCertificateException;
 
@@ -146,7 +146,7 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	* @return the last matching vr issue equipment certificate, or <code>null</code> if a matching vr issue equipment certificate could not be found
 	*/
 	public VRIssueEquipmentCertificate fetchByIssueVehicleCertificateId_Last(
-		int issueVehicleCertificateId,
+		long issueVehicleCertificateId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRIssueEquipmentCertificate> orderByComparator);
 
 	/**
@@ -159,7 +159,7 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	* @throws NoSuchVRIssueEquipmentCertificateException if a vr issue equipment certificate with the primary key could not be found
 	*/
 	public VRIssueEquipmentCertificate[] findByIssueVehicleCertificateId_PrevAndNext(
-		long id, int issueVehicleCertificateId,
+		long id, long issueVehicleCertificateId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRIssueEquipmentCertificate> orderByComparator)
 		throws NoSuchVRIssueEquipmentCertificateException;
 
@@ -168,7 +168,8 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	*
 	* @param issueVehicleCertificateId the issue vehicle certificate ID
 	*/
-	public void removeByIssueVehicleCertificateId(int issueVehicleCertificateId);
+	public void removeByIssueVehicleCertificateId(
+		long issueVehicleCertificateId);
 
 	/**
 	* Returns the number of vr issue equipment certificates where issueVehicleCertificateId = &#63;.
@@ -176,7 +177,7 @@ public interface VRIssueEquipmentCertificatePersistence extends BasePersistence<
 	* @param issueVehicleCertificateId the issue vehicle certificate ID
 	* @return the number of matching vr issue equipment certificates
 	*/
-	public int countByIssueVehicleCertificateId(int issueVehicleCertificateId);
+	public int countByIssueVehicleCertificateId(long issueVehicleCertificateId);
 
 	/**
 	* Returns all the vr issue equipment certificates where vehiclecertificaterecordno = &#63;.

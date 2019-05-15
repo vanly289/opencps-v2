@@ -632,8 +632,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByYearofPeriodAndCorporationId",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -644,8 +643,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByYearofPeriodAndCorporationId",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			VRInventoryModelImpl.MTCORE_COLUMN_BITMASK |
 			VRInventoryModelImpl.YEAROFPERIOD_COLUMN_BITMASK |
@@ -657,8 +655,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByYearofPeriodAndCorporationId",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 
 	/**
@@ -671,7 +668,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public List<VRInventory> findByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, String corporationId) {
+		long yearofPeriod, long corporationId) {
 		return findByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
 			corporationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -692,7 +689,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public List<VRInventory> findByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, String corporationId, int start, int end) {
+		long yearofPeriod, long corporationId, int start, int end) {
 		return findByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
 			corporationId, start, end, null);
 	}
@@ -714,7 +711,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public List<VRInventory> findByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, String corporationId, int start, int end,
+		long yearofPeriod, long corporationId, int start, int end,
 		OrderByComparator<VRInventory> orderByComparator) {
 		return findByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
 			corporationId, start, end, orderByComparator, true);
@@ -738,7 +735,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public List<VRInventory> findByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, String corporationId, int start, int end,
+		long yearofPeriod, long corporationId, int start, int end,
 		OrderByComparator<VRInventory> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -770,8 +767,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 				for (VRInventory vrInventory : list) {
 					if ((mtCore != vrInventory.getMtCore()) ||
 							(yearofPeriod != vrInventory.getYearofPeriod()) ||
-							!Objects.equals(corporationId,
-								vrInventory.getCorporationId())) {
+							(corporationId != vrInventory.getCorporationId())) {
 						list = null;
 
 						break;
@@ -797,19 +793,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 
 			query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_YEAROFPERIOD_2);
 
-			boolean bindCorporationId = false;
-
-			if (corporationId == null) {
-				query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_1);
-			}
-			else if (corporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_3);
-			}
-			else {
-				bindCorporationId = true;
-
-				query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -835,9 +819,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 
 				qPos.add(yearofPeriod);
 
-				if (bindCorporationId) {
-					qPos.add(corporationId);
-				}
+				qPos.add(corporationId);
 
 				if (!pagination) {
 					list = (List<VRInventory>)QueryUtil.list(q, getDialect(),
@@ -881,7 +863,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public VRInventory findByYearofPeriodAndCorporationId_First(long mtCore,
-		long yearofPeriod, String corporationId,
+		long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator)
 		throws NoSuchVRInventoryException {
 		VRInventory vrInventory = fetchByYearofPeriodAndCorporationId_First(mtCore,
@@ -920,7 +902,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public VRInventory fetchByYearofPeriodAndCorporationId_First(long mtCore,
-		long yearofPeriod, String corporationId,
+		long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator) {
 		List<VRInventory> list = findByYearofPeriodAndCorporationId(mtCore,
 				yearofPeriod, corporationId, 0, 1, orderByComparator);
@@ -944,7 +926,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public VRInventory findByYearofPeriodAndCorporationId_Last(long mtCore,
-		long yearofPeriod, String corporationId,
+		long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator)
 		throws NoSuchVRInventoryException {
 		VRInventory vrInventory = fetchByYearofPeriodAndCorporationId_Last(mtCore,
@@ -983,7 +965,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public VRInventory fetchByYearofPeriodAndCorporationId_Last(long mtCore,
-		long yearofPeriod, String corporationId,
+		long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator) {
 		int count = countByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
 				corporationId);
@@ -1015,7 +997,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public VRInventory[] findByYearofPeriodAndCorporationId_PrevAndNext(
-		long id, long mtCore, long yearofPeriod, String corporationId,
+		long id, long mtCore, long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator)
 		throws NoSuchVRInventoryException {
 		VRInventory vrInventory = findByPrimaryKey(id);
@@ -1049,7 +1031,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 
 	protected VRInventory getByYearofPeriodAndCorporationId_PrevAndNext(
 		Session session, VRInventory vrInventory, long mtCore,
-		long yearofPeriod, String corporationId,
+		long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1068,19 +1050,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 
 		query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_YEAROFPERIOD_2);
 
-		boolean bindCorporationId = false;
-
-		if (corporationId == null) {
-			query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_1);
-		}
-		else if (corporationId.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_3);
-		}
-		else {
-			bindCorporationId = true;
-
-			query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_2);
-		}
+		query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1154,9 +1124,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 
 		qPos.add(yearofPeriod);
 
-		if (bindCorporationId) {
-			qPos.add(corporationId);
-		}
+		qPos.add(corporationId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(vrInventory);
@@ -1185,7 +1153,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public void removeByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, String corporationId) {
+		long yearofPeriod, long corporationId) {
 		for (VRInventory vrInventory : findByYearofPeriodAndCorporationId(
 				mtCore, yearofPeriod, corporationId, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
@@ -1203,7 +1171,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 	 */
 	@Override
 	public int countByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, String corporationId) {
+		long yearofPeriod, long corporationId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_YEAROFPERIODANDCORPORATIONID;
 
 		Object[] finderArgs = new Object[] { mtCore, yearofPeriod, corporationId };
@@ -1219,19 +1187,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 
 			query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_YEAROFPERIOD_2);
 
-			boolean bindCorporationId = false;
-
-			if (corporationId == null) {
-				query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_1);
-			}
-			else if (corporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_3);
-			}
-			else {
-				bindCorporationId = true;
-
-				query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_2);
 
 			String sql = query.toString();
 
@@ -1248,9 +1204,7 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 
 				qPos.add(yearofPeriod);
 
-				if (bindCorporationId) {
-					qPos.add(corporationId);
-				}
+				qPos.add(corporationId);
 
 				count = (Long)q.uniqueResult();
 
@@ -1273,12 +1227,8 @@ public class VRInventoryPersistenceImpl extends BasePersistenceImpl<VRInventory>
 		"vrInventory.mtCore = ? AND ";
 	private static final String _FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_YEAROFPERIOD_2 =
 		"vrInventory.yearofPeriod = ? AND ";
-	private static final String _FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_1 =
-		"vrInventory.corporationId IS NULL";
 	private static final String _FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_2 =
 		"vrInventory.corporationId = ?";
-	private static final String _FINDER_COLUMN_YEAROFPERIODANDCORPORATIONID_CORPORATIONID_3 =
-		"(vrInventory.corporationId IS NULL OR vrInventory.corporationId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_YEAROFPERIODANDVEHICLECLASS =
 		new FinderPath(VRInventoryModelImpl.ENTITY_CACHE_ENABLED,
 			VRInventoryModelImpl.FINDER_CACHE_ENABLED, VRInventoryImpl.class,

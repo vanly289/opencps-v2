@@ -239,30 +239,28 @@ public interface VROutputSheetDetailsModel extends BaseModel<VROutputSheetDetail
 	 *
 	 * @return the serial start no of this vr output sheet details
 	 */
-	@AutoEscape
-	public String getSerialStartNo();
+	public long getSerialStartNo();
 
 	/**
 	 * Sets the serial start no of this vr output sheet details.
 	 *
 	 * @param serialStartNo the serial start no of this vr output sheet details
 	 */
-	public void setSerialStartNo(String serialStartNo);
+	public void setSerialStartNo(long serialStartNo);
 
 	/**
 	 * Returns the serial end no of this vr output sheet details.
 	 *
 	 * @return the serial end no of this vr output sheet details
 	 */
-	@AutoEscape
-	public String getSerialEndNo();
+	public long getSerialEndNo();
 
 	/**
 	 * Sets the serial end no of this vr output sheet details.
 	 *
 	 * @param serialEndNo the serial end no of this vr output sheet details
 	 */
-	public void setSerialEndNo(String serialEndNo);
+	public void setSerialEndNo(long serialEndNo);
 
 	/**
 	 * Returns the sub total in document of this vr output sheet details.

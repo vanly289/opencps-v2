@@ -102,6 +102,13 @@ public class VRProductionPlantEquipmentLocalServiceWrapper
 		return _vrProductionPlantEquipmentLocalService.getVRProductionPlantEquipment(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductionPlantEquipment updateProductionPlantEquipment(
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return _vrProductionPlantEquipmentLocalService.updateProductionPlantEquipment(mapValues,
+			mtCore);
+	}
+
 	/**
 	* Updates the vr production plant equipment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -272,6 +279,12 @@ public class VRProductionPlantEquipmentLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _vrProductionPlantEquipmentLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteByproductPlantId(long mtCore, long productPlantId) {
+		_vrProductionPlantEquipmentLocalService.deleteByproductPlantId(mtCore,
+			productPlantId);
 	}
 
 	@Override

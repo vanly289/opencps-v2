@@ -153,11 +153,11 @@ public class VROutputSheetSoap implements Serializable {
 		_originalDocumentNo = originalDocumentNo;
 	}
 
-	public String getSupplierCorporationId() {
+	public long getSupplierCorporationId() {
 		return _supplierCorporationId;
 	}
 
-	public void setSupplierCorporationId(String supplierCorporationId) {
+	public void setSupplierCorporationId(long supplierCorporationId) {
 		_supplierCorporationId = supplierCorporationId;
 	}
 
@@ -257,19 +257,19 @@ public class VROutputSheetSoap implements Serializable {
 		_issueId = issueId;
 	}
 
-	public String getPurchaserId() {
+	public long getPurchaserId() {
 		return _purchaserId;
 	}
 
-	public void setPurchaserId(String purchaserId) {
+	public void setPurchaserId(long purchaserId) {
 		_purchaserId = purchaserId;
 	}
 
-	public String getPurchaserCorporationId() {
+	public long getPurchaserCorporationId() {
 		return _purchaserCorporationId;
 	}
 
-	public void setPurchaserCorporationId(String purchaserCorporationId) {
+	public void setPurchaserCorporationId(long purchaserCorporationId) {
 		_purchaserCorporationId = purchaserCorporationId;
 	}
 
@@ -342,7 +342,7 @@ public class VROutputSheetSoap implements Serializable {
 	private String _outputSheetNo;
 	private Date _outputSheetDate;
 	private String _originalDocumentNo;
-	private String _supplierCorporationId;
+	private long _supplierCorporationId;
 	private long _outputSheetType;
 	private String _maker;
 	private String _checker;
@@ -355,8 +355,8 @@ public class VROutputSheetSoap implements Serializable {
 	private Date _inventoryDate;
 	private long _dossierId;
 	private long _issueId;
-	private String _purchaserId;
-	private String _purchaserCorporationId;
+	private long _purchaserId;
+	private long _purchaserCorporationId;
 	private String _bookIDList;
 	private long _isApproval;
 	private long _totalQuantities;

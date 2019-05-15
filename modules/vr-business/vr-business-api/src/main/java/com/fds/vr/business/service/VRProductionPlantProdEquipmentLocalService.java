@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for VRProductionPlantProdEquipment. Methods of this
@@ -115,6 +116,9 @@ public interface VRProductionPlantProdEquipmentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRProductionPlantProdEquipment getVRProductionPlantProdEquipment(
 		long id) throws PortalException;
+
+	public VRProductionPlantProdEquipment updateProductionPlantProdEquipment(
+		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 
 	/**
 	* Updates the vr production plant prod equipment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -236,4 +240,6 @@ public interface VRProductionPlantProdEquipmentLocalService
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteByproductPlantID(long mtCore, long productPlantId);
 }

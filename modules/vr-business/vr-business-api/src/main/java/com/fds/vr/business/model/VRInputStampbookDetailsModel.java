@@ -216,9 +216,9 @@ public interface VRInputStampbookDetailsModel extends BaseModel<VRInputStampbook
 	/**
 	 * Sets the box no of this vr input stampbook details.
 	 *
-	 * @param BoxNo the box no of this vr input stampbook details
+	 * @param boxNo the box no of this vr input stampbook details
 	 */
-	public void setBoxNo(String BoxNo);
+	public void setBoxNo(String boxNo);
 
 	/**
 	 * Returns the vin no of this vr input stampbook details.
@@ -371,15 +371,14 @@ public interface VRInputStampbookDetailsModel extends BaseModel<VRInputStampbook
 	 *
 	 * @return the corporation ID of this vr input stampbook details
 	 */
-	@AutoEscape
-	public String getCorporationId();
+	public long getCorporationId();
 
 	/**
 	 * Sets the corporation ID of this vr input stampbook details.
 	 *
 	 * @param corporationId the corporation ID of this vr input stampbook details
 	 */
-	public void setCorporationId(String corporationId);
+	public void setCorporationId(long corporationId);
 
 	/**
 	 * Returns the issuing status of this vr input stampbook details.

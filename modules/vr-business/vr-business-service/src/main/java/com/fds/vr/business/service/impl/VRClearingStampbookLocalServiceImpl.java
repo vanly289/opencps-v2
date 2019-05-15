@@ -16,19 +16,15 @@ package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.fds.vr.business.model.VRClearingStampbook;
 import com.fds.vr.business.service.base.VRClearingStampbookLocalServiceBaseImpl;
-import com.fds.vr.business.service.base.VROutputSheetDetailsLocalServiceBaseImpl;
 
 /**
  * The implementation of the vr clearing stampbook local service.
@@ -55,8 +51,8 @@ public class VRClearingStampbookLocalServiceImpl
 	
 	public VRClearingStampbook updateClearingStambook(long id, long mtCore, long debitNoteId, 
 			long inputSheetId, long outputSheetId, long bookId, long certificateId, String certificateNumber,
-			Date certificateDate, String vehicleClass, String stampType, String stampShortNo, String serialStartNo,
-			String serialEndNo, long subTotalInDocument, long subTotalQuantities, long vehiclePrice,
+			Date certificateDate, String vehicleClass, String stampType, String stampShortNo, Long serialStartNo,
+			Long serialEndNo, long subTotalInDocument, long subTotalQuantities, long vehiclePrice,
 			long unitPrice, long totalAmount, long totalInUse, long totalNotUsed, long totalLost,
 			long totalCancelled, long totalReturned, String remark)
 		throws PortalException, SystemException {

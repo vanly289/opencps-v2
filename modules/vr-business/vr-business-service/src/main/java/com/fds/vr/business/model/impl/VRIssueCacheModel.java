@@ -65,7 +65,7 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(113);
+		StringBundler sb = new StringBundler(119);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -175,6 +175,12 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		sb.append(applicantmaker);
 		sb.append(", applicantchecker=");
 		sb.append(applicantchecker);
+		sb.append(", inspectorId=");
+		sb.append(inspectorId);
+		sb.append(", issueInspectorId=");
+		sb.append(issueInspectorId);
+		sb.append(", verifyInspectorId=");
+		sb.append(verifyInspectorId);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -330,13 +336,7 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		}
 
 		vrIssueImpl.setTotalInDocument(totalInDocument);
-
-		if (issueCorporationId == null) {
-			vrIssueImpl.setIssueCorporationId(StringPool.BLANK);
-		}
-		else {
-			vrIssueImpl.setIssueCorporationId(issueCorporationId);
-		}
+		vrIssueImpl.setIssueCorporationId(issueCorporationId);
 
 		if (verifyCorporationId == null) {
 			vrIssueImpl.setVerifyCorporationId(StringPool.BLANK);
@@ -345,12 +345,7 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 			vrIssueImpl.setVerifyCorporationId(verifyCorporationId);
 		}
 
-		if (digitalissuestatus == null) {
-			vrIssueImpl.setDigitalissuestatus(StringPool.BLANK);
-		}
-		else {
-			vrIssueImpl.setDigitalissuestatus(digitalissuestatus);
-		}
+		vrIssueImpl.setDigitalissuestatus(digitalissuestatus);
 
 		if (issueType == null) {
 			vrIssueImpl.setIssueType(StringPool.BLANK);
@@ -481,6 +476,10 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 			vrIssueImpl.setApplicantchecker(applicantchecker);
 		}
 
+		vrIssueImpl.setInspectorId(inspectorId);
+		vrIssueImpl.setIssueInspectorId(issueInspectorId);
+		vrIssueImpl.setVerifyInspectorId(verifyInspectorId);
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrIssueImpl.setModifyDate(null);
 		}
@@ -532,9 +531,11 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		methodOfIssue = objectInput.readUTF();
 
 		totalInDocument = objectInput.readLong();
-		issueCorporationId = objectInput.readUTF();
+
+		issueCorporationId = objectInput.readLong();
 		verifyCorporationId = objectInput.readUTF();
-		digitalissuestatus = objectInput.readUTF();
+
+		digitalissuestatus = objectInput.readInt();
 		issueType = objectInput.readUTF();
 
 		averageSTBQuantity = objectInput.readInt();
@@ -570,6 +571,12 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		leadername = objectInput.readUTF();
 		applicantmaker = objectInput.readUTF();
 		applicantchecker = objectInput.readUTF();
+
+		inspectorId = objectInput.readLong();
+
+		issueInspectorId = objectInput.readLong();
+
+		verifyInspectorId = objectInput.readLong();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -711,12 +718,7 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 
 		objectOutput.writeLong(totalInDocument);
 
-		if (issueCorporationId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(issueCorporationId);
-		}
+		objectOutput.writeLong(issueCorporationId);
 
 		if (verifyCorporationId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -725,12 +727,7 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 			objectOutput.writeUTF(verifyCorporationId);
 		}
 
-		if (digitalissuestatus == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(digitalissuestatus);
-		}
+		objectOutput.writeInt(digitalissuestatus);
 
 		if (issueType == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -854,6 +851,11 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 			objectOutput.writeUTF(applicantchecker);
 		}
 
+		objectOutput.writeLong(inspectorId);
+
+		objectOutput.writeLong(issueInspectorId);
+
+		objectOutput.writeLong(verifyInspectorId);
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -883,9 +885,9 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 	public String remarks;
 	public String methodOfIssue;
 	public long totalInDocument;
-	public String issueCorporationId;
+	public long issueCorporationId;
 	public String verifyCorporationId;
-	public String digitalissuestatus;
+	public int digitalissuestatus;
 	public String issueType;
 	public int averageSTBQuantity;
 	public int maxMonthQuantity;
@@ -912,6 +914,9 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 	public String leadername;
 	public String applicantmaker;
 	public String applicantchecker;
+	public long inspectorId;
+	public long issueInspectorId;
+	public long verifyInspectorId;
 	public long modifyDate;
 	public long syncDate;
 }

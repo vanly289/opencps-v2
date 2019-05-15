@@ -147,11 +147,11 @@ public class VRInputSheetSoap implements Serializable {
 		_originalDocumentNo = originalDocumentNo;
 	}
 
-	public String getCorporationId() {
+	public long getCorporationId() {
 		return _corporationId;
 	}
 
-	public void setCorporationId(String corporationId) {
+	public void setCorporationId(long corporationId) {
 		_corporationId = corporationId;
 	}
 
@@ -288,7 +288,7 @@ public class VRInputSheetSoap implements Serializable {
 	private String _inputSheetNo;
 	private Date _inputSheetDate;
 	private String _originalDocumentNo;
-	private String _corporationId;
+	private long _corporationId;
 	private long _inputSheetType;
 	private String _maker;
 	private String _checker;

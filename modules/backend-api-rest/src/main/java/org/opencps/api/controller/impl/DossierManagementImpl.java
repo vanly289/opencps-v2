@@ -285,8 +285,7 @@ public class DossierManagementImpl implements DossierManagement {
 			// _log.info("3");
 			dossierPermission.hasGetDossiers(groupId, user.getUserId(), query.getSecetKey());
 
-			// _log.info("31" + query.getEnd());
-			if (query.getEnd() == 0) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 
@@ -834,9 +833,9 @@ public class DossierManagementImpl implements DossierManagement {
 						if (input.getIsSynAction() == 1) {
 							//_log.info(JSONFactoryUtil.looseSerialize(input));
 							_log.info("Call in SynAction **********8 ===========");
-							dossierAction = actions.doAction(groupId, dossier,
-									option, proAction, input.getActionCode(), input.getActionUser(),
-									input.getActionNote(), input.getAssignUserId(), 0l, subUsers, serviceContext);
+							dossierAction = actions.doAction(groupId, dossier, option, proAction, input.getActionCode(),
+									input.getActionUser(), input.getActionNote(), input.getAssignUserId(), 0l, subUsers,
+									input.getPayment(), serviceContext);
 		
 						} else {
 							if (!auth.isAuth(serviceContext)) {
@@ -846,9 +845,9 @@ public class DossierManagementImpl implements DossierManagement {
 							_log.info("input.getActionCode(): " + input.getActionCode());
 							_log.info("action.getProcessActionId(): " + proAction.getProcessActionId());
 							_log.info("input.getActionUser(): " + input.getActionUser());
-							dossierAction = actions.doAction(groupId, dossier, option, proAction,
-									input.getActionCode(), input.getActionUser(), input.getActionNote(), input.getAssignUserId(),
-									user.getUserId(), subUsers, serviceContext);
+							dossierAction = actions.doAction(groupId, dossier, option, proAction, input.getActionCode(),
+									input.getActionUser(), input.getActionNote(), input.getAssignUserId(),
+									user.getUserId(), subUsers, input.getPayment(), serviceContext);
 						}
 					}
 				}
@@ -1431,7 +1430,7 @@ public class DossierManagementImpl implements DossierManagement {
 				dossierPermission.hasGetDossiers(groupId, user.getUserId(), query.getSecetKey());
 			}
 
-			if (query.getEnd() == 0) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 
@@ -1564,7 +1563,7 @@ public class DossierManagementImpl implements DossierManagement {
 				dossierPermission.hasGetDossiers(groupId, user.getUserId(), query.getSecetKey());
 			}
 
-			if (query.getEnd() == 0) {
+			if (Validator.isNull(query.getEnd()) || query.getEnd() == 0) {
 
 				query.setStart(-1);
 

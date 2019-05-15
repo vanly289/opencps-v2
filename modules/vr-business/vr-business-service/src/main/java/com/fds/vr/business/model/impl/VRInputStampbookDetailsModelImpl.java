@@ -84,7 +84,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 			{ "inputSheetId", Types.BIGINT },
 			{ "bookId", Types.BIGINT },
 			{ "purchaserId", Types.VARCHAR },
-			{ "corporationId", Types.VARCHAR },
+			{ "corporationId", Types.BIGINT },
 			{ "issuingStatus", Types.BIGINT },
 			{ "clearingStatus", Types.BIGINT },
 			{ "stampStatus", Types.BIGINT },
@@ -122,7 +122,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 		TABLE_COLUMNS_MAP.put("inputSheetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("bookId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("purchaserId", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("corporationId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("corporationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("issuingStatus", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("clearingStatus", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("stampStatus", Types.BIGINT);
@@ -137,7 +137,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_inputstampbookdetails (id LONG not null primary key,mtCore LONG,stampSerialNo VARCHAR(75) null,sequenceNo LONG,dossierId LONG,certificateId LONG,certificateNumber VARCHAR(75) null,certificateDate DATE null,vehicleRecordId LONG,frameNo VARCHAR(75) null,BoxNo VARCHAR(75) null,vinNo VARCHAR(75) null,engineNo VARCHAR(75) null,qrCode VARCHAR(75) null,copies LONG,markupFulfill LONG,replacedSerialNo VARCHAR(75) null,remark VARCHAR(75) null,inputSheetId LONG,bookId LONG,purchaserId VARCHAR(75) null,corporationId VARCHAR(75) null,issuingStatus LONG,clearingStatus LONG,stampStatus LONG,issuingDate DATE null,printingDate DATE null,noticeofLostDate DATE null,noticeofCancelDate DATE null,noticeofReturnDate DATE null,clearingDate DATE null,clearingAdvancePaymentID LONG,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_inputstampbookdetails (id LONG not null primary key,mtCore LONG,stampSerialNo VARCHAR(75) null,sequenceNo LONG,dossierId LONG,certificateId LONG,certificateNumber VARCHAR(75) null,certificateDate DATE null,vehicleRecordId LONG,frameNo VARCHAR(75) null,BoxNo VARCHAR(75) null,vinNo VARCHAR(75) null,engineNo VARCHAR(75) null,qrCode VARCHAR(75) null,copies LONG,markupFulfill LONG,replacedSerialNo VARCHAR(75) null,remark VARCHAR(75) null,inputSheetId LONG,bookId LONG,purchaserId VARCHAR(75) null,corporationId LONG,issuingStatus LONG,clearingStatus LONG,stampStatus LONG,issuingDate DATE null,printingDate DATE null,noticeofLostDate DATE null,noticeofCancelDate DATE null,noticeofReturnDate DATE null,clearingDate DATE null,clearingAdvancePaymentID LONG,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_inputstampbookdetails";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrInputStampbookDetails.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_inputstampbookdetails.modifyDate DESC";
@@ -160,8 +160,9 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	public static final long DOSSIERID_COLUMN_BITMASK = 16L;
 	public static final long INPUTSHEETID_COLUMN_BITMASK = 32L;
 	public static final long MTCORE_COLUMN_BITMASK = 64L;
-	public static final long VEHICLERECORDID_COLUMN_BITMASK = 128L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 256L;
+	public static final long SEQUENCENO_COLUMN_BITMASK = 128L;
+	public static final long VEHICLERECORDID_COLUMN_BITMASK = 256L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 512L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRInputStampbookDetails"));
 
@@ -212,7 +213,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 		attributes.put("certificateDate", getCertificateDate());
 		attributes.put("vehicleRecordId", getVehicleRecordId());
 		attributes.put("frameNo", getFrameNo());
-		attributes.put("BoxNo", getBoxNo());
+		attributes.put("boxNo", getBoxNo());
 		attributes.put("vinNo", getVinNo());
 		attributes.put("engineNo", getEngineNo());
 		attributes.put("qrCode", getQrCode());
@@ -305,10 +306,10 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 			setFrameNo(frameNo);
 		}
 
-		String BoxNo = (String)attributes.get("BoxNo");
+		String boxNo = (String)attributes.get("boxNo");
 
-		if (BoxNo != null) {
-			setBoxNo(BoxNo);
+		if (boxNo != null) {
+			setBoxNo(boxNo);
 		}
 
 		String vinNo = (String)attributes.get("vinNo");
@@ -371,7 +372,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 			setPurchaserId(purchaserId);
 		}
 
-		String corporationId = (String)attributes.get("corporationId");
+		Long corporationId = (Long)attributes.get("corporationId");
 
 		if (corporationId != null) {
 			setCorporationId(corporationId);
@@ -505,7 +506,19 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 
 	@Override
 	public void setSequenceNo(long sequenceNo) {
+		_columnBitmask |= SEQUENCENO_COLUMN_BITMASK;
+
+		if (!_setOriginalSequenceNo) {
+			_setOriginalSequenceNo = true;
+
+			_originalSequenceNo = _sequenceNo;
+		}
+
 		_sequenceNo = sequenceNo;
+	}
+
+	public long getOriginalSequenceNo() {
+		return _originalSequenceNo;
 	}
 
 	@Override
@@ -626,17 +639,17 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 
 	@Override
 	public String getBoxNo() {
-		if (_BoxNo == null) {
+		if (_boxNo == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _BoxNo;
+			return _boxNo;
 		}
 	}
 
 	@Override
-	public void setBoxNo(String BoxNo) {
-		_BoxNo = BoxNo;
+	public void setBoxNo(String boxNo) {
+		_boxNo = boxNo;
 	}
 
 	@Override
@@ -794,28 +807,25 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	}
 
 	@Override
-	public String getCorporationId() {
-		if (_corporationId == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _corporationId;
-		}
+	public long getCorporationId() {
+		return _corporationId;
 	}
 
 	@Override
-	public void setCorporationId(String corporationId) {
+	public void setCorporationId(long corporationId) {
 		_columnBitmask |= CORPORATIONID_COLUMN_BITMASK;
 
-		if (_originalCorporationId == null) {
+		if (!_setOriginalCorporationId) {
+			_setOriginalCorporationId = true;
+
 			_originalCorporationId = _corporationId;
 		}
 
 		_corporationId = corporationId;
 	}
 
-	public String getOriginalCorporationId() {
-		return GetterUtil.getString(_originalCorporationId);
+	public long getOriginalCorporationId() {
+		return _originalCorporationId;
 	}
 
 	@Override
@@ -1072,6 +1082,10 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 
 		vrInputStampbookDetailsModelImpl._setOriginalMtCore = false;
 
+		vrInputStampbookDetailsModelImpl._originalSequenceNo = vrInputStampbookDetailsModelImpl._sequenceNo;
+
+		vrInputStampbookDetailsModelImpl._setOriginalSequenceNo = false;
+
 		vrInputStampbookDetailsModelImpl._originalDossierId = vrInputStampbookDetailsModelImpl._dossierId;
 
 		vrInputStampbookDetailsModelImpl._setOriginalDossierId = false;
@@ -1095,6 +1109,8 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 		vrInputStampbookDetailsModelImpl._setOriginalBookId = false;
 
 		vrInputStampbookDetailsModelImpl._originalCorporationId = vrInputStampbookDetailsModelImpl._corporationId;
+
+		vrInputStampbookDetailsModelImpl._setOriginalCorporationId = false;
 
 		vrInputStampbookDetailsModelImpl._columnBitmask = 0;
 	}
@@ -1148,12 +1164,12 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 			vrInputStampbookDetailsCacheModel.frameNo = null;
 		}
 
-		vrInputStampbookDetailsCacheModel.BoxNo = getBoxNo();
+		vrInputStampbookDetailsCacheModel.boxNo = getBoxNo();
 
-		String BoxNo = vrInputStampbookDetailsCacheModel.BoxNo;
+		String boxNo = vrInputStampbookDetailsCacheModel.boxNo;
 
-		if ((BoxNo != null) && (BoxNo.length() == 0)) {
-			vrInputStampbookDetailsCacheModel.BoxNo = null;
+		if ((boxNo != null) && (boxNo.length() == 0)) {
+			vrInputStampbookDetailsCacheModel.boxNo = null;
 		}
 
 		vrInputStampbookDetailsCacheModel.vinNo = getVinNo();
@@ -1213,12 +1229,6 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 		}
 
 		vrInputStampbookDetailsCacheModel.corporationId = getCorporationId();
-
-		String corporationId = vrInputStampbookDetailsCacheModel.corporationId;
-
-		if ((corporationId != null) && (corporationId.length() == 0)) {
-			vrInputStampbookDetailsCacheModel.corporationId = null;
-		}
 
 		vrInputStampbookDetailsCacheModel.issuingStatus = getIssuingStatus();
 
@@ -1327,7 +1337,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 		sb.append(getVehicleRecordId());
 		sb.append(", frameNo=");
 		sb.append(getFrameNo());
-		sb.append(", BoxNo=");
+		sb.append(", boxNo=");
 		sb.append(getBoxNo());
 		sb.append(", vinNo=");
 		sb.append(getVinNo());
@@ -1429,7 +1439,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 		sb.append(getFrameNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>BoxNo</column-name><column-value><![CDATA[");
+			"<column><column-name>boxNo</column-name><column-value><![CDATA[");
 		sb.append(getBoxNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
@@ -1540,6 +1550,8 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	private boolean _setOriginalMtCore;
 	private String _stampSerialNo;
 	private long _sequenceNo;
+	private long _originalSequenceNo;
+	private boolean _setOriginalSequenceNo;
 	private long _dossierId;
 	private long _originalDossierId;
 	private boolean _setOriginalDossierId;
@@ -1553,7 +1565,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	private long _originalVehicleRecordId;
 	private boolean _setOriginalVehicleRecordId;
 	private String _frameNo;
-	private String _BoxNo;
+	private String _boxNo;
 	private String _vinNo;
 	private String _engineNo;
 	private String _qrCode;
@@ -1568,8 +1580,9 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	private long _originalBookId;
 	private boolean _setOriginalBookId;
 	private String _purchaserId;
-	private String _corporationId;
-	private String _originalCorporationId;
+	private long _corporationId;
+	private long _originalCorporationId;
+	private boolean _setOriginalCorporationId;
 	private long _issuingStatus;
 	private long _clearingStatus;
 	private long _stampStatus;

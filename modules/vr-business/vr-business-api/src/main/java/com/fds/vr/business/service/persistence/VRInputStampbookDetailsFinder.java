@@ -22,4 +22,8 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface VRInputStampbookDetailsFinder {
+	public java.lang.Long[] findStartNoEndNoBySequence(long inputStampbookId);
+
+	public java.util.List<java.lang.Object[]> findStampbookByVehicleClass(
+		java.lang.String vehicleClass, long corporationId);
 }

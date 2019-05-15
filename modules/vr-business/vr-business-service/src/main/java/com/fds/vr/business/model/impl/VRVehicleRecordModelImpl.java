@@ -65,6 +65,7 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "id", Types.BIGINT },
 			{ "mtCore", Types.BIGINT },
+			{ "issueId", Types.BIGINT },
 			{ "issueVehicleCertificateId", Types.BIGINT },
 			{ "dossierId", Types.BIGINT },
 			{ "applicantProfileId", Types.BIGINT },
@@ -95,6 +96,7 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 	static {
 		TABLE_COLUMNS_MAP.put("id", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mtCore", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("issueId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("issueVehicleCertificateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("dossierId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("applicantProfileId", Types.BIGINT);
@@ -121,7 +123,7 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 		TABLE_COLUMNS_MAP.put("certificaterecordno", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_vehiclerecord (id LONG not null primary key,mtCore LONG,issueVehicleCertificateId LONG,dossierId LONG,applicantProfileId LONG,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,certificateId LONG,productionNumber VARCHAR(75) null,productionDate DATE null,frameNo VARCHAR(75) null,boxNo VARCHAR(75) null,engineNo VARCHAR(75) null,color VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialNo VARCHAR(75) null,vehicleRecordStatus LONG,printingStatus LONG,attachedFile LONG,signName VARCHAR(75) null,signTitle VARCHAR(75) null,signPlace VARCHAR(75) null,signDate DATE null,modifyDate DATE null,syncDate DATE null,certificaterecordno VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_vehiclerecord (id LONG not null primary key,mtCore LONG,issueId LONG,issueVehicleCertificateId LONG,dossierId LONG,applicantProfileId LONG,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,certificateId LONG,productionNumber VARCHAR(75) null,productionDate DATE null,frameNo VARCHAR(75) null,boxNo VARCHAR(75) null,engineNo VARCHAR(75) null,color VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialNo VARCHAR(75) null,vehicleRecordStatus LONG,printingStatus LONG,attachedFile LONG,signName VARCHAR(75) null,signTitle VARCHAR(75) null,signPlace VARCHAR(75) null,signDate DATE null,modifyDate DATE null,syncDate DATE null,certificaterecordno VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_vehiclerecord";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrVehicleRecord.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_vehiclerecord.modifyDate DESC";
@@ -187,6 +189,7 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
+		attributes.put("issueId", getIssueId());
 		attributes.put("issueVehicleCertificateId",
 			getIssueVehicleCertificateId());
 		attributes.put("dossierId", getDossierId());
@@ -231,6 +234,12 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 
 		if (mtCore != null) {
 			setMtCore(mtCore);
+		}
+
+		Long issueId = (Long)attributes.get("issueId");
+
+		if (issueId != null) {
+			setIssueId(issueId);
 		}
 
 		Long issueVehicleCertificateId = (Long)attributes.get(
@@ -410,6 +419,16 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 
 	public long getOriginalMtCore() {
 		return _originalMtCore;
+	}
+
+	@Override
+	public long getIssueId() {
+		return _issueId;
+	}
+
+	@Override
+	public void setIssueId(long issueId) {
+		_issueId = issueId;
 	}
 
 	@Override
@@ -824,6 +843,7 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 
 		vrVehicleRecordImpl.setId(getId());
 		vrVehicleRecordImpl.setMtCore(getMtCore());
+		vrVehicleRecordImpl.setIssueId(getIssueId());
 		vrVehicleRecordImpl.setIssueVehicleCertificateId(getIssueVehicleCertificateId());
 		vrVehicleRecordImpl.setDossierId(getDossierId());
 		vrVehicleRecordImpl.setApplicantProfileId(getApplicantProfileId());
@@ -949,6 +969,8 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 		vrVehicleRecordCacheModel.id = getId();
 
 		vrVehicleRecordCacheModel.mtCore = getMtCore();
+
+		vrVehicleRecordCacheModel.issueId = getIssueId();
 
 		vrVehicleRecordCacheModel.issueVehicleCertificateId = getIssueVehicleCertificateId();
 
@@ -1110,12 +1132,14 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{id=");
 		sb.append(getId());
 		sb.append(", mtCore=");
 		sb.append(getMtCore());
+		sb.append(", issueId=");
+		sb.append(getIssueId());
 		sb.append(", issueVehicleCertificateId=");
 		sb.append(getIssueVehicleCertificateId());
 		sb.append(", dossierId=");
@@ -1171,7 +1195,7 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(82);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRVehicleRecord");
@@ -1184,6 +1208,10 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 		sb.append(
 			"<column><column-name>mtCore</column-name><column-value><![CDATA[");
 		sb.append(getMtCore());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>issueId</column-name><column-value><![CDATA[");
+		sb.append(getIssueId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>issueVehicleCertificateId</column-name><column-value><![CDATA[");
@@ -1295,6 +1323,7 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 	private long _mtCore;
 	private long _originalMtCore;
 	private boolean _setOriginalMtCore;
+	private long _issueId;
 	private long _issueVehicleCertificateId;
 	private long _originalIssueVehicleCertificateId;
 	private boolean _setOriginalIssueVehicleCertificateId;

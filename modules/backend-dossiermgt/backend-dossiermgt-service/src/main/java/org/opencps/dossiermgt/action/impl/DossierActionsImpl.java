@@ -6,11 +6,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
+import javax.ws.rs.HttpMethod;
 
 import org.opencps.datamgt.model.DictCollection;
 import org.opencps.datamgt.model.DictItem;
@@ -23,7 +24,7 @@ import org.opencps.dossiermgt.action.util.DossierContentGenerator;
 import org.opencps.dossiermgt.action.util.DossierMgtUtils;
 import org.opencps.dossiermgt.action.util.DossierNumberGenerator;
 import org.opencps.dossiermgt.action.util.DossierPaymentUtils;
-import org.opencps.dossiermgt.constants.DeliverableTypesTerm;
+import org.opencps.dossiermgt.action.util.SpecialCharacterUtils;
 import org.opencps.dossiermgt.constants.DossierActionTerm;
 import org.opencps.dossiermgt.constants.DossierFileTerm;
 import org.opencps.dossiermgt.constants.DossierPartTerm;
@@ -31,12 +32,10 @@ import org.opencps.dossiermgt.constants.DossierStatusConstants;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.constants.ProcessActionTerm;
 import org.opencps.dossiermgt.constants.ProcessStepRoleTerm;
-import org.opencps.dossiermgt.model.DeliverableType;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierActionUser;
 import org.opencps.dossiermgt.model.DossierFile;
-import org.opencps.dossiermgt.model.DossierMark;
 import org.opencps.dossiermgt.model.DossierPart;
 import org.opencps.dossiermgt.model.DossierTemplate;
 import org.opencps.dossiermgt.model.PaymentFile;
@@ -47,13 +46,12 @@ import org.opencps.dossiermgt.model.ProcessStep;
 import org.opencps.dossiermgt.model.ProcessStepRole;
 import org.opencps.dossiermgt.model.ServiceProcess;
 import org.opencps.dossiermgt.model.ServiceProcessRole;
-import org.opencps.dossiermgt.model.impl.ProcessActionImpl;
-import org.opencps.dossiermgt.service.DeliverableTypeLocalServiceUtil;
+import org.opencps.dossiermgt.scheduler.InvokeREST;
+import org.opencps.dossiermgt.scheduler.RESTFulConfiguration;
 import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierActionUserLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
-import org.opencps.dossiermgt.service.DossierMarkLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierRequestUDLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
@@ -68,11 +66,13 @@ import org.opencps.dossiermgt.service.ServiceProcessRoleLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 import org.opencps.usermgt.service.util.OCPSUserUtils;
 
+import com.fds.vr.business.model.VRVehicleTypeCertificate;
+import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -104,6 +104,8 @@ public class DossierActionsImpl implements DossierActions {
 	public static final String AUTO_EVENT_TIMMER = "timer";
 	public static final String DOSSIER_SATUS_DC_CODE = "DOSSIER_STATUS";
 	public static final String DOSSIER_SUB_SATUS_DC_CODE = "DOSSIER_SUB_STATUS";
+	public static final String RT_EXPIRED = "expired";
+	public static final String RT_EXPIRING = "expiring";
 
 	@Override
 	public JSONObject getDossiers(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
@@ -111,7 +113,7 @@ public class DossierActionsImpl implements DossierActions {
 
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 
-		Hits hits = null;
+		long total = 0;
 
 		SearchContext searchContext = new SearchContext();
 		searchContext.setCompanyId(companyId);
@@ -119,23 +121,150 @@ public class DossierActionsImpl implements DossierActions {
 		try {
 
 			String status = GetterUtil.getString(params.get(DossierTerm.STATUS));
-			_log.debug("status: " + status);
+			String state = GetterUtil.getString(params.get(DossierTerm.STATE));
+			_log.info("status: " + status);
 			if (Validator.isNotNull(status)) {
+				if (Validator.isNotNull(state) && (state.contains(RT_EXPIRED) || state.contains(RT_EXPIRING))) {
+					params.put(DossierTerm.STATE, StringPool.BLANK);
+				}
+				List<Document> allDocsList = new ArrayList<Document>();
 				if (!status.contains(StringPool.COMMA)) {
 					if (!status.equals("done") && !status.equals("cancelled")) {
 						_log.debug("done: " + status);
 						params.put(DossierTerm.NOT_STATE, "cancelling");
 					}
 				}
+				Hits hitStatus = DossierLocalServiceUtil.searchLucene(params, sorts, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, searchContext);
+
+				if (hitStatus != null && hitStatus.getLength() > 0) {
+					long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+					_log.info("count: " + count);
+					allDocsList.addAll(hitStatus.toList());
+					_log.info("SizeList1: " + hitStatus.toList().size());
+					total += count;
+				}
+				//
+				
+				if (Validator.isNotNull(state) && (state.contains(RT_EXPIRED) || state.contains(RT_EXPIRING))) {
+					if (state.contains(StringPool.COMMA)) {
+						String[] stateArr = state.split(StringPool.COMMA);
+						if (stateArr != null) {
+							for (String statusState : stateArr) {
+								if (statusState.equals(RT_EXPIRED)) {
+									List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
+											.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_WATTING);
+									if (certTypeList != null && certTypeList.size() > 0) {
+										int lenghtCert = certTypeList.size();
+										String strDossierNo = StringPool.BLANK;
+										if (lenghtCert == 1) {
+											strDossierNo = SpecialCharacterUtils.splitSpecial(certTypeList.get(0).getDossierNo());
+										} else {
+											StringBuilder sb = new StringBuilder();
+											for (int i = 0; i < lenghtCert; i++) {
+												VRVehicleTypeCertificate certType = certTypeList.get(i);
+												if (i == lenghtCert - 1) {
+													sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
+												} else {
+													sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
+													sb.append(StringPool.COMMA);
+												}
+											}
+											strDossierNo = sb.toString();
+										}
+										_log.info("strDossierNo: " + strDossierNo);
+										params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+									}
+									Hits hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
+
+									if (hitState != null && hitState.getLength() > 0) {
+										long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+										_log.info("count: " + count);
+										allDocsList.addAll(hitState.toList());
+										_log.info("SizeList1: " + hitStatus.toList().size());
+										total += count;
+									}
+								}
+								//
+								if (state.equals(RT_EXPIRING)) {
+									List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
+											.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_ACTIVE); // get to status = 0 or 1
+									if (certTypeList != null && certTypeList.size() > 0) {
+										String strDossierNo = DossierMgtUtils.checkConditionState(certTypeList);
+										_log.info("strDossierNo: " + strDossierNo);
+										params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+									}
+									Hits hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
+
+									if (hitState != null && hitState.getLength() > 0) {
+										long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+										_log.info("count: " + count);
+										allDocsList.addAll(hitState.toList());
+										_log.info("SizeList1: " + hitStatus.toList().size());
+										total += count;
+									}
+								}
+							}
+						}
+					}
+				}
+				result.put("data", allDocsList);
+				result.put("total", total);
+			} else {
+				if (Validator.isNotNull(state) && (state.contains(RT_EXPIRED) || state.contains(RT_EXPIRING))) {
+					params.put(DossierTerm.STATE, StringPool.BLANK);
+					if (state.equals(RT_EXPIRED)) {
+						List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
+								.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_WATTING);
+						if (certTypeList != null && certTypeList.size() > 0) {
+							int lenghtCert = certTypeList.size();
+							String strDossierNo = StringPool.BLANK;
+							if (lenghtCert == 1) {
+								strDossierNo = SpecialCharacterUtils.splitSpecial(certTypeList.get(0).getDossierNo());
+							} else {
+								StringBuilder sb = new StringBuilder();
+								for (int i = 0; i < lenghtCert; i++) {
+									VRVehicleTypeCertificate certType = certTypeList.get(i);
+									if (i == lenghtCert - 1) {
+										sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
+									} else {
+										sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
+										sb.append(StringPool.COMMA);
+									}
+								}
+								strDossierNo = sb.toString();
+							}
+							_log.info("strDossierNo: " + strDossierNo);
+							params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+						}
+
+						Hits hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
+						long totalState = DossierLocalServiceUtil.countLucene(params, searchContext);
+
+						result.put("data", hitState.toList());
+						result.put("total", totalState);
+						//
+						return result;
+					}
+
+					if (state.equals(RT_EXPIRING)) {
+						List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
+								.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_ACTIVE); // get to status = 0 or 1
+						if (certTypeList != null && certTypeList.size() > 0) {
+							String strDossierNo = DossierMgtUtils.checkConditionState(certTypeList);
+							_log.info("strDossierNo: " + strDossierNo);
+							params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+							}
+						Hits hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
+						long totalState = DossierLocalServiceUtil.countLucene(params, searchContext);
+
+						result.put("data", hitState.toList());
+						result.put("total", totalState);
+						//
+						return result;
+					}
+				}
 			}
-
-			hits = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
-
-			result.put("data", hits.toList());
-
-			long total = DossierLocalServiceUtil.countLucene(params, searchContext);
-
-			result.put("total", total);
 
 		} catch (Exception e) {
 			_log.error(e);
@@ -1286,9 +1415,8 @@ public class DossierActionsImpl implements DossierActions {
 	@Override
 	public DossierAction doAction(long groupId, Dossier dossier, ProcessOption option, ProcessAction proAction,
 			String actionCode, String actionUser, String actionNote, long assignUserId, long userId, String subUsers,
-			ServiceContext context) throws PortalException {
+			String payment, ServiceContext context) throws PortalException {
 
-		long startTime = System.currentTimeMillis();
 		_log.info("START DO ACTION ==========:GroupID: " + groupId);
 
 		// Update DossierSync (if it in the client)
@@ -1301,18 +1429,126 @@ public class DossierActionsImpl implements DossierActions {
 		_log.debug("applicantNote: " + applicantNote);
 		dossier.setApplicantNote(applicantNote);
 
-		long serviceProcessId = option.getServiceProcessId();
-		_log.debug("serviceProcessId: " + serviceProcessId);
+		// update reference dossier
+		DossierAction prvAction = DossierActionLocalServiceUtil.getByNextActionId(dossierId, 0l);
 
-		ServiceProcess serviceProcess = ServiceProcessLocalServiceUtil.fetchServiceProcess(serviceProcessId);
+		ServiceProcess serviceProcess = null;
+		long serviceProcessId = 0;
+		if ((option != null || prvAction != null) && proAction != null) {
+			serviceProcessId = (option != null ? option.getServiceProcessId() : prvAction.getServiceProcessId());
+			serviceProcess = ServiceProcessLocalServiceUtil.fetchServiceProcess(serviceProcessId);
+			// Add paymentFile
+//			String paymentFee = proAction.getPaymentFee();
+			String paymentFee = StringPool.BLANK;
+//			_log.info("Payment fee: " + JSONFactoryUtil.looseSerialize(proAction.getPaymentFee()) + ", request payment: " + proAction.getRequestPayment());
+			if (proAction.getRequestPayment() == ProcessActionTerm.REQUEST_PAYMENT_YEU_CAU_QUYET_TOAN_PHI) {
 
-		// Add paymentFile
-		if (Validator.isNotNull(proAction.getPaymentFee())) {
-			try {
-				DossierPaymentUtils.processPaymentFile(proAction.getPaymentFee(), groupId, dossierId, userId,
-						context, serviceProcess.getServerNo());
-			} catch (Exception e) {
-				_log.error("Cannot create PaymentFile with pattern \"" + proAction.getPaymentFee() + "\"");
+				JSONObject paymentFeeJSON = null;
+				try {
+					paymentFeeJSON = JSONFactoryUtil.createJSONObject(proAction.getPaymentFee());
+					paymentFee = paymentFeeJSON.has("paymentFee") ? paymentFeeJSON.getString("paymentFee") : StringPool.BLANK;
+				} catch (JSONException e) {
+					_log.debug(e);
+				}
+				PaymentFile oldPaymentFile = PaymentFileLocalServiceUtil.getByG_ID(groupId, dossier.getDossierId());
+				if (oldPaymentFile != null) {
+//					//if (Validator.isNotNull(paymentNote))
+//					//	oldPaymentFile.setPaymentNote(paymentNote);
+//					try {
+//						PaymentFile paymentFile = PaymentFileLocalServiceUtil.updateApplicantFeeAmount(
+//								oldPaymentFile.getPaymentFileId(), proAction.getRequestPayment(), feeAmount,
+//								serviceAmount, shipAmount, paymentNote);
+//						
+//						String generatorPayURL = PaymentUrlGenerator.generatorPayURL(groupId,
+//								paymentFile.getPaymentFileId(), paymentFee, dossierId);
+//						
+//						JSONObject epaymentProfileJsonNew = JSONFactoryUtil.createJSONObject(paymentFile.getEpaymentProfile());
+//						
+//						epaymentProfileJsonNew.put("keypayUrl", generatorPayURL);
+//						
+//						PaymentFileActions actions = new PaymentFileActionsImpl();
+//						
+//						actions.updateEProfile(dossierId, paymentFile.getReferenceUid(), epaymentProfileJsonNew.toJSONString(),
+//								context);
+//						
+//					} catch (IOException e) {
+//						_log.error(e);
+//					}
+				} else {
+					_log.info("proAction.getPaymentFee(): "+proAction.getPaymentFee());
+					DossierPaymentUtils.processPaymentFile(proAction, proAction.getPaymentFee(), groupId, dossierId, userId,
+							context, "DKLR_CTN");
+				}
+			} else if (proAction.getRequestPayment() == ProcessActionTerm.REQUEST_PAYMENT_XAC_NHAN_HOAN_THANH_THU_PHI) {
+				String CINVOICEUrl = "postal/invoice";
+				
+				//_log.info("SONDT payment REQUESTPAYMENT 5 ========= "+ JSONFactoryUtil.looseSerialize(payment));
+				
+				JSONObject resultObj = null;
+				Map<String, Object> params = new HashMap<>();
+				//_log.info("SONDT payment REQUESTPAYMENT 5: DOSSIERID ========= "+ dossier.getDossierId());
+				PaymentFile oldPaymentFile = PaymentFileLocalServiceUtil.getByG_ID(groupId, dossier.getDossierId());
+				int intpaymentMethod = 1; // KeyPay
+				//if(Validator.isNotNull(proAction.getPreCondition())) {
+				//	intpaymentMethod = checkPaymentMethodinPrecondition(proAction.getPreCondition());
+				//}
+				if(oldPaymentFile != null){
+					
+					//_log.info("SONDT oldPaymentFile REQUESTPAYMENT 5 ===========================  " + JSONFactoryUtil.looseSerialize(oldPaymentFile));
+					params = createParamsInvoice(oldPaymentFile, dossier, intpaymentMethod);
+					InvokeREST callRest = new InvokeREST();
+					String baseUrl = RESTFulConfiguration.SERVER_PATH_BASE;
+					HashMap<String, String> properties = new HashMap<String, String>();
+					
+					_log.info("START CALL POST API CINVOICEUrl");
+					resultObj = callRest.callPostAPI(groupId, HttpMethod.POST, "application/json", baseUrl,
+							CINVOICEUrl, "", "", properties, params, context);
+					
+				}
+				//_log.info("SONDT resultCINVOICE REQUESTPAYMENT 5 ===========================  " + JSONFactoryUtil.looseSerialize(resultObj));
+				
+				if (Validator.isNotNull(oldPaymentFile) ) {
+					String paymentMethod = "";
+					if (intpaymentMethod != 0) {
+						paymentMethod = checkPaymentMethod(intpaymentMethod);
+					}
+					// C_Invoice
+					if(Validator.isNotNull(resultObj) && resultObj.getLong("status") == 200) {
+						String message = resultObj.getString("message");
+						if (Validator.isNotNull(message)) {
+							String[] splitMessage = message.split("#");
+							JSONObject resultInvoice = JSONFactoryUtil.createJSONObject();
+							resultInvoice.put("EInvoiceNo", splitMessage[1]);
+							resultInvoice.put("EInvoiceSearch", splitMessage[3]);
+							//
+							oldPaymentFile.setEinvoice(resultInvoice.toString());
+						}
+						oldPaymentFile.setInvoicePayload(params.toString());
+						if (Validator.isNotNull(paymentMethod)) {
+							oldPaymentFile.setPaymentMethod(paymentMethod);
+						}
+					}
+					
+					oldPaymentFile.setPaymentStatus(DossierPaymentUtils.convertPaymentStatus(proAction.getRequestPayment()));
+					
+					PaymentFileLocalServiceUtil.updatePaymentFile(oldPaymentFile);
+				}
+				
+				
+			} else if (proAction.getRequestPayment() == ProcessActionTerm.REQUEST_PAYMENT_BAO_DA_NOP_PHI) {
+				PaymentFile oldPaymentFile = PaymentFileLocalServiceUtil.getByG_ID(groupId, dossier.getDossierId());
+				//_log.info("SONDT DOSSIERACTION oldPaymentFile REQUESTPAYMENT 3 ===========================  " + JSONFactoryUtil.looseSerialize(oldPaymentFile));
+				int intpaymentMethod = checkPaymentMethodinPrecondition(proAction.getPreCondition());
+				String paymentMethod = checkPaymentMethod(intpaymentMethod);
+				if (oldPaymentFile != null) {
+//					PaymentFileLocalServiceUtil.updateApplicantFeeAmount(oldPaymentFile.getPaymentFileId(),
+//							proAction.getRequestPayment(), oldPaymentFile.getFeeAmount(), oldPaymentFile.getServiceAmount(),
+//							oldPaymentFile.getShipAmount());
+					oldPaymentFile.setPaymentStatus(DossierPaymentUtils.convertPaymentStatus(proAction.getRequestPayment()));
+					oldPaymentFile.setPaymentMethod(paymentMethod);
+					
+					PaymentFileLocalServiceUtil.updatePaymentFile(oldPaymentFile);
+				}
 			}
 		}
 
@@ -1386,8 +1622,6 @@ public class DossierActionsImpl implements DossierActions {
 					curStep.getDossierSubStatus());
 			_log.info("jsonDataStatusText: "+JSONFactoryUtil.looseSerialize(jsonDataStatusText));
 
-			// update reference dossier
-			DossierAction prvAction = DossierActionLocalServiceUtil.getByNextActionId(dossierId, 0l);
 			//update current dossierAction
 			if (prvAction != null) {
 				dossierAction = DossierActionLocalServiceUtil.updateDossierAction(groupId, 0, dossierId, serviceProcessId,
@@ -1511,7 +1745,7 @@ public class DossierActionsImpl implements DossierActions {
 						serviceProcess.getServerNo());
 
 				// Comment code process pre-develop
-				List<DossierFile> lsDossierFile = DossierFileLocalServiceUtil.getByDossierIdAndIsNew(dossierId, true);
+				List<DossierFile> lsDossierFile = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
 				// check return file
 				List<String> returnDossierFileTemplateNos = ListUtil
 						.toList(StringUtil.split(proAction.getReturnDossierFiles()));
@@ -2707,8 +2941,6 @@ public class DossierActionsImpl implements DossierActions {
 
 		searchContext.setCompanyId(companyId);
 
-		String statusCode = StringPool.BLANK;
-
 		String subStatusCode = StringPool.BLANK;
 
 		JSONArray statistics = JSONFactoryUtil.createJSONArray();
@@ -2716,10 +2948,79 @@ public class DossierActionsImpl implements DossierActions {
 		long total = 0;
 
 		try {
-			statusCode = GetterUtil.getString(params.get(DossierTerm.STATUS));
+			String statusCode = GetterUtil.getString(params.get(DossierTerm.STATUS));
+			String state = GetterUtil.getString(params.get(DossierTerm.STATE));
+
+			if (Validator.isNotNull(state) && (state.contains(RT_EXPIRED) || state.contains(RT_EXPIRING))) {
+				params.put(DossierTerm.STATE, StringPool.BLANK);
+				if (state.contains(StringPool.COMMA)) {
+					String[] stateArr = state.split(StringPool.COMMA);
+					if (stateArr != null) {
+						for (String statusState : stateArr) {
+							if (statusState.equals(RT_EXPIRED)) {
+								List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
+										.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_WATTING);
+								if (certTypeList != null && certTypeList.size() > 0) {
+									int lenghtCert = certTypeList.size();
+									String strDossierNo = StringPool.BLANK;
+									if (lenghtCert == 1) {
+										strDossierNo = SpecialCharacterUtils.splitSpecial(certTypeList.get(0).getDossierNo());
+									} else {
+										StringBuilder sb = new StringBuilder();
+										for (int i = 0; i < lenghtCert; i++) {
+											VRVehicleTypeCertificate certType = certTypeList.get(i);
+											if (i == lenghtCert - 1) {
+												sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
+											} else {
+												sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
+												sb.append(StringPool.COMMA);
+											}
+										}
+										strDossierNo = sb.toString();
+									}
+									_log.info("strDossierNo: " + strDossierNo);
+									params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+								}
+
+								long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+
+								JSONObject statistic = JSONFactoryUtil.createJSONObject();
+								statistic.put("dossierStatus", statusState);
+								statistic.put("dossierSubStatus", StringPool.BLANK);
+								statistic.put("count", count);
+
+								statistics.put(statistic);
+
+								total += count;
+							}
+							//
+							if (statusState.equals(RT_EXPIRING)) {
+								String[] expireStatusArr = new String[]{DossierTerm.EXPIRED_STATUS_NOT_ACTIVE, DossierTerm.EXPIRED_STATUS_ACTIVE};
+								List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
+										.findByF_EXP_STATUS(expireStatusArr); // get to status = 0 or 1
+								if (certTypeList != null && certTypeList.size() > 0) {
+									String strDossierNo = DossierMgtUtils.checkConditionState(certTypeList);
+									_log.info("strDossierNo: " + strDossierNo);
+									params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+								}
+								long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+
+								JSONObject statistic = JSONFactoryUtil.createJSONObject();
+								statistic.put("dossierStatus", statusState);
+								statistic.put("dossierSubStatus", StringPool.BLANK);
+								statistic.put("count", count);
+
+								statistics.put(statistic);
+
+								total += count;
+							}
+						}
+					}
+				}
+			}
 
 			if (Validator.isNotNull(statusCode)) {
-
+				params.put(DossierTerm.DOSSIER_NO_EXPIRED, StringPool.BLANK);
 				String[] statusCodeArr = statusCode.split(StringPool.COMMA);
 				if (statusCodeArr != null && statusCodeArr.length > 0) {
 					for (String strStatus : statusCodeArr) {
@@ -3029,5 +3330,109 @@ public class DossierActionsImpl implements DossierActions {
 		}
 
 		return lstUser;
+	}
+
+	private int checkPaymentMethodinPrecondition(String preCondition) {
+		//_log.info("SONDT checkPaymentMethodinPrecondition preCondition ===== " + preCondition);
+		int paymentMethod = 0;
+		String[] preConditions = StringUtil.split(preCondition);
+		for(String pre : preConditions) {
+			pre = pre.trim();
+			//_log.info("SONDT checkPaymentMethodinPrecondition pre ===== " + pre);
+			if (pre.toLowerCase().contains("paymentmethod=")) {
+				String[] splitPaymentMethod = pre.split("=");
+				//_log.info("SONDT checkPaymentMethodinPrecondition splitPaymentMethod ===== " + splitPaymentMethod);
+				if (splitPaymentMethod.length == 2) {
+					paymentMethod = Integer.parseInt(splitPaymentMethod[1]);
+					//_log.info("SONDT checkPaymentMethodinPrecondition paymentMethod in if ===== " + paymentMethod);
+				}
+				break;
+			}
+		}
+		_log.info("SONDT checkPaymentMethodinPrecondition paymentMethod ===== " + paymentMethod);
+		return paymentMethod;
+	}
+
+	private String checkPaymentMethod(int mt) {
+		String pmMethod = "";
+		if (mt == 1) {
+			pmMethod = "Chuyển khoản";//KeyPay
+		} else if (mt == 2) {
+			pmMethod = "Chuyển khoản";
+		} else if (mt == 3) {
+			pmMethod = "Tiền mặt";
+		}
+		
+		_log.info("SONDT checkPaymentMethod pmMethod ===== " + pmMethod);
+		return pmMethod;
+	}
+
+	private Map<String, Object> createParamsInvoice(PaymentFile oldPaymentFile, Dossier dossier, int intpaymentMethod) {
+		Map<String, Object> params = new HashMap<>();
+		
+		StringBuilder address = new StringBuilder();
+		address.append(dossier.getAddress());address.append(", ");
+		address.append(dossier.getWardName());address.append(", ");
+		address.append(dossier.getDistrictName());address.append(", ");
+		address.append(dossier.getCityName());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+		String dateformatted = sdf.format(new Date());
+		_log.info("SONDT CINVOICE DATEFORMATED ============= " + dateformatted);
+		
+		params.put("userName", "HA");	
+		params.put("passWord", "1"); 	    	
+		params.put("soid", "0"); 
+		params.put("maHoadon", "01GTKT0/001"); 
+		params.put("ngayHd", dateformatted); //"01/08/2018"
+		params.put("seri", "12314"); 
+		params.put("maNthue", "01"); 
+		params.put("kieuSo", "G"); 
+		params.put("maKhackHang", Long.toString(dossier.getUserId()));
+		params.put("ten", dossier.getApplicantName());
+		//TODO
+		//params.put("phone", dossier.getContactTelNo());
+		params.put("phone", "0983025123");
+//		if(dossier.getApplicantIdType().contentEquals("business")) {
+//			params.put("tax", dossier.getApplicantIdNo()); 
+//		} else {
+//			params.put("tax", "");
+//		}
+		params.put("tax", "0311123290");
+		params.put("dchi", address); 
+		params.put("maTk", ""); 
+		params.put("tenNh", ""); 
+		params.put("mailH", GetterUtil.getString(dossier.getContactEmail()));
+		//TODO
+		//params.put("phoneH", GetterUtil.getString(dossier.getContactTelNo()));
+		params.put("phoneH", "0983025123");
+		params.put("tenM", GetterUtil.getString(dossier.getApplicantName()));
+		params.put("maKhL", "K");
+		params.put("maNt", "VND");
+		params.put("tg", "1");
+		if(intpaymentMethod == 3) {
+			params.put("hthuc", "M");
+		}else {
+			params.put("hthuc", "C");
+		}
+		params.put("han", "");
+		params.put("tlGgia", "0");
+		params.put("ggia", "0");
+		params.put("phi", "0");
+		params.put("noidung", dossier.getDossierNo());
+		params.put("tien", Long.toString(oldPaymentFile.getPaymentAmount()));
+		params.put("ttoan", Long.toString(oldPaymentFile.getPaymentAmount()));
+		//TODO
+		params.put("maVtDetail", dossier.getDossierNo().replace("/", "."));
+		params.put("tenDetail", GetterUtil.getString(dossier.getServiceName()));
+		params.put("dvtDetail", "bo");
+		params.put("luongDetail", "1");
+		params.put("giaDetail", Long.toString(oldPaymentFile.getPaymentAmount()));
+		params.put("tienDetail", Long.toString(oldPaymentFile.getPaymentAmount()));
+		params.put("tsDetail", "0");
+		params.put("thueDetail", "0");
+		params.put("ttoanDetail", Long.toString(oldPaymentFile.getPaymentAmount()));
+		
+		return params;
 	}
 }

@@ -196,7 +196,7 @@ public class ProcessActionWrapper implements ProcessAction,
 			setAssignUserId(assignUserId);
 		}
 
-		Boolean requestPayment = (Boolean)attributes.get("requestPayment");
+		Integer requestPayment = (Integer)attributes.get("requestPayment");
 
 		if (requestPayment != null) {
 			setRequestPayment(requestPayment);
@@ -304,16 +304,6 @@ public class ProcessActionWrapper implements ProcessAction,
 	}
 
 	/**
-	* Returns the request payment of this process action.
-	*
-	* @return the request payment of this process action
-	*/
-	@Override
-	public boolean getRequestPayment() {
-		return _processAction.getRequestPayment();
-	}
-
-	/**
 	* Returns the rollbackable of this process action.
 	*
 	* @return the rollbackable of this process action
@@ -369,16 +359,6 @@ public class ProcessActionWrapper implements ProcessAction,
 	}
 
 	/**
-	* Returns <code>true</code> if this process action is request payment.
-	*
-	* @return <code>true</code> if this process action is request payment; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isRequestPayment() {
-		return _processAction.isRequestPayment();
-	}
-
-	/**
 	* Returns <code>true</code> if this process action is rollbackable.
 	*
 	* @return <code>true</code> if this process action is rollbackable; <code>false</code> otherwise
@@ -401,6 +381,16 @@ public class ProcessActionWrapper implements ProcessAction,
 	@Override
 	public int compareTo(ProcessAction processAction) {
 		return _processAction.compareTo(processAction);
+	}
+
+	/**
+	* Returns the request payment of this process action.
+	*
+	* @return the request payment of this process action
+	*/
+	@Override
+	public int getRequestPayment() {
+		return _processAction.getRequestPayment();
 	}
 
 	@Override
@@ -945,12 +935,12 @@ public class ProcessActionWrapper implements ProcessAction,
 	}
 
 	/**
-	* Sets whether this process action is request payment.
+	* Sets the request payment of this process action.
 	*
 	* @param requestPayment the request payment of this process action
 	*/
 	@Override
-	public void setRequestPayment(boolean requestPayment) {
+	public void setRequestPayment(int requestPayment) {
 		_processAction.setRequestPayment(requestPayment);
 	}
 

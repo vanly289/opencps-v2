@@ -98,7 +98,8 @@ import javax.xml.bind.annotation.XmlType;
 		"invoiceNo",
 		"invoiceFileType",
 		"invoiceFileSize",
-		"briefNote"
+		"briefNote",
+		"eInvoice"
 })
 public class PaymentFileSearchTemplateModel {
 
@@ -135,6 +136,8 @@ public class PaymentFileSearchTemplateModel {
 	protected String invoiceNo;
 	protected String invoiceFileType;
 	protected Long invoiceFileSize;
+	protected String eInvoice;
+
 	public String getBriefNote() {
 		return briefNote;
 	}
@@ -936,4 +939,13 @@ public class PaymentFileSearchTemplateModel {
 	public void setInvoiceFileSize(Long invoiceFileSize) {
 		this.invoiceFileSize = invoiceFileSize;
 	}
+
+	public String geteInvoice() {
+		return eInvoice;
+	}
+
+	public void seteInvoice(String eInvoice) {
+		this.eInvoice = eInvoice;
+	}
+
 }

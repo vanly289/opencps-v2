@@ -100,6 +100,12 @@ public class VRProductTypeLocalServiceWrapper
 		return _vrProductTypeLocalService.getVRProductType(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductType updateProductType(
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return _vrProductTypeLocalService.updateProductType(mapValues, mtCore);
+	}
+
 	/**
 	* Updates the vr product type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -268,6 +274,11 @@ public class VRProductTypeLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _vrProductTypeLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteByproductPlantId(long mtCore, long productPlantId) {
+		_vrProductTypeLocalService.deleteByproductPlantId(mtCore, productPlantId);
 	}
 
 	@Override

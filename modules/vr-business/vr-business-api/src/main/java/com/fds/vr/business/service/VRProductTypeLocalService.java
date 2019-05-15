@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for VRProductType. Methods of this
@@ -109,6 +110,9 @@ public interface VRProductTypeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRProductType getVRProductType(long id) throws PortalException;
+
+	public VRProductType updateProductType(
+		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 
 	/**
 	* Updates the vr product type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -227,4 +231,6 @@ public interface VRProductTypeLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteByproductPlantId(long mtCore, long productPlantId);
 }

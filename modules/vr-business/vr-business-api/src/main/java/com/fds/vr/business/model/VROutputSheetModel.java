@@ -139,15 +139,14 @@ public interface VROutputSheetModel extends BaseModel<VROutputSheet> {
 	 *
 	 * @return the supplier corporation ID of this vr output sheet
 	 */
-	@AutoEscape
-	public String getSupplierCorporationId();
+	public long getSupplierCorporationId();
 
 	/**
 	 * Sets the supplier corporation ID of this vr output sheet.
 	 *
 	 * @param supplierCorporationId the supplier corporation ID of this vr output sheet
 	 */
-	public void setSupplierCorporationId(String supplierCorporationId);
+	public void setSupplierCorporationId(long supplierCorporationId);
 
 	/**
 	 * Returns the output sheet type of this vr output sheet.
@@ -330,30 +329,28 @@ public interface VROutputSheetModel extends BaseModel<VROutputSheet> {
 	 *
 	 * @return the purchaser ID of this vr output sheet
 	 */
-	@AutoEscape
-	public String getPurchaserId();
+	public long getPurchaserId();
 
 	/**
 	 * Sets the purchaser ID of this vr output sheet.
 	 *
 	 * @param purchaserId the purchaser ID of this vr output sheet
 	 */
-	public void setPurchaserId(String purchaserId);
+	public void setPurchaserId(long purchaserId);
 
 	/**
 	 * Returns the purchaser corporation ID of this vr output sheet.
 	 *
 	 * @return the purchaser corporation ID of this vr output sheet
 	 */
-	@AutoEscape
-	public String getPurchaserCorporationId();
+	public long getPurchaserCorporationId();
 
 	/**
 	 * Sets the purchaser corporation ID of this vr output sheet.
 	 *
 	 * @param purchaserCorporationId the purchaser corporation ID of this vr output sheet
 	 */
-	public void setPurchaserCorporationId(String purchaserCorporationId);
+	public void setPurchaserCorporationId(long purchaserCorporationId);
 
 	/**
 	 * Returns the book ID list of this vr output sheet.

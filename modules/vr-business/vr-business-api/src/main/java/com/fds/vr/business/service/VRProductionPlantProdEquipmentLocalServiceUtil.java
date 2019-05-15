@@ -106,6 +106,11 @@ public class VRProductionPlantProdEquipmentLocalServiceUtil {
 		return getService().getVRProductionPlantProdEquipment(id);
 	}
 
+	public static com.fds.vr.business.model.VRProductionPlantProdEquipment updateProductionPlantProdEquipment(
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return getService().updateProductionPlantProdEquipment(mapValues, mtCore);
+	}
+
 	/**
 	* Updates the vr production plant prod equipment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -258,6 +263,10 @@ public class VRProductionPlantProdEquipmentLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteByproductPlantID(long mtCore, long productPlantId) {
+		getService().deleteByproductPlantID(mtCore, productPlantId);
 	}
 
 	public static VRProductionPlantProdEquipmentLocalService getService() {

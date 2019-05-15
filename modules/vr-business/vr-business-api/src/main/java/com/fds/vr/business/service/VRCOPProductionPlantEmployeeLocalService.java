@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for VRCOPProductionPlantEmployee. Methods of this
@@ -115,6 +116,9 @@ public interface VRCOPProductionPlantEmployeeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRCOPProductionPlantEmployee getVRCOPProductionPlantEmployee(long id)
 		throws PortalException;
+
+	public VRCOPProductionPlantEmployee updateCOPProductionPlantEmployee(
+		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 
 	/**
 	* Updates the vrcop production plant employee in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -102,6 +102,13 @@ public class VRProductionPlantEmployeeLocalServiceWrapper
 		return _vrProductionPlantEmployeeLocalService.getVRProductionPlantEmployee(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductionPlantEmployee updateProductionPlantEmployee(
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return _vrProductionPlantEmployeeLocalService.updateProductionPlantEmployee(mapValues,
+			mtCore);
+	}
+
 	/**
 	* Updates the vr production plant employee in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -272,6 +279,12 @@ public class VRProductionPlantEmployeeLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _vrProductionPlantEmployeeLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteByproductPlantId(long mtCore, long productPlantId) {
+		_vrProductionPlantEmployeeLocalService.deleteByproductPlantId(mtCore,
+			productPlantId);
 	}
 
 	@Override

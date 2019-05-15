@@ -16,16 +16,20 @@ package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import org.opencps.datamgt.utils.DateTimeUtils;
+
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.fds.vr.business.model.VROutputSheetDetails;
 import com.fds.vr.business.service.base.VROutputSheetDetailsLocalServiceBaseImpl;
 
@@ -52,12 +56,12 @@ public class VROutputSheetDetailsLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VROutputSheetDetailsLocalServiceUtil} to access the vr output sheet details local service.
 	 */
 	
-	public VROutputSheetDetails updateOutputSheetDetails(long id, long mtCore, long inputSheetId, 
-			long outputSheetId, long bookId, long issueVehicleCertificateId, long certificateId,
+	public VROutputSheetDetails updateOutputSheetDetails(long id, long mtCore, Long inputSheetId, 
+			Long outputSheetId, Long bookId, Long issueVehicleCertificateId, Long certificateId,
 			String certificateNumber, Date certificateDate, String vehicleClass, String stampType,
-			String stampShortNo, String serialStartNo, String serialEndNo, long subTotalInDocument,
-			long subTotalQuantities, long unitPrice, long totalAmount, long totalInUse, long totalNotUsed,
-			long totalLost, long totalCancelled, long totalReturned, String remark)
+			String stampShortNo, Long serialStartNo, Long serialEndNo, Long subTotalInDocument,
+			Long subTotalQuantities, Long unitPrice, Long totalAmount, Long totalInUse, Long totalNotUsed,
+			Long totalLost, Long totalCancelled, Long totalReturned, String remark)
 		throws PortalException, SystemException {
 		
 		VROutputSheetDetails outputSheetDetails = null;
@@ -71,30 +75,134 @@ public class VROutputSheetDetailsLocalServiceImpl
 		
 		outputSheetDetails.setModifyDate(new Date());
 		outputSheetDetails.setMtCore(mtCore);
-		outputSheetDetails.setInputSheetId(inputSheetId);
 		outputSheetDetails.setOutputSheetId(outputSheetId);
-		outputSheetDetails.setBookId(bookId);
-		outputSheetDetails.setIssueVehicleCertificateId(issueVehicleCertificateId);
-		outputSheetDetails.setCertificateId(certificateId);
-		outputSheetDetails.setCertificateNumber(certificateNumber);
-		outputSheetDetails.setCertificateDate(certificateDate);
-		outputSheetDetails.setVehicleClass(vehicleClass);
-		outputSheetDetails.setStampType(stampType);
-		outputSheetDetails.setStampShortNo(stampShortNo);
-		outputSheetDetails.setSerialStartNo(serialStartNo);
-		outputSheetDetails.setSerialEndNo(serialEndNo);
-		outputSheetDetails.setSubTotalInDocument(subTotalInDocument);
-		outputSheetDetails.setSubTotalQuantities(subTotalQuantities);
-		outputSheetDetails.setUnitPrice(unitPrice);
-		outputSheetDetails.setTotalAmount(totalAmount);
-		outputSheetDetails.setTotalInUse(totalInUse);
-		outputSheetDetails.setTotalNotUsed(totalNotUsed);
-		outputSheetDetails.setTotalLost(totalLost);
-		outputSheetDetails.setTotalCancelled(totalCancelled);
-		outputSheetDetails.setTotalReturned(totalReturned);
-		outputSheetDetails.setRemark(remark);
+		
+		if(Validator.isNotNull(inputSheetId))
+			outputSheetDetails.setInputSheetId(inputSheetId);
+		
+		if(Validator.isNotNull(bookId))
+			outputSheetDetails.setBookId(bookId);
+		
+		if(Validator.isNotNull(issueVehicleCertificateId))
+			outputSheetDetails.setIssueVehicleCertificateId(issueVehicleCertificateId);
+		
+		if(Validator.isNotNull(certificateId))
+			outputSheetDetails.setCertificateId(certificateId);
+		
+		if(Validator.isNotNull(certificateNumber))
+			outputSheetDetails.setCertificateNumber(certificateNumber);
+		
+		if(Validator.isNotNull(certificateDate))
+			outputSheetDetails.setCertificateDate(certificateDate);
+		
+		if(Validator.isNotNull(vehicleClass))
+			outputSheetDetails.setVehicleClass(vehicleClass);
+
+		if(Validator.isNotNull(stampType))
+			outputSheetDetails.setStampType(stampType);
+		
+		if(Validator.isNotNull(stampShortNo))
+			outputSheetDetails.setStampShortNo(stampShortNo);
+		
+		if(Validator.isNotNull(serialStartNo))
+			outputSheetDetails.setSerialStartNo(serialStartNo);
+		
+		if(Validator.isNotNull(serialEndNo))
+			outputSheetDetails.setSerialEndNo(serialEndNo);
+		
+		if(Validator.isNotNull(subTotalInDocument))
+			outputSheetDetails.setSubTotalInDocument(subTotalInDocument);
+		
+		if(Validator.isNotNull(subTotalQuantities))
+			outputSheetDetails.setSubTotalQuantities(subTotalQuantities);
+		
+		if(Validator.isNotNull(unitPrice))
+			outputSheetDetails.setUnitPrice(unitPrice);
+		
+		if(Validator.isNotNull(totalAmount))
+			outputSheetDetails.setTotalAmount(totalAmount);
+		
+		if(Validator.isNotNull(totalInUse))
+			outputSheetDetails.setTotalInUse(totalInUse);
+		
+		if(Validator.isNotNull(totalNotUsed))
+			outputSheetDetails.setTotalNotUsed(totalNotUsed);
+		
+		if(Validator.isNotNull(totalLost))
+			outputSheetDetails.setTotalLost(totalLost);
+		
+		if(Validator.isNotNull(totalCancelled))
+			outputSheetDetails.setTotalCancelled(totalCancelled);
+		
+		if(Validator.isNotNull(totalReturned))
+			outputSheetDetails.setTotalReturned(totalReturned);
+		
+		if(Validator.isNotNull(remark))
+			outputSheetDetails.setRemark(remark);
 		
 		return vrOutputSheetDetailsPersistence.update(outputSheetDetails);
+	}
+	
+	public void updateJSONArray(long outputSheetId, Long corporationId, 
+			Long outputSheetType, String details, Long isApproval)
+			throws PortalException, SystemException {
+		
+		if(Validator.isNotNull(details)) {
+			JSONArray detailsArr = JSONFactoryUtil.createJSONArray(details);
+			
+			List<VROutputSheetDetails> outputSheetDetails = vrOutputSheetDetailsLocalService.findByOutputSheetId(1l, outputSheetId);
+			
+			// them moi
+			long year = Calendar.getInstance().get(Calendar.YEAR);
+			for (int i = 0; i < detailsArr.length(); ++i) {
+				JSONObject json = detailsArr.getJSONObject(i);
+	
+				Long bookId = json.getLong("bookId");
+				Long inputSheetId = json.getLong("inputSheetId");
+				Long issueVehicleCertificateId = json.getLong("issueVehicleCertificateId");
+				Long issueApplicationProfileId = json.getLong("issueApplicationProfileId");
+				Long certificateId = json.getLong("certificateId");
+				String certificateNumber = json.getString("certificateNumber");
+				Date certificateDate = DateTimeUtils.convertStringToDateAPI(json.getString("certificateDate"));
+				String vehicleClass = json.getString("vehicleClass");
+				String stampType = json.getString("stampType");
+				String stampShortNo = json.getString("stampShortNo");
+				Long serialStartNo = json.getLong("serialStartNo");
+				Long serialEndNo = json.getLong("serialEndNo");
+				Long subTotalInDocument = json.getLong("subTotalInDocument");
+				Long subTotalQuantities = json.getLong("subTotalQuantities");
+				Long unitPrice = json.getLong("unitPrice");
+				Long totalAmount = json.getLong("totalAmount");
+				Long totalInUse = json.getLong("totalInUse");
+				Long totalNotUsed = json.getLong("totalNotUsed");
+				Long totalLost = json.getLong("totalLost");
+				Long totalCancelled = json.getLong("totalCancelled");
+				Long totalReturned = json.getLong("totalReturned");
+				String remark = json.getString("remark");
+	
+				vrOutputSheetDetailsLocalService.updateOutputSheetDetails(0l, 1l, inputSheetId, outputSheetId,
+						bookId, issueVehicleCertificateId, certificateId, certificateNumber, certificateDate,
+						vehicleClass, stampType, stampShortNo, serialStartNo, serialEndNo, subTotalInDocument,
+						subTotalQuantities, unitPrice, totalAmount, totalInUse, totalNotUsed, totalLost, totalCancelled,
+						totalReturned, remark);
+				
+				if(isApproval == 1) { 
+					// Khi can bo duyet thi them vao inventory dong thoi tru so luong tuong ung o stampbook
+					vrInventoryLocalService.updateInventory(0l, 1l, year, null,
+							null, bookId, vehicleClass, stampType, stampShortNo, serialStartNo,
+							serialEndNo, subTotalInDocument, totalInUse, totalNotUsed, remark, corporationId, outputSheetType,
+							null);
+					
+					// update stampbook
+					vrInputStampbookLocalService.updateByOutputSheet(bookId, subTotalInDocument, serialStartNo, serialEndNo, issueApplicationProfileId, corporationId, outputSheetType);
+				}
+			}
+			
+			// xoa cu
+			for(VROutputSheetDetails outputSheetDetail : outputSheetDetails) {
+				vrOutputSheetDetailsPersistence.remove(outputSheetDetail);
+			}
+		}
 	}
 	
 	public List<VROutputSheetDetails> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {

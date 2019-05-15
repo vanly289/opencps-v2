@@ -14,20 +14,20 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRProductionPlantProdEquipment;
+import com.fds.vr.business.service.base.VRProductionPlantProdEquipmentLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.model.VRProductionPlantProdEquipment;
-import com.fds.vr.business.service.base.VRProductionPlantProdEquipmentLocalServiceBaseImpl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr production plant prod equipment local service.
@@ -62,7 +62,41 @@ public class VRProductionPlantProdEquipmentLocalServiceImpl
 		
 	}
 
+	public void deleteByproductPlantID(long mtCore, long productPlantId) {
 
-	
+		vrProductionPlantProdEquipmentPersistence.removeByproductPlantID(mtCore, productPlantId);
+	}
+
+	public VRProductionPlantProdEquipment updateProductionPlantProdEquipment(Map<String, String> mapValues, int mtCore) {
+		
+		Date now = new Date();
+
+		long vrProductionPlantProdEquipmentId = counterLocalService.increment(VRProductionPlantProdEquipment.class.getName());
+
+		VRProductionPlantProdEquipment object = vrProductionPlantProdEquipmentPersistence.create(vrProductionPlantProdEquipmentId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+		object.setModifyDate(now);
+
+		// Add other fields
+		object.setMtCore(mtCore);
+		object.setProductPlantID(Long.valueOf(mapValues.get("productPlantId")));
+		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
+		object.setEquipmentCode(mapValues.get("equipmentCode"));
+		object.setEquipmentName(mapValues.get("equipmentName"));
+		object.setEquipmentType(mapValues.get("equipmentType"));
+		object.setTrademark(mapValues.get("trademark"));
+		object.setTrademarkName(mapValues.get("trademarkName"));
+		object.setCommercialName(mapValues.get("commercialName"));
+		object.setModelCode(mapValues.get("modelCode"));
+		object.setDesignSymbolNo(mapValues.get("designSymbolNo"));
+		object.setProductionCountryCode(mapValues.get("productionCountryCode"));
+		object.setEquipmentStatus(mapValues.get("equipmentStatus"));
+		object.setNotes(mapValues.get("notes"));
+
+		return vrProductionPlantProdEquipmentPersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantProdEquipmentLocalServiceImpl.class);
 }

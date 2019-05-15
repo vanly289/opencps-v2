@@ -14,20 +14,20 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRCOPProdEquipment;
+import com.fds.vr.business.service.base.VRCOPProdEquipmentLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.model.VRCOPProdEquipment;
-import com.fds.vr.business.service.base.VRCOPProdEquipmentLocalServiceBaseImpl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vrcop prod equipment local service.
@@ -71,5 +71,38 @@ public class VRCOPProdEquipmentLocalServiceImpl
 		return new ArrayList<VRCOPProdEquipment>();
 		
 	}
+
+	public VRCOPProdEquipment updateCOPProdEquipment(Map<String, String> mapValues, int mtCore) {
+		
+		Date now = new Date();
+
+		long vrCOPProdEquipmentId = counterLocalService.increment(VRCOPProdEquipment.class.getName());
+
+		VRCOPProdEquipment object = vrcopProdEquipmentPersistence.create(vrCOPProdEquipmentId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+		object.setModifyDate(now);
+
+		// Add other fields
+		object.setMtCore(mtCore);
+		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("copReportRepositoryId")));
+		object.setCopReportNo(mapValues.get("copReportNo"));
+		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
+		object.setEquipmentCode(mapValues.get("equipmentCode"));
+		object.setEquipmentName(mapValues.get("equipmentName"));
+		object.setEquipmentType(mapValues.get("equipmentType"));
+		object.setTrademark(mapValues.get("trademark"));
+		object.setTrademarkName(mapValues.get("trademarkName"));
+		object.setCommercialName(mapValues.get("commercialName"));
+		object.setModelCode(mapValues.get("modelCode"));
+		object.setDesignSymbolNo(mapValues.get("designSymbolNo"));
+		object.setProductionCountryCode(mapValues.get("productionCountryCode"));
+		object.setEquipmentStatus(mapValues.get("equipmentStatus"));
+		object.setNotes(mapValues.get("notes"));
+
+		return vrcopProdEquipmentPersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRCOPProdEquipmentLocalServiceImpl.class);
 }

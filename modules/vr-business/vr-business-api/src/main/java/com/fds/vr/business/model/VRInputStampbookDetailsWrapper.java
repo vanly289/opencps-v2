@@ -69,7 +69,7 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 		attributes.put("certificateDate", getCertificateDate());
 		attributes.put("vehicleRecordId", getVehicleRecordId());
 		attributes.put("frameNo", getFrameNo());
-		attributes.put("BoxNo", getBoxNo());
+		attributes.put("boxNo", getBoxNo());
 		attributes.put("vinNo", getVinNo());
 		attributes.put("engineNo", getEngineNo());
 		attributes.put("qrCode", getQrCode());
@@ -159,10 +159,10 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 			setFrameNo(frameNo);
 		}
 
-		String BoxNo = (String)attributes.get("BoxNo");
+		String boxNo = (String)attributes.get("boxNo");
 
-		if (BoxNo != null) {
-			setBoxNo(BoxNo);
+		if (boxNo != null) {
+			setBoxNo(boxNo);
 		}
 
 		String vinNo = (String)attributes.get("vinNo");
@@ -225,7 +225,7 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 			setPurchaserId(purchaserId);
 		}
 
-		String corporationId = (String)attributes.get("corporationId");
+		Long corporationId = (Long)attributes.get("corporationId");
 
 		if (corporationId != null) {
 			setCorporationId(corporationId);
@@ -378,16 +378,6 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 	@Override
 	public java.lang.String getCertificateNumber() {
 		return _vrInputStampbookDetails.getCertificateNumber();
-	}
-
-	/**
-	* Returns the corporation ID of this vr input stampbook details.
-	*
-	* @return the corporation ID of this vr input stampbook details
-	*/
-	@Override
-	public java.lang.String getCorporationId() {
-		return _vrInputStampbookDetails.getCorporationId();
 	}
 
 	/**
@@ -621,6 +611,16 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 	}
 
 	/**
+	* Returns the corporation ID of this vr input stampbook details.
+	*
+	* @return the corporation ID of this vr input stampbook details
+	*/
+	@Override
+	public long getCorporationId() {
+		return _vrInputStampbookDetails.getCorporationId();
+	}
+
+	/**
 	* Returns the dossier ID of this vr input stampbook details.
 	*
 	* @return the dossier ID of this vr input stampbook details
@@ -738,11 +738,11 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 	/**
 	* Sets the box no of this vr input stampbook details.
 	*
-	* @param BoxNo the box no of this vr input stampbook details
+	* @param boxNo the box no of this vr input stampbook details
 	*/
 	@Override
-	public void setBoxNo(java.lang.String BoxNo) {
-		_vrInputStampbookDetails.setBoxNo(BoxNo);
+	public void setBoxNo(java.lang.String boxNo) {
+		_vrInputStampbookDetails.setBoxNo(boxNo);
 	}
 
 	@Override
@@ -826,7 +826,7 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 	* @param corporationId the corporation ID of this vr input stampbook details
 	*/
 	@Override
-	public void setCorporationId(java.lang.String corporationId) {
+	public void setCorporationId(long corporationId) {
 		_vrInputStampbookDetails.setCorporationId(corporationId);
 	}
 

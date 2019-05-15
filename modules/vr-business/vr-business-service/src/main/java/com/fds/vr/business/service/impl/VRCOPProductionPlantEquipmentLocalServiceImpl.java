@@ -14,20 +14,20 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRCOPProductionPlantEquipment;
+import com.fds.vr.business.service.base.VRCOPProductionPlantEquipmentLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.model.VRCOPProductionPlantEquipment;
-import com.fds.vr.business.service.base.VRCOPProductionPlantEquipmentLocalServiceBaseImpl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vrcop production plant equipment local service.
@@ -71,6 +71,38 @@ public class VRCOPProductionPlantEquipmentLocalServiceImpl
 		return new ArrayList<VRCOPProductionPlantEquipment>();
 		
 	}
-	
+
+	public VRCOPProductionPlantEquipment updateCOPProductionPlantEquipment(Map<String, String> mapValues, int mtCore) {
+		
+		Date now = new Date();
+
+		long vrCOPProductionPlantEquipmentId = counterLocalService.increment(VRCOPProductionPlantEquipment.class.getName());
+
+		VRCOPProductionPlantEquipment object = vrcopProductionPlantEquipmentPersistence.create(vrCOPProductionPlantEquipmentId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+		object.setModifyDate(now);
+
+		// Add other fields
+		object.setMtCore(mtCore);
+		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("copReportRepositoryId")));
+		object.setCopReportNo(mapValues.get("copReportNo"));
+		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
+		object.setEquipmentCode(mapValues.get("equipmentCode"));
+		object.setEquipmentName(mapValues.get("equipmentName"));
+		object.setEquipmentType(mapValues.get("equipmentType"));
+		object.setTrademark(mapValues.get("trademark"));
+		object.setTrademarkName(mapValues.get("trademarkName"));
+		object.setCommercialName(mapValues.get("commercialName"));
+		object.setModelCode(mapValues.get("modelCode"));
+		object.setDesignSymbolNo(mapValues.get("designSymbolNo"));
+		object.setProductionCountryCode(mapValues.get("productionCountryCode"));
+		object.setEquipmentStatus(mapValues.get("equipmentStatus"));
+		object.setNotes(mapValues.get("notes"));
+
+		return vrcopProductionPlantEquipmentPersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductionPlantEquipmentLocalServiceImpl.class);
 }

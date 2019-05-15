@@ -104,6 +104,11 @@ public class VRCOPProductTypeLocalServiceUtil {
 		return getService().getVRCOPProductType(id);
 	}
 
+	public static com.fds.vr.business.model.VRCOPProductType updateCOPProductType(
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return getService().updateCOPProductType(mapValues, mtCore);
+	}
+
 	/**
 	* Updates the vrcop product type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

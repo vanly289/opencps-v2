@@ -23,6 +23,8 @@ import java.util.List;
 import org.opencps.dossiermgt.action.FileUploadUtils;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.constants.PaymentFileTerm;
+import org.opencps.dossiermgt.constants.ProcessActionTerm;
+import org.opencps.dossiermgt.exception.NoSuchPaymentFileException;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.PaymentFile;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
@@ -30,6 +32,9 @@ import org.opencps.dossiermgt.service.base.PaymentFileLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -87,6 +92,16 @@ public class PaymentFileLocalServiceImpl extends PaymentFileLocalServiceBaseImpl
 
 	public PaymentFile fectPaymentFile(long dossierId, String refId) {
 		return paymentFilePersistence.fetchByD_RUID(dossierId, refId);
+	}
+
+	@Override
+	public PaymentFile getByG_ID(long groupId, long dossierId) {
+		try {
+			return paymentFilePersistence.findByG_ID(groupId, dossierId);
+		} catch (Exception e) {
+			_log.debug(e);
+		}
+		return null;
 	}
 
 	/**
@@ -352,9 +367,9 @@ public class PaymentFileLocalServiceImpl extends PaymentFileLocalServiceBaseImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public PaymentFile createPaymentFiles(long userId, long groupId, long dossierId, String referenceUid,
-			String govAgencyCode, String govAgencyName, String applicantName, String applicantIdNo, String paymentFee,
-			long paymentAmount, String paymentNote, String epaymentProfile, String bankInfo,
-			ServiceContext serviceContext) throws PortalException {
+			String paymentFee, long paymentAmount, String paymentNote, String epaymentProfile, String bankInfo,
+			int paymentStatus, String paymentMethod, String paymentFormData, ServiceContext serviceContext)
+			throws PortalException {
 
 		// validate(groupId, serviceConfigId, serviceInfoId, govAgencyCode,
 		// serviceLevel, serviceUrl, objName);
@@ -376,28 +391,17 @@ public class PaymentFileLocalServiceImpl extends PaymentFileLocalServiceBaseImpl
 
 		paymentFile.setDossierId(dossierId);
 		paymentFile.setReferenceUid(referenceUid);
-		paymentFile.setGovAgencyCode(govAgencyCode);
-		paymentFile.setGovAgencyName(govAgencyName);
 		paymentFile.setPaymentFee(paymentFee);
 		paymentFile.setPaymentAmount(GetterUtil.getLong(paymentAmount));
 		paymentFile.setPaymentNote(paymentNote);
 		paymentFile.setEpaymentProfile(epaymentProfile);
 		paymentFile.setBankInfo(bankInfo);
+		paymentFile.setPaymentStatus(paymentStatus);
+		paymentFile.setPaymentMethod(paymentMethod);
+		paymentFile.setPaymentFormData(paymentFormData);
 
-		// WTF?...
-		/*
-		 * try { Dossier dossier =
-		 * DossierLocalServiceUtil.getDossier(dossierId);
-		 * dossier.setApplicantName(applicantName);
-		 * dossier.setApplicantIdNo(applicantIdNo);
-		 * 
-		 * dossierPersistence.update(dossier); } catch (Exception e) {
-		 * e.printStackTrace(); }
-		 */
+		return paymentFilePersistence.update(paymentFile);
 
-		paymentFilePersistence.update(paymentFile);
-
-		return paymentFile;
 	}
 
 	/**
@@ -406,7 +410,6 @@ public class PaymentFileLocalServiceImpl extends PaymentFileLocalServiceBaseImpl
 	 * @param
 	 * @return PaymentFile
 	 */
-	// wtf?..... clgt?
 	public PaymentFile getEpaymentProfile(long dossierId, String referenceUid) {
 
 		return (PaymentFile) paymentFilePersistence.findByF_DUID(dossierId, referenceUid);
@@ -444,10 +447,7 @@ public class PaymentFileLocalServiceImpl extends PaymentFileLocalServiceBaseImpl
 
 		object.setEpaymentProfile(strInput);
 
-		paymentFilePersistence.update(object);
-
-		return object;
-
+		return paymentFilePersistence.update(object);
 	}
 
 	Log _log = LogFactoryUtil.getLog(PaymentFileLocalServiceImpl.class.getName());
@@ -484,7 +484,6 @@ public class PaymentFileLocalServiceImpl extends PaymentFileLocalServiceBaseImpl
 		}
 
 		// update dossier
-		
 
 		try {
 			Dossier dossier = DossierLocalServiceUtil.getDossier(dossierId);
@@ -493,11 +492,9 @@ public class PaymentFileLocalServiceImpl extends PaymentFileLocalServiceBaseImpl
 			dossier.setSubmitting(true);
 
 			dossierLocalService.updateDossier(dossier);
-			//dossierPersistence.update(dossier);
-			
-			//indexer.reindex(dossier);
+
 		} catch (SearchException e) {
-			e.printStackTrace();
+			_log.error(e);
 		}
 
 		return paymentFilePersistence.update(paymentFile);
@@ -559,7 +556,7 @@ public class PaymentFileLocalServiceImpl extends PaymentFileLocalServiceBaseImpl
 			dossier.setSubmitting(true);
 
 			dossierLocalService.updateDossier(dossier);
-			
+
 			//indexer.reindex(dossier);
 		} catch (SearchException e) {
 			e.printStackTrace();
@@ -674,6 +671,34 @@ public class PaymentFileLocalServiceImpl extends PaymentFileLocalServiceBaseImpl
 
 	public List<PaymentFile> getByDID_ISN(long dossierId, boolean isNew) {
 		return paymentFilePersistence.findByDID_ISN(dossierId, isNew);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	public PaymentFile updateApplicantFeeAmount(long paymentFileId, int requestPayment, String paymentNote) {
+		try {
+			PaymentFile paymentFile = paymentFilePersistence.findByPrimaryKey(paymentFileId);
+			paymentFile.setPaymentStatus(requestPayment);
+			if (Validator.isNotNull(paymentNote))
+				paymentFile.setPaymentNote(paymentNote);
+			// Update epayment Profile
+			try {
+				JSONObject epaymentProFile = JSONFactoryUtil.createJSONObject(paymentFile.getEpaymentProfile());
+				if (Validator.isNull(epaymentProFile)) {
+					epaymentProFile = JSONFactoryUtil.createJSONObject();
+				}
+				epaymentProFile.put("paymentNote", paymentNote);
+				//
+				paymentFile.setEpaymentProfile(epaymentProFile.toJSONString());
+			} catch (JSONException e) {
+				_log.debug(e);
+			}
+
+			return paymentFilePersistence.update(paymentFile);
+		} catch (NoSuchPaymentFileException e) {
+			_log.error(e);
+		}
+
+		return null;
 	}
 
 }

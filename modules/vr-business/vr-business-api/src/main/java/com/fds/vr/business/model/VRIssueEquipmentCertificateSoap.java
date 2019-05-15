@@ -128,19 +128,19 @@ public class VRIssueEquipmentCertificateSoap implements Serializable {
 		_mtcore = mtcore;
 	}
 
-	public int getIssueId() {
+	public long getIssueId() {
 		return _issueId;
 	}
 
-	public void setIssueId(int issueId) {
+	public void setIssueId(long issueId) {
 		_issueId = issueId;
 	}
 
-	public int getIssueVehicleCertificateId() {
+	public long getIssueVehicleCertificateId() {
 		return _issueVehicleCertificateId;
 	}
 
-	public void setIssueVehicleCertificateId(int issueVehicleCertificateId) {
+	public void setIssueVehicleCertificateId(long issueVehicleCertificateId) {
 		_issueVehicleCertificateId = issueVehicleCertificateId;
 	}
 
@@ -300,8 +300,8 @@ public class VRIssueEquipmentCertificateSoap implements Serializable {
 
 	private long _id;
 	private int _mtcore;
-	private int _issueId;
-	private int _issueVehicleCertificateId;
+	private long _issueId;
+	private long _issueVehicleCertificateId;
 	private String _vehiclecertificaterecordno;
 	private String _equipmentName;
 	private String _equipmentType;

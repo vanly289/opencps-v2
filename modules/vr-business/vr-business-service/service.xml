@@ -334,7 +334,21 @@
 			<finder-column name="productionPlantName" />
 			<finder-column name="productionPlantAddress" />			
 		</finder>
-		
+		<finder return-type="Collection" name="F_EXP_STATUS">
+			<finder-column name="expiredStatus" arrayable-operator="OR"/>
+		</finder>
+		<finder return-type="Collection" name="F_APP_VH_EXP">
+			<finder-column name="applicantIdNo" />
+			<finder-column name="vehicleClass" />
+			<finder-column name="expiredStatus" />
+		</finder>
+		<finder return-type="Collection" name="F_APP_VH_EXP_CERTNO">
+			<finder-column name="applicantIdNo" />
+			<finder-column name="vehicleClass" />
+			<finder-column name="expiredStatus" />
+			<finder-column name="certificateRecordNo" />
+		</finder>
+
 	</entity>
 
 	<entity name="VRVehicleSpecification" local-service="true" table="vr_vehiclespecification"
@@ -445,8 +459,7 @@
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 	</entity>
 
-	<entity name="VRCFGStandard" local-service="true" table="vr_cfg_standard"
-	remote-service="false">
+	<entity name="VRCFGStandard" local-service="true" table="vr_cfg_standard" remote-service="false">
 		<!-- PK fields -->
 		<column name="id" type="long" primary="true" db-name="id"/>
 	
@@ -463,7 +476,130 @@
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 	</entity>
 
-	
+	<entity name="VRCorporationAttendee" table="vr_corporation_attendee" local-service="true" remote-service="false">
+		<column name="id" db-name="id" type="long" primary="true" />
+		
+		<!-- add new -->
+		<column name="mtCore" type="long" db-name="mtCore"/>
+		<column name="createDate" type="Date" db-name="createDate"/>
+		<column name="modifyDate" type="Date" db-name="modifyDate"/>
+		<column name="syncDate" type="Date" db-name="syncDate"/>
+		
+		<column name="corporationCode" db-name="corporationCode" type="String" />
+		<column name="corporationName" db-name="corporationName" type="String" />
+		<column name="inspectionDate" db-name="inspectionDate" type="Date" />
+		<column name="registerednumber" db-name="registerednumber" type="String" />
+		<column name="testingRegisteredPlace" db-name="testingRegisteredPlace" type="String" />
+		<column name="testingPlaceDistrict" db-name="testingPlaceDistrict" type="String" />		
+		<column name="testingPlaceCity" db-name="testingPlaceCity" type="String" />
+		<column name="testingPlaceRegion" db-name="testingPlaceRegion" type="String" />
+		<column name="testingPlaceCountry" db-name="testingPlaceCountry" type="String" />
+		<column name="testingRemarks" db-name="testingRemarks" type="String" />
+		
+		<column name="activityId" db-name="activityId" type="long" />
+		<column name="userId" db-name="userId" type="long" />
+		<column name="userName" db-name="userName" type="String" />
+		<column name="activityType" db-name="activityType" type="String" />
+		<column name="activityCatetory" db-name="activityCatetory" type="String" />
+		<column name="categoryName" db-name="categoryName" type="String" />
+		<column name="dossierId" db-name="dossierId" type="long" />
+		<column name="serviceName" db-name="serviceName" type="String" />
+		<column name="subject" db-name="subject" type="String" />
+		<column name="hostingId" db-name="hostingId" type="int" />
+		<column name="hosting" db-name="hosting" type="String" />
+		<column name="locationId" db-name="locationId" type="int" />
+		<column name="location" db-name="location" type="String" />
+		<column name="geolocation" db-name="geolocation" type="String" />
+		<column name="startDate" db-name="startDate" type="Date" />
+		<column name="endDate" db-name="endDate" type="Date" />
+		<column name="finishDate" db-name="finishDate" type="Date" />
+		<column name="state" db-name="state" type="String" />
+		<column name="stateName" db-name="stateName" type="String" />
+		<column name="stateColor" db-name="stateColor" type="String" />	
+		<column name="priority" db-name="priority" type="String" />
+		<column name="overdue" db-name="overdue" type="String" />
+		<column name="managerId" db-name="managerId" type="long" />
+		<column name="managerName" db-name="managerName" type="String" />
+		<column name="leaderId" db-name="leaderId" type="long" />
+		<column name="leaderName" db-name="leaderName" type="String" />
+		<column name="leaderJobTitle" db-name="leaderJobTitle" type="String" />
+		<column name="description" db-name="description" type="String" />
+		<column name="permission" db-name="permission" type="String" />
+		<column name="resultNote" db-name="resultNote" type="String" />
+		<column name="progress" db-name="progress" type="String" />
+		<column name="assignType" db-name="assignType" type="String" />
+		<column name="jobPosId" db-name="jobPosId" type="long" />
+		<column name="jobPosTitle" db-name="jobPosTitle" type="String" />
+		<column name="invitation" db-name="invitation" type="String" />
+		<column name="editable" db-name="editable" type="String" />
+		<column name="vaqcontactname" db-name="vaqcontactname" type="String" />
+		<column name="vaqcontactphone" db-name="vaqcontactphone" type="String" />
+		<column name="applicantIdNo" db-name="applicantIdNo" type="String" />
+		<column name="importercontactname" db-name="importercontactname" type="String" />
+		<column name="importercontactphone" db-name="importercontactphone" type="String" />
+		<column name="importercontactemail" db-name="importercontactemail" type="String" />
+		<column name="importerfax" db-name="importerfax" type="String" />
+		<column name="soTKHQ" db-name="soTKHQ" type="String" />
+		<column name="ngayTKHQ" db-name="ngayTKHQ" type="String" />
+		<column name="maChiCucHQ" db-name="maChiCucHQ" type="String" />
+		<column name="nhanHieu" db-name="nhanHieu" type="String" />
+		<column name="tenThuongMai" db-name="tenThuongMai" type="String" />
+		<column name="maKieuLoai" db-name="maKieuLoai" type="String" />
+		<column name="loaiPhuongTien" db-name="loaiPhuongTien" type="String" />
+		<column name="soKhung" db-name="soKhung" type="String" />
+		<column name="soDongCo" db-name="soDongCo" type="String" />
+		<column name="tinhTrangPhuongTien" db-name="tinhTrangPhuongTien" type="String" />
+		<column name="kyHieuThietKe" db-name="kyHieuThietKe" type="String" />
+		<column name="soGCNThamDinhThietKe" db-name="soGCNThamDinhThietKe" type="String" />
+		<column name="soGCNPheDuyetKieuLoaiNuocNgoai" db-name="soGCNPheDuyetKieuLoaiNuocNgoai" type="String" />
+		<column name="tenCoSoSanXuat" db-name="tenCoSoSanXuat" type="String" />
+		<column name="diaChiCoSoSanXuat" db-name="diaChiCoSoSanXuat" type="String" />
+		<column name="tenXuongSanXuat" db-name="tenXuongSanXuat" type="String" />
+		<column name="diaChiXuongSanXuat" db-name="diaChiXuongSanXuat" type="String" />
+		
+		<order by="asc">
+			<order-column name="id" />
+		</order>
+		<finder return-type="Collection" name="CorporationCode">
+			<finder-column name="corporationCode" />
+		</finder>
+		<finder return-type="Collection" name="ManagerId">
+			<finder-column name="managerId" />
+		</finder>
+		<finder return-type="Collection" name="LeaderId">
+			<finder-column name="leaderId" />
+		</finder>
+		<finder return-type="Collection" name="ApplicantIdNo">
+			<finder-column name="applicantIdNo" />
+		</finder>
+		<finder return-type="Collection" name="ApplicantIdNoInspectionDate">
+			<finder-column name="applicantIdNo" />
+			<finder-column name="inspectionDate" />
+		</finder>
+		<finder return-type="Collection" name="CorporationCodeInspectionDate">
+			<finder-column name="corporationCode" />
+			<finder-column name="inspectionDate" />
+		</finder>
+		<finder return-type="Collection" name="ManagerIdInspectionDate">
+			<finder-column name="managerId" />
+			<finder-column name="inspectionDate" />
+		</finder>
+		<finder return-type="Collection" name="LeaderIdInspectionDate">
+			<finder-column name="leaderId" />
+			<finder-column name="inspectionDate" />
+		</finder>
+		<finder return-type="Collection" name="DossierId">
+			<finder-column name="dossierId" />			
+		</finder>
+		<finder return-type="Collection" name="DossierIdActivityCategory">
+			<finder-column name="dossierId" />		
+			<finder-column name="activityCatetory" />			
+		</finder>
+		<finder return-type="Collection" name="DossierIdAssignType">
+			<finder-column name="dossierId" />		
+			<finder-column name="assignType" />			
+		</finder>
+	</entity>
 	
 	<entity name="VRCorporationView" table="vr_corporation_view" local-service="true" remote-service="false">
 		<column name="id" db-name="id" type="long" primary="true" />
@@ -637,6 +773,10 @@
 		<finder return-type="Collection" name="applicantStatus">
 			<finder-column name="mtCore"></finder-column>
 			<finder-column name="applicantStatus"></finder-column>		
+		</finder>
+		<finder return-type="VRApplicantProfile" name="MT_APP_CODE">
+			<finder-column name="mtCore" />
+			<finder-column name="applicantCode" />
 		</finder>
 	</entity>
 
@@ -858,9 +998,10 @@
 		<!-- Audit fields -->
 		<column name="mtCore" type="long" db-name="mtCore"/>
 		<column name="applicantProfileId" type="long" db-name="applicantProfileId"/>
+		<column name="applicantCode" type="String" db-name="applicantCode"/>
 		<column name="applicantName" type="String" db-name="applicantName"/>
 		<column name="applicantAddress" type="String" db-name="applicantAddress"/>
-		<column name="overseasManufacturerId" type="long" db-name="overseasManufacturerId"/>
+		<column name="overseasManufacturerCode" type="String" db-name="overseasManufacturerCode"/>
 		<column name="overseasManufacturerName" type="String" db-name="overseasManufacturerName"/>
 		<column name="overseasManufacturerAddress" type="String" db-name="overseasManufacturerAddress"/>
 		<column name="productionPlantId" type="long" db-name="productionPlantId"/>
@@ -877,6 +1018,7 @@
 		<column name="copReportDate" type="Date" db-name="copReportDate"/>
 		<column name="copReportApprovedDate" type="Date" db-name="copReportApprovedDate"/>
 		<column name="copReportExpiredDate" type="Date" db-name="copReportExpiredDate"/>
+		<column name="COPFileEntryId" type="long" db-name="COPFileEntryId"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
@@ -926,6 +1068,7 @@
 		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
 		<column name="employeeName" type="String" db-name="employeeName"/>
 		<column name="employeeCertificateNo" type="String" db-name="employeeCertificateNo"/>
+		<column name="trainningAt" type="String" db-name="trainningAt"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
@@ -963,6 +1106,7 @@
 		<column name="designSymbolNo" type="String" db-name="designSymbolNo"/>
 		<column name="productionCountryCode" type="String" db-name="productionCountryCode"/>
 		<column name="equipmentStatus" type="String" db-name="equipmentStatus"/>
+		<column name="expireDate" type="Date" db-name="expireDate"/>
 		<column name="notes" type="String" db-name="notes"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
@@ -1030,6 +1174,15 @@
 		<column name="vehicleClass" type="String" db-name="vehicleClass"/>
 		<column name="vehicleTypeCode" type="String" db-name="vehicleTypeCode"/>
 		<column name="vehicleTypeDescription" type="String" db-name="vehicleTypeDescription"/>
+		<column name="productClassificationCode" type="String" db-name="productClassificationCode"/>
+		<column name="productClassificationDescription" type="String" db-name="productClassificationDescription"/>
+		
+		<column name="trademarkName" type="String" db-name="trademarkName"/>
+		<column name="commercialName" type="String" db-name="commercialName"/>
+		<column name="modelCode" type="String" db-name="modelCode"/>
+		<column name="designSymbolNo" type="String" db-name="designSymbolNo"/>
+		<column name="remarks" type="String" db-name="remarks"/>
+		
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		<!-- Filter -->
@@ -1046,37 +1199,6 @@
 		</finder>
 	</entity>
 
-	<entity name="VRCOPProductLine" local-service="true" table="vr_copproductline"
-		remote-service="false">
-		<!-- PK fields -->
-		<column name="id" type="long" primary="true" db-name="id"/>
-		
-		<!-- Audit fields -->
-		<column name="mtCore" type="long" db-name="mtCore"/>
-		<column name="copReportRepositoryID" type="long" db-name="copReportRepositoryID"/>
-		<column name="copReportNo" type="String" db-name="copReportNo"/>
-		<column name="copProductTypeID" type="long" db-name="copProductTypeID"/>
-		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
-		<column name="trademark" type="String" db-name="trademark"/>
-		<column name="trademarkName" type="String" db-name="trademarkName"/>
-		<column name="commercialName" type="String" db-name="commercialName"/>
-		<column name="modelCode" type="String" db-name="modelCode"/>
-		<column name="designSymbolNo" type="String" db-name="designSymbolNo"/>
-		<column name="modifyDate" type="Date" db-name="modifyDate"/>
-		<column name="syncDate" type="Date" db-name="syncDate"/>
-		<!-- Filter -->
-        <order by="desc">
-            <order-column name="modifyDate" order-by="desc"></order-column>
-        </order>
-        <finder return-type="Collection" name="copReportRepositoryID">
-			<finder-column name="mtCore"></finder-column>			
-			<finder-column name="copReportRepositoryID"></finder-column>
-		</finder>
-        <finder return-type="Collection" name="copReportNo">
-			<finder-column name="mtCore"></finder-column>			
-			<finder-column name="copReportNo"></finder-column>
-		</finder>
-	</entity>
 
 	<entity name="VRCOPReportAttach" local-service="true" table="vr_copreport_attach"
 		remote-service="false">
@@ -1088,7 +1210,9 @@
 		<column name="copReportRepositoryID" type="long" db-name="copReportRepositoryID"/>
 		<column name="copReportNo" type="String" db-name="copReportNo"/>
 		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
-		<column name="attachFileURL" type="String" db-name="attachFileURL"/>
+		<column name="docName" type="String" db-name="DocName"/>
+		<column name="docNo" type="String" db-name="DocNo"/>
+		<column name="remarks" type="String" db-name="Remarks"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		<!-- Filter -->
@@ -1105,35 +1229,7 @@
 		</finder>
 	</entity>
 
-	<entity name="VRCOPProductClassification" local-service="true" table="vr_copproductclassification"
-		remote-service="false">
-		<!-- PK fields -->
-		<column name="id" type="long" primary="true" db-name="id"/>
-		
-		<!-- Audit fields -->
-		<column name="mtCore" type="long" db-name="mtCore"/>
-		<column name="copReportRepositoryID" type="long" db-name="copReportRepositoryID"/>
-		<column name="copReportNo" type="String" db-name="copReportNo"/>
-		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
-		<column name="productClassificationCode" type="String" db-name="productClassificationCode"/>
-		<column name="productClassificationDescription" type="String" db-name="productClassificationDescription"/>
-		<column name="modifyDate" type="Date" db-name="modifyDate"/>
-		<column name="syncDate" type="Date" db-name="syncDate"/>
-		<!-- Filter -->
-        <order by="desc">
-            <order-column name="modifyDate" order-by="desc"></order-column>
-        </order>
-        <finder return-type="Collection" name="copReportRepositoryID">
-			<finder-column name="mtCore"></finder-column>			
-			<finder-column name="copReportRepositoryID"></finder-column>
-		</finder>
-        <finder return-type="Collection" name="copReportNo">
-			<finder-column name="mtCore"></finder-column>			
-			<finder-column name="copReportNo"></finder-column>
-		</finder>
-	</entity>
-
-	<entity name="VRProductionPlantEmployee" local-service="true" table="vr_productplantemployee"
+	<entity name="VRProductionPlantEmployee" local-service="true" table="vr_productionplantemployee"
 		remote-service="false">
 		<!-- PK fields -->
 		<column name="id" type="long" primary="true" db-name="id"/>
@@ -1144,6 +1240,7 @@
 		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
 		<column name="employeeName" type="String" db-name="employeeName"/>
 		<column name="employeeCertificateNo" type="String" db-name="employeeCertificateNo"/>
+		<column name="trainningAt" type="String" db-name="trainningAt"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
@@ -1176,6 +1273,7 @@
 		<column name="designSymbolNo" type="String" db-name="designSymbolNo"/>
 		<column name="productionCountryCode" type="String" db-name="productionCountryCode"/>
 		<column name="equipmentStatus" type="String" db-name="equipmentStatus"/>
+		<column name="expireDate" type="Date" db-name="expireDate"/>
 		<column name="notes" type="String" db-name="notes"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
@@ -1221,7 +1319,7 @@
 		</finder>
 	</entity>
 
-	<entity name="VRProductType" local-service="true" table="vr_productiontype"
+	<entity name="VRProductType" local-service="true" table="vr_producttype"
 		remote-service="false">
 		<!-- PK fields -->
 		<column name="id" type="long" primary="true" db-name="id"/>
@@ -1233,32 +1331,14 @@
 		<column name="vehicleClass" type="String" db-name="vehicleClass"/>
 		<column name="vehicleTypeCode" type="String" db-name="vehicleTypeCode"/>
 		<column name="vehicleTypeDescription" type="String" db-name="vehicleTypeDescription"/>
-		<column name="modifyDate" type="Date" db-name="modifyDate"/>
-		<column name="syncDate" type="Date" db-name="syncDate"/>
-		<!-- Filter -->
-        <order by="desc">
-            <order-column name="modifyDate" order-by="desc"></order-column>
-        </order>
-        <finder return-type="Collection" name="productPlantID">
-			<finder-column name="mtCore"></finder-column>			
-			<finder-column name="productPlantID"></finder-column>
-		</finder>
-	</entity>
-
-	<entity name="VRProductLine" local-service="true" table="vr_productline"
-		remote-service="false">
-		<!-- PK fields -->
-		<column name="id" type="long" primary="true" db-name="id"/>
+		<column name="productClassificationCode" type="String" db-name="productClassificationCode"/>
+		<column name="productClassificationDescription" type="String" db-name="productClassificationDescription"/>
 		
-		<!-- Audit fields -->
-		<column name="mtCore" type="long" db-name="mtCore"/>
-		<column name="productPlantID" type="long" db-name="productPlantID"/>
-		<column name="productTypeID" type="long" db-name="productTypeID"/>
-		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
 		<column name="trademark" type="String" db-name="trademark"/>
 		<column name="trademarkName" type="String" db-name="trademarkName"/>
 		<column name="commercialName" type="String" db-name="commercialName"/>
 		<column name="modelCode" type="String" db-name="modelCode"/>
+		<column name="designSymbolNo" type="String" db-name="designSymbolNo"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		<!-- Filter -->
@@ -1271,29 +1351,7 @@
 		</finder>
 	</entity>
 
-	<entity name="VRProductClassification" local-service="true" table="vr_productclassification"
-		remote-service="false">
-		<!-- PK fields -->
-		<column name="id" type="long" primary="true" db-name="id"/>
-		
-		<!-- Audit fields -->
-		<column name="mtCore" type="long" db-name="mtCore"/>
-		<column name="productPlantID" type="long" db-name="productPlantID"/>
-		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
-		<column name="productClassificationCode" type="String" db-name="productClassificationCode"/>
-		<column name="productClassificationDescription" type="String" db-name="productClassificationDescription"/>
-		<column name="modifyDate" type="Date" db-name="modifyDate"/>
-		<column name="syncDate" type="Date" db-name="syncDate"/>
-		
-		<!-- Filter -->
-        <order by="desc">
-            <order-column name="modifyDate" order-by="desc"></order-column>
-        </order>
-        <finder return-type="Collection" name="productPlantID">
-			<finder-column name="mtCore"></finder-column>			
-			<finder-column name="productPlantID"></finder-column>
-		</finder>
-	</entity>
+	
 
 	<entity name="VRInventory" local-service="true" table="vr_inventory"
 		remote-service="false">
@@ -1309,13 +1367,13 @@
 		<column name="vehicleClass" type="String" db-name="vehicleClass"/>
 		<column name="stampType" type="String" db-name="stampType"/>
 		<column name="stampShortNo" type="String" db-name="stampShortNo"/>
-		<column name="serialStartNo" type="String" db-name="serialStartNo"/>
-		<column name="serialEndNo" type="String" db-name="serialEndNo"/>
+		<column name="serialStartNo" type="long" db-name="serialStartNo"/>
+		<column name="serialEndNo" type="long" db-name="serialEndNo"/>
 		<column name="totalQuantities" type="long" db-name="totalQuantities"/>
 		<column name="totalInUse" type="long" db-name="totalInUse"/>
 		<column name="totalNotUsed" type="long" db-name="totalNotUsed"/>
 		<column name="remark" type="String" db-name="remark"/>
-		<column name="corporationId" type="String" db-name="corporationId"/>
+		<column name="corporationId" type="long" db-name="corporationId"/>
 		<column name="checkType" type="long" db-name="checkType"/>
 		<column name="checkStatus" type="long" db-name="checkStatus"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
@@ -1368,7 +1426,7 @@
 		<column name="inputSheetNo" type="String" db-name="inputSheetNo"/>
 		<column name="inputSheetDate" type="Date" db-name="inputSheetDate"/>
 		<column name="originalDocumentNo" type="String" db-name="originalDocumentNo"/>
-		<column name="corporationId" type="String" db-name="corporationId"/>
+		<column name="corporationId" type="long" db-name="corporationId"/>
 		<column name="inputSheetType" type="long" db-name="inputSheetType"/>
 		<column name="maker" type="String" db-name="maker"/>
 		<column name="checker" type="String" db-name="checker"/>
@@ -1417,7 +1475,7 @@
 		<column name="stampType" type="String" db-name="stampType"/>
 		<column name="stampShortNo" type="String" db-name="stampShortNo"/>
 		<column name="serialStartNo" type="long" db-name="serialStartNo"/>
-		<column name="serialEndNo" type="String" db-name="serialEndNo"/>
+		<column name="serialEndNo" type="long" db-name="serialEndNo"/>
 		<column name="subTotalInDocument" type="long" db-name="subTotalInDocument"/>
 		<column name="subTotalQuantities" type="long" db-name="subTotalQuantities"/>
 		<column name="units" type="long" db-name="units"/>
@@ -1451,6 +1509,9 @@
 			<finder-column name="bookId"></finder-column>
 			<finder-column name="stampType"></finder-column>
 		</finder>
+		<finder return-type="Collection" name="Sum3GreaterThan">
+			<finder-column name="sum3" comparator="&gt;"/>
+		</finder>
 		
 	</entity>
 
@@ -1469,7 +1530,7 @@
 		<column name="certificateDate" type="Date" db-name="certificateDate"/>
 		<column name="vehicleRecordId" type="long" db-name="vehicleRecordId"/>
 		<column name="frameNo" type="String" db-name="frameNo"/>
-		<column name="BoxNo" type="String" db-name="BoxNo"/>
+		<column name="boxNo" type="String" db-name="BoxNo"/>
 		<column name="vinNo" type="String" db-name="vinNo"/>
 		<column name="engineNo" type="String" db-name="engineNo"/>
 		<column name="qrCode" type="String" db-name="qrCode"/>
@@ -1480,7 +1541,7 @@
 		<column name="inputSheetId" type="long" db-name="inputSheetId"/>
 		<column name="bookId" type="long" db-name="bookId"/>
 		<column name="purchaserId" type="String" db-name="purchaserId"/>
-		<column name="corporationId" type="String" db-name="corporationId"/>
+		<column name="corporationId" type="long" db-name="corporationId"/>
 		<column name="issuingStatus" type="long" db-name="issuingStatus"/>
 		<column name="clearingStatus" type="long" db-name="clearingStatus"/>
 		<column name="stampStatus" type="long" db-name="stampStatus"/>
@@ -1528,6 +1589,11 @@
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="vehicleRecordId"></finder-column>
 		</finder>
+		<finder return-type="VRInputStampbookDetails" name="BookIdAndSequenceNo">
+			<finder-column name="bookId"></finder-column>			
+			<finder-column name="sequenceNo"></finder-column>
+		</finder>
+		
 	</entity>
 
 	<entity name="VROutputSheet" local-service="true" table="vr_outputsheet"
@@ -1540,7 +1606,7 @@
 		<column name="outputSheetNo" type="String" db-name="outputSheetNo"/>
 		<column name="outputSheetDate" type="Date" db-name="outputSheetDate"/>
 		<column name="originalDocumentNo" type="String" db-name="originalDocumentNo"/>
-		<column name="supplierCorporationId" type="String" db-name="supplierCorporationId"/>
+		<column name="supplierCorporationId" type="long" db-name="supplierCorporationId"/>
 		<column name="outputSheetType" type="long" db-name="outputSheetType"/>
 		<column name="maker" type="String" db-name="maker"/>
 		<column name="checker" type="String" db-name="checker"/>
@@ -1553,8 +1619,8 @@
 		<column name="inventoryDate" type="Date" db-name="inventoryDate"/>
 		<column name="dossierId" type="long" db-name="dossierId"/>
 		<column name="issueId" type="long" db-name="issueId"/>
-		<column name="purchaserId" type="String" db-name="purchaserId"/>
-		<column name="purchaserCorporationId" type="String" db-name="purchaserCorporationId"/>
+		<column name="purchaserId" type="long" db-name="purchaserId"/>
+		<column name="purchaserCorporationId" type="long" db-name="purchaserCorporationId"/>
 		<column name="bookIDList" type="String" db-name="bookIDList"/>
 		<column name="isApproval" type="long" db-name="isApproval"/>
 		<column name="totalQuantities" type="long" db-name="totalQuantities"/>
@@ -1607,8 +1673,8 @@
 		<column name="vehicleClass" type="String" db-name="vehicleClass"/>
 		<column name="stampType" type="String" db-name="stampType"/>
 		<column name="stampShortNo" type="String" db-name="stampShortNo"/>
-		<column name="serialStartNo" type="String" db-name="serialStartNo"/>
-		<column name="serialEndNo" type="String" db-name="serialEndNo"/>
+		<column name="serialStartNo" type="long" db-name="serialStartNo"/>
+		<column name="serialEndNo" type="long" db-name="serialEndNo"/>
 		<column name="subTotalInDocument" type="long" db-name="subTotalInDocument"/>
 		<column name="subTotalQuantities" type="long" db-name="subTotalQuantities"/>
 		<column name="unitPrice" type="long" db-name="unitPrice"/>
@@ -1687,8 +1753,8 @@
 		<column name="vehicleClass" type="String" db-name="vehicleClass"/>
 		<column name="stampType" type="String" db-name="stampType"/>
 		<column name="stampShortNo" type="String" db-name="stampShortNo"/>
-		<column name="serialStartNo" type="String" db-name="serialStartNo"/>
-		<column name="serialEndNo" type="String" db-name="serialEndNo"/>
+		<column name="serialStartNo" type="long" db-name="serialStartNo"/>
+		<column name="serialEndNo" type="long" db-name="serialEndNo"/>
 		<column name="subTotalInDocument" type="long" db-name="subTotalInDocument"/>
 		<column name="subTotalQuantities" type="long" db-name="subTotalQuantities"/>
 		<column name="vehiclePrice" type="long" db-name="vehiclePrice"/>
@@ -1758,6 +1824,7 @@
 		
 		<!-- Audit fields -->
 		<column name="mtCore" type="long" db-name="mtCore"/>
+		<column name="issueId" type="long" db-name="issueId"/>
 		<column name="issueVehicleCertificateId" type="long" db-name="issueVehicleCertificateId"/>
 		<column name="dossierId" type="long" db-name="dossierId"/>
 		<column name="applicantProfileId" type="long" db-name="applicantProfileId"/>
@@ -1848,9 +1915,9 @@
 		<column name="remarks" type="String" db-name="remarks"/>
 		<column name="methodOfIssue" type="String" db-name="methodOfIssue"/>
 		<column name="totalInDocument" type="long" db-name="totalInDocument"/>
-		<column name="issueCorporationId" type="String" db-name="issueCorporationId"/>
+		<column name="issueCorporationId" type="long" db-name="issueCorporationId"/>
 		<column name="verifyCorporationId" type="String" db-name="verifyCorporationId"/>
-		<column name="digitalissuestatus" type="String" db-name="digitalissuestatus"/>
+		<column name="digitalissuestatus" type="int" db-name="digitalissuestatus"/>
 		
 		<!-- add new -->
 		<column type="String" name="issueType"/>
@@ -1879,6 +1946,10 @@
 		<column type="String" name="leadername"/>
 		<column type="String" name="applicantmaker"/>
 		<column type="String" name="applicantchecker"/>
+		
+		<column name="inspectorId" type="long" db-name="inspectorId"/>
+		<column name="issueInspectorId" type="long" db-name="issueInspectorId"/>
+		<column name="verifyInspectorId" type="long" db-name="verifyInspectorId"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 				
@@ -1920,6 +1991,14 @@
 			<finder-column name="mtCore"></finder-column>						
 			<finder-column name="copreportno"></finder-column>
 		</finder>
+		<finder return-type="Collection" name="IC_IS">
+			<finder-column name="issueCorporationId"></finder-column>
+			<finder-column name="digitalissuestatus"></finder-column>
+		</finder>
+		 <finder return-type="VRIssue" name="F_MT_DID">
+			<finder-column name="mtCore" />
+			<finder-column name="dossierId" />
+		</finder>
 	</entity>
 
 	<entity name="VRIssueVehiclecertificate" local-service="true" table="vr_issue_vehiclecertificate"
@@ -1935,17 +2014,14 @@
 		<column name="vehiclePrice" type="long" db-name="vehiclePrice"/>
 		<column name="totalQuantity" type="long" db-name="totalQuantity"/>
 		<column name="unitPrice" type="long" db-name="unitPrice"/>
+		<column name="totalProduct" type="int" db-name="totalproduct"/>
 		
 		<!-- add new -->
 		<column  type="String" name="certificaterecordno"/>
 		<column  type="String" name="productionexamreportno"/>
-		<column  type="String" name="productyear"/>
-		<column  type="int" name="productmonth"/>
-		<column  type="int" name="totalstamp"/>
-		<column  type="int" name="totalproduct"/>
-		<column  type="Date" name="modifyDate"/>
-		
-				
+		<column name="modifyDate" type="Date" db-name="modifyDate"/>
+		<column name="syncDate" type="Date" db-name="syncDate"/>
+						
 		<!-- Filter -->
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
@@ -2134,8 +2210,8 @@
 		<column name="id" type="long" primary="true" db-name="id"/>
 		
 		<column name="mtcore" type="int" db-name="mtcore"/>
-		<column name="issueId" type="int" db-name="issueId"/>
-		<column name="issueVehicleCertificateId" type="int" db-name="issueVehicleCertificateId"/>
+		<column name="issueId" type="long" db-name="issueId"/>
+		<column name="issueVehicleCertificateId" type="long" db-name="issueVehicleCertificateId"/>
 		<column name="vehiclecertificaterecordno" type="String" db-name="vehiclecertificaterecordno"/>
 		<column name="equipmentName" type="String" db-name="equipmentName"/>
 		<column name="equipmentType" type="String" db-name="equipmentType"/>
@@ -7375,7 +7451,43 @@
         	<finder-column name="markasdeleted"></finder-column>
         </finder>
 	</entity>
-	
+
+	<entity local-service="true" name="VRProductionPlantSupplier" remote-service="false"
+		table="vr_productionplantsupplier" uuid="true">
+
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true" db-name="id"/>
+		
+		<!-- Audit fields -->
+		<column name="mtCore" type="long" db-name="mtCore"/>
+		<column name="supplierId" type="String" db-name="supplierid"/>
+		<column name="supplierName" type="String" db-name="suppliername"/>
+		<column name="supplieraddress" type="String" db-name="supplieraddress"/>
+		<column name="corporationCode" type="String" db-name="corporationCode"/>
+		<column name="corporationName" type="String" db-name="corporationName"/>
+		<column name="corporationAddress" type="String" db-name="corporationAddress"/>
+		<column name="applicantprofileId" type="long" db-name="applicantprofileid"/>
+		<column name="productPlantID" type="long" db-name="ProductPlantID"/>
+		<column name="productionPlantCode" type="String" db-name="productionPlantCode"/>
+		<column name="productionPlantName" type="String" db-name="productionPlantName"/>
+		<column name="productionPlantAddress" type="String" db-name="productionPlantAddress"/>
+		<column name="markupImporter" type="int" db-name="markupImporter"/>
+		<column name="mappingMA_CTY" type="String" db-name="mappingMA_CTY"/>
+		<column name="mappingTEN_CTY" type="String" db-name="mappingTEN_CTY"/>
+		<column name="mappingDIA_CHI_CTY" type="String" db-name="mappingDIA_CHI_CTY"/>
+		<column name="mappingMA_XUONG_LR" type="String" db-name="mappingMA_XUONG_LR"/>
+		<column name="mappingTEN_XUONG_LR" type="String" db-name="mappingTEN_XUONG_LR"/>
+		<column name="mappingDIA_CHI_XUONG_LR" type="String" db-name="mappingDIA_CHI_XUONG_LR"/>
+		<column name="modifyDate" type="Date" db-name="modifyDate"/>
+		<column name="syncDate" type="Date" db-name="syncDate"/>
+		<!-- Order -->
+
+		<!-- Filter -->
+        <order by="desc">
+            <order-column name="modifyDate" order-by="desc" />
+        </order>
+	</entity>
+
 	<exceptions>
 		<exception>InvalidInputParam</exception>
 		<exception>OutOfScopeData</exception>

@@ -114,13 +114,21 @@ public interface VRInputStampbookLocalService extends BaseLocalService,
 	public VRInputStampbook getVRInputStampbook(long id)
 		throws PortalException;
 
+	public VRInputStampbook updateByOutputSheet(long bookId,
+		long subTotalInDocument, long serialStartNo, long serialEndNo,
+		java.lang.Long purchaserId, java.lang.Long corporationId,
+		long outputSheetType) throws PortalException, SystemException;
+
 	public VRInputStampbook updateInputStambook(long id, long mtCore,
-		long inputSheetId, long bookId, java.lang.String vehicleClass,
+		long inputSheetId, java.lang.Long corporationId,
+		java.lang.Long inputSheetType, java.lang.String vehicleClass,
 		java.lang.String stampType, java.lang.String stampShortNo,
-		long serialStartNo, java.lang.String serialEndNo,
-		long subTotalInDocument, long subTotalQuantities, long units,
-		long unitPrice, long totalAmount, long totalInUse, long totalNotUsed,
-		long sum1, long sum2, long sum3, java.lang.String remark)
+		java.lang.Long serialStartNo, java.lang.Long serialEndNo,
+		java.lang.Long subTotalInDocument, java.lang.Long subTotalQuantities,
+		java.lang.Long units, java.lang.Long unitPrice,
+		java.lang.Long totalAmount, java.lang.Long totalInUse,
+		java.lang.Long totalNotUsed, java.lang.Long sum1, java.lang.Long sum2,
+		java.lang.Long sum3, java.lang.String remark, java.lang.Long isApproval)
 		throws PortalException, SystemException;
 
 	/**
@@ -217,6 +225,9 @@ public interface VRInputStampbookLocalService extends BaseLocalService,
 		long mtCore, long inputSheetId, long bookId, java.lang.String stampType)
 		throws PortalException, SystemException;
 
+	public List<VRInputStampbook> findBySum3GreaterThan()
+		throws PortalException, SystemException;
+
 	/**
 	* Returns a range of all the vr input stampbooks.
 	*
@@ -248,4 +259,9 @@ public interface VRInputStampbookLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateJSONArrayInputStambook(long inputSheetId,
+		java.lang.Long corporationId, java.lang.Long inputSheetType,
+		java.lang.String stampbooks, java.lang.Long isApproval)
+		throws PortalException, SystemException;
 }

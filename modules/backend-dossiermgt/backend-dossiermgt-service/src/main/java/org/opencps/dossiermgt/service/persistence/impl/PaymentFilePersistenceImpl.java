@@ -3917,6 +3917,240 @@ public class PaymentFilePersistenceImpl extends BasePersistenceImpl<PaymentFile>
 
 	private static final String _FINDER_COLUMN_DID_ISN_DOSSIERID_2 = "paymentFile.dossierId = ? AND ";
 	private static final String _FINDER_COLUMN_DID_ISN_ISNEW_2 = "paymentFile.isNew = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_ID = new FinderPath(PaymentFileModelImpl.ENTITY_CACHE_ENABLED,
+			PaymentFileModelImpl.FINDER_CACHE_ENABLED, PaymentFileImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_ID",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			PaymentFileModelImpl.GROUPID_COLUMN_BITMASK |
+			PaymentFileModelImpl.DOSSIERID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_ID = new FinderPath(PaymentFileModelImpl.ENTITY_CACHE_ENABLED,
+			PaymentFileModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ID",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns the payment file where groupId = &#63; and dossierId = &#63; or throws a {@link NoSuchPaymentFileException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param dossierId the dossier ID
+	 * @return the matching payment file
+	 * @throws NoSuchPaymentFileException if a matching payment file could not be found
+	 */
+	@Override
+	public PaymentFile findByG_ID(long groupId, long dossierId)
+		throws NoSuchPaymentFileException {
+		PaymentFile paymentFile = fetchByG_ID(groupId, dossierId);
+
+		if (paymentFile == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", dossierId=");
+			msg.append(dossierId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchPaymentFileException(msg.toString());
+		}
+
+		return paymentFile;
+	}
+
+	/**
+	 * Returns the payment file where groupId = &#63; and dossierId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param dossierId the dossier ID
+	 * @return the matching payment file, or <code>null</code> if a matching payment file could not be found
+	 */
+	@Override
+	public PaymentFile fetchByG_ID(long groupId, long dossierId) {
+		return fetchByG_ID(groupId, dossierId, true);
+	}
+
+	/**
+	 * Returns the payment file where groupId = &#63; and dossierId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param dossierId the dossier ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching payment file, or <code>null</code> if a matching payment file could not be found
+	 */
+	@Override
+	public PaymentFile fetchByG_ID(long groupId, long dossierId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, dossierId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_ID,
+					finderArgs, this);
+		}
+
+		if (result instanceof PaymentFile) {
+			PaymentFile paymentFile = (PaymentFile)result;
+
+			if ((groupId != paymentFile.getGroupId()) ||
+					(dossierId != paymentFile.getDossierId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_PAYMENTFILE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_ID_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_ID_DOSSIERID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(dossierId);
+
+				List<PaymentFile> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_ID,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"PaymentFilePersistenceImpl.fetchByG_ID(long, long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					PaymentFile paymentFile = list.get(0);
+
+					result = paymentFile;
+
+					cacheResult(paymentFile);
+
+					if ((paymentFile.getGroupId() != groupId) ||
+							(paymentFile.getDossierId() != dossierId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_ID,
+							finderArgs, paymentFile);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_ID, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (PaymentFile)result;
+		}
+	}
+
+	/**
+	 * Removes the payment file where groupId = &#63; and dossierId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param dossierId the dossier ID
+	 * @return the payment file that was removed
+	 */
+	@Override
+	public PaymentFile removeByG_ID(long groupId, long dossierId)
+		throws NoSuchPaymentFileException {
+		PaymentFile paymentFile = findByG_ID(groupId, dossierId);
+
+		return remove(paymentFile);
+	}
+
+	/**
+	 * Returns the number of payment files where groupId = &#63; and dossierId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param dossierId the dossier ID
+	 * @return the number of matching payment files
+	 */
+	@Override
+	public int countByG_ID(long groupId, long dossierId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_ID;
+
+		Object[] finderArgs = new Object[] { groupId, dossierId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_PAYMENTFILE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_ID_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_ID_DOSSIERID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(dossierId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_ID_GROUPID_2 = "paymentFile.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_ID_DOSSIERID_2 = "paymentFile.dossierId = ?";
 
 	public PaymentFilePersistenceImpl() {
 		setModelClass(PaymentFile.class);
@@ -3940,6 +4174,10 @@ public class PaymentFilePersistenceImpl extends BasePersistenceImpl<PaymentFile>
 			new Object[] {
 				paymentFile.getDossierId(), paymentFile.getReferenceUid()
 			}, paymentFile);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_ID,
+			new Object[] { paymentFile.getGroupId(), paymentFile.getDossierId() },
+			paymentFile);
 
 		paymentFile.resetOriginalValues();
 	}
@@ -4031,6 +4269,16 @@ public class PaymentFilePersistenceImpl extends BasePersistenceImpl<PaymentFile>
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_D_RUID, args,
 			paymentFileModelImpl, false);
+
+		args = new Object[] {
+				paymentFileModelImpl.getGroupId(),
+				paymentFileModelImpl.getDossierId()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_ID, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_ID, args,
+			paymentFileModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -4075,6 +4323,27 @@ public class PaymentFilePersistenceImpl extends BasePersistenceImpl<PaymentFile>
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_D_RUID, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_D_RUID, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					paymentFileModelImpl.getGroupId(),
+					paymentFileModelImpl.getDossierId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_ID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_ID, args);
+		}
+
+		if ((paymentFileModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_ID.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					paymentFileModelImpl.getOriginalGroupId(),
+					paymentFileModelImpl.getOriginalDossierId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_ID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_ID, args);
 		}
 	}
 
@@ -4421,6 +4690,9 @@ public class PaymentFilePersistenceImpl extends BasePersistenceImpl<PaymentFile>
 		paymentFileImpl.setInvoiceIssueNo(paymentFile.getInvoiceIssueNo());
 		paymentFileImpl.setInvoiceNo(paymentFile.getInvoiceNo());
 		paymentFileImpl.setInvoiceFileEntryId(paymentFile.getInvoiceFileEntryId());
+		paymentFileImpl.setInvoicePayload(paymentFile.getInvoicePayload());
+		paymentFileImpl.setEinvoice(paymentFile.getEinvoice());
+		paymentFileImpl.setPaymentFormData(paymentFile.getPaymentFormData());
 
 		return paymentFileImpl;
 	}

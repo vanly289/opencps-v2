@@ -303,17 +303,17 @@ public class PaymentFileLocalServiceWrapper implements PaymentFileLocalService,
 	@Override
 	public org.opencps.dossiermgt.model.PaymentFile createPaymentFiles(
 		long userId, long groupId, long dossierId,
-		java.lang.String referenceUid, java.lang.String govAgencyCode,
-		java.lang.String govAgencyName, java.lang.String applicantName,
-		java.lang.String applicantIdNo, java.lang.String paymentFee,
+		java.lang.String referenceUid, java.lang.String paymentFee,
 		long paymentAmount, java.lang.String paymentNote,
 		java.lang.String epaymentProfile, java.lang.String bankInfo,
+		int paymentStatus, java.lang.String paymentMethod,
+		java.lang.String paymentFormData,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _paymentFileLocalService.createPaymentFiles(userId, groupId,
-			dossierId, referenceUid, govAgencyCode, govAgencyName,
-			applicantName, applicantIdNo, paymentFee, paymentAmount,
-			paymentNote, epaymentProfile, bankInfo, serviceContext);
+			dossierId, referenceUid, paymentFee, paymentAmount, paymentNote,
+			epaymentProfile, bankInfo, paymentStatus, paymentMethod,
+			paymentFormData, serviceContext);
 	}
 
 	/**
@@ -366,6 +366,12 @@ public class PaymentFileLocalServiceWrapper implements PaymentFileLocalService,
 		java.lang.String uuid, long groupId) {
 		return _paymentFileLocalService.fetchPaymentFileByUuidAndGroupId(uuid,
 			groupId);
+	}
+
+	@Override
+	public org.opencps.dossiermgt.model.PaymentFile getByG_ID(long groupId,
+		long dossierId) {
+		return _paymentFileLocalService.getByG_ID(groupId, dossierId);
 	}
 
 	/**
@@ -423,6 +429,13 @@ public class PaymentFileLocalServiceWrapper implements PaymentFileLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _paymentFileLocalService.getPaymentFileByUuidAndGroupId(uuid,
 			groupId);
+	}
+
+	@Override
+	public org.opencps.dossiermgt.model.PaymentFile updateApplicantFeeAmount(
+		long paymentFileId, int requestPayment, java.lang.String paymentNote) {
+		return _paymentFileLocalService.updateApplicantFeeAmount(paymentFileId,
+			requestPayment, paymentNote);
 	}
 
 	/**

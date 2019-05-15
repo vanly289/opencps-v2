@@ -103,20 +103,22 @@ public class VRInputSheetLocalServiceWrapper implements VRInputSheetLocalService
 	public com.fds.vr.business.model.VRInputSheet updateInputSheet(long id,
 		long mtCore, java.lang.String inputSheetNo,
 		java.util.Date inputSheetDate, java.lang.String originalDocumentNo,
-		java.lang.String corporationId, long inputSheetType,
+		java.lang.Long corporationId, java.lang.Long inputSheetType,
 		java.lang.String maker, java.lang.String checker,
 		java.lang.String approver, java.lang.String deliveryName,
 		java.lang.String inventoryName, java.lang.String inventoryPlace,
 		java.util.Date inventoryDate, java.lang.String bookIDList,
-		long isApproval, long totalQuantities, long totalAmount,
-		java.lang.String amountInWords, java.lang.String remark)
+		java.lang.Long isApproval, java.lang.Long totalQuantities,
+		java.lang.Long totalAmount, java.lang.String amountInWords,
+		java.lang.String remark, java.lang.String stampbooks)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _vrInputSheetLocalService.updateInputSheet(id, mtCore,
 			inputSheetNo, inputSheetDate, originalDocumentNo, corporationId,
 			inputSheetType, maker, checker, approver, deliveryName,
 			inventoryName, inventoryPlace, inventoryDate, bookIDList,
-			isApproval, totalQuantities, totalAmount, amountInWords, remark);
+			isApproval, totalQuantities, totalAmount, amountInWords, remark,
+			stampbooks);
 	}
 
 	/**
@@ -238,7 +240,7 @@ public class VRInputSheetLocalServiceWrapper implements VRInputSheetLocalService
 
 	@Override
 	public java.util.List<com.fds.vr.business.model.VRInputSheet> findBycorporationId(
-		long mtCore, java.lang.String corporationId)
+		long mtCore, long corporationId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _vrInputSheetLocalService.findBycorporationId(mtCore,

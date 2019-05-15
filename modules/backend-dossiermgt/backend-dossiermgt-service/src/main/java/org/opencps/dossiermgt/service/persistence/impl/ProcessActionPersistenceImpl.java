@@ -8169,7 +8169,7 @@ public class ProcessActionPersistenceImpl extends BasePersistenceImpl<ProcessAct
 		processActionImpl.setActionName(processAction.getActionName());
 		processActionImpl.setAllowAssignUser(processAction.isAllowAssignUser());
 		processActionImpl.setAssignUserId(processAction.getAssignUserId());
-		processActionImpl.setRequestPayment(processAction.isRequestPayment());
+		processActionImpl.setRequestPayment(processAction.getRequestPayment());
 		processActionImpl.setPaymentFee(processAction.getPaymentFee());
 		processActionImpl.setCreateDossierFiles(processAction.getCreateDossierFiles());
 		processActionImpl.setReturnDossierFiles(processAction.getReturnDossierFiles());

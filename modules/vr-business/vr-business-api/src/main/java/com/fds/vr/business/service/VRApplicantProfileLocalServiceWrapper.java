@@ -89,6 +89,13 @@ public class VRApplicantProfileLocalServiceWrapper
 		return _vrApplicantProfileLocalService.fetchVRApplicantProfile(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRApplicantProfile findByMT_APP_CODE(
+		long mtCore, java.lang.String applicantCode) {
+		return _vrApplicantProfileLocalService.findByMT_APP_CODE(mtCore,
+			applicantCode);
+	}
+
 	/**
 	* Returns the vr applicant profile with the primary key.
 	*

@@ -157,13 +157,7 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 			vrOutputSheetImpl.setOriginalDocumentNo(originalDocumentNo);
 		}
 
-		if (supplierCorporationId == null) {
-			vrOutputSheetImpl.setSupplierCorporationId(StringPool.BLANK);
-		}
-		else {
-			vrOutputSheetImpl.setSupplierCorporationId(supplierCorporationId);
-		}
-
+		vrOutputSheetImpl.setSupplierCorporationId(supplierCorporationId);
 		vrOutputSheetImpl.setOutputSheetType(outputSheetType);
 
 		if (maker == null) {
@@ -231,20 +225,8 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 
 		vrOutputSheetImpl.setDossierId(dossierId);
 		vrOutputSheetImpl.setIssueId(issueId);
-
-		if (purchaserId == null) {
-			vrOutputSheetImpl.setPurchaserId(StringPool.BLANK);
-		}
-		else {
-			vrOutputSheetImpl.setPurchaserId(purchaserId);
-		}
-
-		if (purchaserCorporationId == null) {
-			vrOutputSheetImpl.setPurchaserCorporationId(StringPool.BLANK);
-		}
-		else {
-			vrOutputSheetImpl.setPurchaserCorporationId(purchaserCorporationId);
-		}
+		vrOutputSheetImpl.setPurchaserId(purchaserId);
+		vrOutputSheetImpl.setPurchaserCorporationId(purchaserCorporationId);
 
 		if (bookIDList == null) {
 			vrOutputSheetImpl.setBookIDList(StringPool.BLANK);
@@ -298,7 +280,8 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 		outputSheetNo = objectInput.readUTF();
 		outputSheetDate = objectInput.readLong();
 		originalDocumentNo = objectInput.readUTF();
-		supplierCorporationId = objectInput.readUTF();
+
+		supplierCorporationId = objectInput.readLong();
 
 		outputSheetType = objectInput.readLong();
 		maker = objectInput.readUTF();
@@ -314,8 +297,10 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 		dossierId = objectInput.readLong();
 
 		issueId = objectInput.readLong();
-		purchaserId = objectInput.readUTF();
-		purchaserCorporationId = objectInput.readUTF();
+
+		purchaserId = objectInput.readLong();
+
+		purchaserCorporationId = objectInput.readLong();
 		bookIDList = objectInput.readUTF();
 
 		isApproval = objectInput.readLong();
@@ -352,12 +337,7 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 			objectOutput.writeUTF(originalDocumentNo);
 		}
 
-		if (supplierCorporationId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(supplierCorporationId);
-		}
+		objectOutput.writeLong(supplierCorporationId);
 
 		objectOutput.writeLong(outputSheetType);
 
@@ -423,19 +403,9 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 
 		objectOutput.writeLong(issueId);
 
-		if (purchaserId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(purchaserId);
-		}
+		objectOutput.writeLong(purchaserId);
 
-		if (purchaserCorporationId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(purchaserCorporationId);
-		}
+		objectOutput.writeLong(purchaserCorporationId);
 
 		if (bookIDList == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -473,7 +443,7 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 	public String outputSheetNo;
 	public long outputSheetDate;
 	public String originalDocumentNo;
-	public String supplierCorporationId;
+	public long supplierCorporationId;
 	public long outputSheetType;
 	public String maker;
 	public String checker;
@@ -486,8 +456,8 @@ public class VROutputSheetCacheModel implements CacheModel<VROutputSheet>,
 	public long inventoryDate;
 	public long dossierId;
 	public long issueId;
-	public String purchaserId;
-	public String purchaserCorporationId;
+	public long purchaserId;
+	public long purchaserCorporationId;
 	public String bookIDList;
 	public long isApproval;
 	public long totalQuantities;

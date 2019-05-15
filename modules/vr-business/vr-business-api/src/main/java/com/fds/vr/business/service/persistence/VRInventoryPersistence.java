@@ -195,7 +195,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @return the matching vr inventories
 	*/
 	public java.util.List<VRInventory> findByYearofPeriodAndCorporationId(
-		long mtCore, long yearofPeriod, java.lang.String corporationId);
+		long mtCore, long yearofPeriod, long corporationId);
 
 	/**
 	* Returns a range of all the vr inventories where mtCore = &#63; and yearofPeriod = &#63; and corporationId = &#63;.
@@ -212,8 +212,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @return the range of matching vr inventories
 	*/
 	public java.util.List<VRInventory> findByYearofPeriodAndCorporationId(
-		long mtCore, long yearofPeriod, java.lang.String corporationId,
-		int start, int end);
+		long mtCore, long yearofPeriod, long corporationId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the vr inventories where mtCore = &#63; and yearofPeriod = &#63; and corporationId = &#63;.
@@ -231,8 +230,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @return the ordered range of matching vr inventories
 	*/
 	public java.util.List<VRInventory> findByYearofPeriodAndCorporationId(
-		long mtCore, long yearofPeriod, java.lang.String corporationId,
-		int start, int end,
+		long mtCore, long yearofPeriod, long corporationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInventory> orderByComparator);
 
 	/**
@@ -252,8 +250,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @return the ordered range of matching vr inventories
 	*/
 	public java.util.List<VRInventory> findByYearofPeriodAndCorporationId(
-		long mtCore, long yearofPeriod, java.lang.String corporationId,
-		int start, int end,
+		long mtCore, long yearofPeriod, long corporationId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInventory> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -268,7 +265,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @throws NoSuchVRInventoryException if a matching vr inventory could not be found
 	*/
 	public VRInventory findByYearofPeriodAndCorporationId_First(long mtCore,
-		long yearofPeriod, java.lang.String corporationId,
+		long yearofPeriod, long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInventory> orderByComparator)
 		throws NoSuchVRInventoryException;
 
@@ -282,7 +279,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @return the first matching vr inventory, or <code>null</code> if a matching vr inventory could not be found
 	*/
 	public VRInventory fetchByYearofPeriodAndCorporationId_First(long mtCore,
-		long yearofPeriod, java.lang.String corporationId,
+		long yearofPeriod, long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInventory> orderByComparator);
 
 	/**
@@ -296,7 +293,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @throws NoSuchVRInventoryException if a matching vr inventory could not be found
 	*/
 	public VRInventory findByYearofPeriodAndCorporationId_Last(long mtCore,
-		long yearofPeriod, java.lang.String corporationId,
+		long yearofPeriod, long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInventory> orderByComparator)
 		throws NoSuchVRInventoryException;
 
@@ -310,7 +307,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @return the last matching vr inventory, or <code>null</code> if a matching vr inventory could not be found
 	*/
 	public VRInventory fetchByYearofPeriodAndCorporationId_Last(long mtCore,
-		long yearofPeriod, java.lang.String corporationId,
+		long yearofPeriod, long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInventory> orderByComparator);
 
 	/**
@@ -325,8 +322,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @throws NoSuchVRInventoryException if a vr inventory with the primary key could not be found
 	*/
 	public VRInventory[] findByYearofPeriodAndCorporationId_PrevAndNext(
-		long id, long mtCore, long yearofPeriod,
-		java.lang.String corporationId,
+		long id, long mtCore, long yearofPeriod, long corporationId,
 		com.liferay.portal.kernel.util.OrderByComparator<VRInventory> orderByComparator)
 		throws NoSuchVRInventoryException;
 
@@ -338,7 +334,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @param corporationId the corporation ID
 	*/
 	public void removeByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, java.lang.String corporationId);
+		long yearofPeriod, long corporationId);
 
 	/**
 	* Returns the number of vr inventories where mtCore = &#63; and yearofPeriod = &#63; and corporationId = &#63;.
@@ -349,7 +345,7 @@ public interface VRInventoryPersistence extends BasePersistence<VRInventory> {
 	* @return the number of matching vr inventories
 	*/
 	public int countByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, java.lang.String corporationId);
+		long yearofPeriod, long corporationId);
 
 	/**
 	* Returns all the vr inventories where mtCore = &#63; and yearofPeriod = &#63; and vehicleClass = &#63;.

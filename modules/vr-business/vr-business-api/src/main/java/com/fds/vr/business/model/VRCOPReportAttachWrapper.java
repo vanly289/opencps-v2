@@ -63,7 +63,9 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 		attributes.put("copReportRepositoryID", getCopReportRepositoryID());
 		attributes.put("copReportNo", getCopReportNo());
 		attributes.put("sequenceNo", getSequenceNo());
-		attributes.put("attachFileURL", getAttachFileURL());
+		attributes.put("docName", getDocName());
+		attributes.put("docNo", getDocNo());
+		attributes.put("remarks", getRemarks());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -103,10 +105,22 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 			setSequenceNo(sequenceNo);
 		}
 
-		String attachFileURL = (String)attributes.get("attachFileURL");
+		String docName = (String)attributes.get("docName");
 
-		if (attachFileURL != null) {
-			setAttachFileURL(attachFileURL);
+		if (docName != null) {
+			setDocName(docName);
+		}
+
+		String docNo = (String)attributes.get("docNo");
+
+		if (docNo != null) {
+			setDocNo(docNo);
+		}
+
+		String remarks = (String)attributes.get("remarks");
+
+		if (remarks != null) {
+			setRemarks(remarks);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -178,16 +192,6 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 	}
 
 	/**
-	* Returns the attach file url of this vrcop report attach.
-	*
-	* @return the attach file url of this vrcop report attach
-	*/
-	@Override
-	public java.lang.String getAttachFileURL() {
-		return _vrcopReportAttach.getAttachFileURL();
-	}
-
-	/**
 	* Returns the cop report no of this vrcop report attach.
 	*
 	* @return the cop report no of this vrcop report attach
@@ -195,6 +199,36 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 	@Override
 	public java.lang.String getCopReportNo() {
 		return _vrcopReportAttach.getCopReportNo();
+	}
+
+	/**
+	* Returns the doc name of this vrcop report attach.
+	*
+	* @return the doc name of this vrcop report attach
+	*/
+	@Override
+	public java.lang.String getDocName() {
+		return _vrcopReportAttach.getDocName();
+	}
+
+	/**
+	* Returns the doc no of this vrcop report attach.
+	*
+	* @return the doc no of this vrcop report attach
+	*/
+	@Override
+	public java.lang.String getDocNo() {
+		return _vrcopReportAttach.getDocNo();
+	}
+
+	/**
+	* Returns the remarks of this vrcop report attach.
+	*
+	* @return the remarks of this vrcop report attach
+	*/
+	@Override
+	public java.lang.String getRemarks() {
+		return _vrcopReportAttach.getRemarks();
 	}
 
 	@Override
@@ -282,16 +316,6 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 		_vrcopReportAttach.persist();
 	}
 
-	/**
-	* Sets the attach file url of this vrcop report attach.
-	*
-	* @param attachFileURL the attach file url of this vrcop report attach
-	*/
-	@Override
-	public void setAttachFileURL(java.lang.String attachFileURL) {
-		_vrcopReportAttach.setAttachFileURL(attachFileURL);
-	}
-
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_vrcopReportAttach.setCachedModel(cachedModel);
@@ -315,6 +339,26 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 	@Override
 	public void setCopReportRepositoryID(long copReportRepositoryID) {
 		_vrcopReportAttach.setCopReportRepositoryID(copReportRepositoryID);
+	}
+
+	/**
+	* Sets the doc name of this vrcop report attach.
+	*
+	* @param docName the doc name of this vrcop report attach
+	*/
+	@Override
+	public void setDocName(java.lang.String docName) {
+		_vrcopReportAttach.setDocName(docName);
+	}
+
+	/**
+	* Sets the doc no of this vrcop report attach.
+	*
+	* @param docNo the doc no of this vrcop report attach
+	*/
+	@Override
+	public void setDocNo(java.lang.String docNo) {
+		_vrcopReportAttach.setDocNo(docNo);
 	}
 
 	@Override
@@ -381,6 +425,16 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_vrcopReportAttach.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the remarks of this vrcop report attach.
+	*
+	* @param remarks the remarks of this vrcop report attach
+	*/
+	@Override
+	public void setRemarks(java.lang.String remarks) {
+		_vrcopReportAttach.setRemarks(remarks);
 	}
 
 	/**

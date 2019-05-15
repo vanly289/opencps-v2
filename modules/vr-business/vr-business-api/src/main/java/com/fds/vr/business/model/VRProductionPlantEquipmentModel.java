@@ -269,6 +269,20 @@ public interface VRProductionPlantEquipmentModel extends BaseModel<VRProductionP
 	public void setEquipmentStatus(String equipmentStatus);
 
 	/**
+	 * Returns the expire date of this vr production plant equipment.
+	 *
+	 * @return the expire date of this vr production plant equipment
+	 */
+	public Date getExpireDate();
+
+	/**
+	 * Sets the expire date of this vr production plant equipment.
+	 *
+	 * @param expireDate the expire date of this vr production plant equipment
+	 */
+	public void setExpireDate(Date expireDate);
+
+	/**
 	 * Returns the notes of this vr production plant equipment.
 	 *
 	 * @return the notes of this vr production plant equipment

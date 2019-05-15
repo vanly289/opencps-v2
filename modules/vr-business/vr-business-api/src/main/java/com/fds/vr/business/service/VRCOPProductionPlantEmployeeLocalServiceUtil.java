@@ -106,6 +106,11 @@ public class VRCOPProductionPlantEmployeeLocalServiceUtil {
 		return getService().getVRCOPProductionPlantEmployee(id);
 	}
 
+	public static com.fds.vr.business.model.VRCOPProductionPlantEmployee updateCOPProductionPlantEmployee(
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return getService().updateCOPProductionPlantEmployee(mapValues, mtCore);
+	}
+
 	/**
 	* Updates the vrcop production plant employee in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

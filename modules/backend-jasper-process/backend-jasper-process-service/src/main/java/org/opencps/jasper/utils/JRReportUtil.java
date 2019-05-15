@@ -18,6 +18,7 @@ package org.opencps.jasper.utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import com.liferay.portal.kernel.log.Log;
@@ -77,7 +78,8 @@ public class JRReportUtil {
 
 		try {
 			// fix json enter char
-			jsonData = quoteHTML(jsonData);
+			//jsonData = quoteHTML(jsonData);
+			
 			JasperReport reportTemplate = JRReportTemplate.getJasperReport(jrxmlTemplate);
 			JRJSONDataSource dataSource = JRJSONDataSource.getInstance(jsonData);
 

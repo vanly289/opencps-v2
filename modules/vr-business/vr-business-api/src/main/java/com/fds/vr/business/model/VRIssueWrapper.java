@@ -112,6 +112,9 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 		attributes.put("leadername", getLeadername());
 		attributes.put("applicantmaker", getApplicantmaker());
 		attributes.put("applicantchecker", getApplicantchecker());
+		attributes.put("inspectorId", getInspectorId());
+		attributes.put("issueInspectorId", getIssueInspectorId());
+		attributes.put("verifyInspectorId", getVerifyInspectorId());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -278,7 +281,7 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 			setTotalInDocument(totalInDocument);
 		}
 
-		String issueCorporationId = (String)attributes.get("issueCorporationId");
+		Long issueCorporationId = (Long)attributes.get("issueCorporationId");
 
 		if (issueCorporationId != null) {
 			setIssueCorporationId(issueCorporationId);
@@ -291,7 +294,8 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 			setVerifyCorporationId(verifyCorporationId);
 		}
 
-		String digitalissuestatus = (String)attributes.get("digitalissuestatus");
+		Integer digitalissuestatus = (Integer)attributes.get(
+				"digitalissuestatus");
 
 		if (digitalissuestatus != null) {
 			setDigitalissuestatus(digitalissuestatus);
@@ -457,6 +461,24 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 			setApplicantchecker(applicantchecker);
 		}
 
+		Long inspectorId = (Long)attributes.get("inspectorId");
+
+		if (inspectorId != null) {
+			setInspectorId(inspectorId);
+		}
+
+		Long issueInspectorId = (Long)attributes.get("issueInspectorId");
+
+		if (issueInspectorId != null) {
+			setIssueInspectorId(issueInspectorId);
+		}
+
+		Long verifyInspectorId = (Long)attributes.get("verifyInspectorId");
+
+		if (verifyInspectorId != null) {
+			setVerifyInspectorId(verifyInspectorId);
+		}
+
 		Date modifyDate = (Date)attributes.get("modifyDate");
 
 		if (modifyDate != null) {
@@ -538,6 +560,16 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public int getAverageSTMQuantity() {
 		return _vrIssue.getAverageSTMQuantity();
+	}
+
+	/**
+	* Returns the digitalissuestatus of this vr issue.
+	*
+	* @return the digitalissuestatus of this vr issue
+	*/
+	@Override
+	public int getDigitalissuestatus() {
+		return _vrIssue.getDigitalissuestatus();
 	}
 
 	/**
@@ -766,16 +798,6 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	}
 
 	/**
-	* Returns the digitalissuestatus of this vr issue.
-	*
-	* @return the digitalissuestatus of this vr issue
-	*/
-	@Override
-	public java.lang.String getDigitalissuestatus() {
-		return _vrIssue.getDigitalissuestatus();
-	}
-
-	/**
 	* Returns the examination period of this vr issue.
 	*
 	* @return the examination period of this vr issue
@@ -823,16 +845,6 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public java.lang.String getInspectorname() {
 		return _vrIssue.getInspectorname();
-	}
-
-	/**
-	* Returns the issue corporation ID of this vr issue.
-	*
-	* @return the issue corporation ID of this vr issue
-	*/
-	@Override
-	public java.lang.String getIssueCorporationId() {
-		return _vrIssue.getIssueCorporationId();
 	}
 
 	/**
@@ -1066,6 +1078,36 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	}
 
 	/**
+	* Returns the inspector ID of this vr issue.
+	*
+	* @return the inspector ID of this vr issue
+	*/
+	@Override
+	public long getInspectorId() {
+		return _vrIssue.getInspectorId();
+	}
+
+	/**
+	* Returns the issue corporation ID of this vr issue.
+	*
+	* @return the issue corporation ID of this vr issue
+	*/
+	@Override
+	public long getIssueCorporationId() {
+		return _vrIssue.getIssueCorporationId();
+	}
+
+	/**
+	* Returns the issue inspector ID of this vr issue.
+	*
+	* @return the issue inspector ID of this vr issue
+	*/
+	@Override
+	public long getIssueInspectorId() {
+		return _vrIssue.getIssueInspectorId();
+	}
+
+	/**
 	* Returns the mt core of this vr issue.
 	*
 	* @return the mt core of this vr issue
@@ -1103,6 +1145,16 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public long getTotalInDocument() {
 		return _vrIssue.getTotalInDocument();
+	}
+
+	/**
+	* Returns the verify inspector ID of this vr issue.
+	*
+	* @return the verify inspector ID of this vr issue
+	*/
+	@Override
+	public long getVerifyInspectorId() {
+		return _vrIssue.getVerifyInspectorId();
 	}
 
 	@Override
@@ -1343,7 +1395,7 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	* @param digitalissuestatus the digitalissuestatus of this vr issue
 	*/
 	@Override
-	public void setDigitalissuestatus(java.lang.String digitalissuestatus) {
+	public void setDigitalissuestatus(int digitalissuestatus) {
 		_vrIssue.setDigitalissuestatus(digitalissuestatus);
 	}
 
@@ -1424,6 +1476,16 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	}
 
 	/**
+	* Sets the inspector ID of this vr issue.
+	*
+	* @param inspectorId the inspector ID of this vr issue
+	*/
+	@Override
+	public void setInspectorId(long inspectorId) {
+		_vrIssue.setInspectorId(inspectorId);
+	}
+
+	/**
 	* Sets the inspectorcode of this vr issue.
 	*
 	* @param inspectorcode the inspectorcode of this vr issue
@@ -1449,8 +1511,18 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	* @param issueCorporationId the issue corporation ID of this vr issue
 	*/
 	@Override
-	public void setIssueCorporationId(java.lang.String issueCorporationId) {
+	public void setIssueCorporationId(long issueCorporationId) {
 		_vrIssue.setIssueCorporationId(issueCorporationId);
+	}
+
+	/**
+	* Sets the issue inspector ID of this vr issue.
+	*
+	* @param issueInspectorId the issue inspector ID of this vr issue
+	*/
+	@Override
+	public void setIssueInspectorId(long issueInspectorId) {
+		_vrIssue.setIssueInspectorId(issueInspectorId);
 	}
 
 	/**
@@ -1712,6 +1784,16 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public void setVerifyCorporationId(java.lang.String verifyCorporationId) {
 		_vrIssue.setVerifyCorporationId(verifyCorporationId);
+	}
+
+	/**
+	* Sets the verify inspector ID of this vr issue.
+	*
+	* @param verifyInspectorId the verify inspector ID of this vr issue
+	*/
+	@Override
+	public void setVerifyInspectorId(long verifyInspectorId) {
+		_vrIssue.setVerifyInspectorId(verifyInspectorId);
 	}
 
 	@Override

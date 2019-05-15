@@ -204,11 +204,11 @@ public class VRInputStampbookDetailsSoap implements Serializable {
 	}
 
 	public String getBoxNo() {
-		return _BoxNo;
+		return _boxNo;
 	}
 
-	public void setBoxNo(String BoxNo) {
-		_BoxNo = BoxNo;
+	public void setBoxNo(String boxNo) {
+		_boxNo = boxNo;
 	}
 
 	public String getVinNo() {
@@ -291,11 +291,11 @@ public class VRInputStampbookDetailsSoap implements Serializable {
 		_purchaserId = purchaserId;
 	}
 
-	public String getCorporationId() {
+	public long getCorporationId() {
 		return _corporationId;
 	}
 
-	public void setCorporationId(String corporationId) {
+	public void setCorporationId(long corporationId) {
 		_corporationId = corporationId;
 	}
 
@@ -405,7 +405,7 @@ public class VRInputStampbookDetailsSoap implements Serializable {
 	private Date _certificateDate;
 	private long _vehicleRecordId;
 	private String _frameNo;
-	private String _BoxNo;
+	private String _boxNo;
 	private String _vinNo;
 	private String _engineNo;
 	private String _qrCode;
@@ -416,7 +416,7 @@ public class VRInputStampbookDetailsSoap implements Serializable {
 	private long _inputSheetId;
 	private long _bookId;
 	private String _purchaserId;
-	private String _corporationId;
+	private long _corporationId;
 	private long _issuingStatus;
 	private long _clearingStatus;
 	private long _stampStatus;

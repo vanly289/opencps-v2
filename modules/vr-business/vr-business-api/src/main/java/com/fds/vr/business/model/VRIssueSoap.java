@@ -87,6 +87,9 @@ public class VRIssueSoap implements Serializable {
 		soapModel.setLeadername(model.getLeadername());
 		soapModel.setApplicantmaker(model.getApplicantmaker());
 		soapModel.setApplicantchecker(model.getApplicantchecker());
+		soapModel.setInspectorId(model.getInspectorId());
+		soapModel.setIssueInspectorId(model.getIssueInspectorId());
+		soapModel.setVerifyInspectorId(model.getVerifyInspectorId());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 
@@ -342,11 +345,11 @@ public class VRIssueSoap implements Serializable {
 		_totalInDocument = totalInDocument;
 	}
 
-	public String getIssueCorporationId() {
+	public long getIssueCorporationId() {
 		return _issueCorporationId;
 	}
 
-	public void setIssueCorporationId(String issueCorporationId) {
+	public void setIssueCorporationId(long issueCorporationId) {
 		_issueCorporationId = issueCorporationId;
 	}
 
@@ -358,11 +361,11 @@ public class VRIssueSoap implements Serializable {
 		_verifyCorporationId = verifyCorporationId;
 	}
 
-	public String getDigitalissuestatus() {
+	public int getDigitalissuestatus() {
 		return _digitalissuestatus;
 	}
 
-	public void setDigitalissuestatus(String digitalissuestatus) {
+	public void setDigitalissuestatus(int digitalissuestatus) {
 		_digitalissuestatus = digitalissuestatus;
 	}
 
@@ -574,6 +577,30 @@ public class VRIssueSoap implements Serializable {
 		_applicantchecker = applicantchecker;
 	}
 
+	public long getInspectorId() {
+		return _inspectorId;
+	}
+
+	public void setInspectorId(long inspectorId) {
+		_inspectorId = inspectorId;
+	}
+
+	public long getIssueInspectorId() {
+		return _issueInspectorId;
+	}
+
+	public void setIssueInspectorId(long issueInspectorId) {
+		_issueInspectorId = issueInspectorId;
+	}
+
+	public long getVerifyInspectorId() {
+		return _verifyInspectorId;
+	}
+
+	public void setVerifyInspectorId(long verifyInspectorId) {
+		_verifyInspectorId = verifyInspectorId;
+	}
+
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -615,9 +642,9 @@ public class VRIssueSoap implements Serializable {
 	private String _remarks;
 	private String _methodOfIssue;
 	private long _totalInDocument;
-	private String _issueCorporationId;
+	private long _issueCorporationId;
 	private String _verifyCorporationId;
-	private String _digitalissuestatus;
+	private int _digitalissuestatus;
 	private String _issueType;
 	private int _averageSTBQuantity;
 	private int _maxMonthQuantity;
@@ -644,6 +671,9 @@ public class VRIssueSoap implements Serializable {
 	private String _leadername;
 	private String _applicantmaker;
 	private String _applicantchecker;
+	private long _inspectorId;
+	private long _issueInspectorId;
+	private long _verifyInspectorId;
 	private Date _modifyDate;
 	private Date _syncDate;
 }

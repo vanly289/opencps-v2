@@ -14,20 +14,20 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRCOPProductType;
+import com.fds.vr.business.service.base.VRCOPProductTypeLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.model.VRCOPProductType;
-import com.fds.vr.business.service.base.VRCOPProductTypeLocalServiceBaseImpl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vrcop product type local service.
@@ -71,6 +71,36 @@ public class VRCOPProductTypeLocalServiceImpl
 		return new ArrayList<VRCOPProductType>();
 		
 	}
-	
+
+	public VRCOPProductType updateCOPProductType(Map<String, String> mapValues, int mtCore) {
+		
+		Date now = new Date();
+
+		long vrCOPProductTypeId = counterLocalService.increment(VRCOPProductType.class.getName());
+
+		VRCOPProductType object = vrcopProductTypePersistence.create(vrCOPProductTypeId);
+
+		/// Add audit fields
+		object.setSyncDate(now);
+		object.setModifyDate(now);
+
+		// Add other fields
+		object.setMtCore(mtCore);
+		object.setCopReportRepositoryID(Long.valueOf(mapValues.get("copReportRepositoryId")));
+		object.setCopReportNo(mapValues.get("copReportNo"));
+		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
+		object.setVehicleClass(mapValues.get("vehicleClass"));
+		object.setVehicleTypeCode(mapValues.get("vehicleTypeCode"));
+		object.setVehicleTypeDescription(mapValues.get("vehicleTypeDescription"));
+		object.setProductClassificationCode(mapValues.get("productClassificationCode"));
+		object.setProductClassificationDescription(mapValues.get("productClassificationDescription"));
+		object.setTrademarkName(mapValues.get("trademarkName"));
+		object.setCommercialName(mapValues.get("commercialName"));
+		object.setModelCode(mapValues.get("modelCode"));
+		object.setDesignSymbolNo(mapValues.get("designSymbolNo"));
+
+		return vrcopProductTypePersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductTypeLocalServiceImpl.class);
 }

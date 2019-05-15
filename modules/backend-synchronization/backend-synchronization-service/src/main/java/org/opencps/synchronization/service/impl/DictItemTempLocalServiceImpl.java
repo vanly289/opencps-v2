@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -543,7 +544,7 @@ public class DictItemTempLocalServiceImpl
 	public Hits luceneSearchEngine(LinkedHashMap<String, Object> params, Sort[] sorts, int start, int end,
 			SearchContext searchContext) throws ParseException, SearchException {
 		Indexer<DictItemTemp> indexer = IndexerRegistryUtil.nullSafeGetIndexer(DictItemTemp.class);
-
+		try {
 		searchContext.addFullQueryEntryClassName(DictItemTemp.class.getName());
 		searchContext.setEntryClassNames(new String[] { DictItemTemp.class.getName() });
 		searchContext.setAttribute("paginationType", "regular");
@@ -562,13 +563,7 @@ public class DictItemTempLocalServiceImpl
 		String dictCollectionId = (String) params.get(DictItemTempTerm.DICT_COLLECTION_ID);
 		String dictItemParentId = String.valueOf(params.get(DictItemTempTerm.PARENT_ITEM_ID));
 		String parentItemCode = (String) params.get(DictItemTempTerm.PARENT_ITEM_CODE);
-		
-		/*
-		 * ThanhNv: fixbug get all DictItemTemp in a collection
-		if (Validator.isNull(parentItemCode)) {
-			parentItemCode = "0";
-		}
-		*/
+	
 
 		String dictItemCode = (String) params.get(DictItemTempTerm.ITEM_CODE);
 		String keywords = (String) params.get("keywords");
@@ -672,7 +667,12 @@ public class DictItemTempLocalServiceImpl
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, DictItemTemp.class.getName());
 
 		return IndexSearcherHelperUtil.search(searchContext, booleanQuery);
-
+		} catch (ParseException e) {
+			_log.error("LuceneSearchEngine ParseException: " + e);
+		} catch (SearchException e) {
+			_log.error("LuceneSearchEngine SearchException: " + e);
+		}
+		return new HitsImpl();
 	}
 
 	public long countLuceneSearchEngine(LinkedHashMap<String, Object> params, SearchContext searchContext)
@@ -694,10 +694,6 @@ public class DictItemTempLocalServiceImpl
 		String dictCollectionId = (String) params.get(DictItemTempTerm.DICT_COLLECTION_ID);
 		String dictItemParentId = String.valueOf(params.get(DictItemTempTerm.PARENT_ITEM_ID));
 		String parentItemCode = (String) params.get(DictItemTempTerm.PARENT_ITEM_CODE);
-
-//		if (Validator.isNull(parentItemCode)) {
-//			parentItemCode = "0";
-//		}
 
 		String dictItemCode = (String) params.get(DictItemTempTerm.ITEM_CODE);
 		String keywords = (String) params.get("keywords");

@@ -19,13 +19,18 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.model.VRIssue;
+import com.fds.vr.business.model.VRIssueVehiclecertificate;
 import com.fds.vr.business.model.VRVehicleRecord;
 import com.fds.vr.business.service.base.VRVehicleRecordLocalServiceBaseImpl;
 
@@ -72,6 +77,11 @@ public class VRVehicleRecordLocalServiceImpl
 		return new ArrayList<VRVehicleRecord>();
 		
 	}
+
+	public void deleteBydossierId(long mtCore, long dossierId) throws PortalException, SystemException {
+
+		vrVehicleRecordPersistence.removeBydossierId(mtCore, dossierId);
+	}
 	
 	public List<VRVehicleRecord> findBycertificateId(long mtCore, long certificateId) throws PortalException, SystemException {
 		try {
@@ -112,6 +122,33 @@ public class VRVehicleRecordLocalServiceImpl
 		return new ArrayList<VRVehicleRecord>();
 		
 	}
-	
+
+	public VRVehicleRecord updateVRVehicleRecord(Map<String, String> mapValue, int mtCore) {
+
+		long idVRRecord = CounterLocalServiceUtil.increment(VRVehicleRecord.class.getName());
+		VRVehicleRecord object = vrVehicleRecordPersistence.create(idVRRecord);
+
+		// create objVRIssue
+		object.setModifyDate(new Date());
+		object.setSyncDate(new Date());
+
+		object.setMtCore(mtCore);
+		object.setIssueVehicleCertificateId(GetterUtil.getLong(mapValue.get("issueVehicleCertificateId")));
+		object.setDossierId(GetterUtil.getLong(mapValue.get("dossierId")));
+		object.setApplicantProfileId(GetterUtil.getLong(mapValue.get("applicantProfileId")));
+		object.setApplicantName(mapValue.get("applicantName"));
+		object.setApplicantAddress(mapValue.get("applicantAddress"));
+		object.setCertificateId(GetterUtil.getLong(mapValue.get("certificateId")));
+		object.setCertificaterecordno(mapValue.get("certificaterecordno"));
+		object.setFrameNo(mapValue.get("frameNo"));
+		object.setBoxNo(mapValue.get("boxNo"));
+		object.setEngineNo(mapValue.get("engineNo"));
+		object.setColor(mapValue.get("color"));
+		object.setVehicleRecordStatus(GetterUtil.getLong(mapValue.get("vehicleRecordStatus")));
+		object.setPrintingStatus(GetterUtil.getLong(mapValue.get("printingStatus")));
+
+		return vrVehicleRecordPersistence.update(object);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRVehicleRecordLocalServiceImpl.class);
 }

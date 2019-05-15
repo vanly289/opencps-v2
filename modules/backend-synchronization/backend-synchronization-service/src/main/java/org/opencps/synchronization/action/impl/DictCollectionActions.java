@@ -503,8 +503,11 @@ public class DictCollectionActions implements DictCollectionTempInterface {
 		try {
 
 			hits = DictItemTempLocalServiceUtil.luceneSearchEngine(params, sorts, start, end, searchContext);
-
-			result.put("data", hits.toList());
+			if (Validator.isNotNull(hits)) {
+				result.put("data", hits.toList());
+			} else {
+				result.put("data", "");
+			}
 
 			long total = DictItemTempLocalServiceUtil.countLuceneSearchEngine(params, searchContext);
 

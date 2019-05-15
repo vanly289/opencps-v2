@@ -16,12 +16,17 @@ package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.fds.vr.business.model.VRInputStampbook;
 import com.fds.vr.business.service.base.VRInputStampbookLocalServiceBaseImpl;
@@ -49,12 +54,12 @@ public class VRInputStampbookLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRInputStampbookLocalServiceUtil} to access the vr input stampbook local service.
 	 */
 	
-	public VRInputStampbook updateInputStambook(long id, long mtCore, long inputSheetId, 
-			long bookId, String vehicleClass, String stampType, 
-			String stampShortNo, long serialStartNo, String serialEndNo, 
-			long subTotalInDocument, long subTotalQuantities, long units, 
-			long unitPrice, long totalAmount, long totalInUse, long totalNotUsed, 
-			long sum1, long sum2, long sum3, String remark)
+	public VRInputStampbook updateInputStambook(long id, long mtCore, long inputSheetId, Long corporationId, 
+			Long inputSheetType, String vehicleClass, String stampType, 
+			String stampShortNo, Long serialStartNo, Long serialEndNo, 
+			Long subTotalInDocument, Long subTotalQuantities, Long units, 
+			Long unitPrice, Long totalAmount, Long totalInUse, Long totalNotUsed, 
+			Long sum1, Long sum2, Long sum3, String remark, Long isApproval)
 		throws PortalException, SystemException {
 		
 		VRInputStampbook inputStambook = null;
@@ -66,29 +71,152 @@ public class VRInputStampbookLocalServiceImpl
 			inputStambook = vrInputStampbookPersistence.create(id);
 		}
 		
+		long bookId = id;
+		
 		inputStambook.setModifyDate(new Date());
 		inputStambook.setMtCore(mtCore);
 		inputStambook.setInputSheetId(inputSheetId);
+		
 		inputStambook.setBookId(bookId);
-		inputStambook.setVehicleClass(vehicleClass);
-		inputStambook.setStampType(stampType);
-		inputStambook.setStampShortNo(stampShortNo);
-		inputStambook.setSerialStartNo(serialStartNo);
-		inputStambook.setSerialEndNo(serialEndNo);
-		inputStambook.setSubTotalInDocument(subTotalInDocument);
-		inputStambook.setSubTotalQuantities(subTotalQuantities);
-		inputStambook.setUnits(units);
-		inputStambook.setUnitPrice(unitPrice);
-		inputStambook.setTotalAmount(totalAmount);
-		inputStambook.setTotalInUse(totalInUse);
-		inputStambook.setTotalNotUsed(totalNotUsed);
-		inputStambook.setSum1(sum1);
-		inputStambook.setSum2(sum2);
-		inputStambook.setSum3(sum3);
-		inputStambook.setRemark(remark);
+		
+		if(Validator.isNotNull(vehicleClass))
+			inputStambook.setVehicleClass(vehicleClass);
+		
+		if(Validator.isNotNull(stampType))
+			inputStambook.setStampType(stampType);
+		
+		if(Validator.isNotNull(stampShortNo))
+			inputStambook.setStampShortNo(stampShortNo);
+		
+		if(Validator.isNotNull(serialStartNo))
+			inputStambook.setSerialStartNo(serialStartNo);
+		
+		if(Validator.isNotNull(serialEndNo))
+			inputStambook.setSerialEndNo(serialEndNo);
+		
+		if(Validator.isNotNull(subTotalInDocument))
+			inputStambook.setSubTotalInDocument(subTotalInDocument);
+		
+		if(Validator.isNotNull(subTotalQuantities))
+			inputStambook.setSubTotalQuantities(subTotalQuantities);
+		
+		if(Validator.isNotNull(units))
+			inputStambook.setUnits(units);
+		
+		if(Validator.isNotNull(unitPrice))
+			inputStambook.setUnitPrice(unitPrice);
+		
+		if(Validator.isNotNull(totalAmount))
+			inputStambook.setTotalAmount(totalAmount);
+		
+		if(Validator.isNotNull(totalInUse))
+			inputStambook.setTotalInUse(totalInUse);
+		
+		if(Validator.isNotNull(totalNotUsed))
+			inputStambook.setTotalNotUsed(totalNotUsed);
+		
+		if(Validator.isNotNull(sum1))
+			inputStambook.setSum1(sum1);
+		
+		if(Validator.isNotNull(sum2))
+			inputStambook.setSum2(sum2);
+		
+		if(Validator.isNotNull(sum3))
+			inputStambook.setSum3(sum3);
+		
+		if(Validator.isNotNull(remark))
+			inputStambook.setRemark(remark);
+		
+		if(isApproval != null && isApproval == 1) {	//phieu nhap da duyet
+			long year = Calendar.getInstance().get(Calendar.YEAR);
+			
+			// update inventory
+			vrInventoryLocalService.updateInventory(0l, 1l, year, null, null,
+					bookId, vehicleClass, stampType, stampShortNo, serialStartNo, serialEndNo, sum3,
+					totalInUse, totalNotUsed, remark, corporationId, inputSheetType, 0l);
+			
+			for(long sequenNo = serialStartNo ; sequenNo <= serialEndNo ; sequenNo ++) {
+				String stampSerialNo = stampShortNo + String.format("%06d", sequenNo);
+				// update stampbookdetails
+				vrInputStampbookDetailsLocalService.updateInputStampbookDetails(0l, 1l, stampSerialNo, sequenNo,
+						null, null, null, null, null, null, null,
+						null, null, null, null, null, remark, inputSheetId, bookId,
+						null, corporationId, null, null, 0l, null,
+						null, null, null, null, null,
+						null);
+			}
+		}
 		
 		return vrInputStampbookPersistence.update(inputStambook);
 		
+	}
+	
+	public void updateJSONArrayInputStambook(long inputSheetId, Long corporationId, 
+			Long inputSheetType, String stampbooks, Long isApproval)
+			throws PortalException, SystemException {
+		
+		if(Validator.isNotNull(stampbooks)) {
+			JSONArray stampbookArr = JSONFactoryUtil.createJSONArray(stampbooks);
+			
+			List<VRInputStampbook> inputStambooks = vrInputStampbookLocalService.findByInputSheetId(1l, inputSheetId);
+			
+			// them moi
+			for (int i = 0; i < stampbookArr.length(); ++i) {
+				JSONObject json = stampbookArr.getJSONObject(i);
+	
+				String vehicleClass = json.getString("vehicleClass");
+				String stampType = json.getString("stampType");
+				String stampShortNo = json.getString("stampShortNo");
+				Long serialStartNo = json.getLong("serialStartNo");
+				Long serialEndNo = json.getLong("serialEndNo");
+				Long subTotalInDocument = json.getLong("subTotalInDocument");
+				Long subTotalQuantities = json.getLong("subTotalQuantities");
+				Long units = json.getLong("units");
+				Long unitPrice = json.getLong("unitPrice");
+				Long totalAmount_ = json.getLong("totalAmount");
+				Long totalInUse = json.getLong("totalInUse");
+				Long totalNotUsed = json.getLong("totalNotUsed");
+				Long sum1 = json.getLong("sum1");
+				Long sum2 = json.getLong("sum2");
+				Long sum3 = json.getLong("sum3");
+				String remark = json.getString("remark");
+	
+				vrInputStampbookLocalService.updateInputStambook(0l, 1l, inputSheetId, corporationId, inputSheetType,
+						vehicleClass, stampType, stampShortNo, serialStartNo, serialEndNo, subTotalInDocument,
+						subTotalQuantities, units, unitPrice, totalAmount_, totalInUse, totalNotUsed, sum1, sum2, sum3,
+						remark, isApproval);
+			}
+			
+			// xoa cu
+			for(VRInputStampbook inputStambook : inputStambooks) {
+				vrInputStampbookPersistence.remove(inputStambook.getPrimaryKey());
+			}
+		}
+	}
+	
+	public VRInputStampbook updateByOutputSheet(long bookId, long subTotalInDocument, long serialStartNo, long serialEndNo, Long purchaserId, Long corporationId, long outputSheetType) throws PortalException, SystemException {
+		VRInputStampbook inputStambook = vrInputStampbookPersistence.findByPrimaryKey(bookId);
+		
+		if(outputSheetType == 5) {	// CHO DOI
+			long newSum3 = inputStambook.getSum3() - subTotalInDocument;
+			long newSum2 = inputStambook.getSum2() + subTotalInDocument;
+			
+			inputStambook.setSum3(newSum3);
+			inputStambook.setSum2(newSum2);
+		} else if(outputSheetType == 4 || outputSheetType == 6) {	
+			long newSum1 = inputStambook.getSum1() + subTotalInDocument;
+			inputStambook.setSum1(newSum1);
+		}
+		
+		inputStambook.setModifyDate(new Date());
+		
+		for(long sequenNo = serialStartNo ; sequenNo <= serialEndNo ; sequenNo ++) {
+			long issuingStatus = outputSheetType == 5 ? 1 : 2;	// 1 chua cap phat - dang o doi, 2 cap phat cho cssx
+			
+			vrInputStampbookDetailsLocalService.updateByOutputSheet(bookId, outputSheetType, sequenNo, purchaserId, corporationId, issuingStatus);
+		}
+		
+		return vrInputStampbookPersistence.update(inputStambook);
 	}
 	
 	public List<VRInputStampbook> findByInputSheetId(long mtCore, long inputSheetId) throws PortalException, SystemException {
@@ -118,6 +246,17 @@ public class VRInputStampbookLocalServiceImpl
 		} catch (Exception e) {
 			_log.error(e);
 		}
+		return new ArrayList<VRInputStampbook>();
+		
+	}
+	
+	public List<VRInputStampbook> findBySum3GreaterThan() throws PortalException, SystemException {
+		try {
+			return vrInputStampbookPersistence.findBySum3GreaterThan(0l);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		
 		return new ArrayList<VRInputStampbook>();
 		
 	}

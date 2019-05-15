@@ -87,7 +87,7 @@ public class ProcessActionReturnModel {
     protected String allowAssignUser;
     protected String assignUserId;
     protected String assignUserName;
-    protected String requestPayment;
+    protected int requestPayment;
     protected String paymentFee;
     protected List<String> createDossierFiles;
     protected List<String> returnDossierFiles;
@@ -370,7 +370,7 @@ public class ProcessActionReturnModel {
      *     {@link String }
      *     
      */
-    public String getRequestPayment() {
+    public int getRequestPayment() {
         return requestPayment;
     }
 
@@ -382,7 +382,7 @@ public class ProcessActionReturnModel {
      *     {@link String }
      *     
      */
-    public void setRequestPayment(String value) {
+    public void setRequestPayment(int value) {
         this.requestPayment = value;
     }
 

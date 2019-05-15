@@ -105,26 +105,39 @@ public class VRInputStampbookDetailsLocalServiceUtil {
 		return getService().getVRInputStampbookDetails(id);
 	}
 
+	public static com.fds.vr.business.model.VRInputStampbookDetails updateByOutputSheet(
+		long bookId, long outputSheetType, long sequenceNo,
+		java.lang.Long purchaserId, java.lang.Long corporationId,
+		long issuingStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateByOutputSheet(bookId, outputSheetType, sequenceNo,
+			purchaserId, corporationId, issuingStatus);
+	}
+
 	public static com.fds.vr.business.model.VRInputStampbookDetails updateInputStampbookDetails(
-		long id, long mtCore, java.lang.String stampSerialNo, long sequenceNo,
-		long dossierId, long certificateId, java.lang.String certificateNumber,
-		java.util.Date certificateDate, long vehicleRecordId,
-		java.lang.String frameNo, java.lang.String BoxNo,
-		java.lang.String vinNo, java.lang.String engineNo, long copies,
-		long markupFulfill, java.lang.String replacedSerialNo,
-		java.lang.String remark, long inputSheetId, long bookId,
-		java.lang.String purchaserId, java.lang.String corporationId,
-		long issuingStatus, long clearingStatus, long stampStatus,
-		java.util.Date issuingDate, java.util.Date printingDate,
-		java.util.Date noticeofLostDate, java.util.Date noticeofCancelDate,
-		java.util.Date noticeofReturnDate, java.util.Date clearingDate,
-		long clearingAdvancePaymentID)
+		long id, long mtCore, java.lang.String stampSerialNo,
+		java.lang.Long sequenceNo, java.lang.Long dossierId,
+		java.lang.Long certificateId, java.lang.String certificateNumber,
+		java.util.Date certificateDate, java.lang.Long vehicleRecordId,
+		java.lang.String frameNo, java.lang.String boxNo,
+		java.lang.String vinNo, java.lang.String engineNo,
+		java.lang.Long copies, java.lang.Long markupFulfill,
+		java.lang.String replacedSerialNo, java.lang.String remark,
+		java.lang.Long inputSheetId, java.lang.Long bookId,
+		java.lang.Long purchaserId, java.lang.Long corporationId,
+		java.lang.Long issuingStatus, java.lang.Long clearingStatus,
+		java.lang.Long stampStatus, java.util.Date issuingDate,
+		java.util.Date printingDate, java.util.Date noticeofLostDate,
+		java.util.Date noticeofCancelDate, java.util.Date noticeofReturnDate,
+		java.util.Date clearingDate, java.lang.Long clearingAdvancePaymentID)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateInputStampbookDetails(id, mtCore, stampSerialNo,
 			sequenceNo, dossierId, certificateId, certificateNumber,
-			certificateDate, vehicleRecordId, frameNo, BoxNo, vinNo, engineNo,
+			certificateDate, vehicleRecordId, frameNo, boxNo, vinNo, engineNo,
 			copies, markupFulfill, replacedSerialNo, remark, inputSheetId,
 			bookId, purchaserId, corporationId, issuingStatus, clearingStatus,
 			stampStatus, issuingDate, printingDate, noticeofLostDate,
@@ -178,6 +191,11 @@ public class VRInputStampbookDetailsLocalServiceUtil {
 	*/
 	public static int getVRInputStampbookDetailsesCount() {
 		return getService().getVRInputStampbookDetailsesCount();
+	}
+
+	public static java.lang.Long[] findStartNoEndNoBySequence(
+		long inputStampbookId) {
+		return getService().findStartNoEndNoBySequence(inputStampbookId);
 	}
 
 	/**
@@ -269,7 +287,7 @@ public class VRInputStampbookDetailsLocalServiceUtil {
 	}
 
 	public static java.util.List<com.fds.vr.business.model.VRInputStampbookDetails> findBycorporationId(
-		long mtCore, java.lang.String corporationId)
+		long mtCore, long corporationId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().findBycorporationId(mtCore, corporationId);
@@ -287,6 +305,12 @@ public class VRInputStampbookDetailsLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().findByvehicleRecordId(mtCore, vehicleRecordId);
+	}
+
+	public static java.util.List findStampbookByVehicleClass(
+		java.lang.String vehicleClass, long corporationId) {
+		return getService()
+				   .findStampbookByVehicleClass(vehicleClass, corporationId);
 	}
 
 	/**

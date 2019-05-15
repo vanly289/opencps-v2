@@ -103,21 +103,36 @@ public class VRInputStampbookLocalServiceWrapper
 	}
 
 	@Override
+	public com.fds.vr.business.model.VRInputStampbook updateByOutputSheet(
+		long bookId, long subTotalInDocument, long serialStartNo,
+		long serialEndNo, java.lang.Long purchaserId,
+		java.lang.Long corporationId, long outputSheetType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInputStampbookLocalService.updateByOutputSheet(bookId,
+			subTotalInDocument, serialStartNo, serialEndNo, purchaserId,
+			corporationId, outputSheetType);
+	}
+
+	@Override
 	public com.fds.vr.business.model.VRInputStampbook updateInputStambook(
-		long id, long mtCore, long inputSheetId, long bookId,
-		java.lang.String vehicleClass, java.lang.String stampType,
-		java.lang.String stampShortNo, long serialStartNo,
-		java.lang.String serialEndNo, long subTotalInDocument,
-		long subTotalQuantities, long units, long unitPrice, long totalAmount,
-		long totalInUse, long totalNotUsed, long sum1, long sum2, long sum3,
-		java.lang.String remark)
+		long id, long mtCore, long inputSheetId, java.lang.Long corporationId,
+		java.lang.Long inputSheetType, java.lang.String vehicleClass,
+		java.lang.String stampType, java.lang.String stampShortNo,
+		java.lang.Long serialStartNo, java.lang.Long serialEndNo,
+		java.lang.Long subTotalInDocument, java.lang.Long subTotalQuantities,
+		java.lang.Long units, java.lang.Long unitPrice,
+		java.lang.Long totalAmount, java.lang.Long totalInUse,
+		java.lang.Long totalNotUsed, java.lang.Long sum1, java.lang.Long sum2,
+		java.lang.Long sum3, java.lang.String remark, java.lang.Long isApproval)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _vrInputStampbookLocalService.updateInputStambook(id, mtCore,
-			inputSheetId, bookId, vehicleClass, stampType, stampShortNo,
-			serialStartNo, serialEndNo, subTotalInDocument, subTotalQuantities,
-			units, unitPrice, totalAmount, totalInUse, totalNotUsed, sum1,
-			sum2, sum3, remark);
+			inputSheetId, corporationId, inputSheetType, vehicleClass,
+			stampType, stampShortNo, serialStartNo, serialEndNo,
+			subTotalInDocument, subTotalQuantities, units, unitPrice,
+			totalAmount, totalInUse, totalNotUsed, sum1, sum2, sum3, remark,
+			isApproval);
 	}
 
 	/**
@@ -265,6 +280,13 @@ public class VRInputStampbookLocalServiceWrapper
 			inputSheetId, bookId, stampType);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRInputStampbook> findBySum3GreaterThan()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrInputStampbookLocalService.findBySum3GreaterThan();
+	}
+
 	/**
 	* Returns a range of all the vr input stampbooks.
 	*
@@ -307,6 +329,16 @@ public class VRInputStampbookLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _vrInputStampbookLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void updateJSONArrayInputStambook(long inputSheetId,
+		java.lang.Long corporationId, java.lang.Long inputSheetType,
+		java.lang.String stampbooks, java.lang.Long isApproval)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_vrInputStampbookLocalService.updateJSONArrayInputStambook(inputSheetId,
+			corporationId, inputSheetType, stampbooks, isApproval);
 	}
 
 	@Override

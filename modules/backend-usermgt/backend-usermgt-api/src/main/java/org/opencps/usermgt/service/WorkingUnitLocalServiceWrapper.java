@@ -321,6 +321,13 @@ public class WorkingUnitLocalServiceWrapper implements WorkingUnitLocalService,
 	}
 
 	@Override
+	public org.opencps.usermgt.model.WorkingUnit fetchByF_govAgencyCode(
+		long groupId, java.lang.String govAgencyCode) {
+		return _workingUnitLocalService.fetchByF_govAgencyCode(groupId,
+			govAgencyCode);
+	}
+
+	@Override
 	public org.opencps.usermgt.model.WorkingUnit fetchWorkingUnit(
 		long workingUnitId) {
 		return _workingUnitLocalService.fetchWorkingUnit(workingUnitId);

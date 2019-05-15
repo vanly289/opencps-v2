@@ -301,7 +301,7 @@ public class VRInventoryUtil {
 	* @return the matching vr inventories
 	*/
 	public static List<VRInventory> findByYearofPeriodAndCorporationId(
-		long mtCore, long yearofPeriod, java.lang.String corporationId) {
+		long mtCore, long yearofPeriod, long corporationId) {
 		return getPersistence()
 				   .findByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
 			corporationId);
@@ -322,8 +322,7 @@ public class VRInventoryUtil {
 	* @return the range of matching vr inventories
 	*/
 	public static List<VRInventory> findByYearofPeriodAndCorporationId(
-		long mtCore, long yearofPeriod, java.lang.String corporationId,
-		int start, int end) {
+		long mtCore, long yearofPeriod, long corporationId, int start, int end) {
 		return getPersistence()
 				   .findByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
 			corporationId, start, end);
@@ -345,8 +344,8 @@ public class VRInventoryUtil {
 	* @return the ordered range of matching vr inventories
 	*/
 	public static List<VRInventory> findByYearofPeriodAndCorporationId(
-		long mtCore, long yearofPeriod, java.lang.String corporationId,
-		int start, int end, OrderByComparator<VRInventory> orderByComparator) {
+		long mtCore, long yearofPeriod, long corporationId, int start, int end,
+		OrderByComparator<VRInventory> orderByComparator) {
 		return getPersistence()
 				   .findByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
 			corporationId, start, end, orderByComparator);
@@ -369,8 +368,8 @@ public class VRInventoryUtil {
 	* @return the ordered range of matching vr inventories
 	*/
 	public static List<VRInventory> findByYearofPeriodAndCorporationId(
-		long mtCore, long yearofPeriod, java.lang.String corporationId,
-		int start, int end, OrderByComparator<VRInventory> orderByComparator,
+		long mtCore, long yearofPeriod, long corporationId, int start, int end,
+		OrderByComparator<VRInventory> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
@@ -388,7 +387,7 @@ public class VRInventoryUtil {
 	* @throws NoSuchVRInventoryException if a matching vr inventory could not be found
 	*/
 	public static VRInventory findByYearofPeriodAndCorporationId_First(
-		long mtCore, long yearofPeriod, java.lang.String corporationId,
+		long mtCore, long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInventoryException {
 		return getPersistence()
@@ -406,7 +405,7 @@ public class VRInventoryUtil {
 	* @return the first matching vr inventory, or <code>null</code> if a matching vr inventory could not be found
 	*/
 	public static VRInventory fetchByYearofPeriodAndCorporationId_First(
-		long mtCore, long yearofPeriod, java.lang.String corporationId,
+		long mtCore, long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator) {
 		return getPersistence()
 				   .fetchByYearofPeriodAndCorporationId_First(mtCore,
@@ -424,7 +423,7 @@ public class VRInventoryUtil {
 	* @throws NoSuchVRInventoryException if a matching vr inventory could not be found
 	*/
 	public static VRInventory findByYearofPeriodAndCorporationId_Last(
-		long mtCore, long yearofPeriod, java.lang.String corporationId,
+		long mtCore, long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInventoryException {
 		return getPersistence()
@@ -442,7 +441,7 @@ public class VRInventoryUtil {
 	* @return the last matching vr inventory, or <code>null</code> if a matching vr inventory could not be found
 	*/
 	public static VRInventory fetchByYearofPeriodAndCorporationId_Last(
-		long mtCore, long yearofPeriod, java.lang.String corporationId,
+		long mtCore, long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator) {
 		return getPersistence()
 				   .fetchByYearofPeriodAndCorporationId_Last(mtCore,
@@ -461,8 +460,7 @@ public class VRInventoryUtil {
 	* @throws NoSuchVRInventoryException if a vr inventory with the primary key could not be found
 	*/
 	public static VRInventory[] findByYearofPeriodAndCorporationId_PrevAndNext(
-		long id, long mtCore, long yearofPeriod,
-		java.lang.String corporationId,
+		long id, long mtCore, long yearofPeriod, long corporationId,
 		OrderByComparator<VRInventory> orderByComparator)
 		throws com.fds.vr.business.exception.NoSuchVRInventoryException {
 		return getPersistence()
@@ -478,7 +476,7 @@ public class VRInventoryUtil {
 	* @param corporationId the corporation ID
 	*/
 	public static void removeByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, java.lang.String corporationId) {
+		long yearofPeriod, long corporationId) {
 		getPersistence()
 			.removeByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
 			corporationId);
@@ -493,7 +491,7 @@ public class VRInventoryUtil {
 	* @return the number of matching vr inventories
 	*/
 	public static int countByYearofPeriodAndCorporationId(long mtCore,
-		long yearofPeriod, java.lang.String corporationId) {
+		long yearofPeriod, long corporationId) {
 		return getPersistence()
 				   .countByYearofPeriodAndCorporationId(mtCore, yearofPeriod,
 			corporationId);

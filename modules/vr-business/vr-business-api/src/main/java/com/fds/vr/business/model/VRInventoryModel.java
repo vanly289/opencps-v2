@@ -198,30 +198,28 @@ public interface VRInventoryModel extends BaseModel<VRInventory> {
 	 *
 	 * @return the serial start no of this vr inventory
 	 */
-	@AutoEscape
-	public String getSerialStartNo();
+	public long getSerialStartNo();
 
 	/**
 	 * Sets the serial start no of this vr inventory.
 	 *
 	 * @param serialStartNo the serial start no of this vr inventory
 	 */
-	public void setSerialStartNo(String serialStartNo);
+	public void setSerialStartNo(long serialStartNo);
 
 	/**
 	 * Returns the serial end no of this vr inventory.
 	 *
 	 * @return the serial end no of this vr inventory
 	 */
-	@AutoEscape
-	public String getSerialEndNo();
+	public long getSerialEndNo();
 
 	/**
 	 * Sets the serial end no of this vr inventory.
 	 *
 	 * @param serialEndNo the serial end no of this vr inventory
 	 */
-	public void setSerialEndNo(String serialEndNo);
+	public void setSerialEndNo(long serialEndNo);
 
 	/**
 	 * Returns the total quantities of this vr inventory.
@@ -285,15 +283,14 @@ public interface VRInventoryModel extends BaseModel<VRInventory> {
 	 *
 	 * @return the corporation ID of this vr inventory
 	 */
-	@AutoEscape
-	public String getCorporationId();
+	public long getCorporationId();
 
 	/**
 	 * Sets the corporation ID of this vr inventory.
 	 *
 	 * @param corporationId the corporation ID of this vr inventory
 	 */
-	public void setCorporationId(String corporationId);
+	public void setCorporationId(long corporationId);
 
 	/**
 	 * Returns the check type of this vr inventory.

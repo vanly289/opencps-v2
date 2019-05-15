@@ -3454,6 +3454,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 		return new ArrayList<VRVehicleTypeCertificate>();
 		
 	}
+
+	public List<VRVehicleTypeCertificate> findByF_EXP_STATUS(String[] expiredStatus) throws PortalException, SystemException {
+
+			return vrVehicleTypeCertificatePersistence.findByF_EXP_STATUS(expiredStatus);
+	}
 	
 	public List<VRVehicleTypeCertificate> findByExpiredstatusAndServiceCode(String expiredStatus, String serviceCode) throws PortalException, SystemException {
 		try {
@@ -3595,5 +3600,17 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 		}
 		return true;
 	}
-	
+
+	public List<VRVehicleTypeCertificate> finByF_APP_VH_EXP(String applicantIdNo, String vehicleClass,
+			String expiredStatus) {
+
+		return vrVehicleTypeCertificatePersistence.findByF_APP_VH_EXP(applicantIdNo, vehicleClass, expiredStatus);
+	}
+
+	public List<VRVehicleTypeCertificate> finByF_APP_VH_EXP_CERTNO(String applicantIdNo, String vehicleClass,
+			String expiredStatus, String certNo) {
+
+		return vrVehicleTypeCertificatePersistence.findByF_APP_VH_EXP_CERTNO(applicantIdNo, vehicleClass, expiredStatus, certNo);
+	}
+
 }

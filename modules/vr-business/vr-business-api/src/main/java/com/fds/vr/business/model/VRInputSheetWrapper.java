@@ -116,7 +116,7 @@ public class VRInputSheetWrapper implements VRInputSheet,
 			setOriginalDocumentNo(originalDocumentNo);
 		}
 
-		String corporationId = (String)attributes.get("corporationId");
+		Long corporationId = (Long)attributes.get("corporationId");
 
 		if (corporationId != null) {
 			setCorporationId(corporationId);
@@ -315,16 +315,6 @@ public class VRInputSheetWrapper implements VRInputSheet,
 	}
 
 	/**
-	* Returns the corporation ID of this vr input sheet.
-	*
-	* @return the corporation ID of this vr input sheet
-	*/
-	@Override
-	public java.lang.String getCorporationId() {
-		return _vrInputSheet.getCorporationId();
-	}
-
-	/**
 	* Returns the delivery name of this vr input sheet.
 	*
 	* @return the delivery name of this vr input sheet
@@ -442,6 +432,16 @@ public class VRInputSheetWrapper implements VRInputSheet,
 	@Override
 	public Date getSyncDate() {
 		return _vrInputSheet.getSyncDate();
+	}
+
+	/**
+	* Returns the corporation ID of this vr input sheet.
+	*
+	* @return the corporation ID of this vr input sheet
+	*/
+	@Override
+	public long getCorporationId() {
+		return _vrInputSheet.getCorporationId();
 	}
 
 	/**
@@ -570,7 +570,7 @@ public class VRInputSheetWrapper implements VRInputSheet,
 	* @param corporationId the corporation ID of this vr input sheet
 	*/
 	@Override
-	public void setCorporationId(java.lang.String corporationId) {
+	public void setCorporationId(long corporationId) {
 		_vrInputSheet.setCorporationId(corporationId);
 	}
 

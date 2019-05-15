@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for VRProductionPlantEmployee. Methods of this
@@ -113,6 +114,9 @@ public interface VRProductionPlantEmployeeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRProductionPlantEmployee getVRProductionPlantEmployee(long id)
 		throws PortalException;
+
+	public VRProductionPlantEmployee updateProductionPlantEmployee(
+		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 
 	/**
 	* Updates the vr production plant employee in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -233,4 +237,6 @@ public interface VRProductionPlantEmployeeLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteByproductPlantId(long mtCore, long productPlantId);
 }

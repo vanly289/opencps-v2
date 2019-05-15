@@ -1539,6 +1539,13 @@ public class VRCOPProductTypePersistenceImpl extends BasePersistenceImpl<VRCOPPr
 		vrcopProductTypeImpl.setVehicleClass(vrcopProductType.getVehicleClass());
 		vrcopProductTypeImpl.setVehicleTypeCode(vrcopProductType.getVehicleTypeCode());
 		vrcopProductTypeImpl.setVehicleTypeDescription(vrcopProductType.getVehicleTypeDescription());
+		vrcopProductTypeImpl.setProductClassificationCode(vrcopProductType.getProductClassificationCode());
+		vrcopProductTypeImpl.setProductClassificationDescription(vrcopProductType.getProductClassificationDescription());
+		vrcopProductTypeImpl.setTrademarkName(vrcopProductType.getTrademarkName());
+		vrcopProductTypeImpl.setCommercialName(vrcopProductType.getCommercialName());
+		vrcopProductTypeImpl.setModelCode(vrcopProductType.getModelCode());
+		vrcopProductTypeImpl.setDesignSymbolNo(vrcopProductType.getDesignSymbolNo());
+		vrcopProductTypeImpl.setRemarks(vrcopProductType.getRemarks());
 		vrcopProductTypeImpl.setModifyDate(vrcopProductType.getModifyDate());
 		vrcopProductTypeImpl.setSyncDate(vrcopProductType.getSyncDate());
 

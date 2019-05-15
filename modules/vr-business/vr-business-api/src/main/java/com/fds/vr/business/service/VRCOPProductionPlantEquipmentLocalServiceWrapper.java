@@ -102,6 +102,13 @@ public class VRCOPProductionPlantEquipmentLocalServiceWrapper
 		return _vrcopProductionPlantEquipmentLocalService.getVRCOPProductionPlantEquipment(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRCOPProductionPlantEquipment updateCOPProductionPlantEquipment(
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return _vrcopProductionPlantEquipmentLocalService.updateCOPProductionPlantEquipment(mapValues,
+			mtCore);
+	}
+
 	/**
 	* Updates the vrcop production plant equipment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
