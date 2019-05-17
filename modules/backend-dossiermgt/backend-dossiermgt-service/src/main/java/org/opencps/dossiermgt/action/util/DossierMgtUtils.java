@@ -69,7 +69,7 @@ public class DossierMgtUtils {
 		return dossier;
 	}
 
-	public static Dossier getDossier(String id, long groupId) throws PortalException {
+	public static Dossier getDossier(String id, long groupId) {
 
 		long dossierId = GetterUtil.getLong(id);
 

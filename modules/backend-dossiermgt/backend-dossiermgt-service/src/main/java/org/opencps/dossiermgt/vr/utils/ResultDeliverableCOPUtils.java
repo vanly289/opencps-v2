@@ -52,7 +52,7 @@ public class ResultDeliverableCOPUtils {
 
 		//Process vr_productionplant
 		VRProductionPlant productionPlan = new VRProductionPlantImpl();
-		if (dossier != null) {
+		if (dossier != null && dossier.getServiceCode().equalsIgnoreCase("TT302011BGTVTCOP")) {
 			String applicantIdNo = dossier.getApplicantIdNo();
 			long dossierId = dossier.getDossierId();
 			long productPlantId = productionPlan.getId();

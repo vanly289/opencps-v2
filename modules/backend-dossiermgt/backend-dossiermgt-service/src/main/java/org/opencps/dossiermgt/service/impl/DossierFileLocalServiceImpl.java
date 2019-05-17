@@ -592,6 +592,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		// User user =
 		// userPersistence.findByPrimaryKey(serviceContext.getUserId());
 		long now = System.currentTimeMillis();
+		//
 		DossierFile dossierFile = dossierFilePersistence.findByDID_REF(dossierId, referenceUid);
 
 		String jrxmlTemplate = dossierFile.getFormReport();
@@ -605,11 +606,9 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			}
 
 			jrxmlTemplate = dossierPart.getFormReport();
-
-			dossierFile.setFormReport(jrxmlTemplate);
 		}
 		// NEW_DOSSIER
-		dossierFile.setFormData(formData);
+		FileEntry fileEntry = null;
 		try {
 			
 			ServiceContext serviceContextFile = new ServiceContext();
@@ -623,7 +622,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			//_log.info("NEW CODE FILES_FROM_FORM_UPDATEDDDDD: "+(System.currentTimeMillis() - now));
 			DossierFileUtils fileUtils = new DossierFileUtils();
 			
-			fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
+			fileEntry = fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
 					serviceContextFile);
 			//FileEntry fileEntry = fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
 			//		serviceContextFile);
@@ -634,31 +633,6 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		} catch (Exception e) {
 			_log.error(e);
 		}
-		
-		dossierFile.setIsNew(true);
-
-		long userActionId = serviceContext.getUserId();
-		User userAction = null;
-		if (userActionId != 0) {
-			userAction = userLocalService.getUser(userActionId);
-		}
-		if (userActionId != dossierFile.getUserId()) {
-			// add new Dossier File
-			
-			long dossierFileId = counterLocalService.increment(DossierFile.class.getName());
-			dossierFile.setDossierFileId(dossierFileId);
-			dossierFile.setCreateDate(new Date());
-			dossierFile.setModifiedDate(new Date());
-			dossierFile.setUserId(userActionId);
-			dossierFile.setUserName(Validator.isNotNull(userAction) ? userAction.getFullName() : StringPool.BLANK);
-			dossierFile.setReferenceUid(PortalUUIDUtil.generate());
-			dossierFile.setIsNew(true);
-			dossierFile.setOriginal(true);			
-			
-			DossierFileLocalServiceUtil.addDossierFile(dossierFile);
-		}
-		
-		
 		// Binhth add message bus to processing jasper file
 		Message message = new Message();
 
@@ -674,7 +648,39 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 
 		_log.info("SEND TO CREATED FILE MODEL END: "+(System.currentTimeMillis() - now));
 		
-		return dossierFilePersistence.update(dossierFile);
+		long userActionId = serviceContext.getUserId();
+		User userAction = null;
+		if (userActionId != 0) {
+			userAction = userLocalService.getUser(userActionId);
+		}
+		if (userActionId != dossierFile.getUserId()) {
+			// add new Dossier File
+			long dossierFileId = counterLocalService.increment(DossierFile.class.getName());
+			DossierFile newDossierFile = dossierFilePersistence.create(dossierFileId);
+
+			newDossierFile.setDossierFileId(dossierFileId);
+			newDossierFile.setCreateDate(new Date());
+			newDossierFile.setModifiedDate(new Date());
+			newDossierFile.setUserId(userActionId);
+			newDossierFile.setUserName(Validator.isNotNull(userAction) ? userAction.getFullName() : StringPool.BLANK);
+			newDossierFile.setReferenceUid(PortalUUIDUtil.generate());
+			newDossierFile.setIsNew(true);
+			newDossierFile.setOriginal(true);
+			if (fileEntry != null && fileEntry.getFileEntryId() > 0) {
+				newDossierFile.setFileEntryId(fileEntry.getFileEntryId());
+			}
+
+			return dossierFilePersistence.update(newDossierFile);
+		} else {
+			dossierFile.setFormReport(jrxmlTemplate);
+			dossierFile.setFormData(formData);
+			dossierFile.setIsNew(true);
+			if (fileEntry != null && fileEntry.getFileEntryId() > 0) {
+				dossierFile.setFileEntryId(fileEntry.getFileEntryId());
+			}
+
+			return dossierFilePersistence.update(dossierFile);
+		}
 	}
 
 	@Indexable(type = IndexableType.DELETE)

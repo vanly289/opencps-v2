@@ -214,8 +214,16 @@ public class DossierManagementImpl implements DossierManagement {
 			params.put(DossierTerm.STATUS_REG, statusRegNo);
 			params.put(DossierTerm.NOT_STATUS_REG, notStatusRegNo);
 
-			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
-					GetterUtil.getBoolean(query.getOrder())) };
+			String strSort = query.getSort();
+			Sort[] sorts = null;
+			if (Validator.isNotNull(strSort) && (strSort.equals("modified") || strSort.contains("Date"))) {
+				_log.info("SORT DATE");
+				sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_Number_sortable", Sort.LONG_TYPE,
+						GetterUtil.getBoolean(query.getOrder())) };
+			} else {
+				sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
+						GetterUtil.getBoolean(query.getOrder())) };
+			}
 
 			if (Validator.isNotNull(top)) {
 				switch (top) {
@@ -370,8 +378,16 @@ public class DossierManagementImpl implements DossierManagement {
 			params.put(DossierTerm.TO_SUBMIT_DATE, toSubmitDate);
 
 			// _log.info("4");
-			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
-					GetterUtil.getBoolean(query.getOrder())) };
+			String strSort = query.getSort();
+			Sort[] sorts = null;
+			if (Validator.isNotNull(strSort) && (strSort.equals("modified") || strSort.contains("Date"))) {
+				_log.info("SORT DATE");
+				sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_Number_sortable", Sort.LONG_TYPE,
+						GetterUtil.getBoolean(query.getOrder())) };
+			} else {
+				sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
+						GetterUtil.getBoolean(query.getOrder())) };
+			}
 
 			if (Validator.isNotNull(top)) {
 				switch (top) {
@@ -1905,6 +1921,114 @@ public class DossierManagementImpl implements DossierManagement {
 		} catch (Exception e) {
 			return Response.status(405).entity("Hồ sơ không tồn tại để index").build();
 		}		
+	}
+
+	@Override
+	public Response rollback(HttpServletRequest request, HttpHeaders header, Company company, Locale locale, User user,
+			ServiceContext serviceContext, String id) {
+
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+
+		Dossier dossier = DossierMgtUtils.getDossier(id, groupId);
+		List<Role> userRoles = user.getRoles();
+		boolean isAdmin = false;
+		for (Role r : userRoles) {
+			if (r.getName().startsWith("Administrator")) {
+				isAdmin = true;
+				break;
+			}
+		}
+
+		if (dossier != null) {
+			DossierAction dossierAction = DossierActionLocalServiceUtil.fetchDossierAction(dossier.getDossierActionId());
+//			if (dossierAction != null && dossierAction.isRollbackable()) {
+//				DossierActionLocalServiceUtil.updateState(dossierAction.getDossierActionId(), DossierActionTerm.STATE_ROLLBACK);
+//			
+//				DossierAction previousAction = DossierActionLocalServiceUtil.fetchDossierAction(dossierAction.getPreviousActionId());
+//				if (previousAction != null) {
+//					DossierActionLocalServiceUtil.updateState(previousAction.getDossierActionId(), DossierActionTerm.STATE_WAITING_PROCESSING);
+//					try {
+//						DossierActionLocalServiceUtil.updateNextActionId(previousAction.getDossierActionId(), 0);
+//						DossierLocalServiceUtil.rollback(dossier, previousAction);
+//					} catch (PortalException e) {
+//						return BusinessExceptionImpl.processException(e);
+//					}
+//				}
+//				
+//				DossierSync ds = DossierSyncLocalServiceUtil.getByDID_DAD(groupId, dossier.getDossierId(), dossierAction.getDossierActionId());
+//				if (ds != null && ((ds.getSyncType() == DossierSyncTerm.SYNCTYPE_INFORM && dossier.getOriginality() == DossierTerm.ORIGINALITY_LIENTHONG)
+//						|| (ds.getSyncType() == DossierSyncTerm.SYNCTYPE_REQUEST && dossier.getOriginality() == DossierTerm.ORIGINALITY_DVCTT))) {
+//					DossierMgtUtils.processSyncRollbackDossier(dossier);					
+//				}
+//			}
+//			else 
+			if (dossierAction != null && isAdmin) {
+
+				DossierAction previousAction = DossierActionLocalServiceUtil.fetchDossierAction(dossierAction.getPreviousActionId());
+				if (previousAction != null) {
+					//DossierActionLocalServiceUtil.updateState(previousAction.getDossierActionId(), DossierActionTerm.STATE_WAITING_PROCESSING);
+					try {
+						// Set nextActionId = 0 to previousAction
+						DossierActionLocalServiceUtil.updateNextActionId(previousAction.getDossierActionId(), 0);
+						
+						rollback(dossier, previousAction);
+					} catch (PortalException e) {
+						return Response.status(500).entity(null).build();
+					}
+				}	
+				
+//				DossierSync ds = DossierSyncLocalServiceUtil.getByDID_DAD(groupId, dossier.getDossierId(), dossierAction.getDossierActionId());
+//				if (ds != null && ((ds.getSyncType() == DossierSyncTerm.SYNCTYPE_INFORM && dossier.getOriginality() == DossierTerm.ORIGINALITY_LIENTHONG)
+//						|| (ds.getSyncType() == DossierSyncTerm.SYNCTYPE_REQUEST && dossier.getOriginality() == DossierTerm.ORIGINALITY_DVCTT))) {
+//					DossierMgtUtils.processSyncRollbackDossier(dossier);					
+//				}
+			}
+			return Response.status(200).entity(null).build();
+		}
+		else {
+			return Response.status(405).entity(null).build();
+		}
+	}
+
+	public Dossier rollback(Dossier dossier, DossierAction dossierAction) {
+		ProcessStep processStep = ProcessStepLocalServiceUtil.fetchBySC_GID(dossierAction.getStepCode(),
+				dossier.getGroupId(), dossierAction.getServiceProcessId());
+		if (processStep != null) {
+			JSONObject jsonDataStatusText = getStatusText(dossier.getGroupId(), DOSSIER_SATUS_DC_CODE,
+					processStep.getDossierStatus(), processStep.getDossierSubStatus());
+
+			dossier.setDossierActionId(dossierAction.getDossierActionId());
+			dossier.setDossierStatus(processStep.getDossierStatus());
+			dossier.setDossierStatusText(jsonDataStatusText != null
+					? jsonDataStatusText.getString(processStep.getDossierStatus()) : StringPool.BLANK);
+			dossier.setDossierSubStatus(processStep.getDossierSubStatus());
+			dossier.setDossierSubStatusText(jsonDataStatusText != null
+					? jsonDataStatusText.getString(processStep.getDossierSubStatus()) : StringPool.BLANK);
+		}
+		return DossierLocalServiceUtil.updateDossier(dossier);
+	}
+
+	private JSONObject getStatusText(long groupId, String collectionCode, String curStatus, String curSubStatus) {
+
+		JSONObject jsonData = null;
+		DictCollection dc = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode(collectionCode, groupId);
+
+		if (Validator.isNotNull(dc) && Validator.isNotNull(curStatus)) {
+			jsonData = JSONFactoryUtil.createJSONObject();
+			DictItem it = DictItemLocalServiceUtil.fetchByF_dictItemCode(curStatus, dc.getPrimaryKey(), groupId);
+			if (Validator.isNotNull(it)) {
+				jsonData.put(curStatus, it.getItemName());
+				if (Validator.isNotNull(curSubStatus)) {
+					DictItem dItem = DictItemLocalServiceUtil.fetchByF_dictItemCode(curSubStatus, dc.getPrimaryKey(),
+							groupId);
+					if (Validator.isNotNull(dItem)) {
+						jsonData.put(curSubStatus, dItem.getItemName());
+					}
+				}
+			}
+		}
+
+		return jsonData;
 	}
 
 	public static final String DOSSIER_SATUS_DC_CODE = "DOSSIER_STATUS";
