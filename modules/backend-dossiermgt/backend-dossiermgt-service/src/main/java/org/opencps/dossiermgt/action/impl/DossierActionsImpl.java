@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
+
 import javax.ws.rs.HttpMethod;
 
 import org.opencps.datamgt.model.DictCollection;
@@ -64,6 +65,7 @@ import org.opencps.dossiermgt.service.ProcessStepRoleLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessRoleLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
+import org.opencps.dossiermgt.vr.utils.VRRPDossierStatisticUtils;
 import org.opencps.usermgt.service.util.OCPSUserUtils;
 
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
@@ -2039,6 +2041,8 @@ public class DossierActionsImpl implements DossierActions {
 			}
 		}
 
+		//Process update DossierStatistic
+		VRRPDossierStatisticUtils.updateRPdossierstatistics(dossierAction, payload.toString());
 		_log.info("END DO ACTION ==========");
 		return dossierAction;
 	}
