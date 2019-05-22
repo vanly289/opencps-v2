@@ -798,65 +798,26 @@ public class DossierActionsImpl implements DossierActions {
 							data.put("pending", pending);
 							//
 							results.put(data);
+							//
+							List<ProcessPlugin> pluginList = ProcessPluginLocalServiceUtil.getBySC_SPID_ARUN(serviceProcessId,
+									postStepCode, true);
+
+							if (pluginList != null && pluginList.size() > 0) {
+								for (ProcessPlugin plg : pluginList) {
+									// do create file
+									String pluginForm = plg.getPluginForm();
+									String fileTemplateNo = StringUtil.replaceFirst(plg.getSampleData(), "#", StringPool.BLANK);
+
+									if (Validator.isNotNull(pluginForm) && !pluginForm.contains("original")) {
+										_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(),
+												serviceContext);
+									}
+								}
+							}
 						}
 					}
 				}
-//				else {
-//					results = JSONFactoryUtil.createJSONArray();
-//					ProcessOption option = null;
-//					if (dossierAction != null) {
-//						DossierTemplate dossierTemplate = DossierTemplateLocalServiceUtil.getByTemplateNo(dossier.getGroupId(), dossier.getDossierTemplateNo());
-//						option = ProcessOptionLocalServiceUtil.fetchBySP_DT(dossierAction.getServiceProcessId(), dossierTemplate.getDossierTemplateId());
-//					}
-//					else {
-//						option = DossierMgtUtils.getProcessOption(dossier.getServiceCode(), dossier.getGovAgencyCode(),
-//								dossier.getDossierTemplateNo(), groupId);
-//					}
-//					
-//					if (option != null) {
-//						serviceProcessId = option.getServiceProcessId();
-//					}
-//					processActionList = ProcessActionLocalServiceUtil.getByServiceStepCode(groupId, serviceProcessId,
-//							StringPool.BLANK);
-//					if (processActionList != null && processActionList.size() > 0) {
-//						JSONObject data = null;
-//						long processActionId = 0;
-//						String actionCode;
-//						String actionName;
-//						String preStepCode;
-//						String postStepCode;
-//						String autoEvent;
-//						String preCondition;
-//						for (ProcessAction processAction : processActionList) {
-//							// _log.info("processAction: "+processAction);
-//							data = JSONFactoryUtil.createJSONObject();
-//							processActionId = processAction.getProcessActionId();
-//							actionCode = processAction.getActionCode();
-//							actionName = processAction.getActionName();
-//							preStepCode = processAction.getPreStepCode();
-//							postStepCode = processAction.getPostStepCode();
-//							autoEvent = processAction.getAutoEvent();
-//							preCondition = processAction.getPreCondition();
-//							//
-//							String[] preConditionArr = Validator.isNotNull(preCondition)
-//									? StringUtil.split(preCondition) : null;
-//							boolean checkPreCondition = preConditionArr != null
-//									? DossierMgtUtils.checkPreCondition(preConditionArr, dossier) : false;
-//							if (!checkPreCondition) {
-//								continue;
-//							}
-//							data.put(ProcessActionTerm.PROCESS_ACTION_ID, processActionId);
-//							data.put(ProcessActionTerm.ACTION_CODE, actionCode);
-//							data.put(ProcessActionTerm.ACTION_NAME, actionName);
-//							data.put(ProcessActionTerm.PRESTEP_CODE, preStepCode);
-//							data.put(ProcessActionTerm.POSTSTEP_CODE, postStepCode);
-//							data.put(ProcessActionTerm.AUTO_EVENT, autoEvent);
-//							data.put(ProcessActionTerm.PRE_CONDITION, preCondition);
-//							//
-//							results.put(data);
-//						}
-//					}
-//				}
+
 			}
 		} catch (Exception e) {
 			_log.error(e);
@@ -2052,6 +2013,7 @@ public class DossierActionsImpl implements DossierActions {
 
 		//String formData = StringPool.BLANK;
 		//fileTemplateNo = StringUtil.replaceFirst(fileTemplateNo, "#", StringPool.BLANK);
+		long now = System.currentTimeMillis();
 
 		_log.info("@@@@@ START_DOAUTORUN: "
 				+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
@@ -2062,18 +2024,18 @@ public class DossierActionsImpl implements DossierActions {
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 					fileTemplateNo, false, new DossierFileComparator(false, "createDate", Date.class));
 
-			//_log.info("- DOSSIER_FILE	: "
-			//		+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+			_log.info("- DOSSIER_FILE 1: "
+					+ (System.currentTimeMillis() - now));
 
 			DossierPart dossierPart = DossierPartLocalServiceUtil.getByFileTemplateNo(groupId, fileTemplateNo);
 
-			//_log.info("- DOSSIER_PART	: "
-			//		+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+			_log.info("- DOSSIER_PART	: "
+					+ (System.currentTimeMillis() - now));
 
 			String formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
 
-			//_log.info("- FORM_DATA		: "
-			//		+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+			_log.info("- FORM_DATA		: "
+					+ (System.currentTimeMillis() - now));
 
 			if (Validator.isNull(dossierFile)) {
 
@@ -2084,15 +2046,16 @@ public class DossierActionsImpl implements DossierActions {
 						StringPool.BLANK, String.valueOf(false), context);
 
 				_log.info("- ADD DOSSIER_FL		: "
-						+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+						+ (System.currentTimeMillis() - now));
 
 			}
 
-			DossierFileActions actions = new DossierFileActionsImpl();
-
-			actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData, context);
+			//DossierFileActions actions = new DossierFileActionsImpl();
+			//actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData, context);
+			DossierFileLocalServiceUtil.updateFormDataPlugin(groupId, dossierId,
+					dossierFile.getReferenceUid(), formData, context);
 			_log.info("- UPDATE DSR_ACT		: "
-					+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+					+ (System.currentTimeMillis() - now));
 
 
 		} catch (Exception e) {

@@ -914,6 +914,7 @@
 		<column name="productionPlantEquipmentsNote" type="String" db-name="productionPlantEquipmentsNote"/>
 		<column name="productionPlantProdEquipmentsNote" type="String" db-name="productionPlantProdEquipmentsNote"/>
 		<column name="registrationId" type="long" db-name="registrationId"/>
+		<column name="registrationFormId" type="long" db-name="registrationFormId"/>
 		<column name="applicantProfileId" type="long" db-name="applicantProfileId"/>
 		<column name="latestCOPReportDate" type="Date" db-name="latestCOPReportDate"/>
 		<column name="latestCOPReportResult" type="String" db-name="latestCOPReportResult"/>

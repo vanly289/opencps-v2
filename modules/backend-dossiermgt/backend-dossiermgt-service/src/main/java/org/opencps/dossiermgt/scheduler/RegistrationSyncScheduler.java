@@ -391,7 +391,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 													objProductionPlant.setApplicantProfileId(applicantProfileId);
 													objProductionPlant.setProductionPlantCode(
 															registrationClient.getApplicantIdNo() + "."
-																	+ VRProductionPlantId + "");
+																	+ VRProductionPlantId);
 													_log.info("3.5");
 												}
 
@@ -405,6 +405,7 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 												objProductionPlant.setProductionPlantStateName("Vietnam");
 												objProductionPlant.setProductionPlantProvinceCode(
 														registrationClient.getCityCode());
+												objProductionPlant.setRegistrationFormId(registrationFormId);
 												try {
 													String provinceName = getDictItemName(groupId, "ADMINISTRATIVE_REGION", registrationClient.getCityCode());
 													if (Validator.isNotNull(registrationClient.getCityCode()) && Validator.isNotNull(productionPlantAddress)) {
@@ -430,11 +431,12 @@ public class RegistrationSyncScheduler extends BaseSchedulerEntryMessageListener
 															}
 														} 
 													}
-													if (Validator.isNotNull(registrationClient.getCityCode()) && Validator.isNull(objProductionPlant.getProductionPlantProvinceName()))
-													{															
+													if (Validator.isNotNull(registrationClient.getCityCode())
+															&& Validator.isNull(objProductionPlant
+																	.getProductionPlantProvinceName())) {
 														objProductionPlant.setProductionPlantProvinceName(provinceName);
 													}
-												} catch (Exception e) {													
+												} catch (Exception e) {
 													// TODO: handle exception
 												}
 

@@ -60,7 +60,7 @@ import com.liferay.portal.kernel.util.Validator;
 public class SignatureManagementImpl implements SignatureManagement{
 
 	Log _log = LogFactoryUtil.getLog(SignatureManagementImpl.class.getName());
-	private static final String TYPE_DONGDAU = "1137, 1160, 1162";
+	//private static final String TYPE_DONGDAU = "1137, 1160, 1162";
 
 	@Override
 	public Response updateDossierFileBySignature(HttpServletRequest request, HttpHeaders header, Company company,
@@ -108,21 +108,18 @@ public class SignatureManagementImpl implements SignatureManagement{
 //					_log.info("assignUserId: "+assignUserId);
 //					_log.info("subUsers: "+subUsers);
 					String actionCode = input.getActionCode();
-					
+
 					DossierActions actions = new DossierActionsImpl();
 					ProcessOption option = getProcessOption(dossier.getServiceCode(), dossier.getGovAgencyCode(),
 							dossier.getDossierTemplateNo(), groupId);
 					ProcessAction proAction = getProcessAction(groupId, dossier.getDossierId(),
 							dossier.getReferenceUid(), input.getActionCode(), option.getServiceProcessId());
-					if (TYPE_DONGDAU.contains(actionCode)) {
-						actions.doAction(groupId, dossier, option, proAction, actionCode, input.getActionUser(),
-								input.getActionNote(), GetterUtil.getLong(input.getAssignUserId()), 0l,
-								StringPool.BLANK, StringPool.BLANK, serviceContext);
-					} else {
+					if (option != null && proAction != null) {
 						actions.doAction(groupId, dossier, option, proAction, actionCode, input.getActionUser(),
 								input.getActionNote(), GetterUtil.getLong(input.getAssignUserId()), 0l,
 								StringPool.BLANK, StringPool.BLANK, serviceContext);
 					}
+					
 
 					// Update deliverable with deliverableType
 					DossierFile dossierFile = DossierFileLocalServiceUtil.getByFileEntryId(fileEntryId);
