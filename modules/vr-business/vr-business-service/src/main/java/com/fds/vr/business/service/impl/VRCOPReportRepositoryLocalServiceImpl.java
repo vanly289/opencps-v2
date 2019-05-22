@@ -122,6 +122,7 @@ public class VRCOPReportRepositoryLocalServiceImpl
 		object.setOverseasManufacturerCode(mapValues.get("overseasManufacturerCode"));
 		object.setOverseasManufacturerName(mapValues.get("overseasManufacturerName"));
 		object.setOverseasManufacturerAddress(mapValues.get("overseasManufacturerAddress"));
+		System.out.println("productionPlantId: "+mapValues.get("productionPlantId"));
 		object.setProductionPlantId(Long.valueOf(mapValues.get("productionPlantId")));
 		object.setProductionPlantCode(mapValues.get("productionPlantCode"));
 		object.setProductionPlantName(mapValues.get("productionPlantName"));

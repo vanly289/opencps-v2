@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "VRCorporationAttendeeModel")
 public class VRCorporationAttendeeModel {
 	protected String subject;
-	protected String inspectionDate;
+	protected long inspectionDate;
 	protected String testingRegisteredPlace;
 	protected String leaderName;
 	protected String invitation;
@@ -33,10 +33,10 @@ public class VRCorporationAttendeeModel {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public String getInspectionDate() {
+	public long getInspectionDate() {
 		return inspectionDate;
 	}
-	public void setInspectionDate(String inspectionDate) {
+	public void setInspectionDate(long inspectionDate) {
 		this.inspectionDate = inspectionDate;
 	}
 	public String getTestingRegisteredPlace() {

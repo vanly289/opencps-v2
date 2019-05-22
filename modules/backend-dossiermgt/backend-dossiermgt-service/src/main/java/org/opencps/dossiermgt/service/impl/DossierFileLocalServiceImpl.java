@@ -683,6 +683,88 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		}
 	}
 
+	//@Indexable(type = IndexableType.REINDEX)
+	public DossierFile updateFormDataPlugin(long groupId, long dossierId, String referenceUid, String formData,
+			ServiceContext serviceContext) throws PortalException, SystemException {
+
+		long now = System.currentTimeMillis();
+		//
+		DossierFile dossierFile = dossierFilePersistence.findByDID_REF(dossierId, referenceUid);
+
+		String jrxmlTemplate = dossierFile.getFormReport();
+
+		if (Validator.isNull(jrxmlTemplate)) {
+			DossierPart dossierPart = dossierPartLocalService.fetchByTemplatePartNo(groupId,
+					dossierFile.getDossierTemplateNo(), dossierFile.getDossierPartNo());
+
+			if (dossierPart == null) {
+				throw new NoSuchDossierPartException();
+			}
+
+			jrxmlTemplate = dossierPart.getFormReport();
+		}
+		// NEW_DOSSIER
+		FileEntry fileEntry = null;
+		try {
+			
+			ServiceContext serviceContextFile = new ServiceContext();
+			long userId = 20164;
+			long companyId = 20116;
+			
+			serviceContextFile.setUserId(userId);
+			serviceContextFile.setCompanyId(companyId);
+			serviceContextFile.setScopeGroupId(groupId);
+
+			DossierFileUtils fileUtils = new DossierFileUtils();
+
+			fileEntry = fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
+					serviceContextFile);
+
+		} catch (Exception e) {
+			_log.error(e);
+		}
+
+		_log.info("SEND TO CREATED FILE MODEL END: "+(System.currentTimeMillis() - now));
+		
+		long userActionId = serviceContext.getUserId();
+		User userAction = null;
+		if (userActionId != 0) {
+			userAction = userLocalService.getUser(userActionId);
+		}
+		if (userActionId != dossierFile.getUserId()) {
+			// add new Dossier File
+			long dossierFileId = counterLocalService.increment(DossierFile.class.getName());
+			DossierFile newDossierFile = dossierFilePersistence.create(dossierFileId);
+
+			newDossierFile.setDossierFileId(dossierFileId);
+			newDossierFile.setCreateDate(new Date());
+			newDossierFile.setModifiedDate(new Date());
+			newDossierFile.setUserId(userActionId);
+			newDossierFile.setUserName(Validator.isNotNull(userAction) ? userAction.getFullName() : StringPool.BLANK);
+			newDossierFile.setReferenceUid(PortalUUIDUtil.generate());
+			newDossierFile.setIsNew(true);
+			dossierFile.setFormReport(jrxmlTemplate);
+			dossierFile.setFormData(formData);
+			newDossierFile.setOriginal(true);
+			if (fileEntry != null && fileEntry.getFileEntryId() > 0) {
+				newDossierFile.setFileEntryId(fileEntry.getFileEntryId());
+			}
+
+			_log.info("SEND TO CREATED NEW DOSSIER FILE 111: "+(System.currentTimeMillis() - now));
+			return dossierFilePersistence.update(newDossierFile);
+		} else {
+			dossierFile.setFormReport(jrxmlTemplate);
+			dossierFile.setFormData(formData);
+			dossierFile.setIsNew(true);
+			if (fileEntry != null && fileEntry.getFileEntryId() > 0) {
+				dossierFile.setFileEntryId(fileEntry.getFileEntryId());
+			}
+
+			_log.info("SEND TO CREATED UPDATE DOSSIER FILE 2222: "+(System.currentTimeMillis() - now));
+			return dossierFilePersistence.update(dossierFile);
+		}
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	public DossierFile deleteDossierFile(long dossierFileId) throws PortalException {
 		DossierFile dossierFile = dossierFilePersistence.findByPrimaryKey(dossierFileId);

@@ -96,6 +96,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			{ "productionPlantEquipmentsNote", Types.VARCHAR },
 			{ "productionPlantProdEquipmentsNote", Types.VARCHAR },
 			{ "registrationId", Types.BIGINT },
+			{ "registrationFormId", Types.BIGINT },
 			{ "applicantProfileId", Types.BIGINT },
 			{ "latestCOPReportDate", Types.TIMESTAMP },
 			{ "latestCOPReportResult", Types.VARCHAR },
@@ -140,6 +141,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		TABLE_COLUMNS_MAP.put("productionPlantEquipmentsNote", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantProdEquipmentsNote", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("registrationId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("registrationFormId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("applicantProfileId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("latestCOPReportDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("latestCOPReportResult", Types.VARCHAR);
@@ -148,7 +150,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productionplant (id LONG not null primary key,mtCore LONG,mappingMA_CTY VARCHAR(75) null,mappingTEN_CTY VARCHAR(75) null,mappingDIA_CHI_CTY VARCHAR(75) null,mappingMA_XUONG_LR VARCHAR(75) null,mappingTEN_XUONG_LR VARCHAR(75) null,mappingDIA_CHI_XUONG_LR VARCHAR(75) null,mappingNote VARCHAR(75) null,mappingStatus VARCHAR(75) null,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,productionPlantStateCode VARCHAR(75) null,productionPlantStateName VARCHAR(75) null,productionPlantProvinceCode VARCHAR(75) null,productionPlantProvinceName VARCHAR(75) null,productionPlantDistrictCode VARCHAR(75) null,productionPlantDistrictName VARCHAR(75) null,productionPlantEmail VARCHAR(75) null,productionPlantPhone VARCHAR(75) null,productionPlantFax VARCHAR(75) null,productionPlantRepresentative VARCHAR(75) null,productionPlantRepresentativeTitle VARCHAR(75) null,productionPlantContactName VARCHAR(75) null,productionPlantContactEmail VARCHAR(75) null,productionPlantContactPhone VARCHAR(75) null,productionPlantType VARCHAR(75) null,productionPlantStatus VARCHAR(75) null,productionPlantEmployeesNote VARCHAR(75) null,productionPlantEquipmentsNote VARCHAR(75) null,productionPlantProdEquipmentsNote VARCHAR(75) null,registrationId LONG,applicantProfileId LONG,latestCOPReportDate DATE null,latestCOPReportResult VARCHAR(75) null,nextCOPReportDate DATE null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productionplant (id LONG not null primary key,mtCore LONG,mappingMA_CTY VARCHAR(75) null,mappingTEN_CTY VARCHAR(75) null,mappingDIA_CHI_CTY VARCHAR(75) null,mappingMA_XUONG_LR VARCHAR(75) null,mappingTEN_XUONG_LR VARCHAR(75) null,mappingDIA_CHI_XUONG_LR VARCHAR(75) null,mappingNote VARCHAR(75) null,mappingStatus VARCHAR(75) null,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,productionPlantStateCode VARCHAR(75) null,productionPlantStateName VARCHAR(75) null,productionPlantProvinceCode VARCHAR(75) null,productionPlantProvinceName VARCHAR(75) null,productionPlantDistrictCode VARCHAR(75) null,productionPlantDistrictName VARCHAR(75) null,productionPlantEmail VARCHAR(75) null,productionPlantPhone VARCHAR(75) null,productionPlantFax VARCHAR(75) null,productionPlantRepresentative VARCHAR(75) null,productionPlantRepresentativeTitle VARCHAR(75) null,productionPlantContactName VARCHAR(75) null,productionPlantContactEmail VARCHAR(75) null,productionPlantContactPhone VARCHAR(75) null,productionPlantType VARCHAR(75) null,productionPlantStatus VARCHAR(75) null,productionPlantEmployeesNote VARCHAR(75) null,productionPlantEquipmentsNote VARCHAR(75) null,productionPlantProdEquipmentsNote VARCHAR(75) null,registrationId LONG,registrationFormId LONG,applicantProfileId LONG,latestCOPReportDate DATE null,latestCOPReportResult VARCHAR(75) null,nextCOPReportDate DATE null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productionplant";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlant.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplant.modifyDate DESC";
@@ -262,6 +264,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		attributes.put("productionPlantProdEquipmentsNote",
 			getProductionPlantProdEquipmentsNote());
 		attributes.put("registrationId", getRegistrationId());
+		attributes.put("registrationFormId", getRegistrationFormId());
 		attributes.put("applicantProfileId", getApplicantProfileId());
 		attributes.put("latestCOPReportDate", getLatestCOPReportDate());
 		attributes.put("latestCOPReportResult", getLatestCOPReportResult());
@@ -496,6 +499,12 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 		if (registrationId != null) {
 			setRegistrationId(registrationId);
+		}
+
+		Long registrationFormId = (Long)attributes.get("registrationFormId");
+
+		if (registrationFormId != null) {
+			setRegistrationFormId(registrationFormId);
 		}
 
 		Long applicantProfileId = (Long)attributes.get("applicantProfileId");
@@ -1142,6 +1151,16 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	}
 
 	@Override
+	public long getRegistrationFormId() {
+		return _registrationFormId;
+	}
+
+	@Override
+	public void setRegistrationFormId(long registrationFormId) {
+		_registrationFormId = registrationFormId;
+	}
+
+	@Override
 	public long getApplicantProfileId() {
 		return _applicantProfileId;
 	}
@@ -1284,6 +1303,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		vrProductionPlantImpl.setProductionPlantEquipmentsNote(getProductionPlantEquipmentsNote());
 		vrProductionPlantImpl.setProductionPlantProdEquipmentsNote(getProductionPlantProdEquipmentsNote());
 		vrProductionPlantImpl.setRegistrationId(getRegistrationId());
+		vrProductionPlantImpl.setRegistrationFormId(getRegistrationFormId());
 		vrProductionPlantImpl.setApplicantProfileId(getApplicantProfileId());
 		vrProductionPlantImpl.setLatestCOPReportDate(getLatestCOPReportDate());
 		vrProductionPlantImpl.setLatestCOPReportResult(getLatestCOPReportResult());
@@ -1659,6 +1679,8 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 		vrProductionPlantCacheModel.registrationId = getRegistrationId();
 
+		vrProductionPlantCacheModel.registrationFormId = getRegistrationFormId();
+
 		vrProductionPlantCacheModel.applicantProfileId = getApplicantProfileId();
 
 		Date latestCOPReportDate = getLatestCOPReportDate();
@@ -1711,7 +1733,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(81);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1779,6 +1801,8 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getProductionPlantProdEquipmentsNote());
 		sb.append(", registrationId=");
 		sb.append(getRegistrationId());
+		sb.append(", registrationFormId=");
+		sb.append(getRegistrationFormId());
 		sb.append(", applicantProfileId=");
 		sb.append(getApplicantProfileId());
 		sb.append(", latestCOPReportDate=");
@@ -1798,7 +1822,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(121);
+		StringBundler sb = new StringBundler(124);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductionPlant");
@@ -1937,6 +1961,10 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getRegistrationId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>registrationFormId</column-name><column-value><![CDATA[");
+		sb.append(getRegistrationFormId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>applicantProfileId</column-name><column-value><![CDATA[");
 		sb.append(getApplicantProfileId());
 		sb.append("]]></column-value></column>");
@@ -2016,6 +2044,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	private long _registrationId;
 	private long _originalRegistrationId;
 	private boolean _setOriginalRegistrationId;
+	private long _registrationFormId;
 	private long _applicantProfileId;
 	private long _originalApplicantProfileId;
 	private boolean _setOriginalApplicantProfileId;

@@ -451,6 +451,10 @@ public interface DossierFileLocalService extends BaseLocalService,
 		java.lang.String referenceUid, java.lang.String formData,
 		ServiceContext serviceContext) throws PortalException, SystemException;
 
+	public DossierFile updateFormDataPlugin(long groupId, long dossierId,
+		java.lang.String referenceUid, java.lang.String formData,
+		ServiceContext serviceContext) throws PortalException, SystemException;
+
 	/**
 	* for POST /dossiers/{id}/cloning
 	*
