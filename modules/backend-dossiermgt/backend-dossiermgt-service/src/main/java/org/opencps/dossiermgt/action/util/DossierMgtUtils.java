@@ -1,5 +1,7 @@
 package org.opencps.dossiermgt.action.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +37,9 @@ public class DossierMgtUtils {
 
 	private static final Log _log = LogFactoryUtil.getLog(DossierMgtUtils.class);
 	private static final long VALUE_CONVERT_DATE_TIMESTAMP = 1000 * 60 * 60 * 24;
+	private static final String PATTERN_DATE = "dd-MM-yyyy HH:mm:ss";
+	private static final String PATTERN_DATE_2 = "dd/MM/yyyy HH:mm:ss";
+	private static final String PATTERN_DATE_3 = "dd/MM/yyyy";
 
 	//LamTV: Process get process option
 	public static ProcessOption getProcessOption(String serviceInfoCode, String govAgencyCode, String dossierTemplateNo,
@@ -327,6 +332,32 @@ public class DossierMgtUtils {
 			return sb.toString();
 		}
 		return StringPool.BLANK;
+	}
+
+	public static Date parseStringToDate(String strDate) {
+		
+		try {
+			SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE);
+			return df.parse(strDate);
+		}
+		catch (ParseException e) {
+			
+			try {
+				SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE_2);
+				return df.parse(strDate);
+			} catch (Exception e2) {
+				try {
+					SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE_3);
+					return df.parse(strDate);
+				} catch (Exception e3) {
+					
+				}
+			}
+			
+			//_log.error(e);
+			return null;
+		}
+		
 	}
 
 }

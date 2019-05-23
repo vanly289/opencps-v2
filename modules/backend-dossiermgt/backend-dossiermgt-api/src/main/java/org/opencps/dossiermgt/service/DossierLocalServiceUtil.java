@@ -327,6 +327,15 @@ public class DossierLocalServiceUtil {
 		return getService().fetchDossierByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static org.opencps.dossiermgt.model.Dossier getByF_GID_SC_DS_First(
+		long groupId, java.lang.String serviceCode,
+		java.lang.String dossierStatus,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getByF_GID_SC_DS_First(groupId, serviceCode, dossierStatus,
+			orderByComparator);
+	}
+
 	public static org.opencps.dossiermgt.model.Dossier getByRef(long groupId,
 		java.lang.String refId) {
 		return getService().getByRef(groupId, refId);

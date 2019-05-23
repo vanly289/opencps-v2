@@ -1,4 +1,4 @@
-package org.opencps.dossiermgt.action.util;
+package org.opencps.dossiermgt.vr.utils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -33,62 +33,91 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 
-public class IssueContentUtils {
+public class VRIssueContentUtils {
 
-	private static final Log _log = LogFactoryUtil.getLog(IssueContentUtils.class);
+	private static final Log _log = LogFactoryUtil.getLog(VRIssueContentUtils.class);
 	
-	public String updateVRIssueCertificate(DossierAction dossierActionModel, int mtCore) throws PortalException {
+	public static String updateVRIssueCertificate(Dossier objDossier, DossierAction dossierActionModel, int mtCore)
+			throws PortalException {
 		// SONVH bosung 10/05/2019: Cap nhat thong tin ho so CHO CAP PHAT PXX
 		// 1. vr_issue; 
 		// 2. vr_issue_vehiclecertificate
 		// 3. vr_vehiclerecord
 		// 4. vr_issue_equipmentcertificate
 		try {
-			long groupId = dossierActionModel.getGroupId(); 
 			String fileTemplateNo = StringPool.BLANK;
 			String issueVehicleClass = StringPool.BLANK;
 			String formData = StringPool.BLANK;
-			long dossierId = dossierActionModel.getDossierId();
-			Dossier objDossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+			long dossierId = objDossier.getDossierId();
 			String dossierTemplateNo = objDossier.getDossierTemplateNo();
+			//Dossier objDossier = DossierLocalServiceUtil.fetchDossier(dossierId);
 			//ProcessAction processAction = ProcessActionLocalServiceUtil.fetchBySPID_AC(serviceProcessId, actionCode);
-			
-			String postStepCode = dossierActionModel.getStepCode();
-			List <ProcessStep> lstProcessStep = ProcessStepLocalServiceUtil.getBySC_SPID(postStepCode, dossierId);
-			if (Validator.isNotNull(lstProcessStep) && lstProcessStep.size() > 0 ) {
-				if (groupId == 55301 && postStepCode.equalsIgnoreCase("136") && lstProcessStep.get(0).getDossierSubStatus().equalsIgnoreCase("PROCESSING_72")) {
-					if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXBBCH")) {
-						fileTemplateNo = "TT302011BGTVTCPPXBBCHBTTX";
-						issueVehicleClass = "PXX_XCH";
-					} else if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXBBCN")) {
-						fileTemplateNo = "TT302011BGTVTCPPXBBCNBTTX";
-						issueVehicleClass = "PXX_XCN";
-					} else if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXDD")) {
-						fileTemplateNo = "TT302011BGTVTCPPGNTUAC";
-						issueVehicleClass = "PXX_XDD";
-					} else if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXMTGM")) {
-						fileTemplateNo = "TT302011BGTVTCPPXMTGMBTTX";
-						issueVehicleClass = "PXX_XMY";
-					} else if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXCG")) {
-						fileTemplateNo = "TT302011BGTVTCPPXCGBTTX";
-						issueVehicleClass = "PXX_XCG";
-					} else if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXCD")) {
-						fileTemplateNo = "TT302011BGTVTCPPXCDBTTX";
-						issueVehicleClass = "PXX_XCD";
-					} else {
-						return "";
-					}
-					
-					
-					DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(dossierId, fileTemplateNo, 1,
-							false, new DossierFileComparator(false, "createDate", Date.class));
-					if (dossierFile != null) {
-						formData = dossierFile.getFormData();
-					}
+			//String postStepCode = dossierActionModel.getStepCode();
+			//List <ProcessStep> lstProcessStep = ProcessStepLocalServiceUtil.getBySC_SPID(postStepCode, dossierId);
+			//if (Validator.isNotNull(lstProcessStep) && lstProcessStep.size() > 0 ) {
+			//if (groupId == 55301 && postStepCode.equalsIgnoreCase("136") && lstProcessStep.get(0).getDossierSubStatus().equalsIgnoreCase("PROCESSING_72")) {
+//			if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXBBCH")) {
+//				fileTemplateNo = "TT302011BGTVTCPPXBBCHBTTX";
+//				issueVehicleClass = "PXX_XCH";
+//			} else if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXBBCN")) {
+//				fileTemplateNo = "TT302011BGTVTCPPXBBCNBTTX";
+//				issueVehicleClass = "PXX_XCN";
+//			} else if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXDD")) {
+//				fileTemplateNo = "TT302011BGTVTCPPGNTUAC";
+//				issueVehicleClass = "PXX_XDD";
+//			} else if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXMTGM")) {
+//				fileTemplateNo = "TT302011BGTVTCPPXMTGMBTTX";
+//				issueVehicleClass = "PXX_XMY";
+//			} else if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXCG")) {
+//				fileTemplateNo = "TT302011BGTVTCPPXCGBTTX";
+//				issueVehicleClass = "PXX_XCG";
+//			} else if (dossierTemplateNo.equalsIgnoreCase("TT302011BGTVTCPPXCD")) {
+//				fileTemplateNo = "TT302011BGTVTCPPXCDBTTX";
+//				issueVehicleClass = "PXX_XCD";
+//			} else {
+//				return "";
+//			}
+			if (Validator.isNotNull(dossierTemplateNo)) {
+				String templateNoUpcase = dossierTemplateNo.toUpperCase();
+				switch (templateNoUpcase) {
+				case "TT302011BGTVTCPPXBBCH":
+					fileTemplateNo = "TT302011BGTVTCPPXBBCHBTTX";
+					issueVehicleClass = "PXX_XCH";
+					break;
+				case "TT302011BGTVTCPPXBBCN":
+					fileTemplateNo = "TT302011BGTVTCPPXBBCNBTTX";
+					issueVehicleClass = "PXX_XCN";
+					break;
+				case "TT302011BGTVTCPPXDD":
+					fileTemplateNo = "TT302011BGTVTCPPGNTUAC";
+					issueVehicleClass = "PXX_XDD";
+					break;
+				case "TT302011BGTVTCPPXMTGM":
+					fileTemplateNo = "TT302011BGTVTCPPXMTGMBTTX";
+					issueVehicleClass = "PXX_XMY";
+					break;
+				case "TT302011BGTVTCPPXCG":
+					fileTemplateNo = "TT302011BGTVTCPPXCGBTTX";
+					issueVehicleClass = "PXX_XCG";
+					break;
+				case "TT302011BGTVTCPPXCD":
+					fileTemplateNo = "TT302011BGTVTCPPXCDBTTX";
+					issueVehicleClass = "PXX_XCD";
+					break;
+				default:
+					return "";
 				}
-			}
-			if (Validator.isNull(formData)) {
+			} else {
 				return "";
+			}
+
+			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(dossierId, fileTemplateNo, 1,
+					false, new DossierFileComparator(false, "createDate", Date.class));
+			if (dossierFile != null) {
+				formData = dossierFile.getFormData();
+				if (Validator.isNull(formData)) {
+					return "";
+				}
 			}
 
 			JSONObject jsonData = JSONFactoryUtil.createJSONObject(formData);
@@ -127,7 +156,6 @@ public class IssueContentUtils {
 			case 1:
 				methodOfIssue = flagProcess ? 40 : 10;
 				break;
-
 			case 2:
 				methodOfIssue = 20;
 				break;
@@ -172,7 +200,7 @@ public class IssueContentUtils {
 	}
 
 	//Process update table VRIssueVehiclecertificate
-	private void processVRIssueCert(JSONObject jsonData, long issueId, long dossierId, VRApplicantProfile appProfile,
+	private static void processVRIssueCert(JSONObject jsonData, long issueId, long dossierId, VRApplicantProfile appProfile,
 			int mtCore) throws JSONException {
 		String strDataArr = jsonData.getString("bang_khai");
 		Map<String, String> mapValue = null;
@@ -206,7 +234,7 @@ public class IssueContentUtils {
 	}
 
 	//Process update table VRVehicleRecord
-	private void processVRVehicleRecord(JSONObject jsonData, VRApplicantProfile appProfile, long issueCertId,
+	private static void processVRVehicleRecord(JSONObject jsonData, VRApplicantProfile appProfile, long issueCertId,
 			long dossierId, int mtCore) throws JSONException {
 		JSONArray jsonDetailArr = JSONFactoryUtil.createJSONArray(jsonData.getString("chi_tiet_2"));
 		Map<String, String> mapValue = null;

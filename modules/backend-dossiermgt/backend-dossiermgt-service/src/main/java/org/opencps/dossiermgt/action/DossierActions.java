@@ -16,8 +16,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 public interface DossierActions {
 	
-	public static final long SERVER_GROUP_ID = 55217;
-	public static final long CLIENT_GROUP_ID = 55301;	
+	//public static final long SERVER_GROUP_ID = 55217;
+	//public static final long CLIENT_GROUP_ID = 55301;	
 
 	public JSONObject getDossiers(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
 			Sort[] sorts, int start, int end, ServiceContext serviceContext);
@@ -78,8 +78,8 @@ public interface DossierActions {
 	public JSONObject getDossierActions(long dossierId, long groupId, Boolean owner, int start, int end, String sort,
 			String order, ServiceContext serviceContext) throws PortalException;
 
-	public JSONArray getNextActions(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
-			Sort[] sorts, int start, int end, ServiceContext serviceContext) throws PortalException;
+	//public JSONArray getNextActions(long userId, long companyId, long groupId, LinkedHashMap<String, Object> params,
+	//		Sort[] sorts, int start, int end, ServiceContext serviceContext) throws PortalException;
 
 	public Dossier cloneDossier(long groupId, long dossierId, ServiceContext serviceContext) throws PortalException;
 

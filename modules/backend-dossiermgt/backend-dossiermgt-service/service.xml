@@ -426,6 +426,11 @@
 		<finder return-type="Collection" name="SUB_MIT">
 			<finder-column name="submitting" />
 		</finder>
+		<finder return-type="Collection" name="F_GID_SC_DS">
+			<finder-column name="groupId" />
+			<finder-column name="serviceCode" />
+			<finder-column name="dossierStatus" />
+		</finder>
 	</entity>
 
 	<entity name="DossierFile" table="opencps_dossierfile"

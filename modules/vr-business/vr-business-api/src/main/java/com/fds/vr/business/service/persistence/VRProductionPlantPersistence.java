@@ -2117,6 +2117,66 @@ public interface VRProductionPlantPersistence extends BasePersistence<VRProducti
 		java.lang.String productionPlantName);
 
 	/**
+	* Returns the vr production plant where mtCore = &#63; and applicantProfileId = &#63; and registrationFormId = &#63; or throws a {@link NoSuchVRProductionPlantException} if it could not be found.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationFormId the registration form ID
+	* @return the matching vr production plant
+	* @throws NoSuchVRProductionPlantException if a matching vr production plant could not be found
+	*/
+	public VRProductionPlant findByF_MT_APP_FORM_ID(long mtCore,
+		long applicantProfileId, long registrationFormId)
+		throws NoSuchVRProductionPlantException;
+
+	/**
+	* Returns the vr production plant where mtCore = &#63; and applicantProfileId = &#63; and registrationFormId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationFormId the registration form ID
+	* @return the matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	*/
+	public VRProductionPlant fetchByF_MT_APP_FORM_ID(long mtCore,
+		long applicantProfileId, long registrationFormId);
+
+	/**
+	* Returns the vr production plant where mtCore = &#63; and applicantProfileId = &#63; and registrationFormId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationFormId the registration form ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	*/
+	public VRProductionPlant fetchByF_MT_APP_FORM_ID(long mtCore,
+		long applicantProfileId, long registrationFormId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the vr production plant where mtCore = &#63; and applicantProfileId = &#63; and registrationFormId = &#63; from the database.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationFormId the registration form ID
+	* @return the vr production plant that was removed
+	*/
+	public VRProductionPlant removeByF_MT_APP_FORM_ID(long mtCore,
+		long applicantProfileId, long registrationFormId)
+		throws NoSuchVRProductionPlantException;
+
+	/**
+	* Returns the number of vr production plants where mtCore = &#63; and applicantProfileId = &#63; and registrationFormId = &#63;.
+	*
+	* @param mtCore the mt core
+	* @param applicantProfileId the applicant profile ID
+	* @param registrationFormId the registration form ID
+	* @return the number of matching vr production plants
+	*/
+	public int countByF_MT_APP_FORM_ID(long mtCore, long applicantProfileId,
+		long registrationFormId);
+
+	/**
 	* Caches the vr production plant in the entity cache if it is enabled.
 	*
 	* @param vrProductionPlant the vr production plant

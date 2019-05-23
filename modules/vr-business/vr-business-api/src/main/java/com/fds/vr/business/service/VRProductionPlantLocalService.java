@@ -104,6 +104,9 @@ public interface VRProductionPlantLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRProductionPlant fetchVRProductionPlant(long id);
 
+	public VRProductionPlant findByF_MT_APP_FORM_ID(long mtCore,
+		long applicantProfileId, long registrationFormId);
+
 	/**
 	* Returns the vr production plant with the primary key.
 	*

@@ -345,6 +345,15 @@ public class DossierLocalServiceWrapper implements DossierLocalService,
 	}
 
 	@Override
+	public org.opencps.dossiermgt.model.Dossier getByF_GID_SC_DS_First(
+		long groupId, java.lang.String serviceCode,
+		java.lang.String dossierStatus,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _dossierLocalService.getByF_GID_SC_DS_First(groupId,
+			serviceCode, dossierStatus, orderByComparator);
+	}
+
+	@Override
 	public org.opencps.dossiermgt.model.Dossier getByRef(long groupId,
 		java.lang.String refId) {
 		return _dossierLocalService.getByRef(groupId, refId);

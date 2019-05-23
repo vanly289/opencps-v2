@@ -39,6 +39,7 @@ import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
+import org.opencps.dossiermgt.vr.utils.ResultDeliverableCOPUtils;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -133,9 +134,14 @@ public class SignatureManagementImpl implements SignatureManagement{
 									deliverable.setDeliverableState("2");
 									DeliverableLocalServiceUtil.updateDeliverable(deliverable);
 								}
+								//Process update VR_COP
+								if (dossier.getServiceCode().equalsIgnoreCase("TT302011BGTVTCOP")) {
+									ResultDeliverableCOPUtils.updateVRCOPBusiness(dossier, deliverable, 1);
+								}
 							}
 						}
 					}
+
 					// Process success
 					result.put("msg", "success");
 				}

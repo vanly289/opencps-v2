@@ -989,6 +989,11 @@
 			<finder-column name="applicantProfileId"></finder-column>
 			<finder-column name="productionPlantName"></finder-column>
 		</finder>
+		<finder return-type="VRProductionPlant" name="F_MT_APP_FORM_ID">
+			<finder-column name="mtCore" />
+			<finder-column name="applicantProfileId" />
+			<finder-column name="registrationFormId" />
+		</finder>
 	</entity>
 
 	<entity name="VRCOPReportRepository" local-service="true" table="vr_copreportrepository"
