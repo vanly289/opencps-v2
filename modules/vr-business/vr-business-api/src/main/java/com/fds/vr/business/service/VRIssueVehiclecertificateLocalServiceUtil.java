@@ -106,6 +106,11 @@ public class VRIssueVehiclecertificateLocalServiceUtil {
 		return getService().getVRIssueVehiclecertificate(id);
 	}
 
+	public static com.fds.vr.business.model.VRIssueVehiclecertificate updateVRIssueVehicleCertificate(
+		java.util.Map<java.lang.String, java.lang.String> mapValue, int mtCore) {
+		return getService().updateVRIssueVehicleCertificate(mapValue, mtCore);
+	}
+
 	/**
 	* Updates the vr issue vehiclecertificate in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -272,6 +277,10 @@ public class VRIssueVehiclecertificateLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteBydossierId(long mtCore, long dossierId) {
+		getService().deleteBydossierId(mtCore, dossierId);
 	}
 
 	public static VRIssueVehiclecertificateLocalService getService() {

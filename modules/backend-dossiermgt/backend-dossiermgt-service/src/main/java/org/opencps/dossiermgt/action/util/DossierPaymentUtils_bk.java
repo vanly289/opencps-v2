@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.util.Validator;
 public class DossierPaymentUtils_bk {
 
 	public static void main(String[] args) {
-		String pattern = "bank cash keypay net=[ payment = 100000]   ship=0 tax=0  $Lệ phí đánh giá COP $";
+		String pattern = "net=[payment = 2000000/11 * 10;  if(50000 * 0.08 < 2000000) { payment = 2000000/11 * 10; } else { payment = 50000 * 0.08 / 11 * 10; }]";
 
 		Pattern patternName = null;
 		Matcher matcherName = null;
@@ -85,7 +85,7 @@ public class DossierPaymentUtils_bk {
 
 				engine.eval(netScript);
 
-				long net = GetterUtil.getInteger(engine.get("payment"));
+				String net = String.valueOf(GetterUtil.getLong(engine.get("payment")));
 				System.out.println("DossierPaymentUtils.main()" + net);
 			} catch (ScriptException e) {
 				e.printStackTrace();

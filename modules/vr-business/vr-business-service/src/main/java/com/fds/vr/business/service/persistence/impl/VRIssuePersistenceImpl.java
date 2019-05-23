@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -5235,6 +5236,241 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 
 	private static final String _FINDER_COLUMN_IC_IS_ISSUECORPORATIONID_2 = "vrIssue.issueCorporationId = ? AND ";
 	private static final String _FINDER_COLUMN_IC_IS_DIGITALISSUESTATUS_2 = "vrIssue.digitalissuestatus = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_F_MT_DID = new FinderPath(VRIssueModelImpl.ENTITY_CACHE_ENABLED,
+			VRIssueModelImpl.FINDER_CACHE_ENABLED, VRIssueImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByF_MT_DID",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			VRIssueModelImpl.MTCORE_COLUMN_BITMASK |
+			VRIssueModelImpl.DOSSIERID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_F_MT_DID = new FinderPath(VRIssueModelImpl.ENTITY_CACHE_ENABLED,
+			VRIssueModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_MT_DID",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns the vr issue where mtCore = &#63; and dossierId = &#63; or throws a {@link NoSuchVRIssueException} if it could not be found.
+	 *
+	 * @param mtCore the mt core
+	 * @param dossierId the dossier ID
+	 * @return the matching vr issue
+	 * @throws NoSuchVRIssueException if a matching vr issue could not be found
+	 */
+	@Override
+	public VRIssue findByF_MT_DID(long mtCore, long dossierId)
+		throws NoSuchVRIssueException {
+		VRIssue vrIssue = fetchByF_MT_DID(mtCore, dossierId);
+
+		if (vrIssue == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("mtCore=");
+			msg.append(mtCore);
+
+			msg.append(", dossierId=");
+			msg.append(dossierId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchVRIssueException(msg.toString());
+		}
+
+		return vrIssue;
+	}
+
+	/**
+	 * Returns the vr issue where mtCore = &#63; and dossierId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param mtCore the mt core
+	 * @param dossierId the dossier ID
+	 * @return the matching vr issue, or <code>null</code> if a matching vr issue could not be found
+	 */
+	@Override
+	public VRIssue fetchByF_MT_DID(long mtCore, long dossierId) {
+		return fetchByF_MT_DID(mtCore, dossierId, true);
+	}
+
+	/**
+	 * Returns the vr issue where mtCore = &#63; and dossierId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param mtCore the mt core
+	 * @param dossierId the dossier ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching vr issue, or <code>null</code> if a matching vr issue could not be found
+	 */
+	@Override
+	public VRIssue fetchByF_MT_DID(long mtCore, long dossierId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { mtCore, dossierId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_F_MT_DID,
+					finderArgs, this);
+		}
+
+		if (result instanceof VRIssue) {
+			VRIssue vrIssue = (VRIssue)result;
+
+			if ((mtCore != vrIssue.getMtCore()) ||
+					(dossierId != vrIssue.getDossierId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_VRISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_F_MT_DID_MTCORE_2);
+
+			query.append(_FINDER_COLUMN_F_MT_DID_DOSSIERID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(mtCore);
+
+				qPos.add(dossierId);
+
+				List<VRIssue> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_F_MT_DID,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"VRIssuePersistenceImpl.fetchByF_MT_DID(long, long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					VRIssue vrIssue = list.get(0);
+
+					result = vrIssue;
+
+					cacheResult(vrIssue);
+
+					if ((vrIssue.getMtCore() != mtCore) ||
+							(vrIssue.getDossierId() != dossierId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_F_MT_DID,
+							finderArgs, vrIssue);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_F_MT_DID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (VRIssue)result;
+		}
+	}
+
+	/**
+	 * Removes the vr issue where mtCore = &#63; and dossierId = &#63; from the database.
+	 *
+	 * @param mtCore the mt core
+	 * @param dossierId the dossier ID
+	 * @return the vr issue that was removed
+	 */
+	@Override
+	public VRIssue removeByF_MT_DID(long mtCore, long dossierId)
+		throws NoSuchVRIssueException {
+		VRIssue vrIssue = findByF_MT_DID(mtCore, dossierId);
+
+		return remove(vrIssue);
+	}
+
+	/**
+	 * Returns the number of vr issues where mtCore = &#63; and dossierId = &#63;.
+	 *
+	 * @param mtCore the mt core
+	 * @param dossierId the dossier ID
+	 * @return the number of matching vr issues
+	 */
+	@Override
+	public int countByF_MT_DID(long mtCore, long dossierId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_F_MT_DID;
+
+		Object[] finderArgs = new Object[] { mtCore, dossierId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_VRISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_F_MT_DID_MTCORE_2);
+
+			query.append(_FINDER_COLUMN_F_MT_DID_DOSSIERID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(mtCore);
+
+				qPos.add(dossierId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_F_MT_DID_MTCORE_2 = "vrIssue.mtCore = ? AND ";
+	private static final String _FINDER_COLUMN_F_MT_DID_DOSSIERID_2 = "vrIssue.dossierId = ?";
 
 	public VRIssuePersistenceImpl() {
 		setModelClass(VRIssue.class);
@@ -5249,6 +5485,10 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	public void cacheResult(VRIssue vrIssue) {
 		entityCache.putResult(VRIssueModelImpl.ENTITY_CACHE_ENABLED,
 			VRIssueImpl.class, vrIssue.getPrimaryKey(), vrIssue);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_F_MT_DID,
+			new Object[] { vrIssue.getMtCore(), vrIssue.getDossierId() },
+			vrIssue);
 
 		vrIssue.resetOriginalValues();
 	}
@@ -5301,6 +5541,8 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((VRIssueModelImpl)vrIssue, true);
 	}
 
 	@Override
@@ -5311,6 +5553,43 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 		for (VRIssue vrIssue : vrIssues) {
 			entityCache.removeResult(VRIssueModelImpl.ENTITY_CACHE_ENABLED,
 				VRIssueImpl.class, vrIssue.getPrimaryKey());
+
+			clearUniqueFindersCache((VRIssueModelImpl)vrIssue, true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(VRIssueModelImpl vrIssueModelImpl) {
+		Object[] args = new Object[] {
+				vrIssueModelImpl.getMtCore(), vrIssueModelImpl.getDossierId()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_F_MT_DID, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_F_MT_DID, args,
+			vrIssueModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(VRIssueModelImpl vrIssueModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					vrIssueModelImpl.getMtCore(),
+					vrIssueModelImpl.getDossierId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_F_MT_DID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_F_MT_DID, args);
+		}
+
+		if ((vrIssueModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_F_MT_DID.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					vrIssueModelImpl.getOriginalMtCore(),
+					vrIssueModelImpl.getOriginalDossierId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_F_MT_DID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_F_MT_DID, args);
 		}
 	}
 
@@ -5653,6 +5932,9 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 
 		entityCache.putResult(VRIssueModelImpl.ENTITY_CACHE_ENABLED,
 			VRIssueImpl.class, vrIssue.getPrimaryKey(), vrIssue, false);
+
+		clearUniqueFindersCache(vrIssueModelImpl, false);
+		cacheUniqueFindersCache(vrIssueModelImpl);
 
 		vrIssue.resetOriginalValues();
 

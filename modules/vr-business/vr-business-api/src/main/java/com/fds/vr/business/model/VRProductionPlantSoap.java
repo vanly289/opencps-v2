@@ -66,6 +66,7 @@ public class VRProductionPlantSoap implements Serializable {
 		soapModel.setProductionPlantEquipmentsNote(model.getProductionPlantEquipmentsNote());
 		soapModel.setProductionPlantProdEquipmentsNote(model.getProductionPlantProdEquipmentsNote());
 		soapModel.setRegistrationId(model.getRegistrationId());
+		soapModel.setRegistrationFormId(model.getRegistrationFormId());
 		soapModel.setApplicantProfileId(model.getApplicantProfileId());
 		soapModel.setLatestCOPReportDate(model.getLatestCOPReportDate());
 		soapModel.setLatestCOPReportResult(model.getLatestCOPReportResult());
@@ -402,6 +403,14 @@ public class VRProductionPlantSoap implements Serializable {
 		_registrationId = registrationId;
 	}
 
+	public long getRegistrationFormId() {
+		return _registrationFormId;
+	}
+
+	public void setRegistrationFormId(long registrationFormId) {
+		_registrationFormId = registrationFormId;
+	}
+
 	public long getApplicantProfileId() {
 		return _applicantProfileId;
 	}
@@ -483,6 +492,7 @@ public class VRProductionPlantSoap implements Serializable {
 	private String _productionPlantEquipmentsNote;
 	private String _productionPlantProdEquipmentsNote;
 	private long _registrationId;
+	private long _registrationFormId;
 	private long _applicantProfileId;
 	private Date _latestCOPReportDate;
 	private String _latestCOPReportResult;

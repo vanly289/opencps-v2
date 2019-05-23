@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VRVehicleCertificateModel", propOrder = {
+	"certificateId",
 	"mtCore",
     "dossierId",
     "dossierNo",
@@ -58,6 +59,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "VRVehicleCertificateModel")
 public class VRVehicleTypeCertificateModel {
+	protected long certificateId;
 	protected long mtCore;
 	protected long dossierId;
 	protected String dossierNo;
@@ -380,6 +382,12 @@ public class VRVehicleTypeCertificateModel {
 	}
 	public void setModule(String module) {
 		this.module = module;
+	}
+	public long getCertificateId() {
+		return certificateId;
+	}
+	public void setCertificateId(long certificateId) {
+		this.certificateId = certificateId;
 	}
 
 }

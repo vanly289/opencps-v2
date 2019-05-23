@@ -28,6 +28,7 @@ public class VRVehicleCertificateUtils {
 
 		VRVehicleTypeCertificateModel model = new VRVehicleTypeCertificateModel();
 		//
+		model.setCertificateId(certInfo.getId());
 		model.setMtCore(certInfo.getMtCore());
 		model.setDossierId(certInfo.getDossierId());
 		model.setDossierNo(certInfo.getDossierNo());

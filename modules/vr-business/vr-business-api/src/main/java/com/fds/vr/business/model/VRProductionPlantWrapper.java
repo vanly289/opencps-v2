@@ -103,6 +103,7 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 		attributes.put("productionPlantProdEquipmentsNote",
 			getProductionPlantProdEquipmentsNote());
 		attributes.put("registrationId", getRegistrationId());
+		attributes.put("registrationFormId", getRegistrationFormId());
 		attributes.put("applicantProfileId", getApplicantProfileId());
 		attributes.put("latestCOPReportDate", getLatestCOPReportDate());
 		attributes.put("latestCOPReportResult", getLatestCOPReportResult());
@@ -334,6 +335,12 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 
 		if (registrationId != null) {
 			setRegistrationId(registrationId);
+		}
+
+		Long registrationFormId = (Long)attributes.get("registrationFormId");
+
+		if (registrationFormId != null) {
+			setRegistrationFormId(registrationFormId);
 		}
 
 		Long applicantProfileId = (Long)attributes.get("applicantProfileId");
@@ -830,6 +837,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
+	* Returns the registration form ID of this vr production plant.
+	*
+	* @return the registration form ID of this vr production plant
+	*/
+	@Override
+	public long getRegistrationFormId() {
+		return _vrProductionPlant.getRegistrationFormId();
+	}
+
+	/**
 	* Returns the registration ID of this vr production plant.
 	*
 	* @return the registration ID of this vr production plant
@@ -1269,6 +1286,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public void setProductionPlantType(java.lang.String productionPlantType) {
 		_vrProductionPlant.setProductionPlantType(productionPlantType);
+	}
+
+	/**
+	* Sets the registration form ID of this vr production plant.
+	*
+	* @param registrationFormId the registration form ID of this vr production plant
+	*/
+	@Override
+	public void setRegistrationFormId(long registrationFormId) {
+		_vrProductionPlant.setRegistrationFormId(registrationFormId);
 	}
 
 	/**

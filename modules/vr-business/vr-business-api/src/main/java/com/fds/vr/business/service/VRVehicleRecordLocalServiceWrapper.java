@@ -115,6 +115,13 @@ public class VRVehicleRecordLocalServiceWrapper
 	}
 
 	@Override
+	public com.fds.vr.business.model.VRVehicleRecord updateVRVehicleRecord(
+		java.util.Map<java.lang.String, java.lang.String> mapValue, int mtCore) {
+		return _vrVehicleRecordLocalService.updateVRVehicleRecord(mapValue,
+			mtCore);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _vrVehicleRecordLocalService.getActionableDynamicQuery();
 	}
@@ -315,6 +322,13 @@ public class VRVehicleRecordLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _vrVehicleRecordLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteBydossierId(long mtCore, long dossierId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_vrVehicleRecordLocalService.deleteBydossierId(mtCore, dossierId);
 	}
 
 	@Override

@@ -1,9 +1,11 @@
 package org.opencps.api.controller.impl;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+
 import javax.activation.DataHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
@@ -25,9 +27,12 @@ import org.opencps.auth.api.BackendAuthImpl;
 import org.opencps.auth.api.exception.UnauthenticationException;
 import org.opencps.auth.api.exception.UnauthorizationException;
 import org.opencps.auth.api.keys.ActionKeys;
+import org.opencps.dossiermgt.action.DossierActions;
 import org.opencps.dossiermgt.action.PaymentFileActions;
+import org.opencps.dossiermgt.action.impl.DossierActionsImpl;
 import org.opencps.dossiermgt.action.impl.PaymentFileActionsImpl;
 import org.opencps.dossiermgt.action.util.DossierMgtUtils;
+import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.constants.PaymentFileTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.PaymentConfig;
@@ -52,6 +57,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -864,6 +872,20 @@ public class PaymentFileManagementImpl implements PaymentFileManagement {
 						String formReport = paymentConfig.getInvoiceForm();
 
 						JSONObject jsonData = JSONFactoryUtil.createJSONObject(formData);
+						//
+						if (paymentFile != null) {
+							String paymentFormData = paymentFile.getPaymentFormData();
+							if (Validator.isNotNull(paymentFormData)) {
+								JSONObject jsonPaymentFormData = JSONFactoryUtil.createJSONObject(paymentFormData);
+								//
+								Iterator<String> keys = jsonPaymentFormData.keys();
+
+								while (keys.hasNext()) {
+									String key = keys.next();
+									jsonData.put(key, jsonPaymentFormData.getString(key));
+								}
+							}
+						}
 
 						jsonData.put("applicantName", dossier.getApplicantName());
 
@@ -930,6 +952,51 @@ public class PaymentFileManagementImpl implements PaymentFileManagement {
 			_log.error(e);
 			return processException(e);
 		}		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Response resolveConflictPayments(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext) {
+		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
+		//long userId = user.getUserId();
+		PaymentFileActions action = new PaymentFileActionsImpl();
+		Indexer<PaymentFile> indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(PaymentFile.class);
+		
+		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+		params.put(Field.GROUP_ID, String.valueOf(groupId));
+
+		//DossierResultsModel results = new DossierResultsModel();
+
+		JSONObject jsonData = action.getPaymentFiles(serviceContext.getUserId(),
+				serviceContext.getCompanyId(), groupId, params, null, -1, -1,
+				serviceContext);
+		
+		//List<Dossier> lstInDbs = DossierLocalServiceUtil.getDossiers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		
+		long total = jsonData.getLong("total");
+		//JSONArray dossierArr = JSONFactoryUtil.createJSONArray();
+		
+		if (total > 0) {
+			List<Document> lstDocuments = (List<Document>) jsonData.get("data");	
+			for (Document document : lstDocuments) {
+				long paymentFileId = GetterUtil.getLong(document.get(PaymentFileTerm.PAYMENT_FILE_ID));
+				long companyId = GetterUtil.getLong(document.get(Field.COMPANY_ID));
+				String uid = document.get(Field.UID);
+				PaymentFile oldPaymentFile = PaymentFileLocalServiceUtil.fetchPaymentFile(paymentFileId);
+				if (oldPaymentFile == null) {
+					try {
+						indexer.delete(companyId, uid);
+					} catch (SearchException e) {
+					}
+				}
+			}
+		}
+		else {
+		}
+
+		return Response.status(200).entity("Dữ liệu đã được clean").build();
 	}
 
 	Log _log = LogFactoryUtil.getLog(PaymentFileManagementImpl.class);

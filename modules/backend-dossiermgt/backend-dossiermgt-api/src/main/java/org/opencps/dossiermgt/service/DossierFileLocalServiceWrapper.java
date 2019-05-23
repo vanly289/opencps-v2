@@ -610,6 +610,17 @@ public class DossierFileLocalServiceWrapper implements DossierFileLocalService,
 			referenceUid, formData, serviceContext);
 	}
 
+	@Override
+	public org.opencps.dossiermgt.model.DossierFile updateFormDataPlugin(
+		long groupId, long dossierId, java.lang.String referenceUid,
+		java.lang.String formData,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dossierFileLocalService.updateFormDataPlugin(groupId,
+			dossierId, referenceUid, formData, serviceContext);
+	}
+
 	/**
 	* for POST /dossiers/{id}/cloning
 	*

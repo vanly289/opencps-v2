@@ -29,7 +29,7 @@ import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.model.impl.VRCorporationAttendeeImpl;
 import com.fds.vr.business.service.VRCorporationAttendeeLocalServiceUtil;
 import com.fds.vr.business.service.base.VRCorporationAttendeeLocalServiceBaseImpl;
-
+import com.fds.vr.business.service.persistence.VRCorporationAttendeeFinder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -109,4 +109,10 @@ public class VRCorporationAttendeeLocalServiceImpl
 	public List<VRCorporationAttendee> findByDossierIdAssignType(long dossierId, String assignType){
 		return vrCorporationAttendeePersistence.findByDossierIdAssignType(dossierId, assignType);
 	}
+
+	public List<VRCorporationAttendee> getVRCorporationByUserId(int mtCore, long userId, String fromDateConvert, String toDateConvert) {
+
+		return vrCorporationAttendeeFinder.findByUserId(mtCore, userId, fromDateConvert, toDateConvert);
+	}
+
 }

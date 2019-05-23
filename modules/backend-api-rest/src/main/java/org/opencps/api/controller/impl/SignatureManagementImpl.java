@@ -19,12 +19,16 @@ import org.opencps.auth.api.BackendAuthImpl;
 import org.opencps.auth.api.exception.NotFoundException;
 import org.opencps.auth.api.exception.UnauthenticationException;
 import org.opencps.auth.api.exception.UnauthorizationException;
+import org.opencps.dossiermgt.action.DossierActions;
+import org.opencps.dossiermgt.action.impl.DossierActionsImpl;
 import org.opencps.dossiermgt.model.Deliverable;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
 import org.opencps.dossiermgt.model.ProcessAction;
+import org.opencps.dossiermgt.model.ProcessOption;
 import org.opencps.dossiermgt.model.ProcessStep;
+import org.opencps.dossiermgt.model.ServiceConfig;
 import org.opencps.dossiermgt.scheduler.InvokeREST;
 import org.opencps.dossiermgt.scheduler.RESTFulConfiguration;
 import org.opencps.dossiermgt.service.DeliverableLocalServiceUtil;
@@ -32,7 +36,9 @@ import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
+import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
+import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -54,6 +60,7 @@ import com.liferay.portal.kernel.util.Validator;
 public class SignatureManagementImpl implements SignatureManagement{
 
 	Log _log = LogFactoryUtil.getLog(SignatureManagementImpl.class.getName());
+	//private static final String TYPE_DONGDAU = "1137, 1160, 1162";
 
 	@Override
 	public Response updateDossierFileBySignature(HttpServletRequest request, HttpHeaders header, Company company,
@@ -100,7 +107,20 @@ public class SignatureManagementImpl implements SignatureManagement{
 //					_log.info("actionNote: "+actionNote);
 //					_log.info("assignUserId: "+assignUserId);
 //					_log.info("subUsers: "+subUsers);
+					String actionCode = input.getActionCode();
+
+					DossierActions actions = new DossierActionsImpl();
+					ProcessOption option = getProcessOption(dossier.getServiceCode(), dossier.getGovAgencyCode(),
+							dossier.getDossierTemplateNo(), groupId);
+					ProcessAction proAction = getProcessAction(groupId, dossier.getDossierId(),
+							dossier.getReferenceUid(), input.getActionCode(), option.getServiceProcessId());
+					if (option != null && proAction != null) {
+						actions.doAction(groupId, dossier, option, proAction, actionCode, input.getActionUser(),
+								input.getActionNote(), GetterUtil.getLong(input.getAssignUserId()), 0l,
+								StringPool.BLANK, StringPool.BLANK, serviceContext);
+					}
 					
+
 					// Update deliverable with deliverableType
 					DossierFile dossierFile = DossierFileLocalServiceUtil.getByFileEntryId(fileEntryId);
 					if (dossierFile != null) {
@@ -264,6 +284,28 @@ public class SignatureManagementImpl implements SignatureManagement{
 
 	}
 
+	protected Dossier getDossier(long groupId, long dossierId, String refId) throws PortalException {
+
+		Dossier dossier = null;
+
+		if (dossierId != 0) {
+			dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+		} else {
+			dossier = DossierLocalServiceUtil.getByRef(groupId, refId);
+		}
+
+		return dossier;
+	}
+
+	private ProcessOption getProcessOption(String serviceInfoCode, String govAgencyCode, String dossierTemplateNo,
+			long groupId) throws PortalException {
+
+		ServiceConfig config = ServiceConfigLocalServiceUtil.getBySICodeAndGAC(groupId, serviceInfoCode, govAgencyCode);
+
+		return ProcessOptionLocalServiceUtil.getByDTPLNoAndServiceCF(groupId, dossierTemplateNo,
+				config.getServiceConfigId());
+	}
+
 	protected ProcessAction getProcessAction(long groupId, long dossierId, String refId, String actionCode,
 			long serviceProcessId) throws PortalException {
 		
@@ -305,19 +347,6 @@ public class SignatureManagementImpl implements SignatureManagement{
 		}
 
 		return action;
-	}
-
-	protected Dossier getDossier(long groupId, long dossierId, String refId) throws PortalException {
-
-		Dossier dossier = null;
-
-		if (dossierId != 0) {
-			dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
-		} else {
-			dossier = DossierLocalServiceUtil.getByRef(groupId, refId);
-		}
-
-		return dossier;
 	}
 
 }

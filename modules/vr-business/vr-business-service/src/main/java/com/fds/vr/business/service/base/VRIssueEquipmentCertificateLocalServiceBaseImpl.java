@@ -40,6 +40,7 @@ import com.fds.vr.business.service.persistence.VRCertificateProgressPersistence;
 import com.fds.vr.business.service.persistence.VRClearingStampbookFinder;
 import com.fds.vr.business.service.persistence.VRClearingStampbookPersistence;
 import com.fds.vr.business.service.persistence.VRConfigTechSpecPersistence;
+import com.fds.vr.business.service.persistence.VRCorporationAttendeeFinder;
 import com.fds.vr.business.service.persistence.VRCorporationAttendeePersistence;
 import com.fds.vr.business.service.persistence.VRCorporationInspectorFinder;
 import com.fds.vr.business.service.persistence.VRCorporationInspectorPersistence;
@@ -1110,6 +1111,25 @@ public abstract class VRIssueEquipmentCertificateLocalServiceBaseImpl
 	public void setVRCorporationAttendeePersistence(
 		VRCorporationAttendeePersistence vrCorporationAttendeePersistence) {
 		this.vrCorporationAttendeePersistence = vrCorporationAttendeePersistence;
+	}
+
+	/**
+	 * Returns the vr corporation attendee finder.
+	 *
+	 * @return the vr corporation attendee finder
+	 */
+	public VRCorporationAttendeeFinder getVRCorporationAttendeeFinder() {
+		return vrCorporationAttendeeFinder;
+	}
+
+	/**
+	 * Sets the vr corporation attendee finder.
+	 *
+	 * @param vrCorporationAttendeeFinder the vr corporation attendee finder
+	 */
+	public void setVRCorporationAttendeeFinder(
+		VRCorporationAttendeeFinder vrCorporationAttendeeFinder) {
+		this.vrCorporationAttendeeFinder = vrCorporationAttendeeFinder;
 	}
 
 	/**
@@ -3587,6 +3607,8 @@ public abstract class VRIssueEquipmentCertificateLocalServiceBaseImpl
 	protected com.fds.vr.business.service.VRCorporationAttendeeLocalService vrCorporationAttendeeLocalService;
 	@BeanReference(type = VRCorporationAttendeePersistence.class)
 	protected VRCorporationAttendeePersistence vrCorporationAttendeePersistence;
+	@BeanReference(type = VRCorporationAttendeeFinder.class)
+	protected VRCorporationAttendeeFinder vrCorporationAttendeeFinder;
 	@BeanReference(type = com.fds.vr.business.service.VRCorporationInspectorLocalService.class)
 	protected com.fds.vr.business.service.VRCorporationInspectorLocalService vrCorporationInspectorLocalService;
 	@BeanReference(type = VRCorporationInspectorPersistence.class)

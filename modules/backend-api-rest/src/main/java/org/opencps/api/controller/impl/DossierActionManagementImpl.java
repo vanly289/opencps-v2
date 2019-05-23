@@ -213,8 +213,12 @@ public class DossierActionManagementImpl implements DossierActionManagement {
 			JSONArray jsonData = actions.getNextActionList(user.getUserId(), company.getCompanyId(), groupId, params,
 					sorts, query.getStart(), query.getEnd(), serviceContext);
 			_log.info("Part3: "+(System.currentTimeMillis() - now));
-			result.setTotal(jsonData.length());
-			result.getData().addAll(DossierActionUtils.mappingToNextActions(jsonData));
+			if (jsonData != null && jsonData.length() > 0) {
+				result.setTotal(jsonData.length());
+				result.getData().addAll(DossierActionUtils.mappingToNextActions(jsonData));
+			} else {
+				result.setTotal(0);
+			}
 			// result.getData()
 			// .addAll(DossierActionUtils.mappingToDoListActions((List<ProcessAction>)
 			// jsonData.get("data")));

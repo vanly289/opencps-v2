@@ -90,6 +90,11 @@ public class VRIssueLocalServiceUtil {
 		return getService().fetchVRIssue(id);
 	}
 
+	public static com.fds.vr.business.model.VRIssue findByMT_DID(long mtCore,
+		long dossierId) {
+		return getService().findByMT_DID(mtCore, dossierId);
+	}
+
 	/**
 	* Returns the vr issue with the primary key.
 	*
@@ -117,6 +122,13 @@ public class VRIssueLocalServiceUtil {
 	public static com.fds.vr.business.model.VRIssue updateVRIssue(
 		com.fds.vr.business.model.VRIssue vrIssue) {
 		return getService().updateVRIssue(vrIssue);
+	}
+
+	public static com.fds.vr.business.model.VRIssue updateVRIssue(
+		java.util.Map<java.lang.String, java.lang.String> mapValue, int mtCore,
+		boolean flagExits)
+		throws com.fds.vr.business.exception.NoSuchVRIssueException {
+		return getService().updateVRIssue(mapValue, mtCore, flagExits);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

@@ -484,19 +484,17 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 						_log.info("UPDATED DOSSIERFILE");
 
-						actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
-								context);
-
+						DossierFileLocalServiceUtil.updateFormDataPlugin(groupId, dossierId,
+								dossierFile.getReferenceUid(), formData, context);
 					} else {
 						// add temp File
 
 					}
 
 				} else {
-					// formData = dossierFile.getFormData();
 
-					actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData,
-							context);
+					DossierFileLocalServiceUtil.updateFormDataPlugin(groupId, dossierId,
+							dossierFile.getReferenceUid(), formData, context);
 
 				}
 			}

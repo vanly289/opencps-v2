@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for VRIssueVehiclecertificate. Methods of this
@@ -113,6 +114,9 @@ public interface VRIssueVehiclecertificateLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRIssueVehiclecertificate getVRIssueVehiclecertificate(long id)
 		throws PortalException;
+
+	public VRIssueVehiclecertificate updateVRIssueVehicleCertificate(
+		Map<java.lang.String, java.lang.String> mapValue, int mtCore);
 
 	/**
 	* Updates the vr issue vehiclecertificate in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -240,4 +244,6 @@ public interface VRIssueVehiclecertificateLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteBydossierId(long mtCore, long dossierId);
 }

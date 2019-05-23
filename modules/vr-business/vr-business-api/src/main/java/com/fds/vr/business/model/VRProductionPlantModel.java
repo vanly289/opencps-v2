@@ -566,6 +566,20 @@ public interface VRProductionPlantModel extends BaseModel<VRProductionPlant> {
 	public void setRegistrationId(long registrationId);
 
 	/**
+	 * Returns the registration form ID of this vr production plant.
+	 *
+	 * @return the registration form ID of this vr production plant
+	 */
+	public long getRegistrationFormId();
+
+	/**
+	 * Sets the registration form ID of this vr production plant.
+	 *
+	 * @param registrationFormId the registration form ID of this vr production plant
+	 */
+	public void setRegistrationFormId(long registrationFormId);
+
+	/**
 	 * Returns the applicant profile ID of this vr production plant.
 	 *
 	 * @return the applicant profile ID of this vr production plant

@@ -85,6 +85,12 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 		return _vrIssueLocalService.fetchVRIssue(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRIssue findByMT_DID(long mtCore,
+		long dossierId) {
+		return _vrIssueLocalService.findByMT_DID(mtCore, dossierId);
+	}
+
 	/**
 	* Returns the vr issue with the primary key.
 	*
@@ -116,6 +122,14 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 	public com.fds.vr.business.model.VRIssue updateVRIssue(
 		com.fds.vr.business.model.VRIssue vrIssue) {
 		return _vrIssueLocalService.updateVRIssue(vrIssue);
+	}
+
+	@Override
+	public com.fds.vr.business.model.VRIssue updateVRIssue(
+		java.util.Map<java.lang.String, java.lang.String> mapValue, int mtCore,
+		boolean flagExits)
+		throws com.fds.vr.business.exception.NoSuchVRIssueException {
+		return _vrIssueLocalService.updateVRIssue(mapValue, mtCore, flagExits);
 	}
 
 	@Override

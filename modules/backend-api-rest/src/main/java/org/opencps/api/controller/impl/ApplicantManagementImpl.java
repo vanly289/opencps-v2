@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -135,10 +136,11 @@ public class ApplicantManagementImpl implements ApplicantManagement {
 			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
-
-			if (!auth.hasResource(serviceContext, ServiceInfo.class.getName(), ActionKeys.ADD_ENTRY)) {
-				throw new UnauthorizationException();
-			}
+			
+			// Tạm thời bỏ authent
+//			if (!auth.hasResource(serviceContext, ServiceInfo.class.getName(), ActionKeys.ADD_ENTRY)) {
+//				throw new UnauthorizationException();
+//			}
 
 			if (query.getEnd() == 0) {
 
@@ -799,6 +801,163 @@ public class ApplicantManagementImpl implements ApplicantManagement {
 			resultObj.put("token", applicant.getTmpPass());
 
 			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(resultObj)).build();
+
+		} catch (Exception e) {
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					if (e instanceof NoSuchUserException) {
+						error.setMessage("Not Found");
+						error.setCode(HttpURLConnection.HTTP_NOT_FOUND);
+						error.setDescription("Not Found");
+
+						return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(error).build();
+
+					} else {
+						error.setMessage("Internal Server Error");
+						error.setCode(HttpURLConnection.HTTP_INTERNAL_ERROR);
+						error.setDescription(e.getMessage());
+
+						return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+					}
+
+				}
+			}
+		}
+	}
+
+	@Override
+	public Response changePassApplicantProfile(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long id, ProfileInputModel input) {
+		// TODO Auto-generated method stub
+		BackendAuth auth = new BackendAuthImpl();
+		try {
+
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+
+			User requestUser = ApplicantUtils.getUser(id);
+			_log.info("user_________________" + requestUser.toString());
+			boolean isAllowed = false;
+
+			if (Validator.isNull(requestUser)) {
+				throw new NoSuchUserException();
+			} else {
+				isAllowed = true;
+			}
+			_log.info("isAllowed_________________" + isAllowed);
+			if (isAllowed) {
+				requestUser.setPassword(input.getValue());
+				requestUser.setPasswordEncrypted(false);
+				
+				Applicant applicant = ApplicantLocalServiceUtil.getApplicant(id);
+				applicant.setTmpPass(input.getValue());
+				
+				User userRes = UserLocalServiceUtil.updateUser(requestUser);
+				ApplicantLocalServiceUtil.updateApplicant(applicant);
+				JSONObject result = JSONFactoryUtil.createJSONObject();
+				result.put("message", "update ok!");
+				return Response.status(200).entity(JSONFactoryUtil.looseSerialize(result)).build();
+			} else {
+				throw new UnauthorizationException();
+			}
+
+		} catch (Exception e) {
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					if (e instanceof NoSuchUserException) {
+						error.setMessage("Not Found");
+						error.setCode(HttpURLConnection.HTTP_NOT_FOUND);
+						error.setDescription("Not Found");
+
+						return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(error).build();
+
+					} else {
+						error.setMessage("Internal Server Error");
+						error.setCode(HttpURLConnection.HTTP_INTERNAL_ERROR);
+						error.setDescription(e.getMessage());
+
+						return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+					}
+
+				}
+			}
+		}
+	}
+
+	@Override
+	public Response changeEmailApplicantProfile(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long id, ProfileInputModel input) {
+		// TODO Auto-generated method stub
+		BackendAuth auth = new BackendAuthImpl();
+		try {
+
+			if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}
+
+			User requestUser = ApplicantUtils.getUser(id);
+			_log.info("user_________________" + requestUser.toString());
+			boolean isAllowed = false;
+
+			if (Validator.isNull(requestUser)) {
+				throw new NoSuchUserException();
+			} else {
+				isAllowed = true;
+			}
+			_log.info("isAllowed_________________" + isAllowed);
+			if (isAllowed) {
+				Applicant applicantChange = ApplicantLocalServiceUtil.getApplicant(id);
+				applicantChange.setContactEmail(input.getValue());
+				Applicant applicantRes = ApplicantLocalServiceUtil.updateApplicant(applicantChange);
+				
+				requestUser.setEmailAddress(input.getValue());
+				User userRes = UserLocalServiceUtil.updateUser(requestUser);
+				_log.info("userRes_________________" + userRes.toString());
+				_log.info("applicantRes_________________" + applicantRes.toString());
+				JSONObject result = JSONFactoryUtil.createJSONObject();
+				if (Validator.isNull(userRes) || Validator.isNull(applicantRes)) {
+					result.put("message", "Not modified!");
+					return Response.status(304).entity(JSONFactoryUtil.looseSerialize(result)).build();
+				} else {
+					result = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(applicantRes));
+				}
+				return Response.status(200).entity(JSONFactoryUtil.looseSerialize(result)).build();
+			} else {
+				throw new UnauthorizationException();
+			}
 
 		} catch (Exception e) {
 			ErrorMsg error = new ErrorMsg();

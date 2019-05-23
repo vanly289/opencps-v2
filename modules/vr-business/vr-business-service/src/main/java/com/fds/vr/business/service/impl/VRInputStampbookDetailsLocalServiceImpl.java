@@ -123,7 +123,7 @@ public class VRInputStampbookDetailsLocalServiceImpl
 			inputStampbookDetails.setBookId(bookId);
 		
 		if(Validator.isNotNull(purchaserId))
-			inputStampbookDetails.setPurchaserId(purchaserId);
+			inputStampbookDetails.setPurchaserId(String.valueOf(purchaserId));
 		
 		if(Validator.isNotNull(corporationId))
 			inputStampbookDetails.setCorporationId(corporationId);
@@ -170,7 +170,7 @@ public class VRInputStampbookDetailsLocalServiceImpl
 		if(outputSheetType == 5) {
 			inputStampbookDetails.setCorporationId(corporationId);
 		} else if(outputSheetType == 4 || outputSheetType == 6) {
-			inputStampbookDetails.setPurchaserId(purchaserId);
+			inputStampbookDetails.setPurchaserId(String.valueOf(purchaserId));
 		}
 		
 		inputStampbookDetails.setIssuingStatus(issuingStatus);

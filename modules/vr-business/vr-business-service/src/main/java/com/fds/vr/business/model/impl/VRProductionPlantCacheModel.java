@@ -66,7 +66,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(81);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -134,6 +134,8 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		sb.append(productionPlantProdEquipmentsNote);
 		sb.append(", registrationId=");
 		sb.append(registrationId);
+		sb.append(", registrationFormId=");
+		sb.append(registrationFormId);
 		sb.append(", applicantProfileId=");
 		sb.append(applicantProfileId);
 		sb.append(", latestCOPReportDate=");
@@ -369,6 +371,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		}
 
 		vrProductionPlantImpl.setRegistrationId(registrationId);
+		vrProductionPlantImpl.setRegistrationFormId(registrationFormId);
 		vrProductionPlantImpl.setApplicantProfileId(applicantProfileId);
 
 		if (latestCOPReportDate == Long.MIN_VALUE) {
@@ -450,6 +453,8 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		productionPlantProdEquipmentsNote = objectInput.readUTF();
 
 		registrationId = objectInput.readLong();
+
+		registrationFormId = objectInput.readLong();
 
 		applicantProfileId = objectInput.readLong();
 		latestCOPReportDate = objectInput.readLong();
@@ -678,6 +683,8 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 
 		objectOutput.writeLong(registrationId);
 
+		objectOutput.writeLong(registrationFormId);
+
 		objectOutput.writeLong(applicantProfileId);
 		objectOutput.writeLong(latestCOPReportDate);
 
@@ -726,6 +733,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 	public String productionPlantEquipmentsNote;
 	public String productionPlantProdEquipmentsNote;
 	public long registrationId;
+	public long registrationFormId;
 	public long applicantProfileId;
 	public long latestCOPReportDate;
 	public String latestCOPReportResult;

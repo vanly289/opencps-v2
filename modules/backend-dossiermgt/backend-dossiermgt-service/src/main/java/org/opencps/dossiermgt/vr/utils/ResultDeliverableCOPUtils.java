@@ -34,11 +34,14 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 public class ResultDeliverableCOPUtils {
 
+	private static final Log _log = LogFactoryUtil.getLog(ResultDeliverableCOPUtils.class);
 	public static void updateVRCOPBusiness(Deliverable model, int mtCore) throws NoSuchDossierFileException, JSONException {
 		
 		DossierFile dossierFile = DossierFileLocalServiceUtil.getByDeliverableCode(model.getDeliverableCode());
@@ -52,10 +55,11 @@ public class ResultDeliverableCOPUtils {
 
 		//Process vr_productionplant
 		VRProductionPlant productionPlan = new VRProductionPlantImpl();
-		if (dossier != null) {
+		if (dossier != null && dossier.getServiceCode().equalsIgnoreCase("TT302011BGTVTCOP")) {
 			String applicantIdNo = dossier.getApplicantIdNo();
 			long dossierId = dossier.getDossierId();
-			long productPlantId = productionPlan.getId();
+			//long productPlantId = productionPlan.getId();
+			long productPlantId = 1;
 
 			DossierFile dossierFileDN = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(
 					dossierId, "TT302011BGTVTCOPTTDN", 1, false,
@@ -66,6 +70,7 @@ public class ResultDeliverableCOPUtils {
 			/** VR_PRODUCTION */
 			if (Validator.isNotNull(formData)) {
 				JSONObject jsonData = JSONFactoryUtil.createJSONObject(formData);
+				_log.info("jsonData: "+jsonData);
 				if (jsonData.has("loai_ho_so_cop") && !jsonData.getString("loai_ho_so_cop").equals("BS")) {
 					//TODO: xóa sạch 4 bảng trên, để insert lại
 					// Delete vr_productionplantemployee
@@ -81,12 +86,12 @@ public class ResultDeliverableCOPUtils {
 				// Process vr_productionplantemployee
 				Map<String, String> mapProductPlant = null;
 				if (jsonData.has("danh_sach_nhan_vien")) {
-					JSONArray employeeArr = JSONFactoryUtil.createJSONArray("danh_sach_nhan_vien");
+					JSONArray employeeArr = JSONFactoryUtil.createJSONArray(jsonData.getString("danh_sach_nhan_vien"));
 					for (int i = 0; i < employeeArr.length(); i++) {
 						mapProductPlant = new HashMap<>();
 						JSONObject jsonEmployee = employeeArr.getJSONObject(i);
 
-						mapProductPlant.put("productPlantId", String.valueOf(productionPlan.getId()));
+						mapProductPlant.put("productPlantId", String.valueOf(productPlantId));
 						mapProductPlant.put("sequenceNo", String.valueOf(i));
 						mapProductPlant.put("employeeName", jsonEmployee.getString("ho_ten_pl1"));
 						mapProductPlant.put("employeeCertificateNo", jsonEmployee.getString("chung_chi_pl1"));
@@ -100,12 +105,12 @@ public class ResultDeliverableCOPUtils {
 				
 				// Process vr_productionplantprodequipment
 				if (jsonData.has("thiet_bi_san_xuat_chinh")) {
-					JSONArray prodEquipmentArr = JSONFactoryUtil.createJSONArray("thiet_bi_san_xuat_chinh");
+					JSONArray prodEquipmentArr = JSONFactoryUtil.createJSONArray(jsonData.getString("thiet_bi_san_xuat_chinh"));
 					for (int i = 0; i < prodEquipmentArr.length(); i++) {
 						mapProductPlant = new HashMap<>();
 						JSONObject jsonProdEquipment = prodEquipmentArr.getJSONObject(i);
 
-						mapProductPlant.put("productPlantId", String.valueOf(productionPlan.getId()));
+						mapProductPlant.put("productPlantId", String.valueOf(productPlantId));
 						mapProductPlant.put("sequenceNo", String.valueOf(i));
 						mapProductPlant.put("equipmentCode", jsonProdEquipment.getString("so_luong_pl2"));
 						mapProductPlant.put("equipmentName", jsonProdEquipment.getString("ten_thiet_bi_pl2"));
@@ -120,12 +125,12 @@ public class ResultDeliverableCOPUtils {
 				
 				// Process vr_productionplantequipment
 				if (jsonData.has("thiet_bi_kiem_tra_chinh")) {
-					JSONArray equipmentArr = JSONFactoryUtil.createJSONArray("thiet_bi_kiem_tra_chinh");
+					JSONArray equipmentArr = JSONFactoryUtil.createJSONArray(jsonData.getString("thiet_bi_kiem_tra_chinh"));
 					for (int i = 0; i < equipmentArr.length(); i++) {
 						mapProductPlant = new HashMap<>();
 						JSONObject jsonEquipment = equipmentArr.getJSONObject(i);
 
-						mapProductPlant.put("productPlantId", String.valueOf(productionPlan.getId()));
+						mapProductPlant.put("productPlantId", String.valueOf(productPlantId));
 						mapProductPlant.put("sequenceNo", String.valueOf(i));
 						mapProductPlant.put("equipmentCode", jsonEquipment.getString("so_luong_pl3"));
 						mapProductPlant.put("equipmentName", jsonEquipment.getString("ten_thiet_bi_pl3"));
@@ -141,12 +146,12 @@ public class ResultDeliverableCOPUtils {
 				
 				// Process vr_producttype
 				if (jsonData.has("loai_san_pham_xuong")) {
-					JSONArray typeArr = JSONFactoryUtil.createJSONArray("loai_san_pham_xuong");
+					JSONArray typeArr = JSONFactoryUtil.createJSONArray(jsonData.getString("loai_san_pham_xuong"));
 					for (int i = 0; i < typeArr.length(); i++) {
 						mapProductPlant = new HashMap<>();
 						JSONObject jsonType = typeArr.getJSONObject(i);
 
-						mapProductPlant.put("productPlantId", String.valueOf(productionPlan.getId()));
+						mapProductPlant.put("productPlantId", String.valueOf(productPlantId));
 						mapProductPlant.put("sequenceNo", String.valueOf(i));
 						mapProductPlant.put("vehicleClass", jsonType.getString("so_luong_pl3"));
 						mapProductPlant.put("vehicleTypeCode", jsonType.getString("ten_thiet_bi_pl3"));
@@ -177,20 +182,31 @@ public class ResultDeliverableCOPUtils {
 				mapReport.put("applicantName", appProFile.getApplicantName());
 				mapReport.put("applicantAddress", appProFile.getApplicantAddress());
 			}
+
+			boolean falgCOP = false;
 			if (Validator.isNotNull(formData)) {
 				JSONObject jsonData = JSONFactoryUtil.createJSONObject(formData);
 				if (jsonData.has("list_COP_TrongNuoc_NuocNgoai") && jsonData.getString("list_COP_TrongNuoc_NuocNgoai").equalsIgnoreCase("NN")) {
 					DictCollection collection = DictCollectionLocalServiceUtil.fetchByF_dictCollectionCode("VR86", dossier.getGroupId());
 
-					DictItem dictItem = DictItemLocalServiceUtil.fetchByF_dictItemCode(jsonData.getString("ma_so_xuong"),
+					DictItem dictItem = DictItemLocalServiceUtil.fetchByF_dictItemCode(jsonData.getString("ma_so_nha_xuong"),
 							collection.getDictCollectionId(), dossier.getGroupId());
 					//
-					DictItem dictItemParent = DictItemLocalServiceUtil.fetchDictItem(dictItem.getParentItemId());
-					if (dictItemParent != null) {
-						mapReport.put("overseasManufacturerCode", dictItemParent.getItemCode());
-						mapReport.put("overseasManufacturerName", dictItemParent.getItemName());
-						mapReport.put("overseasManufacturerAddress", dictItemParent.getItemNameEN());
+					if (dictItem != null) {
+						mapReport.put("productionPlantId", String.valueOf(0));
+						mapReport.put("productionPlantCode", dictItem.getItemCode());
+						mapReport.put("productionPlantName", dictItem.getItemName());
+						mapReport.put("productionPlantAddress", dictItem.getItemNameEN());
+						//
+						DictItem dictItemParent = DictItemLocalServiceUtil.fetchDictItem(dictItem.getParentItemId());
+						if (dictItemParent != null) {
+							mapReport.put("overseasManufacturerCode", dictItemParent.getItemCode());
+							mapReport.put("overseasManufacturerName", dictItemParent.getItemName());
+							mapReport.put("overseasManufacturerAddress", dictItemParent.getItemNameEN());
+						}
 					}
+					//
+					falgCOP = true;
 				}
 			}
 			//
@@ -200,9 +216,13 @@ public class ResultDeliverableCOPUtils {
 			String formDataKQ = dossierFileReportKQ != null ? dossierFileReportKQ.getFormData(): StringPool.BLANK;
 			if (Validator.isNotNull(formDataKQ)) {
 				JSONObject jsonDataKQ = JSONFactoryUtil.createJSONObject(formDataKQ);
-				mapReport.put("productionPlantCode", jsonDataKQ.getString("ma_so_xuong"));
-				mapReport.put("productionPlantName", jsonDataKQ.getString("ten_xuong_san_xuat"));
-				mapReport.put("productionPlantAddress", jsonDataKQ.getString("dia_chi_xuong_san_xuat"));
+				if (!falgCOP) {
+					mapReport.put("productionPlantId", String.valueOf(productPlantId));
+					mapReport.put("productionPlantCode", jsonDataKQ.getString("ma_so_nha_xuong"));
+					mapReport.put("productionPlantName", jsonDataKQ.getString("nha_xuong"));
+					mapReport.put("productionPlantAddress", jsonDataKQ.getString("dia_chi_nha_xuong"));
+				}
+
 				mapReport.put("copReportNo", jsonDataKQ.getString("so_thong_bao"));
 				mapReport.put("copReportStatus", jsonDataKQ.getString("ket_luan"));
 				mapReport.put("copReportType", jsonDataKQ.getString("loai_ho_so_cop"));
@@ -231,11 +251,12 @@ public class ResultDeliverableCOPUtils {
 			// n many table 
 			// process table vr_COPProductionPlantProdEquipment
 			if (copReport != null && Validator.isNotNull(formData)) {
+				_log.info("copReportRepositoryId: "+ copReport.getId());
 				JSONObject jsonData = JSONFactoryUtil.createJSONObject(formData);
 				// process table vr_COPProductionPlantProdEquipment
 				Map<String, String> mapCOP = null;
 				if (jsonData.has("thiet_bi_san_xuat_chinh")) {
-					JSONArray equimentArr = JSONFactoryUtil.createJSONArray("thiet_bi_san_xuat_chinh");
+					JSONArray equimentArr = JSONFactoryUtil.createJSONArray(jsonData.getString("thiet_bi_san_xuat_chinh"));
 					for (int i = 0; i < equimentArr.length(); i++) {
 						mapCOP = new HashMap<>();
 						JSONObject jsonEquiment = equimentArr.getJSONObject(i);
@@ -256,7 +277,7 @@ public class ResultDeliverableCOPUtils {
 				//
 				// process table vr_COPProductionPlantEquipment
 				if (jsonData.has("thiet_bi_kiem_tra_chinh")) {
-					JSONArray equimentArr = JSONFactoryUtil.createJSONArray("thiet_bi_kiem_tra_chinh");
+					JSONArray equimentArr = JSONFactoryUtil.createJSONArray(jsonData.getString("thiet_bi_kiem_tra_chinh"));
 					for (int i = 0; i < equimentArr.length(); i++) {
 						mapCOP = new HashMap<>();
 						JSONObject jsonEquiment = equimentArr.getJSONObject(i);
@@ -278,12 +299,12 @@ public class ResultDeliverableCOPUtils {
 				//
 				// process table vr_COPProductionPlantEmployee
 				if (jsonData.has("danh_sach_nhan_vien")) {
-					JSONArray employeeArr = JSONFactoryUtil.createJSONArray("danh_sach_nhan_vien");
+					JSONArray employeeArr = JSONFactoryUtil.createJSONArray(jsonData.getString("danh_sach_nhan_vien"));
 					for (int i = 0; i < employeeArr.length(); i++) {
 						mapCOP = new HashMap<>();
 						JSONObject jsonEmployee = employeeArr.getJSONObject(i);
 
-						mapCOP.put("copReportRepositoryId", String.valueOf("ti nua them"));
+						mapCOP.put("copReportRepositoryId", String.valueOf(copReport.getId()));
 						mapCOP.put("copReportNo", "so_thong_bao");
 						mapCOP.put("sequenceNo", String.valueOf(i));
 						mapCOP.put("employeeName", jsonEmployee.getString("ho_ten_pl1"));
@@ -296,7 +317,7 @@ public class ResultDeliverableCOPUtils {
 
 				// process table vr_COPReport_attach
 				if (jsonData.has("danh_sach_tai_lieu")) {
-					JSONArray reportAttachArr = JSONFactoryUtil.createJSONArray("danh_sach_tai_lieu");
+					JSONArray reportAttachArr = JSONFactoryUtil.createJSONArray(jsonData.getString("danh_sach_tai_lieu"));
 					for (int i = 0; i < reportAttachArr.length(); i++) {
 						mapCOP = new HashMap<>();
 						JSONObject jsonReportAttach = reportAttachArr.getJSONObject(i);

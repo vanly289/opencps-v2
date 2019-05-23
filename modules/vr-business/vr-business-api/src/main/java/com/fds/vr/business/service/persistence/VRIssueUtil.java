@@ -1787,6 +1787,67 @@ public class VRIssueUtil {
 	}
 
 	/**
+	* Returns the vr issue where mtCore = &#63; and dossierId = &#63; or throws a {@link NoSuchVRIssueException} if it could not be found.
+	*
+	* @param mtCore the mt core
+	* @param dossierId the dossier ID
+	* @return the matching vr issue
+	* @throws NoSuchVRIssueException if a matching vr issue could not be found
+	*/
+	public static VRIssue findByF_MT_DID(long mtCore, long dossierId)
+		throws com.fds.vr.business.exception.NoSuchVRIssueException {
+		return getPersistence().findByF_MT_DID(mtCore, dossierId);
+	}
+
+	/**
+	* Returns the vr issue where mtCore = &#63; and dossierId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param mtCore the mt core
+	* @param dossierId the dossier ID
+	* @return the matching vr issue, or <code>null</code> if a matching vr issue could not be found
+	*/
+	public static VRIssue fetchByF_MT_DID(long mtCore, long dossierId) {
+		return getPersistence().fetchByF_MT_DID(mtCore, dossierId);
+	}
+
+	/**
+	* Returns the vr issue where mtCore = &#63; and dossierId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param mtCore the mt core
+	* @param dossierId the dossier ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vr issue, or <code>null</code> if a matching vr issue could not be found
+	*/
+	public static VRIssue fetchByF_MT_DID(long mtCore, long dossierId,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByF_MT_DID(mtCore, dossierId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the vr issue where mtCore = &#63; and dossierId = &#63; from the database.
+	*
+	* @param mtCore the mt core
+	* @param dossierId the dossier ID
+	* @return the vr issue that was removed
+	*/
+	public static VRIssue removeByF_MT_DID(long mtCore, long dossierId)
+		throws com.fds.vr.business.exception.NoSuchVRIssueException {
+		return getPersistence().removeByF_MT_DID(mtCore, dossierId);
+	}
+
+	/**
+	* Returns the number of vr issues where mtCore = &#63; and dossierId = &#63;.
+	*
+	* @param mtCore the mt core
+	* @param dossierId the dossier ID
+	* @return the number of matching vr issues
+	*/
+	public static int countByF_MT_DID(long mtCore, long dossierId) {
+		return getPersistence().countByF_MT_DID(mtCore, dossierId);
+	}
+
+	/**
 	* Caches the vr issue in the entity cache if it is enabled.
 	*
 	* @param vrIssue the vr issue
