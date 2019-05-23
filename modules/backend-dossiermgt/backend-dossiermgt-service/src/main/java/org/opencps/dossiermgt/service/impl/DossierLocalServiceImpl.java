@@ -23,6 +23,7 @@ import org.opencps.communication.model.ServerConfig;
 import org.opencps.communication.service.ServerConfigLocalServiceUtil;
 import org.opencps.dossiermgt.constants.DossierStatusConstants;
 import org.opencps.dossiermgt.constants.DossierTerm;
+import org.opencps.dossiermgt.exception.NoSuchDossierFileException;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
@@ -34,6 +35,7 @@ import org.opencps.dossiermgt.model.ServiceInfo;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
 import org.opencps.dossiermgt.service.base.DossierLocalServiceBaseImpl;
+import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,6 +64,7 @@ import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2110,6 +2113,10 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 
 	public List<Dossier> getBySubmitting(boolean submitting) {
 		return dossierPersistence.findBySUB_MIT(submitting);
+	}
+
+	public Dossier getByF_GID_SC_DS_First(long groupId, String serviceCode, String dossierStatus, OrderByComparator orderByComparator) {
+		return dossierPersistence.fetchByF_GID_SC_DS_First(groupId, serviceCode, dossierStatus, orderByComparator);
 	}
 
 	public static final String CLASS_NAME = Dossier.class.getName();

@@ -1857,6 +1857,209 @@ public class DossierUtil {
 	}
 
 	/**
+	* Returns all the dossiers where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63;.
+	*
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	* @return the matching dossiers
+	*/
+	public static List<Dossier> findByF_GID_SC_DS(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus) {
+		return getPersistence()
+				   .findByF_GID_SC_DS(groupId, serviceCode, dossierStatus);
+	}
+
+	/**
+	* Returns a range of all the dossiers where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DossierModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	* @param start the lower bound of the range of dossiers
+	* @param end the upper bound of the range of dossiers (not inclusive)
+	* @return the range of matching dossiers
+	*/
+	public static List<Dossier> findByF_GID_SC_DS(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus,
+		int start, int end) {
+		return getPersistence()
+				   .findByF_GID_SC_DS(groupId, serviceCode, dossierStatus,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the dossiers where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DossierModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	* @param start the lower bound of the range of dossiers
+	* @param end the upper bound of the range of dossiers (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching dossiers
+	*/
+	public static List<Dossier> findByF_GID_SC_DS(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus,
+		int start, int end, OrderByComparator<Dossier> orderByComparator) {
+		return getPersistence()
+				   .findByF_GID_SC_DS(groupId, serviceCode, dossierStatus,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the dossiers where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DossierModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	* @param start the lower bound of the range of dossiers
+	* @param end the upper bound of the range of dossiers (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching dossiers
+	*/
+	public static List<Dossier> findByF_GID_SC_DS(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus,
+		int start, int end, OrderByComparator<Dossier> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByF_GID_SC_DS(groupId, serviceCode, dossierStatus,
+			start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first dossier in the ordered set where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63;.
+	*
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching dossier
+	* @throws NoSuchDossierException if a matching dossier could not be found
+	*/
+	public static Dossier findByF_GID_SC_DS_First(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus,
+		OrderByComparator<Dossier> orderByComparator)
+		throws org.opencps.dossiermgt.exception.NoSuchDossierException {
+		return getPersistence()
+				   .findByF_GID_SC_DS_First(groupId, serviceCode,
+			dossierStatus, orderByComparator);
+	}
+
+	/**
+	* Returns the first dossier in the ordered set where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63;.
+	*
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching dossier, or <code>null</code> if a matching dossier could not be found
+	*/
+	public static Dossier fetchByF_GID_SC_DS_First(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus,
+		OrderByComparator<Dossier> orderByComparator) {
+		return getPersistence()
+				   .fetchByF_GID_SC_DS_First(groupId, serviceCode,
+			dossierStatus, orderByComparator);
+	}
+
+	/**
+	* Returns the last dossier in the ordered set where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63;.
+	*
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching dossier
+	* @throws NoSuchDossierException if a matching dossier could not be found
+	*/
+	public static Dossier findByF_GID_SC_DS_Last(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus,
+		OrderByComparator<Dossier> orderByComparator)
+		throws org.opencps.dossiermgt.exception.NoSuchDossierException {
+		return getPersistence()
+				   .findByF_GID_SC_DS_Last(groupId, serviceCode, dossierStatus,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last dossier in the ordered set where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63;.
+	*
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching dossier, or <code>null</code> if a matching dossier could not be found
+	*/
+	public static Dossier fetchByF_GID_SC_DS_Last(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus,
+		OrderByComparator<Dossier> orderByComparator) {
+		return getPersistence()
+				   .fetchByF_GID_SC_DS_Last(groupId, serviceCode,
+			dossierStatus, orderByComparator);
+	}
+
+	/**
+	* Returns the dossiers before and after the current dossier in the ordered set where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63;.
+	*
+	* @param dossierId the primary key of the current dossier
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next dossier
+	* @throws NoSuchDossierException if a dossier with the primary key could not be found
+	*/
+	public static Dossier[] findByF_GID_SC_DS_PrevAndNext(long dossierId,
+		long groupId, java.lang.String serviceCode,
+		java.lang.String dossierStatus,
+		OrderByComparator<Dossier> orderByComparator)
+		throws org.opencps.dossiermgt.exception.NoSuchDossierException {
+		return getPersistence()
+				   .findByF_GID_SC_DS_PrevAndNext(dossierId, groupId,
+			serviceCode, dossierStatus, orderByComparator);
+	}
+
+	/**
+	* Removes all the dossiers where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	*/
+	public static void removeByF_GID_SC_DS(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus) {
+		getPersistence().removeByF_GID_SC_DS(groupId, serviceCode, dossierStatus);
+	}
+
+	/**
+	* Returns the number of dossiers where groupId = &#63; and serviceCode = &#63; and dossierStatus = &#63;.
+	*
+	* @param groupId the group ID
+	* @param serviceCode the service code
+	* @param dossierStatus the dossier status
+	* @return the number of matching dossiers
+	*/
+	public static int countByF_GID_SC_DS(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus) {
+		return getPersistence()
+				   .countByF_GID_SC_DS(groupId, serviceCode, dossierStatus);
+	}
+
+	/**
 	* Caches the dossier in the entity cache if it is enabled.
 	*
 	* @param dossier the dossier

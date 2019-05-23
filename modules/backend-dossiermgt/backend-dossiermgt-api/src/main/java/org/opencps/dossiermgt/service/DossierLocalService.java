@@ -289,6 +289,11 @@ public interface DossierLocalService extends BaseLocalService,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Dossier getByF_GID_SC_DS_First(long groupId,
+		java.lang.String serviceCode, java.lang.String dossierStatus,
+		OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Dossier getByRef(long groupId, java.lang.String refId);
 
 	/**
