@@ -1540,7 +1540,7 @@
 		<column name="remark" type="String" db-name="remark"/>
 		<column name="inputSheetId" type="long" db-name="inputSheetId"/>
 		<column name="bookId" type="long" db-name="bookId"/>
-		<column name="purchaserId" type="String" db-name="purchaserId"/>
+		<column name="purchaserId" type="long" db-name="purchaserId"/>
 		<column name="corporationId" type="long" db-name="corporationId"/>
 		<column name="issuingStatus" type="long" db-name="issuingStatus"/>
 		<column name="clearingStatus" type="long" db-name="clearingStatus"/>

@@ -2401,7 +2401,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 			VRIssueModelImpl.FINDER_CACHE_ENABLED, VRIssueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByissueCorporationId",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -2411,7 +2411,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 			VRIssueModelImpl.FINDER_CACHE_ENABLED, VRIssueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByissueCorporationId",
-			new String[] { Long.class.getName(), String.class.getName() },
+			new String[] { Long.class.getName(), Long.class.getName() },
 			VRIssueModelImpl.MTCORE_COLUMN_BITMASK |
 			VRIssueModelImpl.ISSUECORPORATIONID_COLUMN_BITMASK |
 			VRIssueModelImpl.MODIFYDATE_COLUMN_BITMASK);
@@ -2419,7 +2419,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 			VRIssueModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByissueCorporationId",
-			new String[] { Long.class.getName(), String.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns all the vr issues where mtCore = &#63; and issueCorporationId = &#63;.
@@ -2430,7 +2430,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 */
 	@Override
 	public List<VRIssue> findByissueCorporationId(long mtCore,
-		String issueCorporationId) {
+		long issueCorporationId) {
 		return findByissueCorporationId(mtCore, issueCorporationId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -2450,7 +2450,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 */
 	@Override
 	public List<VRIssue> findByissueCorporationId(long mtCore,
-		String issueCorporationId, int start, int end) {
+		long issueCorporationId, int start, int end) {
 		return findByissueCorporationId(mtCore, issueCorporationId, start, end,
 			null);
 	}
@@ -2471,7 +2471,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 */
 	@Override
 	public List<VRIssue> findByissueCorporationId(long mtCore,
-		String issueCorporationId, int start, int end,
+		long issueCorporationId, int start, int end,
 		OrderByComparator<VRIssue> orderByComparator) {
 		return findByissueCorporationId(mtCore, issueCorporationId, start, end,
 			orderByComparator, true);
@@ -2494,7 +2494,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 */
 	@Override
 	public List<VRIssue> findByissueCorporationId(long mtCore,
-		String issueCorporationId, int start, int end,
+		long issueCorporationId, int start, int end,
 		OrderByComparator<VRIssue> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2524,8 +2524,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 			if ((list != null) && !list.isEmpty()) {
 				for (VRIssue vrIssue : list) {
 					if ((mtCore != vrIssue.getMtCore()) ||
-							!Objects.equals(issueCorporationId,
-								vrIssue.getIssueCorporationId())) {
+							(issueCorporationId != vrIssue.getIssueCorporationId())) {
 						list = null;
 
 						break;
@@ -2549,19 +2548,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 
 			query.append(_FINDER_COLUMN_ISSUECORPORATIONID_MTCORE_2);
 
-			boolean bindIssueCorporationId = false;
-
-			if (issueCorporationId == null) {
-				query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_1);
-			}
-			else if (issueCorporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_3);
-			}
-			else {
-				bindIssueCorporationId = true;
-
-				query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -2585,9 +2572,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 
 				qPos.add(mtCore);
 
-				if (bindIssueCorporationId) {
-					qPos.add(issueCorporationId);
-				}
+				qPos.add(issueCorporationId);
 
 				if (!pagination) {
 					list = (List<VRIssue>)QueryUtil.list(q, getDialect(),
@@ -2630,7 +2615,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 */
 	@Override
 	public VRIssue findByissueCorporationId_First(long mtCore,
-		String issueCorporationId, OrderByComparator<VRIssue> orderByComparator)
+		long issueCorporationId, OrderByComparator<VRIssue> orderByComparator)
 		throws NoSuchVRIssueException {
 		VRIssue vrIssue = fetchByissueCorporationId_First(mtCore,
 				issueCorporationId, orderByComparator);
@@ -2664,7 +2649,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 */
 	@Override
 	public VRIssue fetchByissueCorporationId_First(long mtCore,
-		String issueCorporationId, OrderByComparator<VRIssue> orderByComparator) {
+		long issueCorporationId, OrderByComparator<VRIssue> orderByComparator) {
 		List<VRIssue> list = findByissueCorporationId(mtCore,
 				issueCorporationId, 0, 1, orderByComparator);
 
@@ -2686,7 +2671,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 */
 	@Override
 	public VRIssue findByissueCorporationId_Last(long mtCore,
-		String issueCorporationId, OrderByComparator<VRIssue> orderByComparator)
+		long issueCorporationId, OrderByComparator<VRIssue> orderByComparator)
 		throws NoSuchVRIssueException {
 		VRIssue vrIssue = fetchByissueCorporationId_Last(mtCore,
 				issueCorporationId, orderByComparator);
@@ -2720,7 +2705,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 */
 	@Override
 	public VRIssue fetchByissueCorporationId_Last(long mtCore,
-		String issueCorporationId, OrderByComparator<VRIssue> orderByComparator) {
+		long issueCorporationId, OrderByComparator<VRIssue> orderByComparator) {
 		int count = countByissueCorporationId(mtCore, issueCorporationId);
 
 		if (count == 0) {
@@ -2749,7 +2734,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 */
 	@Override
 	public VRIssue[] findByissueCorporationId_PrevAndNext(long id, long mtCore,
-		String issueCorporationId, OrderByComparator<VRIssue> orderByComparator)
+		long issueCorporationId, OrderByComparator<VRIssue> orderByComparator)
 		throws NoSuchVRIssueException {
 		VRIssue vrIssue = findByPrimaryKey(id);
 
@@ -2779,7 +2764,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	}
 
 	protected VRIssue getByissueCorporationId_PrevAndNext(Session session,
-		VRIssue vrIssue, long mtCore, String issueCorporationId,
+		VRIssue vrIssue, long mtCore, long issueCorporationId,
 		OrderByComparator<VRIssue> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -2796,19 +2781,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 
 		query.append(_FINDER_COLUMN_ISSUECORPORATIONID_MTCORE_2);
 
-		boolean bindIssueCorporationId = false;
-
-		if (issueCorporationId == null) {
-			query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_1);
-		}
-		else if (issueCorporationId.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_3);
-		}
-		else {
-			bindIssueCorporationId = true;
-
-			query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_2);
-		}
+		query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2880,9 +2853,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 
 		qPos.add(mtCore);
 
-		if (bindIssueCorporationId) {
-			qPos.add(issueCorporationId);
-		}
+		qPos.add(issueCorporationId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(vrIssue);
@@ -2909,8 +2880,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 * @param issueCorporationId the issue corporation ID
 	 */
 	@Override
-	public void removeByissueCorporationId(long mtCore,
-		String issueCorporationId) {
+	public void removeByissueCorporationId(long mtCore, long issueCorporationId) {
 		for (VRIssue vrIssue : findByissueCorporationId(mtCore,
 				issueCorporationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(vrIssue);
@@ -2925,7 +2895,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	 * @return the number of matching vr issues
 	 */
 	@Override
-	public int countByissueCorporationId(long mtCore, String issueCorporationId) {
+	public int countByissueCorporationId(long mtCore, long issueCorporationId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_ISSUECORPORATIONID;
 
 		Object[] finderArgs = new Object[] { mtCore, issueCorporationId };
@@ -2939,19 +2909,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 
 			query.append(_FINDER_COLUMN_ISSUECORPORATIONID_MTCORE_2);
 
-			boolean bindIssueCorporationId = false;
-
-			if (issueCorporationId == null) {
-				query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_1);
-			}
-			else if (issueCorporationId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_3);
-			}
-			else {
-				bindIssueCorporationId = true;
-
-				query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_2);
-			}
+			query.append(_FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_2);
 
 			String sql = query.toString();
 
@@ -2966,9 +2924,7 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 
 				qPos.add(mtCore);
 
-				if (bindIssueCorporationId) {
-					qPos.add(issueCorporationId);
-				}
+				qPos.add(issueCorporationId);
 
 				count = (Long)q.uniqueResult();
 
@@ -2988,12 +2944,8 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	}
 
 	private static final String _FINDER_COLUMN_ISSUECORPORATIONID_MTCORE_2 = "vrIssue.mtCore = ? AND ";
-	private static final String _FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_1 =
-		"vrIssue.issueCorporationId IS NULL";
 	private static final String _FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_2 =
 		"vrIssue.issueCorporationId = ?";
-	private static final String _FINDER_COLUMN_ISSUECORPORATIONID_ISSUECORPORATIONID_3 =
-		"(vrIssue.issueCorporationId IS NULL OR vrIssue.issueCorporationId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VERIFYCORPORATIONID =
 		new FinderPath(VRIssueModelImpl.ENTITY_CACHE_ENABLED,
 			VRIssueModelImpl.FINDER_CACHE_ENABLED, VRIssueImpl.class,
@@ -4734,6 +4686,555 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 	private static final String _FINDER_COLUMN_COPREPORTNO_COPREPORTNO_1 = "vrIssue.copreportno IS NULL";
 	private static final String _FINDER_COLUMN_COPREPORTNO_COPREPORTNO_2 = "vrIssue.copreportno = ?";
 	private static final String _FINDER_COLUMN_COPREPORTNO_COPREPORTNO_3 = "(vrIssue.copreportno IS NULL OR vrIssue.copreportno = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_IC_IS = new FinderPath(VRIssueModelImpl.ENTITY_CACHE_ENABLED,
+			VRIssueModelImpl.FINDER_CACHE_ENABLED, VRIssueImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByIC_IS",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_IC_IS = new FinderPath(VRIssueModelImpl.ENTITY_CACHE_ENABLED,
+			VRIssueModelImpl.FINDER_CACHE_ENABLED, VRIssueImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByIC_IS",
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			VRIssueModelImpl.ISSUECORPORATIONID_COLUMN_BITMASK |
+			VRIssueModelImpl.DIGITALISSUESTATUS_COLUMN_BITMASK |
+			VRIssueModelImpl.MODIFYDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_IC_IS = new FinderPath(VRIssueModelImpl.ENTITY_CACHE_ENABLED,
+			VRIssueModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByIC_IS",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns all the vr issues where issueCorporationId = &#63; and digitalissuestatus = &#63;.
+	 *
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 * @return the matching vr issues
+	 */
+	@Override
+	public List<VRIssue> findByIC_IS(long issueCorporationId,
+		int digitalissuestatus) {
+		return findByIC_IS(issueCorporationId, digitalissuestatus,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the vr issues where issueCorporationId = &#63; and digitalissuestatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRIssueModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 * @param start the lower bound of the range of vr issues
+	 * @param end the upper bound of the range of vr issues (not inclusive)
+	 * @return the range of matching vr issues
+	 */
+	@Override
+	public List<VRIssue> findByIC_IS(long issueCorporationId,
+		int digitalissuestatus, int start, int end) {
+		return findByIC_IS(issueCorporationId, digitalissuestatus, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the vr issues where issueCorporationId = &#63; and digitalissuestatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRIssueModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 * @param start the lower bound of the range of vr issues
+	 * @param end the upper bound of the range of vr issues (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching vr issues
+	 */
+	@Override
+	public List<VRIssue> findByIC_IS(long issueCorporationId,
+		int digitalissuestatus, int start, int end,
+		OrderByComparator<VRIssue> orderByComparator) {
+		return findByIC_IS(issueCorporationId, digitalissuestatus, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the vr issues where issueCorporationId = &#63; and digitalissuestatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRIssueModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 * @param start the lower bound of the range of vr issues
+	 * @param end the upper bound of the range of vr issues (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching vr issues
+	 */
+	@Override
+	public List<VRIssue> findByIC_IS(long issueCorporationId,
+		int digitalissuestatus, int start, int end,
+		OrderByComparator<VRIssue> orderByComparator, boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_IC_IS;
+			finderArgs = new Object[] { issueCorporationId, digitalissuestatus };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_IC_IS;
+			finderArgs = new Object[] {
+					issueCorporationId, digitalissuestatus,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<VRIssue> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<VRIssue>)finderCache.getResult(finderPath, finderArgs,
+					this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (VRIssue vrIssue : list) {
+					if ((issueCorporationId != vrIssue.getIssueCorporationId()) ||
+							(digitalissuestatus != vrIssue.getDigitalissuestatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_VRISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_IC_IS_ISSUECORPORATIONID_2);
+
+			query.append(_FINDER_COLUMN_IC_IS_DIGITALISSUESTATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(VRIssueModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(issueCorporationId);
+
+				qPos.add(digitalissuestatus);
+
+				if (!pagination) {
+					list = (List<VRIssue>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<VRIssue>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first vr issue in the ordered set where issueCorporationId = &#63; and digitalissuestatus = &#63;.
+	 *
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vr issue
+	 * @throws NoSuchVRIssueException if a matching vr issue could not be found
+	 */
+	@Override
+	public VRIssue findByIC_IS_First(long issueCorporationId,
+		int digitalissuestatus, OrderByComparator<VRIssue> orderByComparator)
+		throws NoSuchVRIssueException {
+		VRIssue vrIssue = fetchByIC_IS_First(issueCorporationId,
+				digitalissuestatus, orderByComparator);
+
+		if (vrIssue != null) {
+			return vrIssue;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("issueCorporationId=");
+		msg.append(issueCorporationId);
+
+		msg.append(", digitalissuestatus=");
+		msg.append(digitalissuestatus);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRIssueException(msg.toString());
+	}
+
+	/**
+	 * Returns the first vr issue in the ordered set where issueCorporationId = &#63; and digitalissuestatus = &#63;.
+	 *
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vr issue, or <code>null</code> if a matching vr issue could not be found
+	 */
+	@Override
+	public VRIssue fetchByIC_IS_First(long issueCorporationId,
+		int digitalissuestatus, OrderByComparator<VRIssue> orderByComparator) {
+		List<VRIssue> list = findByIC_IS(issueCorporationId,
+				digitalissuestatus, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last vr issue in the ordered set where issueCorporationId = &#63; and digitalissuestatus = &#63;.
+	 *
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vr issue
+	 * @throws NoSuchVRIssueException if a matching vr issue could not be found
+	 */
+	@Override
+	public VRIssue findByIC_IS_Last(long issueCorporationId,
+		int digitalissuestatus, OrderByComparator<VRIssue> orderByComparator)
+		throws NoSuchVRIssueException {
+		VRIssue vrIssue = fetchByIC_IS_Last(issueCorporationId,
+				digitalissuestatus, orderByComparator);
+
+		if (vrIssue != null) {
+			return vrIssue;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("issueCorporationId=");
+		msg.append(issueCorporationId);
+
+		msg.append(", digitalissuestatus=");
+		msg.append(digitalissuestatus);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRIssueException(msg.toString());
+	}
+
+	/**
+	 * Returns the last vr issue in the ordered set where issueCorporationId = &#63; and digitalissuestatus = &#63;.
+	 *
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vr issue, or <code>null</code> if a matching vr issue could not be found
+	 */
+	@Override
+	public VRIssue fetchByIC_IS_Last(long issueCorporationId,
+		int digitalissuestatus, OrderByComparator<VRIssue> orderByComparator) {
+		int count = countByIC_IS(issueCorporationId, digitalissuestatus);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<VRIssue> list = findByIC_IS(issueCorporationId,
+				digitalissuestatus, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the vr issues before and after the current vr issue in the ordered set where issueCorporationId = &#63; and digitalissuestatus = &#63;.
+	 *
+	 * @param id the primary key of the current vr issue
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next vr issue
+	 * @throws NoSuchVRIssueException if a vr issue with the primary key could not be found
+	 */
+	@Override
+	public VRIssue[] findByIC_IS_PrevAndNext(long id, long issueCorporationId,
+		int digitalissuestatus, OrderByComparator<VRIssue> orderByComparator)
+		throws NoSuchVRIssueException {
+		VRIssue vrIssue = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			VRIssue[] array = new VRIssueImpl[3];
+
+			array[0] = getByIC_IS_PrevAndNext(session, vrIssue,
+					issueCorporationId, digitalissuestatus, orderByComparator,
+					true);
+
+			array[1] = vrIssue;
+
+			array[2] = getByIC_IS_PrevAndNext(session, vrIssue,
+					issueCorporationId, digitalissuestatus, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected VRIssue getByIC_IS_PrevAndNext(Session session, VRIssue vrIssue,
+		long issueCorporationId, int digitalissuestatus,
+		OrderByComparator<VRIssue> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_VRISSUE_WHERE);
+
+		query.append(_FINDER_COLUMN_IC_IS_ISSUECORPORATIONID_2);
+
+		query.append(_FINDER_COLUMN_IC_IS_DIGITALISSUESTATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(VRIssueModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(issueCorporationId);
+
+		qPos.add(digitalissuestatus);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(vrIssue);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<VRIssue> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the vr issues where issueCorporationId = &#63; and digitalissuestatus = &#63; from the database.
+	 *
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 */
+	@Override
+	public void removeByIC_IS(long issueCorporationId, int digitalissuestatus) {
+		for (VRIssue vrIssue : findByIC_IS(issueCorporationId,
+				digitalissuestatus, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(vrIssue);
+		}
+	}
+
+	/**
+	 * Returns the number of vr issues where issueCorporationId = &#63; and digitalissuestatus = &#63;.
+	 *
+	 * @param issueCorporationId the issue corporation ID
+	 * @param digitalissuestatus the digitalissuestatus
+	 * @return the number of matching vr issues
+	 */
+	@Override
+	public int countByIC_IS(long issueCorporationId, int digitalissuestatus) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_IC_IS;
+
+		Object[] finderArgs = new Object[] {
+				issueCorporationId, digitalissuestatus
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_VRISSUE_WHERE);
+
+			query.append(_FINDER_COLUMN_IC_IS_ISSUECORPORATIONID_2);
+
+			query.append(_FINDER_COLUMN_IC_IS_DIGITALISSUESTATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(issueCorporationId);
+
+				qPos.add(digitalissuestatus);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_IC_IS_ISSUECORPORATIONID_2 = "vrIssue.issueCorporationId = ? AND ";
+	private static final String _FINDER_COLUMN_IC_IS_DIGITALISSUESTATUS_2 = "vrIssue.digitalissuestatus = ?";
 
 	public VRIssuePersistenceImpl() {
 		setModelClass(VRIssue.class);
@@ -5125,6 +5626,27 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_COPREPORTNO, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COPREPORTNO,
+					args);
+			}
+
+			if ((vrIssueModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_IC_IS.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						vrIssueModelImpl.getOriginalIssueCorporationId(),
+						vrIssueModelImpl.getOriginalDigitalissuestatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_IC_IS, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_IC_IS,
+					args);
+
+				args = new Object[] {
+						vrIssueModelImpl.getIssueCorporationId(),
+						vrIssueModelImpl.getDigitalissuestatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_IC_IS, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_IC_IS,
 					args);
 			}
 		}

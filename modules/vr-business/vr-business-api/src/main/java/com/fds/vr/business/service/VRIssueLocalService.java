@@ -110,6 +110,9 @@ public interface VRIssueLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRIssue getVRIssue(long id) throws PortalException;
 
+	public VRIssue updateDigitalIssueStatus(long id, int digitalIssueStatus)
+		throws PortalException;
+
 	/**
 	* Updates the vr issue in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -193,6 +196,9 @@ public interface VRIssueLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRIssue> findByIC_IS(long issueCorporationId,
+		int digitalIssueStatus) throws PortalException, SystemException;
+
 	public List<VRIssue> findByapplicantProfileId(long mtCore, long dossierId,
 		long applicantProfileId) throws PortalException, SystemException;
 
@@ -206,8 +212,7 @@ public interface VRIssueLocalService extends BaseLocalService,
 		throws PortalException, SystemException;
 
 	public List<VRIssue> findByissueCorporationId(long mtCore,
-		java.lang.String issueCorporationId)
-		throws PortalException, SystemException;
+		long issueCorporationId) throws PortalException, SystemException;
 
 	public List<VRIssue> findByproductionPlantId(long mtCore,
 		long productionPlantId) throws PortalException, SystemException;

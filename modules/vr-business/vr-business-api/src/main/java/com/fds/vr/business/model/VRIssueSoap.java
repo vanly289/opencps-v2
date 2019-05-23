@@ -345,11 +345,11 @@ public class VRIssueSoap implements Serializable {
 		_totalInDocument = totalInDocument;
 	}
 
-	public String getIssueCorporationId() {
+	public long getIssueCorporationId() {
 		return _issueCorporationId;
 	}
 
-	public void setIssueCorporationId(String issueCorporationId) {
+	public void setIssueCorporationId(long issueCorporationId) {
 		_issueCorporationId = issueCorporationId;
 	}
 
@@ -361,11 +361,11 @@ public class VRIssueSoap implements Serializable {
 		_verifyCorporationId = verifyCorporationId;
 	}
 
-	public String getDigitalissuestatus() {
+	public int getDigitalissuestatus() {
 		return _digitalissuestatus;
 	}
 
-	public void setDigitalissuestatus(String digitalissuestatus) {
+	public void setDigitalissuestatus(int digitalissuestatus) {
 		_digitalissuestatus = digitalissuestatus;
 	}
 
@@ -642,9 +642,9 @@ public class VRIssueSoap implements Serializable {
 	private String _remarks;
 	private String _methodOfIssue;
 	private long _totalInDocument;
-	private String _issueCorporationId;
+	private long _issueCorporationId;
 	private String _verifyCorporationId;
-	private String _digitalissuestatus;
+	private int _digitalissuestatus;
 	private String _issueType;
 	private int _averageSTBQuantity;
 	private int _maxMonthQuantity;

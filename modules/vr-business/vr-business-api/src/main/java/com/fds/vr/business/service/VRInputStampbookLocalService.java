@@ -116,8 +116,8 @@ public interface VRInputStampbookLocalService extends BaseLocalService,
 
 	public VRInputStampbook updateByOutputSheet(long bookId,
 		long subTotalInDocument, long serialStartNo, long serialEndNo,
-		long corporationId, long outputSheetType)
-		throws PortalException, SystemException;
+		java.lang.Long purchaserId, java.lang.Long corporationId,
+		long outputSheetType) throws PortalException, SystemException;
 
 	public VRInputStampbook updateInputStambook(long id, long mtCore,
 		long inputSheetId, java.lang.Long corporationId,

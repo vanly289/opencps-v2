@@ -283,11 +283,11 @@ public class VRInputStampbookDetailsSoap implements Serializable {
 		_bookId = bookId;
 	}
 
-	public String getPurchaserId() {
+	public long getPurchaserId() {
 		return _purchaserId;
 	}
 
-	public void setPurchaserId(String purchaserId) {
+	public void setPurchaserId(long purchaserId) {
 		_purchaserId = purchaserId;
 	}
 
@@ -415,7 +415,7 @@ public class VRInputStampbookDetailsSoap implements Serializable {
 	private String _remark;
 	private long _inputSheetId;
 	private long _bookId;
-	private String _purchaserId;
+	private long _purchaserId;
 	private long _corporationId;
 	private long _issuingStatus;
 	private long _clearingStatus;

@@ -230,14 +230,7 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 
 		vrInputStampbookDetailsImpl.setInputSheetId(inputSheetId);
 		vrInputStampbookDetailsImpl.setBookId(bookId);
-
-		if (purchaserId == null) {
-			vrInputStampbookDetailsImpl.setPurchaserId(StringPool.BLANK);
-		}
-		else {
-			vrInputStampbookDetailsImpl.setPurchaserId(purchaserId);
-		}
-
+		vrInputStampbookDetailsImpl.setPurchaserId(purchaserId);
 		vrInputStampbookDetailsImpl.setCorporationId(corporationId);
 		vrInputStampbookDetailsImpl.setIssuingStatus(issuingStatus);
 		vrInputStampbookDetailsImpl.setClearingStatus(clearingStatus);
@@ -340,7 +333,8 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 		inputSheetId = objectInput.readLong();
 
 		bookId = objectInput.readLong();
-		purchaserId = objectInput.readUTF();
+
+		purchaserId = objectInput.readLong();
 
 		corporationId = objectInput.readLong();
 
@@ -449,12 +443,7 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 
 		objectOutput.writeLong(bookId);
 
-		if (purchaserId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(purchaserId);
-		}
+		objectOutput.writeLong(purchaserId);
 
 		objectOutput.writeLong(corporationId);
 
@@ -495,7 +484,7 @@ public class VRInputStampbookDetailsCacheModel implements CacheModel<VRInputStam
 	public String remark;
 	public long inputSheetId;
 	public long bookId;
-	public String purchaserId;
+	public long purchaserId;
 	public long corporationId;
 	public long issuingStatus;
 	public long clearingStatus;
