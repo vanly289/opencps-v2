@@ -1682,10 +1682,10 @@ public class DossierActionsImpl implements DossierActions {
 
 			}
 
-			//DossierFileActions actions = new DossierFileActionsImpl();
-			//actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData, context);
-			DossierFileLocalServiceUtil.updateFormDataPlugin(groupId, dossierId,
-					dossierFile.getReferenceUid(), formData, context);
+			DossierFileActions actions = new DossierFileActionsImpl();
+			actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData, context);
+			//DossierFileLocalServiceUtil.updateFormDataPlugin(groupId, dossierId,
+			//		dossierFile.getReferenceUid(), formData, context);
 			_log.info("- UPDATE DSR_ACT		: "
 					+ (System.currentTimeMillis() - now));
 

@@ -608,7 +608,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			jrxmlTemplate = dossierPart.getFormReport();
 		}
 		// NEW_DOSSIER
-		FileEntry fileEntry = null;
+		//FileEntry fileEntry = null;
 		try {
 			
 			ServiceContext serviceContextFile = new ServiceContext();
@@ -622,7 +622,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			//_log.info("NEW CODE FILES_FROM_FORM_UPDATEDDDDD: "+(System.currentTimeMillis() - now));
 			DossierFileUtils fileUtils = new DossierFileUtils();
 			
-			fileEntry = fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
+			fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
 					serviceContextFile);
 			//FileEntry fileEntry = fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
 			//		serviceContextFile);
@@ -666,18 +666,12 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			newDossierFile.setReferenceUid(PortalUUIDUtil.generate());
 			newDossierFile.setIsNew(true);
 			newDossierFile.setOriginal(true);
-			if (fileEntry != null && fileEntry.getFileEntryId() > 0) {
-				newDossierFile.setFileEntryId(fileEntry.getFileEntryId());
-			}
 
 			return dossierFilePersistence.update(newDossierFile);
 		} else {
 			dossierFile.setFormReport(jrxmlTemplate);
 			dossierFile.setFormData(formData);
 			dossierFile.setIsNew(true);
-			if (fileEntry != null && fileEntry.getFileEntryId() > 0) {
-				dossierFile.setFileEntryId(fileEntry.getFileEntryId());
-			}
 
 			return dossierFilePersistence.update(dossierFile);
 		}
@@ -704,7 +698,6 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			jrxmlTemplate = dossierPart.getFormReport();
 		}
 		// NEW_DOSSIER
-		FileEntry fileEntry = null;
 		try {
 			
 			ServiceContext serviceContextFile = new ServiceContext();
@@ -717,7 +710,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 
 			DossierFileUtils fileUtils = new DossierFileUtils();
 
-			fileEntry = fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
+			fileUtils.uploadFileEntry(userId, groupId, formData, "FORM_FILE_DATA_STORE",
 					serviceContextFile);
 
 		} catch (Exception e) {
@@ -746,9 +739,6 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			dossierFile.setFormReport(jrxmlTemplate);
 			dossierFile.setFormData(formData);
 			newDossierFile.setOriginal(true);
-			if (fileEntry != null && fileEntry.getFileEntryId() > 0) {
-				newDossierFile.setFileEntryId(fileEntry.getFileEntryId());
-			}
 
 			_log.info("SEND TO CREATED NEW DOSSIER FILE 111: "+(System.currentTimeMillis() - now));
 			return dossierFilePersistence.update(newDossierFile);
@@ -756,9 +746,6 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			dossierFile.setFormReport(jrxmlTemplate);
 			dossierFile.setFormData(formData);
 			dossierFile.setIsNew(true);
-			if (fileEntry != null && fileEntry.getFileEntryId() > 0) {
-				dossierFile.setFileEntryId(fileEntry.getFileEntryId());
-			}
 
 			_log.info("SEND TO CREATED UPDATE DOSSIER FILE 2222: "+(System.currentTimeMillis() - now));
 			return dossierFilePersistence.update(dossierFile);
