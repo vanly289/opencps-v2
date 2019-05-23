@@ -83,7 +83,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 			{ "remark", Types.VARCHAR },
 			{ "inputSheetId", Types.BIGINT },
 			{ "bookId", Types.BIGINT },
-			{ "purchaserId", Types.VARCHAR },
+			{ "purchaserId", Types.BIGINT },
 			{ "corporationId", Types.BIGINT },
 			{ "issuingStatus", Types.BIGINT },
 			{ "clearingStatus", Types.BIGINT },
@@ -121,7 +121,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 		TABLE_COLUMNS_MAP.put("remark", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("inputSheetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("bookId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("purchaserId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("purchaserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("corporationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("issuingStatus", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("clearingStatus", Types.BIGINT);
@@ -137,7 +137,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_inputstampbookdetails (id LONG not null primary key,mtCore LONG,stampSerialNo VARCHAR(75) null,sequenceNo LONG,dossierId LONG,certificateId LONG,certificateNumber VARCHAR(75) null,certificateDate DATE null,vehicleRecordId LONG,frameNo VARCHAR(75) null,BoxNo VARCHAR(75) null,vinNo VARCHAR(75) null,engineNo VARCHAR(75) null,qrCode VARCHAR(75) null,copies LONG,markupFulfill LONG,replacedSerialNo VARCHAR(75) null,remark VARCHAR(75) null,inputSheetId LONG,bookId LONG,purchaserId VARCHAR(75) null,corporationId LONG,issuingStatus LONG,clearingStatus LONG,stampStatus LONG,issuingDate DATE null,printingDate DATE null,noticeofLostDate DATE null,noticeofCancelDate DATE null,noticeofReturnDate DATE null,clearingDate DATE null,clearingAdvancePaymentID LONG,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_inputstampbookdetails (id LONG not null primary key,mtCore LONG,stampSerialNo VARCHAR(75) null,sequenceNo LONG,dossierId LONG,certificateId LONG,certificateNumber VARCHAR(75) null,certificateDate DATE null,vehicleRecordId LONG,frameNo VARCHAR(75) null,BoxNo VARCHAR(75) null,vinNo VARCHAR(75) null,engineNo VARCHAR(75) null,qrCode VARCHAR(75) null,copies LONG,markupFulfill LONG,replacedSerialNo VARCHAR(75) null,remark VARCHAR(75) null,inputSheetId LONG,bookId LONG,purchaserId LONG,corporationId LONG,issuingStatus LONG,clearingStatus LONG,stampStatus LONG,issuingDate DATE null,printingDate DATE null,noticeofLostDate DATE null,noticeofCancelDate DATE null,noticeofReturnDate DATE null,clearingDate DATE null,clearingAdvancePaymentID LONG,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_inputstampbookdetails";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrInputStampbookDetails.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_inputstampbookdetails.modifyDate DESC";
@@ -366,7 +366,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 			setBookId(bookId);
 		}
 
-		String purchaserId = (String)attributes.get("purchaserId");
+		Long purchaserId = (Long)attributes.get("purchaserId");
 
 		if (purchaserId != null) {
 			setPurchaserId(purchaserId);
@@ -792,17 +792,12 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	}
 
 	@Override
-	public String getPurchaserId() {
-		if (_purchaserId == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _purchaserId;
-		}
+	public long getPurchaserId() {
+		return _purchaserId;
 	}
 
 	@Override
-	public void setPurchaserId(String purchaserId) {
+	public void setPurchaserId(long purchaserId) {
 		_purchaserId = purchaserId;
 	}
 
@@ -1222,12 +1217,6 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 
 		vrInputStampbookDetailsCacheModel.purchaserId = getPurchaserId();
 
-		String purchaserId = vrInputStampbookDetailsCacheModel.purchaserId;
-
-		if ((purchaserId != null) && (purchaserId.length() == 0)) {
-			vrInputStampbookDetailsCacheModel.purchaserId = null;
-		}
-
 		vrInputStampbookDetailsCacheModel.corporationId = getCorporationId();
 
 		vrInputStampbookDetailsCacheModel.issuingStatus = getIssuingStatus();
@@ -1579,7 +1568,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	private long _bookId;
 	private long _originalBookId;
 	private boolean _setOriginalBookId;
-	private String _purchaserId;
+	private long _purchaserId;
 	private long _corporationId;
 	private long _originalCorporationId;
 	private boolean _setOriginalCorporationId;

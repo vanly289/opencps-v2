@@ -356,15 +356,14 @@ public interface VRInputStampbookDetailsModel extends BaseModel<VRInputStampbook
 	 *
 	 * @return the purchaser ID of this vr input stampbook details
 	 */
-	@AutoEscape
-	public String getPurchaserId();
+	public long getPurchaserId();
 
 	/**
 	 * Sets the purchaser ID of this vr input stampbook details.
 	 *
 	 * @param purchaserId the purchaser ID of this vr input stampbook details
 	 */
-	public void setPurchaserId(String purchaserId);
+	public void setPurchaserId(long purchaserId);
 
 	/**
 	 * Returns the corporation ID of this vr input stampbook details.

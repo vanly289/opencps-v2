@@ -219,7 +219,7 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 			setBookId(bookId);
 		}
 
-		String purchaserId = (String)attributes.get("purchaserId");
+		Long purchaserId = (Long)attributes.get("purchaserId");
 
 		if (purchaserId != null) {
 			setPurchaserId(purchaserId);
@@ -398,16 +398,6 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 	@Override
 	public java.lang.String getFrameNo() {
 		return _vrInputStampbookDetails.getFrameNo();
-	}
-
-	/**
-	* Returns the purchaser ID of this vr input stampbook details.
-	*
-	* @return the purchaser ID of this vr input stampbook details
-	*/
-	@Override
-	public java.lang.String getPurchaserId() {
-		return _vrInputStampbookDetails.getPurchaserId();
 	}
 
 	/**
@@ -688,6 +678,16 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 	@Override
 	public long getPrimaryKey() {
 		return _vrInputStampbookDetails.getPrimaryKey();
+	}
+
+	/**
+	* Returns the purchaser ID of this vr input stampbook details.
+	*
+	* @return the purchaser ID of this vr input stampbook details
+	*/
+	@Override
+	public long getPurchaserId() {
+		return _vrInputStampbookDetails.getPurchaserId();
 	}
 
 	/**
@@ -1012,7 +1012,7 @@ public class VRInputStampbookDetailsWrapper implements VRInputStampbookDetails,
 	* @param purchaserId the purchaser ID of this vr input stampbook details
 	*/
 	@Override
-	public void setPurchaserId(java.lang.String purchaserId) {
+	public void setPurchaserId(long purchaserId) {
 		_vrInputStampbookDetails.setPurchaserId(purchaserId);
 	}
 
