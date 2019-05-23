@@ -89,6 +89,13 @@ public class VRProductionPlantLocalServiceWrapper
 		return _vrProductionPlantLocalService.fetchVRProductionPlant(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductionPlant findByF_MT_APP_FORM_ID(
+		long mtCore, long applicantProfileId, long registrationFormId) {
+		return _vrProductionPlantLocalService.findByF_MT_APP_FORM_ID(mtCore,
+			applicantProfileId, registrationFormId);
+	}
+
 	/**
 	* Returns the vr production plant with the primary key.
 	*

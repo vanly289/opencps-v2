@@ -92,6 +92,13 @@ public class VRProductionPlantLocalServiceUtil {
 		return getService().fetchVRProductionPlant(id);
 	}
 
+	public static com.fds.vr.business.model.VRProductionPlant findByF_MT_APP_FORM_ID(
+		long mtCore, long applicantProfileId, long registrationFormId) {
+		return getService()
+				   .findByF_MT_APP_FORM_ID(mtCore, applicantProfileId,
+			registrationFormId);
+	}
+
 	/**
 	* Returns the vr production plant with the primary key.
 	*

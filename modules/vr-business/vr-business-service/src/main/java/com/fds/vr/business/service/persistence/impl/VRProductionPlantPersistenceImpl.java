@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -8355,6 +8356,281 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 		"vrProductionPlant.productionPlantName = ?";
 	private static final String _FINDER_COLUMN_PRODUCTIONPLANTNAME_PRODUCTIONPLANTNAME_3 =
 		"(vrProductionPlant.productionPlantName IS NULL OR vrProductionPlant.productionPlantName = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID = new FinderPath(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
+			VRProductionPlantModelImpl.FINDER_CACHE_ENABLED,
+			VRProductionPlantImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByF_MT_APP_FORM_ID",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			VRProductionPlantModelImpl.MTCORE_COLUMN_BITMASK |
+			VRProductionPlantModelImpl.APPLICANTPROFILEID_COLUMN_BITMASK |
+			VRProductionPlantModelImpl.REGISTRATIONFORMID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_F_MT_APP_FORM_ID = new FinderPath(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
+			VRProductionPlantModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByF_MT_APP_FORM_ID",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns the vr production plant where mtCore = &#63; and applicantProfileId = &#63; and registrationFormId = &#63; or throws a {@link NoSuchVRProductionPlantException} if it could not be found.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantProfileId the applicant profile ID
+	 * @param registrationFormId the registration form ID
+	 * @return the matching vr production plant
+	 * @throws NoSuchVRProductionPlantException if a matching vr production plant could not be found
+	 */
+	@Override
+	public VRProductionPlant findByF_MT_APP_FORM_ID(long mtCore,
+		long applicantProfileId, long registrationFormId)
+		throws NoSuchVRProductionPlantException {
+		VRProductionPlant vrProductionPlant = fetchByF_MT_APP_FORM_ID(mtCore,
+				applicantProfileId, registrationFormId);
+
+		if (vrProductionPlant == null) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("mtCore=");
+			msg.append(mtCore);
+
+			msg.append(", applicantProfileId=");
+			msg.append(applicantProfileId);
+
+			msg.append(", registrationFormId=");
+			msg.append(registrationFormId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchVRProductionPlantException(msg.toString());
+		}
+
+		return vrProductionPlant;
+	}
+
+	/**
+	 * Returns the vr production plant where mtCore = &#63; and applicantProfileId = &#63; and registrationFormId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantProfileId the applicant profile ID
+	 * @param registrationFormId the registration form ID
+	 * @return the matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	 */
+	@Override
+	public VRProductionPlant fetchByF_MT_APP_FORM_ID(long mtCore,
+		long applicantProfileId, long registrationFormId) {
+		return fetchByF_MT_APP_FORM_ID(mtCore, applicantProfileId,
+			registrationFormId, true);
+	}
+
+	/**
+	 * Returns the vr production plant where mtCore = &#63; and applicantProfileId = &#63; and registrationFormId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantProfileId the applicant profile ID
+	 * @param registrationFormId the registration form ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	 */
+	@Override
+	public VRProductionPlant fetchByF_MT_APP_FORM_ID(long mtCore,
+		long applicantProfileId, long registrationFormId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] {
+				mtCore, applicantProfileId, registrationFormId
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID,
+					finderArgs, this);
+		}
+
+		if (result instanceof VRProductionPlant) {
+			VRProductionPlant vrProductionPlant = (VRProductionPlant)result;
+
+			if ((mtCore != vrProductionPlant.getMtCore()) ||
+					(applicantProfileId != vrProductionPlant.getApplicantProfileId()) ||
+					(registrationFormId != vrProductionPlant.getRegistrationFormId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_SELECT_VRPRODUCTIONPLANT_WHERE);
+
+			query.append(_FINDER_COLUMN_F_MT_APP_FORM_ID_MTCORE_2);
+
+			query.append(_FINDER_COLUMN_F_MT_APP_FORM_ID_APPLICANTPROFILEID_2);
+
+			query.append(_FINDER_COLUMN_F_MT_APP_FORM_ID_REGISTRATIONFORMID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(mtCore);
+
+				qPos.add(applicantProfileId);
+
+				qPos.add(registrationFormId);
+
+				List<VRProductionPlant> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"VRProductionPlantPersistenceImpl.fetchByF_MT_APP_FORM_ID(long, long, long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					VRProductionPlant vrProductionPlant = list.get(0);
+
+					result = vrProductionPlant;
+
+					cacheResult(vrProductionPlant);
+
+					if ((vrProductionPlant.getMtCore() != mtCore) ||
+							(vrProductionPlant.getApplicantProfileId() != applicantProfileId) ||
+							(vrProductionPlant.getRegistrationFormId() != registrationFormId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID,
+							finderArgs, vrProductionPlant);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (VRProductionPlant)result;
+		}
+	}
+
+	/**
+	 * Removes the vr production plant where mtCore = &#63; and applicantProfileId = &#63; and registrationFormId = &#63; from the database.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantProfileId the applicant profile ID
+	 * @param registrationFormId the registration form ID
+	 * @return the vr production plant that was removed
+	 */
+	@Override
+	public VRProductionPlant removeByF_MT_APP_FORM_ID(long mtCore,
+		long applicantProfileId, long registrationFormId)
+		throws NoSuchVRProductionPlantException {
+		VRProductionPlant vrProductionPlant = findByF_MT_APP_FORM_ID(mtCore,
+				applicantProfileId, registrationFormId);
+
+		return remove(vrProductionPlant);
+	}
+
+	/**
+	 * Returns the number of vr production plants where mtCore = &#63; and applicantProfileId = &#63; and registrationFormId = &#63;.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantProfileId the applicant profile ID
+	 * @param registrationFormId the registration form ID
+	 * @return the number of matching vr production plants
+	 */
+	@Override
+	public int countByF_MT_APP_FORM_ID(long mtCore, long applicantProfileId,
+		long registrationFormId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_F_MT_APP_FORM_ID;
+
+		Object[] finderArgs = new Object[] {
+				mtCore, applicantProfileId, registrationFormId
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_VRPRODUCTIONPLANT_WHERE);
+
+			query.append(_FINDER_COLUMN_F_MT_APP_FORM_ID_MTCORE_2);
+
+			query.append(_FINDER_COLUMN_F_MT_APP_FORM_ID_APPLICANTPROFILEID_2);
+
+			query.append(_FINDER_COLUMN_F_MT_APP_FORM_ID_REGISTRATIONFORMID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(mtCore);
+
+				qPos.add(applicantProfileId);
+
+				qPos.add(registrationFormId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_F_MT_APP_FORM_ID_MTCORE_2 = "vrProductionPlant.mtCore = ? AND ";
+	private static final String _FINDER_COLUMN_F_MT_APP_FORM_ID_APPLICANTPROFILEID_2 =
+		"vrProductionPlant.applicantProfileId = ? AND ";
+	private static final String _FINDER_COLUMN_F_MT_APP_FORM_ID_REGISTRATIONFORMID_2 =
+		"vrProductionPlant.registrationFormId = ?";
 
 	public VRProductionPlantPersistenceImpl() {
 		setModelClass(VRProductionPlant.class);
@@ -8370,6 +8646,13 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 		entityCache.putResult(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
 			VRProductionPlantImpl.class, vrProductionPlant.getPrimaryKey(),
 			vrProductionPlant);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID,
+			new Object[] {
+				vrProductionPlant.getMtCore(),
+				vrProductionPlant.getApplicantProfileId(),
+				vrProductionPlant.getRegistrationFormId()
+			}, vrProductionPlant);
 
 		vrProductionPlant.resetOriginalValues();
 	}
@@ -8424,6 +8707,9 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((VRProductionPlantModelImpl)vrProductionPlant,
+			true);
 	}
 
 	@Override
@@ -8434,6 +8720,50 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 		for (VRProductionPlant vrProductionPlant : vrProductionPlants) {
 			entityCache.removeResult(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
 				VRProductionPlantImpl.class, vrProductionPlant.getPrimaryKey());
+
+			clearUniqueFindersCache((VRProductionPlantModelImpl)vrProductionPlant,
+				true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		VRProductionPlantModelImpl vrProductionPlantModelImpl) {
+		Object[] args = new Object[] {
+				vrProductionPlantModelImpl.getMtCore(),
+				vrProductionPlantModelImpl.getApplicantProfileId(),
+				vrProductionPlantModelImpl.getRegistrationFormId()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_F_MT_APP_FORM_ID, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID, args,
+			vrProductionPlantModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		VRProductionPlantModelImpl vrProductionPlantModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					vrProductionPlantModelImpl.getMtCore(),
+					vrProductionPlantModelImpl.getApplicantProfileId(),
+					vrProductionPlantModelImpl.getRegistrationFormId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_F_MT_APP_FORM_ID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID, args);
+		}
+
+		if ((vrProductionPlantModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					vrProductionPlantModelImpl.getOriginalMtCore(),
+					vrProductionPlantModelImpl.getOriginalApplicantProfileId(),
+					vrProductionPlantModelImpl.getOriginalRegistrationFormId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_F_MT_APP_FORM_ID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID, args);
 		}
 	}
 
@@ -8882,6 +9212,9 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 		entityCache.putResult(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
 			VRProductionPlantImpl.class, vrProductionPlant.getPrimaryKey(),
 			vrProductionPlant, false);
+
+		clearUniqueFindersCache(vrProductionPlantModelImpl, false);
+		cacheUniqueFindersCache(vrProductionPlantModelImpl);
 
 		vrProductionPlant.resetOriginalValues();
 

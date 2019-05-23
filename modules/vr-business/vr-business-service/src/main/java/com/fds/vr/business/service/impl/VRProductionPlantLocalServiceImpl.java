@@ -157,6 +157,10 @@ public class VRProductionPlantLocalServiceImpl
 	public List<VRProductionPlant> findByproductionPlantName(long mtCore, long applicantProfileId, String productionPlantName){
 		return vrProductionPlantPersistence.findByproductionPlantName(mtCore, applicantProfileId, productionPlantName);
 	}
+
+	public VRProductionPlant findByF_MT_APP_FORM_ID(long mtCore, long applicantProfileId, long registrationFormId){
+		return vrProductionPlantPersistence.fetchByF_MT_APP_FORM_ID(mtCore, applicantProfileId, registrationFormId);
+	}
 	
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantLocalServiceImpl.class);
 

@@ -177,8 +177,9 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	public static final long PRODUCTIONPLANTREPRESENTATIVE_COLUMN_BITMASK = 256L;
 	public static final long PRODUCTIONPLANTSTATUS_COLUMN_BITMASK = 512L;
 	public static final long PRODUCTIONPLANTTYPE_COLUMN_BITMASK = 1024L;
-	public static final long REGISTRATIONID_COLUMN_BITMASK = 2048L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 4096L;
+	public static final long REGISTRATIONFORMID_COLUMN_BITMASK = 2048L;
+	public static final long REGISTRATIONID_COLUMN_BITMASK = 4096L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 8192L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductionPlant"));
 
@@ -1157,7 +1158,19 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 	@Override
 	public void setRegistrationFormId(long registrationFormId) {
+		_columnBitmask |= REGISTRATIONFORMID_COLUMN_BITMASK;
+
+		if (!_setOriginalRegistrationFormId) {
+			_setOriginalRegistrationFormId = true;
+
+			_originalRegistrationFormId = _registrationFormId;
+		}
+
 		_registrationFormId = registrationFormId;
+	}
+
+	public long getOriginalRegistrationFormId() {
+		return _originalRegistrationFormId;
 	}
 
 	@Override
@@ -1398,6 +1411,10 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		vrProductionPlantModelImpl._originalRegistrationId = vrProductionPlantModelImpl._registrationId;
 
 		vrProductionPlantModelImpl._setOriginalRegistrationId = false;
+
+		vrProductionPlantModelImpl._originalRegistrationFormId = vrProductionPlantModelImpl._registrationFormId;
+
+		vrProductionPlantModelImpl._setOriginalRegistrationFormId = false;
 
 		vrProductionPlantModelImpl._originalApplicantProfileId = vrProductionPlantModelImpl._applicantProfileId;
 
@@ -2045,6 +2062,8 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	private long _originalRegistrationId;
 	private boolean _setOriginalRegistrationId;
 	private long _registrationFormId;
+	private long _originalRegistrationFormId;
+	private boolean _setOriginalRegistrationFormId;
 	private long _applicantProfileId;
 	private long _originalApplicantProfileId;
 	private boolean _setOriginalApplicantProfileId;

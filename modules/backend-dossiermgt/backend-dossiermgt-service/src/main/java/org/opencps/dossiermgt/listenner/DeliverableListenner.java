@@ -31,7 +31,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 			_log.info("====businessTypeCode====" + businessTypeCode + "==businessResult==" + businessResult);
 			
 			//Process update VR_COP
-			ResultDeliverableCOPUtils.updateVRCOPBusiness(model, mtCore);
+			//ResultDeliverableCOPUtils.updateVRCOPBusiness(model, mtCore);
 			
 		} catch (Exception e) {
 			_log.error(e);
@@ -53,7 +53,7 @@ public class DeliverableListenner extends BaseModelListener<Deliverable> {
 			_log.info("====businessTypeCode====" + businessTypeCode + "==businessResult==" + businessResult);
 			
 			//Process update VR_COP
-			ResultDeliverableCOPUtils.updateVRCOPBusiness(model, mtCore);
+			//ResultDeliverableCOPUtils.updateVRCOPBusiness(model, mtCore);
 			
 		} catch (Exception e) {
 			_log.error(e);
