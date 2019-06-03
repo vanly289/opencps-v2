@@ -154,9 +154,9 @@ public class StatisticManagementImpl implements StatisticManagement {
 
 		try {
 
-			if (!auth.isAuth(serviceContext)) {
-				throw new UnauthenticationException();
-			}
+//			if (!auth.isAuth(serviceContext)) {
+//				throw new UnauthenticationException();
+//			}
 
 			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
