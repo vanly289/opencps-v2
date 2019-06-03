@@ -2435,6 +2435,66 @@ public interface DossierFilePersistence extends BasePersistence<DossierFile> {
 		java.lang.String[] fileTemplateNos);
 
 	/**
+	* Returns the dossier file where dossierId = &#63; and referenceUid = &#63; and dossierActionId = &#63; or throws a {@link NoSuchDossierFileException} if it could not be found.
+	*
+	* @param dossierId the dossier ID
+	* @param referenceUid the reference uid
+	* @param dossierActionId the dossier action ID
+	* @return the matching dossier file
+	* @throws NoSuchDossierFileException if a matching dossier file could not be found
+	*/
+	public DossierFile findByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId)
+		throws NoSuchDossierFileException;
+
+	/**
+	* Returns the dossier file where dossierId = &#63; and referenceUid = &#63; and dossierActionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param dossierId the dossier ID
+	* @param referenceUid the reference uid
+	* @param dossierActionId the dossier action ID
+	* @return the matching dossier file, or <code>null</code> if a matching dossier file could not be found
+	*/
+	public DossierFile fetchByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId);
+
+	/**
+	* Returns the dossier file where dossierId = &#63; and referenceUid = &#63; and dossierActionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param dossierId the dossier ID
+	* @param referenceUid the reference uid
+	* @param dossierActionId the dossier action ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching dossier file, or <code>null</code> if a matching dossier file could not be found
+	*/
+	public DossierFile fetchByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the dossier file where dossierId = &#63; and referenceUid = &#63; and dossierActionId = &#63; from the database.
+	*
+	* @param dossierId the dossier ID
+	* @param referenceUid the reference uid
+	* @param dossierActionId the dossier action ID
+	* @return the dossier file that was removed
+	*/
+	public DossierFile removeByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId)
+		throws NoSuchDossierFileException;
+
+	/**
+	* Returns the number of dossier files where dossierId = &#63; and referenceUid = &#63; and dossierActionId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param referenceUid the reference uid
+	* @param dossierActionId the dossier action ID
+	* @return the number of matching dossier files
+	*/
+	public int countByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId);
+
+	/**
 	* Caches the dossier file in the entity cache if it is enabled.
 	*
 	* @param dossierFile the dossier file

@@ -353,14 +353,14 @@ public class DossierFileLocalServiceWrapper implements DossierFileLocalService,
 		java.lang.String fileTemplateNo, java.lang.String displayName,
 		java.lang.String sourceFileName, long fileSize,
 		java.io.InputStream inputStream, java.lang.String fileType,
-		java.lang.String isSync,
+		java.lang.String isSync, long dossierActionId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dossierFileLocalService.addDossierFile(groupId, dossierId,
 			referenceUid, dossierTemplateNo, dossierPartNo, fileTemplateNo,
 			displayName, sourceFileName, fileSize, inputStream, fileType,
-			isSync, serviceContext);
+			isSync, dossierActionId, serviceContext);
 	}
 
 	/**
@@ -483,6 +483,13 @@ public class DossierFileLocalServiceWrapper implements DossierFileLocalService,
 	}
 
 	@Override
+	public org.opencps.dossiermgt.model.DossierFile getByF_DID_REF_DAID(
+		long dossierId, java.lang.String referenceUid, long dossierActionId) {
+		return _dossierFileLocalService.getByF_DID_REF_DAID(dossierId,
+			referenceUid, dossierActionId);
+	}
+
+	@Override
 	public org.opencps.dossiermgt.model.DossierFile getByFileEntryId(
 		long fileEntryId) {
 		return _dossierFileLocalService.getByFileEntryId(fileEntryId);
@@ -601,13 +608,13 @@ public class DossierFileLocalServiceWrapper implements DossierFileLocalService,
 
 	@Override
 	public org.opencps.dossiermgt.model.DossierFile updateFormData(
-		long groupId, long dossierId, java.lang.String referenceUid,
-		java.lang.String formData,
+		long groupId, long dossierId, long dossierActionId,
+		java.lang.String referenceUid, java.lang.String formData,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dossierFileLocalService.updateFormData(groupId, dossierId,
-			referenceUid, formData, serviceContext);
+			dossierActionId, referenceUid, formData, serviceContext);
 	}
 
 	@Override

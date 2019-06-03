@@ -490,7 +490,7 @@ public interface DossierManagement {
 			@PathParam("id") String id);
 
 	@GET
-	@Path("/COP/finished")
+	@Path("/{serviceCode}/finished")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	@ApiOperation(value = "Get the detail of Dossier by its id (or referenceId)", response = DossierDetailModel.class)
 	@ApiResponses(value = {
@@ -501,6 +501,7 @@ public interface DossierManagement {
 
 	public Response getFormDataByDossierFinished(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, @QueryParam("applicantIdNo") String applicantIdNo,
-			@QueryParam("registrationId") String registrationId, @QueryParam("fileTemplateNo") String fileTemplateNo);
+			@Context ServiceContext serviceContext, @PathParam("serviceCode") String serviceCode,
+			@QueryParam("applicantIdNo") String applicantIdNo, @QueryParam("registrationId") String registrationId,
+			@QueryParam("fileTemplateNo") String fileTemplateNo);
 }

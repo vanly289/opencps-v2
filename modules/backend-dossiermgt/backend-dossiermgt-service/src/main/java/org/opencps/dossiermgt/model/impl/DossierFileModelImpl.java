@@ -95,7 +95,8 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 			{ "formScript", Types.VARCHAR },
 			{ "formReport", Types.VARCHAR },
 			{ "formSchema", Types.VARCHAR },
-			{ "deliverableCode", Types.VARCHAR }
+			{ "deliverableCode", Types.VARCHAR },
+			{ "dossierActionId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -127,9 +128,10 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		TABLE_COLUMNS_MAP.put("formReport", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("formSchema", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("deliverableCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierActionId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table opencps_dossierfile (uuid_ VARCHAR(75) null,dossierFileId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dossierId LONG,referenceUid VARCHAR(75) null,dossierTemplateNo VARCHAR(75) null,dossierPartNo VARCHAR(75) null,dossierPartType INTEGER,fileTemplateNo VARCHAR(75) null,displayName VARCHAR(75) null,formData VARCHAR(75) null,fileEntryId LONG,original BOOLEAN,eForm BOOLEAN,isNew BOOLEAN,removed BOOLEAN,signCheck INTEGER,signInfo VARCHAR(75) null,formScript VARCHAR(75) null,formReport VARCHAR(75) null,formSchema VARCHAR(75) null,deliverableCode VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table opencps_dossierfile (uuid_ VARCHAR(75) null,dossierFileId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dossierId LONG,referenceUid VARCHAR(75) null,dossierTemplateNo VARCHAR(75) null,dossierPartNo VARCHAR(75) null,dossierPartType INTEGER,fileTemplateNo VARCHAR(75) null,displayName VARCHAR(75) null,formData VARCHAR(75) null,fileEntryId LONG,original BOOLEAN,eForm BOOLEAN,isNew BOOLEAN,removed BOOLEAN,signCheck INTEGER,signInfo VARCHAR(75) null,formScript VARCHAR(75) null,formReport VARCHAR(75) null,formSchema VARCHAR(75) null,deliverableCode VARCHAR(75) null,dossierActionId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table opencps_dossierfile";
 	public static final String ORDER_BY_JPQL = " ORDER BY dossierFile.modifiedDate DESC, dossierFile.dossierPartNo ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY opencps_dossierfile.modifiedDate DESC, opencps_dossierfile.dossierPartNo ASC";
@@ -147,17 +149,18 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long DELIVERABLECODE_COLUMN_BITMASK = 2L;
-	public static final long DOSSIERID_COLUMN_BITMASK = 4L;
-	public static final long DOSSIERPARTNO_COLUMN_BITMASK = 8L;
-	public static final long DOSSIERPARTTYPE_COLUMN_BITMASK = 16L;
-	public static final long FILEENTRYID_COLUMN_BITMASK = 32L;
-	public static final long FILETEMPLATENO_COLUMN_BITMASK = 64L;
-	public static final long GROUPID_COLUMN_BITMASK = 128L;
-	public static final long ISNEW_COLUMN_BITMASK = 256L;
-	public static final long REFERENCEUID_COLUMN_BITMASK = 512L;
-	public static final long REMOVED_COLUMN_BITMASK = 1024L;
-	public static final long UUID_COLUMN_BITMASK = 2048L;
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 4096L;
+	public static final long DOSSIERACTIONID_COLUMN_BITMASK = 4L;
+	public static final long DOSSIERID_COLUMN_BITMASK = 8L;
+	public static final long DOSSIERPARTNO_COLUMN_BITMASK = 16L;
+	public static final long DOSSIERPARTTYPE_COLUMN_BITMASK = 32L;
+	public static final long FILEENTRYID_COLUMN_BITMASK = 64L;
+	public static final long FILETEMPLATENO_COLUMN_BITMASK = 128L;
+	public static final long GROUPID_COLUMN_BITMASK = 256L;
+	public static final long ISNEW_COLUMN_BITMASK = 512L;
+	public static final long REFERENCEUID_COLUMN_BITMASK = 1024L;
+	public static final long REMOVED_COLUMN_BITMASK = 2048L;
+	public static final long UUID_COLUMN_BITMASK = 4096L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8192L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(org.opencps.backend.dossiermgt.service.util.ServiceProps.get(
 				"lock.expiration.time.org.opencps.dossiermgt.model.DossierFile"));
 
@@ -225,6 +228,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		attributes.put("formReport", getFormReport());
 		attributes.put("formSchema", getFormSchema());
 		attributes.put("deliverableCode", getDeliverableCode());
+		attributes.put("dossierActionId", getDossierActionId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -394,6 +398,12 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 
 		if (deliverableCode != null) {
 			setDeliverableCode(deliverableCode);
+		}
+
+		Long dossierActionId = (Long)attributes.get("dossierActionId");
+
+		if (dossierActionId != null) {
+			setDossierActionId(dossierActionId);
 		}
 	}
 
@@ -909,6 +919,28 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 	}
 
 	@Override
+	public long getDossierActionId() {
+		return _dossierActionId;
+	}
+
+	@Override
+	public void setDossierActionId(long dossierActionId) {
+		_columnBitmask |= DOSSIERACTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalDossierActionId) {
+			_setOriginalDossierActionId = true;
+
+			_originalDossierActionId = _dossierActionId;
+		}
+
+		_dossierActionId = dossierActionId;
+	}
+
+	public long getOriginalDossierActionId() {
+		return _originalDossierActionId;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				DossierFile.class.getName()));
@@ -972,6 +1004,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		dossierFileImpl.setFormReport(getFormReport());
 		dossierFileImpl.setFormSchema(getFormSchema());
 		dossierFileImpl.setDeliverableCode(getDeliverableCode());
+		dossierFileImpl.setDossierActionId(getDossierActionId());
 
 		dossierFileImpl.resetOriginalValues();
 
@@ -1080,6 +1113,10 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		dossierFileModelImpl._setOriginalRemoved = false;
 
 		dossierFileModelImpl._originalDeliverableCode = dossierFileModelImpl._deliverableCode;
+
+		dossierFileModelImpl._originalDossierActionId = dossierFileModelImpl._dossierActionId;
+
+		dossierFileModelImpl._setOriginalDossierActionId = false;
 
 		dossierFileModelImpl._columnBitmask = 0;
 	}
@@ -1234,12 +1271,14 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 			dossierFileCacheModel.deliverableCode = null;
 		}
 
+		dossierFileCacheModel.dossierActionId = getDossierActionId();
+
 		return dossierFileCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1295,6 +1334,8 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		sb.append(getFormSchema());
 		sb.append(", deliverableCode=");
 		sb.append(getDeliverableCode());
+		sb.append(", dossierActionId=");
+		sb.append(getDossierActionId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1302,7 +1343,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(88);
 
 		sb.append("<model><model-name>");
 		sb.append("org.opencps.dossiermgt.model.DossierFile");
@@ -1416,6 +1457,10 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 			"<column><column-name>deliverableCode</column-name><column-value><![CDATA[");
 		sb.append(getDeliverableCode());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierActionId</column-name><column-value><![CDATA[");
+		sb.append(getDossierActionId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1473,6 +1518,9 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 	private String _formSchema;
 	private String _deliverableCode;
 	private String _originalDeliverableCode;
+	private long _dossierActionId;
+	private long _originalDossierActionId;
+	private boolean _setOriginalDossierActionId;
 	private long _columnBitmask;
 	private DossierFile _escapedModel;
 }

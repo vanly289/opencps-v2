@@ -73,6 +73,7 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 
 			DossierPart dossierPart = DossierPartLocalServiceUtil.fetchByTemplatePartNo(model.getGroupId(),
 					model.getDossierTemplateNo(), model.getDossierPartNo());
+			_log.info("deliverableType: "+dossierPart.getDeliverableType());
 
 			String deliverableType = dossierPart.getDeliverableType();
 

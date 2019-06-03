@@ -48,12 +48,12 @@ public class DossierFileActionsImpl implements DossierFileActions {
 	@Override
 	public DossierFile addDossierFile(long groupId, long dossierId, String referenceUid, String dossierTemplateNo,
 			String dossierPartNo, String fileTemplateNo, String displayName, String sourceFileName, long fileSize,
-			InputStream inputStream, String fileType, String isSync, ServiceContext serviceContext)
-			throws SystemException, PortalException {
+			InputStream inputStream, String fileType, String isSync, long dossierActionId,
+			ServiceContext serviceContext) throws SystemException, PortalException {
 
 		return DossierFileLocalServiceUtil.addDossierFile(groupId, dossierId, referenceUid, dossierTemplateNo,
 				dossierPartNo, fileTemplateNo, displayName, sourceFileName, fileSize, inputStream, fileType, isSync,
-				serviceContext);
+				dossierActionId, serviceContext);
 	}
 
 	@Override
@@ -135,10 +135,12 @@ public class DossierFileActionsImpl implements DossierFileActions {
 	}
 
 	@Override
-	public DossierFile updateDossierFileFormData(long groupId, long dossierId, String referenceUid, String formData,
-			ServiceContext serviceContext) throws SystemException, PortalException {
+	public DossierFile updateDossierFileFormData(long groupId, long dossierId, long dossierActionId,
+			String referenceUid, String formData, ServiceContext serviceContext)
+			throws SystemException, PortalException {
 
-		return DossierFileLocalServiceUtil.updateFormData(groupId, dossierId, referenceUid, formData, serviceContext);
+		return DossierFileLocalServiceUtil.updateFormData(groupId, dossierId, dossierActionId, referenceUid, formData,
+				serviceContext);
 	}
 
 	@Override
@@ -213,35 +215,33 @@ public class DossierFileActionsImpl implements DossierFileActions {
 			ServiceContext serviceContext) throws SystemException, PortalException {
 		
 		DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(dossierId, referenceUid);
+	
+		// String dossierTemplateNo = StringPool.BLANK;
+
+		String defaultData = StringPool.BLANK;
+
+		if (Validator.isNotNull(dossierFile)) {
+			DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(groupId,
+					dossierFile.getFileTemplateNo());
+
+			defaultData = AutoFillFormData.sampleDataBinding(part.getSampleData(), dossierId, serviceContext);
+		}
+
+		dossierFile = DossierFileLocalServiceUtil.updateFormData(groupId, dossierId, dossierFile.getDossierActionId(),
+				referenceUid, defaultData, serviceContext);
 		
-				
-	
-			// String dossierTemplateNo = StringPool.BLANK;
-	
-			String defaultData = StringPool.BLANK;
-	
-			if (Validator.isNotNull(dossierFile)) {
-				DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(groupId,
-						dossierFile.getFileTemplateNo());
-	
-				defaultData = AutoFillFormData.sampleDataBinding(part.getSampleData(), dossierId, serviceContext);
-			}
-	
-			dossierFile = DossierFileLocalServiceUtil.updateFormData(groupId, dossierId, referenceUid, defaultData,
-					serviceContext);
+		//remove Deliverable
+		
+		String deliverableCode = dossierFile.getDeliverableCode();
+		
+		if (Validator.isNotNull(deliverableCode)) {
 			
-			//remove Deliverable
+			//_log.info("DELETE_deliverable_" + deliverableCode);
 			
-			String deliverableCode = dossierFile.getDeliverableCode();
+			Deliverable deliverable = DeliverableLocalServiceUtil.getByCode(deliverableCode);
 			
-			if (Validator.isNotNull(deliverableCode)) {
-				
-				//_log.info("DELETE_deliverable_" + deliverableCode);
-				
-				Deliverable deliverable = DeliverableLocalServiceUtil.getByCode(deliverableCode);
-				
-				DeliverableLocalServiceUtil.deleteDeliverable(deliverable);
-			}
+			DeliverableLocalServiceUtil.deleteDeliverable(deliverable);
+		}
 
 
 		return dossierFile;

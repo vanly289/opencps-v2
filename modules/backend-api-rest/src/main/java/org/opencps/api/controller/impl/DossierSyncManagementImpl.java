@@ -29,6 +29,7 @@ import org.opencps.auth.api.exception.NotFoundException;
 import org.opencps.auth.api.exception.UnauthenticationException;
 import org.opencps.auth.api.exception.UnauthorizationException;
 import org.opencps.auth.api.keys.ActionKeys;
+import org.opencps.dossiermgt.action.util.ConstantsUtils;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
@@ -283,73 +284,75 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 		}
 
 		// SyncDossierFile
-			if (method == 1) {
+		if (method == 1) {
 				
 				// Need check some case:
 				// 1. Add new file
 				// 2. Remove new file
 				// 3. Update file
 				
-				DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFile(classPK);
+			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFile(classPK);
+			
+			if (dossierFile.getRemoved()) {
 				
-				if (dossierFile.getRemoved()) {
-					
-					//remove file in server
-					long serverGroupId = 55217l;
-					
-					DossierFile dossierServerFile = DossierFileLocalServiceUtil.getByRefAndGroupId(serverGroupId, dossierFile.getReferenceUid());
-					
-					dossierServerFile.setRemoved(true);
-					
-					//update dossierFile
-					DossierFileLocalServiceUtil.updateDossierFile(dossierServerFile);
-					
-					//remove dossierSync
+				//remove file in server
+				//long serverGroupId = 55217l;
+				long serverGroupId = ConstantsUtils.GROUP_CTN;
+				
+				DossierFile dossierServerFile = DossierFileLocalServiceUtil.getByRefAndGroupId(serverGroupId,
+						dossierFile.getReferenceUid());
+
+				dossierServerFile.setRemoved(true);
+				
+				//update dossierFile
+				DossierFileLocalServiceUtil.updateDossierFile(dossierServerFile);
+				
+				//remove dossierSync
+				DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+
+			} else {
+				// TODO add case update file
+				String endPointSyncDossierFile = "dossiers/" + refId + "/files";
+
+				properties.put("referenceUid", dossierFile.getReferenceUid());
+				properties.put("dossierTemplateNo", dossierFile.getDossierTemplateNo());
+				properties.put("dossierPartNo", dossierFile.getDossierPartNo());
+				properties.put("fileTemplateNo", dossierFile.getFileTemplateNo());
+				properties.put("displayName", dossierFile.getDisplayName());
+				properties.put("isSync", StringPool.FALSE);
+				properties.put("formData", dossierFile.getFormData());
+
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
+
+//						properties.put("fileType", fileEntry.getExtension());
+				//LamTV_ Get fileType
+				_log.info("LamTV_fileTypeSync: "+fileEntry.getMimeType());
+				properties.put("fileType", fileEntry.getMimeType());
+
+				File file = getFile(dossierFile.getFileEntryId());
+
+				// TODO review extention file
+				JSONObject resSynFile = rest.callPostFileAPI(groupId, HttpMethods.POST, "application/json",
+						RESTFulConfiguration.SERVER_PATH_BASE, endPointSyncDossierFile, RESTFulConfiguration.SERVER_USER,
+						RESTFulConfiguration.SERVER_PASS, properties, file, serviceContext);
+
+				if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+					// remove DossierSync
 					DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
 
 				} else {
-					// TODO add case update file
-					String endPointSyncDossierFile = "dossiers/" + refId + "/files";
-
-					properties.put("referenceUid", dossierFile.getReferenceUid());
-					properties.put("dossierTemplateNo", dossierFile.getDossierTemplateNo());
-					properties.put("dossierPartNo", dossierFile.getDossierPartNo());
-					properties.put("fileTemplateNo", dossierFile.getFileTemplateNo());
-					properties.put("displayName", dossierFile.getDisplayName());
-					properties.put("isSync", StringPool.FALSE);
-					properties.put("formData", dossierFile.getFormData());
-
-					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
-
-//						properties.put("fileType", fileEntry.getExtension());
-					//LamTV_ Get fileType
-					_log.info("LamTV_fileTypeSync: "+fileEntry.getMimeType());
-					properties.put("fileType", fileEntry.getMimeType());
-
-					File file = getFile(dossierFile.getFileEntryId());
-
-					// TODO review extention file
-					JSONObject resSynFile = rest.callPostFileAPI(groupId, HttpMethods.POST, "application/json",
-							RESTFulConfiguration.SERVER_PATH_BASE, endPointSyncDossierFile, RESTFulConfiguration.SERVER_USER,
-							RESTFulConfiguration.SERVER_PASS, properties, file, serviceContext);
-
-					if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
-						// remove DossierSync
-						DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
-
-					} else {
-						_log.info(resSynFile.get(RESTFulConfiguration.MESSAGE));
-					}
-
+					_log.info(resSynFile.get(RESTFulConfiguration.MESSAGE));
 				}
-				
-
-				// Reset isNew
-				dossierFile.setIsNew(false);
-
-				DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
 
 			}
+			
+
+			// Reset isNew
+			dossierFile.setIsNew(false);
+
+			DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+
+		}
 
 		// SyncAction
 		if (method == 0) {

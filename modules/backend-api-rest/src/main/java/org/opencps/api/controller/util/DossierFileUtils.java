@@ -7,6 +7,7 @@ import java.util.List;
 import org.opencps.api.dossierfile.model.DossierFileModel;
 import org.opencps.api.dossierfile.model.DossierFileSearchResultModel;
 import org.opencps.auth.utils.APIDateTimeUtils;
+import org.opencps.dossiermgt.constants.DossierActionTerm;
 import org.opencps.dossiermgt.constants.DossierFileTerm;
 import org.opencps.dossiermgt.model.DossierFile;
 
@@ -89,6 +90,8 @@ public class DossierFileUtils {
         model.setFormScript(dossierFile.getFormScript());
         model.setFormData(dossierFile.getFormData());
         model.setDossierFileId(dossierFile.getDossierFileId());
+        model.setDossierActionId(dossierFile.getDossierActionId());
+
         return model;
     }
 
@@ -144,7 +147,7 @@ public class DossierFileUtils {
             model.setSignCheck(GetterUtil.getInteger(document.get(DossierFileTerm.SIGN_CHECK)));
             model.setSignInfo(document.get(DossierFileTerm.SIGN_INFO));
             model.setDossierFileId(dossierFileId);
-            model.setDossierId(dossierId);
+            model.setDossierActionId(GetterUtil.getLong(document.get(DossierActionTerm.DOSSIERACTION_ID)));
 
             outputs.add(model);
         }

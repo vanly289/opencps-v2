@@ -87,6 +87,7 @@ public class DossierFileWrapper implements DossierFile,
 		attributes.put("formReport", getFormReport());
 		attributes.put("formSchema", getFormSchema());
 		attributes.put("deliverableCode", getDeliverableCode());
+		attributes.put("dossierActionId", getDossierActionId());
 
 		return attributes;
 	}
@@ -253,6 +254,12 @@ public class DossierFileWrapper implements DossierFile,
 
 		if (deliverableCode != null) {
 			setDeliverableCode(deliverableCode);
+		}
+
+		Long dossierActionId = (Long)attributes.get("dossierActionId");
+
+		if (dossierActionId != null) {
+			setDossierActionId(dossierActionId);
 		}
 	}
 
@@ -592,6 +599,16 @@ public class DossierFileWrapper implements DossierFile,
 	}
 
 	/**
+	* Returns the dossier action ID of this dossier file.
+	*
+	* @return the dossier action ID of this dossier file
+	*/
+	@Override
+	public long getDossierActionId() {
+		return _dossierFile.getDossierActionId();
+	}
+
+	/**
 	* Returns the dossier file ID of this dossier file.
 	*
 	* @return the dossier file ID of this dossier file
@@ -699,6 +716,16 @@ public class DossierFileWrapper implements DossierFile,
 	@Override
 	public void setDisplayName(java.lang.String displayName) {
 		_dossierFile.setDisplayName(displayName);
+	}
+
+	/**
+	* Sets the dossier action ID of this dossier file.
+	*
+	* @param dossierActionId the dossier action ID of this dossier file
+	*/
+	@Override
+	public void setDossierActionId(long dossierActionId) {
+		_dossierFile.setDossierActionId(dossierActionId);
 	}
 
 	/**

@@ -70,7 +70,8 @@ import javax.xml.bind.annotation.XmlType;
     "eForm",
     "formData",
     "formReport",
-    "formScript"
+    "formScript",
+    "dossierActionId"
 })
 @XmlRootElement(name = "DossierFileModel")
 public class DossierFileModel {
@@ -95,8 +96,17 @@ public class DossierFileModel {
 	protected String formData;
     protected String formReport;
     protected String formScript;
-    
-    public String getFormScript() {
+    protected Long dossierActionId;
+
+	public Long getDossierActionId() {
+		return dossierActionId;
+	}
+
+	public void setDossierActionId(Long dossierActionId) {
+		this.dossierActionId = dossierActionId;
+	}
+
+	public String getFormScript() {
 		return formScript;
 	}
 

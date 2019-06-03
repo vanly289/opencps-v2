@@ -284,8 +284,8 @@ public interface DossierFileLocalService extends BaseLocalService,
 		java.lang.String dossierPartNo, java.lang.String fileTemplateNo,
 		java.lang.String displayName, java.lang.String sourceFileName,
 		long fileSize, InputStream inputStream, java.lang.String fileType,
-		java.lang.String isSync, ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		java.lang.String isSync, long dossierActionId,
+		ServiceContext serviceContext) throws PortalException, SystemException;
 
 	/**
 	* Adds the dossier file to the database. Also notifies the appropriate model listeners.
@@ -373,6 +373,10 @@ public interface DossierFileLocalService extends BaseLocalService,
 	public DossierFile getByDeliverableCode(java.lang.String deliverableCode);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DossierFile getByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DossierFile getByFileEntryId(long fileEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -448,8 +452,9 @@ public interface DossierFileLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public DossierFile updateFormData(long groupId, long dossierId,
-		java.lang.String referenceUid, java.lang.String formData,
-		ServiceContext serviceContext) throws PortalException, SystemException;
+		long dossierActionId, java.lang.String referenceUid,
+		java.lang.String formData, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	public DossierFile updateFormDataPlugin(long groupId, long dossierId,
 		java.lang.String referenceUid, java.lang.String formData,

@@ -385,6 +385,7 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 			if (Validator.isNull(referenceUid)) {
 				referenceUid = UUID.randomUUID().toString();
 			}
+			long dossierActionId = dossier.getDossierActionId();
 
 			DataHandler dataHandler = file.getDataHandler();
 
@@ -428,13 +429,13 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 				_log.info("__Start add file at:" + new Date());
 				
 				if (dataHandler != null && dataHandler.getInputStream() != null) {
-					dossierFile = action.addDossierFile(groupId, dossier.getDossierId(), referenceUid, dossierTemplateNo,
-							dossierPartNo, fileTemplateNo, displayName, dataHandler.getName(), 0,
-							dataHandler.getInputStream(), fileType, isSync, serviceContext);
+					dossierFile = action.addDossierFile(groupId, dossier.getDossierId(), referenceUid,
+							dossierTemplateNo, dossierPartNo, fileTemplateNo, displayName, dataHandler.getName(), 0,
+							dataHandler.getInputStream(), fileType, isSync, dossierActionId, serviceContext);
 				} else {
-					dossierFile = action.addDossierFile(groupId, dossier.getDossierId(), referenceUid, dossierTemplateNo,
-							dossierPartNo, fileTemplateNo, displayName, displayName, 0, null, fileType, isSync,
-							serviceContext);
+					dossierFile = action.addDossierFile(groupId, dossier.getDossierId(), referenceUid,
+							dossierTemplateNo, dossierPartNo, fileTemplateNo, displayName, displayName, 0, null,
+							fileType, isSync, dossierActionId, serviceContext);
 				}
 				
 				_log.info("__End add file at:" + new Date());
@@ -703,12 +704,21 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 			}
 
 			DossierFileActions action = new DossierFileActionsImpl();
-			DossierFile dossierFile = action.updateDossierFileFormData(groupId, id, referenceUid, formdata,
-					serviceContext);
-			//_log.info("SEND TO CREATED FILE MODEL 2: "+(System.currentTimeMillis() - now));
-			DossierFileModel result = DossierFileUtils.mappingToDossierFileModel(dossierFile);
-			//_log.info("SEND TO CREATED FILE MODEL 3: "+(System.currentTimeMillis() - now));
-			return Response.status(200).entity(result).build();
+			Dossier dossier = DossierLocalServiceUtil.fetchDossier(id);
+			DossierFile dossierFile = null;
+			if (dossier != null) {
+				dossierFile = action.updateDossierFileFormData(groupId, id, dossier.getDossierActionId(), referenceUid,
+						formdata, serviceContext);
+			}
+			
+			if (dossierFile != null) {
+				//_log.info("SEND TO CREATED FILE MODEL 2: "+(System.currentTimeMillis() - now));
+				DossierFileModel result = DossierFileUtils.mappingToDossierFileModel(dossierFile);
+				//_log.info("SEND TO CREATED FILE MODEL 3: "+(System.currentTimeMillis() - now));
+				return Response.status(200).entity(result).build();
+			} else {
+				return Response.status(500).entity("{error: not create DossierFile}").build();
+			}
 
 		} catch (Exception e) {
 			_log.error(e);

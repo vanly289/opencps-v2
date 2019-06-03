@@ -5,6 +5,7 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.opencps.dossiermgt.constants.DossierActionTerm;
 import org.opencps.dossiermgt.constants.DossierFileTerm;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
@@ -57,6 +58,7 @@ public class DossierFileIndexer extends BaseIndexer<DossierFile> {
 		document.addNumberSortable(DossierFileTerm.FILE_ENTRY_ID, object.getFileEntryId());
 		document.addNumberSortable(DossierFileTerm.DOSSIER_PART_TYPE, object.getDossierPartType());
 		document.addNumberSortable(DossierFileTerm.SIGN_CHECK, object.getSignCheck());
+		document.addNumberSortable(DossierActionTerm.DOSSIERACTION_ID, object.getDossierActionId());
 
 		// add text fields
 		document.addTextSortable(DossierFileTerm.REFERENCE_UID, object.getReferenceUid());

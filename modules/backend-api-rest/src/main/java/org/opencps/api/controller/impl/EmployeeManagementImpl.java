@@ -940,6 +940,7 @@ public class EmployeeManagementImpl implements EmployeeManagement {
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
 
 			List<User> users = UserLocalServiceUtil.getRoleUsers(roleId);
+			_log.info("list user: "+ JSONFactoryUtil.looseSerialize(users));
 			StringBuilder strUserIdList = new StringBuilder();
 			if (users != null && users.size() > 0) {
 				int length = users.size();
