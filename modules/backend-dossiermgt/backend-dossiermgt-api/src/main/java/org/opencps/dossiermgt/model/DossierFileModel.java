@@ -515,6 +515,20 @@ public interface DossierFileModel extends BaseModel<DossierFile>, GroupedModel,
 	 */
 	public void setDeliverableCode(String deliverableCode);
 
+	/**
+	 * Returns the dossier action ID of this dossier file.
+	 *
+	 * @return the dossier action ID of this dossier file
+	 */
+	public long getDossierActionId();
+
+	/**
+	 * Sets the dossier action ID of this dossier file.
+	 *
+	 * @param dossierActionId the dossier action ID of this dossier file
+	 */
+	public void setDossierActionId(long dossierActionId);
+
 	@Override
 	public boolean isNew();
 

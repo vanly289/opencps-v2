@@ -586,6 +586,22 @@ public class VRVehicleTypeCertificateLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleTypeCertificate> findByF_APPNO_EXP_STATUS(
+		java.lang.String applicantIdNo, java.lang.String expiredStatus) {
+		return _vrVehicleTypeCertificateLocalService.findByF_APPNO_EXP_STATUS(applicantIdNo,
+			expiredStatus);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleTypeCertificate> findByF_APPNO_EXP_STATUS(
+		java.lang.String applicantIdNo, java.lang.String[] expiredStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrVehicleTypeCertificateLocalService.findByF_APPNO_EXP_STATUS(applicantIdNo,
+			expiredStatus);
+	}
+
+	@Override
 	public java.util.List<com.fds.vr.business.model.VRVehicleTypeCertificate> findByF_EXP_STATUS(
 		java.lang.String[] expiredStatus)
 		throws com.liferay.portal.kernel.exception.PortalException,

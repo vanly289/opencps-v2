@@ -337,6 +337,10 @@
 		<finder return-type="Collection" name="F_EXP_STATUS">
 			<finder-column name="expiredStatus" arrayable-operator="OR"/>
 		</finder>
+		<finder return-type="Collection" name="F_APPNO_EXP_STATUS">
+			<finder-column name="applicantIdNo" />
+			<finder-column name="expiredStatus" arrayable-operator="OR"/>
+		</finder>
 		<finder return-type="Collection" name="F_APP_VH_EXP">
 			<finder-column name="applicantIdNo" />
 			<finder-column name="vehicleClass" />

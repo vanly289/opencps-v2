@@ -324,6 +324,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 			// binhth index dossierId CTN
 			// TODO
 
+			long now = System.currentTimeMillis();
 			MessageDigest md5 = null;
 
 			byte[] ba = null;
@@ -346,6 +347,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 			dossierIDCTN = formattedDate + HashFunction.hexShort(ba);
 
 			document.addTextSortable(DossierTerm.DOSSIER_ID + "CTN", dossierIDCTN);
+			_log.info("Time DossierIDCTN: "+ (System.currentTimeMillis() - now));
 
 			// Get info cert Number
 			List<String> certNoIndexer = certNoIndexer(dossierId, object.getGroupId());
@@ -366,6 +368,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 				}
 			}
 
+			_log.info("Time certNo: "+ (System.currentTimeMillis() - now));
 			document.addTextSortable(DossierTerm.ENDORSEMENT_DATE, APIDateTimeUtils
 					.convertDateToString(object.getEndorsementDate(), APIDateTimeUtils._NORMAL_PARTTERN));
 			document.addNumberSortable(DossierTerm.ENDORSEMENT_DATE_TIMESTAMP,
@@ -397,7 +400,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 	private List<String> certNoIndexer(long dossierId, long groupId) {
 		List<String> certIndex = new ArrayList<String>();
 		// Get info cert Number
-		List<DossierFile> dossierFileList = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
+		List<DossierFile> dossierFileList = DossierFileLocalServiceUtil.getDossierFilesByD_DP(dossierId, 2);
 		if (dossierFileList != null && dossierFileList.size() > 0) {
 			String templateNo = StringPool.BLANK;
 			String partNo = StringPool.BLANK;
@@ -419,8 +422,7 @@ public class DossierIndexer extends BaseIndexer<Dossier> {
 							if (Validator.isNotNull(deliverableCode)) {
 								Deliverable deli = DeliverableLocalServiceUtil.getByCodeAndState(deliverableCode, "2");
 								if (deli != null) {
-									String formData = StringPool.BLANK;
-									formData = deli.getFormData();
+									String formData = deli.getFormData();
 									try {
 										JSONObject jsonData = JSONFactoryUtil.createJSONObject(formData);
 										String certNo = String.valueOf(jsonData.get("so_chung_chi"));

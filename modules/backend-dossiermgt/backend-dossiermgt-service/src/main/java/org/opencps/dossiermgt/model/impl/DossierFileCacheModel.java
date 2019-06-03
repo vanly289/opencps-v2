@@ -66,7 +66,7 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -122,6 +122,8 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 		sb.append(formSchema);
 		sb.append(", deliverableCode=");
 		sb.append(deliverableCode);
+		sb.append(", dossierActionId=");
+		sb.append(dossierActionId);
 		sb.append("}");
 
 		return sb.toString();
@@ -252,6 +254,8 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 			dossierFileImpl.setDeliverableCode(deliverableCode);
 		}
 
+		dossierFileImpl.setDossierActionId(dossierActionId);
+
 		dossierFileImpl.resetOriginalValues();
 
 		return dossierFileImpl;
@@ -298,6 +302,8 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 		formReport = objectInput.readUTF();
 		formSchema = objectInput.readUTF();
 		deliverableCode = objectInput.readUTF();
+
+		dossierActionId = objectInput.readLong();
 	}
 
 	@Override
@@ -420,6 +426,8 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 		else {
 			objectOutput.writeUTF(deliverableCode);
 		}
+
+		objectOutput.writeLong(dossierActionId);
 	}
 
 	public String uuid;
@@ -449,4 +457,5 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 	public String formReport;
 	public String formSchema;
 	public String deliverableCode;
+	public long dossierActionId;
 }

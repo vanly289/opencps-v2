@@ -2034,12 +2034,12 @@ public class DossierManagementImpl implements DossierManagement {
 
 	@Override
 	public Response getFormDataByDossierFinished(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, String applicantIdNo, String registrationId,
-			String fileTemplateNo) {
+			Locale locale, User user, ServiceContext serviceContext, String serviceCode, String applicantIdNo,
+			String registrationId, String fileTemplateNo) {
 		
 		long groupId = ConstantsUtils.GROUP_CXL;
 		try {
-		Dossier dossier = DossierLocalServiceUtil.getByF_GID_SC_DS_First(groupId, "TT302011BGTVTCOP", "done",
+		Dossier dossier = DossierLocalServiceUtil.getByF_GID_SC_DS_First(groupId, serviceCode, "done",
 				new DossierComparator(false, "finishDate", Date.class));
 			if (dossier != null) {
 				DossierFile dossierFileDN = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(

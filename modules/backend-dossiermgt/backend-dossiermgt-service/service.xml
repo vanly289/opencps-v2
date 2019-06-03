@@ -473,6 +473,7 @@
 		<column name="formReport" type="String" />
 		<column name="formSchema" type="String" />
 		<column name="deliverableCode" type="String"/>
+		<column name="dossierActionId" type="long" />
 
 		<!-- Order -->
 
@@ -562,6 +563,11 @@
 			<finder-column name="dossierId" />
 			<finder-column name="isNew" />
 			<finder-column name="fileTemplateNo" arrayable-operator="OR"/>
+		</finder>
+		<finder return-type="DossierFile" name="F_DID_REF_DAID">
+			<finder-column name="dossierId" />
+			<finder-column name="referenceUid" />
+			<finder-column name="dossierActionId" />
 		</finder>
 	</entity>
 

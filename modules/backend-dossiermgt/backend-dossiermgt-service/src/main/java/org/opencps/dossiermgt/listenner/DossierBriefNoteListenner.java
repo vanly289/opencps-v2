@@ -81,7 +81,8 @@ public class DossierBriefNoteListenner extends BaseModelListener<DossierFile> {
 			
 			Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
 			if (dossier != null) {
-				DossierAction dAction = DossierActionLocalServiceUtil.getByNextActionId(dossierId, 0);
+				//DossierAction dAction = DossierActionLocalServiceUtil.getByNextActionId(dossierId, 0);
+				DossierAction dAction = DossierActionLocalServiceUtil.fetchDossierAction(model.getDossierActionId());
 				String briefNote = StringPool.BLANK;
 				if (dAction != null) {
 					ProcessStep processStep = ProcessStepLocalServiceUtil.fetchBySC_GID(dAction.getStepCode(), groupId,

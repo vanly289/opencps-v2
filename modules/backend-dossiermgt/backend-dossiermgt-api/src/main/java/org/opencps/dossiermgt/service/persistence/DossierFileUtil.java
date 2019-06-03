@@ -3061,6 +3061,86 @@ public class DossierFileUtil {
 	}
 
 	/**
+	* Returns the dossier file where dossierId = &#63; and referenceUid = &#63; and dossierActionId = &#63; or throws a {@link NoSuchDossierFileException} if it could not be found.
+	*
+	* @param dossierId the dossier ID
+	* @param referenceUid the reference uid
+	* @param dossierActionId the dossier action ID
+	* @return the matching dossier file
+	* @throws NoSuchDossierFileException if a matching dossier file could not be found
+	*/
+	public static DossierFile findByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId)
+		throws org.opencps.dossiermgt.exception.NoSuchDossierFileException {
+		return getPersistence()
+				   .findByF_DID_REF_DAID(dossierId, referenceUid,
+			dossierActionId);
+	}
+
+	/**
+	* Returns the dossier file where dossierId = &#63; and referenceUid = &#63; and dossierActionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param dossierId the dossier ID
+	* @param referenceUid the reference uid
+	* @param dossierActionId the dossier action ID
+	* @return the matching dossier file, or <code>null</code> if a matching dossier file could not be found
+	*/
+	public static DossierFile fetchByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId) {
+		return getPersistence()
+				   .fetchByF_DID_REF_DAID(dossierId, referenceUid,
+			dossierActionId);
+	}
+
+	/**
+	* Returns the dossier file where dossierId = &#63; and referenceUid = &#63; and dossierActionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param dossierId the dossier ID
+	* @param referenceUid the reference uid
+	* @param dossierActionId the dossier action ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching dossier file, or <code>null</code> if a matching dossier file could not be found
+	*/
+	public static DossierFile fetchByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByF_DID_REF_DAID(dossierId, referenceUid,
+			dossierActionId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the dossier file where dossierId = &#63; and referenceUid = &#63; and dossierActionId = &#63; from the database.
+	*
+	* @param dossierId the dossier ID
+	* @param referenceUid the reference uid
+	* @param dossierActionId the dossier action ID
+	* @return the dossier file that was removed
+	*/
+	public static DossierFile removeByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId)
+		throws org.opencps.dossiermgt.exception.NoSuchDossierFileException {
+		return getPersistence()
+				   .removeByF_DID_REF_DAID(dossierId, referenceUid,
+			dossierActionId);
+	}
+
+	/**
+	* Returns the number of dossier files where dossierId = &#63; and referenceUid = &#63; and dossierActionId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param referenceUid the reference uid
+	* @param dossierActionId the dossier action ID
+	* @return the number of matching dossier files
+	*/
+	public static int countByF_DID_REF_DAID(long dossierId,
+		java.lang.String referenceUid, long dossierActionId) {
+		return getPersistence()
+				   .countByF_DID_REF_DAID(dossierId, referenceUid,
+			dossierActionId);
+	}
+
+	/**
 	* Caches the dossier file in the entity cache if it is enabled.
 	*
 	* @param dossierFile the dossier file

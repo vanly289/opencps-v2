@@ -1052,10 +1052,10 @@ public class DossierPullScheduler_bk extends BaseSchedulerEntryMessageListener {
 
 			if (Validator.isNull(dossierFile)) {
 				// create dossierFile
-				dossierFile = DossierFileLocalServiceUtil.addDossierFile(desGroupId, dossierId,
-						PortalUUIDUtil.generate(), dossierTemplateNo, part.getPartNo(), part.getFileTemplateNo(),
-						part.getPartName(), StringPool.BLANK, 0, null, StringPool.BLANK, StringPool.FALSE,
-						serviceContext);
+//				dossierFile = DossierFileLocalServiceUtil.addDossierFile(desGroupId, dossierId,
+//						PortalUUIDUtil.generate(), dossierTemplateNo, part.getPartNo(), part.getFileTemplateNo(),
+//						part.getPartName(), StringPool.BLANK, 0, null, StringPool.BLANK, StringPool.FALSE,
+//						serviceContext);
 			}
 
 			dossierFile.setFormData(formData);

@@ -1102,11 +1102,11 @@ public class DossierActionsImpl_bak {
 												}
 												if (Validator.isNull(dossierFile)) {
 
-													dossierFile = actions.addDossierFile(groupId, dossierId,
-															referenceUid, dossier.getDossierTemplateNo(),
-															dossierPart.getPartNo(), fileTemplateNo,
-															dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-															StringPool.BLANK, String.valueOf(false), serviceContext);
+//													dossierFile = actions.addDossierFile(groupId, dossierId,
+//															referenceUid, dossier.getDossierTemplateNo(),
+//															dossierPart.getPartNo(), fileTemplateNo,
+//															dossierPart.getPartName(), StringPool.BLANK, 0L, null,
+//															StringPool.BLANK, String.valueOf(false), serviceContext);
 
 												}
 
@@ -2066,9 +2066,9 @@ public class DossierActionsImpl_bak {
 
 				DossierFileActions actions = new DossierFileActionsImpl();
 
-				dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(), dossierTemplateNo,
-						dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-						StringPool.BLANK, String.valueOf(false), context);
+//				dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(), dossierTemplateNo,
+//						dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(), StringPool.BLANK, 0L, null,
+//						StringPool.BLANK, String.valueOf(false), context);
 
 				_log.info("- ADD DOSSIER_FL		: "
 						+ (System.currentTimeMillis() - now));
@@ -3213,11 +3213,11 @@ public class DossierActionsImpl_bak {
 														new DossierFileComparator(false, "createDate", Date.class));
 
 										if (Validator.isNull(dossierFile)) {
-											dossierFile = actions.addDossierFile(groupId, dossierId,
-													StringPool.BLANK, dossier.getDossierTemplateNo(),
-													dossierPart.getPartNo(), fileTemplateNo,
-													dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-													StringPool.BLANK, String.valueOf(false), serviceContext);
+//											dossierFile = actions.addDossierFile(groupId, dossierId,
+//													StringPool.BLANK, dossier.getDossierTemplateNo(),
+//													dossierPart.getPartNo(), fileTemplateNo,
+//													dossierPart.getPartName(), StringPool.BLANK, 0L, null,
+//													StringPool.BLANK, String.valueOf(false), serviceContext);
 										}
 										docFileReferenceUid = dossierFile.getReferenceUid();
 										dossierFileId = dossierFile.getDossierFileId();

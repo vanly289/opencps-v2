@@ -358,7 +358,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 					if (formCode.startsWith("#")) {
 						
 						formData = _getFormData(groupId, formCode, dossier.getDossierId(), autoRun,
-								dossier.getDossierTemplateNo(), original, serviceContext);
+								dossier.getDossierTemplateNo(), original, dossierActionId, serviceContext);
 						
 						_log.info("formData"+ formData);
 						
@@ -444,7 +444,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 	}
 
 	private String _getFormData(long groupId, String fileTemplateNo, long dossierId, boolean autoRun,
-			String dossierTemplateNo, boolean original, ServiceContext context) {
+			String dossierTemplateNo, boolean original, long dossierActionId, ServiceContext context) {
 
 		_log.info("RUN TO GET FORM DATA");
 
@@ -480,7 +480,8 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 						dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(),
 								dossierTemplateNo, dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(),
-								StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), context);
+								StringPool.BLANK, 0L, null, StringPool.BLANK, String.valueOf(false), dossierActionId,
+								context);
 
 						_log.info("UPDATED DOSSIERFILE");
 
@@ -593,7 +594,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 
 					if (formCode.startsWith("#")) {
 						formData = _getFormData(groupId, formCode, dossier.getDossierId(), autoRun,
-								dossier.getDossierTemplateNo(), original, serviceContext);
+								dossier.getDossierTemplateNo(), original, dossierActionId, serviceContext);
 
 						formReport = _getFormHtml(formCode, dossier.getDossierId());
 					}

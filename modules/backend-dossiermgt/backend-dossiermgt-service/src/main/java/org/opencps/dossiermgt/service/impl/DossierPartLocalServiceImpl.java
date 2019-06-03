@@ -569,11 +569,7 @@ public class DossierPartLocalServiceImpl extends DossierPartLocalServiceBaseImpl
 
 	public DossierPart getByPartTypeEsign(String templateNo,
 			String partNo, int partType, boolean eSign) {
-		try {
-			return dossierPartPersistence.findByTP_NO_PART_ESIGN(templateNo, partNo, partType, eSign);
-		} catch (NoSuchDossierPartException e) {
-			return null;
-		}
+		return dossierPartPersistence.fetchByTP_NO_PART_ESIGN(templateNo, partNo, partType, eSign);
 	}
 
 	public static final String CLASS_NAME = DossierPart.class.getName();

@@ -558,6 +558,20 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 				   .findByExpiredstatusAndServiceCode(expiredStatus, serviceCode);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRVehicleTypeCertificate> findByF_APPNO_EXP_STATUS(
+		java.lang.String applicantIdNo, java.lang.String expiredStatus) {
+		return getService()
+				   .findByF_APPNO_EXP_STATUS(applicantIdNo, expiredStatus);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRVehicleTypeCertificate> findByF_APPNO_EXP_STATUS(
+		java.lang.String applicantIdNo, java.lang.String[] expiredStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByF_APPNO_EXP_STATUS(applicantIdNo, expiredStatus);
+	}
+
 	public static java.util.List<com.fds.vr.business.model.VRVehicleTypeCertificate> findByF_EXP_STATUS(
 		java.lang.String[] expiredStatus)
 		throws com.liferay.portal.kernel.exception.PortalException,

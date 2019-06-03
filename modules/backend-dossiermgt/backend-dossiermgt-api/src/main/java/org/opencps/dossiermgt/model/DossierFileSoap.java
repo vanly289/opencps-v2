@@ -60,6 +60,7 @@ public class DossierFileSoap implements Serializable {
 		soapModel.setFormReport(model.getFormReport());
 		soapModel.setFormSchema(model.getFormSchema());
 		soapModel.setDeliverableCode(model.getDeliverableCode());
+		soapModel.setDossierActionId(model.getDossierActionId());
 
 		return soapModel;
 	}
@@ -344,6 +345,14 @@ public class DossierFileSoap implements Serializable {
 		_deliverableCode = deliverableCode;
 	}
 
+	public long getDossierActionId() {
+		return _dossierActionId;
+	}
+
+	public void setDossierActionId(long dossierActionId) {
+		_dossierActionId = dossierActionId;
+	}
+
 	private String _uuid;
 	private long _dossierFileId;
 	private long _groupId;
@@ -371,4 +380,5 @@ public class DossierFileSoap implements Serializable {
 	private String _formReport;
 	private String _formSchema;
 	private String _deliverableCode;
+	private long _dossierActionId;
 }

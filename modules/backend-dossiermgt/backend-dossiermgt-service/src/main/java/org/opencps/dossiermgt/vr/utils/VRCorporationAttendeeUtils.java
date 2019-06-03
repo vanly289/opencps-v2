@@ -142,7 +142,7 @@ public class VRCorporationAttendeeUtils {
 			objVRCorporationAttendee.setPermission("read");
 			objVRCorporationAttendee.setManagerId(dossierFile.getUserId());
 			objVRCorporationAttendee.setManagerName(dossierFile.getUserName());
-			long leaderId = Long.valueOf(mapValues.get("userAction"));
+			long leaderId = Validator.isNotNull(mapValues.get("userAction"))? Long.valueOf(mapValues.get("userAction")) : 0;
 			objVRCorporationAttendee.setLeaderId(leaderId);
 			objVRCorporationAttendee.setLeaderName(mapValues.get("userNameAction") + " -" + mapValues.get("userNoAction"));
 			objVRCorporationAttendee.setLeaderJobTitle("");

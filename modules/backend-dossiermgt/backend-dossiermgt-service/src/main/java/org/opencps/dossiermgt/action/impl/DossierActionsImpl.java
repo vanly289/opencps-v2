@@ -42,6 +42,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 import javax.ws.rs.HttpMethod;
+
 import org.opencps.datamgt.model.DictCollection;
 import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
@@ -95,6 +96,8 @@ import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessRoleLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 import org.opencps.dossiermgt.vr.utils.VRBussinessUtils;
+import org.opencps.usermgt.model.Applicant;
+import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 import org.opencps.usermgt.service.util.OCPSUserUtils;
 
 import backend.auth.api.exception.NotFoundException;
@@ -719,7 +722,7 @@ public class DossierActionsImpl implements DossierActions {
 		try {
 			if (dossier != null) {
 				long dossierActionId = dossier.getDossierActionId();
-				// _log.info("dossierActionId: "+dossierActionId);
+				_log.info("dossierActionId: "+dossierActionId);
 				if (dossierActionId > 0) {
 					dossierAction = DossierActionLocalServiceUtil.fetchDossierAction(dossierActionId);
 				}
@@ -733,7 +736,7 @@ public class DossierActionsImpl implements DossierActions {
 					// _log.info("User id: " + userId);
 					processActionList = ProcessActionLocalServiceUtil.getProcessActionByG_SPID_PRESC(groupId,
 							serviceProcessId, stepCode);
-					_log.debug("processActionList: "+processActionList.size());
+					_log.info("processActionList: "+processActionList.size());
 					if (processActionList != null && processActionList.size() > 0) {
 						if (results == null) {
 							results = JSONFactoryUtil.createJSONArray();
@@ -788,7 +791,7 @@ public class DossierActionsImpl implements DossierActions {
 
 									if (Validator.isNotNull(pluginForm) && !pluginForm.contains("original")) {
 										_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(),
-												serviceContext);
+												dossierActionId, serviceContext);
 									}
 								}
 							}
@@ -808,7 +811,7 @@ public class DossierActionsImpl implements DossierActions {
 	
 								if (Validator.isNotNull(pluginForm) && !pluginForm.contains("original")) {
 									_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(),
-											serviceContext);
+											dossierActionId, serviceContext);
 								}
 							}
 						}
@@ -1606,7 +1609,7 @@ public class DossierActionsImpl implements DossierActions {
 		if (Validator.isNotNull(dossierBriefNote))
 			dossier.setBriefNote(dossierBriefNote);
 		//Reindex dossier
-		DossierLocalServiceUtil.updateDossier(dossier);
+		Dossier dossierUpdate = DossierLocalServiceUtil.updateDossier(dossier);
 		//_log.info("dossier: "+dossier);
 
 		// do plugin auto
@@ -1627,7 +1630,8 @@ public class DossierActionsImpl implements DossierActions {
 				// do create file
 				String fileTemplateNo = StringUtil.replaceFirst(plg.getSampleData(), "#", StringPool.BLANK);
 
-				_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(), context);
+				_doAutoRun(groupId, fileTemplateNo, dossierId, dossierUpdate.getDossierTemplateNo(),
+						dossierUpdate.getDossierActionId(), context);
 			}
 		}
 
@@ -1641,7 +1645,7 @@ public class DossierActionsImpl implements DossierActions {
 	}
 
 	private void _doAutoRun(long groupId, String fileTemplateNo, long dossierId, String dossierTemplateNo,
-			ServiceContext context) {
+			long dossierActionId, ServiceContext context) {
 
 		//String formData = StringPool.BLANK;
 		//fileTemplateNo = StringUtil.replaceFirst(fileTemplateNo, "#", StringPool.BLANK);
@@ -1675,7 +1679,7 @@ public class DossierActionsImpl implements DossierActions {
 
 				dossierFile = actions.addDossierFile(groupId, dossierId, PortalUUIDUtil.generate(), dossierTemplateNo,
 						dossierPart.getPartNo(), fileTemplateNo, dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-						StringPool.BLANK, String.valueOf(false), context);
+						StringPool.BLANK, String.valueOf(false), dossierActionId, context);
 
 				_log.info("- ADD DOSSIER_FL		: "
 						+ (System.currentTimeMillis() - now));
@@ -1683,7 +1687,7 @@ public class DossierActionsImpl implements DossierActions {
 			}
 
 			DossierFileActions actions = new DossierFileActionsImpl();
-			actions.updateDossierFileFormData(groupId, dossierId, dossierFile.getReferenceUid(), formData, context);
+			actions.updateDossierFileFormData(groupId, dossierId, dossierActionId, dossierFile.getReferenceUid(), formData, context);
 			//DossierFileLocalServiceUtil.updateFormDataPlugin(groupId, dossierId,
 			//		dossierFile.getReferenceUid(), formData, context);
 			_log.info("- UPDATE DSR_ACT		: "
@@ -2546,72 +2550,75 @@ public class DossierActionsImpl implements DossierActions {
 
 		long total = 0;
 
+		Applicant applicant = ApplicantLocalServiceUtil.fetchByMappingID(userId);
 		try {
 			String statusCode = GetterUtil.getString(params.get(DossierTerm.STATUS));
 			String state = GetterUtil.getString(params.get(DossierTerm.STATE));
 
 			if (Validator.isNotNull(state) && (state.contains(ConstantsUtils.RT_EXPIRED) || state.contains(ConstantsUtils.RT_EXPIRING))) {
 				params.put(DossierTerm.STATE, StringPool.BLANK);
-				if (state.contains(StringPool.COMMA)) {
-					String[] stateArr = state.split(StringPool.COMMA);
-					if (stateArr != null) {
-						for (String statusState : stateArr) {
-							if (statusState.equals(ConstantsUtils.RT_EXPIRED)) {
-								List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
-										.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_WATTING);
-								if (certTypeList != null && certTypeList.size() > 0) {
-									int lenghtCert = certTypeList.size();
-									String strDossierNo = StringPool.BLANK;
-									if (lenghtCert == 1) {
-										strDossierNo = SpecialCharacterUtils.splitSpecial(certTypeList.get(0).getDossierNo());
-									} else {
-										StringBuilder sb = new StringBuilder();
-										for (int i = 0; i < lenghtCert; i++) {
-											VRVehicleTypeCertificate certType = certTypeList.get(i);
-											if (i == lenghtCert - 1) {
-												sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
-											} else {
-												sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
-												sb.append(StringPool.COMMA);
+				if (applicant != null) {
+					if (state.contains(StringPool.COMMA)) {
+						String[] stateArr = state.split(StringPool.COMMA);
+						if (stateArr != null) {
+							for (String statusState : stateArr) {
+								if (statusState.equals(ConstantsUtils.RT_EXPIRED)) {
+									List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
+											.findByF_APPNO_EXP_STATUS(applicant.getApplicantIdNo(), DossierTerm.EXPIRED_STATUS_WATTING);
+									if (certTypeList != null && certTypeList.size() > 0) {
+										int lenghtCert = certTypeList.size();
+										String strDossierNo = StringPool.BLANK;
+										if (lenghtCert == 1) {
+											strDossierNo = SpecialCharacterUtils.splitSpecial(certTypeList.get(0).getDossierNo());
+										} else {
+											StringBuilder sb = new StringBuilder();
+											for (int i = 0; i < lenghtCert; i++) {
+												VRVehicleTypeCertificate certType = certTypeList.get(i);
+												if (i == lenghtCert - 1) {
+													sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
+												} else {
+													sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
+													sb.append(StringPool.COMMA);
+												}
 											}
+											strDossierNo = sb.toString();
 										}
-										strDossierNo = sb.toString();
+										_log.info("strDossierNo: " + strDossierNo);
+										params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
 									}
-									_log.info("strDossierNo: " + strDossierNo);
-									params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+
+									long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+
+									JSONObject statistic = JSONFactoryUtil.createJSONObject();
+									statistic.put("dossierStatus", statusState);
+									statistic.put("dossierSubStatus", StringPool.BLANK);
+									statistic.put("count", count);
+
+									statistics.put(statistic);
+
+									total += count;
 								}
+								//
+								if (statusState.equals(ConstantsUtils.RT_EXPIRING)) {
+									String[] expireStatusArr = new String[]{DossierTerm.EXPIRED_STATUS_NOT_ACTIVE, DossierTerm.EXPIRED_STATUS_ACTIVE};
+									List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
+											.findByF_APPNO_EXP_STATUS(applicant.getApplicantIdNo(), expireStatusArr); // get to status = 0 or 1
+									if (certTypeList != null && certTypeList.size() > 0) {
+										String strDossierNo = DossierMgtUtils.checkConditionState(certTypeList);
+										_log.info("strDossierNo: " + strDossierNo);
+										params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+									}
+									long count = DossierLocalServiceUtil.countLucene(params, searchContext);
 
-								long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+									JSONObject statistic = JSONFactoryUtil.createJSONObject();
+									statistic.put("dossierStatus", statusState);
+									statistic.put("dossierSubStatus", StringPool.BLANK);
+									statistic.put("count", count);
 
-								JSONObject statistic = JSONFactoryUtil.createJSONObject();
-								statistic.put("dossierStatus", statusState);
-								statistic.put("dossierSubStatus", StringPool.BLANK);
-								statistic.put("count", count);
+									statistics.put(statistic);
 
-								statistics.put(statistic);
-
-								total += count;
-							}
-							//
-							if (statusState.equals(ConstantsUtils.RT_EXPIRING)) {
-								String[] expireStatusArr = new String[]{DossierTerm.EXPIRED_STATUS_NOT_ACTIVE, DossierTerm.EXPIRED_STATUS_ACTIVE};
-								List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
-										.findByF_EXP_STATUS(expireStatusArr); // get to status = 0 or 1
-								if (certTypeList != null && certTypeList.size() > 0) {
-									String strDossierNo = DossierMgtUtils.checkConditionState(certTypeList);
-									_log.info("strDossierNo: " + strDossierNo);
-									params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+									total += count;
 								}
-								long count = DossierLocalServiceUtil.countLucene(params, searchContext);
-
-								JSONObject statistic = JSONFactoryUtil.createJSONObject();
-								statistic.put("dossierStatus", statusState);
-								statistic.put("dossierSubStatus", StringPool.BLANK);
-								statistic.put("count", count);
-
-								statistics.put(statistic);
-
-								total += count;
 							}
 						}
 					}
@@ -2675,6 +2682,7 @@ public class DossierActionsImpl implements DossierActions {
 		try {
 			Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
 			if (dossier != null) {
+				long dossierActionId = dossier.getDossierActionId();
 				String dossierTempNo = dossier.getDossierTemplateNo();
 				long processActionId = GetterUtil.getLong(params.get(ProcessActionTerm.PROCESS_ACTION_ID));
 				ProcessAction processAction = ProcessActionLocalServiceUtil.fetchProcessAction(processActionId);
@@ -2820,11 +2828,11 @@ public class DossierActionsImpl implements DossierActions {
 														new DossierFileComparator(false, "createDate", Date.class));
 
 										if (Validator.isNull(dossierFile)) {
-											dossierFile = actions.addDossierFile(groupId, dossierId,
-													StringPool.BLANK, dossier.getDossierTemplateNo(),
-													dossierPart.getPartNo(), fileTemplateNo,
-													dossierPart.getPartName(), StringPool.BLANK, 0L, null,
-													StringPool.BLANK, String.valueOf(false), serviceContext);
+											dossierFile = actions.addDossierFile(groupId, dossierId, StringPool.BLANK,
+													dossier.getDossierTemplateNo(), dossierPart.getPartNo(),
+													fileTemplateNo, dossierPart.getPartName(), StringPool.BLANK, 0L,
+													null, StringPool.BLANK, String.valueOf(false), dossierActionId,
+													serviceContext);
 										}
 										docFileReferenceUid = dossierFile.getReferenceUid();
 										dossierFileId = dossierFile.getDossierFileId();
@@ -2868,7 +2876,7 @@ public class DossierActionsImpl implements DossierActions {
 
 						if (Validator.isNotNull(pluginForm) && !pluginForm.contains("original")) {
 							_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(),
-									serviceContext);
+									dossierActionId, serviceContext);
 						}
 					}
 				}

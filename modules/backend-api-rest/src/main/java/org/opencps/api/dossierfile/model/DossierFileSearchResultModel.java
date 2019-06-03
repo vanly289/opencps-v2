@@ -59,7 +59,8 @@ import javax.xml.bind.annotation.XmlType;
     "original",
     "isNew",
     "signCheck",
-    "signInfo"
+    "signInfo",
+    "dossierActionId"
 })
 public class DossierFileSearchResultModel {
     protected Long dossierId;
@@ -76,6 +77,7 @@ public class DossierFileSearchResultModel {
     protected Boolean isNew;
     protected Integer signCheck;
     protected String signInfo;
+    protected Long dossierActionId;
 
     /**
      * Gets the value of the dossierId property.
@@ -412,5 +414,13 @@ public class DossierFileSearchResultModel {
     public void setSignInfo(String value) {
         this.signInfo = value;
     }
+
+	public Long getDossierActionId() {
+		return dossierActionId;
+	}
+
+	public void setDossierActionId(Long dossierActionId) {
+		this.dossierActionId = dossierActionId;
+	}
 
 }
