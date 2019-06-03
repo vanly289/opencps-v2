@@ -142,63 +142,74 @@ public class DossierActionsImpl implements DossierActions {
 					total += count;
 				}
 				//
+				Applicant applicant = ApplicantLocalServiceUtil.fetchByMappingID(userId);
 				
 				if (Validator.isNotNull(state) && (state.contains(ConstantsUtils.RT_EXPIRED) || state.contains(ConstantsUtils.RT_EXPIRING))) {
-					if (state.contains(StringPool.COMMA)) {
-						String[] stateArr = state.split(StringPool.COMMA);
-						if (stateArr != null) {
-							for (String statusState : stateArr) {
-								if (statusState.equals(ConstantsUtils.RT_EXPIRED)) {
-									List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
-											.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_WATTING);
-									if (certTypeList != null && certTypeList.size() > 0) {
-										int lenghtCert = certTypeList.size();
-										String strDossierNo = StringPool.BLANK;
-										if (lenghtCert == 1) {
-											strDossierNo = SpecialCharacterUtils.splitSpecial(certTypeList.get(0).getDossierNo());
-										} else {
-											StringBuilder sb = new StringBuilder();
-											for (int i = 0; i < lenghtCert; i++) {
-												VRVehicleTypeCertificate certType = certTypeList.get(i);
-												if (i == lenghtCert - 1) {
-													sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
-												} else {
-													sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
-													sb.append(StringPool.COMMA);
+					params.put(DossierTerm.STATE, StringPool.BLANK);
+					if (applicant != null) {
+						if (state.contains(StringPool.COMMA)) {
+							String[] stateArr = state.split(StringPool.COMMA);
+							if (stateArr != null) {
+								for (String statusState : stateArr) {
+									if (statusState.equals(ConstantsUtils.RT_EXPIRED)) {
+										List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
+												.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_WATTING);
+										Hits hitState = null;
+										if (certTypeList != null && certTypeList.size() > 0) {
+											int lenghtCert = certTypeList.size();
+											String strDossierNo = StringPool.BLANK;
+											if (lenghtCert == 1) {
+												strDossierNo = SpecialCharacterUtils.splitSpecial(certTypeList.get(0).getDossierNo());
+											} else {
+												StringBuilder sb = new StringBuilder();
+												for (int i = 0; i < lenghtCert; i++) {
+													VRVehicleTypeCertificate certType = certTypeList.get(i);
+													if (i == lenghtCert - 1) {
+														sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
+													} else {
+														sb.append(SpecialCharacterUtils.splitSpecial(certType.getDossierNo()));
+														sb.append(StringPool.COMMA);
+													}
 												}
+												strDossierNo = sb.toString();
 											}
-											strDossierNo = sb.toString();
+											_log.info("strDossierNo: " + strDossierNo);
+											if (Validator.isNotNull(strDossierNo)) {
+												params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+												//
+												hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
+											}
 										}
-										_log.info("strDossierNo: " + strDossierNo);
-										params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+	
+										if (hitState != null && hitState.getLength() > 0) {
+											long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+											_log.info("count: " + count);
+											allDocsList.addAll(hitState.toList());
+											_log.info("SizeList1: " + hitStatus.toList().size());
+											total += count;
+										}
 									}
-									Hits hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
-
-									if (hitState != null && hitState.getLength() > 0) {
-										long count = DossierLocalServiceUtil.countLucene(params, searchContext);
-										_log.info("count: " + count);
-										allDocsList.addAll(hitState.toList());
-										_log.info("SizeList1: " + hitStatus.toList().size());
-										total += count;
-									}
-								}
-								//
-								if (state.equals(ConstantsUtils.RT_EXPIRING)) {
-									List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
-											.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_ACTIVE); // get to status = 0 or 1
-									if (certTypeList != null && certTypeList.size() > 0) {
-										String strDossierNo = DossierMgtUtils.checkConditionState(certTypeList);
-										_log.info("strDossierNo: " + strDossierNo);
-										params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
-									}
-									Hits hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
-
-									if (hitState != null && hitState.getLength() > 0) {
-										long count = DossierLocalServiceUtil.countLucene(params, searchContext);
-										_log.info("count: " + count);
-										allDocsList.addAll(hitState.toList());
-										_log.info("SizeList1: " + hitStatus.toList().size());
-										total += count;
+									//
+									if (state.equals(ConstantsUtils.RT_EXPIRING)) {
+										List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
+												.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_ACTIVE); // get to status = 0 or 1
+										Hits hitState = null;
+										if (certTypeList != null && certTypeList.size() > 0) {
+											String strDossierNo = DossierMgtUtils.checkConditionState(certTypeList);
+											_log.info("strDossierNo: " + strDossierNo);
+											if (Validator.isNotNull(strDossierNo)) {
+												params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+												//
+												hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
+											}
+										}
+										if (hitState != null && hitState.getLength() > 0) {
+											long count = DossierLocalServiceUtil.countLucene(params, searchContext);
+											_log.info("count: " + count);
+											allDocsList.addAll(hitState.toList());
+											_log.info("SizeList1: " + hitStatus.toList().size());
+											total += count;
+										}
 									}
 								}
 							}
@@ -2562,9 +2573,12 @@ public class DossierActionsImpl implements DossierActions {
 						String[] stateArr = state.split(StringPool.COMMA);
 						if (stateArr != null) {
 							for (String statusState : stateArr) {
+								_log.info("statusState: "+statusState);
 								if (statusState.equals(ConstantsUtils.RT_EXPIRED)) {
 									List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
 											.findByF_APPNO_EXP_STATUS(applicant.getApplicantIdNo(), DossierTerm.EXPIRED_STATUS_WATTING);
+
+									long count = 0;
 									if (certTypeList != null && certTypeList.size() > 0) {
 										int lenghtCert = certTypeList.size();
 										String strDossierNo = StringPool.BLANK;
@@ -2585,9 +2599,9 @@ public class DossierActionsImpl implements DossierActions {
 										}
 										_log.info("strDossierNo: " + strDossierNo);
 										params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+										//
+										count = DossierLocalServiceUtil.countLucene(params, searchContext);
 									}
-
-									long count = DossierLocalServiceUtil.countLucene(params, searchContext);
 
 									JSONObject statistic = JSONFactoryUtil.createJSONObject();
 									statistic.put("dossierStatus", statusState);
@@ -2603,13 +2617,20 @@ public class DossierActionsImpl implements DossierActions {
 									String[] expireStatusArr = new String[]{DossierTerm.EXPIRED_STATUS_NOT_ACTIVE, DossierTerm.EXPIRED_STATUS_ACTIVE};
 									List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
 											.findByF_APPNO_EXP_STATUS(applicant.getApplicantIdNo(), expireStatusArr); // get to status = 0 or 1
+									
+									long count = 0;
 									if (certTypeList != null && certTypeList.size() > 0) {
 										String strDossierNo = DossierMgtUtils.checkConditionState(certTypeList);
 										_log.info("strDossierNo: " + strDossierNo);
-										params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+										if (Validator.isNotNull(strDossierNo)) {
+											params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+											//
+											count = DossierLocalServiceUtil.countLucene(params, searchContext);
+										}
 									}
-									long count = DossierLocalServiceUtil.countLucene(params, searchContext);
 
+									_log.info("count: "+count);
+									_log.info("dossierStatus: "+statusState);
 									JSONObject statistic = JSONFactoryUtil.createJSONObject();
 									statistic.put("dossierStatus", statusState);
 									statistic.put("dossierSubStatus", StringPool.BLANK);
