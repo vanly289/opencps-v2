@@ -36,7 +36,6 @@ import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierPart;
 import org.opencps.dossiermgt.service.base.DossierFileLocalServiceBaseImpl;
 
-import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -481,6 +480,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				dossierFileAction.setEForm(true);
 				dossierFileAction.setDeliverableCode(dossierFile.getDeliverableCode());
 				dossierFileAction.setDisplayName(dossierFile.getDisplayName());
+				dossierFileAction.setFormScript(dossierFile.getFormScript());
 	
 				dossierFileAction = dossierFilePersistence.update(dossierFileAction);
 			} else {
