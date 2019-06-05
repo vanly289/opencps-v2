@@ -7373,6 +7373,9 @@
          <finder return-type="Collection" name="REF_UID">
         	<finder-column name="referenceUid" />
        	</finder>
+       	<finder return-type="DossierFile" name="DossierFileId">
+			<finder-column name="dossierFileId" />
+		</finder>
        	
 	</entity>
 

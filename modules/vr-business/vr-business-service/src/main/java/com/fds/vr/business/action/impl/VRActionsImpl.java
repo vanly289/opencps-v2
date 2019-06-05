@@ -548,6 +548,8 @@ public class VRActionsImpl implements VRActions {
 		JSONObject formData = null;
 
 		// JSONArray formSchema = null;
+		
+//		_log.info("==childKeyObj==getFormData==" + formSchema);
 
 		if (Validator.isNotNull(dossierFile)) {
 
@@ -588,6 +590,8 @@ public class VRActionsImpl implements VRActions {
 						String childKeyValue = formData.getString(childKeyObj);
 
 						child.put("value", childKeyValue);
+						
+//						_log.info("==childKeyObj==" + dossierFileId + "_" + childKeyObj + "_" + childKeyValue);
 
 						altJSONArray.put(child);
 					}
@@ -615,7 +619,7 @@ public class VRActionsImpl implements VRActions {
 
 		if (dossierFileId != 0) {
 			try {
-				dossierFile = VRDossierFileLocalServiceUtil.getVRDossierFile(dossierFileId);
+				dossierFile = VRDossierFileLocalServiceUtil.getByDossierFileId(dossierFileId);
 			} catch (Exception e) {
 				_log.error(e);
 			}

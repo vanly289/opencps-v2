@@ -50,6 +50,14 @@ public class VRDossierFileLocalServiceImpl
 		}
 	}
 	
+	public VRDossierFile getByDossierFileId(long dossierFileId) {
+		try {
+			return vrDossierFilePersistence.fetchByDossierFileId(dossierFileId, false);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	public VRDossierFile getDossierFileByDID_FTNO_First(long dossierId, String fileTemplateNo, boolean removed,
 			OrderByComparator orderByComparator) {
 		return vrDossierFilePersistence.fetchByDID_FTNO_First(dossierId, fileTemplateNo, removed, orderByComparator);
