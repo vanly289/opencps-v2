@@ -224,6 +224,7 @@ public class DossierActionsImpl implements DossierActions {
 					if (state.equals(ConstantsUtils.RT_EXPIRED)) {
 						List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
 								.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_WATTING);
+						Hits hitState = null;
 						if (certTypeList != null && certTypeList.size() > 0) {
 							int lenghtCert = certTypeList.size();
 							String strDossierNo = StringPool.BLANK;
@@ -244,13 +245,19 @@ public class DossierActionsImpl implements DossierActions {
 							}
 							_log.info("strDossierNo: " + strDossierNo);
 							params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+							if (Validator.isNotNull(strDossierNo)) {
+								params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+								//
+								hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
+							}
 						}
 
-						Hits hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
-						long totalState = DossierLocalServiceUtil.countLucene(params, searchContext);
+						if (hitState != null && hitState.getLength() > 0) {
+							long totalState = DossierLocalServiceUtil.countLucene(params, searchContext);
 
-						result.put("data", hitState.toList());
-						result.put("total", totalState);
+							result.put("data", hitState.toList());
+							result.put("total", totalState);
+						}
 						//
 						return result;
 					}
@@ -258,16 +265,24 @@ public class DossierActionsImpl implements DossierActions {
 					if (state.equals(ConstantsUtils.RT_EXPIRING)) {
 						List<VRVehicleTypeCertificate> certTypeList = VRVehicleTypeCertificateLocalServiceUtil
 								.findByExpiredstatus(DossierTerm.EXPIRED_STATUS_ACTIVE); // get to status = 0 or 1
+						Hits hitState = null;
 						if (certTypeList != null && certTypeList.size() > 0) {
 							String strDossierNo = DossierMgtUtils.checkConditionState(certTypeList);
 							_log.info("strDossierNo: " + strDossierNo);
 							params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+							if (Validator.isNotNull(strDossierNo)) {
+								params.put(DossierTerm.DOSSIER_NO_EXPIRED, strDossierNo);
+								//
+								hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
 							}
-						Hits hitState = DossierLocalServiceUtil.searchLucene(params, sorts, start, end, searchContext);
-						long totalState = DossierLocalServiceUtil.countLucene(params, searchContext);
+						}
 
-						result.put("data", hitState.toList());
-						result.put("total", totalState);
+						if (hitState != null && hitState.getLength() > 0) {
+							long totalState = DossierLocalServiceUtil.countLucene(params, searchContext);
+
+							result.put("data", hitState.toList());
+							result.put("total", totalState);
+						}
 						//
 						return result;
 					}
