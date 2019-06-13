@@ -50,12 +50,12 @@ import com.liferay.portal.kernel.util.Validator;
 public class DossierFileListenner extends BaseModelListener<DossierFile> {
 	@Override
 	public void onBeforeCreate(DossierFile model) throws ModelListenerException {
-		_log.info("Before Created........... ==> " + model.getDossierId());
+//		_log.info("Before Created........... ==> " + model.getDossierId());
 	}
 
 	@Override
 	public void onAfterCreate(DossierFile model) throws ModelListenerException {
-		_log.info("DossierFileCreate........... ");
+//		_log.info("DossierFileCreate........... ");
 
 		ServiceContext serviceContext = new ServiceContext();
 		serviceContext.setCompanyId(model.getCompanyId());
@@ -400,7 +400,7 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 
 	@Override
 	public void onAfterUpdate(DossierFile model) throws ModelListenerException {
-		_log.info("Update DossierFile_________-");
+//		_log.info("Update DossierFile_________-");
 		
 		//_log.info("Expando______" + model.getExpandoBridge().getAttribute("isDel"));
 
@@ -474,7 +474,7 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 				DeliverableTypesActions dtAction = new DeliverableTypesActionsImpl();
 				DateFormatValidator dateValidator = new DateFormatValidator();
 				
-				_log.info("Update deliverable");
+//				_log.info("Update deliverable");
 				if (dlvType != null) {
 					String subjectKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_SUBJECT, dlvType);
 					String issueDateKey = dtAction.getMappingKey(DeliverableTypesTerm.MAPPING_ISSUEDATE, dlvType);
@@ -510,7 +510,7 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 					revalidate = formDataContent.getString("revalidate");
 				}
 
-				_log.info("Deliverable info: revalidate " + revalidate);
+//				_log.info("Deliverable info: revalidate " + revalidate);
 				if (Validator.isNull(dlv)) {
 					// add deliverable
 					dlv = DeliverableLocalServiceUtil.addDeliverable(model.getGroupId(), deliverableType,

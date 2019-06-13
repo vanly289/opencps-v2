@@ -1694,6 +1694,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 		searchContext.setEntryClassNames(new String[] { CLASS_NAME });
 		searchContext.setAttribute("paginationType", "regular");
 		searchContext.setLike(true);
+		
 		searchContext.setStart(start);
 		searchContext.setEnd(end);
 		searchContext.setAndSearch(true);

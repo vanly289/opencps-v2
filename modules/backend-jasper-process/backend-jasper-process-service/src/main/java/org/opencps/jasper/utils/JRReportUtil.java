@@ -16,11 +16,8 @@ package org.opencps.jasper.utils;
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  */
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +31,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -43,6 +39,8 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
+import net.sf.jasperreports.governors.MaxPagesGovernor;
+import net.sf.jasperreports.governors.TimeoutGovernor;
 
 /**
  * @author trungnt
@@ -321,6 +319,11 @@ public class JRReportUtil {
 	protected static JasperPrint getJasperPrint(JasperReport jrReportTemplate, Map<String, Object> parameters,
 			JRJSONDataSource dataSource) throws JRException {
 
+		jrReportTemplate.setProperty(MaxPagesGovernor.PROPERTY_MAX_PAGES, "10");
+		jrReportTemplate.setProperty(MaxPagesGovernor.PROPERTY_MAX_PAGES_ENABLED, "true");
+		jrReportTemplate.setProperty(TimeoutGovernor.PROPERTY_TIMEOUT, "4000");
+		jrReportTemplate.setProperty(TimeoutGovernor.PROPERTY_TIMEOUT_ENABLED, "true");
+		
 		return JasperFillManager.fillReport(jrReportTemplate, null, dataSource);
 	}
 
@@ -334,6 +337,11 @@ public class JRReportUtil {
 	protected static JasperPrint getJasperPrint(JRReportTemplate jrReportTemplate, Map<String, Object> parameters,
 			JRJSONDataSource dataSource) throws JRException {
 
+		jrReportTemplate.setProperty(MaxPagesGovernor.PROPERTY_MAX_PAGES, "10");
+		jrReportTemplate.setProperty(MaxPagesGovernor.PROPERTY_MAX_PAGES_ENABLED, "true");
+		jrReportTemplate.setProperty(TimeoutGovernor.PROPERTY_TIMEOUT, "4000");
+		jrReportTemplate.setProperty(TimeoutGovernor.PROPERTY_TIMEOUT_ENABLED, "true");
+		
 		return JasperFillManager.fillReport(jrReportTemplate, null, dataSource);
 	}
 

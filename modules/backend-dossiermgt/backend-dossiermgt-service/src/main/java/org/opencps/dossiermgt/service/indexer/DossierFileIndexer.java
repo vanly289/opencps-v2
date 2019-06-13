@@ -64,14 +64,14 @@ public class DossierFileIndexer extends BaseIndexer<DossierFile> {
 		document.addTextSortable(DossierFileTerm.DOSSIER_PART_NO, object.getDossierPartNo());
 		document.addTextSortable(DossierFileTerm.FILE_TEMPLATE_NO, object.getFileTemplateNo());
 		document.addTextSortable(DossierFileTerm.DISPLAY_NAME, object.getDisplayName());
-		document.addTextSortable(DossierFileTerm.FORM_DATA, object.getFormData());
+//		document.addTextSortable(DossierFileTerm.FORM_DATA, object.getFormData());
 		document.addTextSortable(DossierFileTerm.ORIGINAL, Boolean.toString(object.getOriginal()));
 		document.addTextSortable(DossierFileTerm.E_FORM, Boolean.toString(object.getEForm()));
 		document.addTextSortable(DossierFileTerm.IS_NEW, Boolean.toString(object.getIsNew()));
 		document.addTextSortable(DossierFileTerm.REMOVED, Boolean.toString(object.getRemoved()));
 		document.addTextSortable(DossierFileTerm.SIGN_INFO, object.getSignInfo());
-		document.addTextSortable(DossierFileTerm.FORM_SCRIPT, object.getFormScript());
-		document.addTextSortable(DossierFileTerm.FORM_REPORT, object.getFormReport());
+//		document.addTextSortable(DossierFileTerm.FORM_SCRIPT, object.getFormScript());
+//		document.addTextSortable(DossierFileTerm.FORM_REPORT, object.getFormReport());
 
 		return document;
 	}

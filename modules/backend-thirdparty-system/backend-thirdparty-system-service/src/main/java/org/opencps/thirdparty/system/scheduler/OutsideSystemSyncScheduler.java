@@ -70,34 +70,47 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 @Component(immediate = true, service = OutsideSystemSyncScheduler.class)
 public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListener {
+	
+	private static volatile boolean isRunningSync = false;
+	
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_log.info("===THIRD_PARTY_SYNC_BEGIN==="
-				+ APIDateTimeUtils.convertDateToString(new Date()));
-
-		List<ThirdPartyDossierSync> lstSyncs = ThirdPartyDossierSyncLocalServiceUtil.findByStatus(false, 
-				0, 20);
-		
-		for (ThirdPartyDossierSync sync : lstSyncs) {
-			ThirdPartyDossierSyncLocalServiceUtil.updateStatus(sync, true);
-		}
-
-		for (ThirdPartyDossierSync sync : lstSyncs) {
-			long dossierSyncId = sync.getDossierSyncId();
+		if (!isRunningSync) {
+			isRunningSync = true;
 			
-			boolean pending = false;
 			try {
-				pending = doSync(sync);
-			} catch(Exception e) {
+				_log.info("===THIRD_PARTY_SYNC_BEGIN==="
+						+ APIDateTimeUtils.convertDateToString(new Date()));
+		
+				List<ThirdPartyDossierSync> lstSyncs = ThirdPartyDossierSyncLocalServiceUtil.findByStatus(false, 
+						0, 20);
+				
+				for (ThirdPartyDossierSync sync : lstSyncs) {
+					ThirdPartyDossierSyncLocalServiceUtil.updateStatus(sync, true);
+				}
+		
+				for (ThirdPartyDossierSync sync : lstSyncs) {
+					long dossierSyncId = sync.getDossierSyncId();
+					
+					boolean pending = false;
+					try {
+						pending = doSync(sync);
+					} catch(Exception e) {
+						_log.error(e);
+					}
+					
+					if(!pending) {	// pending thi khong xu ly tiep nua
+						ThirdPartyDossierSyncLocalServiceUtil.updateStatus(dossierSyncId, false);
+					}
+				}
+			} catch (Exception e) {
 				_log.error(e);
 			}
 			
-			if(!pending) {	// pending thi khong xu ly tiep nua
-				ThirdPartyDossierSyncLocalServiceUtil.updateStatus(dossierSyncId, false);
-			}
+			isRunningSync = false;
+	
+			_log.info("===THIRD_PARTY_SYNC_END===" + APIDateTimeUtils.convertDateToString(new Date()));
 		}
-
-		_log.info("===THIRD_PARTY_SYNC_END===" + APIDateTimeUtils.convertDateToString(new Date()));
 	}
 	
 	private boolean doSync(ThirdPartyDossierSync sync) throws PortalException {

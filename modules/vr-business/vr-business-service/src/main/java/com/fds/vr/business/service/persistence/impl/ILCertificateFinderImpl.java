@@ -45,7 +45,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.setCacheable(false);
-			q.addEntity("ILCertificate", ILCertificateImpl.class);
+			q.addEntity("il_certificate", ILCertificateImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -80,7 +80,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.setCacheable(false);
-			q.addEntity("ILCertificate", ILCertificateImpl.class);
+			q.addEntity("il_certificate", ILCertificateImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 			
@@ -114,7 +114,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.setCacheable(false);
-			q.addEntity("ILCertificate", ILCertificateImpl.class);
+			q.addEntity("il_certificate", ILCertificateImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 			keyword = StringPool.PERCENT + keyword + StringPool.PERCENT;
@@ -165,11 +165,10 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			session = openSession();
 
 			SQLQuery q = session.createSQLQuery(sql);
-			q.setCacheable(false);
+//			q.setCacheable(false);
 			q.addEntity("il_certificate", ILCertificateImpl.class);
 
 			certList = q.list();
-			// _log.info("SQL list deliverable: "+ deliverableList);
 		} catch (Exception e) {
 			_log.error(e);
 		} finally {
@@ -185,18 +184,26 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 		Session session = null;
 		long total = 0;
 
-		String sql = checkInputSearch(keywords, serviceCode, govAgencyCode, routeCode, fromDate, toDate);
+		String sql = countCheckInputSearch(keywords, serviceCode, govAgencyCode, routeCode, fromDate, toDate);
 
 		_log.info("SQL: " + sql);
 		try {
 			session = openSession();
 
 			SQLQuery q = session.createSQLQuery(sql);
-			q.setCacheable(false);
-			q.addEntity("il_certificate", ILCertificateImpl.class);
+//			q.setCacheable(false);
+			q.addScalar("COUNT_VALUE", Type.LONG);
 
-			total = q.list().size();
-			// _log.info("SQL list deliverable: "+ deliverableList);
+			Iterator<Long> itr = q.list().iterator();
+
+			if (itr.hasNext()) {
+
+				Long count = itr.next();
+
+				if (count != null) {
+					total = count.longValue();
+				}
+			}
 		} catch (Exception e) {
 			_log.error(e);
 		} finally {
@@ -227,7 +234,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 		_log.info("countCheck: " + countCheck);
 		//
 		if (countCheck > 0) {
-			sb.append("SELECT * FROM il_certificate WHERE");
+			sb.append("SELECT {il_certificate.*} FROM il_certificate WHERE");
 			switch (countCheck) {
 			case 1:
 				appendKeyWord(sb, keywords, serviceCode, govAgencyCode, routeCode, fromDate, toDate);
@@ -249,7 +256,57 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 				break;
 			}
 		} else {
-			sb.append("SELECT * FROM il_certificate");
+			sb.append("SELECT {il_certificate.*} FROM il_certificate");
+		}
+
+		return sb.toString();
+
+	}
+	
+	private String countCheckInputSearch(String keywords, String serviceCode, String govAgencyCode, String routeCode,
+			String fromDate, String toDate) {
+		StringBuilder sb = new StringBuilder();
+
+		int countCheck = 0;
+		if (Validator.isNotNull(keywords)) {
+			countCheck = 1;
+		} else if (Validator.isNotNull(serviceCode)) {
+			countCheck = 2;
+		} else if (Validator.isNotNull(govAgencyCode)) {
+			countCheck = 3;
+		} else if (Validator.isNotNull(routeCode)) {
+			countCheck = 4;
+		} else if (Validator.isNotNull(fromDate)) {
+			countCheck = 5;
+		} else if (Validator.isNotNull(toDate)) {
+			countCheck = 6;
+		}
+		_log.info("countCheck: " + countCheck);
+		//
+		if (countCheck > 0) {
+			sb.append("SELECT COUNT(*) AS COUNT_VALUE FROM il_certificate WHERE");
+			switch (countCheck) {
+			case 1:
+				appendKeyWord(sb, keywords, serviceCode, govAgencyCode, routeCode, fromDate, toDate);
+				break;
+			case 2:
+				appendServiceCode(sb, serviceCode, govAgencyCode, routeCode, fromDate, toDate);
+				break;
+			case 3:
+				appendGovAgencyCode(sb, govAgencyCode, routeCode, fromDate, toDate);
+				break;
+			case 4:
+				appendRouteCode(sb, routeCode, fromDate, toDate);
+				break;
+			case 5:
+				appendFromDate(sb, fromDate, toDate);
+				break;
+			case 6:
+				appendToDate(sb, toDate);
+				break;
+			}
+		} else {
+			sb.append("SELECT COUNT(*) AS COUNT_VALUE FROM il_certificate");
 		}
 
 		return sb.toString();
@@ -263,13 +320,13 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 		sb.append(" OR LOWER(licenceNo) LIKE '" + keywords + "')");
 
 		if (Validator.isNotNull(serviceCode)) {
-			sb.append(" AND LOWER(serviceCode) IN (" + serviceCode + ")");
+			sb.append(" AND serviceCode IN (" + serviceCode + ")");
 		}
 		if (Validator.isNotNull(govAgencyCode)) {
-			sb.append(" AND LOWER(govAgencyCode) = '" + govAgencyCode + "'");
+			sb.append(" AND govAgencyCode = '" + govAgencyCode + "'");
 		}
 		if (Validator.isNotNull(routeCode)) {
-			sb.append(" AND LOWER(routeCode) = '" + routeCode + "'");
+			sb.append(" AND routeCode = '" + routeCode + "'");
 		}
 		if (Validator.isNotNull(fromDate)) {
 			sb.append(" AND DATE(validFrom) = '" + fromDate + "'");
@@ -282,12 +339,12 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 
 	private StringBuilder appendServiceCode(StringBuilder sb, String serviceCode, String govAgencyCode,
 			String routeCode, String fromDate, String toDate) {
-		sb.append(" LOWER(serviceCode) IN (" + serviceCode + ")");
+		sb.append(" serviceCode IN (" + serviceCode + ")");
 		if (Validator.isNotNull(govAgencyCode)) {
-			sb.append(" AND LOWER(govAgencyCode) = '" + govAgencyCode + "'");
+			sb.append(" AND govAgencyCode = '" + govAgencyCode + "'");
 		}
 		if (Validator.isNotNull(routeCode)) {
-			sb.append(" AND LOWER(routeCode) = '" + routeCode + "'");
+			sb.append(" AND routeCode = '" + routeCode + "'");
 		}
 		if (Validator.isNotNull(fromDate)) {
 			sb.append(" AND DATE(validFrom) = '" + fromDate + "'");
@@ -300,9 +357,9 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 
 	private StringBuilder appendGovAgencyCode(StringBuilder sb, String govAgencyCode, String routeCode, String fromDate,
 			String toDate) {
-		sb.append(" LOWER(govAgencyCode) = '" + govAgencyCode + "'");
+		sb.append(" govAgencyCode = '" + govAgencyCode + "'");
 		if (Validator.isNotNull(routeCode)) {
-			sb.append(" AND LOWER(routeCode) = '" + routeCode + "'");
+			sb.append(" AND routeCode = '" + routeCode + "'");
 		}
 		if (Validator.isNotNull(fromDate)) {
 			sb.append(" AND DATE(validFrom) = '" + fromDate + "'");
@@ -314,7 +371,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 	}
 
 	private StringBuilder appendRouteCode(StringBuilder sb, String routeCode, String fromDate, String toDate) {
-		sb.append(" LOWER(routeCode) = '" + routeCode + "'");
+		sb.append(" routeCode = '" + routeCode + "'");
 		if (Validator.isNotNull(fromDate)) {
 			sb.append(" AND DATE(validFrom) = '" + fromDate + "'");
 		}
@@ -342,7 +399,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 		Session session = null;
 		List<ILCertificate> certList = null;
 
-		String sql = "SELECT * FROM il_certificate" + " WHERE LOWER(serviceCode) = '" + serviceCode + "'"
+		String sql = "SELECT {il_certificate.*} FROM il_certificate" + " WHERE serviceCode = '" + serviceCode + "'"
 				+ " AND validFrom IN ("
 				+ "SELECT MAX(validFrom) FROM il_certificate GROUP BY applicantIdNo) AND applicantIdNo='" + applicant
 				+ "'";
@@ -370,7 +427,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 		Session session = null;
 		long total = 0;
 
-		String sql = "SELECT * FROM il_certificate" + " WHERE LOWER(serviceCode) = '" + serviceCode + "'"
+		String sql = "SELECT COUNT(*) AS COUNT_VALUE FROM il_certificate" + " WHERE serviceCode = '" + serviceCode + "'"
 				+ " AND validFrom IN ("
 				+ "SELECT MAX(validFrom) FROM il_certificate GROUP BY applicantIdNo) AND applicantIdNo='" + applicant
 				+ "'";
@@ -380,11 +437,20 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 			session = openSession();
 
 			SQLQuery q = session.createSQLQuery(sql);
-			q.setCacheable(false);
-			q.addEntity("il_certificate", ILCertificateImpl.class);
+//			q.setCacheable(false);
+			q.addScalar("COUNT_VALUE", Type.LONG);
 
-			total = q.list().size();
-			// _log.info("SQL list deliverable: "+ deliverableList);
+			Iterator<Long> itr = q.list().iterator();
+
+			if (itr.hasNext()) {
+
+				Long count = itr.next();
+
+				if (count != null) {
+					total = count.longValue();
+				}
+			}
+			
 		} catch (Exception e) {
 			_log.error(e);
 		} finally {
@@ -419,7 +485,7 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 				
 				sql = StringUtil.replace(sql, "[$SERVICE_CODE$]", StringUtil.lowerCase(sb.toString()));
 			} else {
-				sql = StringUtil.replace(sql, "AND (LOWER(serviceCode) IN ([$SERVICE_CODE$]))", StringPool.BLANK);
+				sql = StringUtil.replace(sql, "AND (serviceCode IN ([$SERVICE_CODE$]))", StringPool.BLANK);
 			}
 			
 			Timestamp fromDateLT_TS = null;

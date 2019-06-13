@@ -58,16 +58,16 @@ public class DossierActionUserImpl implements DossierActionUser {
 			}
 		}
 		// Get DossierAction
-		_log.info("START ROLES");
+//		_log.info("START ROLES");
 		DossierAction dossierAction = DossierActionLocalServiceUtil.getDossierAction(dossierActionId);
-		_log.info("dossierActionId: "+dossierActionId);
+//		_log.info("dossierActionId: "+dossierActionId);
 		if (dossierAction != null) {
-			_log.info("actionCode: "+dossierAction.getActionCode());
+//			_log.info("actionCode: "+dossierAction.getActionCode());
 		}
 		
 		String actionCode = dossierAction.getActionCode();
 		long serviceProcessId = dossierAction.getServiceProcessId();
-		_log.info("serviceProcessId: "+dossierAction.getServiceProcessId());
+//		_log.info("serviceProcessId: "+dossierAction.getServiceProcessId());
 
 		// Get ProcessAction
 		ProcessAction processAction = ProcessActionLocalServiceUtil.fetchBySPID_AC(serviceProcessId, actionCode);

@@ -140,11 +140,12 @@ public class ApplicantManagementImpl implements ApplicantManagement {
 //				throw new UnauthorizationException();
 //			}
 
+			//TODO: FIX 15 items/pages
 			if (query.getEnd() == 0) {
 
-				query.setStart(-1);
+				query.setStart(0);
 
-				query.setEnd(-1);
+				query.setEnd(15);
 
 			}
 

@@ -3,9 +3,13 @@ package org.opencps.api.controller.impl;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,8 +63,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 public class ServiceInfoManagementImpl implements ServiceInfoManagement {
@@ -81,7 +85,7 @@ public class ServiceInfoManagementImpl implements ServiceInfoManagement {
 				query.setEnd(-1);
 
 			}
-
+			
 			long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
 
 			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
@@ -92,18 +96,51 @@ public class ServiceInfoManagementImpl implements ServiceInfoManagement {
 			params.put(ServiceInfoTerm.DOMAIN_CODE, query.getDomain());
 			params.put(ServiceInfoTerm.MAX_LEVEL, query.getLevel());
 			params.put(ServiceInfoTerm.SERVICE_CODE, query.getServiceCode());
-
-			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
-					GetterUtil.getBoolean(query.getOrder())) };
-
-			JSONObject jsonData = actions.getServiceInfos(serviceContext.getUserId(), serviceContext.getCompanyId(),
-					groupId, params, sorts, query.getStart(), query.getEnd(), serviceContext);
-
-			results.setTotal(jsonData.getInt("total"));
-			results.getData()
-					.addAll(ServiceInfoUtils.mappingToServiceInfoResultModel((List<Document>) jsonData.get("data"), serviceContext));
-
-			return Response.status(200).entity(results).build();
+			
+//			if(query.getEnd() == -1 && Validator.isNull(query.getKeyword()) && Validator.isNull(query.getAdministration())
+//					 && Validator.isNull(query.getDomain()) && query.getLevel() == 0 && Validator.isNull(query.getServiceCode())) {
+//				
+//				//TODO: performance for DB
+//				File cacheFile = new File("/tmp/get_serviceinfos" + String.valueOf(groupId) + ".json");
+//				
+//				String output = "" ;
+//				if(FileUtil.exists(cacheFile)) {
+//					ObjectInputStream in = new ObjectInputStream(new FileInputStream(cacheFile));
+//					JSONObject jsonObject = (JSONObject) in.readObject();
+//					in.close();
+//					output = jsonObject.toString();
+//				} else {
+//					// search
+//					Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
+//							GetterUtil.getBoolean(query.getOrder())) };
+//		
+//					JSONObject jsonData = actions.getServiceInfos(serviceContext.getUserId(), serviceContext.getCompanyId(),
+//							groupId, params, sorts, query.getStart(), query.getEnd(), serviceContext);
+//		
+//					results.setTotal(jsonData.getInt("total"));
+//					results.getData()
+//							.addAll(ServiceInfoUtils.mappingToServiceInfoResultModel((List<Document>) jsonData.get("data"), serviceContext));
+//					
+//					// store cache
+//					ObjectOutput out = new ObjectOutputStream(new FileOutputStream(cacheFile));
+//					out.writeObject( results );
+//					out.close();
+//				}
+//				
+//				return Response.status(200).entity(output).build();
+//			} else {
+				Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
+						GetterUtil.getBoolean(query.getOrder())) };
+	
+				JSONObject jsonData = actions.getServiceInfos(serviceContext.getUserId(), serviceContext.getCompanyId(),
+						groupId, params, sorts, query.getStart(), query.getEnd(), serviceContext);
+	
+				results.setTotal(jsonData.getInt("total"));
+				results.getData()
+						.addAll(ServiceInfoUtils.mappingToServiceInfoResultModel((List<Document>) jsonData.get("data"), serviceContext));
+			
+				return Response.status(200).entity(results).build();
+//			}
 
 		} catch (Exception e) {
 			ErrorMsg error = new ErrorMsg();

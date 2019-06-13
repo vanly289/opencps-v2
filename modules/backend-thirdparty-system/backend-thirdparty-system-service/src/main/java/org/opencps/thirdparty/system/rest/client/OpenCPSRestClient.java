@@ -47,7 +47,7 @@ public class OpenCPSRestClient {
 		CloseableHttpClient httpClient = null;
 		BufferedReader br = null;
 		
-		_log.info("===postMessageQueue===" + model.getMessageId());
+		_log.info("===postMessageQueue===" + model.getReference() + "="+ model.getType() + "=" + model.getFunction() + "=" + model.getMessageId());
 
 		try {
 

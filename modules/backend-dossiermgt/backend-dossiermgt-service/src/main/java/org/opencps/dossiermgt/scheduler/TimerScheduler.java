@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -52,25 +54,40 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_log.info("Invoke Timer****");
+		_log.info("===TimerScheduler=BEGIN===");
+		
+		//TODO: Dang fix cho duong bo de quet nhung ho so co trong DossierRequest va statusReg=3. Khi xu ly xong thi lat lai co statusReg=30 de khong doc nua
+		// Khong ap dung duoc cho viec quet autoEvent de xu ly nhung truong hop khac.
+		processTimerScheduler();
+		
+		_log.info("===TimerScheduler=END===");
+	}
+	
+	private void processTimerScheduler() throws Exception {
 		// get all actions that has preCondition is "timer"
 
 		// Get all dossier
 		List<Dossier> allDossierTimer = new ArrayList<Dossier>();
 
-		Company company = CompanyLocalServiceUtil.getCompanyByMx(PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+//		Company company = CompanyLocalServiceUtil.getCompanyByMx(PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
 		// This is TEMPORARY code for auto = timer, it need to optimize later
-//		allDossierTimer = DossierLocalServiceUtil.getDossiers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		allDossierTimer = DossierLocalServiceUtil.getDossiersByAutoEvent("timmer", 0, 100);	// get 100 dossier once
-
+//				allDossierTimer = DossierLocalServiceUtil.getDossiers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		allDossierTimer = DossierLocalServiceUtil.getDossiersByAutoEvent("timmer", 0, 200);	// get 100 dossier once
+		
+		_log.info("===TimerScheduler=allDossierTimer===" + allDossierTimer.size());
+		
+		List<Long> tempDossierIds = new ArrayList<Long>();
+		
 		DossierActions dossierActions = new DossierActionsImpl();
+		
+		long companyId = 20116;//TODO: FIX
 
-		User systemUser = UserLocalServiceUtil.getUserByEmailAddress(company.getCompanyId(),
+		User systemUser = UserLocalServiceUtil.getUserByEmailAddress(companyId,
 				RESTFulConfiguration.SERVER_USER);
 
 		ServiceContext serviceContext = new ServiceContext();
-		serviceContext.setCompanyId(company.getCompanyId());
+		serviceContext.setCompanyId(companyId);
 		serviceContext.setUserId(systemUser.getUserId());
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
@@ -78,105 +95,113 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 		//Sort[] sorts = new Sort[] { SortFactoryUtil.create("_sortable", Sort.STRING_TYPE, false) };
 
 		for (Dossier dossier : allDossierTimer) {
-			params.put(Field.GROUP_ID, String.valueOf(dossier.getGroupId()));
-			params.put(DossierTerm.DOSSIER_ID, String.valueOf(dossier.getDossierId()));
-			params.put(DossierTerm.REFERENCE_UID, String.valueOf(dossier.getReferenceUid()));
-			params.put(DossierActionTerm.AUTO, "timmer");
-
-			if (Validator.isNotNull(dossier.getDossierStatus())) {
-
-				long dossierActionId = dossier.getDossierActionId();
-
-				DossierAction dossierAction = DossierActionLocalServiceUtil.fetchDossierAction(dossierActionId);
-
-				long serviceProcessId = dossierAction != null ? dossierAction.getServiceProcessId() : 0;
-
-				String stepCode = dossierAction != null ? dossierAction.getStepCode() : StringPool.BLANK;
-
-				//boolean pending = dossierAction != null ? dossierAction.getPending() : false;
-
-				List<ProcessAction> lstProcessAction = new ArrayList<ProcessAction>();
-
-				lstProcessAction = ProcessActionLocalServiceUtil.getProcessActionByG_SPID_PRESC(dossier.getGroupId(),
-						serviceProcessId, stepCode);
-				//TODO : test case auto event
-				DossierRequestUD dRegUD = DossierRequestUDLocalServiceUtil
-						.getDossierRequestByDossierId(dossier.getDossierId());
-
-				boolean flag = false;
-				if (dRegUD != null && dRegUD.getStatusReg() == 3) {
-					for (ProcessAction processAction : lstProcessAction) {
-
-						if (processAction.getAutoEvent().contains("timmer")) {
-							
-							String perConditionStr = processAction.getPreCondition();
-
-							boolean checkPreCondition = DossierMgtUtils
-									.checkPreCondition(StringUtil.split(perConditionStr, StringPool.COMMA), dossier);
-
-							// do action
-
-							String userActionName = _getUserActionName(perConditionStr, dossier.getDossierId(),
-									systemUser.getFullName());
-
-							// String subUsers = StringPool.BLANK;
-							if (checkPreCondition) {
+			
+			if(!tempDossierIds.contains(dossier.getDossierId())) {
+				
+				tempDossierIds.add(dossier.getDossierId());
+			
+				params.put(Field.GROUP_ID, String.valueOf(dossier.getGroupId()));
+				params.put(DossierTerm.DOSSIER_ID, String.valueOf(dossier.getDossierId()));
+				params.put(DossierTerm.REFERENCE_UID, String.valueOf(dossier.getReferenceUid()));
+				params.put(DossierActionTerm.AUTO, "timmer");
+	
+				if (Validator.isNotNull(dossier.getDossierStatus())) {
+	
+					long dossierActionId = dossier.getDossierActionId();
+	
+					DossierAction dossierAction = DossierActionLocalServiceUtil.fetchDossierAction(dossierActionId);
+	
+					long serviceProcessId = dossierAction != null ? dossierAction.getServiceProcessId() : 0;
+	
+					String stepCode = dossierAction != null ? dossierAction.getStepCode() : StringPool.BLANK;
+	
+					//boolean pending = dossierAction != null ? dossierAction.getPending() : false;
+	
+					List<ProcessAction> lstProcessAction = ProcessActionLocalServiceUtil.getProcessActionByG_SPID_PRESC(dossier.getGroupId(),
+							serviceProcessId, stepCode);
+					
+					
+					//TODO : test case auto event
+					DossierRequestUD dRegUD = DossierRequestUDLocalServiceUtil
+							.getDossierRequestByDossierId(dossier.getDossierId());
+	
+					boolean flag = false;
+					if (dRegUD != null && dRegUD.getStatusReg() == 3) {
+						for (ProcessAction processAction : lstProcessAction) {
+	
+							if (processAction.getAutoEvent().contains("timmer")) {
 								
-								_log.info("$$$$$dossierId_"+dossier.getDossierId() + "autoEvent_" + processAction.getAutoEvent());
-
-								flag = true;
-
-								dossierActions.doAction(dossier.getGroupId(), dossier.getDossierId(),
-										dossier.getReferenceUid(), processAction.getActionCode(),
-										processAction.getProcessActionId(), userActionName, StringPool.BLANK,
-										processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
-										serviceContext);
+								String perConditionStr = processAction.getPreCondition();
+	
+								boolean checkPreCondition = DossierMgtUtils
+										.checkPreCondition(StringUtil.split(perConditionStr, StringPool.COMMA), dossier);
+	
+								// do action
+	
+								String userActionName = _getUserActionName(perConditionStr, dossier.getDossierId(),
+										systemUser.getFullName());
+	
+								// String subUsers = StringPool.BLANK;
+								if (checkPreCondition) {
+									
+									_log.info("$$$$$dossierId_"+dossier.getDossierId() + "autoEvent_" + processAction.getAutoEvent());
+	
+									flag = true;
+	
+									dossierActions.doAction(dossier.getGroupId(), dossier.getDossierId(),
+											dossier.getReferenceUid(), processAction.getActionCode(),
+											processAction.getProcessActionId(), userActionName, StringPool.BLANK,
+											processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
+											serviceContext);
+								}
+							}
+							
+							if (flag) {
+								break;
 							}
 						}
-						
-						if (flag) {
-							break;
-						}
-					}
-				} else {
-					for (ProcessAction processAction : lstProcessAction) {
-
-						if (processAction.getAutoEvent().contains("timmer")) {
-							
-							String perConditionStr = processAction.getPreCondition();
-
-							boolean checkPreCondition = DossierMgtUtils
-									.checkPreCondition(StringUtil.split(perConditionStr, StringPool.COMMA), dossier);
-
-							// do action
-
-							String userActionName = _getUserActionName(perConditionStr, dossier.getDossierId(),
-									systemUser.getFullName());
-
-							// String subUsers = StringPool.BLANK;
-							if (checkPreCondition && perConditionStr.contains("payok")) {
+					} else {
+						for (ProcessAction processAction : lstProcessAction) {
+	
+							if (processAction.getAutoEvent().contains("timmer")) {
 								
-								_log.info("$$$$$dossierId_"+dossier.getDossierId() + "autoEvent_" + processAction.getAutoEvent());
-
-								flag = true;
-
-								dossierActions.doAction(dossier.getGroupId(), dossier.getDossierId(),
-										dossier.getReferenceUid(), processAction.getActionCode(),
-										processAction.getProcessActionId(), userActionName, processAction.getActionName(),
-										processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
-										serviceContext);
+								String perConditionStr = processAction.getPreCondition();
+	
+								boolean checkPreCondition = DossierMgtUtils
+										.checkPreCondition(StringUtil.split(perConditionStr, StringPool.COMMA), dossier);
+	
+								// do action
+	
+								String userActionName = _getUserActionName(perConditionStr, dossier.getDossierId(),
+										systemUser.getFullName());
+	
+								// String subUsers = StringPool.BLANK;
+								if (checkPreCondition && perConditionStr.contains("payok")) {
+									
+									_log.info("$$$$$dossierId_"+dossier.getDossierId() + "autoEvent_" + processAction.getAutoEvent());
+	
+									flag = true;
+	
+									dossierActions.doAction(dossier.getGroupId(), dossier.getDossierId(),
+											dossier.getReferenceUid(), processAction.getActionCode(),
+											processAction.getProcessActionId(), userActionName, processAction.getActionName(),
+											processAction.getAssignUserId(), systemUser.getUserId(), StringPool.BLANK,
+											serviceContext);
+								}
 							}
-						}
-						
-						if (flag) {
-							break;
+							
+							if (flag) {
+								break;
+							}
 						}
 					}
 				}
+				
+				DossierRequestUDLocalServiceUtil.updateDossierRequests(dossier.getDossierId(), 1);
 			}
-
 		}
-
+		
+		_log.info("===TimerScheduler=tempDossierIds===" + tempDossierIds.size());
 	}
 
 	private String _getUserActionName(String perConditionStr, long dossierId, String defaultName) {

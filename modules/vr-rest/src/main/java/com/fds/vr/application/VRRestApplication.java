@@ -1633,20 +1633,17 @@ public class VRRestApplication extends Application {
 							}
 						}
 						serviceSearch = sb.toString();
-						if (Validator.isNotNull(serviceSearch)) {
-							serviceSearch = serviceSearch.toLowerCase();
-						}
 					}
 				} else {
-					serviceSearch = StringPool.APOSTROPHE + serviceCode.toLowerCase() + StringPool.APOSTROPHE;
+					serviceSearch = StringPool.APOSTROPHE + serviceCode + StringPool.APOSTROPHE;
 				}
 			}
 			_log.info("serviceSearch: " + serviceSearch);
 			if (Validator.isNotNull(govAgencyCode)) {
-				govCodeSearch = govAgencyCode.toLowerCase();
+				govCodeSearch = govAgencyCode;
 			}
 			if (Validator.isNotNull(routeCode)) {
-				routeCodeSearch = routeCode.toLowerCase();
+				routeCodeSearch = routeCode;
 			}
 			if (Validator.isNotNull(fromDate)) {
 				fromDate = ConvertFormatDate.formatDateSQL(fromDate);
@@ -1790,12 +1787,12 @@ public class VRRestApplication extends Application {
 			String serviceSearch = StringPool.BLANK;
 
 			if (Validator.isNotNull(applicantIdNo)) {
-				applicant = applicantIdNo.toLowerCase();
+				applicant = applicantIdNo;
 			}
 			_log.info("applicantIdNo: " + applicantIdNo);
 			_log.info("applicant: " + applicant);
 			if (Validator.isNotNull(serviceCode)) {
-				serviceSearch = serviceCode.toLowerCase();
+				serviceSearch = serviceCode;
 			}
 			_log.info("serviceCode: " + serviceCode);
 			_log.info("serviceSearch: " + serviceSearch);

@@ -111,6 +111,18 @@ public class DossierRequestUDLocalServiceImpl
 		
 	}
 	
+	// Status = 0 la scheduler chua quet, =1 la da quet, k quet lai nua
+	public void updateDossierRequests(long dossierId, int status) {
+		
+		List<DossierRequestUD> dossierRequestUDs =  dossierRequestUDPersistence.findByD_(dossierId);
+		
+		for(DossierRequestUD dossierRequestUD : dossierRequestUDs) {
+			dossierRequestUD.setStatus(status);
+			
+			dossierRequestUDPersistence.update(dossierRequestUD);
+		}
+	}
+	
 	public List<DossierRequestUD> getDossierRequest(long dossierId, int isNew) throws PortalException, SystemException {
 		//TODO dont know why can use finder in service.xml file
 		

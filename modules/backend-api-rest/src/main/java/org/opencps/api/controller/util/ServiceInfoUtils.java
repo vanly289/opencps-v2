@@ -80,7 +80,7 @@ public class ServiceInfoUtils {
 
 			JSONObject jsonData = serviceConfigActions.getServiceConfigs(serviceContext.getUserId(),
 					serviceContext.getCompanyId(), Long.parseLong(doc.get(Field.GROUP_ID)), params, sorts,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, serviceContext);
+					-1, -1, serviceContext);
 
 			List<Document> serviceConfigs = (List<Document>) jsonData.get("data");
 

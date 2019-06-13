@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 public class BGTVT0600052 {
@@ -213,12 +214,19 @@ public class BGTVT0600052 {
 					if (formDataObj.has("Address")) {
 						clvNonCommercialCrossBorderTransportPermit.setAddress(formDataObj.getString("Address"));
 					}
-					if (formDataObj.has("Tel")) {
+					if (formDataObj.has("Tel") && Validator.isNotNull(formDataObj.getString("Tel"))) {
 						clvNonCommercialCrossBorderTransportPermit.setTel(formDataObj.getString("Tel"));
+					}else {
+						clvNonCommercialCrossBorderTransportPermit.setTel(DUMMY_DATA);
 					}
-					if (formDataObj.has("Fax")) {
+					
+					if (formDataObj.has("Fax") && Validator.isNotNull(formDataObj.getString("Fax"))) {
 						clvNonCommercialCrossBorderTransportPermit.setFax(formDataObj.getString("Fax"));
+					} else {
+						clvNonCommercialCrossBorderTransportPermit.setFax(DUMMY_DATA);
 					}
+					
+					
 					if (formDataObj.has("VehicleOwner")) {
 						clvNonCommercialCrossBorderTransportPermit.setVehicleOwner(formDataObj.getString("VehicleOwner"));
 					}

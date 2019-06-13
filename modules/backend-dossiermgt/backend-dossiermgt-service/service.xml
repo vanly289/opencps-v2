@@ -938,6 +938,7 @@
 		<column name="comment" type="String" />
 		<column name="isNew" type="int" />
 		<column name="statusReg" type="int" />
+		<column name="status" type="int" />
 
 		<!-- Filter -->
 		<order by="desc">

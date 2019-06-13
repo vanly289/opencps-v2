@@ -268,7 +268,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(results).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -284,15 +284,15 @@ public class DossierManagementImpl implements DossierManagement {
 		DossierActions actions = new DossierActionsImpl();
 
 		try {
-			// _log.info("1");
+			// _log.debug("1");
 			if (!auth.isAuth(serviceContext)) {
 				throw new UnauthenticationException();
 			}
-			// _log.info("2");
+			// _log.debug("2");
 			boolean isCitizen = dossierPermission.isCitizen(user.getUserId());
-			// _log.info("3");
+			// _log.debug("3");
 			dossierPermission.hasGetDossiers(groupId, user.getUserId(), query.getSecetKey());
-			// _log.info("31" + query.getEnd());
+			// _log.debug("31" + query.getEnd());
 
 			if (query.getEnd() == 0) {
 
@@ -385,7 +385,7 @@ public class DossierManagementImpl implements DossierManagement {
 			params.put(DossierTerm.TO_SUBMIT_DATE, toSubmitDate);
 			params.put(DossierTerm.REFERENCE_UID, referenceUid);
 
-			// _log.info("4");
+			// _log.debug("4");
 			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
 					GetterUtil.getBoolean(query.getOrder())) };
 
@@ -416,16 +416,16 @@ public class DossierManagementImpl implements DossierManagement {
 				}
 
 			}
-			// _log.info("5");
+			// _log.debug("5");
 			JSONObject jsonData = actions.getDossiersTest(user.getUserId(), company.getCompanyId(), groupId, params,
 					sorts, query.getStart(), query.getEnd(), serviceContext);
 
-			// _log.info("6");
+			// _log.debug("6");
 			DossierResultsModel results = new DossierResultsModel();
 
 			if (jsonData != null && jsonData.length() > 0) {
 				results.setTotal(jsonData.getInt("total"));
-//				_log.info("7");
+//				_log.debug("7");
 //				results.getData().addAll(DossierUtils.mappingForGetList((List<Document>) jsonData.get("data")));
 
 				List<Document> docs = (List<Document>) jsonData.get("data");
@@ -437,8 +437,8 @@ public class DossierManagementImpl implements DossierManagement {
 						if (query.getEnd() == -1) {
 							results.getData().addAll(DossierUtils.mappingForGetList(docs));
 						} else {
-							results.getData().addAll(
-									DossierUtils.mappingForGetListPaging(docs, query.getStart(), query.getEnd()));
+							results.getData().addAll(DossierUtils.mappingForGetList(docs));
+									//DossierUtils.mappingForGetListPaging(docs, query.getStart(), query.getEnd()));
 						}
 					}
 				}
@@ -446,11 +446,11 @@ public class DossierManagementImpl implements DossierManagement {
 				results.setTotal(0);
 			}
 
-			// _log.info("8");
+			// _log.debug("8");
 			return Response.status(200).entity(results).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -593,7 +593,7 @@ public class DossierManagementImpl implements DossierManagement {
 			}
 
 		} catch (Exception e) {
-//			_log.info(e);
+//			_log.error(e);
 			return processException(e);
 		}
 
@@ -674,7 +674,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 	}
@@ -706,7 +706,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 	}
@@ -739,7 +739,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 	}
@@ -773,7 +773,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -807,7 +807,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -834,7 +834,7 @@ public class DossierManagementImpl implements DossierManagement {
 					.build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -856,9 +856,9 @@ public class DossierManagementImpl implements DossierManagement {
 
 			if (input.getIsSynAction() == 1) {
 
-				_log.info(JSONFactoryUtil.looseSerialize(input));
+				_log.debug(JSONFactoryUtil.looseSerialize(input));
 
-//				_log.info("Call in SynAction **********8 ===========");
+//				_log.debug("Call in SynAction **********8 ===========");
 
 				DossierAction dossierAction = actions.doAction(groupId, dossier.getDossierId(),
 						dossier.getReferenceUid(), input.getActionCode(), 0l, input.getActionUser(),
@@ -877,7 +877,7 @@ public class DossierManagementImpl implements DossierManagement {
 					throw new UnauthenticationException();
 				}
 
-//				_log.info("Call ===========");
+//				_log.debug("Call ===========");
 
 				ProcessOption option = getProcessOption(dossier.getServiceCode(), dossier.getGovAgencyCode(),
 						dossier.getDossierTemplateNo(), groupId);
@@ -889,10 +889,10 @@ public class DossierManagementImpl implements DossierManagement {
 				// user.getUserId(), dossier, option.getServiceProcessId(),
 				// action);
 
-				_log.info("input.getActionCode(): " + input.getActionCode());
-				_log.info("process action: " + action);
-				_log.info("action.getProcessActionId(): " + action.getProcessActionId());
-				_log.info("input.getActionUser(): " + input.getActionUser());
+				_log.debug("input.getActionCode(): " + input.getActionCode());
+				_log.debug("process action: " + action);
+				_log.debug("action.getProcessActionId(): " + action.getProcessActionId());
+				_log.debug("input.getActionUser(): " + input.getActionUser());
 				DossierAction dossierAction = actions.doAction(groupId, dossier.getDossierId(),
 						dossier.getReferenceUid(), input.getActionCode(), action.getProcessActionId(),
 						input.getActionUser(), input.getActionNote(), input.getAssignUserId(), user.getUserId(),
@@ -903,7 +903,7 @@ public class DossierManagementImpl implements DossierManagement {
 			}
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 	}
@@ -924,7 +924,7 @@ public class DossierManagementImpl implements DossierManagement {
 						
 						DeliverableLocalServiceUtil.updateDeliverable(deliverable);
 						
-						_log.info("****UPDATE DELIVERABLE: " + deliverable.getDeliverableName());
+						_log.debug("****UPDATE DELIVERABLE: " + deliverable.getDeliverableName());
 					}
 				}
 			}
@@ -1012,7 +1012,7 @@ public class DossierManagementImpl implements DossierManagement {
 	protected ProcessAction getProcessAction(long groupId, long dossierId, String refId, String actionCode,
 			long serviceProcessId) throws PortalException {
 
-		_log.info("GET PROCESS ACTION____");
+		_log.debug("GET PROCESS ACTION____");
 
 		ProcessAction action = null;
 
@@ -1020,19 +1020,19 @@ public class DossierManagementImpl implements DossierManagement {
 			List<ProcessAction> actions = ProcessActionLocalServiceUtil.getByActionCode(groupId, actionCode,
 					serviceProcessId);
 			
-			_log.info("ACTIONS groupId" + groupId);
-			_log.info("ACTIONS serviceProcessId" + serviceProcessId);
+			_log.debug("ACTIONS groupId" + groupId);
+			_log.debug("ACTIONS serviceProcessId" + serviceProcessId);
 
 			
-			_log.info("ACTIONS NUMBER____" + actions.size());
+			_log.debug("ACTIONS NUMBER____" + actions.size());
 
 			Dossier dossier = getDossier(groupId, dossierId, refId);
-			_log.info("ACTIONS dossierId" + dossierId);
-			_log.info("ACTIONS refId" + refId);
+			_log.debug("ACTIONS dossierId" + dossierId);
+			_log.debug("ACTIONS refId" + refId);
 
 			String dossierStatus = dossier.getDossierStatus();
 
-			_log.info("ACTIONS dossierStatus" + dossierStatus);
+			_log.debug("ACTIONS dossierStatus" + dossierStatus);
 
 			String dossierSubStatus = dossier.getDossierSubStatus();
 
@@ -1056,7 +1056,7 @@ public class DossierManagementImpl implements DossierManagement {
 			}
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			throw new NotFoundException("NotProcessActionFound");
 		}
 
@@ -1083,7 +1083,7 @@ public class DossierManagementImpl implements DossierManagement {
 			JSONObject result = action.getContacts(groupId, dossierId, referenceUid);
 			return Response.status(200).entity(result).build();
 		} catch (PortalException e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 	}
@@ -1109,7 +1109,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -1131,11 +1131,11 @@ public class DossierManagementImpl implements DossierManagement {
 				throw new UnauthenticationException();
 			}
 
-			_log.info("===================== dossierId " + id);
+			_log.debug("===================== dossierId " + id);
 
-			_log.info("===================== groupId " + groupId);
+			_log.debug("===================== groupId " + groupId);
 
-			_log.info("===================== dossierno " + dossierno);
+			_log.debug("===================== dossierno " + dossierno);
 
 			Dossier dossier = getDossier(id, groupId);
 
@@ -1150,7 +1150,7 @@ public class DossierManagementImpl implements DossierManagement {
 		} catch (Exception e) {
 
 			_log.error("Can't syncDossierNo with id = " + id, e);
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 
 		}
@@ -1163,9 +1163,9 @@ public class DossierManagementImpl implements DossierManagement {
 	@Override
 	public Response getDossierByCertificateNumber(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, String certificateNumber) {
-		_log.info("START*********1");
+		_log.debug("START*********1");
 		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
-		_log.info("groupId: " + groupId);
+		_log.debug("groupId: " + groupId);
 		BackendAuth auth = new BackendAuthImpl();
 		DossierActions actions = new DossierActionsImpl();
 
@@ -1177,7 +1177,7 @@ public class DossierManagementImpl implements DossierManagement {
 
 			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
-			_log.info("certificateNumber: " + certificateNumber);
+			_log.debug("certificateNumber: " + certificateNumber);
 			params.put(Field.GROUP_ID, String.valueOf(groupId));
 			params.put(DossierTerm.DOSSIER_ID + "CTN", certificateNumber);
 
@@ -1194,7 +1194,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(JSONFactoryUtil.looseSerialize(results)).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -1324,7 +1324,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -1368,7 +1368,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -1412,7 +1412,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 
@@ -1456,7 +1456,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(restrictDossier).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 	}
@@ -1561,7 +1561,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(pendding).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 	}
@@ -1621,8 +1621,8 @@ public class DossierManagementImpl implements DossierManagement {
 			Sort[] sorts = new Sort[] { SortFactoryUtil.create(query.getSort() + "_sortable", Sort.STRING_TYPE,
 					GetterUtil.getBoolean(query.getOrder())) };
 
-			// _log.info("START 1");
-			// _log.info("START Applicant: "+query.getApplicantIdNo());
+			// _log.debug("START 1");
+			// _log.debug("START Applicant: "+query.getApplicantIdNo());
 
 			if (Boolean.parseBoolean(pendding)) {
 				long groupIdCXL = 55301;
@@ -1633,7 +1633,7 @@ public class DossierManagementImpl implements DossierManagement {
 
 				if (dActionList != null && dActionList.size() > 0) {
 					LinkedHashMap<String, Object> paramPending = new LinkedHashMap<String, Object>();
-					_log.info("dActionList: " + dActionList.size());
+					_log.debug("dActionList: " + dActionList.size());
 					int length = dActionList.size();
 					StringBuilder sb = new StringBuilder();
 					for (int i = 0; i < length; i++) {
@@ -1647,7 +1647,7 @@ public class DossierManagementImpl implements DossierManagement {
 
 						}
 					}
-					_log.info("DOSSIER_ACTION_ID_PENDING: " + sb.toString());
+					_log.debug("DOSSIER_ACTION_ID_PENDING: " + sb.toString());
 
 					paramPending.put(Field.GROUP_ID, String.valueOf(groupIdCXL));
 					paramPending.put(DossierTerm.OWNER, String.valueOf(false));
@@ -1656,7 +1656,7 @@ public class DossierManagementImpl implements DossierManagement {
 
 					jsonDataPending = actions.getDossiers(user.getUserId(), company.getCompanyId(), groupIdCXL,
 							paramPending, sorts, -1, -1, serviceContext);
-					_log.info("jsonDataPending: " + jsonDataPending);
+					_log.debug("jsonDataPending: " + jsonDataPending);
 				}
 				if (jsonDataPending != null) {
 					List<Document> docs = (List<Document>) jsonDataPending.get("data");
@@ -1673,7 +1673,7 @@ public class DossierManagementImpl implements DossierManagement {
 								sb1.append(referenceUid);
 							}
 						}
-						_log.info("REFERENCE_UID: " + sb1.toString());
+						_log.debug("REFERENCE_UID: " + sb1.toString());
 						params.put(DossierTerm.REFERENCE_UID, sb1.toString());
 					}
 				}
@@ -1694,7 +1694,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(results).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 	}
@@ -1771,7 +1771,7 @@ public class DossierManagementImpl implements DossierManagement {
 			// if (dActionList != null && dActionList.size() > 0) {
 			// LinkedHashMap<String, Object> paramPending = new
 			// LinkedHashMap<String, Object>();
-			// _log.info("dActionList: "+dActionList.size());
+			// _log.debug("dActionList: "+dActionList.size());
 			// int length = dActionList.size();
 			// StringBuilder sb = new StringBuilder();
 			// for (int i = 0; i < length; i ++) {
@@ -1785,7 +1785,7 @@ public class DossierManagementImpl implements DossierManagement {
 			//
 			// }
 			// }
-			// _log.info("DOSSIER_ACTION_ID_PENDING: "+sb.toString());
+			// _log.debug("DOSSIER_ACTION_ID_PENDING: "+sb.toString());
 			//
 			// paramPending.put(Field.GROUP_ID, String.valueOf(groupIdCXL));
 			// paramPending.put(DossierTerm.OWNER, String.valueOf(false));
@@ -1797,7 +1797,7 @@ public class DossierManagementImpl implements DossierManagement {
 			// jsonDataPending = actions.getDossiers(user.getUserId(),
 			// company.getCompanyId(), groupIdCXL, paramPending, sorts,
 			// -1, -1, serviceContext);
-			// _log.info("jsonDataPending: "+jsonDataPending);
+			// _log.debug("jsonDataPending: "+jsonDataPending);
 			// }
 			// if (jsonDataPending != null) {
 			// List<Document> docs = (List<Document>)
@@ -1815,7 +1815,7 @@ public class DossierManagementImpl implements DossierManagement {
 			// sb1.append(referenceUid);
 			// }
 			// }
-			// _log.info("REFERENCE_UID: "+sb1.toString());
+			// _log.debug("REFERENCE_UID: "+sb1.toString());
 			// params.put(DossierTerm.REFERENCE_UID, sb1.toString());
 			// }
 			// }
@@ -1836,7 +1836,7 @@ public class DossierManagementImpl implements DossierManagement {
 			return Response.status(200).entity(results).build();
 
 		} catch (Exception e) {
-			_log.info(e);
+			_log.error(e);
 			return processException(e);
 		}
 	}

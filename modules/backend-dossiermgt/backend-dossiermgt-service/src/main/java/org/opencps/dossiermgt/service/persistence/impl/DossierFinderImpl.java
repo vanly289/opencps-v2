@@ -30,9 +30,12 @@ public class DossierFinderImpl extends DossierFinderBaseImpl implements DossierF
 					"	opencps_dossieraction ON opencps_dossier.dossieractionId=opencps_dossieraction.dossieractionId " + 
 					"LEFT JOIN " + 
 					"	opencps_processaction ON opencps_dossieraction.serviceprocessid = opencps_processaction.serviceprocessid " + 
+					"LEFT JOIN " + 
+					"	opencps_dossierrequests ON opencps_dossier.dossierid = opencps_dossierrequests.dossierid " + 
 					"WHERE " + 
 					"	opencps_dossier.groupId=opencps_processaction.groupId " + 
 					"	AND opencps_processaction.preStepCode=opencps_dossieraction.stepCode " + 
+					"	AND opencps_dossierrequests.status=0 " + 
 					"	AND opencps_processaction.autoEvent = ?";
 		try {
 			session = openSession();
