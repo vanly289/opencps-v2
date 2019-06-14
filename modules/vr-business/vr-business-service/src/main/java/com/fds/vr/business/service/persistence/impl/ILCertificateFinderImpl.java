@@ -157,20 +157,24 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 		try {
 			session = openSession();
 			String sql = CustomSQLUtil.get(getClass(), SEARCH_GIAYPHEP);
-
+			
+			if (Validator.isNull(keyword)) {
+				sql = StringUtil.replace(sql, "(licenceNo LIKE ? OR applicantName LIKE ?) AND", StringPool.BLANK);
+			}
 
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.setCacheable(false);
 			q.addEntity("il_certificate", ILCertificateImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
-			keyword = StringPool.PERCENT + keyword + StringPool.PERCENT;
-
-			qPos.add(keyword);
-
-			qPos.add(keyword);
-
+			if (Validator.isNotNull(keyword)) {
+				QueryPos qPos = QueryPos.getInstance(q);
+				keyword = StringPool.PERCENT + keyword + StringPool.PERCENT;
+				
+				qPos.add(keyword);
+	
+				qPos.add(keyword);
+			}
 
 			return (List<ILCertificate>) QueryUtil.list(q, getDialect(), start, end);
 
@@ -191,16 +195,21 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 		try {
 			session = openSession();
 			String sql = CustomSQLUtil.get(getClass(), COUNT_GIAYPHEP);
+			
+			if (Validator.isNull(keyword)) {
+				sql = StringUtil.replace(sql, "(licenceNo LIKE ? OR applicantName LIKE ?) AND", StringPool.BLANK);
+			}
 
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addScalar("COUNT_VALUE", Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
-			
 			if (Validator.isNotNull(keyword)) {
+				QueryPos qPos = QueryPos.getInstance(q);
+				keyword = StringPool.PERCENT + keyword + StringPool.PERCENT;
+				
 				qPos.add(keyword);
-
+	
 				qPos.add(keyword);
 			}
 			
