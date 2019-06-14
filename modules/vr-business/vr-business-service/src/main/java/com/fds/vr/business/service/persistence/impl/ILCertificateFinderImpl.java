@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -28,7 +27,9 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 	private static final Log _log = LogFactoryUtil.getLog(ILCertificateFinderImpl.class);
 
 	private static final String SEARCH_LIENVAN = ILCertificateFinder.class.getName() + ".searchLienVan";
+	private static final String COUNT_LIENVAN = ILCertificateFinder.class.getName() + ".countLienVan";
 	private static final String SEARCH_GIAYPHEP = ILCertificateFinder.class.getName() + ".searhGiayPhep";
+	private static final String COUNT_GIAYPHEP = ILCertificateFinder.class.getName() + ".countGiayPhep";
 	private static final String SEARCH_BY_REG_NUMBER = ILCertificateFinder.class.getName() + ".searchCertificateByRegNumber";
 	private static final String COUNT_BY_SERVICE_CODE = ILCertificateFinder.class.getName() + ".countByServiceCode";
 	
@@ -100,6 +101,53 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public int countLienVan(String keyword) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(getClass(), COUNT_LIENVAN);
+			
+			if (Validator.isNull(keyword)) {
+				sql = StringUtil.replace(sql, "(licenceNo = ? OR registrationNumber = ?) AND", StringPool.BLANK);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar("COUNT_VALUE", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+			
+			if (Validator.isNotNull(keyword)) {
+				qPos.add(keyword);
+
+				qPos.add(keyword);
+			}
+			
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+
+		} catch (Exception e) {
+			_log.error(e);
+		} finally {
+			closeSession(session);
+		}
+
+		return 0;
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<ILCertificate> searchGiayPhep(String keyword, int start, int end) {
@@ -133,6 +181,48 @@ public class ILCertificateFinderImpl extends ILCertificateFinderBaseImpl impleme
 		}
 
 		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public int countGiayPhep(String keyword) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(getClass(), COUNT_GIAYPHEP);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar("COUNT_VALUE", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+			
+			if (Validator.isNotNull(keyword)) {
+				qPos.add(keyword);
+
+				qPos.add(keyword);
+			}
+			
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+
+		} catch (Exception e) {
+			_log.error(e);
+		} finally {
+			closeSession(session);
+		}
+
+		return 0;
 	}
 
 	@SuppressWarnings("unchecked")

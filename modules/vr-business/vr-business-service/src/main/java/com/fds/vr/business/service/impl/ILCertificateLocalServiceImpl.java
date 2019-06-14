@@ -81,8 +81,18 @@ public class ILCertificateLocalServiceImpl
 
 	}
 	
+	public int countLienVan(String keyword) {
+		
+		return ilCertificateFinder.countLienVan(keyword);
+
+	}
+	
 	public List<ILCertificate> searchGiayPhep(String keyword, int start, int end) {
 		return ilCertificateFinder.searchGiayPhep(keyword, start, end);
+	}
+	
+	public int countGiayPhep(String keyword) {
+		return ilCertificateFinder.countGiayPhep(keyword);
 	}
 	
 	public ILCertificate addCertificate(JSONObject jsonData, Dossier dossier, long dossierFileId,

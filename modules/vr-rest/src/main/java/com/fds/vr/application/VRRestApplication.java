@@ -740,7 +740,7 @@ public class VRRestApplication extends Application {
 
 		JSONArray data = JSONFactoryUtil.createJSONArray();
 
-		long count = ILCertificateLocalServiceUtil.searchGiayPhep(keyword, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+		int count = ILCertificateLocalServiceUtil.countGiayPhep(keyword);
 
 		obj.put("total", count);
 
@@ -781,7 +781,7 @@ public class VRRestApplication extends Application {
 
 		JSONArray data = JSONFactoryUtil.createJSONArray();
 
-		long count = ILCertificateLocalServiceUtil.searchLienVan(keyword, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+		int count = ILCertificateLocalServiceUtil.countLienVan(keyword);
 
 		obj.put("total", count);
 
