@@ -39,7 +39,7 @@ public class DossierBriefNoteListenner extends BaseModelListener<DossierFile> {
 
 	@Override
 	public void onAfterUpdate(DossierFile model) throws ModelListenerException {
-		_log.info("Update DossierBriefNote=====-");
+		_log.info("Update DossierBriefNote=====" + model.getDossierFileId());
 		
 		ServiceContext serviceContext = new ServiceContext();
 		serviceContext.setCompanyId(model.getCompanyId());
@@ -82,7 +82,9 @@ public class DossierBriefNoteListenner extends BaseModelListener<DossierFile> {
 			Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
 			if (dossier != null) {
 				//DossierAction dAction = DossierActionLocalServiceUtil.getByNextActionId(dossierId, 0);
-				DossierAction dAction = DossierActionLocalServiceUtil.fetchDossierAction(model.getDossierActionId());
+				//TODO: Fix cho trong hop dossierActionId = 0 trong dossierFile (lan dau tao moi ho so)
+				long dossierActionId = model.getDossierActionId() > 0 ? model.getDossierActionId() : dossier.getDossierActionId();
+				DossierAction dAction = DossierActionLocalServiceUtil.fetchDossierAction(dossierActionId);
 				String briefNote = StringPool.BLANK;
 				if (dAction != null) {
 					ProcessStep processStep = ProcessStepLocalServiceUtil.fetchBySC_GID(dAction.getStepCode(), groupId,
@@ -91,6 +93,8 @@ public class DossierBriefNoteListenner extends BaseModelListener<DossierFile> {
 					String briefNoteStep = processStep != null ? processStep.getBriefNote() :  StringPool.BLANK;
 					if (Validator.isNotNull(briefNoteStep)) {
 						briefNote = DossierContentGenerator.getBriefNote(dossier, briefNoteStep);
+						
+						_log.info("Update DossierBriefNote=====" + model.getDossierFileId() + "=" + briefNote);
 					}
 				}
 				//
@@ -100,7 +104,7 @@ public class DossierBriefNoteListenner extends BaseModelListener<DossierFile> {
 			}
 	
 		} catch (PortalException e) {
-			e.printStackTrace();
+			_log.error(e);
 		}
 	}
 

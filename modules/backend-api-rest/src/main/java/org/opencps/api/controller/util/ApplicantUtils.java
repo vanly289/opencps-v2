@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.opencps.api.usermgt.model.ApplicantModel;
 import org.opencps.api.usermgt.model.MappingUser;
+import org.opencps.auth.utils.APIDateTimeUtils;
 import org.opencps.usermgt.model.Applicant;
 import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 
@@ -15,7 +16,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 public class ApplicantUtils {
@@ -34,7 +34,7 @@ public class ApplicantUtils {
 		model.setApplicantName(applicant.getApplicantName());
 		model.setApplicantIdType(applicant.getApplicantIdType());
 		model.setApplicantIdNo(applicant.getApplicantIdNo());
-		model.setApplicantIdDate(StringUtil.valueOf(applicant.getApplicantIdDate()));
+		model.setApplicantIdDate(APIDateTimeUtils.convertDateToString(applicant.getApplicantIdDate(), APIDateTimeUtils._NORMAL_DATE));
 		model.setContactEmail(applicant.getContactEmail());
 		model.setAddress(applicant.getAddress());
 		model.setCityCode(applicant.getCityCode());

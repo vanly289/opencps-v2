@@ -47,6 +47,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 			return;
 		}
 
+		try {
 			_log.info("OpenCPS SYNC DOSSIERS IS  : " + APIDateTimeUtils.convertDateToString(new Date()));
 
 			Company company = CompanyLocalServiceUtil.getCompanyByMx(PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
@@ -82,6 +83,8 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 					}
 				}
 			}
+		} catch (Exception e) {
+		}
 		
 		isRunningSync = false;
 		_log.info("OpenCPS SYNC DOSSIERS HAS BEEN DONE : " + APIDateTimeUtils.convertDateToString(new Date()));

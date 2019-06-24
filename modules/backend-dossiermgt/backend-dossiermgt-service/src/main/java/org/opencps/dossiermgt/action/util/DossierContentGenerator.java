@@ -18,6 +18,8 @@ import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -117,6 +119,7 @@ public class DossierContentGenerator {
 				String patternContent = entry.getValue();
 				String[] textSplit = StringUtil.split(patternContent, "@");
 				if (textSplit == null || textSplit.length < 2) {
+//					_log.info("===getBriefNote===" + tmpKey + "=");
 					briefNotePattern = briefNotePattern.replace(tmpKey, StringPool.BLANK);
 				} else {
 					String dataKey = textSplit[0];
@@ -125,12 +128,16 @@ public class DossierContentGenerator {
 					DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossier.getDossierId(),
 							fileTemplateNo, false, new DossierFileComparator(false, "createDate", Date.class));
 					
+//					_log.info("===getBriefNote===" + dossier.getDossierId() + "=" + fileTemplateNo);
 					
 					if (dossierFile == null) {
-						briefNotePattern = briefNotePattern.replace(tmpKey, StringPool.BLANK);
+//						_log.info("===getBriefNote===" + tmpKey + "=");
+						briefNotePattern = StringPool.BLANK;//briefNotePattern.replace(tmpKey, StringPool.BLANK);
+						//TODO: Trong truong hop khong tim thay dossierFile thi k update vao briefNote
 					} else {
 						
 						String formData = dossierFile.getFormData();
+//						_log.info("===getBriefNote===" + dossierFile.getDossierFileId() + "=" + formData);
 						if (Validator.isNull(formData)) {
 							briefNotePattern = briefNotePattern.replace(tmpKey, StringPool.BLANK);
 						} else {
@@ -142,9 +149,12 @@ public class DossierContentGenerator {
 									value = object.getString(dataKey);
 								}
 								
+//								_log.info("===getBriefNote===" + dossierFile.getDossierFileId() + "=" + dataKey + "=" + value);
+								
 								briefNotePattern = briefNotePattern.replace(tmpKey,
 										Validator.isNotNull(value) ? value : StringPool.BLANK);
 							} catch (Exception e) {
+								_log.error(e);
 								briefNotePattern = briefNotePattern.replace(tmpKey, StringPool.BLANK);
 							}
 						}
@@ -160,4 +170,6 @@ public class DossierContentGenerator {
 			return StringPool.BLANK;
 		}
 	}
+	
+	private static Log _log = LogFactoryUtil.getLog(DossierContentGenerator.class.getName());
 }

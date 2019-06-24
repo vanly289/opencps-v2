@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 public class AutoFillFormData {
 
 	public static String sampleDataBinding(String sampleData, long dossierId, ServiceContext serviceContext) {
-		// TODO Auto-generated method stub
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		try {
 			
@@ -137,8 +136,7 @@ public class AutoFillFormData {
 				}
 				
 			} catch (PortalException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				_log.error(e1);
 			}
 			
 			try {

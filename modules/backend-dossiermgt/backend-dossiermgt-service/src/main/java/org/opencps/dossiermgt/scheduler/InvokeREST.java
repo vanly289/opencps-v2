@@ -145,9 +145,9 @@ public class InvokeREST {
 			conn.disconnect();
 
 		} catch (MalformedURLException e) {
-			_log.error("Can't invoke api " + pathBase + endPoint, e);
+			_log.error("Can't invoke api " + pathBase + endPoint);
 		} catch (IOException e) {
-			_log.error("Can't invoke api " + pathBase + endPoint, e);
+			_log.error("Can't invoke api " + pathBase + endPoint);
 
 		} finally {
 			if (conn != null) {

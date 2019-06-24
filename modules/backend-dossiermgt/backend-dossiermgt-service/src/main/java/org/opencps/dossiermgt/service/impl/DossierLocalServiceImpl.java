@@ -344,6 +344,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			dossier.setApplicantIdDate(applicantIdDate);
 			dossier.setDossierNo(dossierNo);
 			dossier.setApplicantNote(applicantNote);
+			_log.info("==NHU_LOL===" + dossierId + "=" + briefNote);
 			dossier.setBriefNote(briefNote);
 
 			dossier.setDossierStatus(dossierStatus);
@@ -466,6 +467,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 			dossier.setApplicantIdDate(applicantIdDate);
 			dossier.setDossierNo(dossierNo);
 			dossier.setApplicantNote(applicantNote);
+			_log.info("==NHU_LOL===" + dossierId + "=" + briefNote);
 			dossier.setBriefNote(briefNote);
 
 			dossier.setDossierStatus(dossierStatus);
@@ -952,8 +954,11 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	public Dossier updateDossierBriefNote(long dossierId, String dossierBriefNote) throws PortalException {
 		Dossier dossier = dossierPersistence.findByPrimaryKey(dossierId);
-
+		Date now = new Date();
+		dossier.setModifiedDate(now);
 		dossier.setBriefNote(dossierBriefNote);
+		
+		_log.info("==NHU_LOL===updateDossierBriefNote===" + dossierId + "=" + dossierBriefNote + "=" + now);
 
 		return dossierPersistence.update(dossier);
 
