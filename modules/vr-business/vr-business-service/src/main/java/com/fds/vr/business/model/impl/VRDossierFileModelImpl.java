@@ -147,17 +147,18 @@ public class VRDossierFileModelImpl extends BaseModelImpl<VRDossierFile>
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long DELIVERABLECODE_COLUMN_BITMASK = 2L;
-	public static final long DOSSIERID_COLUMN_BITMASK = 4L;
-	public static final long DOSSIERPARTNO_COLUMN_BITMASK = 8L;
-	public static final long DOSSIERPARTTYPE_COLUMN_BITMASK = 16L;
-	public static final long FILEENTRYID_COLUMN_BITMASK = 32L;
-	public static final long FILETEMPLATENO_COLUMN_BITMASK = 64L;
-	public static final long GROUPID_COLUMN_BITMASK = 128L;
-	public static final long ISNEW_COLUMN_BITMASK = 256L;
-	public static final long REFERENCEUID_COLUMN_BITMASK = 512L;
-	public static final long REMOVED_COLUMN_BITMASK = 1024L;
-	public static final long UUID_COLUMN_BITMASK = 2048L;
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 4096L;
+	public static final long DOSSIERFILEID_COLUMN_BITMASK = 4L;
+	public static final long DOSSIERID_COLUMN_BITMASK = 8L;
+	public static final long DOSSIERPARTNO_COLUMN_BITMASK = 16L;
+	public static final long DOSSIERPARTTYPE_COLUMN_BITMASK = 32L;
+	public static final long FILEENTRYID_COLUMN_BITMASK = 64L;
+	public static final long FILETEMPLATENO_COLUMN_BITMASK = 128L;
+	public static final long GROUPID_COLUMN_BITMASK = 256L;
+	public static final long ISNEW_COLUMN_BITMASK = 512L;
+	public static final long REFERENCEUID_COLUMN_BITMASK = 1024L;
+	public static final long REMOVED_COLUMN_BITMASK = 2048L;
+	public static final long UUID_COLUMN_BITMASK = 4096L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8192L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRDossierFile"));
 
@@ -427,7 +428,19 @@ public class VRDossierFileModelImpl extends BaseModelImpl<VRDossierFile>
 
 	@Override
 	public void setDossierFileId(long dossierFileId) {
+		_columnBitmask |= DOSSIERFILEID_COLUMN_BITMASK;
+
+		if (!_setOriginalDossierFileId) {
+			_setOriginalDossierFileId = true;
+
+			_originalDossierFileId = _dossierFileId;
+		}
+
 		_dossierFileId = dossierFileId;
+	}
+
+	public long getOriginalDossierFileId() {
+		return _originalDossierFileId;
 	}
 
 	@Override
@@ -1043,6 +1056,10 @@ public class VRDossierFileModelImpl extends BaseModelImpl<VRDossierFile>
 
 		vrDossierFileModelImpl._originalUuid = vrDossierFileModelImpl._uuid;
 
+		vrDossierFileModelImpl._originalDossierFileId = vrDossierFileModelImpl._dossierFileId;
+
+		vrDossierFileModelImpl._setOriginalDossierFileId = false;
+
 		vrDossierFileModelImpl._originalGroupId = vrDossierFileModelImpl._groupId;
 
 		vrDossierFileModelImpl._setOriginalGroupId = false;
@@ -1429,6 +1446,8 @@ public class VRDossierFileModelImpl extends BaseModelImpl<VRDossierFile>
 	private String _uuid;
 	private String _originalUuid;
 	private long _dossierFileId;
+	private long _originalDossierFileId;
+	private boolean _setOriginalDossierFileId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
