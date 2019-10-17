@@ -17,6 +17,7 @@ import org.opencps.api.context.provider.UserContextProvider;
 import org.opencps.api.controller.impl.ApplicantManagementImpl;
 import org.opencps.api.controller.impl.CertNumberManagementImpl;
 import org.opencps.api.controller.impl.CommentManagementImpl;
+import org.opencps.api.controller.impl.DMDataItemManagementImpl;
 import org.opencps.api.controller.impl.DataManagementImpl;
 import org.opencps.api.controller.impl.DataTempManagementImpl;
 import org.opencps.api.controller.impl.DeliverableTypesManagementImpl;
@@ -51,6 +52,7 @@ import org.opencps.api.controller.impl.SignatureManagementImpl;
 import org.opencps.api.controller.impl.StatisticManagementImpl;
 import org.opencps.api.controller.impl.UserInfoLogManagementImpl;
 import org.opencps.api.controller.impl.UserManagementImpl;
+import org.opencps.api.controller.impl.VRConditionManagementImpl;
 import org.opencps.api.controller.impl.WorkTimeManagementImpl;
 import org.opencps.api.controller.impl.WorkingUnitManagementImpl;
 import org.opencps.dossiermgt.model.impl.DossierStatisticImpl;
@@ -109,6 +111,8 @@ public class BackendAPIRestApplication extends Application {
 		singletons.add(new DataTempManagementImpl());
 		singletons.add(new UserInfoLogManagementImpl());
 		singletons.add(new CertNumberManagementImpl());
+		singletons.add(new DMDataItemManagementImpl());
+		singletons.add(new VRConditionManagementImpl());
 		
 		// add service provider
 		singletons.add(_serviceContextProvider);

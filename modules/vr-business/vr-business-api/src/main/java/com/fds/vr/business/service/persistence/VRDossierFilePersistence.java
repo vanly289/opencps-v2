@@ -2193,6 +2193,51 @@ public interface VRDossierFilePersistence extends BasePersistence<VRDossierFile>
 	public int countByREF_UID(java.lang.String referenceUid);
 
 	/**
+	* Returns the vr dossier file where dossierFileId = &#63; or throws a {@link NoSuchVRDossierFileException} if it could not be found.
+	*
+	* @param dossierFileId the dossier file ID
+	* @return the matching vr dossier file
+	* @throws NoSuchVRDossierFileException if a matching vr dossier file could not be found
+	*/
+	public VRDossierFile findByDossierFileId(long dossierFileId)
+		throws NoSuchVRDossierFileException;
+
+	/**
+	* Returns the vr dossier file where dossierFileId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param dossierFileId the dossier file ID
+	* @return the matching vr dossier file, or <code>null</code> if a matching vr dossier file could not be found
+	*/
+	public VRDossierFile fetchByDossierFileId(long dossierFileId);
+
+	/**
+	* Returns the vr dossier file where dossierFileId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param dossierFileId the dossier file ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vr dossier file, or <code>null</code> if a matching vr dossier file could not be found
+	*/
+	public VRDossierFile fetchByDossierFileId(long dossierFileId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the vr dossier file where dossierFileId = &#63; from the database.
+	*
+	* @param dossierFileId the dossier file ID
+	* @return the vr dossier file that was removed
+	*/
+	public VRDossierFile removeByDossierFileId(long dossierFileId)
+		throws NoSuchVRDossierFileException;
+
+	/**
+	* Returns the number of vr dossier files where dossierFileId = &#63;.
+	*
+	* @param dossierFileId the dossier file ID
+	* @return the number of matching vr dossier files
+	*/
+	public int countByDossierFileId(long dossierFileId);
+
+	/**
 	* Caches the vr dossier file in the entity cache if it is enabled.
 	*
 	* @param vrDossierFile the vr dossier file

@@ -8855,6 +8855,221 @@ public class VRDossierFilePersistenceImpl extends BasePersistenceImpl<VRDossierF
 	private static final String _FINDER_COLUMN_REF_UID_REFERENCEUID_1 = "vrDossierFile.referenceUid IS NULL";
 	private static final String _FINDER_COLUMN_REF_UID_REFERENCEUID_2 = "vrDossierFile.referenceUid = ?";
 	private static final String _FINDER_COLUMN_REF_UID_REFERENCEUID_3 = "(vrDossierFile.referenceUid IS NULL OR vrDossierFile.referenceUid = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_DOSSIERFILEID = new FinderPath(VRDossierFileModelImpl.ENTITY_CACHE_ENABLED,
+			VRDossierFileModelImpl.FINDER_CACHE_ENABLED,
+			VRDossierFileImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByDossierFileId", new String[] { Long.class.getName() },
+			VRDossierFileModelImpl.DOSSIERFILEID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_DOSSIERFILEID = new FinderPath(VRDossierFileModelImpl.ENTITY_CACHE_ENABLED,
+			VRDossierFileModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDossierFileId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the vr dossier file where dossierFileId = &#63; or throws a {@link NoSuchVRDossierFileException} if it could not be found.
+	 *
+	 * @param dossierFileId the dossier file ID
+	 * @return the matching vr dossier file
+	 * @throws NoSuchVRDossierFileException if a matching vr dossier file could not be found
+	 */
+	@Override
+	public VRDossierFile findByDossierFileId(long dossierFileId)
+		throws NoSuchVRDossierFileException {
+		VRDossierFile vrDossierFile = fetchByDossierFileId(dossierFileId);
+
+		if (vrDossierFile == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("dossierFileId=");
+			msg.append(dossierFileId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchVRDossierFileException(msg.toString());
+		}
+
+		return vrDossierFile;
+	}
+
+	/**
+	 * Returns the vr dossier file where dossierFileId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param dossierFileId the dossier file ID
+	 * @return the matching vr dossier file, or <code>null</code> if a matching vr dossier file could not be found
+	 */
+	@Override
+	public VRDossierFile fetchByDossierFileId(long dossierFileId) {
+		return fetchByDossierFileId(dossierFileId, true);
+	}
+
+	/**
+	 * Returns the vr dossier file where dossierFileId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param dossierFileId the dossier file ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching vr dossier file, or <code>null</code> if a matching vr dossier file could not be found
+	 */
+	@Override
+	public VRDossierFile fetchByDossierFileId(long dossierFileId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { dossierFileId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_DOSSIERFILEID,
+					finderArgs, this);
+		}
+
+		if (result instanceof VRDossierFile) {
+			VRDossierFile vrDossierFile = (VRDossierFile)result;
+
+			if ((dossierFileId != vrDossierFile.getDossierFileId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_VRDOSSIERFILE_WHERE);
+
+			query.append(_FINDER_COLUMN_DOSSIERFILEID_DOSSIERFILEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(dossierFileId);
+
+				List<VRDossierFile> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_DOSSIERFILEID,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"VRDossierFilePersistenceImpl.fetchByDossierFileId(long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					VRDossierFile vrDossierFile = list.get(0);
+
+					result = vrDossierFile;
+
+					cacheResult(vrDossierFile);
+
+					if ((vrDossierFile.getDossierFileId() != dossierFileId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_DOSSIERFILEID,
+							finderArgs, vrDossierFile);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_DOSSIERFILEID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (VRDossierFile)result;
+		}
+	}
+
+	/**
+	 * Removes the vr dossier file where dossierFileId = &#63; from the database.
+	 *
+	 * @param dossierFileId the dossier file ID
+	 * @return the vr dossier file that was removed
+	 */
+	@Override
+	public VRDossierFile removeByDossierFileId(long dossierFileId)
+		throws NoSuchVRDossierFileException {
+		VRDossierFile vrDossierFile = findByDossierFileId(dossierFileId);
+
+		return remove(vrDossierFile);
+	}
+
+	/**
+	 * Returns the number of vr dossier files where dossierFileId = &#63;.
+	 *
+	 * @param dossierFileId the dossier file ID
+	 * @return the number of matching vr dossier files
+	 */
+	@Override
+	public int countByDossierFileId(long dossierFileId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_DOSSIERFILEID;
+
+		Object[] finderArgs = new Object[] { dossierFileId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_VRDOSSIERFILE_WHERE);
+
+			query.append(_FINDER_COLUMN_DOSSIERFILEID_DOSSIERFILEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(dossierFileId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_DOSSIERFILEID_DOSSIERFILEID_2 = "vrDossierFile.dossierFileId = ?";
 
 	public VRDossierFilePersistenceImpl() {
 		setModelClass(VRDossierFile.class);
@@ -8896,6 +9111,9 @@ public class VRDossierFilePersistenceImpl extends BasePersistenceImpl<VRDossierF
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_FILE_ID,
 			new Object[] { vrDossierFile.getFileEntryId() }, vrDossierFile);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_DOSSIERFILEID,
+			new Object[] { vrDossierFile.getDossierFileId() }, vrDossierFile);
 
 		vrDossierFile.resetOriginalValues();
 	}
@@ -9022,6 +9240,13 @@ public class VRDossierFilePersistenceImpl extends BasePersistenceImpl<VRDossierF
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_FILE_ID, args,
 			vrDossierFileModelImpl, false);
+
+		args = new Object[] { vrDossierFileModelImpl.getDossierFileId() };
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_DOSSIERFILEID, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_DOSSIERFILEID, args,
+			vrDossierFileModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -9146,6 +9371,25 @@ public class VRDossierFilePersistenceImpl extends BasePersistenceImpl<VRDossierF
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_FILE_ID, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_FILE_ID, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					vrDossierFileModelImpl.getDossierFileId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_DOSSIERFILEID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_DOSSIERFILEID, args);
+		}
+
+		if ((vrDossierFileModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_DOSSIERFILEID.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					vrDossierFileModelImpl.getOriginalDossierFileId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_DOSSIERFILEID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_DOSSIERFILEID, args);
 		}
 	}
 
