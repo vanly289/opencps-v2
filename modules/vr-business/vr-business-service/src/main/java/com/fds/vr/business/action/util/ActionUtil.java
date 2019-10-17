@@ -36,10 +36,12 @@ public class ActionUtil {
 	}
 
 	// create statement column name with table alias
-	public static String createSCNWTA(String columnName, String tableAlias) {
+	public static String createSCNWTAS(String columnName, String tableAlias) {
 		if (Validator.isNotNull(tableAlias)) {
+			_log.info("====>>> tableAlias " + tableAlias);
 			return tableAlias + "." + columnName + " AS " + tableAlias + "_" + columnName;
 		} else {
+			_log.info("====>>> columnName " + columnName);
 			return columnName;
 		}
 	}
@@ -205,7 +207,7 @@ public class ActionUtil {
 		return keyword;
 	}
 
-	public static LinkedHashMap<String, String> getOrderMap(LinkedHashMap<String, Object> params,
+	public static LinkedHashMap<String, String> getOrderFiledMap(LinkedHashMap<String, Object> params,
 			LinkedHashMap<String, String> statementColumnNames) {
 		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
 		if (params != null && statementColumnNames != null) {
@@ -224,14 +226,26 @@ public class ActionUtil {
 				HashMap<String, String> _tmp = new HashMap<String, String>();
 				statementColumnNames.forEach((k, v) -> {
 					k = k.trim();
-					String alias = k.substring(k.lastIndexOf(" ") + 1, k.length());
-
 					String fileld = StringPool.BLANK;
-					if (k.contains(".")) {
-						fileld = k.substring(k.lastIndexOf(".") + 1, k.indexOf(" "));
+					String alias = StringPool.BLANK;
+					if (k.contains(" ")) {
+						alias = k.substring(k.lastIndexOf(" ") + 1, k.length());
+						if (k.contains(".")) {
+							fileld = k.substring(k.lastIndexOf(".") + 1, k.indexOf(" "));
+						} else {
+							fileld = k.substring(0, k.indexOf(" "));
+						}
+
 					} else {
-						fileld = k.substring(0, k.indexOf(" "));
+						if (k.contains(".")) {
+							fileld = k.substring(k.lastIndexOf(".") + 1, k.length());
+						} else {
+							fileld = k;
+						}
+
+						alias = fileld;
 					}
+
 					if (Validator.isNotNull(fileld) && Validator.isNotNull(alias)) {
 						_tmp.put(fileld, alias);
 					}

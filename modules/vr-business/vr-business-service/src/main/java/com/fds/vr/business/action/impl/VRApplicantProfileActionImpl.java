@@ -1,5 +1,7 @@
 package com.fds.vr.business.action.impl;
 
+import java.util.LinkedHashMap;
+
 import com.fds.vr.business.action.VRApplicantProfileAction;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryInstance;
@@ -11,10 +13,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.LinkedHashMap;
 
 /**
  * @author trungnt
@@ -58,14 +57,15 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 
 		String tableAlias = StringPool.BLANK;
 
-		String sqlStatementPattern = "SELECT [$STATEMENT_COLUMN$] FROM vr_applicantprofile AS " + tableAlias
+		String sqlStatementPattern = "SELECT [$STATEMENT_COLUMN$] FROM vr_applicantprofile"
+				+ (Validator.isNotNull(tableAlias) ? " AS " + tableAlias : StringPool.BLANK)
 				+ " [$CONDITION$] [$ORDERBY$]";
 
 		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
-		columnStatementMap.put(ActionUtil.createSCNWTA("id", tableAlias), long.class.getName());
-		columnStatementMap.put(ActionUtil.createSCNWTA("mappingma_cty", tableAlias), String.class.getName());
-		columnStatementMap.put(ActionUtil.createSCNWTA("mappingten_cty", tableAlias), String.class.getName());
-		columnStatementMap.put(ActionUtil.createSCNWTA("mappingdia_chi_cty", tableAlias), String.class.getName());
+		columnStatementMap.put(ActionUtil.createSCNWTAS("id", tableAlias), long.class.getName());
+		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingma_cty", tableAlias), String.class.getName());
+		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingten_cty", tableAlias), String.class.getName());
+		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingdia_chi_cty", tableAlias), String.class.getName());
 
 		StringBuilder conditions = new StringBuilder();
 
@@ -92,7 +92,7 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 							StringPool.BLANK, " AND ", StringPool.BLANK));
 		}
 
-		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderMap(params, columnStatementMap);
+		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
 
 		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
 				conditions, sortedby, VRApplicantProfileImpl.class, StringPool.BLANK);
