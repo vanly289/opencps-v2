@@ -10,4 +10,5 @@ Export-Package: \
 	com.fds.vr.business.action,\
 	com.fds.vr.business.action.impl,\
 	com.fds.vr.business.action.util,\
-	com.fds.vr.business.exception
+	com.fds.vr.business.exception,\
+	com.fds.vr.business.engine

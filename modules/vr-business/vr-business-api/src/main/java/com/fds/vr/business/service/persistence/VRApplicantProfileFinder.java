@@ -43,4 +43,14 @@ public interface VRApplicantProfileFinder {
 	public int COUNTDuplicateSupplier(long groupId,
 		java.lang.String supplierType, java.lang.String supplierName,
 		java.lang.String supplierAddress);
+
+	public com.liferay.portal.kernel.json.JSONArray findVRAppicantProfile(
+		java.lang.String sql, java.util.List<java.lang.String> columnNames,
+		java.util.List<java.lang.String> dataTypes,
+		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public long countVRAppicantProfile(java.lang.String sql)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

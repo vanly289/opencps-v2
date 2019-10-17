@@ -137,6 +137,17 @@ public class VRApplicantProfileLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.json.JSONArray findVRAppicantProfile(
+		java.lang.String sql, java.util.List<java.lang.String> columnNames,
+		java.util.List<java.lang.String> dataTypes,
+		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findVRAppicantProfile(sql, columnNames, dataTypes,
+			modelClazz, modelClassName, start, end);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -276,6 +287,11 @@ public class VRApplicantProfileLocalServiceUtil {
 	public static java.util.List<com.fds.vr.business.model.VRApplicantProfile> getVRApplicantProfiles(
 		int start, int end) {
 		return getService().getVRApplicantProfiles(start, end);
+	}
+
+	public static long countVRAppicantProfile(java.lang.String sql)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().countVRAppicantProfile(sql);
 	}
 
 	/**

@@ -25,4 +25,14 @@ public interface VRCorporationAttendeeFinder {
 	public java.util.List<com.fds.vr.business.model.VRCorporationAttendee> findByUserId(
 		long mtCore, long userId, java.lang.String startDate,
 		java.lang.String endDate);
+
+	public com.liferay.portal.kernel.json.JSONArray findData(
+		java.lang.String sql, java.util.List<java.lang.String> columnNames,
+		java.util.List<java.lang.String> dataTypes,
+		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public long countData(java.lang.String sql)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }
