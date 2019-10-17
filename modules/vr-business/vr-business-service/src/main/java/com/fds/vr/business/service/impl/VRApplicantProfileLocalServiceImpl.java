@@ -14,20 +14,18 @@
 
 package com.fds.vr.business.service.impl;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.fds.vr.business.exception.NoSuchVRApplicantProfileException;
 import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.VRRPDossierStatistics;
 import com.fds.vr.business.service.base.VRApplicantProfileLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -191,6 +189,18 @@ public class VRApplicantProfileLocalServiceImpl
 		} catch (NoSuchVRApplicantProfileException e) {
 			return null;
 		}
+	}
+	
+
+	public JSONArray findVRAppicantProfile(String sql, List<String> columnNames, List<String> dataTypes,
+			Class<?> modelClazz, String modelClassName, int start, int end) throws SystemException {
+		
+		return vrApplicantProfileFinder.findVRAppicantProfile(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long countVRAppicantProfile(String sql) throws SystemException {
+
+		return vrApplicantProfileFinder.countVRAppicantProfile(sql);
 	}
 	
 	private Log _log = LogFactoryUtil.getLog(VRApplicantProfileLocalServiceImpl.class);

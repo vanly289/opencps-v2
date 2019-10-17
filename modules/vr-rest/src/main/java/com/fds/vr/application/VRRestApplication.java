@@ -1,11 +1,44 @@
 package com.fds.vr.application;
 
+import com.fds.vr.business.action.VRActions;
+import com.fds.vr.business.action.impl.DictItemUtil;
+import com.fds.vr.business.action.impl.VRActionsImpl;
+import com.fds.vr.business.model.VRCorporationAttendee;
+import com.fds.vr.business.model.VRReport;
+import com.fds.vr.business.model.VRVehicleTypeCertificate;
+import com.fds.vr.business.service.VRReportLocalServiceUtil;
+import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
+import com.fds.vr.controler.impl.VRApplicantManagementImpl;
+import com.fds.vr.model.VRCorporationAttendeeResultModel;
+import com.fds.vr.model.VRVehicleTypeCertificateResultModel;
+import com.fds.vr.util.VRCorporationAttendeeUtils;
+import com.fds.vr.util.VRVehicleCertificateUtils;
+import com.liferay.counter.kernel.model.Counter;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -33,38 +66,6 @@ import org.opencps.datamgt.service.DictItemLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.fds.vr.business.action.VRActions;
-import com.fds.vr.business.action.impl.DictItemUtil;
-import com.fds.vr.business.action.impl.VRActionsImpl;
-import com.fds.vr.business.model.VRCorporationAttendee;
-import com.fds.vr.business.model.VRReport;
-import com.fds.vr.business.model.VRVehicleTypeCertificate;
-import com.fds.vr.business.service.VRReportLocalServiceUtil;
-import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
-import com.fds.vr.model.VRCorporationAttendeeResultModel;
-import com.fds.vr.model.VRVehicleTypeCertificateResultModel;
-import com.fds.vr.util.DateTimeUtils;
-import com.fds.vr.util.VRCorporationAttendeeUtils;
-import com.fds.vr.util.VRVehicleCertificateUtils;
-import com.liferay.counter.kernel.model.Counter;
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-
 /**
  * @author admin
  */
@@ -73,18 +74,20 @@ import com.liferay.portal.kernel.util.Validator;
 public class VRRestApplication extends Application {
 
 	public Set<Object> getSingletons() {
-		
-		return Collections.<Object>singleton(this);
+		Set<Object> singletons = new HashSet<Object>();
+		//Set<Object> singletons = Collections.<Object>singleton(this);
+		singletons.add(new VRApplicantManagementImpl());
+		singletons.add(this);
+		return singletons;
 	}
 
 	public static final String PRE_FIX_CERT = "DKLR_CERT@";
 	public static final String PRE_FIX_CERT_CURR = "DKLR_CERT_CURR@";
 	public static final String PRE_FIX_CERT_ELM = "DKLR_CERT_ELM@";
 
-
-	@GET //method
+	@GET // method
 	@Path("/techspecs/vehicleclass/{vehicleClass}") // duong dan API POST ~ ADD, PUT ~ UPDATE, DELELTE - REMOVE (Xoa)
-	@Produces(MediaType.APPLICATION_JSON) // Loai gia tri trar ve 
+	@Produces(MediaType.APPLICATION_JSON) // Loai gia tri trar ve
 	public Response getTechSpecByVehicleClass(@Context HttpHeaders header,
 			@PathParam("vehicleClass") String vehicleClass) {
 		VRActions actions = new VRActionsImpl();
@@ -93,9 +96,7 @@ public class VRRestApplication extends Application {
 		String module = header.getHeaderString("module");
 		long dossierId = GetterUtil.getLong(header.getHeaderString("dossierId"));
 		long dossierFileId = GetterUtil.getLong(header.getHeaderString("dossierFileId"));
-		
-	
-		
+
 		try {
 			JSONObject object = actions.getTechSpecByVehicleClass(groupId, module, dossierId, dossierFileId,
 					vehicleClass);
@@ -254,11 +255,11 @@ public class VRRestApplication extends Application {
 			@PathParam("type") String type) {
 
 		long groupId = GetterUtil.getLong(header.getHeaderString(Field.GROUP_ID));
-		groupId = 55301; //fixed;
+		groupId = 55301; // fixed;
 		String collectionCode = code;
-		String parentItemCode = type; 
-		String level = "2"; 
-		String OrderBy = "name"; 
+		String parentItemCode = type;
+		String level = "2";
+		String OrderBy = "name";
 
 		JSONObject resp = JSONFactoryUtil.createJSONObject();
 
@@ -267,14 +268,16 @@ public class VRRestApplication extends Application {
 		long dictCollectionId = dictUtil.getCollectionId(code, groupId);
 
 		try {
-  
+
 			List<DictItem> items = DictItemLocalServiceUtil.findByF_dictCollectionId(dictCollectionId);
 
-			// Cach cu: B1. lay toan bo danh sach theo CollectionCode; B2.Loc danh sach theo Ma nhom (type)
-			//JSONArray itemsJson = dictUtil.getDictItem(items, type);
+			// Cach cu: B1. lay toan bo danh sach theo CollectionCode; B2.Loc danh sach theo
+			// Ma nhom (type)
+			// JSONArray itemsJson = dictUtil.getDictItem(items, type);
 
-			// Cach moi: Lay danh sach theo ma cha parentItemCode va CollectionCode.			
-			JSONArray itemsJson = dictUtil.getDictItemByCollection_Parent_Level_OrderBy(items, groupId, collectionCode, parentItemCode, level, OrderBy );
+			// Cach moi: Lay danh sach theo ma cha parentItemCode va CollectionCode.
+			JSONArray itemsJson = dictUtil.getDictItemByCollection_Parent_Level_OrderBy(items, groupId, collectionCode,
+					parentItemCode, level, OrderBy);
 			resp.put("Items", itemsJson);
 			resp.put("Total", itemsJson.length());
 
