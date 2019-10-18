@@ -99,7 +99,7 @@ public class VRCOPProductClassificationLocalServiceImpl
 
 		return vrcopProductClassificationPersistence.update(object);
 	}
-	
+	/*
 	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
 			String modelClassName, int start, int end) throws SystemException {
 
@@ -110,6 +110,6 @@ public class VRCOPProductClassificationLocalServiceImpl
 
 		return vrcopProductClassificationFinder.countData(sql);
 	}
-
+	*/
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductClassificationLocalServiceImpl.class);
 }

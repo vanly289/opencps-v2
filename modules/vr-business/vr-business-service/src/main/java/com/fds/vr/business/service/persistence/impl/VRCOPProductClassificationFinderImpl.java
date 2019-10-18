@@ -1,15 +1,9 @@
 package com.fds.vr.business.service.persistence.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.sql.Timestamp;
-import java.util.Date;
-
-import org.opencps.datamgt.model.DictItem;
-import org.opencps.datamgt.model.impl.DictItemImpl;
-
-import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.impl.VRCOPProductClassificationModelImpl;
+import com.fds.vr.business.service.persistence.VRCOPProductClassificationFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -20,18 +14,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
-import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.VRCOPProductClassification;
-import com.fds.vr.business.model.impl.VRApplicantProfileHistoryModelImpl;
-import com.fds.vr.business.model.impl.VRCOPProductClassificationImpl;
-import com.fds.vr.business.model.impl.VRCOPProductClassificationModelImpl;
-import com.fds.vr.business.service.persistence.VRCOPProductClassificationFinder;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class VRCOPProductClassificationFinderImpl extends VRCOPProductClassificationFinderBaseImpl
 		implements VRCOPProductClassificationFinder {

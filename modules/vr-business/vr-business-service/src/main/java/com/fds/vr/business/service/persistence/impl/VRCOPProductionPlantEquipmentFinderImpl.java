@@ -2,7 +2,6 @@ package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.impl.VRCOPProductClassificationModelImpl;
 import com.fds.vr.business.model.impl.VRCOPProductionPlantEquipmentModelImpl;
 import com.fds.vr.business.service.persistence.VRCOPProductionPlantEquipmentFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

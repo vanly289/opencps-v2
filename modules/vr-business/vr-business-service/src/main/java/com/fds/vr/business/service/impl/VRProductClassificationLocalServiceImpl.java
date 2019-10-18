@@ -62,7 +62,7 @@ public class VRProductClassificationLocalServiceImpl
 		return new ArrayList<VRProductClassification>();
 		
 	}
-
+	/*
 	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
 			String modelClassName, int start, int end) throws SystemException {
 
@@ -73,6 +73,6 @@ public class VRProductClassificationLocalServiceImpl
 
 		return vrProductClassificationFinder.countData(sql);
 	}
-	
+	*/
 	private Log _log = LogFactoryUtil.getLog(VRProductClassificationLocalServiceImpl.class);
 }
