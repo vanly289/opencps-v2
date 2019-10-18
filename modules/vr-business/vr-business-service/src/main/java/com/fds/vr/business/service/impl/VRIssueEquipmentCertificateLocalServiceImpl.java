@@ -14,19 +14,13 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.ArrayList;
+import com.fds.vr.business.service.base.VRIssueEquipmentCertificateLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+
 import java.util.List;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.service.base.VRIssueEquipmentCertificateLocalServiceBaseImpl;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr issue equipment certificate local service.
@@ -50,4 +44,15 @@ public class VRIssueEquipmentCertificateLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRIssueEquipmentCertificateLocalServiceUtil} to access the vr issue equipment certificate local service.
 	 */
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrIssueEquipmentCertificateFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrIssueEquipmentCertificateFinder.countData(sql);
+	}
 }

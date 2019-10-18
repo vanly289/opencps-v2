@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,10 +37,15 @@ import com.liferay.portal.kernel.util.Validator;
  * The implementation of the vrrp dossier statistics local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.fds.vr.business.service.VRRPDossierStatisticsLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link com.fds.vr.business.service.VRRPDossierStatisticsLocalService}
+ * interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author LamTV
@@ -47,21 +53,23 @@ import com.liferay.portal.kernel.util.Validator;
  * @see com.fds.vr.business.service.VRRPDossierStatisticsLocalServiceUtil
  */
 @ProviderType
-public class VRRPDossierStatisticsLocalServiceImpl
-	extends VRRPDossierStatisticsLocalServiceBaseImpl {
+public class VRRPDossierStatisticsLocalServiceImpl extends VRRPDossierStatisticsLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRRPDossierStatisticsLocalServiceUtil} to access the vrrp dossier statistics local service.
+	 * Never reference this class directly. Always use {@link
+	 * com.fds.vr.business.service.VRRPDossierStatisticsLocalServiceUtil} to access
+	 * the vrrp dossier statistics local service.
 	 */
-	public List<VRRPDossierStatistics> findByDossierIdCTN(long dossierid, String dossierIdCTN) throws PortalException, SystemException {
+	public List<VRRPDossierStatistics> findByDossierIdCTN(long dossierid, String dossierIdCTN)
+			throws PortalException, SystemException {
 		try {
 			return vrrpDossierStatisticsPersistence.findByDossierIdCTN(dossierid, dossierIdCTN);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRRPDossierStatistics>();
-		
+
 	}
 
 	public List<VRRPDossierStatistics> findByDossierId(long dossierid) {
@@ -79,9 +87,9 @@ public class VRRPDossierStatisticsLocalServiceImpl
 			_log.error(e);
 		}
 		return new ArrayList<VRRPDossierStatistics>();
-		
+
 	}
-	
+
 	public List<VRRPDossierStatistics> findByApplicantNo(String applicantNo) throws PortalException, SystemException {
 		try {
 			return vrrpDossierStatisticsPersistence.findByApplicantNo(applicantNo);
@@ -89,29 +97,42 @@ public class VRRPDossierStatisticsLocalServiceImpl
 			_log.error(e);
 		}
 		return new ArrayList<VRRPDossierStatistics>();
-		
+
 	}
-	
-	public List<VRRPDossierStatistics> findByCorporationId(String corporationId) throws PortalException, SystemException {
+
+	public List<VRRPDossierStatistics> findByCorporationId(String corporationId)
+			throws PortalException, SystemException {
 		try {
 			return vrrpDossierStatisticsPersistence.findByCorporationId(corporationId);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRRPDossierStatistics>();
-		
+
 	}
-	
-	public List<VRRPDossierStatistics> findByInspectorcode(String inspectorcode) throws PortalException, SystemException {
+
+	public List<VRRPDossierStatistics> findByInspectorcode(String inspectorcode)
+			throws PortalException, SystemException {
 		try {
 			return vrrpDossierStatisticsPersistence.findByInspectorcode(inspectorcode);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRRPDossierStatistics>();
-		
+
 	}
-	
-	
+
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrrpDossierStatisticsFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start,
+				end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrrpDossierStatisticsFinder.countData(sql);
+	}
+
 	private Log _log = LogFactoryUtil.getLog(VRRPDossierStatisticsLocalServiceImpl.class);
 }

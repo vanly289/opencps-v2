@@ -63,6 +63,7 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 
 		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
 		columnStatementMap.put(ActionUtil.createSCNWTAS("id", tableAlias), long.class.getName());
+		columnStatementMap.put(ActionUtil.createSCNWTAS("mtcore", tableAlias), long.class.getName());
 		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingma_cty", tableAlias), String.class.getName());
 		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingten_cty", tableAlias), String.class.getName());
 		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingdia_chi_cty", tableAlias), String.class.getName());

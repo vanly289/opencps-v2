@@ -26,6 +26,7 @@ import com.fds.vr.business.service.base.VRIssueLocalServiceBaseImpl;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -237,6 +238,17 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		vrIssue.setModifyDate(new Date());
 		
 		return vrIssuePersistence.update(vrIssue);
+	}
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrIssueFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrIssueFinder.countData(sql);
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRIssueLocalServiceImpl.class);

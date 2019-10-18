@@ -998,6 +998,9 @@
 			<finder-column name="applicantProfileId" />
 			<finder-column name="registrationFormId" />
 		</finder>
+        <finder name="applicantProfileId" return-type="Collection">
+            <finder-column name="applicantProfileId"></finder-column>
+        </finder>
 	</entity>
 
 	<entity name="VRCOPReportRepository" local-service="true" table="vr_copreportrepository"
@@ -1064,6 +1067,11 @@
 			<finder-column name="productionPlantName"></finder-column>
 			<finder-column name="productionPlantAddress"></finder-column>
 		</finder>
+        <finder name="mtCore_applicantProfileId_productionPlantCode" return-type="Collection">
+            <finder-column name="mtCore"></finder-column>
+            <finder-column name="applicantProfileId"></finder-column>
+            <finder-column name="productionPlantCode"></finder-column>
+        </finder>
 	</entity>
 
 	<entity name="VRCOPProductionPlantEmployee" local-service="true" table="vr_copproductionplantemployee"

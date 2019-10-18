@@ -47,7 +47,7 @@ public class VRApplicantProfileHistoryFinderImpl extends VRApplicantProfileHisto
 				if (applicantProfiles != null) {
 					for (VRApplicantProfile applicantProfile : applicantProfiles) {
 						JSONObject json = ActionUtil.object2Json(applicantProfile, VRApplicantProfileHistoryModelImpl.class,
-								"vrapplicantprofilehistory");
+								"");
 						results.put(json);
 					}
 				}

@@ -40,4 +40,17 @@ public class VRCFGStandardLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRCFGStandardLocalServiceUtil} to access the vrcfg standard local service.
 	 */
+	
+	/*
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrCFGStandardFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrCertificateProgressFinder.countData(sql);
+	}
+	*/
 }

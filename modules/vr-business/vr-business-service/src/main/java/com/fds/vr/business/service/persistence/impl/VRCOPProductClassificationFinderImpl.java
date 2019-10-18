@@ -59,7 +59,7 @@ public class VRCOPProductClassificationFinderImpl extends VRCOPProductClassifica
 				if (applicantProfiles != null) {
 					for (VRApplicantProfile applicantProfile : applicantProfiles) {
 						JSONObject json = ActionUtil.object2Json(applicantProfile,
-								VRCOPProductClassificationModelImpl.class, "vrcopproductclassification");
+								VRCOPProductClassificationModelImpl.class, "");
 						results.put(json);
 					}
 				}

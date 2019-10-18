@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -119,6 +120,17 @@ public class VRApplicantProfileHistoryLocalServiceImpl
 		}
 		return new ArrayList<VRApplicantProfileHistory>();
 		
+	}
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrApplicantProfileHistoryFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrApplicantProfileHistoryFinder.countData(sql);
 	}
 	
 	private Log _log = LogFactoryUtil.getLog(VRApplicantProfileHistoryLocalServiceImpl.class);

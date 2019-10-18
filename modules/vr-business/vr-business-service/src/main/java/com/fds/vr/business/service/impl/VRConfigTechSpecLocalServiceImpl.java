@@ -23,6 +23,7 @@ import com.fds.vr.business.model.VRConfigTechSpec;
 import com.fds.vr.business.service.base.VRConfigTechSpecLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -122,6 +123,19 @@ public class VRConfigTechSpecLocalServiceImpl
 		}
 		return new ArrayList<VRConfigTechSpec>(); 
 	}
+	
+	/*
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrConfigTechSpecFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrConfigTechSpecFinder.countData(sql);
+	}
+	*/
 	
 	Log _log = LogFactoryUtil.getLog(VRConfigTechSpecLocalServiceImpl.class);
 }

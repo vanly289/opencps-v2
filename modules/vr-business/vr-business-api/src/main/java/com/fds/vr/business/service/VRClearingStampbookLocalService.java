@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -144,6 +145,11 @@ public interface VRClearingStampbookLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	public JSONArray findData(java.lang.String sql,
+		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
+		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
+		int start, int end) throws SystemException;
+
 	/**
 	* @throws PortalException
 	*/
@@ -254,6 +260,8 @@ public interface VRClearingStampbookLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<VRClearingStampbook> getVRClearingStampbooks(int start, int end);
+
+	public long counData(java.lang.String sql) throws SystemException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

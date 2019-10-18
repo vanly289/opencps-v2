@@ -24,6 +24,7 @@ import java.util.Map;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -148,6 +149,18 @@ public class VRVehicleRecordLocalServiceImpl
 		object.setPrintingStatus(GetterUtil.getLong(mapValue.get("printingStatus")));
 
 		return vrVehicleRecordPersistence.update(object);
+	}
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrVehicleRecordFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start,
+				end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrVehicleRecordFinder.countData(sql);
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRVehicleRecordLocalServiceImpl.class);

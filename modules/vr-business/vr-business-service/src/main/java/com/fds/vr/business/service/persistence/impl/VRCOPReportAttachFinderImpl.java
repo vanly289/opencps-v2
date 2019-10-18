@@ -46,7 +46,7 @@ public class VRCOPReportAttachFinderImpl extends VRCOPReportAttachFinderBaseImpl
 				if (applicantProfiles != null) {
 					for (VRApplicantProfile applicantProfile : applicantProfiles) {
 						JSONObject json = ActionUtil.object2Json(applicantProfile, VRCOPReportAttachModelImpl.class,
-								"vrcopreportattach");
+								"");
 						results.put(json);
 					}
 				}

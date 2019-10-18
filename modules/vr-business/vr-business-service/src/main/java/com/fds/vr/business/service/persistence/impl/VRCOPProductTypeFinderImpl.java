@@ -46,7 +46,7 @@ public class VRCOPProductTypeFinderImpl extends VRCOPProductTypeFinderBaseImpl
 				if (applicantProfiles != null) {
 					for (VRApplicantProfile applicantProfile : applicantProfiles) {
 						JSONObject json = ActionUtil.object2Json(applicantProfile, VRCOPProductTypeModelImpl.class,
-								"vrcopproducttype");
+								"");
 						results.put(json);
 					}
 				}

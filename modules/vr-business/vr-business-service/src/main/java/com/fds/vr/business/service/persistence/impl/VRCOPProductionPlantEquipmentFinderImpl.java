@@ -47,7 +47,7 @@ public class VRCOPProductionPlantEquipmentFinderImpl extends VRCOPProductionPlan
 				if (applicantProfiles != null) {
 					for (VRApplicantProfile applicantProfile : applicantProfiles) {
 						JSONObject json = ActionUtil.object2Json(applicantProfile,
-								VRCOPProductionPlantEquipmentModelImpl.class, "vrcopproductionplantequipment");
+								VRCOPProductionPlantEquipmentModelImpl.class, "");
 						results.put(json);
 					}
 				}

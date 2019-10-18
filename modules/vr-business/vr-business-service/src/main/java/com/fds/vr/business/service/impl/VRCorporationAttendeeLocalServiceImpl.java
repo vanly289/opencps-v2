@@ -32,6 +32,7 @@ import com.fds.vr.business.service.base.VRCorporationAttendeeLocalServiceBaseImp
 import com.fds.vr.business.service.persistence.VRCorporationAttendeeFinder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -113,6 +114,17 @@ public class VRCorporationAttendeeLocalServiceImpl
 	public List<VRCorporationAttendee> getVRCorporationByUserId(int mtCore, long userId, String fromDateConvert, String toDateConvert) {
 
 		return vrCorporationAttendeeFinder.findByUserId(mtCore, userId, fromDateConvert, toDateConvert);
+	}
+
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrCorporationAttendeeFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrCorporationAttendeeFinder.countData(sql);
 	}
 
 }

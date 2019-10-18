@@ -47,7 +47,7 @@ public class VRClearingStampbookFinderImpl extends VRClearingStampbookFinderBase
 				if (applicantProfiles != null) {
 					for (VRApplicantProfile applicantProfile : applicantProfiles) {
 						JSONObject json = ActionUtil.object2Json(applicantProfile, VRClearingStampbookModelImpl.class,
-								"vrclearingstampbook");
+								"");
 						results.put(json);
 					}
 				}

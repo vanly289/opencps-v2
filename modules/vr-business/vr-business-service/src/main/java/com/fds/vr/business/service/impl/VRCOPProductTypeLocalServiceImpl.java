@@ -24,6 +24,7 @@ import com.fds.vr.business.model.VRCOPProductType;
 import com.fds.vr.business.service.base.VRCOPProductTypeLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -100,6 +101,17 @@ public class VRCOPProductTypeLocalServiceImpl
 		object.setDesignSymbolNo(mapValues.get("designSymbolNo"));
 
 		return vrcopProductTypePersistence.update(object);
+	}
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrcopProductTypeFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrcopProductTypeFinder.countData(sql);
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductTypeLocalServiceImpl.class);

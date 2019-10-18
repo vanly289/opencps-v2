@@ -87,7 +87,7 @@ public class VRCorporationAttendeeFinderImpl extends VRCorporationAttendeeFinder
 					for (VRApplicantProfile applicantProfile : applicantProfiles) {
 						
 						JSONObject json = ActionUtil.object2Json(applicantProfile, VRCorporationAttendeeModelImpl.class,
-								"vrcorporationattendee");
+								"");
 						results.put(json);
 					}
 				}

@@ -46,7 +46,7 @@ public class VRCOPReportRepositoryFinderImpl extends VRCOPReportRepositoryFinder
 				if (applicantProfiles != null) {
 					for (VRApplicantProfile applicantProfile : applicantProfiles) {
 						JSONObject json = ActionUtil.object2Json(applicantProfile, VRCOPReportRepositoryModelImpl.class,
-								"vrcopreportrepository");
+								"");
 						results.put(json);
 					}
 				}

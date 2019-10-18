@@ -147,6 +147,17 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 		return _vrIssueLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray findData(
+		java.lang.String sql, java.util.List<java.lang.String> columnNames,
+		java.util.List<java.lang.String> dataTypes,
+		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.findData(sql, columnNames, dataTypes,
+			modelClazz, modelClassName, start, end);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -329,6 +340,12 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 	public java.util.List<com.fds.vr.business.model.VRIssue> getVRIssues(
 		int start, int end) {
 		return _vrIssueLocalService.getVRIssues(start, end);
+	}
+
+	@Override
+	public long counData(java.lang.String sql)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueLocalService.counData(sql);
 	}
 
 	/**

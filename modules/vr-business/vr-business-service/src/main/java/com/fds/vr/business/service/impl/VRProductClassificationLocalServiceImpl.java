@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,7 +63,16 @@ public class VRProductClassificationLocalServiceImpl
 		
 	}
 
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
 
+		return vrProductClassificationFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrProductClassificationFinder.countData(sql);
+	}
 	
 	private Log _log = LogFactoryUtil.getLog(VRProductClassificationLocalServiceImpl.class);
 }
