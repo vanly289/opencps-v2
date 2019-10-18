@@ -9,6 +9,7 @@ import com.fds.vr.business.model.VRVehicleTypeCertificate;
 import com.fds.vr.business.service.VRReportLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.fds.vr.controler.impl.VRApplicantManagementImpl;
+import com.fds.vr.controler.impl.VRProductionManagementImpl;
 import com.fds.vr.model.VRCorporationAttendeeResultModel;
 import com.fds.vr.model.VRVehicleTypeCertificateResultModel;
 import com.fds.vr.util.VRCorporationAttendeeUtils;
@@ -36,7 +37,6 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -77,6 +77,7 @@ public class VRRestApplication extends Application {
 		Set<Object> singletons = new HashSet<Object>();
 		//Set<Object> singletons = Collections.<Object>singleton(this);
 		singletons.add(new VRApplicantManagementImpl());
+		singletons.add(new VRProductionManagementImpl());
 		singletons.add(this);
 		return singletons;
 	}

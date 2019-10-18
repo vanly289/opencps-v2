@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRCOPReportAttach;
 import com.fds.vr.business.model.impl.VRCOPReportAttachModelImpl;
 import com.fds.vr.business.service.persistence.VRCOPReportAttachFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -41,11 +41,11 @@ public class VRCOPReportAttachFinderImpl extends VRCOPReportAttachFinderBaseImpl
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRCOPReportAttach> vrcopReportAttachs = (List<VRCOPReportAttach>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRCOPReportAttachModelImpl.class,
+				if (vrcopReportAttachs != null) {
+					for (VRCOPReportAttach vrcopReportAttach : vrcopReportAttachs) {
+						JSONObject json = ActionUtil.object2Json(vrcopReportAttach, VRCOPReportAttachModelImpl.class,
 								"");
 						results.put(json);
 					}

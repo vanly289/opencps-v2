@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRCOPProductType;
 import com.fds.vr.business.model.impl.VRCOPProductTypeModelImpl;
 import com.fds.vr.business.service.persistence.VRCOPProductTypeFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Iterator;
 import java.util.List;
 
-
-public class VRCOPProductTypeFinderImpl extends VRCOPProductTypeFinderBaseImpl
-	implements VRCOPProductTypeFinder {
+public class VRCOPProductTypeFinderImpl extends VRCOPProductTypeFinderBaseImpl implements VRCOPProductTypeFinder {
 
 	Log log = LogFactoryUtil.getLog(VRCOPProductTypeFinderImpl.class);
 
@@ -41,12 +39,11 @@ public class VRCOPProductTypeFinderImpl extends VRCOPProductTypeFinderBaseImpl
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRCOPProductType> vrcopProductTypes = (List<VRCOPProductType>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRCOPProductTypeModelImpl.class,
-								"");
+				if (vrcopProductTypes != null) {
+					for (VRCOPProductType vrcopProductType : vrcopProductTypes) {
+						JSONObject json = ActionUtil.object2Json(vrcopProductType, VRCOPProductTypeModelImpl.class, "");
 						results.put(json);
 					}
 				}

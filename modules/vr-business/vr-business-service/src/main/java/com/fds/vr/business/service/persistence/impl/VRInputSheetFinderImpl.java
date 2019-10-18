@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRInputSheet;
 import com.fds.vr.business.model.impl.VRInputSheetModelImpl;
 import com.fds.vr.business.service.persistence.VRInputSheetFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -39,11 +39,11 @@ public class VRInputSheetFinderImpl extends VRInputSheetFinderBaseImpl implement
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRInputSheet> vrInputSheets = (List<VRInputSheet>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRInputSheetModelImpl.class, "");
+				if (vrInputSheets != null) {
+					for (VRInputSheet vrInputSheet : vrInputSheets) {
+						JSONObject json = ActionUtil.object2Json(vrInputSheet, VRInputSheetModelImpl.class, "");
 						results.put(json);
 					}
 				}

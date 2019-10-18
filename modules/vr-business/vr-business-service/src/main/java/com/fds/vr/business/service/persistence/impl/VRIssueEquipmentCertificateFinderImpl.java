@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRIssueEquipmentCertificate;
 import com.fds.vr.business.model.impl.VRIssueEquipmentCertificateModelImpl;
 import com.fds.vr.business.service.persistence.VRIssueEquipmentCertificateFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -40,11 +40,11 @@ public class VRIssueEquipmentCertificateFinderImpl extends VRIssueEquipmentCerti
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRIssueEquipmentCertificate> vrIssueEquipmentCertificates = (List<VRIssueEquipmentCertificate>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile,
+				if (vrIssueEquipmentCertificates != null) {
+					for (VRIssueEquipmentCertificate vrIssueEquipmentCertificate : vrIssueEquipmentCertificates) {
+						JSONObject json = ActionUtil.object2Json(vrIssueEquipmentCertificate,
 								VRIssueEquipmentCertificateModelImpl.class, "");
 						results.put(json);
 					}

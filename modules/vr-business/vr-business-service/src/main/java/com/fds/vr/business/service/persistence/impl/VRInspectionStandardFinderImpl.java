@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRInspectionStandard;
 import com.fds.vr.business.model.impl.VRInspectionStandardModelImpl;
 import com.fds.vr.business.service.persistence.VRInspectionStandardFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -40,11 +40,11 @@ public class VRInspectionStandardFinderImpl extends VRInspectionStandardFinderBa
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRInspectionStandard> vrInspectionStandards = (List<VRInspectionStandard>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRInspectionStandardModelImpl.class,
+				if (vrInspectionStandards != null) {
+					for (VRInspectionStandard vrInspectionStandard : vrInspectionStandards) {
+						JSONObject json = ActionUtil.object2Json(vrInspectionStandard, VRInspectionStandardModelImpl.class,
 								"");
 						results.put(json);
 					}

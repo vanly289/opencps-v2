@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRApplicantProfileHistory;
 import com.fds.vr.business.model.impl.VRApplicantProfileHistoryModelImpl;
 import com.fds.vr.business.service.persistence.VRApplicantProfileHistoryFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -42,11 +42,11 @@ public class VRApplicantProfileHistoryFinderImpl extends VRApplicantProfileHisto
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRApplicantProfileHistory> vrApplicantProfileHistories = (List<VRApplicantProfileHistory>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRApplicantProfileHistoryModelImpl.class,
+				if (vrApplicantProfileHistories != null) {
+					for (VRApplicantProfileHistory vrApplicantProfileHistory : vrApplicantProfileHistories) {
+						JSONObject json = ActionUtil.object2Json(vrApplicantProfileHistory, VRApplicantProfileHistoryModelImpl.class,
 								"");
 						results.put(json);
 					}

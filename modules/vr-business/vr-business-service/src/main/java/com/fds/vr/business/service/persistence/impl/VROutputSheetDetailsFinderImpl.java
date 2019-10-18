@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VROutputSheetDetails;
 import com.fds.vr.business.model.impl.VROutputSheetDetailsModelImpl;
 import com.fds.vr.business.service.persistence.VROutputSheetDetailsFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -40,11 +40,11 @@ public class VROutputSheetDetailsFinderImpl extends VROutputSheetDetailsFinderBa
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VROutputSheetDetails> vrOutputSheetDetails = (List<VROutputSheetDetails>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VROutputSheetDetailsModelImpl.class,
+				if (vrOutputSheetDetails != null) {
+					for (VROutputSheetDetails vrOutputSheetDetail : vrOutputSheetDetails) {
+						JSONObject json = ActionUtil.object2Json(vrOutputSheetDetail, VROutputSheetDetailsModelImpl.class,
 								"");
 						results.put(json);
 					}

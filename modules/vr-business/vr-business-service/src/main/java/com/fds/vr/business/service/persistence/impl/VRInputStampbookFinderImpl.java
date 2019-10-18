@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRInputStampbook;
 import com.fds.vr.business.model.impl.VRInputStampbookModelImpl;
 import com.fds.vr.business.service.persistence.VRInputStampbookFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -41,11 +41,11 @@ public class VRInputStampbookFinderImpl extends VRInputStampbookFinderBaseImpl
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRInputStampbook> vrInputStampbooks = (List<VRInputStampbook>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRInputStampbookModelImpl.class, "");
+				if (vrInputStampbooks != null) {
+					for (VRInputStampbook vrInputStampbook : vrInputStampbooks) {
+						JSONObject json = ActionUtil.object2Json(vrInputStampbook, VRInputStampbookModelImpl.class, "");
 						results.put(json);
 					}
 				}

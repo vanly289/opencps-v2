@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRCOPProductionPlantEquipment;
 import com.fds.vr.business.model.impl.VRCOPProductionPlantEquipmentModelImpl;
 import com.fds.vr.business.service.persistence.VRCOPProductionPlantEquipmentFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Iterator;
 import java.util.List;
 
-
 public class VRCOPProductionPlantEquipmentFinderImpl extends VRCOPProductionPlantEquipmentFinderBaseImpl
-	implements VRCOPProductionPlantEquipmentFinder {
+		implements VRCOPProductionPlantEquipmentFinder {
 
 	Log log = LogFactoryUtil.getLog(VRCOPProductionPlantEquipmentFinderImpl.class);
 
@@ -41,10 +40,10 @@ public class VRCOPProductionPlantEquipmentFinderImpl extends VRCOPProductionPlan
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
-						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
+				List<VRCOPProductionPlantEquipment> vrcopProductionPlantEquipments = (List<VRCOPProductionPlantEquipment>) QueryUtil
+						.list(q, getDialect(), start, end);
+				if (vrcopProductionPlantEquipments != null) {
+					for (VRCOPProductionPlantEquipment applicantProfile : vrcopProductionPlantEquipments) {
 						JSONObject json = ActionUtil.object2Json(applicantProfile,
 								VRCOPProductionPlantEquipmentModelImpl.class, "");
 						results.put(json);

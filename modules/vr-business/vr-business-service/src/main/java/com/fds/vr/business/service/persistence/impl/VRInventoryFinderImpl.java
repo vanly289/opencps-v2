@@ -1,8 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.impl.VRInspectionStandardModelImpl;
+import com.fds.vr.business.model.VRInventory;
 import com.fds.vr.business.model.impl.VRInventoryModelImpl;
 import com.fds.vr.business.service.persistence.VRInventoryFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -42,11 +41,11 @@ public class VRInventoryFinderImpl extends VRInventoryFinderBaseImpl
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRInventory> vrInventories = (List<VRInventory>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRInventoryModelImpl.class,
+				if (vrInventories != null) {
+					for (VRInventory vrInventory : vrInventories) {
+						JSONObject json = ActionUtil.object2Json(vrInventory, VRInventoryModelImpl.class,
 								"");
 						results.put(json);
 					}

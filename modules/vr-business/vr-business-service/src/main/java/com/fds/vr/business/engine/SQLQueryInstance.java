@@ -21,7 +21,6 @@ public class SQLQueryInstance {
 	private StringBuilder conditions = new StringBuilder();
 	private String className;
 
-
 	public SQLQueryInstance(String sqlStatementPattern, LinkedHashMap<String, String> columnMap,
 			StringBuilder conditions, LinkedHashMap<String, String> sortedby, Class<?> returnClassName,
 			String className) {
@@ -72,7 +71,8 @@ public class SQLQueryInstance {
 			sqlStatemanent = sqlStatemanent.replace("[$ORDERBY$]", StringPool.BLANK);
 		}
 
-		sqlStatemanent = sqlStatemanent.replace("[$STATEMENT_COLUMN$]", StringUtil.merge(statementColumns));
+		sqlStatemanent = sqlStatemanent.replace("[$STATEMENT_COLUMN$]",
+				(statementColumns != null && !statementColumns.isEmpty()) ? StringUtil.merge(statementColumns) : " * ");
 
 		this.setSqlStatemanent(sqlStatemanent);
 		this.setCountStatemanent(countStatemanent);

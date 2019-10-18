@@ -1,15 +1,9 @@
 package com.fds.vr.business.service.persistence.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.sql.Timestamp;
-import java.util.Date;
-
-import org.opencps.datamgt.model.DictItem;
-import org.opencps.datamgt.model.impl.DictItemImpl;
-
-import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.model.VRCorporationInspector;
+import com.fds.vr.business.model.impl.VRCorporationInspectorModelImpl;
+import com.fds.vr.business.service.persistence.VRCorporationInspectorFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -20,18 +14,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
-import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.VRCorporationInspector;
-import com.fds.vr.business.model.impl.VRCOPReportRepositoryModelImpl;
-import com.fds.vr.business.model.impl.VRCorporationInspectorImpl;
-import com.fds.vr.business.model.impl.VRCorporationInspectorModelImpl;
-import com.fds.vr.business.service.persistence.VRCorporationInspectorFinder;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class VRCorporationInspectorFinderImpl extends VRCorporationInspectorFinderBaseImpl
 		implements VRCorporationInspectorFinder {
@@ -54,11 +40,11 @@ public class VRCorporationInspectorFinderImpl extends VRCorporationInspectorFind
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRCorporationInspector> vrCorporationInspectors = (List<VRCorporationInspector>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile,
+				if (vrCorporationInspectors != null) {
+					for (VRCorporationInspector vrCorporationInspector : vrCorporationInspectors) {
+						JSONObject json = ActionUtil.object2Json(vrCorporationInspector,
 								VRCorporationInspectorModelImpl.class, "");
 						results.put(json);
 					}

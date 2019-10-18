@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRVehicleEquipment;
 import com.fds.vr.business.model.impl.VRVehicleEquipmentModelImpl;
 import com.fds.vr.business.service.persistence.VRVehicleEquipmentFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -39,11 +39,11 @@ public class VRVehicleEquipmentFinderImpl extends VRVehicleEquipmentFinderBaseIm
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRVehicleEquipment> vrVehicleEquipments = (List<VRVehicleEquipment>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRVehicleEquipmentModelImpl.class,
+				if (vrVehicleEquipments != null) {
+					for (VRVehicleEquipment vrVehicleEquipment : vrVehicleEquipments) {
+						JSONObject json = ActionUtil.object2Json(vrVehicleEquipment, VRVehicleEquipmentModelImpl.class,
 								"");
 						results.put(json);
 					}

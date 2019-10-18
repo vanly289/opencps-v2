@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRCorporationView;
 import com.fds.vr.business.model.impl.VRCorporationViewModelImpl;
 import com.fds.vr.business.service.persistence.VRCorporationViewFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -41,11 +41,11 @@ public class VRCorporationViewFinderImpl extends VRCorporationViewFinderBaseImpl
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRCorporationView> vrCorporationViews = (List<VRCorporationView>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile,
+				if (vrCorporationViews != null) {
+					for (VRCorporationView vrCorporationView : vrCorporationViews) {
+						JSONObject json = ActionUtil.object2Json(vrCorporationView,
 								VRCorporationViewModelImpl.class, "");
 						results.put(json);
 					}
