@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	
+	<xsd:complexType name="VRCOPReportRepositoryModel">
+		<xsd:sequence>
+			<xsd:element name="mtCore" type="xsd:int" minOccurs="0" />
+			<xsd:element name="applicantProfileId" type="xsd:long" minOccurs="0" />
+			<xsd:element name="applicantCode" type="xsd:string" minOccurs="0" />
+			<xsd:element name="applicantName" type="xsd:string" minOccurs="0" />
+			<xsd:element name="applicantAddress" type="xsd:string" minOccurs="0" />
+			<xsd:element name="overseasManufacturerCode" type="xsd:string" minOccurs="0" />
+			<xsd:element name="overseasManufacturerName" type="xsd:string" minOccurs="0" />
+			<xsd:element name="overseasManufacturerAddress" type="xsd:string" minOccurs="0" />
+			<xsd:element name="productionPlantId" type="xsd:long" minOccurs="0" />
+			<xsd:element name="productionPlantCode" type="xsd:string" minOccurs="0" />
+			<xsd:element name="productionPlantName" type="xsd:string" minOccurs="0" />
+			<xsd:element name="productionPlantAddress" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPReportNo" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPReportStatus" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPReportType" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPReportMetadata" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPReportSignName" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPReportSignTitle" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPReportSignPlace" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPReportDate" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPReportApprovedDate" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPReportExpiredDate" type="xsd:string" minOccurs="0" />
+			<xsd:element name="COPFileEntryId" type="xsd:long" minOccurs="0" />
+			<xsd:element name="modifyDate" type="xsd:string" minOccurs="0" />
+			<xsd:element name="syncDate" type="xsd:string" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="VRCOPReportRepositoryResultModel">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="total" type="xsd:int" minOccurs="0" />
+				<xsd:element name="data" type="VRCOPReportRepositoryModel"  minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

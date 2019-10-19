@@ -1,0 +1,13 @@
+Bundle-Name: vr_cop-service
+Bundle-SymbolicName: vr.cop.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
+Export-Package: \
+	com.fds.vr.cop.model.impl,\
+	com.fds.vr.cop.service.impl,\
+	com.fds.vr.cop.service.persistence.impl,\
+	com.fds.vr.cop.action,\
+	com.fds.vr.cop.action.impl,\
+	com.fds.vr.cop.action.util,\
+	com.fds.vr.cop.action.exception,\

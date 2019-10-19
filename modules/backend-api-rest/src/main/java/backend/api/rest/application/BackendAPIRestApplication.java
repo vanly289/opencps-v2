@@ -52,6 +52,7 @@ import org.opencps.api.controller.impl.SignatureManagementImpl;
 import org.opencps.api.controller.impl.StatisticManagementImpl;
 import org.opencps.api.controller.impl.UserInfoLogManagementImpl;
 import org.opencps.api.controller.impl.UserManagementImpl;
+import org.opencps.api.controller.impl.VRCOPManagementImpl;
 import org.opencps.api.controller.impl.VRConditionManagementImpl;
 import org.opencps.api.controller.impl.WorkTimeManagementImpl;
 import org.opencps.api.controller.impl.WorkingUnitManagementImpl;
@@ -112,6 +113,7 @@ public class BackendAPIRestApplication extends Application {
 		singletons.add(new CertNumberManagementImpl());
 		singletons.add(new DMDataItemManagementImpl());
 		singletons.add(new VRConditionManagementImpl());
+		singletons.add(new VRCOPManagementImpl());
 		
 		// add service provider
 		singletons.add(_serviceContextProvider);

@@ -1,6 +1,7 @@
 package com.fds.vr.business.action.util;
 
 import com.fds.vr.business.engine.SQLQueryInstance;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -101,6 +102,27 @@ public class ActionUtil {
 
 			}
 		}
+		return result;
+	}
+	
+	public static JSONArray objectList2Json(List<?> list, Class<?> clazz, String tableAlias) throws JSONException {
+
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		
+		for (Object object:list) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = object2Json(object, clazz, tableAlias);
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+
+		}
+		
 		return result;
 	}
 

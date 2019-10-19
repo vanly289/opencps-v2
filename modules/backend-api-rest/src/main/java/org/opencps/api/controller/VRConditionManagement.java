@@ -28,7 +28,7 @@ public interface VRConditionManagement {
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getVRConditions(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
-			@DefaultValue("-1")@PathParam("dataGroupId") int start,@DefaultValue("-1")@PathParam("level") int end);
+			@DefaultValue("-1")@PathParam("start") int start,@DefaultValue("-1")@PathParam("end") int end);
 	
 	@GET
 	@Path("/specificationcode/{specificationCode}")

@@ -1,0 +1,11 @@
+Bundle-Name: vr_cop-api
+Bundle-SymbolicName: vr.cop.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.fds.vr.cop.exception,\
+	com.fds.vr.cop.model,\
+	com.fds.vr.cop.service,\
+	com.fds.vr.cop.service.persistence,\
+	com.fds.vr.cop.xmlmodel
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../vr_cop-service/service.xml

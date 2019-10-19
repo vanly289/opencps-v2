@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	
+	<xsd:complexType name="VRCOPProductionPlantEquipmentModel">
+		<xsd:sequence>
+			<xsd:element name="mtCore" type="xsd:int" minOccurs="0" />
+			<xsd:element name="COPReportRepositoryID" type="xsd:long" minOccurs="0" />
+			<xsd:element name="COPReportNo" type="xsd:string" minOccurs="0" />
+			<xsd:element name="sequenceNo" type="xsd:long" minOccurs="0" />
+			
+			<xsd:element name="equipmentCode" type="xsd:string" minOccurs="0" />
+			<xsd:element name="equipmentName" type="xsd:string" minOccurs="0" />
+			<xsd:element name="equipmentType" type="xsd:string" minOccurs="0" />
+			<xsd:element name="tradeMark" type="xsd:string" minOccurs="0" />
+			<xsd:element name="tradeMarkName" type="xsd:string" minOccurs="0" />
+			<xsd:element name="commercialName" type="xsd:string" minOccurs="0" />
+			<xsd:element name="modelCode" type="xsd:string" minOccurs="0" />
+			<xsd:element name="designSymbolNo" type="xsd:string" minOccurs="0" />
+			<xsd:element name="productionCountryCode" type="xsd:long" minOccurs="0" />
+			<xsd:element name="equipmentStatus" type="xsd:string" minOccurs="0" />
+			<xsd:element name="notes" type="xsd:string" minOccurs="0" />
+			<xsd:element name="expireDate" type="xsd:string" minOccurs="0" />
+			
+			<xsd:element name="modifyDate" type="xsd:string" minOccurs="0" />
+			<xsd:element name="syncDate" type="xsd:string" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="VRCOPProductionPlantEquipmentResultModel">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="total" type="xsd:int" minOccurs="0" />
+				<xsd:element name="data" type="VRCOPProductionPlantEquipmentModel"  minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
