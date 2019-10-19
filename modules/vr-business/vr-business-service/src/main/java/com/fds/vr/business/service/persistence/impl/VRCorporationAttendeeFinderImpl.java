@@ -92,15 +92,29 @@ public class VRCorporationAttendeeFinderImpl extends VRCorporationAttendeeFinder
 				}
 			} else {
 
-				Iterator<Object[]> itr = (Iterator<Object[]>) QueryUtil.iterate(q, getDialect(), start, end);
+				if (columnNames.size() > 1) {
+					Iterator<Object[]> itr = (Iterator<Object[]>) QueryUtil.iterate(q, getDialect(), start, end);
 
-				if (itr.hasNext()) {
-					while (itr.hasNext()) {
-						Object[] objects = itr.next();
-						JSONObject json = ActionUtil.array2Json(objects, columnNames, dataTypes);
-						results.put(json);
+					if (itr.hasNext()) {
+						while (itr.hasNext()) {
+							Object[] objects = itr.next();
+							JSONObject json = ActionUtil.array2Json(objects, columnNames, dataTypes);
+							results.put(json);
+						}
+
 					}
+				} else if (columnNames.size() == 1) {
+					Iterator itr = QueryUtil.iterate(q, getDialect(), start, end);
 
+					if (itr.hasNext()) {
+						while (itr.hasNext()) {
+
+							JSONObject json = JSONFactoryUtil.createJSONObject();
+							json.put(columnNames.get(0), itr.next());
+							results.put(json);
+						}
+
+					}
 				}
 			}
 

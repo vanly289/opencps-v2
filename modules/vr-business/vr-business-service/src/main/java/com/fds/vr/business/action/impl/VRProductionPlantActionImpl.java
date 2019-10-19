@@ -3,8 +3,7 @@ package com.fds.vr.business.action.impl;
 import com.fds.vr.business.action.VRProductionPlantAction;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryInstance;
-import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
-import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
+import com.fds.vr.business.model.impl.VRProductionPlantImpl;
 import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -86,7 +85,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction{
 		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
 
 		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
-				conditions, sortedby, VRApplicantProfileImpl.class, "VRApplicantProfile");
+				conditions, sortedby, VRProductionPlantImpl.class, "VRProductionPlant");
 
 		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
 
