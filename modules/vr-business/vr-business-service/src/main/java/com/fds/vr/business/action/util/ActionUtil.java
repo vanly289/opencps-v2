@@ -105,27 +105,6 @@ public class ActionUtil {
 		}
 		return result;
 	}
-	
-	public static JSONArray objectList2Json(List<?> list, Class<?> clazz, String tableAlias) throws JSONException {
-
-		JSONArray result = JSONFactoryUtil.createJSONArray();
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		
-		for (Object object:list) {
-			
-			jsonObject = JSONFactoryUtil.createJSONObject();
-			
-			jsonObject = object2Json(object, clazz, tableAlias);
-			
-			if(Validator.isNotNull(jsonObject)) {
-				result.put(jsonObject);
-			}
-
-		}
-		
-		return result;
-	}
 
 	public static JSONObject mergeJSON(JSONObject object1, JSONObject object2, Class<?> clazz) {
 

@@ -74,7 +74,7 @@
 
 	</entity>
 	
-	<entity local-service="true" name="VRCOPProductionPlantEquipment" remote-service="false" uuid="false" table="vr_copproductionplantequiptment">
+	<entity local-service="true" name="VRCOPProductionPlantEquipment" remote-service="false" uuid="false" table="vr_copproductionplantequipment">
 
 		<column name="id" primary="true" type="long" db-name="id" />
 		<column name="mtCore" type="int" />

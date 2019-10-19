@@ -17,7 +17,6 @@ package com.fds.vr.cop.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.fds.vr.cop.model.VRCOPProductType;
-import com.fds.vr.cop.xmlmodel.VRCOPProductTypeModel;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -25,6 +24,8 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -133,6 +134,10 @@ public interface VRCOPProductTypeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONArray getListBy(java.lang.String COPReportNo)
+		throws JSONException;
+
 	/**
 	* @throws PortalException
 	*/
@@ -198,9 +203,6 @@ public interface VRCOPProductTypeLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<VRCOPProductTypeModel> getListBy(java.lang.String COPReportNo);
 
 	/**
 	* Returns a range of all the vrcop product types.

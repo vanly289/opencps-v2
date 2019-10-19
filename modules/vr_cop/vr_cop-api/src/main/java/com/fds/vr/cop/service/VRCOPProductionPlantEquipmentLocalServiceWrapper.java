@@ -129,6 +129,13 @@ public class VRCOPProductionPlantEquipmentLocalServiceWrapper
 		return _vrcopProductionPlantEquipmentLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray getListBy(
+		java.lang.String COPReportNo)
+		throws com.liferay.portal.kernel.json.JSONException {
+		return _vrcopProductionPlantEquipmentLocalService.getListBy(COPReportNo);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -218,12 +225,6 @@ public class VRCOPProductionPlantEquipmentLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _vrcopProductionPlantEquipmentLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.fds.vr.cop.xmlmodel.VRCOPProductionPlantEquipmentModel> getListBy(
-		java.lang.String COPReportNo) {
-		return _vrcopProductionPlantEquipmentLocalService.getListBy(COPReportNo);
 	}
 
 	/**

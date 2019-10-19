@@ -14,15 +14,16 @@
 
 package com.fds.vr.cop.service.impl;
 
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.cop.model.VRCOPProductionPlantEmployee;
 import com.fds.vr.cop.model.VRCOPProductionPlantEquipment;
 import com.fds.vr.cop.service.base.VRCOPProductionPlantEquipmentLocalServiceBaseImpl;
-import com.fds.vr.cop.service.persistence.VRCOPProductionPlantEmployeeUtils;
-import com.fds.vr.cop.service.persistence.VRCOPProductionPlantEquipmentUtils;
-import com.fds.vr.cop.xmlmodel.VRCOPProductionPlantEmployeeModel;
-import com.fds.vr.cop.xmlmodel.VRCOPProductionPlantEquipmentModel;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import aQute.bnd.annotation.ProviderType;
@@ -50,15 +51,23 @@ public class VRCOPProductionPlantEquipmentLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.cop.service.VRCOPProductionPlantEquipmentLocalServiceUtil} to access the vrcop production plant equipment local service.
 	 */
 	
-	public List<VRCOPProductionPlantEquipmentModel> getListBy(String COPReportNo){
+	public JSONArray getListBy(String COPReportNo) throws JSONException{
 		
-		List<VRCOPProductionPlantEquipmentModel> list = new ArrayList<VRCOPProductionPlantEquipmentModel>();
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 		
 		List<VRCOPProductionPlantEquipment> dataList =vrcopProductionPlantEquipmentPersistence.findByCOP_REPORT_NO(COPReportNo);
 		
-		VRCOPProductionPlantEquipmentUtils actions = new VRCOPProductionPlantEquipmentUtils();
-		
-		list = actions.mapperModel(dataList);
-		return list;
+		for(VRCOPProductionPlantEquipment data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRCOPProductionPlantEmployee.class, "vr_copproductionplantequipment");
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
 	}
 }

@@ -14,12 +14,15 @@
 
 package com.fds.vr.cop.service.impl;
 
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.cop.model.VRCOPProductionPlantEmployee;
 import com.fds.vr.cop.service.base.VRCOPProductionPlantEmployeeLocalServiceBaseImpl;
-import com.fds.vr.cop.service.persistence.VRCOPProductionPlantEmployeeUtils;
-import com.fds.vr.cop.xmlmodel.VRCOPProductionPlantEmployeeModel;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import aQute.bnd.annotation.ProviderType;
@@ -47,15 +50,25 @@ public class VRCOPProductionPlantEmployeeLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.cop.service.VRCOPProductionPlantEmployeeLocalServiceUtil} to access the vrcop production plant employee local service.
 	 */
 	
-	public List<VRCOPProductionPlantEmployeeModel> getListBy(String COPReportNo){
+	
+	public JSONArray getListBy(String COPReportNo) throws JSONException{
 		
-		List<VRCOPProductionPlantEmployeeModel> list = new ArrayList<VRCOPProductionPlantEmployeeModel>();
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 		
 		List<VRCOPProductionPlantEmployee> dataList = vrcopProductionPlantEmployeePersistence.findByCOP_REPORT_NO(COPReportNo);
 		
-		VRCOPProductionPlantEmployeeUtils actions = new VRCOPProductionPlantEmployeeUtils();
+		for(VRCOPProductionPlantEmployee data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRCOPProductionPlantEmployee.class, "vr_copproductionplantemployee");
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
 		
-		list = actions.mapperModel(dataList);
-		return list;
+		return result;
 	}
 }

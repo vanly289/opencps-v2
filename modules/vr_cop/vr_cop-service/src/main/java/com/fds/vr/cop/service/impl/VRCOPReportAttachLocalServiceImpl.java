@@ -14,18 +14,18 @@
 
 package com.fds.vr.cop.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.fds.vr.cop.model.VRCOPProductionPlantEmployee;
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.cop.model.VRCOPReportAttach;
 import com.fds.vr.cop.service.base.VRCOPReportAttachLocalServiceBaseImpl;
-import com.fds.vr.cop.service.persistence.VRCOPProductionPlantEmployeeUtils;
-import com.fds.vr.cop.service.persistence.VRCOPReportAttachUtils;
-import com.fds.vr.cop.xmlmodel.VRCOPProductionPlantEmployeeModel;
-import com.fds.vr.cop.xmlmodel.VRCOPReportAttachModel;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vrcop report attach local service.
@@ -50,15 +50,23 @@ public class VRCOPReportAttachLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.cop.service.VRCOPReportAttachLocalServiceUtil} to access the vrcop report attach local service.
 	 */
 	
-	public List<VRCOPReportAttachModel> getListBy(String COPReportNo){
+	public JSONArray getListBy(String COPReportNo) throws JSONException{
 		
-		List<VRCOPReportAttachModel> list = new ArrayList<VRCOPReportAttachModel>();
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 		
 		List<VRCOPReportAttach> dataList = vrcopReportAttachPersistence.findByCOP_REPORT_NO(COPReportNo);
 		
-		VRCOPReportAttachUtils actions = new VRCOPReportAttachUtils();
-		
-		list = actions.mapperModel(dataList);
-		return list;
+		for(VRCOPReportAttach data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRCOPReportAttach.class, "vr_copreportattach");
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
 	}
 }

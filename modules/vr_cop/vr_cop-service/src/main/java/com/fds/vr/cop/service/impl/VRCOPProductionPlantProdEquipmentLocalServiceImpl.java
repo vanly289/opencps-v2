@@ -14,12 +14,15 @@
 
 package com.fds.vr.cop.service.impl;
 
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.cop.model.VRCOPProductionPlantProdEquipment;
 import com.fds.vr.cop.service.base.VRCOPProductionPlantProdEquipmentLocalServiceBaseImpl;
-import com.fds.vr.cop.service.persistence.VRCOPProductionPlantProdEquipmentUtils;
-import com.fds.vr.cop.xmlmodel.VRCOPProductionPlantProdEquipmentModel;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import aQute.bnd.annotation.ProviderType;
@@ -47,15 +50,23 @@ public class VRCOPProductionPlantProdEquipmentLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.cop.service.VRCOPProductionPlantProdEquipmentLocalServiceUtil} to access the vrcop production plant prod equipment local service.
 	 */
 	
-	public List<VRCOPProductionPlantProdEquipmentModel> getListBy(String COPReportNo){
+	public JSONArray getListBy(String COPReportNo) throws JSONException{
 		
-		List<VRCOPProductionPlantProdEquipmentModel> list = new ArrayList<VRCOPProductionPlantProdEquipmentModel>();
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 		
 		List<VRCOPProductionPlantProdEquipment> dataList = vrcopProductionPlantProdEquipmentPersistence.findByCOP_REPORT_NO(COPReportNo);
 		
-		VRCOPProductionPlantProdEquipmentUtils actions = new VRCOPProductionPlantProdEquipmentUtils();
-		
-		list = actions.mapperModel(dataList);
-		return list;
+		for(VRCOPProductionPlantProdEquipment data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRCOPProductionPlantProdEquipment.class, "vr_copproductionplantprodequipment");
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
 	}
 }

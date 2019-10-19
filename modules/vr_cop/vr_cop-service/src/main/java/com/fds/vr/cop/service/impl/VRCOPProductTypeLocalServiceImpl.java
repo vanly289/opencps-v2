@@ -14,15 +14,15 @@
 
 package com.fds.vr.cop.service.impl;
 
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.cop.model.VRCOPProductType;
-import com.fds.vr.cop.model.VRCOPProductionPlantEmployee;
 import com.fds.vr.cop.service.base.VRCOPProductTypeLocalServiceBaseImpl;
-import com.fds.vr.cop.service.persistence.VRCOPProductTypeUtils;
-import com.fds.vr.cop.service.persistence.VRCOPProductionPlantEmployeeUtils;
-import com.fds.vr.cop.xmlmodel.VRCOPProductTypeModel;
-import com.fds.vr.cop.xmlmodel.VRCOPProductionPlantEmployeeModel;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import aQute.bnd.annotation.ProviderType;
@@ -50,16 +50,23 @@ public class VRCOPProductTypeLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.cop.service.VRCOPProductTypeLocalServiceUtil} to access the vrcop product type local service.
 	 */
 	
-	
-	public List<VRCOPProductTypeModel> getListBy(String COPReportNo){
+	public JSONArray getListBy(String COPReportNo) throws JSONException{
 		
-		List<VRCOPProductTypeModel> list = new ArrayList<VRCOPProductTypeModel>();
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 		
 		List<VRCOPProductType> dataList = vrcopProductTypePersistence.findByCOP_REPORT_NO(COPReportNo);
 		
-		VRCOPProductTypeUtils actions = new VRCOPProductTypeUtils();
-		
-		list = actions.mapperModel(dataList);
-		return list;
+		for(VRCOPProductType data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRCOPProductType.class, "vr_copproducttype");
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
 	}
 }

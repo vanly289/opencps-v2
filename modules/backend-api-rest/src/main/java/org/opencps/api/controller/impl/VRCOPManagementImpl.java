@@ -49,21 +49,10 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 		
 		try {
 			
-			_log.info("===getVRCOPReportRepositories===");
-			_log.info("start:"+start);
-			_log.info("end:"+end);
 
 			JSONArray result = VRCOPReportRepositoryLocalServiceUtil.getCOPReports(start, end);
 			
-			_log.info("list.size():"+result.length());
-			
-//			VRCOPReportRepositoryResultModel results = new VRCOPReportRepositoryResultModel();
-//			
-//			results.setTotal(list.size());
-//			results.getData().addAll(list);
-			
-
-			return Response.status(200).entity(result).build();
+			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
 			
@@ -101,9 +90,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 	public Response getVRCOPReportRepositories(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext) {
 		
-		_log.info("===getVRCOPReportRepositories(1)===");
-		
-		return getVRCOPReportRepositories(request, header, company, locale, user, serviceContext, -1, -1);
+		return getVRCOPReportRepositories(request, header, company, locale, user, serviceContext, 0, 50);
 	}
 	
 	@Override
@@ -112,12 +99,9 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 		
 		try {
 			
-			_log.debug("===getVRCOPReportRepository===");
-			_log.debug("COPReportNo:" + COPReportNo);
-
 			JSONObject result = VRCOPReportRepositoryLocalServiceUtil.getCOPReport(COPReportNo);
 			
-			return Response.status(200).entity(result).build();
+			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
 			
@@ -156,17 +140,10 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			User user, ServiceContext serviceContext, String COPReportNo ) {
 		
 		try {
-			
-			_log.debug("===getVRCOPProductionPlantEmployeeList===");
-			_log.debug("COPReportNo:" + COPReportNo);
 
-			List<VRCOPProductionPlantEmployeeModel> vrCondition = VRCOPProductionPlantEmployeeLocalServiceUtil.getListBy(COPReportNo);
-			VRCOPProductionPlantEmployeeResultModel result = new VRCOPProductionPlantEmployeeResultModel();
+			JSONArray result = VRCOPProductionPlantEmployeeLocalServiceUtil.getListBy(COPReportNo);
 			
-			result.setTotal(vrCondition.size());
-			result.getData().addAll(vrCondition);
-
-			return Response.status(200).entity(result).build();
+			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
 			
@@ -205,17 +182,11 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			User user, ServiceContext serviceContext, String COPReportNo ) {
 		
 		try {
-			
-			_log.debug("===getVRCOPProductionPlantEquipmentList===");
-			_log.debug("COPReportNo:" + COPReportNo);
 
-			List<VRCOPProductionPlantEquipmentModel> vrCondition = VRCOPProductionPlantEquipmentLocalServiceUtil.getListBy(COPReportNo);
-			VRCOPProductionPlantEquipmentResultModel result = new VRCOPProductionPlantEquipmentResultModel();
+			JSONArray result = VRCOPProductionPlantEquipmentLocalServiceUtil.getListBy(COPReportNo);
 			
-			result.setTotal(vrCondition.size());
-			result.getData().addAll(vrCondition);
 
-			return Response.status(200).entity(result).build();
+			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
 			
@@ -254,17 +225,11 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			User user, ServiceContext serviceContext, String COPReportNo ) {
 		
 		try {
-			
-			_log.debug("===getVRCOPProductionPlantProdEquipmentList===");
-			_log.debug("COPReportNo:" + COPReportNo);
 
-			List<VRCOPProductionPlantProdEquipmentModel> vrCondition = VRCOPProductionPlantProdEquipmentLocalServiceUtil.getListBy(COPReportNo);
-			VRCOPProductionPlantProdEquipmentResultModel result = new VRCOPProductionPlantProdEquipmentResultModel();
+			JSONArray result = VRCOPProductionPlantProdEquipmentLocalServiceUtil.getListBy(COPReportNo);
 			
-			result.setTotal(vrCondition.size());
-			result.getData().addAll(vrCondition);
 
-			return Response.status(200).entity(result).build();
+			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
 			
@@ -303,17 +268,11 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			User user, ServiceContext serviceContext, String COPReportNo ) {
 		
 		try {
-			
-			_log.debug("===getVRCOPProductTypeList===");
-			_log.debug("COPReportNo:" + COPReportNo);
 
-			List<VRCOPProductTypeModel> vrCondition = VRCOPProductTypeLocalServiceUtil.getListBy(COPReportNo);
-			VRCOPProductTypeResultModel result = new VRCOPProductTypeResultModel();
+			JSONArray result = VRCOPProductTypeLocalServiceUtil.getListBy(COPReportNo);
 			
-			result.setTotal(vrCondition.size());
-			result.getData().addAll(vrCondition);
 
-			return Response.status(200).entity(result).build();
+			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
 			
@@ -352,17 +311,10 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			User user, ServiceContext serviceContext, String COPReportNo ) {
 		
 		try {
-			
-			_log.debug("===getVRCOPReportAttachList===");
-			_log.debug("COPReportNo:" + COPReportNo);
 
-			List<VRCOPReportAttachModel> vrCondition = VRCOPReportAttachLocalServiceUtil.getListBy(COPReportNo);
-			VRCOPReportAttachResultModel result = new VRCOPReportAttachResultModel();
+			JSONArray result = VRCOPReportAttachLocalServiceUtil.getListBy(COPReportNo);
 			
-			result.setTotal(vrCondition.size());
-			result.getData().addAll(vrCondition);
-
-			return Response.status(200).entity(result).build();
+			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
 			

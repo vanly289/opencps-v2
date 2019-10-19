@@ -17,8 +17,6 @@ package com.fds.vr.cop.service.impl;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.cop.model.VRCOPReportRepository;
 import com.fds.vr.cop.service.base.VRCOPReportRepositoryLocalServiceBaseImpl;
-import com.fds.vr.cop.service.persistence.VRCOPReportRepositoryUtils;
-import com.fds.vr.cop.xmlmodel.VRCOPReportRepositoryModel;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -26,8 +24,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import aQute.bnd.annotation.ProviderType;
@@ -56,20 +54,6 @@ public class VRCOPReportRepositoryLocalServiceImpl
 	 */
 	
 	private Log _log = LogFactoryUtil.getLog(VRCOPReportRepositoryLocalServiceImpl.class);
-//	public VRCOPReportRepositoryModel getCOPReport(String COPReportNo) throws SystemException{
-//		
-//		VRCOPReportRepositoryModel result = new VRCOPReportRepositoryModel();
-//		
-//		VRCOPReportRepository vrCOPReportRepository = vrcopReportRepositoryPersistence.fetchByCOP_REPORT_NO(COPReportNo);
-//		
-//		VRCOPReportRepositoryUtils actions = new VRCOPReportRepositoryUtils();
-//		
-//		result= actions.mapperModel(vrCOPReportRepository);
-//		
-//		
-//		
-//		return result;
-//	}
 	
 	public JSONObject getCOPReport(String COPReportNo) throws SystemException, JSONException{
 		
@@ -79,40 +63,35 @@ public class VRCOPReportRepositoryLocalServiceImpl
 		
 		result = ActionUtil.object2Json(vrCOPReportRepository, VRCOPReportRepository.class,"vr_copreportrepository");
 		
-		_log.info("result:"+result);
+		_log.debug("result:"+result);
 		
 		return result;
 	}
 	
-//	public List<VRCOPReportRepositoryModel> getCOPReports(int start, int end) throws SystemException {
-//
-//		List<VRCOPReportRepositoryModel> list = new ArrayList<VRCOPReportRepositoryModel>();
-//
-//		List<VRCOPReportRepository> dataList = vrcopReportRepositoryPersistence.findAll(start, end);
-//		
-//		_log.info("dataList.size():"+dataList.size());
-//
-//		VRCOPReportRepositoryUtils actions = new VRCOPReportRepositoryUtils();
-//
-//		list = actions.mapperModel(dataList);
-//		
-//		_log.info("list.size():"+list.size());
-//
-//		return list;
-//	}
-	
 	public JSONArray getCOPReports(int start, int end) throws SystemException, JSONException {
 
 		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		
+		try {
 
 		List<VRCOPReportRepository> dataList = vrcopReportRepositoryPersistence.findAll(start, end);
 		
-		result = ActionUtil.objectList2Json(dataList, VRCOPReportRepository.class,"vr_copreportrepository");
+		for(VRCOPReportRepository data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRCOPReportRepository.class, "vr_copreportrepository");
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
 		
-		_log.info("dataList.size():"+dataList.size());
-
+		}catch(Exception e) {
+			_log.error(e);
+		}
 		
-
 		return result;
 	}
 	

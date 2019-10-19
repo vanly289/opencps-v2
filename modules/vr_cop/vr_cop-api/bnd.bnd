@@ -5,7 +5,6 @@ Export-Package:\
 	com.fds.vr.cop.exception,\
 	com.fds.vr.cop.model,\
 	com.fds.vr.cop.service,\
-	com.fds.vr.cop.service.persistence,\
-	com.fds.vr.cop.xmlmodel
+	com.fds.vr.cop.service.persistence
 -check: EXPORTS
 -includeresource: META-INF/service.xml=../vr_cop-service/service.xml
