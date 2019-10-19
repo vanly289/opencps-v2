@@ -9,6 +9,7 @@ import com.fds.vr.business.model.VRVehicleTypeCertificate;
 import com.fds.vr.business.service.VRReportLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.fds.vr.controler.impl.VRApplicantManagementImpl;
+import com.fds.vr.controler.impl.VRCOPManagementImpl;
 import com.fds.vr.controler.impl.VRProductionManagementImpl;
 import com.fds.vr.model.VRCorporationAttendeeResultModel;
 import com.fds.vr.model.VRVehicleTypeCertificateResultModel;
@@ -78,6 +79,7 @@ public class VRRestApplication extends Application {
 		//Set<Object> singletons = Collections.<Object>singleton(this);
 		singletons.add(new VRApplicantManagementImpl());
 		singletons.add(new VRProductionManagementImpl());
+		singletons.add(new VRCOPManagementImpl());
 		singletons.add(this);
 		return singletons;
 	}
