@@ -143,6 +143,13 @@ public class VRCOPProdEquipmentLocalServiceUtil {
 			modelClassName, start, end);
 	}
 
+	public static com.liferay.portal.kernel.json.JSONArray getByCOPReportNo(
+		long mtCore, java.lang.String COPReportNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByCOPReportNo(mtCore, COPReportNo);
+	}
+
 	/**
 	* @throws PortalException
 	*/

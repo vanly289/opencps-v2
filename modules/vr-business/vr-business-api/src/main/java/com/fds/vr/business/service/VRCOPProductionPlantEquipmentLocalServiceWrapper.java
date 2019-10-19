@@ -147,6 +147,15 @@ public class VRCOPProductionPlantEquipmentLocalServiceWrapper
 			columnNames, dataTypes, modelClazz, modelClassName, start, end);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray getByCOPReportNo(
+		long mtCore, java.lang.String COPReportNo)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrcopProductionPlantEquipmentLocalService.getByCOPReportNo(mtCore,
+			COPReportNo);
+	}
+
 	/**
 	* @throws PortalException
 	*/

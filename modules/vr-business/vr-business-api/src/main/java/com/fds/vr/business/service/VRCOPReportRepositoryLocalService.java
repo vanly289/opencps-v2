@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -144,6 +145,10 @@ public interface VRCOPReportRepositoryLocalService extends BaseLocalService,
 		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
 		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
 		int start, int end) throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONObject getByCOPReportNo(long mtCore, java.lang.String COPReportNo)
+		throws PortalException, SystemException;
 
 	/**
 	* @throws PortalException
