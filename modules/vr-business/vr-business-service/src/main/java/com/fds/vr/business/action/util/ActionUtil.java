@@ -82,7 +82,8 @@ public class ActionUtil {
 				fieldName = fieldName.replaceFirst("_", "");
 				String dataType = clazz.getDeclaredFields()[i].getType().getName();
 				if (result.has(fieldName)) {
-					String key = tableAlias + "_" + fieldName.toLowerCase();
+					String key = Validator.isNotNull(tableAlias) ? (tableAlias + "_")
+							: StringPool.BLANK + fieldName.toLowerCase();
 					Object value = result.get(fieldName);
 
 					if (dataType.equals("java.util.Date")) {
@@ -92,7 +93,7 @@ public class ActionUtil {
 							Calendar c = Calendar.getInstance();
 							c.setTimeInMillis(time);
 							Date date = c.getTime();
-							strDate = DateTimeUtils.convertDateToString(date, DateTimeUtils._VN_TIME_FORMAT_HOUR);
+							strDate = DateTimeUtils.convertDateToString(date, DateTimeUtils._VN_DATE_TIME_FORMAT_HOUR);
 							value = strDate;
 						}
 					}
@@ -232,7 +233,7 @@ public class ActionUtil {
 	public static LinkedHashMap<String, String> getOrderFiledMap(LinkedHashMap<String, Object> params,
 			LinkedHashMap<String, String> statementColumnNames) {
 		LinkedHashMap<String, String> orderMap = new LinkedHashMap<String, String>();
-		if (params != null && statementColumnNames != null) {
+		if (params != null) {
 
 			String order_asc = StringPool.BLANK;
 			String order_desc = StringPool.BLANK;
@@ -244,55 +245,78 @@ public class ActionUtil {
 				order_desc = (String) params.get("order_desc");
 			}
 
-			if (Validator.isNotNull(order_asc) || Validator.isNotNull(order_desc)) {
-				HashMap<String, String> _tmp = new HashMap<String, String>();
-				statementColumnNames.forEach((k, v) -> {
-					k = k.trim();
-					String fileld = StringPool.BLANK;
-					String alias = StringPool.BLANK;
-					if (k.contains(" ")) {
-						alias = k.substring(k.lastIndexOf(" ") + 1, k.length());
-						if (k.contains(".")) {
-							fileld = k.substring(k.lastIndexOf(".") + 1, k.indexOf(" "));
+			if ((Validator.isNotNull(order_asc) || Validator.isNotNull(order_desc))) {
+
+				if (statementColumnNames != null && !statementColumnNames.isEmpty()) {
+					HashMap<String, String> _tmp = new HashMap<String, String>();
+					statementColumnNames.forEach((k, v) -> {
+						k = k.trim();
+						String fileld = StringPool.BLANK;
+						String alias = StringPool.BLANK;
+						if (k.contains(" ")) {
+							alias = k.substring(k.lastIndexOf(" ") + 1, k.length());
+							if (k.contains(".")) {
+								fileld = k.substring(k.lastIndexOf(".") + 1, k.indexOf(" "));
+							} else {
+								fileld = k.substring(0, k.indexOf(" "));
+							}
+
 						} else {
-							fileld = k.substring(0, k.indexOf(" "));
+							if (k.contains(".")) {
+								fileld = k.substring(k.lastIndexOf(".") + 1, k.length());
+							} else {
+								fileld = k;
+							}
+
+							alias = fileld;
 						}
 
-					} else {
-						if (k.contains(".")) {
-							fileld = k.substring(k.lastIndexOf(".") + 1, k.length());
-						} else {
-							fileld = k;
+						if (Validator.isNotNull(fileld) && Validator.isNotNull(alias)) {
+							_tmp.put(fileld, alias);
 						}
 
-						alias = fileld;
-					}
+					});
 
-					if (Validator.isNotNull(fileld) && Validator.isNotNull(alias)) {
-						_tmp.put(fileld, alias);
-					}
-
-				});
-
-				if (Validator.isNotNull(order_asc)) {
-					String[] orderASC = StringUtil.split(order_asc);
-					if (orderASC != null && orderASC.length > 0) {
-						for (int i = 0; i < orderASC.length; i++) {
-							String field = orderASC[i];
-							if (_tmp.containsKey(field)) {
-								orderMap.put(_tmp.get(field), "ASC");
+					if (Validator.isNotNull(order_asc)) {
+						String[] orderASC = StringUtil.split(order_asc);
+						if (orderASC != null && orderASC.length > 0) {
+							for (int i = 0; i < orderASC.length; i++) {
+								String field = orderASC[i];
+								if (_tmp.containsKey(field)) {
+									orderMap.put(_tmp.get(field), "ASC");
+								}
 							}
 						}
 					}
-				}
 
-				if (Validator.isNotNull(order_desc)) {
-					String[] orderDESC = StringUtil.split(order_desc);
-					if (orderDESC != null && orderDESC.length > 0) {
-						for (int i = 0; i < orderDESC.length; i++) {
-							String field = orderDESC[i];
-							if (_tmp.containsKey(field)) {
-								orderMap.put(_tmp.get(field), "DESC");
+					if (Validator.isNotNull(order_desc)) {
+						String[] orderDESC = StringUtil.split(order_desc);
+						if (orderDESC != null && orderDESC.length > 0) {
+							for (int i = 0; i < orderDESC.length; i++) {
+								String field = orderDESC[i];
+								if (_tmp.containsKey(field)) {
+									orderMap.put(_tmp.get(field), "DESC");
+								}
+							}
+						}
+					}
+				} else {
+					if (Validator.isNotNull(order_asc)) {
+						String[] orderASC = StringUtil.split(order_asc);
+						if (orderASC != null && orderASC.length > 0) {
+							for (int i = 0; i < orderASC.length; i++) {
+								String field = orderASC[i];
+								orderMap.put(field, "ASC");
+							}
+						}
+					}
+
+					if (Validator.isNotNull(order_desc)) {
+						String[] orderDESC = StringUtil.split(order_desc);
+						if (orderDESC != null && orderDESC.length > 0) {
+							for (int i = 0; i < orderDESC.length; i++) {
+								String field = orderDESC[i];
+								orderMap.put(field, "DESC");
 							}
 						}
 					}

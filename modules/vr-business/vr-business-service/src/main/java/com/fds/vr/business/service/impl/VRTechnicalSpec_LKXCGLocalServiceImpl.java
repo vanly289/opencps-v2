@@ -111,7 +111,19 @@ public class VRTechnicalSpec_LKXCGLocalServiceImpl
 		return new ArrayList<VRTechnicalSpec_LKXCG>();
 		
 	}
-	
+	/*
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrTechnicalSpec_LKXCGFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start,
+				end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrTechnicalSpec_LKXCGFinder.countData(sql);
+	}
+	*/
 	private Log _log = LogFactoryUtil.getLog(VRTechnicalSpec_LKXCGLocalServiceImpl.class);
 
 }

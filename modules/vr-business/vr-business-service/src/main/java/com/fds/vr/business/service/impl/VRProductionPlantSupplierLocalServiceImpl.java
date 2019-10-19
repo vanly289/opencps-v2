@@ -16,10 +16,13 @@ package com.fds.vr.business.service.impl;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRProductionPlantSupplier;
 import com.fds.vr.business.service.base.VRProductionPlantSupplierLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -83,4 +86,17 @@ public class VRProductionPlantSupplierLocalServiceImpl
 
 		return vrProductionPlantSupplierPersistence.update(object);
 	}
+	
+	/*
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrProductionPlantSupplierFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrProductionPlantSupplierFinder.countData(sql);
+	}
+	*/
 }

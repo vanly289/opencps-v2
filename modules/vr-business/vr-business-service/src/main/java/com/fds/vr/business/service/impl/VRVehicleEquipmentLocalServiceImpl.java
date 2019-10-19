@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,4 +51,16 @@ public class VRVehicleEquipmentLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRVehicleEquipmentLocalServiceUtil} to access the vr vehicle equipment local service.
 	 */
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrVehicleEquipmentFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start,
+				end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrVehicleEquipmentFinder.countData(sql);
+	}
 }

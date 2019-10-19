@@ -136,6 +136,17 @@ public class VRIssueVehiclecertificateLocalServiceWrapper
 		return _vrIssueVehiclecertificateLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray findData(
+		java.lang.String sql, java.util.List<java.lang.String> columnNames,
+		java.util.List<java.lang.String> dataTypes,
+		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueVehiclecertificateLocalService.findData(sql,
+			columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -270,6 +281,12 @@ public class VRIssueVehiclecertificateLocalServiceWrapper
 		int start, int end) {
 		return _vrIssueVehiclecertificateLocalService.getVRIssueVehiclecertificates(start,
 			end);
+	}
+
+	@Override
+	public long counData(java.lang.String sql)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrIssueVehiclecertificateLocalService.counData(sql);
 	}
 
 	/**

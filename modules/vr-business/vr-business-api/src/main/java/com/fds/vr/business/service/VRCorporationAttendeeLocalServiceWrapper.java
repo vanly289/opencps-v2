@@ -129,6 +129,17 @@ public class VRCorporationAttendeeLocalServiceWrapper
 		return _vrCorporationAttendeeLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray findData(
+		java.lang.String sql, java.util.List<java.lang.String> columnNames,
+		java.util.List<java.lang.String> dataTypes,
+		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrCorporationAttendeeLocalService.findData(sql, columnNames,
+			dataTypes, modelClazz, modelClassName, start, end);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -316,6 +327,12 @@ public class VRCorporationAttendeeLocalServiceWrapper
 		java.lang.String toDateConvert) {
 		return _vrCorporationAttendeeLocalService.getVRCorporationByUserId(mtCore,
 			userId, fromDateConvert, toDateConvert);
+	}
+
+	@Override
+	public long counData(java.lang.String sql)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrCorporationAttendeeLocalService.counData(sql);
 	}
 
 	/**

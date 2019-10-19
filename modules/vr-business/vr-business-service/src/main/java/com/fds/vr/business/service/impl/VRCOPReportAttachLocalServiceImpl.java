@@ -24,6 +24,7 @@ import com.fds.vr.business.model.VRCOPReportAttach;
 import com.fds.vr.business.service.base.VRCOPReportAttachLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -95,6 +96,17 @@ public class VRCOPReportAttachLocalServiceImpl
 		object.setRemarks(mapValues.get("remarks"));
 
 		return vrcopReportAttachPersistence.update(object);
+	}
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrcopReportAttachFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrcopReportAttachFinder.countData(sql);
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRCOPReportAttachLocalServiceImpl.class);

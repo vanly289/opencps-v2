@@ -24,6 +24,7 @@ import com.fds.vr.business.model.VRCOPProductionPlantEmployee;
 import com.fds.vr.business.service.base.VRCOPProductionPlantEmployeeLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -95,6 +96,17 @@ public class VRCOPProductionPlantEmployeeLocalServiceImpl
 		object.setTrainningAt(mapValues.get("trainningAt"));
 
 		return vrcopProductionPlantEmployeePersistence.update(object);
+	}
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return  vrcopProductionPlantEmployeeFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrcopProductionPlantEmployeeFinder.countData(sql);
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductionPlantEmployeeLocalServiceImpl.class);

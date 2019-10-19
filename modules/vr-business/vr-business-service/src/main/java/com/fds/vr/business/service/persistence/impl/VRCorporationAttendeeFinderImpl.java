@@ -1,7 +1,6 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.VRCorporationAttendee;
 import com.fds.vr.business.model.impl.VRCorporationAttendeeImpl;
 import com.fds.vr.business.model.impl.VRCorporationAttendeeModelImpl;
@@ -81,13 +80,13 @@ public class VRCorporationAttendeeFinderImpl extends VRCorporationAttendeeFinder
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
+				List<VRCorporationAttendee> vrCorporationAttendees = (List<VRCorporationAttendee>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
+				if (vrCorporationAttendees != null) {
+					for (VRCorporationAttendee vrCorporationAttendee : vrCorporationAttendees) {
 						
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRCorporationAttendeeModelImpl.class,
-								"vrcorporationattendee");
+						JSONObject json = ActionUtil.object2Json(vrCorporationAttendee, VRCorporationAttendeeModelImpl.class,
+								"");
 						results.put(json);
 					}
 				}

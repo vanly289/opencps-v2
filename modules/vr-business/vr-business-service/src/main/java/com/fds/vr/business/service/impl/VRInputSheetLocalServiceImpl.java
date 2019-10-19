@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -157,6 +158,17 @@ public class VRInputSheetLocalServiceImpl
 		}
 		return new ArrayList<VRInputSheet>();
 		
+	}
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrInputSheetFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrInputSheetFinder.countData(sql);
 	}
 	
 	private Log _log = LogFactoryUtil.getLog(VRInputSheetLocalServiceImpl.class);

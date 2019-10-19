@@ -16,7 +16,11 @@ package com.fds.vr.business.service.impl;
 
 import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.service.base.VRDossierFileLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -63,5 +67,17 @@ public class VRDossierFileLocalServiceImpl
 		return vrDossierFilePersistence.fetchByDID_FTNO_First(dossierId, fileTemplateNo, removed, orderByComparator);
 	}
 	
+	/*
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrDossierFileFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrDossierFileFinder.countData(sql);
+	}
+	*/
 	public static final String CLASS_NAME = VRDossierFile.class.getName();
 }

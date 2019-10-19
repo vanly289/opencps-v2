@@ -1,7 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRCOPReportRepository;
 import com.fds.vr.business.model.impl.VRCOPReportRepositoryModelImpl;
 import com.fds.vr.business.service.persistence.VRCOPReportRepositoryFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Iterator;
 import java.util.List;
 
-
 public class VRCOPReportRepositoryFinderImpl extends VRCOPReportRepositoryFinderBaseImpl
-	implements VRCOPReportRepositoryFinder {
+		implements VRCOPReportRepositoryFinder {
 
 	Log log = LogFactoryUtil.getLog(VRCOPReportRepositoryFinderImpl.class);
 
@@ -41,12 +40,12 @@ public class VRCOPReportRepositoryFinderImpl extends VRCOPReportRepositoryFinder
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
-						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRCOPReportRepositoryModelImpl.class,
-								"vrcopreportrepository");
+				List<VRCOPReportRepository> vrcopReportRepositories = (List<VRCOPReportRepository>) QueryUtil.list(q,
+						getDialect(), start, end);
+				if (vrcopReportRepositories != null) {
+					for (VRCOPReportRepository vrcopReportRepository : vrcopReportRepositories) {
+						JSONObject json = ActionUtil.object2Json(vrcopReportRepository,
+								VRCOPReportRepositoryModelImpl.class, "");
 						results.put(json);
 					}
 				}

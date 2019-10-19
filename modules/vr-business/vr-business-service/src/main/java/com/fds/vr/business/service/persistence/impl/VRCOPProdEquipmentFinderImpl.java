@@ -1,9 +1,8 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRCOPProdEquipment;
 import com.fds.vr.business.model.impl.VRCOPProdEquipmentModelImpl;
-import com.fds.vr.business.model.impl.VRClearingStampbookModelImpl;
 import com.fds.vr.business.service.persistence.VRCOPProdEquipmentFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -20,22 +19,19 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Iterator;
 import java.util.List;
 
-
-public class VRCOPProdEquipmentFinderImpl extends VRCOPProdEquipmentFinderBaseImpl
-	implements VRCOPProdEquipmentFinder {
+public class VRCOPProdEquipmentFinderImpl extends VRCOPProdEquipmentFinderBaseImpl implements VRCOPProdEquipmentFinder {
 
 	Log log = LogFactoryUtil.getLog(VRCOPProdEquipmentFinderImpl.class);
 
-	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes,
-			Class<?> modelClazz, String modelClassName, int start, int end) throws SystemException {
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
 
 		Session session = null;
 		JSONArray results = JSONFactoryUtil.createJSONArray();
 		try {
 			session = openSession();
 
-			log.info("===>>>VRCOPProdEquipmentFinder " + sql + "|" + start + "|"
-					+ end);
+			log.info("===>>>VRCOPProdEquipmentFinder " + sql + "|" + start + "|" + end);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -43,17 +39,17 @@ public class VRCOPProdEquipmentFinderImpl extends VRCOPProdEquipmentFinderBaseIm
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRApplicantProfile> applicantProfiles = (List<VRApplicantProfile>) QueryUtil.list(q, getDialect(),
-						start, end);
-				if (applicantProfiles != null) {
-					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRCOPProdEquipmentModelImpl.class,
-								"vrcopprodequipment");
+				List<VRCOPProdEquipment> vrcopProdEquipments = (List<VRCOPProdEquipment>) QueryUtil.list(q,
+						getDialect(), start, end);
+				if (vrcopProdEquipments != null) {
+					for (VRCOPProdEquipment vrcopProdEquipment : vrcopProdEquipments) {
+						JSONObject json = ActionUtil.object2Json(vrcopProdEquipment, VRCOPProdEquipmentModelImpl.class,
+								"");
 						results.put(json);
 					}
 				}
 			} else {
-				
+
 				Iterator<Object[]> itr = (Iterator<Object[]>) QueryUtil.iterate(q, getDialect(), start, end);
 
 				if (itr.hasNext()) {

@@ -39,6 +39,7 @@ import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.fds.vr.business.service.base.VRVehicleTypeCertificateLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -50,10 +51,15 @@ import aQute.bnd.annotation.ProviderType;
  * The implementation of the vr vehicle type certificate local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.fds.vr.business.service.VRVehicleTypeCertificateLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link com.fds.vr.business.service.VRVehicleTypeCertificateLocalService}
+ * interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author LamTV
@@ -61,12 +67,13 @@ import aQute.bnd.annotation.ProviderType;
  * @see com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil
  */
 @ProviderType
-public class VRVehicleTypeCertificateLocalServiceImpl
-	extends VRVehicleTypeCertificateLocalServiceBaseImpl {
+public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCertificateLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil} to access the vr vehicle type certificate local service.
+	 * Never reference this class directly. Always use {@link
+	 * com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil} to
+	 * access the vr vehicle type certificate local service.
 	 */
 
 	private Log _log = LogFactoryUtil.getLog(VRVehicleTypeCertificateLocalServiceImpl.class);
@@ -76,16 +83,16 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 
 	public VRVehicleTypeCertificate updateVehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
 			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile) {
-		
+
 		Date now = new Date();
 
 		long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
 
 		VRVehicleTypeCertificate object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
-		//VRVehicleTypeCertificateLocalServiceUtil.
+		// VRVehicleTypeCertificateLocalServiceUtil.
 		/// Add audit fields
 		object.setSyncDate(now);
-		_log.info("Vao KHONG syncDateList:"+object.getSyncDate());
+		_log.info("Vao KHONG syncDateList:" + object.getSyncDate());
 
 		// Add other fields
 		object.setMtCore(1);
@@ -100,7 +107,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setApplicantIdDate(registration.getApplicantIdDate());
 			object.setApplicantName(registration.getApplicantName());
 		}
-		
+
 		object.setApplicantAddress(mapValues.get(""));
 		object.setApplicantRepresentative(mapValues.get(""));
 		object.setApplicantRepresentativeTitle(mapValues.get(""));
@@ -111,9 +118,9 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 		object.setApplicantContactEmail(mapValues.get(""));
 		object.setApplicantcontactPhone(mapValues.get(""));
 		object.setManufacturerForeignCode(mapValues.get(""));
-		
+
 		object.setManufacturerName(mapValues.get("bien_ban@bb_XCG01001"));
-		object.setManufacturerAddress(mapValues.get("bien_ban@bb_XCG01002"));		
+		object.setManufacturerAddress(mapValues.get("bien_ban@bb_XCG01002"));
 		object.setManufacturerRepresentative(mapValues.get(""));
 		object.setManufacturerRepresentativeTitle(mapValues.get(""));
 		object.setManufacturerEmail(mapValues.get(""));
@@ -133,7 +140,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 		object.setDesignerAddress(mapValues.get("bien_ban@bb_dia_chi_co_so_thiet_ke"));
 		object.setDesignerRepresentative(mapValues.get("bien_ban@bb_XCG01003"));
 		object.setDesignerRepresentativeTitle(mapValues.get(""));
-		
+
 		object.setDesignerEmail(mapValues.get("bien_ban@bb_XCG01006"));
 		object.setDesignerPhone(mapValues.get("bien_ban@bb_XCG01005"));
 		object.setDesignerFax(mapValues.get(""));
@@ -146,7 +153,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 		object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
 		object.setDesignModelDescription(mapValues.get("bien_ban@loai_hinh_thiet_ke_text"));
 		object.setDesignSymbol(mapValues.get("bien_ban@bb_XCG01026"));
-		
+
 		object.setRegisteredNumber(mapValues.get(""));
 		object.setInspectorReceiveDate(now);
 		object.setInspectorSubmitDate(now);
@@ -226,27 +233,32 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 
 		return vrVehicleTypeCertificatePersistence.update(object);
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTTTKXCG_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTTTKXCG_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
-			Date now = new Date();	
+			Date now = new Date();
 			boolean flagUpdate = true;
-				
+
 			VRVehicleTypeCertificate object = new VRVehicleTypeCertificateImpl();
-			List <VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDeliverableCode(dossierFile.getDeliverableCode());
-			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0 ) {
-				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0)) && lsVRVehicleTypeCertificate.get(0).getModule().contains("01")) {
+			List<VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+					.findByDeliverableCode(dossierFile.getDeliverableCode());
+			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0) {
+				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0))
+						&& lsVRVehicleTypeCertificate.get(0).getModule().contains("01")) {
 					object = lsVRVehicleTypeCertificate.get(0);
 					flagUpdate = true;
 				} else {
 					flagUpdate = false;
-					long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);				
+					long vrVehicleTypeCertificateId = counterLocalService
+							.increment(VRVehicleTypeCertificate.class.getName());
+					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 				}
 			} else {
 				flagUpdate = false;
-				long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+				long vrVehicleTypeCertificateId = counterLocalService
+						.increment(VRVehicleTypeCertificate.class.getName());
 				object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 			}
 			object.setMtCore(1);
@@ -266,7 +278,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setApplicantContactEmail(mapValues.get("bien_ban@bb_XCG01012"));
 				object.setApplicantcontactPhone(mapValues.get("bien_ban@bb_XCG01014"));
 				object.setCityCode(appProfile.getApplicantCity());
-				
+
 			} else {
 				return object;
 			}
@@ -274,47 +286,50 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
+				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@hinh_thuc_cap_giay"));
-			
+
 			object.setConvertassembleId(0);
-			
+
 			if (Validator.isNotNull(objDossier)) {
 				object.setDossierNo(objDossier.getDossierNo());
 				object.setReferenceUid(objDossier.getReferenceUid());
 				object.setServiceCode(objDossier.getServiceCode());
-				object.setServiceName(objDossier.getServiceName());			
+				object.setServiceName(objDossier.getServiceName());
 				object.setRegisteredNumber(mapValues.get("ma_ho_so"));
 			}
-			
+
 			// Khong ap dung voi Tham dinh thiet ke
-			/*object.setManufacturerForeignCode(mapValues.get(""));
-			object.setManufacturerName(mapValues.get(""));
-			object.setManufacturerAddress(mapValues.get(""));
-			object.setManufacturerRepresentative(mapValues.get(""));
-			object.setManufacturerRepresentativeTitle(mapValues.get(""));
-			object.setManufacturerEmail(mapValues.get(""));
-			object.setManufacturerPhone(mapValues.get(""));
-			object.setManufacturerFax(mapValues.get(""));
-			
-			object.setCopReportNo(mapValues.get(""));
-			object.setCopReportDate(null);
-			object.setCopReportExpireDate(null);*/
-			
+			/*
+			 * object.setManufacturerForeignCode(mapValues.get(""));
+			 * object.setManufacturerName(mapValues.get(""));
+			 * object.setManufacturerAddress(mapValues.get(""));
+			 * object.setManufacturerRepresentative(mapValues.get(""));
+			 * object.setManufacturerRepresentativeTitle(mapValues.get(""));
+			 * object.setManufacturerEmail(mapValues.get(""));
+			 * object.setManufacturerPhone(mapValues.get(""));
+			 * object.setManufacturerFax(mapValues.get(""));
+			 * 
+			 * object.setCopReportNo(mapValues.get("")); object.setCopReportDate(null);
+			 * object.setCopReportExpireDate(null);
+			 */
+
 			String productionPlantCode = mapValues.get("bien_ban@bb_XCG01007");
 			VRProductionPlant objVRProductionPlant = new VRProductionPlantImpl();
-			try {				
-				long productionPlantRegistrationId = Long.parseLong(productionPlantCode) ;
+			try {
+				long productionPlantRegistrationId = Long.parseLong(productionPlantCode);
 				// fake
-				List <VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
-				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0 ) {
-					objVRProductionPlant = lstVRProductionPlant.get(0);				
+				List<VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil
+						.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
+				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0) {
+					objVRProductionPlant = lstVRProductionPlant.get(0);
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				productionPlantCode = objVRProductionPlant.getProductionPlantCode();
 				object.setProductionPlantCode(productionPlantCode);
 				object.setProductionPlantName(objVRProductionPlant.getProductionPlantName());
@@ -325,47 +340,56 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			}
 
 			object.setDesignerCode(mapValues.get("ma_so_doanh_nghiep"));
-			object.setDesignerName(Validator.isNotNull(mapValues.get("bien_ban@bb_ten_co_so_thiet_ke")) ? mapValues.get("bien_ban@bb_ten_co_so_thiet_ke") : appProfile.getApplicantName());
-			object.setDesignerAddress(Validator.isNotNull(mapValues.get("bien_ban@bb_dia_chi_co_so_thiet_ke")) ? mapValues.get("bien_ban@bb_dia_chi_co_so_thiet_ke") : appProfile.getApplicantAddress());
+			object.setDesignerName(Validator.isNotNull(mapValues.get("bien_ban@bb_ten_co_so_thiet_ke"))
+					? mapValues.get("bien_ban@bb_ten_co_so_thiet_ke")
+					: appProfile.getApplicantName());
+			object.setDesignerAddress(Validator.isNotNull(mapValues.get("bien_ban@bb_dia_chi_co_so_thiet_ke"))
+					? mapValues.get("bien_ban@bb_dia_chi_co_so_thiet_ke")
+					: appProfile.getApplicantAddress());
 			object.setDesignerRepresentative(mapValues.get("bien_ban@bb_XCG01003"));
-			object.setDesignerRepresentativeTitle(mapValues.get("bien_ban@bb_XCG01004")); // Chua xuat hien trong data bien ban
-			
+			object.setDesignerRepresentativeTitle(mapValues.get("bien_ban@bb_XCG01004")); // Chua xuat hien trong data
+																							// bien ban
+
 			object.setDesignerEmail(mapValues.get("bien_ban@bb_XCG01006"));
 			object.setDesignerPhone(mapValues.get("bien_ban@bb_XCG01005")); // Chua xuat hien trong data bien ban
 			object.setDesignerFax(mapValues.get(""));
 			try {
 				object.setVerificationCertificateNo(mapValues.get("so_chung_chi"));
-				
+
 				if (Validator.isNotNull(mapValues.get("ngay_ky_cc"))) {
 					object.setVerificationCertificateDate(parseStringToDate(mapValues.get("ngay_ky_cc")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
+
 			try {
-				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban")); 
-				SimpleDateFormat formatDateShort = new SimpleDateFormat("dd/MM/yyyy"); 
-				Date setDate = formatDateShort.parse(mapValues.get("chung_chi@ngay_ket_thuc_tham_dinh")); 
-				object.setVerificationRefDate(setDate); 
+				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban"));
+				SimpleDateFormat formatDateShort = new SimpleDateFormat("dd/MM/yyyy");
+				Date setDate = formatDateShort.parse(mapValues.get("chung_chi@ngay_ket_thuc_tham_dinh"));
+				object.setVerificationRefDate(setDate);
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setReferenceCertificateNo(mapValues.get("bien_ban@XCG01020")); // Chua xuat hien trong data bien ban
+				object.setReferenceCertificateNo(mapValues.get("bien_ban@XCG01020")); // Chua xuat hien trong data bien
+																						// ban
 				if (Validator.isNotNull(mapValues.get("bien_ban@XCG01021"))) { // Chua xuat hien trong data bien ban
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("bien_ban@XCG01021")));
 				}
-				
+
 				// Mo rong: so_gcn_goc va ngay_gcn_goc;
-				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc")) && mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
+				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc"))
+						&& mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_goc")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_gcn_goc"));
 				}
-				// Cap lai: so_chung_chi va ngay_gcn_cu; 
-				if (mapValues.get("chung_chi@so_chung_chi").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu")) && mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
+				// Cap lai: so_chung_chi va ngay_gcn_cu;
+				if (mapValues.get("chung_chi@so_chung_chi").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu"))
+						&& mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_cu")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_chung_chi"));
 				}
@@ -375,29 +399,29 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
 			object.setDesignModelDescription(mapValues.get("bien_ban@loai_hinh_thiet_ke_text"));
 			object.setDesignSymbol(mapValues.get("bien_ban@bb_XCG01026"));
-			
+
 			// Khong ap dung voi Tham dinh thiet ke
-			/*object.setTypeApprovalCertificateNo(mapValues.get(""));
-			object.setTypeApprovalCertificateDate(now);
-			object.setInspectorReceiveDate(now);
-			object.setInspectorSubmitDate(now);
-			object.setInspectorendorSementDate(now);
-			object.setInspectorDeadline(now);
-			object.setInspectorFinishDate(now);
-			object.setInspectorCancelDate(now);
-			object.setInspectorOrganization(mapValues.get(""));
-			object.setInspectorDivision(mapValues.get(""));
-			object.setInspectorSignName(mapValues.get(""));
-			object.setInspectorSignTitle(mapValues.get(""));
-			object.setInspectorSignPlace(mapValues.get(""));*/
-			
-			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); //1: Giay chung nhan; 0: Thong bao khong dat			
+			/*
+			 * object.setTypeApprovalCertificateNo(mapValues.get(""));
+			 * object.setTypeApprovalCertificateDate(now);
+			 * object.setInspectorReceiveDate(now); object.setInspectorSubmitDate(now);
+			 * object.setInspectorendorSementDate(now); object.setInspectorDeadline(now);
+			 * object.setInspectorFinishDate(now); object.setInspectorCancelDate(now);
+			 * object.setInspectorOrganization(mapValues.get(""));
+			 * object.setInspectorDivision(mapValues.get(""));
+			 * object.setInspectorSignName(mapValues.get(""));
+			 * object.setInspectorSignTitle(mapValues.get(""));
+			 * object.setInspectorSignPlace(mapValues.get(""));
+			 */
+
+			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); // 1: Giay chung nhan; 0: Thong bao
+																					// khong dat
 			object.setCertificateRecordNo(mapValues.get("chung_chi@so_chung_chi"));
 			object.setCertificateSignName(mapValues.get("chung_chi@nguoi_ky_cc_text"));
 			object.setCertificateSignTitle(mapValues.get("chung_chi@chuc_danh_ky"));
 			object.setCertificateSignPlace(mapValues.get("chung_chi@dia_diem_ky"));
 			object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
-			
+
 			try {
 				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc"))) {
 					object.setCertificateRecordDate(parseStringToDate(mapValues.get("chung_chi@ngay_cap_cc")));
@@ -416,102 +440,110 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setCertifiedTrademarkName(mapValues.get("chung_chi@bb_XCG01051_text"));
 			object.setCertifiedCommercialName(mapValues.get("chung_chi@bb_XCG01052"));
 			object.setCertifiedModelCode(mapValues.get("chung_chi@bb_XCG01053"));
-			
+
 			// Khong ap dung voi Tham dinh thiet ke
-			/*object.setCertifiedAssemblyType(mapValues.get(""));
-			object.setCertifiedAssemblyTypeDescription(mapValues.get(""));
-			object.setCertifiedVINNo(mapValues.get(""));
-			object.setCertifiedVINPosition(mapValues.get(""));
-			object.setCertifiedFrameNo(mapValues.get(""));
-			object.setCertifiedFrameAttachPlace(mapValues.get(""));
-			object.setCertifiedFramePosition(mapValues.get(""));
-			object.setCertifiedEngineNo(mapValues.get(""));
-			object.setCertifiedEngineAttachPlace(mapValues.get(""));
-			object.setCertifiedEnginePosition(mapValues.get(""));
-			object.setSafetyTestReportNo(mapValues.get(""));
-			object.setSafetyTestReportDate(now);
-			object.setEmissionTestReportNo(mapValues.get(""));
-			object.setEmissionTestReportDate(now);*/
-			
+			/*
+			 * object.setCertifiedAssemblyType(mapValues.get(""));
+			 * object.setCertifiedAssemblyTypeDescription(mapValues.get(""));
+			 * object.setCertifiedVINNo(mapValues.get(""));
+			 * object.setCertifiedVINPosition(mapValues.get(""));
+			 * object.setCertifiedFrameNo(mapValues.get(""));
+			 * object.setCertifiedFrameAttachPlace(mapValues.get(""));
+			 * object.setCertifiedFramePosition(mapValues.get(""));
+			 * object.setCertifiedEngineNo(mapValues.get(""));
+			 * object.setCertifiedEngineAttachPlace(mapValues.get(""));
+			 * object.setCertifiedEnginePosition(mapValues.get(""));
+			 * object.setSafetyTestReportNo(mapValues.get(""));
+			 * object.setSafetyTestReportDate(now);
+			 * object.setEmissionTestReportNo(mapValues.get(""));
+			 * object.setEmissionTestReportDate(now);
+			 */
+
 			object.setCommonSafetyStandard(mapValues.get("bien_ban@bb_XCG01031"));
 			object.setEmissionStandard(mapValues.get("bien_ban@bb_XCG01032"));
 			object.setCommonSafetyDescription(mapValues.get("bien_ban@XCG01031_text"));
 			object.setEmissionDescription(mapValues.get("bien_ban@XCG01032_text"));
-			
-			
+
 			// Khong ap dung voi Tham dinh thiet ke
-			/*object.setOtherTestReportNo(mapValues.get(""));
-			object.setOtherTestReportDate(now);
-			object.setSampleFrameNo(mapValues.get(""));
-			object.setSampleVINNo(mapValues.get(""));
-			object.setSampleEngineNo(mapValues.get(""));
-			object.setSampleVehicleType(mapValues.get(""));
-			object.setSampleVehicleTypeDescription(mapValues.get(""));
-			object.setSampleTrademark(mapValues.get(""));
-			object.setSampleTrademarkName(mapValues.get(""));
-			object.setSampleCommercialName(mapValues.get(""));
-			object.setSampleModelCode(mapValues.get(""));
-			object.setCustomsDeclarationNo(mapValues.get(""));
-			object.setCustomsDeclarationDate(now);
-			object.setProductionCountry(mapValues.get(""));
-			object.setImporterQuantity(Long.valueOf(mapValues.get("")));
-			object.setInspectionRecordNo(mapValues.get(""));
-			object.setInspectionDate(now);
-			object.setInspectionSite(mapValues.get(""));
-			object.setInspectionDistrictCode(mapValues.get(""));
-			object.setInspectionDistrictName(mapValues.get(""));
-			object.setInspectionProvinceCode(mapValues.get(""));
-			object.setInspectionProvinceName(mapValues.get(""));
-			object.setCorporationId(mapValues.get(""));
-			object.setInspectorId(Long.valueOf(mapValues.get("")));
-			object.setRemarks(mapValues.get(""));
-			object.setInspectionNote(mapValues.get(""));*/
-			
-			object.setModule("01") ; // 01: Tham dinh thiet ke
-			
+			/*
+			 * object.setOtherTestReportNo(mapValues.get(""));
+			 * object.setOtherTestReportDate(now);
+			 * object.setSampleFrameNo(mapValues.get(""));
+			 * object.setSampleVINNo(mapValues.get(""));
+			 * object.setSampleEngineNo(mapValues.get(""));
+			 * object.setSampleVehicleType(mapValues.get(""));
+			 * object.setSampleVehicleTypeDescription(mapValues.get(""));
+			 * object.setSampleTrademark(mapValues.get(""));
+			 * object.setSampleTrademarkName(mapValues.get(""));
+			 * object.setSampleCommercialName(mapValues.get(""));
+			 * object.setSampleModelCode(mapValues.get(""));
+			 * object.setCustomsDeclarationNo(mapValues.get(""));
+			 * object.setCustomsDeclarationDate(now);
+			 * object.setProductionCountry(mapValues.get(""));
+			 * object.setImporterQuantity(Long.valueOf(mapValues.get("")));
+			 * object.setInspectionRecordNo(mapValues.get(""));
+			 * object.setInspectionDate(now); object.setInspectionSite(mapValues.get(""));
+			 * object.setInspectionDistrictCode(mapValues.get(""));
+			 * object.setInspectionDistrictName(mapValues.get(""));
+			 * object.setInspectionProvinceCode(mapValues.get(""));
+			 * object.setInspectionProvinceName(mapValues.get(""));
+			 * object.setCorporationId(mapValues.get(""));
+			 * object.setInspectorId(Long.valueOf(mapValues.get("")));
+			 * object.setRemarks(mapValues.get(""));
+			 * object.setInspectionNote(mapValues.get(""));
+			 */
+
+			object.setModule("01"); // 01: Tham dinh thiet ke
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
-		return null;
-	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTTDTKXMCD_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
-		try {
-			Date now = new Date();
-	
-			long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-	
-			VRVehicleTypeCertificate object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
-		
-			return vrVehicleTypeCertificatePersistence.update(object);
-		} catch (Exception e) {
-			_log.error(e);
-		}		
+		}
 		return null;
 	}
 
-	public VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
+	public VRVehicleTypeCertificate updateTT302011BGTVTTDTKXMCD_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
-			Date now = new Date();	
+			Date now = new Date();
+
+			long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+
+			VRVehicleTypeCertificate object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
+
+			return vrVehicleTypeCertificatePersistence.update(object);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return null;
+	}
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXCG_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
+		try {
+			Date now = new Date();
 			boolean flagUpdate = true;
-				
+
 			VRVehicleTypeCertificate object = new VRVehicleTypeCertificateImpl();
-			List <VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDeliverableCode(dossierFile.getDeliverableCode());
+			List<VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+					.findByDeliverableCode(dossierFile.getDeliverableCode());
 			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0) {
-				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0)) && lsVRVehicleTypeCertificate.get(0).getModule().contains("02")) {
+				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0))
+						&& lsVRVehicleTypeCertificate.get(0).getModule().contains("02")) {
 					object = lsVRVehicleTypeCertificate.get(0);
 					flagUpdate = true;
 				} else {
 					flagUpdate = false;
-					long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);				
+					long vrVehicleTypeCertificateId = counterLocalService
+							.increment(VRVehicleTypeCertificate.class.getName());
+					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 				}
 			} else {
 				flagUpdate = false;
-				long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+				long vrVehicleTypeCertificateId = counterLocalService
+						.increment(VRVehicleTypeCertificate.class.getName());
 				object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 			}
 			object.setMtCore(1);
@@ -531,7 +563,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XCG01012"));
 				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XCG01014"));
 				object.setCityCode(appProfile.getApplicantCity());
-				
+
 			} else {
 				return object;
 			}
@@ -539,44 +571,48 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
+				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCG01019"));
-			
+
 			object.setConvertassembleId(0);
-			
+
 			if (Validator.isNotNull(objDossier)) {
 				object.setDossierNo(objDossier.getDossierNo());
 				object.setReferenceUid(objDossier.getReferenceUid());
 				object.setServiceCode(objDossier.getServiceCode());
-				object.setServiceName(objDossier.getServiceName());		
+				object.setServiceName(objDossier.getServiceName());
 				object.setRegisteredNumber(mapValues.get("ma_ho_so"));
 			}
-			
+
 			// Khong ap dung voi Kiem tra san pham mau
-			/*object.setManufacturerForeignCode(mapValues.get(""));
-			object.setManufacturerName(mapValues.get(""));
-			object.setManufacturerAddress(mapValues.get(""));
-			object.setManufacturerRepresentative(mapValues.get(""));
-			object.setManufacturerRepresentativeTitle(mapValues.get(""));
-			object.setManufacturerEmail(mapValues.get(""));
-			object.setManufacturerPhone(mapValues.get(""));
-			object.setManufacturerFax(mapValues.get(""));*/
-			
+			/*
+			 * object.setManufacturerForeignCode(mapValues.get(""));
+			 * object.setManufacturerName(mapValues.get(""));
+			 * object.setManufacturerAddress(mapValues.get(""));
+			 * object.setManufacturerRepresentative(mapValues.get(""));
+			 * object.setManufacturerRepresentativeTitle(mapValues.get(""));
+			 * object.setManufacturerEmail(mapValues.get(""));
+			 * object.setManufacturerPhone(mapValues.get(""));
+			 * object.setManufacturerFax(mapValues.get(""));
+			 */
+
 			String productionPlantCode = mapValues.get("bien_ban@bb_XCG01007");
-			
+
 			VRProductionPlant objVRProductionPlant = new VRProductionPlantImpl();
-			try {				
-				long productionPlantRegistrationId = Long.parseLong(productionPlantCode) ;
-				
-				List <VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
-				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0 ) {
-					objVRProductionPlant = lstVRProductionPlant.get(0);				
+			try {
+				long productionPlantRegistrationId = Long.parseLong(productionPlantCode);
+
+				List<VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil
+						.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
+				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0) {
+					objVRProductionPlant = lstVRProductionPlant.get(0);
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				productionPlantCode = objVRProductionPlant.getProductionPlantCode();
 				object.setProductionPlantCode(productionPlantCode);
 				object.setProductionPlantName(objVRProductionPlant.getProductionPlantName());
@@ -586,55 +622,51 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 
 			}
 			// Khong ap dung voi Kiem tra san pham mau
-			/*object.setCopReportNo(mapValues.get(""));
-			object.setCopReportDate(null);
-			object.setCopReportExpireDate(null);
+			/*
+			 * object.setCopReportNo(mapValues.get("")); object.setCopReportDate(null);
+			 * object.setCopReportExpireDate(null);
+			 * 
+			 * object.setDesignerCode(""); object.setDesignerName("");
+			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
+			 * object.setDesignerRepresentativeTitle("");
+			 * 
+			 * object.setDesignerEmail(""); object.setDesignerPhone("");
+			 * object.setDesignerFax(""); object.setVerificationCertificateNo("");
+			 * object.setVerificationCertificateDate(null); object.setDesignModelCode("");
+			 * object.setDesignModelDescription(""); object.setDesignSymbol("");
+			 */
 
-			object.setDesignerCode("");
-			object.setDesignerName("");
-			object.setDesignerAddress("");
-			object.setDesignerRepresentative("");
-			object.setDesignerRepresentativeTitle("");
-			
-			object.setDesignerEmail("");
-			object.setDesignerPhone("");
-			object.setDesignerFax("");
-			object.setVerificationCertificateNo("");
-			object.setVerificationCertificateDate(null);
-			object.setDesignModelCode("");
-			object.setDesignModelDescription("");
-			object.setDesignSymbol("");*/
-					
 			// Khong ap dung voi Kiem tra san pham mau
-			/*object.setTypeApprovalCertificateNo(mapValues.get(""));
-			object.setTypeApprovalCertificateDate(now);
-			object.setInspectorReceiveDate(now);
-			object.setInspectorSubmitDate(now);
-			object.setInspectorendorSementDate(now);
-			object.setInspectorDeadline(now);
-			object.setInspectorFinishDate(now);
-			object.setInspectorCancelDate(now);
-			object.setInspectorOrganization(mapValues.get(""));
-			object.setInspectorDivision(mapValues.get(""));
-			object.setInspectorSignName(mapValues.get(""));
-			object.setInspectorSignTitle(mapValues.get(""));
-			object.setInspectorSignPlace(mapValues.get(""));*/
-			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); //1: Giay chung nhan; 0: Thong bao khong dat
-			
+			/*
+			 * object.setTypeApprovalCertificateNo(mapValues.get(""));
+			 * object.setTypeApprovalCertificateDate(now);
+			 * object.setInspectorReceiveDate(now); object.setInspectorSubmitDate(now);
+			 * object.setInspectorendorSementDate(now); object.setInspectorDeadline(now);
+			 * object.setInspectorFinishDate(now); object.setInspectorCancelDate(now);
+			 * object.setInspectorOrganization(mapValues.get(""));
+			 * object.setInspectorDivision(mapValues.get(""));
+			 * object.setInspectorSignName(mapValues.get(""));
+			 * object.setInspectorSignTitle(mapValues.get(""));
+			 * object.setInspectorSignPlace(mapValues.get(""));
+			 */
+			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); // 1: Giay chung nhan; 0: Thong bao
+																					// khong dat
+
 			object.setCertificateRecordNo(mapValues.get("chung_chi@so_bao_cao"));
 			object.setCertificateSignName(mapValues.get("chung_chi@nguoi_ky_bao_cao"));
 			object.setCertificateSignTitle(mapValues.get("chung_chi@chuc_danh_ky"));
 			object.setCertificateSignPlace(mapValues.get("chung_chi@dia_diem_ky"));
-			//object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
+			// object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
 			try {
 				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra"))) {
-					object.setCertificateRecordDate(parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
-				}				
+					object.setCertificateRecordDate(
+							parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
+				}
 				object.setCertificateRecordExpireDate(null);
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setExpiredStatus("1");
 			object.setCertificateRecordStatus("2");
 			object.setDigitalIssueStatus("0");
@@ -651,40 +683,40 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XCG01055"));
 			object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XCG01056"));
 			object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XCG01057"));
-			//object.setCertifiedFrameAttachPlace(mapValues.get(""));
+			// object.setCertifiedFrameAttachPlace(mapValues.get(""));
 			object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XCG01058"));
 			object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XCG01059"));
-			//object.setCertifiedEngineAttachPlace(mapValues.get(""));
+			// object.setCertifiedEngineAttachPlace(mapValues.get(""));
 			object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XCG01060"));
-			
-			
+
 			object.setCommonSafetyStandard(mapValues.get("bien_ban@bb_XCG01031"));
 			object.setEmissionStandard(mapValues.get("bien_ban@bb_XCG01032"));
 			object.setCommonSafetyDescription(mapValues.get("bien_ban@XCG01031_text"));
 			object.setEmissionDescription(mapValues.get("bien_ban@XCG01032_text"));
-			
+
 			try {
 				object.setSafetyTestReportNo(mapValues.get("bien_ban@bb_XCG01034"));
 				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01035"))) {
 					object.setSafetyTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCG01035")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-						
+
 			try {
 				object.setEmissionTestReportNo(mapValues.get("bien_ban@bb_XCG01040"));
 				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01041"))) {
 					object.setEmissionTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCG01041")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
+
 			// Khong ap dung voi Kiem tra san pham mau
-			/*object.setOtherTestReportNo(mapValues.get(""));
-			object.setOtherTestReportDate(now);*/
+			/*
+			 * object.setOtherTestReportNo(mapValues.get(""));
+			 * object.setOtherTestReportDate(now);
+			 */
 			object.setSampleFrameNo(mapValues.get("bien_ban@bb_XCG01062"));
 			object.setSampleVINNo(mapValues.get("bien_ban@bb_XCG01062"));
 			object.setSampleEngineNo(mapValues.get("bien_ban@bb_XCG01063"));
@@ -695,11 +727,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setSampleCommercialName(mapValues.get("bien_ban@bb_XCG01068"));
 			object.setSampleModelCode(mapValues.get("bien_ban@bb_XCG01069"));
 			/*
-			object.setCustomsDeclarationNo(mapValues.get(""));
-			object.setCustomsDeclarationDate(now);
-			object.setProductionCountry(mapValues.get(""));
-			object.setImporterQuantity(Long.valueOf(mapValues.get("")));
-			*/
+			 * object.setCustomsDeclarationNo(mapValues.get(""));
+			 * object.setCustomsDeclarationDate(now);
+			 * object.setProductionCountry(mapValues.get(""));
+			 * object.setImporterQuantity(Long.valueOf(mapValues.get("")));
+			 */
 			object.setInspectionRecordNo(mapValues.get("bien_ban@so_bien_ban"));
 			try {
 				object.setInspectionSite(mapValues.get("bien_ban@bb_XCG01008"));
@@ -709,49 +741,54 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				object.setInspectionDistrictCode(objVRProductionPlant.getProductionPlantDistrictCode());
 				object.setInspectionDistrictName(objVRProductionPlant.getProductionPlantDistrictName());
 				object.setInspectionProvinceCode(objVRProductionPlant.getProductionPlantProvinceCode());
 				object.setInspectionProvinceName(objVRProductionPlant.getProductionPlantProvinceName());
 			}
-			
+
 			object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
 			object.setInspectorId(Long.valueOf(mapValues.get("bien_ban@dang_kiem_vien_chinh_userId")));
 			object.setRemarks(mapValues.get(""));
 			object.setInspectionNote(mapValues.get(""));
-			
-			object.setModule("02") ; // 02: Kiem tra san pham mau
-			
+
+			object.setModule("02"); // 02: Kiem tra san pham mau
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXBBCN_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTKTSPMXBBCN_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
-			Date now = new Date();	
+			Date now = new Date();
 			boolean flagUpdate = true;
-				
+
 			VRVehicleTypeCertificate object = new VRVehicleTypeCertificateImpl();
-			List <VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDeliverableCode(dossierFile.getDeliverableCode());
+			List<VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+					.findByDeliverableCode(dossierFile.getDeliverableCode());
 			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0) {
-				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0)) && lsVRVehicleTypeCertificate.get(0).getModule().contains("02")) {
+				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0))
+						&& lsVRVehicleTypeCertificate.get(0).getModule().contains("02")) {
 					object = lsVRVehicleTypeCertificate.get(0);
 					flagUpdate = true;
 				} else {
 					flagUpdate = false;
-					long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);				
+					long vrVehicleTypeCertificateId = counterLocalService
+							.increment(VRVehicleTypeCertificate.class.getName());
+					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 				}
 			} else {
 				flagUpdate = false;
-				long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+				long vrVehicleTypeCertificateId = counterLocalService
+						.increment(VRVehicleTypeCertificate.class.getName());
 				object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 			}
 			object.setMtCore(1);
@@ -767,11 +804,14 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setApplicantEmail(appProfile.getApplicantEmail());
 				object.setApplicantPhone(appProfile.getApplicantPhone());
 				object.setApplicantFax(mapValues.get(""));
-				object.setApplicantContactName(mapValues.get("chungchi@bb_XCN01013")); // Chua xuat hien trong data bien ban
-				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XCN01012")); // Chua xuat hien trong data bien ban
-				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XCN01014")); // Chua xuat hien trong data bien ban
+				object.setApplicantContactName(mapValues.get("chungchi@bb_XCN01013")); // Chua xuat hien trong data bien
+																						// ban
+				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XCN01012")); // Chua xuat hien trong data
+																						// bien ban
+				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XCN01014")); // Chua xuat hien trong data
+																						// bien ban
 				object.setCityCode(appProfile.getApplicantCity());
-				
+
 			} else {
 				return object;
 			}
@@ -779,44 +819,48 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
+				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCN01019"));
-			
+
 			object.setConvertassembleId(0);
-			
+
 			if (Validator.isNotNull(objDossier)) {
 				object.setDossierNo(objDossier.getDossierNo());
 				object.setReferenceUid(objDossier.getReferenceUid());
 				object.setServiceCode(objDossier.getServiceCode());
-				object.setServiceName(objDossier.getServiceName());		
+				object.setServiceName(objDossier.getServiceName());
 				object.setRegisteredNumber(mapValues.get("ma_ho_so"));
 			}
-			
+
 			// Khong ap dung voi Kiem tra san pham mau
-			/*object.setManufacturerForeignCode(mapValues.get(""));
-			object.setManufacturerName(mapValues.get(""));
-			object.setManufacturerAddress(mapValues.get(""));
-			object.setManufacturerRepresentative(mapValues.get(""));
-			object.setManufacturerRepresentativeTitle(mapValues.get(""));
-			object.setManufacturerEmail(mapValues.get(""));
-			object.setManufacturerPhone(mapValues.get(""));
-			object.setManufacturerFax(mapValues.get(""));*/
-			
+			/*
+			 * object.setManufacturerForeignCode(mapValues.get(""));
+			 * object.setManufacturerName(mapValues.get(""));
+			 * object.setManufacturerAddress(mapValues.get(""));
+			 * object.setManufacturerRepresentative(mapValues.get(""));
+			 * object.setManufacturerRepresentativeTitle(mapValues.get(""));
+			 * object.setManufacturerEmail(mapValues.get(""));
+			 * object.setManufacturerPhone(mapValues.get(""));
+			 * object.setManufacturerFax(mapValues.get(""));
+			 */
+
 			String productionPlantCode = mapValues.get("bien_ban@bb_XCN01007");
-			
+
 			VRProductionPlant objVRProductionPlant = new VRProductionPlantImpl();
-			try {				
-				long productionPlantRegistrationId = Long.parseLong(productionPlantCode) ;
-				
-				List <VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
-				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0 ) {
-					objVRProductionPlant = lstVRProductionPlant.get(0);				
+			try {
+				long productionPlantRegistrationId = Long.parseLong(productionPlantCode);
+
+				List<VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil
+						.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
+				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0) {
+					objVRProductionPlant = lstVRProductionPlant.get(0);
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				productionPlantCode = objVRProductionPlant.getProductionPlantCode();
 				object.setProductionPlantCode(productionPlantCode);
 				object.setProductionPlantName(objVRProductionPlant.getProductionPlantName());
@@ -826,55 +870,51 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 
 			}
 			// Khong ap dung voi Kiem tra san pham mau
-			/*object.setCopReportNo(mapValues.get(""));
-			object.setCopReportDate(null);
-			object.setCopReportExpireDate(null);
+			/*
+			 * object.setCopReportNo(mapValues.get("")); object.setCopReportDate(null);
+			 * object.setCopReportExpireDate(null);
+			 * 
+			 * object.setDesignerCode(""); object.setDesignerName("");
+			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
+			 * object.setDesignerRepresentativeTitle("");
+			 * 
+			 * object.setDesignerEmail(""); object.setDesignerPhone("");
+			 * object.setDesignerFax(""); object.setVerificationCertificateNo("");
+			 * object.setVerificationCertificateDate(null); object.setDesignModelCode("");
+			 * object.setDesignModelDescription(""); object.setDesignSymbol("");
+			 */
 
-			object.setDesignerCode("");
-			object.setDesignerName("");
-			object.setDesignerAddress("");
-			object.setDesignerRepresentative("");
-			object.setDesignerRepresentativeTitle("");
-			
-			object.setDesignerEmail("");
-			object.setDesignerPhone("");
-			object.setDesignerFax("");
-			object.setVerificationCertificateNo("");
-			object.setVerificationCertificateDate(null);
-			object.setDesignModelCode("");
-			object.setDesignModelDescription("");
-			object.setDesignSymbol("");*/
-					
 			// Khong ap dung voi Kiem tra san pham mau
-			/*object.setTypeApprovalCertificateNo(mapValues.get(""));
-			object.setTypeApprovalCertificateDate(now);
-			object.setInspectorReceiveDate(now);
-			object.setInspectorSubmitDate(now);
-			object.setInspectorendorSementDate(now);
-			object.setInspectorDeadline(now);
-			object.setInspectorFinishDate(now);
-			object.setInspectorCancelDate(now);
-			object.setInspectorOrganization(mapValues.get(""));
-			object.setInspectorDivision(mapValues.get(""));
-			object.setInspectorSignName(mapValues.get(""));
-			object.setInspectorSignTitle(mapValues.get(""));
-			object.setInspectorSignPlace(mapValues.get(""));*/
-			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); //1: Giay chung nhan; 0: Thong bao khong dat
-			
+			/*
+			 * object.setTypeApprovalCertificateNo(mapValues.get(""));
+			 * object.setTypeApprovalCertificateDate(now);
+			 * object.setInspectorReceiveDate(now); object.setInspectorSubmitDate(now);
+			 * object.setInspectorendorSementDate(now); object.setInspectorDeadline(now);
+			 * object.setInspectorFinishDate(now); object.setInspectorCancelDate(now);
+			 * object.setInspectorOrganization(mapValues.get(""));
+			 * object.setInspectorDivision(mapValues.get(""));
+			 * object.setInspectorSignName(mapValues.get(""));
+			 * object.setInspectorSignTitle(mapValues.get(""));
+			 * object.setInspectorSignPlace(mapValues.get(""));
+			 */
+			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); // 1: Giay chung nhan; 0: Thong bao
+																					// khong dat
+
 			object.setCertificateRecordNo(mapValues.get("chung_chi@so_bao_cao"));
 			object.setCertificateSignName(mapValues.get("chung_chi@nguoi_ky_bao_cao"));
 			object.setCertificateSignTitle(mapValues.get("chung_chi@chuc_danh_ky"));
 			object.setCertificateSignPlace(mapValues.get("chung_chi@dia_diem_ky"));
-			//object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
+			// object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
 			try {
 				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra"))) {
-					object.setCertificateRecordDate(parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
-				}				
+					object.setCertificateRecordDate(
+							parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
+				}
 				object.setCertificateRecordExpireDate(null);
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setExpiredStatus("1");
 			object.setCertificateRecordStatus("2");
 			object.setDigitalIssueStatus("0");
@@ -891,40 +931,40 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XCN01055"));
 			object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XCN01056"));
 			object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XCN01057"));
-			//object.setCertifiedFrameAttachPlace(mapValues.get(""));
+			// object.setCertifiedFrameAttachPlace(mapValues.get(""));
 			object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XCN01058"));
 			object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XCN01059"));
-			//object.setCertifiedEngineAttachPlace(mapValues.get(""));
+			// object.setCertifiedEngineAttachPlace(mapValues.get(""));
 			object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XCN01060"));
-			
-			
+
 			object.setCommonSafetyStandard(mapValues.get("bien_ban@bb_XCN01031"));
 			object.setEmissionStandard(mapValues.get("bien_ban@bb_XCN01032"));
 			object.setCommonSafetyDescription(mapValues.get("bien_ban@XCN01031_text"));
 			object.setEmissionDescription(mapValues.get("bien_ban@XCN01032_text"));
-			
+
 			try {
 				object.setSafetyTestReportNo(mapValues.get("bien_ban@bb_XCN01034"));
 				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCN01035"))) {
 					object.setSafetyTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCN01035")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-						
+
 			try {
 				object.setEmissionTestReportNo(mapValues.get("bien_ban@bb_XCN01040"));
 				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCN01041"))) {
 					object.setEmissionTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCN01041")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
+
 			// Khong ap dung voi Kiem tra san pham mau
-			/*object.setOtherTestReportNo(mapValues.get(""));
-			object.setOtherTestReportDate(now);*/
+			/*
+			 * object.setOtherTestReportNo(mapValues.get(""));
+			 * object.setOtherTestReportDate(now);
+			 */
 			object.setSampleFrameNo(mapValues.get("bien_ban@bb_XCN01062"));
 			object.setSampleVINNo(mapValues.get("bien_ban@bb_XCN01062"));
 			object.setSampleEngineNo(mapValues.get("bien_ban@bb_XCN01063"));
@@ -935,11 +975,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setSampleCommercialName(mapValues.get("bien_ban@bb_XCN01068"));
 			object.setSampleModelCode(mapValues.get("bien_ban@bb_XCN01069"));
 			/*
-			object.setCustomsDeclarationNo(mapValues.get(""));
-			object.setCustomsDeclarationDate(now);
-			object.setProductionCountry(mapValues.get(""));
-			object.setImporterQuantity(Long.valueOf(mapValues.get("")));
-			*/
+			 * object.setCustomsDeclarationNo(mapValues.get(""));
+			 * object.setCustomsDeclarationDate(now);
+			 * object.setProductionCountry(mapValues.get(""));
+			 * object.setImporterQuantity(Long.valueOf(mapValues.get("")));
+			 */
 			object.setInspectionRecordNo(mapValues.get("bien_ban@so_bien_ban"));
 			try {
 				object.setInspectionSite(mapValues.get("bien_ban@bb_XCN01008"));
@@ -949,129 +989,139 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				object.setInspectionDistrictCode(objVRProductionPlant.getProductionPlantDistrictCode());
 				object.setInspectionDistrictName(objVRProductionPlant.getProductionPlantDistrictName());
 				object.setInspectionProvinceCode(objVRProductionPlant.getProductionPlantProvinceCode());
 				object.setInspectionProvinceName(objVRProductionPlant.getProductionPlantProvinceName());
 			}
-			
+
 			object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
 			object.setInspectorId(Long.valueOf(mapValues.get("bien_ban@dang_kiem_vien_chinh_userId")));
 			object.setRemarks(mapValues.get(""));
 			object.setInspectionNote(mapValues.get(""));
-			
-			object.setModule("02") ; // 02: Kiem tra san pham mau
-		
+
+			object.setModule("02"); // 02: Kiem tra san pham mau
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTCOP_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTCOP_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date modifiedDate, VRRegistration registration,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
 			Date now = new Date();
-	
+
 			long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-	
+
 			VRVehicleTypeCertificate object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
-		
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTKTTBLANDAU_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTKTTBLANDAU_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date modifiedDate, VRRegistration registration,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
 			Date now = new Date();
-	
+
 			long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-	
+
 			VRVehicleTypeCertificate object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
-		
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT192012TTBGTVTDGLD_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT192012TTBGTVTDGLD_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date modifiedDate, VRRegistration registration,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
 			Date now = new Date();
-	
+
 			long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-	
+
 			VRVehicleTypeCertificate object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
-		
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate update432014TTLTBGTVTBCTTTNLNK_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate update432014TTLTBGTVTBCTTTNLNK_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date modifiedDate, VRRegistration registration,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
 			Date now = new Date();
-	
+
 			long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-	
+
 			VRVehicleTypeCertificate object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
-		
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate update432014TTLTBGTVTBCTTTNLSXLR_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date modifiedDate, VRRegistration registration, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate update432014TTLTBGTVTBCTTTNLSXLR_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date modifiedDate, VRRegistration registration,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
 			Date now = new Date();
-	
+
 			long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-	
+
 			VRVehicleTypeCertificate object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
-		
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLLKXCG_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLLKXCG_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
-			Date now = new Date();	
+			Date now = new Date();
 			boolean flagUpdate = true;
-				
+
 			VRVehicleTypeCertificate object = new VRVehicleTypeCertificateImpl();
-			List <VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDeliverableCode(dossierFile.getDeliverableCode());
+			List<VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+					.findByDeliverableCode(dossierFile.getDeliverableCode());
 			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0) {
-				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0)) && lsVRVehicleTypeCertificate.get(0).getModule().contains("04")) {
+				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0))
+						&& lsVRVehicleTypeCertificate.get(0).getModule().contains("04")) {
 					object = lsVRVehicleTypeCertificate.get(0);
 					flagUpdate = true;
 				} else {
 					flagUpdate = false;
-					long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);				
+					long vrVehicleTypeCertificateId = counterLocalService
+							.increment(VRVehicleTypeCertificate.class.getName());
+					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 				}
 			} else {
 				flagUpdate = false;
-				long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+				long vrVehicleTypeCertificateId = counterLocalService
+						.increment(VRVehicleTypeCertificate.class.getName());
 				object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 			}
 			object.setMtCore(1);
@@ -1087,11 +1137,14 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setApplicantEmail(appProfile.getApplicantEmail());
 				object.setApplicantPhone(appProfile.getApplicantPhone());
 				object.setApplicantFax(mapValues.get(""));
-				object.setApplicantContactName(mapValues.get("chungchi@bb_XCG01013")); // Chua xuat hien trong data bien ban
-				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XCG01012")); // Chua xuat hien trong data bien ban
-				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XCG01014")); // Chua xuat hien trong data bien ban
-				object.setCityCode(appProfile.getApplicantCity()); 
-				
+				object.setApplicantContactName(mapValues.get("chungchi@bb_XCG01013")); // Chua xuat hien trong data bien
+																						// ban
+				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XCG01012")); // Chua xuat hien trong data
+																						// bien ban
+				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XCG01014")); // Chua xuat hien trong data
+																						// bien ban
+				object.setCityCode(appProfile.getApplicantCity());
+
 			} else {
 				return object;
 			}
@@ -1099,35 +1152,34 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
+				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCG01019"));
-			
+
 			object.setConvertassembleId(0);
-			
+
 			if (Validator.isNotNull(objDossier)) {
 				object.setDossierNo(objDossier.getDossierNo());
 				object.setReferenceUid(objDossier.getReferenceUid());
 				object.setServiceCode(objDossier.getServiceCode());
-				object.setServiceName(objDossier.getServiceName());		
+				object.setServiceName(objDossier.getServiceName());
 				object.setRegisteredNumber(mapValues.get("ma_ho_so"));
 			}
-			
-			
-			
+
 			String productionPlantCode = mapValues.get("bien_ban@bb_XCG01007");
 			String loai_hinh_san_xuat = mapValues.get("bien_ban@loai_hinh_san_xuat"); // sxlr / nk
-			
+
 			VRProductionPlant objVRProductionPlant = new VRProductionPlantImpl();
-			try {				
+			try {
 				if (Validator.isNotNull(loai_hinh_san_xuat) && loai_hinh_san_xuat.contains("sxlr")) {
-					long productionPlantRegistrationId = Long.parseLong(productionPlantCode) ;
-					
-					List <VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
-					if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0 ) {
-						objVRProductionPlant = lstVRProductionPlant.get(0);				
+					long productionPlantRegistrationId = Long.parseLong(productionPlantCode);
+
+					List<VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil
+							.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
+					if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0) {
+						objVRProductionPlant = lstVRProductionPlant.get(0);
 					}
-				} else {     
+				} else {
 					// Co so nhap khau
 					// Chi ap dung voi Chung nhan chat luong linh kien Nhap khau
 					object.setManufacturerForeignCode(mapValues.get("bien_ban@bb_co_so_nhap_khau"));
@@ -1139,125 +1191,141 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 					object.setManufacturerPhone(mapValues.get("bien_ban@bb_so_dien_thoai_nhap_khau"));
 					object.setManufacturerFax(mapValues.get("bien_ban@bb_thu_dien_tu_nguoi_lien_he"));
 				}
-				
+
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				productionPlantCode = objVRProductionPlant.getProductionPlantCode();
 				object.setProductionPlantCode(productionPlantCode);
 				object.setProductionPlantName(objVRProductionPlant.getProductionPlantName());
 				object.setProductionPlantAddress(objVRProductionPlant.getProductionPlantAddress());
-				object.setProductionPlantRepresentative(mapValues.get("bien_ban@bb_XCG01009")); // Chua xuat hien trong data bien ban
-				object.setProductionPlantRepresentativeTitle(mapValues.get("bien_ban@bb_XCG01010")); // Chua xuat hien trong data bien ban
+				object.setProductionPlantRepresentative(mapValues.get("bien_ban@bb_XCG01009")); // Chua xuat hien trong
+																								// data bien ban
+				object.setProductionPlantRepresentativeTitle(mapValues.get("bien_ban@bb_XCG01010")); // Chua xuat hien
+																										// trong data
+																										// bien ban
 
 			}
-			
+
 			try {
 				object.setCopReportNo(mapValues.get("chung_chi@bb_XCG01016"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01017")) && mapValues.get("chung_chi@bb_XCG01017").length() > 9) { 
-					object.setCopReportDate(parseStringToDate(mapValues.get("chung_chi@bb_XCG01017"))); // Chua xuat hien trong data bien ban
-				}				
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01017"))
+						&& mapValues.get("chung_chi@bb_XCG01017").length() > 9) {
+					object.setCopReportDate(parseStringToDate(mapValues.get("chung_chi@bb_XCG01017"))); // Chua xuat
+																										// hien trong
+																										// data bien ban
+				}
 				object.setCopReportExpireDate(null);
-				
+
 				// Kiem tra hieu luc COP cho lan ke tiep
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01016")) && mapValues.get("chung_chi@bb_XCG01016").trim().length() > 0) {
-					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil.findBycopReportNo(1, mapValues.get("chung_chi@bb_XCG01016").trim());
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01016"))
+						&& mapValues.get("chung_chi@bb_XCG01016").trim().length() > 0) {
+					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil
+							.findBycopReportNo(1, mapValues.get("chung_chi@bb_XCG01016").trim());
 					if (Validator.isNotNull(objVRCOPReportRepository)) {
 						object.setCopReportDate(objVRCOPReportRepository.getCopReportDate());
 						object.setCopReportExpireDate(objVRCOPReportRepository.getCopReportExpiredDate());
 					}
 				}
-				
+
 			} catch (Exception e) {
 				_log.debug(e);
 			}
 
-			//Khong ap dung voi Chung nhan chat luong linh kien
+			// Khong ap dung voi Chung nhan chat luong linh kien
 			/*
-			object.setDesignerCode("");
-			object.setDesignerName("");
-			object.setDesignerAddress("");
-			object.setDesignerRepresentative("");
-			object.setDesignerRepresentativeTitle("");
-			
-			object.setDesignerEmail("");
-			object.setDesignerPhone("");
-			object.setDesignerFax("");
-			object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
-			object.setDesignModelDescription(mapValues.get("bien_ban@loai_hinh_thiet_ke_text"));
-			
-			//object.setVerificationCertificateNo
-			//object.setVerificationCertificateDate
-			//object.setTypeApprovalCertificateNo
-			//object.setTypeApprovalCertificateDate
-			
-			*/
+			 * object.setDesignerCode(""); object.setDesignerName("");
+			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
+			 * object.setDesignerRepresentativeTitle("");
+			 * 
+			 * object.setDesignerEmail(""); object.setDesignerPhone("");
+			 * object.setDesignerFax("");
+			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
+			 * object.setDesignModelDescription(mapValues.get(
+			 * "bien_ban@loai_hinh_thiet_ke_text"));
+			 * 
+			 * //object.setVerificationCertificateNo //object.setVerificationCertificateDate
+			 * //object.setTypeApprovalCertificateNo //object.setTypeApprovalCertificateDate
+			 * 
+			 */
 			try {
-				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban")); 
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")) && mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
+				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban"));
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setVerificationRefDate(parseStringToDate(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XCG01020")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01021")) && mapValues.get("bien_ban@bb_XCG01021").length() > 9) { 
-					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("bien_ban@bb_XCG01021"))); // Chua xuat hien trong data bien ban
+				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XCG01020")); // Chua xuat hien trong data
+																							// bien ban
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01021"))
+						&& mapValues.get("bien_ban@bb_XCG01021").length() > 9) {
+					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("bien_ban@bb_XCG01021"))); // Chua
+																													// xuat
+																													// hien
+																													// trong
+																													// data
+																													// bien
+																													// ban
 				}
-				
+
 				// Mo rong: so_gcn_goc va ngay_gcn_goc;
-				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc")) && mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
+				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc"))
+						&& mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_goc")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_gcn_goc"));
 				}
-				// Cap lai: so_chung_chi va ngay_gcn_cu; 
-				if (mapValues.get("chung_chi@so_chung_chi").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu")) && mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
+				// Cap lai: so_chung_chi va ngay_gcn_cu;
+				if (mapValues.get("chung_chi@so_chung_chi").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu"))
+						&& mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_cu")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_chung_chi"));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
-			
-			
-			
+
 			// Khong ap dung voi Chung nhan chat luong linh kien
 			/*
-			object.setInspectorReceiveDate(now);
-			object.setInspectorSubmitDate(now);
-			object.setInspectorendorSementDate(now);
-			object.setInspectorDeadline(now);
-			object.setInspectorFinishDate(now);
-			object.setInspectorCancelDate(now);
-			object.setInspectorOrganization(mapValues.get(""));
-			object.setInspectorDivision(mapValues.get(""));
-			object.setInspectorSignName(mapValues.get(""));
-			object.setInspectorSignTitle(mapValues.get(""));
-			object.setInspectorSignPlace(mapValues.get(""));*/
-			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); //1: Giay chung nhan; 0: Thong bao khong dat
-			
+			 * object.setInspectorReceiveDate(now); object.setInspectorSubmitDate(now);
+			 * object.setInspectorendorSementDate(now); object.setInspectorDeadline(now);
+			 * object.setInspectorFinishDate(now); object.setInspectorCancelDate(now);
+			 * object.setInspectorOrganization(mapValues.get(""));
+			 * object.setInspectorDivision(mapValues.get(""));
+			 * object.setInspectorSignName(mapValues.get(""));
+			 * object.setInspectorSignTitle(mapValues.get(""));
+			 * object.setInspectorSignPlace(mapValues.get(""));
+			 */
+			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); // 1: Giay chung nhan; 0: Thong bao
+																					// khong dat
+
 			object.setCertificateRecordNo(mapValues.get("chung_chi@so_chung_chi"));
 			object.setCertificateSignName(mapValues.get("chung_chi@nguoi_ky_cc_text"));
 			object.setCertificateSignTitle(mapValues.get("chung_chi@chuc_danh_ky"));
 			object.setCertificateSignPlace(mapValues.get("chung_chi@dia_diem_ky"));
 			object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
 			try {
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc")) && mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc"))
+						&& mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
 					object.setCertificateRecordDate(parseStringToDate(mapValues.get("chung_chi@ngay_cap_cc")));
-				}		
-				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_het_han_gcn")) && mapValues.get("bien_ban@ngay_het_han_gcn").length() > 9) {
-					object.setCertificateRecordExpireDate(parseStringToDate(mapValues.get("bien_ban@ngay_het_han_gcn"))); 
+				}
+				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_het_han_gcn"))
+						&& mapValues.get("bien_ban@ngay_het_han_gcn").length() > 9) {
+					object.setCertificateRecordExpireDate(
+							parseStringToDate(mapValues.get("bien_ban@ngay_het_han_gcn")));
 					// Moi co trong bien ban, Chua xuat hien trong data chung chi
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
-			} 
-			
+			}
+
 			object.setExpiredStatus("1");
 			object.setCertificateRecordStatus("2");
 			object.setDigitalIssueStatus("0");
@@ -1271,134 +1339,158 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			//
 			object.setCertifiedAssemblyType(mapValues.get("bien_ban@bb_hinh_thuc_cap"));
 			object.setCertifiedAssemblyTypeDescription(mapValues.get("bien_ban@bb_hinh_thuc_cap_text"));
-			
-			/*object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XCG01055"));
-			object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XCG01056"));
-			object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XCG01057"));
-			object.setCertifiedFrameAttachPlace(mapValues.get(""));
-			object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XCG01058"));
-			object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XCG01059"));
-			object.setCertifiedEngineAttachPlace(mapValues.get(""));
-			object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XCG01060"));
-			object.setSampleFrameNo(mapValues.get("bien_ban@bb_XCG01062"));
-			object.setSampleVINNo(mapValues.get("bien_ban@bb_XCG01062"));
-			object.setSampleEngineNo(mapValues.get("bien_ban@bb_XCG01063"));
-			object.setSampleVehicleType(mapValues.get("bien_ban@bb_XCG01066"));
-			object.setSampleVehicleTypeDescription(mapValues.get("bien_ban@bb_XCG01066_text"));
-			object.setSampleTrademark(mapValues.get("bien_ban@bb_XCG01067"));
-			object.setSampleTrademarkName(mapValues.get("bien_ban@bb_XCG01067_text"));
-			object.setSampleCommercialName(mapValues.get("bien_ban@bb_XCG01068"));
-			object.setSampleModelCode(mapValues.get("bien_ban@bb_XCG01069"));
-			*/
-			
-			
+
+			/*
+			 * object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XCG01055"));
+			 * object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XCG01056"));
+			 * object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XCG01057"));
+			 * object.setCertifiedFrameAttachPlace(mapValues.get(""));
+			 * object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XCG01058"));
+			 * object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XCG01059"));
+			 * object.setCertifiedEngineAttachPlace(mapValues.get(""));
+			 * object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XCG01060"));
+			 * object.setSampleFrameNo(mapValues.get("bien_ban@bb_XCG01062"));
+			 * object.setSampleVINNo(mapValues.get("bien_ban@bb_XCG01062"));
+			 * object.setSampleEngineNo(mapValues.get("bien_ban@bb_XCG01063"));
+			 * object.setSampleVehicleType(mapValues.get("bien_ban@bb_XCG01066"));
+			 * object.setSampleVehicleTypeDescription(mapValues.get(
+			 * "bien_ban@bb_XCG01066_text"));
+			 * object.setSampleTrademark(mapValues.get("bien_ban@bb_XCG01067"));
+			 * object.setSampleTrademarkName(mapValues.get("bien_ban@bb_XCG01067_text"));
+			 * object.setSampleCommercialName(mapValues.get("bien_ban@bb_XCG01068"));
+			 * object.setSampleModelCode(mapValues.get("bien_ban@bb_XCG01069"));
+			 */
+
 			object.setCommonSafetyStandard(mapValues.get("bien_ban@bb_tieu_chuan_ap_dung"));
 			object.setCommonSafetyDescription(mapValues.get("bien_ban@bb_tieu_chuan_ap_dung_text"));
-			/*object.setEmissionStandard(mapValues.get("bien_ban@bb_XCG01032"));			
-			object.setEmissionDescription(mapValues.get("bien_ban@XCG01032_text"));*/
-			
+			/*
+			 * object.setEmissionStandard(mapValues.get("bien_ban@bb_XCG01032"));
+			 * object.setEmissionDescription(mapValues.get("bien_ban@XCG01032_text"));
+			 */
+
 			try {
 				object.setSafetyTestReportNo(mapValues.get("bien_ban@bb_bao_cao_ket_qua_thu_nghiem"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem")) && mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem").length() > 9) {
-					object.setSafetyTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem")));
-				}	// Chua xuat hien trong data bien ban 			
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem"))
+						&& mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem").length() > 9) {
+					object.setSafetyTestReportDate(
+							parseStringToDate(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem")));
+				} // Chua xuat hien trong data bien ban
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-						
+
 			try {
 				object.setEmissionTestReportNo(mapValues.get("bien_ban@bb_bao_cao_ket_qua_thu_nghiem_lien_quan"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan")) && mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan").length() > 9) {
-					object.setEmissionTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan")));
-				}	// Chua xuat hien trong data bien ban 				
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan"))
+						&& mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan").length() > 9) {
+					object.setEmissionTestReportDate(parseStringToDate(
+							mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan")));
+				} // Chua xuat hien trong data bien ban
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
 				object.setOtherTestReportNo(mapValues.get("bien_ban@bb_bien_ban_kiem_tra_xac_nhan"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan")) && mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan").length() > 9) {
-					object.setOtherTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan")));
-				}	// Chua xuat hien trong data bien ban 			
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan"))
+						&& mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan").length() > 9) {
+					object.setOtherTestReportDate(
+							parseStringToDate(mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan")));
+				} // Chua xuat hien trong data bien ban
 			} catch (Exception e) {
 				_log.debug(e);
-			}			
-			
+			}
+
 			// Chi ap dung voi Chung nhan chat luong linh kien
-			//so_to_khai ngay_mo_to_khai nuoc_san_xuat 
+			// so_to_khai ngay_mo_to_khai nuoc_san_xuat
 			try {
 				object.setCustomsDeclarationNo(mapValues.get("bien_ban@bb_LKXCG0401"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_LKXCG0402")) && mapValues.get("bien_ban@bb_LKXCG0402").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_LKXCG0402"))
+						&& mapValues.get("bien_ban@bb_LKXCG0402").length() > 9) {
 					object.setCustomsDeclarationDate(parseStringToDate(mapValues.get("bien_ban@bb_LKXCG0402")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
 				// Chua xuat hien trong data bien ban
-				object.setDesignSymbol(Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01026")) ? mapValues.get("bien_ban@bb_XCG01026") : Validator.isNotNull(mapValues.get("bien_ban@so_to_khai")) ? mapValues.get("bien_ban@so_to_khai") : null); 
-				object.setProductionCountry(Validator.isNotNull(mapValues.get("bien_ban@bb_LKXCG0405")) ? mapValues.get("bien_ban@bb_LKXCG0405") : Validator.isNotNull(mapValues.get("bien_ban@nuoc_san_xuat")) ? mapValues.get("bien_ban@nuoc_san_xuat") : null);
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_LKXCG0404")) && mapValues.get("bien_ban@bb_LKXCG0404").length() > 0) {
+				object.setDesignSymbol(Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01026"))
+						? mapValues.get("bien_ban@bb_XCG01026")
+						: Validator.isNotNull(mapValues.get("bien_ban@so_to_khai"))
+								? mapValues.get("bien_ban@so_to_khai")
+								: null);
+				object.setProductionCountry(Validator.isNotNull(mapValues.get("bien_ban@bb_LKXCG0405"))
+						? mapValues.get("bien_ban@bb_LKXCG0405")
+						: Validator.isNotNull(mapValues.get("bien_ban@nuoc_san_xuat"))
+								? mapValues.get("bien_ban@nuoc_san_xuat")
+								: null);
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_LKXCG0404"))
+						&& mapValues.get("bien_ban@bb_LKXCG0404").length() > 0) {
 					object.setImporterQuantity(Long.valueOf(mapValues.get("bien_ban@bb_LKXCG0404")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
+
 			object.setInspectionRecordNo(mapValues.get("bien_ban@so_bien_ban"));
 			try {
 				object.setInspectionSite(mapValues.get("bien_ban@bb_XCG01008"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")) && mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setInspectionDate(parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				object.setInspectionDistrictCode(objVRProductionPlant.getProductionPlantDistrictCode());
 				object.setInspectionDistrictName(objVRProductionPlant.getProductionPlantDistrictName());
 				object.setInspectionProvinceCode(objVRProductionPlant.getProductionPlantProvinceCode());
 				object.setInspectionProvinceName(objVRProductionPlant.getProductionPlantProvinceName());
 			}
-			
-			//object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
+
+			// object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
 			object.setInspectorId(Long.valueOf(mapValues.get("bien_ban@dang_kiem_vien_chinh_userId")));
 			object.setRemarks(mapValues.get(""));
 			object.setInspectionNote(mapValues.get(""));
-			
-			object.setModule("04") ; // 04: Chung nhan chat luong linh kien
-			
+
+			object.setModule("04"); // 04: Chung nhan chat luong linh kien
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLLKXM_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLLKXM_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
-			Date now = new Date();	
+			Date now = new Date();
 			boolean flagUpdate = true;
-				
+
 			VRVehicleTypeCertificate object = new VRVehicleTypeCertificateImpl();
-			List <VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDeliverableCode(dossierFile.getDeliverableCode());
+			List<VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+					.findByDeliverableCode(dossierFile.getDeliverableCode());
 			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0) {
-				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0)) && lsVRVehicleTypeCertificate.get(0).getModule().contains("04")) {
+				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0))
+						&& lsVRVehicleTypeCertificate.get(0).getModule().contains("04")) {
 					object = lsVRVehicleTypeCertificate.get(0);
 					flagUpdate = true;
 				} else {
 					flagUpdate = false;
-					long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);				
+					long vrVehicleTypeCertificateId = counterLocalService
+							.increment(VRVehicleTypeCertificate.class.getName());
+					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 				}
 			} else {
 				flagUpdate = false;
-				long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+				long vrVehicleTypeCertificateId = counterLocalService
+						.increment(VRVehicleTypeCertificate.class.getName());
 				object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 			}
 			object.setMtCore(1);
@@ -1418,7 +1510,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XMY01012"));
 				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XMY01014"));
 				object.setCityCode(appProfile.getApplicantCity());
-				
+
 			} else {
 				return object;
 			}
@@ -1426,35 +1518,34 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
+				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XMY01019"));
-			
+
 			object.setConvertassembleId(0);
-			
+
 			if (Validator.isNotNull(objDossier)) {
 				object.setDossierNo(objDossier.getDossierNo());
 				object.setReferenceUid(objDossier.getReferenceUid());
 				object.setServiceCode(objDossier.getServiceCode());
-				object.setServiceName(objDossier.getServiceName());		
+				object.setServiceName(objDossier.getServiceName());
 				object.setRegisteredNumber(mapValues.get("ma_ho_so"));
 			}
-			
-			
-			
+
 			String productionPlantCode = mapValues.get("bien_ban@bb_XMY01007");
 			String loai_hinh_san_xuat = mapValues.get("bien_ban@loai_hinh_san_xuat"); // sxlr / nk
-			
+
 			VRProductionPlant objVRProductionPlant = new VRProductionPlantImpl();
-			try {				
+			try {
 				if (Validator.isNotNull(loai_hinh_san_xuat) && loai_hinh_san_xuat.contains("sxlr")) {
-					long productionPlantRegistrationId = Long.parseLong(productionPlantCode) ;
-					
-					List <VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
-					if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0 ) {
-						objVRProductionPlant = lstVRProductionPlant.get(0);				
+					long productionPlantRegistrationId = Long.parseLong(productionPlantCode);
+
+					List<VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil
+							.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
+					if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0) {
+						objVRProductionPlant = lstVRProductionPlant.get(0);
 					}
-				} else {     
+				} else {
 					// Co so nhap khau
 					// Chi ap dung voi Chung nhan chat luong linh kien Nhap khau
 					object.setManufacturerForeignCode(mapValues.get("bien_ban@bb_co_so_nhap_khau"));
@@ -1466,123 +1557,141 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 					object.setManufacturerPhone(mapValues.get("bien_ban@bb_so_dien_thoai_nhap_khau"));
 					object.setManufacturerFax(mapValues.get("bien_ban@bb_thu_dien_tu_nguoi_lien_he"));
 				}
-				
+
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				productionPlantCode = objVRProductionPlant.getProductionPlantCode();
 				object.setProductionPlantCode(productionPlantCode);
 				object.setProductionPlantName(objVRProductionPlant.getProductionPlantName());
 				object.setProductionPlantAddress(objVRProductionPlant.getProductionPlantAddress());
-				object.setProductionPlantRepresentative(mapValues.get("bien_ban@bb_XMY01009")); // Chua xuat hien trong data bien ban
-				object.setProductionPlantRepresentativeTitle(mapValues.get("bien_ban@bb_XMY01010")); // Chua xuat hien trong data bien ban
+				object.setProductionPlantRepresentative(mapValues.get("bien_ban@bb_XMY01009")); // Chua xuat hien trong
+																								// data bien ban
+				object.setProductionPlantRepresentativeTitle(mapValues.get("bien_ban@bb_XMY01010")); // Chua xuat hien
+																										// trong data
+																										// bien ban
 
 			}
-			
+
 			try {
 				object.setCopReportNo(mapValues.get("chung_chi@bb_XMY01016"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01017")) && mapValues.get("chung_chi@bb_XMY01017").length() > 9) { 
-					object.setCopReportDate(parseStringToDate(mapValues.get("chung_chi@bb_XMY01017"))); // Chua xuat hien trong data bien ban
-				}				
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01017"))
+						&& mapValues.get("chung_chi@bb_XMY01017").length() > 9) {
+					object.setCopReportDate(parseStringToDate(mapValues.get("chung_chi@bb_XMY01017"))); // Chua xuat
+																										// hien trong
+																										// data bien ban
+				}
 				object.setCopReportExpireDate(null);
-				
+
 				// Kiem tra hieu luc COP cho lan ke tiep
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01016")) && mapValues.get("chung_chi@bb_XMY01016").trim().length() > 0) {
-					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil.findBycopReportNo(1, mapValues.get("chung_chi@bb_XMY01016").trim());
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01016"))
+						&& mapValues.get("chung_chi@bb_XMY01016").trim().length() > 0) {
+					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil
+							.findBycopReportNo(1, mapValues.get("chung_chi@bb_XMY01016").trim());
 					if (Validator.isNotNull(objVRCOPReportRepository)) {
 						object.setCopReportDate(objVRCOPReportRepository.getCopReportDate());
 						object.setCopReportExpireDate(objVRCOPReportRepository.getCopReportExpiredDate());
 					}
 				}
-				
+
 			} catch (Exception e) {
 				_log.debug(e);
 			}
 
-			//Khong ap dung voi Chung nhan chat luong linh kien
+			// Khong ap dung voi Chung nhan chat luong linh kien
 			/*
-			object.setDesignerCode("");
-			object.setDesignerName("");
-			object.setDesignerAddress("");
-			object.setDesignerRepresentative("");
-			object.setDesignerRepresentativeTitle("");
-			
-			object.setDesignerEmail("");
-			object.setDesignerPhone("");
-			object.setDesignerFax("");
-			object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
-			object.setDesignModelDescription(mapValues.get("bien_ban@loai_hinh_thiet_ke_text"));
-			
-			//object.setVerificationCertificateNo
-			//object.setVerificationCertificateDate
-			//object.setTypeApprovalCertificateNo
-			//object.setTypeApprovalCertificateDate
-			
-			*/
+			 * object.setDesignerCode(""); object.setDesignerName("");
+			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
+			 * object.setDesignerRepresentativeTitle("");
+			 * 
+			 * object.setDesignerEmail(""); object.setDesignerPhone("");
+			 * object.setDesignerFax("");
+			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
+			 * object.setDesignModelDescription(mapValues.get(
+			 * "bien_ban@loai_hinh_thiet_ke_text"));
+			 * 
+			 * //object.setVerificationCertificateNo //object.setVerificationCertificateDate
+			 * //object.setTypeApprovalCertificateNo //object.setTypeApprovalCertificateDate
+			 * 
+			 */
 			try {
-				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban")); 
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")) && mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
+				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban"));
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setVerificationRefDate(parseStringToDate(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XMY01020")); // Chua xuat hien trong data bien ban
-				
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01021")) && mapValues.get("bien_ban@bb_XMY01021").length() > 9) { 
-					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("bien_ban@bb_XMY01021"))); // Chua xuat hien trong data bien ban
+				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XMY01020")); // Chua xuat hien trong data
+																							// bien ban
+
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01021"))
+						&& mapValues.get("bien_ban@bb_XMY01021").length() > 9) {
+					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("bien_ban@bb_XMY01021"))); // Chua
+																													// xuat
+																													// hien
+																													// trong
+																													// data
+																													// bien
+																													// ban
 				}
 				// Mo rong: so_gcn_goc va ngay_gcn_goc;
-				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc")) && mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
+				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc"))
+						&& mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_goc")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_gcn_goc"));
 				}
-				// Cap lai: so_chung_chi va ngay_gcn_cu; 
-				if (mapValues.get("chung_chi@so_chung_chi").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu")) && mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
+				// Cap lai: so_chung_chi va ngay_gcn_cu;
+				if (mapValues.get("chung_chi@so_chung_chi").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu"))
+						&& mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_cu")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_chung_chi"));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
-			
+
 			// Khong ap dung voi Chung nhan chat luong linh kien
 			/*
-			object.setInspectorReceiveDate(now);
-			object.setInspectorSubmitDate(now);
-			object.setInspectorendorSementDate(now);
-			object.setInspectorDeadline(now);
-			object.setInspectorFinishDate(now);
-			object.setInspectorCancelDate(now);
-			object.setInspectorOrganization(mapValues.get(""));
-			object.setInspectorDivision(mapValues.get(""));
-			object.setInspectorSignName(mapValues.get(""));
-			object.setInspectorSignTitle(mapValues.get(""));
-			object.setInspectorSignPlace(mapValues.get(""));*/
-			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); //1: Giay chung nhan; 0: Thong bao khong dat
-			
+			 * object.setInspectorReceiveDate(now); object.setInspectorSubmitDate(now);
+			 * object.setInspectorendorSementDate(now); object.setInspectorDeadline(now);
+			 * object.setInspectorFinishDate(now); object.setInspectorCancelDate(now);
+			 * object.setInspectorOrganization(mapValues.get(""));
+			 * object.setInspectorDivision(mapValues.get(""));
+			 * object.setInspectorSignName(mapValues.get(""));
+			 * object.setInspectorSignTitle(mapValues.get(""));
+			 * object.setInspectorSignPlace(mapValues.get(""));
+			 */
+			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); // 1: Giay chung nhan; 0: Thong bao
+																					// khong dat
+
 			object.setCertificateRecordNo(mapValues.get("chung_chi@so_chung_chi"));
 			object.setCertificateSignName(mapValues.get("chung_chi@nguoi_ky_cc_text"));
 			object.setCertificateSignTitle(mapValues.get("chung_chi@chuc_danh_ky"));
 			object.setCertificateSignPlace(mapValues.get("chung_chi@dia_diem_ky"));
 			object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
 			try {
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc")) && mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc"))
+						&& mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
 					object.setCertificateRecordDate(parseStringToDate(mapValues.get("chung_chi@ngay_cap_cc")));
-				}		
-				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_het_han_gcn")) && mapValues.get("bien_ban@ngay_het_han_gcn").length() > 9) {
-					object.setCertificateRecordExpireDate(parseStringToDate(mapValues.get("bien_ban@ngay_het_han_gcn"))); 
+				}
+				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_het_han_gcn"))
+						&& mapValues.get("bien_ban@ngay_het_han_gcn").length() > 9) {
+					object.setCertificateRecordExpireDate(
+							parseStringToDate(mapValues.get("bien_ban@ngay_het_han_gcn")));
 					// Moi co trong bien ban, Chua xuat hien trong data chung chi
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
-			} 
-			
+			}
+
 			object.setExpiredStatus("1");
 			object.setCertificateRecordStatus("2");
 			object.setDigitalIssueStatus("0");
@@ -1596,135 +1705,158 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			//
 			object.setCertifiedAssemblyType(mapValues.get("bien_ban@bb_hinh_thuc_cap"));
 			object.setCertifiedAssemblyTypeDescription(mapValues.get("bien_ban@bb_hinh_thuc_cap_text"));
-			
-			/*object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XMY01055"));
-			object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XMY01056"));
-			object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XMY01057"));
-			object.setCertifiedFrameAttachPlace(mapValues.get(""));
-			object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XMY01058"));
-			object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XMY01059"));
-			object.setCertifiedEngineAttachPlace(mapValues.get(""));
-			object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XMY01060"));
-			object.setSampleFrameNo(mapValues.get("bien_ban@bb_XMY01062"));
-			object.setSampleVINNo(mapValues.get("bien_ban@bb_XMY01062"));
-			object.setSampleEngineNo(mapValues.get("bien_ban@bb_XMY01063"));
-			object.setSampleVehicleType(mapValues.get("bien_ban@bb_XMY01066"));
-			object.setSampleVehicleTypeDescription(mapValues.get("bien_ban@bb_XMY01066_text"));
-			object.setSampleTrademark(mapValues.get("bien_ban@bb_XMY01067"));
-			object.setSampleTrademarkName(mapValues.get("bien_ban@bb_XMY01067_text"));
-			object.setSampleCommercialName(mapValues.get("bien_ban@bb_XMY01068"));
-			object.setSampleModelCode(mapValues.get("bien_ban@bb_XMY01069"));
-			*/
-			
-			
+
+			/*
+			 * object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XMY01055"));
+			 * object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XMY01056"));
+			 * object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XMY01057"));
+			 * object.setCertifiedFrameAttachPlace(mapValues.get(""));
+			 * object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XMY01058"));
+			 * object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XMY01059"));
+			 * object.setCertifiedEngineAttachPlace(mapValues.get(""));
+			 * object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XMY01060"));
+			 * object.setSampleFrameNo(mapValues.get("bien_ban@bb_XMY01062"));
+			 * object.setSampleVINNo(mapValues.get("bien_ban@bb_XMY01062"));
+			 * object.setSampleEngineNo(mapValues.get("bien_ban@bb_XMY01063"));
+			 * object.setSampleVehicleType(mapValues.get("bien_ban@bb_XMY01066"));
+			 * object.setSampleVehicleTypeDescription(mapValues.get(
+			 * "bien_ban@bb_XMY01066_text"));
+			 * object.setSampleTrademark(mapValues.get("bien_ban@bb_XMY01067"));
+			 * object.setSampleTrademarkName(mapValues.get("bien_ban@bb_XMY01067_text"));
+			 * object.setSampleCommercialName(mapValues.get("bien_ban@bb_XMY01068"));
+			 * object.setSampleModelCode(mapValues.get("bien_ban@bb_XMY01069"));
+			 */
+
 			object.setCommonSafetyStandard(mapValues.get("bien_ban@bb_tieu_chuan_ap_dung"));
 			object.setCommonSafetyDescription(mapValues.get("bien_ban@bb_tieu_chuan_ap_dung_text"));
-			/*object.setEmissionStandard(mapValues.get("bien_ban@bb_XMY01032"));			
-			object.setEmissionDescription(mapValues.get("bien_ban@XMY01032_text"));*/
-			
+			/*
+			 * object.setEmissionStandard(mapValues.get("bien_ban@bb_XMY01032"));
+			 * object.setEmissionDescription(mapValues.get("bien_ban@XMY01032_text"));
+			 */
+
 			try {
 				object.setSafetyTestReportNo(mapValues.get("bien_ban@bb_bao_cao_ket_qua_thu_nghiem"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem")) && mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem").length() > 9) {
-					object.setSafetyTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem")));
-				}	// Chua xuat hien trong data bien ban 			
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem"))
+						&& mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem").length() > 9) {
+					object.setSafetyTestReportDate(
+							parseStringToDate(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem")));
+				} // Chua xuat hien trong data bien ban
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-						
+
 			try {
 				object.setEmissionTestReportNo(mapValues.get("bien_ban@bb_bao_cao_ket_qua_thu_nghiem_lien_quan"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan")) && mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan").length() > 9) {
-					object.setEmissionTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan")));
-				}	// Chua xuat hien trong data bien ban 				
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan"))
+						&& mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan").length() > 9) {
+					object.setEmissionTestReportDate(parseStringToDate(
+							mapValues.get("bien_ban@bb_ngay_cap_bao_cao_ket_qua_thu_nghiem_lien_quan")));
+				} // Chua xuat hien trong data bien ban
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
 				object.setOtherTestReportNo(mapValues.get("bien_ban@bb_bien_ban_kiem_tra_xac_nhan"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan")) && mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan").length() > 9) {
-					object.setOtherTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan")));
-				}	// Chua xuat hien trong data bien ban 			
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan"))
+						&& mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan").length() > 9) {
+					object.setOtherTestReportDate(
+							parseStringToDate(mapValues.get("bien_ban@bb_ngay_cap_bien_ban_kiem_tra_xac_nhan")));
+				} // Chua xuat hien trong data bien ban
 			} catch (Exception e) {
 				_log.debug(e);
-			}			
-			
+			}
+
 			// Chi ap dung voi Chung nhan chat luong linh kien
-			//so_to_khai ngay_mo_to_khai nuoc_san_xuat 
+			// so_to_khai ngay_mo_to_khai nuoc_san_xuat
 			try {
 				object.setCustomsDeclarationNo(mapValues.get("bien_ban@bb_LKXMY0401"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_LKXMY0402")) && mapValues.get("bien_ban@bb_LKXMY0402").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_LKXMY0402"))
+						&& mapValues.get("bien_ban@bb_LKXMY0402").length() > 9) {
 					object.setCustomsDeclarationDate(parseStringToDate(mapValues.get("bien_ban@bb_LKXMY0402")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
 				// Chua xuat hien trong data bien ban
-				object.setDesignSymbol(Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01026")) ? mapValues.get("bien_ban@bb_XMY01026") : Validator.isNotNull(mapValues.get("bien_ban@so_to_khai")) ? mapValues.get("bien_ban@so_to_khai") : null); 
-				object.setProductionCountry(Validator.isNotNull(mapValues.get("bien_ban@bb_LKXMY0405")) ? mapValues.get("bien_ban@bb_LKXMY0405") : Validator.isNotNull(mapValues.get("bien_ban@nuoc_san_xuat")) ? mapValues.get("bien_ban@nuoc_san_xuat") : null);
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_LKXMY0404")) && mapValues.get("bien_ban@bb_LKXMY0404").length() > 0) {
+				object.setDesignSymbol(Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01026"))
+						? mapValues.get("bien_ban@bb_XMY01026")
+						: Validator.isNotNull(mapValues.get("bien_ban@so_to_khai"))
+								? mapValues.get("bien_ban@so_to_khai")
+								: null);
+				object.setProductionCountry(Validator.isNotNull(mapValues.get("bien_ban@bb_LKXMY0405"))
+						? mapValues.get("bien_ban@bb_LKXMY0405")
+						: Validator.isNotNull(mapValues.get("bien_ban@nuoc_san_xuat"))
+								? mapValues.get("bien_ban@nuoc_san_xuat")
+								: null);
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_LKXMY0404"))
+						&& mapValues.get("bien_ban@bb_LKXMY0404").length() > 0) {
 					object.setImporterQuantity(Long.valueOf(mapValues.get("bien_ban@bb_LKXMY0404")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
+
 			object.setInspectionRecordNo(mapValues.get("bien_ban@so_bien_ban"));
 			try {
 				object.setInspectionSite(mapValues.get("bien_ban@bb_XMY01008"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")) && mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setInspectionDate(parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
-			
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				object.setInspectionDistrictCode(objVRProductionPlant.getProductionPlantDistrictCode());
 				object.setInspectionDistrictName(objVRProductionPlant.getProductionPlantDistrictName());
 				object.setInspectionProvinceCode(objVRProductionPlant.getProductionPlantProvinceCode());
 				object.setInspectionProvinceName(objVRProductionPlant.getProductionPlantProvinceName());
 			}
-			
-			//object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
+
+			// object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
 			object.setInspectorId(Long.valueOf(mapValues.get("bien_ban@dang_kiem_vien_chinh_userId")));
 			object.setRemarks(mapValues.get(""));
 			object.setInspectionNote(mapValues.get(""));
-			
-			object.setModule("04") ; // 04: Chung nhan chat luong linh kien
-			
+
+			object.setModule("04"); // 04: Chung nhan chat luong linh kien
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXCG_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXCG_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
-			Date now = new Date();	
+			Date now = new Date();
 			boolean flagUpdate = true;
-				
+
 			VRVehicleTypeCertificate object = new VRVehicleTypeCertificateImpl();
-			List <VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDeliverableCode(dossierFile.getDeliverableCode());
+			List<VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+					.findByDeliverableCode(dossierFile.getDeliverableCode());
 			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0) {
-				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0)) && lsVRVehicleTypeCertificate.get(0).getModule().contains("03")) {
+				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0))
+						&& lsVRVehicleTypeCertificate.get(0).getModule().contains("03")) {
 					object = lsVRVehicleTypeCertificate.get(0);
 					flagUpdate = true;
 				} else {
 					flagUpdate = false;
-					long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);				
+					long vrVehicleTypeCertificateId = counterLocalService
+							.increment(VRVehicleTypeCertificate.class.getName());
+					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 				}
 			} else {
 				flagUpdate = false;
-				long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+				long vrVehicleTypeCertificateId = counterLocalService
+						.increment(VRVehicleTypeCertificate.class.getName());
 				object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 			}
 			object.setMtCore(1);
@@ -1744,7 +1876,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XCG01012"));
 				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XCG01014"));
 				object.setCityCode(appProfile.getApplicantCity());
-				
+
 			} else {
 				return object;
 			}
@@ -1752,44 +1884,48 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
+				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCG01019"));
-			
+
 			object.setConvertassembleId(0);
-			
+
 			if (Validator.isNotNull(objDossier)) {
 				object.setDossierNo(objDossier.getDossierNo());
 				object.setReferenceUid(objDossier.getReferenceUid());
 				object.setServiceCode(objDossier.getServiceCode());
-				object.setServiceName(objDossier.getServiceName());		
+				object.setServiceName(objDossier.getServiceName());
 				object.setRegisteredNumber(mapValues.get("ma_ho_so"));
 			}
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
-			/*object.setManufacturerForeignCode(mapValues.get(""));
-			object.setManufacturerName(mapValues.get(""));
-			object.setManufacturerAddress(mapValues.get(""));
-			object.setManufacturerRepresentative(mapValues.get(""));
-			object.setManufacturerRepresentativeTitle(mapValues.get(""));
-			object.setManufacturerEmail(mapValues.get(""));
-			object.setManufacturerPhone(mapValues.get(""));
-			object.setManufacturerFax(mapValues.get(""));*/
-			
+			/*
+			 * object.setManufacturerForeignCode(mapValues.get(""));
+			 * object.setManufacturerName(mapValues.get(""));
+			 * object.setManufacturerAddress(mapValues.get(""));
+			 * object.setManufacturerRepresentative(mapValues.get(""));
+			 * object.setManufacturerRepresentativeTitle(mapValues.get(""));
+			 * object.setManufacturerEmail(mapValues.get(""));
+			 * object.setManufacturerPhone(mapValues.get(""));
+			 * object.setManufacturerFax(mapValues.get(""));
+			 */
+
 			String productionPlantCode = mapValues.get("bien_ban@bb_XCG01007");
-			
+
 			VRProductionPlant objVRProductionPlant = new VRProductionPlantImpl();
-			try {				
-				long productionPlantRegistrationId = Long.parseLong(productionPlantCode) ;
-				
-				List <VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
-				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0 ) {
-					objVRProductionPlant = lstVRProductionPlant.get(0);				
+			try {
+				long productionPlantRegistrationId = Long.parseLong(productionPlantCode);
+
+				List<VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil
+						.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
+				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0) {
+					objVRProductionPlant = lstVRProductionPlant.get(0);
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				productionPlantCode = objVRProductionPlant.getProductionPlantCode();
 				object.setProductionPlantCode(productionPlantCode);
 				object.setProductionPlantName(objVRProductionPlant.getProductionPlantName());
@@ -1798,123 +1934,135 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setProductionPlantRepresentativeTitle(mapValues.get("bien_ban@bb_XCG01010"));
 
 			}
-			
+
 			try {
 				object.setCopReportNo(mapValues.get("chung_chi@bb_XCG01016"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01017")) && mapValues.get("chung_chi@bb_XCG01017").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01017"))
+						&& mapValues.get("chung_chi@bb_XCG01017").length() > 9) {
 					object.setCopReportDate(parseStringToDate(mapValues.get("chung_chi@bb_XCG01017")));
-				}				
+				}
 				object.setCopReportExpireDate(null);
-				
+
 				// Kiem tra hieu luc COP cho lan ke tiep
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01016")) && mapValues.get("chung_chi@bb_XCG01016").trim().length() > 0) {
-					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil.findBycopReportNo(1, mapValues.get("chung_chi@bb_XCG01016").trim());
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01016"))
+						&& mapValues.get("chung_chi@bb_XCG01016").trim().length() > 0) {
+					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil
+							.findBycopReportNo(1, mapValues.get("chung_chi@bb_XCG01016").trim());
 					if (Validator.isNotNull(objVRCOPReportRepository)) {
 						object.setCopReportDate(objVRCOPReportRepository.getCopReportDate());
 						object.setCopReportExpireDate(objVRCOPReportRepository.getCopReportExpiredDate());
 					}
 				}
-				
+
 			} catch (Exception e) {
 				_log.debug(e);
 			}
 
-			//Khong ap dung voi Chung nhan chat luong kieu loai toan xe
+			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setDesignerCode("");
-			object.setDesignerName("");
-			object.setDesignerAddress("");
-			object.setDesignerRepresentative("");
-			object.setDesignerRepresentativeTitle("");
-			
-			object.setDesignerEmail("");
-			object.setDesignerPhone("");
-			object.setDesignerFax("");
-			object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
-			object.setDesignModelDescription(mapValues.get("bien_ban@loai_hinh_thiet_ke_text"));*/
-			
-			
-			
+			 * object.setDesignerCode(""); object.setDesignerName("");
+			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
+			 * object.setDesignerRepresentativeTitle("");
+			 * 
+			 * object.setDesignerEmail(""); object.setDesignerPhone("");
+			 * object.setDesignerFax("");
+			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
+			 * object.setDesignModelDescription(mapValues.get(
+			 * "bien_ban@loai_hinh_thiet_ke_text"));
+			 */
+
 			try {
 				object.setVerificationCertificateNo(mapValues.get("chung_chi@bb_XCG01024"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01025")) && mapValues.get("chung_chi@bb_XCG01025").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01025"))
+						&& mapValues.get("chung_chi@bb_XCG01025").length() > 9) {
 					object.setVerificationCertificateDate(parseStringToDate(mapValues.get("chung_chi@bb_XCG01025")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban")); 
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")) && mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
+				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban"));
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setVerificationRefDate(parseStringToDate(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XCG01020")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01021")) && mapValues.get("bien_ban@bb_XCG01021").length() > 9) { // Chua xuat hien trong data bien ban
+				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XCG01020")); // Chua xuat hien trong data
+																							// bien ban
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01021"))
+						&& mapValues.get("bien_ban@bb_XCG01021").length() > 9) { // Chua xuat hien trong data bien ban
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("bien_ban@bb_XCG01021")));
 				}
 
 				// Mo rong: so_gcn_goc va ngay_gcn_goc;
-				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc")) && mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
+				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc"))
+						&& mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_goc")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_gcn_goc"));
 				}
-				// Cap lai: so_chung_chi va ngay_gcn_cu; 
-				if (mapValues.get("chung_chi@so_chung_chi").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu")) && mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
+				// Cap lai: so_chung_chi va ngay_gcn_cu;
+				if (mapValues.get("chung_chi@so_chung_chi").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu"))
+						&& mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_cu")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_chung_chi"));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setDesignSymbol(mapValues.get("bien_ban@bb_XCG01026")); // Chua xuat hien trong data bien ban
-			
+
 			try {
-				object.setTypeApprovalCertificateNo(mapValues.get("chung_chi@bb_XCG01027")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01028")) && mapValues.get("chung_chi@bb_XCG01028").length() > 9) { // Chua xuat hien trong data bien ban
+				object.setTypeApprovalCertificateNo(mapValues.get("chung_chi@bb_XCG01027")); // Chua xuat hien trong
+																								// data bien ban
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCG01028"))
+						&& mapValues.get("chung_chi@bb_XCG01028").length() > 9) { // Chua xuat hien trong data bien ban
 					object.setTypeApprovalCertificateDate(parseStringToDate(mapValues.get("chung_chi@bb_XCG01028")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setInspectorReceiveDate(now);
-			object.setInspectorSubmitDate(now);
-			object.setInspectorendorSementDate(now);
-			object.setInspectorDeadline(now);
-			object.setInspectorFinishDate(now);
-			object.setInspectorCancelDate(now);
-			object.setInspectorOrganization(mapValues.get(""));
-			object.setInspectorDivision(mapValues.get(""));
-			object.setInspectorSignName(mapValues.get(""));
-			object.setInspectorSignTitle(mapValues.get(""));
-			object.setInspectorSignPlace(mapValues.get(""));*/
-			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); //1: Giay chung nhan; 0: Thong bao khong dat
-			
+			 * object.setInspectorReceiveDate(now); object.setInspectorSubmitDate(now);
+			 * object.setInspectorendorSementDate(now); object.setInspectorDeadline(now);
+			 * object.setInspectorFinishDate(now); object.setInspectorCancelDate(now);
+			 * object.setInspectorOrganization(mapValues.get(""));
+			 * object.setInspectorDivision(mapValues.get(""));
+			 * object.setInspectorSignName(mapValues.get(""));
+			 * object.setInspectorSignTitle(mapValues.get(""));
+			 * object.setInspectorSignPlace(mapValues.get(""));
+			 */
+			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); // 1: Giay chung nhan; 0: Thong bao
+																					// khong dat
+
 			object.setCertificateRecordNo(mapValues.get("chung_chi@so_chung_chi"));
 			object.setCertificateSignName(mapValues.get("chung_chi@nguoi_ky_cc_text"));
 			object.setCertificateSignTitle(mapValues.get("chung_chi@chuc_danh_ky"));
 			object.setCertificateSignPlace(mapValues.get("chung_chi@dia_diem_ky"));
 			object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
 			try {
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc")) && mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc"))
+						&& mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
 					object.setCertificateRecordDate(parseStringToDate(mapValues.get("chung_chi@ngay_cap_cc")));
-				}		
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_het_han_gcn")) && mapValues.get("chung_chi@ngay_het_han_gcn").length() > 9) {
-					object.setCertificateRecordExpireDate(parseStringToDate(mapValues.get("chung_chi@ngay_het_han_gcn")));
-				}				
+				}
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_het_han_gcn"))
+						&& mapValues.get("chung_chi@ngay_het_han_gcn").length() > 9) {
+					object.setCertificateRecordExpireDate(
+							parseStringToDate(mapValues.get("chung_chi@ngay_het_han_gcn")));
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setExpiredStatus("1");
 			object.setCertificateRecordStatus("2");
 			object.setDigitalIssueStatus("0");
@@ -1931,46 +2079,47 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XCG01055"));
 			object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XCG01056"));
 			object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XCG01057"));
-			//object.setCertifiedFrameAttachPlace(mapValues.get(""));
+			// object.setCertifiedFrameAttachPlace(mapValues.get(""));
 			object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XCG01058"));
 			object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XCG01059"));
-			//object.setCertifiedEngineAttachPlace(mapValues.get(""));
+			// object.setCertifiedEngineAttachPlace(mapValues.get(""));
 			object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XCG01060"));
-			
-			
+
 			object.setCommonSafetyStandard(mapValues.get("bien_ban@bb_XCG01031"));
 			object.setEmissionStandard(mapValues.get("bien_ban@bb_XCG01032"));
 			object.setCommonSafetyDescription(mapValues.get("bien_ban@XCG01031_text"));
 			object.setEmissionDescription(mapValues.get("bien_ban@XCG01032_text"));
-			
+
 			try {
 				object.setSafetyTestReportNo(mapValues.get("bien_ban@bb_XCG01034"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01035")) && mapValues.get("bien_ban@bb_XCG01035").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01035"))
+						&& mapValues.get("bien_ban@bb_XCG01035").length() > 9) {
 					object.setSafetyTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCG01035")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-						
+
 			try {
 				object.setEmissionTestReportNo(mapValues.get("bien_ban@bb_XCG01040"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01041")) && mapValues.get("bien_ban@bb_XCG01041").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01041"))
+						&& mapValues.get("bien_ban@bb_XCG01041").length() > 9) {
 					object.setEmissionTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCG01041")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
 				object.setOtherTestReportNo(mapValues.get("bien_ban@bb_XCG01046"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01047")) && mapValues.get("bien_ban@bb_XCG01047").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCG01047"))
+						&& mapValues.get("bien_ban@bb_XCG01047").length() > 9) {
 					object.setOtherTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCG01047")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
+
 			object.setSampleFrameNo(mapValues.get("bien_ban@bb_XCG01062"));
 			object.setSampleVINNo(mapValues.get("bien_ban@bb_XCG01062"));
 			object.setSampleEngineNo(mapValues.get("bien_ban@bb_XCG01063"));
@@ -1980,65 +2129,72 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setSampleTrademarkName(mapValues.get("bien_ban@bb_XCG01067_text"));
 			object.setSampleCommercialName(mapValues.get("bien_ban@bb_XCG01068"));
 			object.setSampleModelCode(mapValues.get("bien_ban@bb_XCG01069"));
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setCustomsDeclarationNo(mapValues.get(""));
-			object.setCustomsDeclarationDate(now);
-			object.setProductionCountry(mapValues.get(""));
-			object.setImporterQuantity(Long.valueOf(mapValues.get("")));
-			*/
+			 * object.setCustomsDeclarationNo(mapValues.get(""));
+			 * object.setCustomsDeclarationDate(now);
+			 * object.setProductionCountry(mapValues.get(""));
+			 * object.setImporterQuantity(Long.valueOf(mapValues.get("")));
+			 */
 			object.setInspectionRecordNo(mapValues.get("bien_ban@so_bien_ban"));
 			try {
 				object.setInspectionSite(mapValues.get("bien_ban@bb_XCG01008"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")) && mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setInspectionDate(parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				object.setInspectionDistrictCode(objVRProductionPlant.getProductionPlantDistrictCode());
 				object.setInspectionDistrictName(objVRProductionPlant.getProductionPlantDistrictName());
 				object.setInspectionProvinceCode(objVRProductionPlant.getProductionPlantProvinceCode());
 				object.setInspectionProvinceName(objVRProductionPlant.getProductionPlantProvinceName());
 			}
-			
-			//object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
+
+			// object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
 			object.setInspectorId(Long.valueOf(mapValues.get("bien_ban@dang_kiem_vien_chinh_userId")));
 			object.setRemarks(mapValues.get(""));
 			object.setInspectionNote(mapValues.get(""));
-			
-			object.setModule("03") ; // 03: Chung nhan chat luong kieu loai toan xe
-			
+
+			object.setModule("03"); // 03: Chung nhan chat luong kieu loai toan xe
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXMTGM_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXMTGM_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
-			Date now = new Date();	
+			Date now = new Date();
 			boolean flagUpdate = true;
-				
+
 			VRVehicleTypeCertificate object = new VRVehicleTypeCertificateImpl();
-			List <VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDeliverableCode(dossierFile.getDeliverableCode());
+			List<VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+					.findByDeliverableCode(dossierFile.getDeliverableCode());
 			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0) {
-				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0)) && lsVRVehicleTypeCertificate.get(0).getModule().contains("03")) {
+				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0))
+						&& lsVRVehicleTypeCertificate.get(0).getModule().contains("03")) {
 					object = lsVRVehicleTypeCertificate.get(0);
 					flagUpdate = true;
 				} else {
 					flagUpdate = false;
-					long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);				
+					long vrVehicleTypeCertificateId = counterLocalService
+							.increment(VRVehicleTypeCertificate.class.getName());
+					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 				}
 			} else {
 				flagUpdate = false;
-				long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+				long vrVehicleTypeCertificateId = counterLocalService
+						.increment(VRVehicleTypeCertificate.class.getName());
 				object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 			}
 			object.setMtCore(1);
@@ -2058,7 +2214,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XMY01012"));
 				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XMY01014"));
 				object.setCityCode(appProfile.getApplicantCity());
-				
+
 			} else {
 				return object;
 			}
@@ -2066,44 +2222,48 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
+				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XMY01019"));
-			
+
 			object.setConvertassembleId(0);
-			
+
 			if (Validator.isNotNull(objDossier)) {
 				object.setDossierNo(objDossier.getDossierNo());
 				object.setReferenceUid(objDossier.getReferenceUid());
 				object.setServiceCode(objDossier.getServiceCode());
-				object.setServiceName(objDossier.getServiceName());		
+				object.setServiceName(objDossier.getServiceName());
 				object.setRegisteredNumber(mapValues.get("ma_ho_so"));
 			}
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
-			/*object.setManufacturerForeignCode(mapValues.get(""));
-			object.setManufacturerName(mapValues.get(""));
-			object.setManufacturerAddress(mapValues.get(""));
-			object.setManufacturerRepresentative(mapValues.get(""));
-			object.setManufacturerRepresentativeTitle(mapValues.get(""));
-			object.setManufacturerEmail(mapValues.get(""));
-			object.setManufacturerPhone(mapValues.get(""));
-			object.setManufacturerFax(mapValues.get(""));*/
-			
+			/*
+			 * object.setManufacturerForeignCode(mapValues.get(""));
+			 * object.setManufacturerName(mapValues.get(""));
+			 * object.setManufacturerAddress(mapValues.get(""));
+			 * object.setManufacturerRepresentative(mapValues.get(""));
+			 * object.setManufacturerRepresentativeTitle(mapValues.get(""));
+			 * object.setManufacturerEmail(mapValues.get(""));
+			 * object.setManufacturerPhone(mapValues.get(""));
+			 * object.setManufacturerFax(mapValues.get(""));
+			 */
+
 			String productionPlantCode = mapValues.get("bien_ban@bb_XMY01007");
-			
+
 			VRProductionPlant objVRProductionPlant = new VRProductionPlantImpl();
-			try {				
-				long productionPlantRegistrationId = Long.parseLong(productionPlantCode) ;
-				
-				List <VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
-				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0 ) {
-					objVRProductionPlant = lstVRProductionPlant.get(0);				
+			try {
+				long productionPlantRegistrationId = Long.parseLong(productionPlantCode);
+
+				List<VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil
+						.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
+				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0) {
+					objVRProductionPlant = lstVRProductionPlant.get(0);
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				productionPlantCode = objVRProductionPlant.getProductionPlantCode();
 				object.setProductionPlantCode(productionPlantCode);
 				object.setProductionPlantName(objVRProductionPlant.getProductionPlantName());
@@ -2112,123 +2272,135 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setProductionPlantRepresentativeTitle(mapValues.get("bien_ban@bb_XMY01010"));
 
 			}
-			
+
 			try {
 				object.setCopReportNo(mapValues.get("chung_chi@bb_XMY01016"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01017")) && mapValues.get("chung_chi@bb_XMY01017").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01017"))
+						&& mapValues.get("chung_chi@bb_XMY01017").length() > 9) {
 					object.setCopReportDate(parseStringToDate(mapValues.get("chung_chi@bb_XMY01017")));
-				}				
+				}
 				object.setCopReportExpireDate(null);
-				
+
 				// Kiem tra hieu luc COP cho lan ke tiep
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01016")) && mapValues.get("chung_chi@bb_XMY01016").trim().length() > 0) {
-					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil.findBycopReportNo(1, mapValues.get("chung_chi@bb_XMY01016").trim());
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01016"))
+						&& mapValues.get("chung_chi@bb_XMY01016").trim().length() > 0) {
+					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil
+							.findBycopReportNo(1, mapValues.get("chung_chi@bb_XMY01016").trim());
 					if (Validator.isNotNull(objVRCOPReportRepository)) {
 						object.setCopReportDate(objVRCOPReportRepository.getCopReportDate());
 						object.setCopReportExpireDate(objVRCOPReportRepository.getCopReportExpiredDate());
 					}
 				}
-				
+
 			} catch (Exception e) {
 				_log.debug(e);
 			}
 
-			//Khong ap dung voi Chung nhan chat luong kieu loai toan xe
+			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setDesignerCode("");
-			object.setDesignerName("");
-			object.setDesignerAddress("");
-			object.setDesignerRepresentative("");
-			object.setDesignerRepresentativeTitle("");
-			
-			object.setDesignerEmail("");
-			object.setDesignerPhone("");
-			object.setDesignerFax("");
-			object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
-			object.setDesignModelDescription(mapValues.get("bien_ban@loai_hinh_thiet_ke_text"));*/
-			
-			
-			
+			 * object.setDesignerCode(""); object.setDesignerName("");
+			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
+			 * object.setDesignerRepresentativeTitle("");
+			 * 
+			 * object.setDesignerEmail(""); object.setDesignerPhone("");
+			 * object.setDesignerFax("");
+			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
+			 * object.setDesignModelDescription(mapValues.get(
+			 * "bien_ban@loai_hinh_thiet_ke_text"));
+			 */
+
 			try {
 				object.setVerificationCertificateNo(mapValues.get("chung_chi@bb_XMY01024"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01025")) && mapValues.get("chung_chi@bb_XMY01025").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01025"))
+						&& mapValues.get("chung_chi@bb_XMY01025").length() > 9) {
 					object.setVerificationCertificateDate(parseStringToDate(mapValues.get("chung_chi@bb_XMY01025")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban")); 
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")) && mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
+				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban"));
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setVerificationRefDate(parseStringToDate(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XMY01020")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01021")) && mapValues.get("bien_ban@bb_XMY01021").length() > 9) { // Chua xuat hien trong data bien ban
+				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XMY01020")); // Chua xuat hien trong data
+																							// bien ban
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01021"))
+						&& mapValues.get("bien_ban@bb_XMY01021").length() > 9) { // Chua xuat hien trong data bien ban
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("bien_ban@bb_XMY01021")));
 				}
-				
+
 				// Mo rong: so_gcn_goc va ngay_gcn_goc;
-				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc")) && mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
+				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc"))
+						&& mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_goc")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_gcn_goc"));
 				}
-				// Cap lai: so_chung_chi va ngay_gcn_cu; 
-				if (mapValues.get("chung_chi@so_chung_chi").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu")) && mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
+				// Cap lai: so_chung_chi va ngay_gcn_cu;
+				if (mapValues.get("chung_chi@so_chung_chi").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu"))
+						&& mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_cu")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_chung_chi"));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setDesignSymbol(mapValues.get("bien_ban@bb_XMY01026")); // Chua xuat hien trong data bien ban
-			
+
 			try {
-				object.setTypeApprovalCertificateNo(mapValues.get("chung_chi@bb_XMY01027")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01028")) && mapValues.get("chung_chi@bb_XMY01028").length() > 9) { // Chua xuat hien trong data bien ban
+				object.setTypeApprovalCertificateNo(mapValues.get("chung_chi@bb_XMY01027")); // Chua xuat hien trong
+																								// data bien ban
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XMY01028"))
+						&& mapValues.get("chung_chi@bb_XMY01028").length() > 9) { // Chua xuat hien trong data bien ban
 					object.setTypeApprovalCertificateDate(parseStringToDate(mapValues.get("chung_chi@bb_XMY01028")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setInspectorReceiveDate(now);
-			object.setInspectorSubmitDate(now);
-			object.setInspectorendorSementDate(now);
-			object.setInspectorDeadline(now);
-			object.setInspectorFinishDate(now);
-			object.setInspectorCancelDate(now);
-			object.setInspectorOrganization(mapValues.get(""));
-			object.setInspectorDivision(mapValues.get(""));
-			object.setInspectorSignName(mapValues.get(""));
-			object.setInspectorSignTitle(mapValues.get(""));
-			object.setInspectorSignPlace(mapValues.get(""));*/
-			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); //1: Giay chung nhan; 0: Thong bao khong dat
-			
+			 * object.setInspectorReceiveDate(now); object.setInspectorSubmitDate(now);
+			 * object.setInspectorendorSementDate(now); object.setInspectorDeadline(now);
+			 * object.setInspectorFinishDate(now); object.setInspectorCancelDate(now);
+			 * object.setInspectorOrganization(mapValues.get(""));
+			 * object.setInspectorDivision(mapValues.get(""));
+			 * object.setInspectorSignName(mapValues.get(""));
+			 * object.setInspectorSignTitle(mapValues.get(""));
+			 * object.setInspectorSignPlace(mapValues.get(""));
+			 */
+			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); // 1: Giay chung nhan; 0: Thong bao
+																					// khong dat
+
 			object.setCertificateRecordNo(mapValues.get("chung_chi@so_chung_chi"));
 			object.setCertificateSignName(mapValues.get("chung_chi@nguoi_ky_cc_text"));
 			object.setCertificateSignTitle(mapValues.get("chung_chi@chuc_danh_ky"));
 			object.setCertificateSignPlace(mapValues.get("chung_chi@dia_diem_ky"));
 			object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
 			try {
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc")) && mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc"))
+						&& mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
 					object.setCertificateRecordDate(parseStringToDate(mapValues.get("chung_chi@ngay_cap_cc")));
-				}		
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_het_han_gcn")) && mapValues.get("chung_chi@ngay_het_han_gcn").length() > 9) {
-					object.setCertificateRecordExpireDate(parseStringToDate(mapValues.get("chung_chi@ngay_het_han_gcn")));
-				}				
+				}
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_het_han_gcn"))
+						&& mapValues.get("chung_chi@ngay_het_han_gcn").length() > 9) {
+					object.setCertificateRecordExpireDate(
+							parseStringToDate(mapValues.get("chung_chi@ngay_het_han_gcn")));
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setExpiredStatus("1");
 			object.setCertificateRecordStatus("2");
 			object.setDigitalIssueStatus("0");
@@ -2245,46 +2417,47 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XMY01055"));
 			object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XMY01056"));
 			object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XMY01057"));
-			//object.setCertifiedFrameAttachPlace(mapValues.get(""));
+			// object.setCertifiedFrameAttachPlace(mapValues.get(""));
 			object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XMY01058"));
 			object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XMY01059"));
-			//object.setCertifiedEngineAttachPlace(mapValues.get(""));
+			// object.setCertifiedEngineAttachPlace(mapValues.get(""));
 			object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XMY01060"));
-			
-			
+
 			object.setCommonSafetyStandard(mapValues.get("bien_ban@bb_XMY01031"));
 			object.setEmissionStandard(mapValues.get("bien_ban@bb_XMY01032"));
 			object.setCommonSafetyDescription(mapValues.get("bien_ban@XMY01031_text"));
 			object.setEmissionDescription(mapValues.get("bien_ban@XMY01032_text"));
-			
+
 			try {
 				object.setSafetyTestReportNo(mapValues.get("bien_ban@bb_XMY01034"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01035")) && mapValues.get("bien_ban@bb_XMY01035").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01035"))
+						&& mapValues.get("bien_ban@bb_XMY01035").length() > 9) {
 					object.setSafetyTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XMY01035")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-						
+
 			try {
 				object.setEmissionTestReportNo(mapValues.get("bien_ban@bb_XMY01040"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01041")) && mapValues.get("bien_ban@bb_XMY01041").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01041"))
+						&& mapValues.get("bien_ban@bb_XMY01041").length() > 9) {
 					object.setEmissionTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XMY01041")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
 				object.setOtherTestReportNo(mapValues.get("bien_ban@bb_XMY01046"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01047")) && mapValues.get("bien_ban@bb_XMY01047").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XMY01047"))
+						&& mapValues.get("bien_ban@bb_XMY01047").length() > 9) {
 					object.setOtherTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XMY01047")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
+
 			object.setSampleFrameNo(mapValues.get("bien_ban@bb_XMY01062"));
 			object.setSampleVINNo(mapValues.get("bien_ban@bb_XMY01062"));
 			object.setSampleEngineNo(mapValues.get("bien_ban@bb_XMY01063"));
@@ -2294,66 +2467,72 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setSampleTrademarkName(mapValues.get("bien_ban@bb_XMY01067_text"));
 			object.setSampleCommercialName(mapValues.get("bien_ban@bb_XMY01068"));
 			object.setSampleModelCode(mapValues.get("bien_ban@bb_XMY01069"));
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setCustomsDeclarationNo(mapValues.get(""));
-			object.setCustomsDeclarationDate(now);
-			object.setProductionCountry(mapValues.get(""));
-			object.setImporterQuantity(Long.valueOf(mapValues.get("")));
-			*/
+			 * object.setCustomsDeclarationNo(mapValues.get(""));
+			 * object.setCustomsDeclarationDate(now);
+			 * object.setProductionCountry(mapValues.get(""));
+			 * object.setImporterQuantity(Long.valueOf(mapValues.get("")));
+			 */
 			object.setInspectionRecordNo(mapValues.get("bien_ban@so_bien_ban"));
 			try {
 				object.setInspectionSite(mapValues.get("bien_ban@bb_XMY01008"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")) && mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setInspectionDate(parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				object.setInspectionDistrictCode(objVRProductionPlant.getProductionPlantDistrictCode());
 				object.setInspectionDistrictName(objVRProductionPlant.getProductionPlantDistrictName());
 				object.setInspectionProvinceCode(objVRProductionPlant.getProductionPlantProvinceCode());
 				object.setInspectionProvinceName(objVRProductionPlant.getProductionPlantProvinceName());
 			}
-			
-			//object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
+
+			// object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
 			object.setInspectorId(Long.valueOf(mapValues.get("bien_ban@dang_kiem_vien_chinh_userId")));
 			object.setRemarks(mapValues.get(""));
 			object.setInspectionNote(mapValues.get(""));
-			
-			object.setModule("03") ; // 03: Chung nhan chat luong kieu loai toan xe
-		
+
+			object.setModule("03"); // 03: Chung nhan chat luong kieu loai toan xe
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXDD_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXDD_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
-			Date now = new Date();	
+			Date now = new Date();
 			boolean flagUpdate = true;
-				
+
 			VRVehicleTypeCertificate object = new VRVehicleTypeCertificateImpl();
-			List <VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDeliverableCode(dossierFile.getDeliverableCode());
+			List<VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+					.findByDeliverableCode(dossierFile.getDeliverableCode());
 			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0) {
-				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0)) && lsVRVehicleTypeCertificate.get(0).getModule().contains("03")) {
+				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0))
+						&& lsVRVehicleTypeCertificate.get(0).getModule().contains("03")) {
 					object = lsVRVehicleTypeCertificate.get(0);
 					flagUpdate = true;
 				} else {
 					flagUpdate = false;
-					long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);				
+					long vrVehicleTypeCertificateId = counterLocalService
+							.increment(VRVehicleTypeCertificate.class.getName());
+					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 				}
 			} else {
 				flagUpdate = false;
-				long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+				long vrVehicleTypeCertificateId = counterLocalService
+						.increment(VRVehicleTypeCertificate.class.getName());
 				object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 			}
 			object.setMtCore(1);
@@ -2373,7 +2552,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XDD01012"));
 				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XDD01014"));
 				object.setCityCode(appProfile.getApplicantCity());
-				
+
 			} else {
 				return object;
 			}
@@ -2384,41 +2563,45 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XDD01019"));
-			
+
 			object.setConvertassembleId(0);
-			
+
 			if (Validator.isNotNull(objDossier)) {
 				object.setDossierNo(objDossier.getDossierNo());
 				object.setReferenceUid(objDossier.getReferenceUid());
 				object.setServiceCode(objDossier.getServiceCode());
-				object.setServiceName(objDossier.getServiceName());		
+				object.setServiceName(objDossier.getServiceName());
 				object.setRegisteredNumber(mapValues.get("ma_ho_so"));
 			}
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
-			/*object.setManufacturerForeignCode(mapValues.get(""));
-			object.setManufacturerName(mapValues.get(""));
-			object.setManufacturerAddress(mapValues.get(""));
-			object.setManufacturerRepresentative(mapValues.get(""));
-			object.setManufacturerRepresentativeTitle(mapValues.get(""));
-			object.setManufacturerEmail(mapValues.get(""));
-			object.setManufacturerPhone(mapValues.get(""));
-			object.setManufacturerFax(mapValues.get(""));*/
-			
+			/*
+			 * object.setManufacturerForeignCode(mapValues.get(""));
+			 * object.setManufacturerName(mapValues.get(""));
+			 * object.setManufacturerAddress(mapValues.get(""));
+			 * object.setManufacturerRepresentative(mapValues.get(""));
+			 * object.setManufacturerRepresentativeTitle(mapValues.get(""));
+			 * object.setManufacturerEmail(mapValues.get(""));
+			 * object.setManufacturerPhone(mapValues.get(""));
+			 * object.setManufacturerFax(mapValues.get(""));
+			 */
+
 			String productionPlantCode = mapValues.get("bien_ban@bb_XDD01007");
-			
+
 			VRProductionPlant objVRProductionPlant = new VRProductionPlantImpl();
-			try {				
-				long productionPlantRegistrationId = Long.parseLong(productionPlantCode) ;
-				
-				List <VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
-				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0 ) {
-					objVRProductionPlant = lstVRProductionPlant.get(0);				
+			try {
+				long productionPlantRegistrationId = Long.parseLong(productionPlantCode);
+
+				List<VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil
+						.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
+				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0) {
+					objVRProductionPlant = lstVRProductionPlant.get(0);
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				productionPlantCode = objVRProductionPlant.getProductionPlantCode();
 				object.setProductionPlantCode(productionPlantCode);
 				object.setProductionPlantName(objVRProductionPlant.getProductionPlantName());
@@ -2427,123 +2610,135 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setProductionPlantRepresentativeTitle(mapValues.get("bien_ban@bb_XDD01010"));
 
 			}
-			
+
 			try {
 				object.setCopReportNo(mapValues.get("chung_chi@bb_XDD01016"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XDD01017")) && mapValues.get("chung_chi@bb_XDD01017").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XDD01017"))
+						&& mapValues.get("chung_chi@bb_XDD01017").length() > 9) {
 					object.setCopReportDate(parseStringToDate(mapValues.get("chung_chi@bb_XDD01017")));
-				}				
+				}
 				object.setCopReportExpireDate(null);
-				
+
 				// Kiem tra hieu luc COP cho lan ke tiep
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XDD01016")) && mapValues.get("chung_chi@bb_XDD01016").trim().length() > 0) {
-					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil.findBycopReportNo(1, mapValues.get("chung_chi@bb_XDD01016").trim());
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XDD01016"))
+						&& mapValues.get("chung_chi@bb_XDD01016").trim().length() > 0) {
+					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil
+							.findBycopReportNo(1, mapValues.get("chung_chi@bb_XDD01016").trim());
 					if (Validator.isNotNull(objVRCOPReportRepository)) {
 						object.setCopReportDate(objVRCOPReportRepository.getCopReportDate());
 						object.setCopReportExpireDate(objVRCOPReportRepository.getCopReportExpiredDate());
 					}
 				}
-				
+
 			} catch (Exception e) {
 				_log.debug(e);
 			}
 
-			//Khong ap dung voi Chung nhan chat luong kieu loai toan xe
+			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setDesignerCode("");
-			object.setDesignerName("");
-			object.setDesignerAddress("");
-			object.setDesignerRepresentative("");
-			object.setDesignerRepresentativeTitle("");
-			
-			object.setDesignerEmail("");
-			object.setDesignerPhone("");
-			object.setDesignerFax("");
-			object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
-			object.setDesignModelDescription(mapValues.get("bien_ban@loai_hinh_thiet_ke_text"));*/
-			
-			
-			
+			 * object.setDesignerCode(""); object.setDesignerName("");
+			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
+			 * object.setDesignerRepresentativeTitle("");
+			 * 
+			 * object.setDesignerEmail(""); object.setDesignerPhone("");
+			 * object.setDesignerFax("");
+			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
+			 * object.setDesignModelDescription(mapValues.get(
+			 * "bien_ban@loai_hinh_thiet_ke_text"));
+			 */
+
 			try {
 				object.setVerificationCertificateNo(mapValues.get("chung_chi@bb_XDD01024"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XDD01025")) && mapValues.get("chung_chi@bb_XDD01025").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XDD01025"))
+						&& mapValues.get("chung_chi@bb_XDD01025").length() > 9) {
 					object.setVerificationCertificateDate(parseStringToDate(mapValues.get("chung_chi@bb_XDD01025")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban")); 
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")) && mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
+				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban"));
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setVerificationRefDate(parseStringToDate(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XDD01020")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XDD01021")) && mapValues.get("bien_ban@bb_XDD01021").length() > 9) { // Chua xuat hien trong data bien ban
+				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XDD01020")); // Chua xuat hien trong data
+																							// bien ban
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XDD01021"))
+						&& mapValues.get("bien_ban@bb_XDD01021").length() > 9) { // Chua xuat hien trong data bien ban
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("bien_ban@bb_XDD01021")));
 				}
-				
+
 				// Mo rong: so_gcn_goc va ngay_gcn_goc;
-				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc")) && mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
+				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc"))
+						&& mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_goc")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_gcn_goc"));
 				}
-				// Cap lai: so_chung_chi va ngay_gcn_cu; 
-				if (mapValues.get("chung_chi@so_chung_chi").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu")) && mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
+				// Cap lai: so_chung_chi va ngay_gcn_cu;
+				if (mapValues.get("chung_chi@so_chung_chi").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu"))
+						&& mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_cu")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_chung_chi"));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setDesignSymbol(mapValues.get("bien_ban@bb_XDD01026")); // Chua xuat hien trong data bien ban
-			
+
 			try {
-				object.setTypeApprovalCertificateNo(mapValues.get("chung_chi@bb_XDD01027")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XDD01028")) && mapValues.get("chung_chi@bb_XDD01028").length() > 9) { // Chua xuat hien trong data bien ban
+				object.setTypeApprovalCertificateNo(mapValues.get("chung_chi@bb_XDD01027")); // Chua xuat hien trong
+																								// data bien ban
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XDD01028"))
+						&& mapValues.get("chung_chi@bb_XDD01028").length() > 9) { // Chua xuat hien trong data bien ban
 					object.setTypeApprovalCertificateDate(parseStringToDate(mapValues.get("chung_chi@bb_XDD01028")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setInspectorReceiveDate(now);
-			object.setInspectorSubmitDate(now);
-			object.setInspectorendorSementDate(now);
-			object.setInspectorDeadline(now);
-			object.setInspectorFinishDate(now);
-			object.setInspectorCancelDate(now);
-			object.setInspectorOrganization(mapValues.get(""));
-			object.setInspectorDivision(mapValues.get(""));
-			object.setInspectorSignName(mapValues.get(""));
-			object.setInspectorSignTitle(mapValues.get(""));
-			object.setInspectorSignPlace(mapValues.get(""));*/
-			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); //1: Giay chung nhan; 0: Thong bao khong dat
-			
+			 * object.setInspectorReceiveDate(now); object.setInspectorSubmitDate(now);
+			 * object.setInspectorendorSementDate(now); object.setInspectorDeadline(now);
+			 * object.setInspectorFinishDate(now); object.setInspectorCancelDate(now);
+			 * object.setInspectorOrganization(mapValues.get(""));
+			 * object.setInspectorDivision(mapValues.get(""));
+			 * object.setInspectorSignName(mapValues.get(""));
+			 * object.setInspectorSignTitle(mapValues.get(""));
+			 * object.setInspectorSignPlace(mapValues.get(""));
+			 */
+			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); // 1: Giay chung nhan; 0: Thong bao
+																					// khong dat
+
 			object.setCertificateRecordNo(mapValues.get("chung_chi@so_chung_chi"));
 			object.setCertificateSignName(mapValues.get("chung_chi@nguoi_ky_cc_text"));
 			object.setCertificateSignTitle(mapValues.get("chung_chi@chuc_danh_ky"));
 			object.setCertificateSignPlace(mapValues.get("chung_chi@dia_diem_ky"));
 			object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
 			try {
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc")) && mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc"))
+						&& mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
 					object.setCertificateRecordDate(parseStringToDate(mapValues.get("chung_chi@ngay_cap_cc")));
-				}		
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_het_han_gcn")) && mapValues.get("chung_chi@ngay_het_han_gcn").length() > 9) {
-					object.setCertificateRecordExpireDate(parseStringToDate(mapValues.get("chung_chi@ngay_het_han_gcn")));
-				}				
+				}
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_het_han_gcn"))
+						&& mapValues.get("chung_chi@ngay_het_han_gcn").length() > 9) {
+					object.setCertificateRecordExpireDate(
+							parseStringToDate(mapValues.get("chung_chi@ngay_het_han_gcn")));
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setExpiredStatus("1");
 			object.setCertificateRecordStatus("2");
 			object.setDigitalIssueStatus("0");
@@ -2560,46 +2755,47 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XDD01055"));
 			object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XDD01056"));
 			object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XDD01057"));
-			//object.setCertifiedFrameAttachPlace(mapValues.get(""));
+			// object.setCertifiedFrameAttachPlace(mapValues.get(""));
 			object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XDD01058"));
 			object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XDD01059"));
-			//object.setCertifiedEngineAttachPlace(mapValues.get(""));
+			// object.setCertifiedEngineAttachPlace(mapValues.get(""));
 			object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XDD01060"));
-			
-			
+
 			object.setCommonSafetyStandard(mapValues.get("bien_ban@bb_XDD01031"));
 			object.setEmissionStandard(mapValues.get("bien_ban@bb_XDD01032"));
 			object.setCommonSafetyDescription(mapValues.get("bien_ban@XDD01031_text"));
 			object.setEmissionDescription(mapValues.get("bien_ban@XDD01032_text"));
-			
+
 			try {
 				object.setSafetyTestReportNo(mapValues.get("bien_ban@bb_XDD01034"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XDD01035")) && mapValues.get("bien_ban@bb_XDD01035").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XDD01035"))
+						&& mapValues.get("bien_ban@bb_XDD01035").length() > 9) {
 					object.setSafetyTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XDD01035")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-						
+
 			try {
 				object.setEmissionTestReportNo(mapValues.get("bien_ban@bb_XDD01040"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XDD01041")) && mapValues.get("bien_ban@bb_XDD01041").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XDD01041"))
+						&& mapValues.get("bien_ban@bb_XDD01041").length() > 9) {
 					object.setEmissionTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XDD01041")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
 				object.setOtherTestReportNo(mapValues.get("bien_ban@bb_XDD01046"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XDD01047")) && mapValues.get("bien_ban@bb_XDD01047").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XDD01047"))
+						&& mapValues.get("bien_ban@bb_XDD01047").length() > 9) {
 					object.setOtherTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XDD01047")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
+
 			object.setSampleFrameNo(mapValues.get("bien_ban@bb_XDD01062"));
 			object.setSampleVINNo(mapValues.get("bien_ban@bb_XDD01062"));
 			object.setSampleEngineNo(mapValues.get("bien_ban@bb_XDD01063"));
@@ -2609,66 +2805,72 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setSampleTrademarkName(mapValues.get("bien_ban@bb_XDD01067_text"));
 			object.setSampleCommercialName(mapValues.get("bien_ban@bb_XDD01068"));
 			object.setSampleModelCode(mapValues.get("bien_ban@bb_XDD01069"));
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setCustomsDeclarationNo(mapValues.get(""));
-			object.setCustomsDeclarationDate(now);
-			object.setProductionCountry(mapValues.get(""));
-			object.setImporterQuantity(Long.valueOf(mapValues.get("")));
-			*/
+			 * object.setCustomsDeclarationNo(mapValues.get(""));
+			 * object.setCustomsDeclarationDate(now);
+			 * object.setProductionCountry(mapValues.get(""));
+			 * object.setImporterQuantity(Long.valueOf(mapValues.get("")));
+			 */
 			object.setInspectionRecordNo(mapValues.get("bien_ban@so_bien_ban"));
 			try {
 				object.setInspectionSite(mapValues.get("bien_ban@bb_XDD01008"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")) && mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setInspectionDate(parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				object.setInspectionDistrictCode(objVRProductionPlant.getProductionPlantDistrictCode());
 				object.setInspectionDistrictName(objVRProductionPlant.getProductionPlantDistrictName());
 				object.setInspectionProvinceCode(objVRProductionPlant.getProductionPlantProvinceCode());
 				object.setInspectionProvinceName(objVRProductionPlant.getProductionPlantProvinceName());
 			}
-			
-			//object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
+
+			// object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
 			object.setInspectorId(Long.valueOf(mapValues.get("bien_ban@dang_kiem_vien_chinh_userId")));
 			object.setRemarks(mapValues.get(""));
 			object.setInspectionNote(mapValues.get(""));
-			
-			object.setModule("03") ; // 03: Chung nhan chat luong kieu loai toan xe
-		
+
+			object.setModule("03"); // 03: Chung nhan chat luong kieu loai toan xe
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXBBCN_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXBBCN_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
-			Date now = new Date();	
+			Date now = new Date();
 			boolean flagUpdate = true;
-				
+
 			VRVehicleTypeCertificate object = new VRVehicleTypeCertificateImpl();
-			List <VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDeliverableCode(dossierFile.getDeliverableCode());
+			List<VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+					.findByDeliverableCode(dossierFile.getDeliverableCode());
 			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0) {
-				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0)) && lsVRVehicleTypeCertificate.get(0).getModule().contains("03")) {
+				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0))
+						&& lsVRVehicleTypeCertificate.get(0).getModule().contains("03")) {
 					object = lsVRVehicleTypeCertificate.get(0);
 					flagUpdate = true;
 				} else {
 					flagUpdate = false;
-					long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);				
+					long vrVehicleTypeCertificateId = counterLocalService
+							.increment(VRVehicleTypeCertificate.class.getName());
+					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 				}
 			} else {
 				flagUpdate = false;
-				long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+				long vrVehicleTypeCertificateId = counterLocalService
+						.increment(VRVehicleTypeCertificate.class.getName());
 				object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 			}
 			object.setMtCore(1);
@@ -2688,7 +2890,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XCN01012"));
 				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XCN01014"));
 				object.setCityCode(appProfile.getApplicantCity());
-				
+
 			} else {
 				return object;
 			}
@@ -2699,41 +2901,45 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCN01019"));
-			
+
 			object.setConvertassembleId(0);
-			
+
 			if (Validator.isNotNull(objDossier)) {
 				object.setDossierNo(objDossier.getDossierNo());
 				object.setReferenceUid(objDossier.getReferenceUid());
 				object.setServiceCode(objDossier.getServiceCode());
-				object.setServiceName(objDossier.getServiceName());		
+				object.setServiceName(objDossier.getServiceName());
 				object.setRegisteredNumber(mapValues.get("ma_ho_so"));
 			}
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
-			/*object.setManufacturerForeignCode(mapValues.get(""));
-			object.setManufacturerName(mapValues.get(""));
-			object.setManufacturerAddress(mapValues.get(""));
-			object.setManufacturerRepresentative(mapValues.get(""));
-			object.setManufacturerRepresentativeTitle(mapValues.get(""));
-			object.setManufacturerEmail(mapValues.get(""));
-			object.setManufacturerPhone(mapValues.get(""));
-			object.setManufacturerFax(mapValues.get(""));*/
-			
+			/*
+			 * object.setManufacturerForeignCode(mapValues.get(""));
+			 * object.setManufacturerName(mapValues.get(""));
+			 * object.setManufacturerAddress(mapValues.get(""));
+			 * object.setManufacturerRepresentative(mapValues.get(""));
+			 * object.setManufacturerRepresentativeTitle(mapValues.get(""));
+			 * object.setManufacturerEmail(mapValues.get(""));
+			 * object.setManufacturerPhone(mapValues.get(""));
+			 * object.setManufacturerFax(mapValues.get(""));
+			 */
+
 			String productionPlantCode = mapValues.get("bien_ban@bb_XCN01007");
-			
+
 			VRProductionPlant objVRProductionPlant = new VRProductionPlantImpl();
-			try {				
-				long productionPlantRegistrationId = Long.parseLong(productionPlantCode) ;
-				
-				List <VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
-				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0 ) {
-					objVRProductionPlant = lstVRProductionPlant.get(0);				
+			try {
+				long productionPlantRegistrationId = Long.parseLong(productionPlantCode);
+
+				List<VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil
+						.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
+				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0) {
+					objVRProductionPlant = lstVRProductionPlant.get(0);
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				productionPlantCode = objVRProductionPlant.getProductionPlantCode();
 				object.setProductionPlantCode(productionPlantCode);
 				object.setProductionPlantName(objVRProductionPlant.getProductionPlantName());
@@ -2742,123 +2948,135 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setProductionPlantRepresentativeTitle(mapValues.get("bien_ban@bb_XCN01010"));
 
 			}
-			
+
 			try {
 				object.setCopReportNo(mapValues.get("chung_chi@bb_XCN01016"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCN01017")) && mapValues.get("chung_chi@bb_XCN01017").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCN01017"))
+						&& mapValues.get("chung_chi@bb_XCN01017").length() > 9) {
 					object.setCopReportDate(parseStringToDate(mapValues.get("chung_chi@bb_XCN01017")));
-				}				
+				}
 				object.setCopReportExpireDate(null);
-				
+
 				// Kiem tra hieu luc COP cho lan ke tiep
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCN01016")) && mapValues.get("chung_chi@bb_XCN01016").trim().length() > 0) {
-					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil.findBycopReportNo(1, mapValues.get("chung_chi@bb_XCN01016").trim());
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCN01016"))
+						&& mapValues.get("chung_chi@bb_XCN01016").trim().length() > 0) {
+					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil
+							.findBycopReportNo(1, mapValues.get("chung_chi@bb_XCN01016").trim());
 					if (Validator.isNotNull(objVRCOPReportRepository)) {
 						object.setCopReportDate(objVRCOPReportRepository.getCopReportDate());
 						object.setCopReportExpireDate(objVRCOPReportRepository.getCopReportExpiredDate());
 					}
 				}
-				
+
 			} catch (Exception e) {
 				_log.debug(e);
 			}
 
-			//Khong ap dung voi Chung nhan chat luong kieu loai toan xe
+			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setDesignerCode("");
-			object.setDesignerName("");
-			object.setDesignerAddress("");
-			object.setDesignerRepresentative("");
-			object.setDesignerRepresentativeTitle("");
-			
-			object.setDesignerEmail("");
-			object.setDesignerPhone("");
-			object.setDesignerFax("");
-			object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
-			object.setDesignModelDescription(mapValues.get("bien_ban@loai_hinh_thiet_ke_text"));*/
-			
-			
-			
+			 * object.setDesignerCode(""); object.setDesignerName("");
+			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
+			 * object.setDesignerRepresentativeTitle("");
+			 * 
+			 * object.setDesignerEmail(""); object.setDesignerPhone("");
+			 * object.setDesignerFax("");
+			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
+			 * object.setDesignModelDescription(mapValues.get(
+			 * "bien_ban@loai_hinh_thiet_ke_text"));
+			 */
+
 			try {
 				object.setVerificationCertificateNo(mapValues.get("chung_chi@bb_XCN01024"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCN01025")) && mapValues.get("chung_chi@bb_XCN01025").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCN01025"))
+						&& mapValues.get("chung_chi@bb_XCN01025").length() > 9) {
 					object.setVerificationCertificateDate(parseStringToDate(mapValues.get("chung_chi@bb_XCN01025")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban")); 
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")) && mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
+				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban"));
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setVerificationRefDate(parseStringToDate(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XCN01020")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCN01021")) && mapValues.get("bien_ban@bb_XCN01021").length() > 9) { // Chua xuat hien trong data bien ban
+				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XCN01020")); // Chua xuat hien trong data
+																							// bien ban
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCN01021"))
+						&& mapValues.get("bien_ban@bb_XCN01021").length() > 9) { // Chua xuat hien trong data bien ban
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("bien_ban@bb_XCN01021")));
 				}
-				
+
 				// Mo rong: so_gcn_goc va ngay_gcn_goc;
-				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc")) && mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
+				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc"))
+						&& mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_goc")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_gcn_goc"));
 				}
-				// Cap lai: so_chung_chi va ngay_gcn_cu; 
-				if (mapValues.get("chung_chi@so_chung_chi").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu")) && mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
+				// Cap lai: so_chung_chi va ngay_gcn_cu;
+				if (mapValues.get("chung_chi@so_chung_chi").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu"))
+						&& mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_cu")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_chung_chi"));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setDesignSymbol(mapValues.get("bien_ban@bb_XCN01026")); // Chua xuat hien trong data bien ban
-			
+
 			try {
-				object.setTypeApprovalCertificateNo(mapValues.get("chung_chi@bb_XCN01027")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCN01028")) && mapValues.get("chung_chi@bb_XCN01028").length() > 9) { // Chua xuat hien trong data bien ban
+				object.setTypeApprovalCertificateNo(mapValues.get("chung_chi@bb_XCN01027")); // Chua xuat hien trong
+																								// data bien ban
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCN01028"))
+						&& mapValues.get("chung_chi@bb_XCN01028").length() > 9) { // Chua xuat hien trong data bien ban
 					object.setTypeApprovalCertificateDate(parseStringToDate(mapValues.get("chung_chi@bb_XCN01028")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setInspectorReceiveDate(now);
-			object.setInspectorSubmitDate(now);
-			object.setInspectorendorSementDate(now);
-			object.setInspectorDeadline(now);
-			object.setInspectorFinishDate(now);
-			object.setInspectorCancelDate(now);
-			object.setInspectorOrganization(mapValues.get(""));
-			object.setInspectorDivision(mapValues.get(""));
-			object.setInspectorSignName(mapValues.get(""));
-			object.setInspectorSignTitle(mapValues.get(""));
-			object.setInspectorSignPlace(mapValues.get(""));*/
-			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); //1: Giay chung nhan; 0: Thong bao khong dat
-			
+			 * object.setInspectorReceiveDate(now); object.setInspectorSubmitDate(now);
+			 * object.setInspectorendorSementDate(now); object.setInspectorDeadline(now);
+			 * object.setInspectorFinishDate(now); object.setInspectorCancelDate(now);
+			 * object.setInspectorOrganization(mapValues.get(""));
+			 * object.setInspectorDivision(mapValues.get(""));
+			 * object.setInspectorSignName(mapValues.get(""));
+			 * object.setInspectorSignTitle(mapValues.get(""));
+			 * object.setInspectorSignPlace(mapValues.get(""));
+			 */
+			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); // 1: Giay chung nhan; 0: Thong bao
+																					// khong dat
+
 			object.setCertificateRecordNo(mapValues.get("chung_chi@so_chung_chi"));
 			object.setCertificateSignName(mapValues.get("chung_chi@nguoi_ky_cc_text"));
 			object.setCertificateSignTitle(mapValues.get("chung_chi@chuc_danh_ky"));
 			object.setCertificateSignPlace(mapValues.get("chung_chi@dia_diem_ky"));
 			object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
 			try {
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc")) && mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc"))
+						&& mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
 					object.setCertificateRecordDate(parseStringToDate(mapValues.get("chung_chi@ngay_cap_cc")));
-				}		
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_het_han_gcn")) && mapValues.get("chung_chi@ngay_het_han_gcn").length() > 9) {
-					object.setCertificateRecordExpireDate(parseStringToDate(mapValues.get("chung_chi@ngay_het_han_gcn")));
-				}				
+				}
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_het_han_gcn"))
+						&& mapValues.get("chung_chi@ngay_het_han_gcn").length() > 9) {
+					object.setCertificateRecordExpireDate(
+							parseStringToDate(mapValues.get("chung_chi@ngay_het_han_gcn")));
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setExpiredStatus("1");
 			object.setCertificateRecordStatus("2");
 			object.setDigitalIssueStatus("0");
@@ -2875,46 +3093,47 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XCN01055"));
 			object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XCN01056"));
 			object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XCN01057"));
-			//object.setCertifiedFrameAttachPlace(mapValues.get(""));
+			// object.setCertifiedFrameAttachPlace(mapValues.get(""));
 			object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XCN01058"));
 			object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XCN01059"));
-			//object.setCertifiedEngineAttachPlace(mapValues.get(""));
+			// object.setCertifiedEngineAttachPlace(mapValues.get(""));
 			object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XCN01060"));
-			
-			
+
 			object.setCommonSafetyStandard(mapValues.get("bien_ban@bb_XCN01031"));
 			object.setEmissionStandard(mapValues.get("bien_ban@bb_XCN01032"));
 			object.setCommonSafetyDescription(mapValues.get("bien_ban@XCN01031_text"));
 			object.setEmissionDescription(mapValues.get("bien_ban@XCN01032_text"));
-			
+
 			try {
 				object.setSafetyTestReportNo(mapValues.get("bien_ban@bb_XCN01034"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCN01035")) && mapValues.get("bien_ban@bb_XCN01035").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCN01035"))
+						&& mapValues.get("bien_ban@bb_XCN01035").length() > 9) {
 					object.setSafetyTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCN01035")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-						
+
 			try {
 				object.setEmissionTestReportNo(mapValues.get("bien_ban@bb_XCN01040"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCN01041")) && mapValues.get("bien_ban@bb_XCN01041").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCN01041"))
+						&& mapValues.get("bien_ban@bb_XCN01041").length() > 9) {
 					object.setEmissionTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCN01041")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
 				object.setOtherTestReportNo(mapValues.get("bien_ban@bb_XCN01046"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCN01047")) && mapValues.get("bien_ban@bb_XCN01047").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCN01047"))
+						&& mapValues.get("bien_ban@bb_XCN01047").length() > 9) {
 					object.setOtherTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCN01047")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
+
 			object.setSampleFrameNo(mapValues.get("bien_ban@bb_XCN01062"));
 			object.setSampleVINNo(mapValues.get("bien_ban@bb_XCN01062"));
 			object.setSampleEngineNo(mapValues.get("bien_ban@bb_XCN01063"));
@@ -2924,66 +3143,72 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setSampleTrademarkName(mapValues.get("bien_ban@bb_XCN01067_text"));
 			object.setSampleCommercialName(mapValues.get("bien_ban@bb_XCN01068"));
 			object.setSampleModelCode(mapValues.get("bien_ban@bb_XCN01069"));
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setCustomsDeclarationNo(mapValues.get(""));
-			object.setCustomsDeclarationDate(now);
-			object.setProductionCountry(mapValues.get(""));
-			object.setImporterQuantity(Long.valueOf(mapValues.get("")));
-			*/
+			 * object.setCustomsDeclarationNo(mapValues.get(""));
+			 * object.setCustomsDeclarationDate(now);
+			 * object.setProductionCountry(mapValues.get(""));
+			 * object.setImporterQuantity(Long.valueOf(mapValues.get("")));
+			 */
 			object.setInspectionRecordNo(mapValues.get("bien_ban@so_bien_ban"));
 			try {
 				object.setInspectionSite(mapValues.get("bien_ban@bb_XCN01008"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")) && mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setInspectionDate(parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				object.setInspectionDistrictCode(objVRProductionPlant.getProductionPlantDistrictCode());
 				object.setInspectionDistrictName(objVRProductionPlant.getProductionPlantDistrictName());
 				object.setInspectionProvinceCode(objVRProductionPlant.getProductionPlantProvinceCode());
 				object.setInspectionProvinceName(objVRProductionPlant.getProductionPlantProvinceName());
 			}
-			
-			//object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
+
+			// object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
 			object.setInspectorId(Long.valueOf(mapValues.get("bien_ban@dang_kiem_vien_chinh_userId")));
 			object.setRemarks(mapValues.get(""));
 			object.setInspectionNote(mapValues.get(""));
-			
-			object.setModule("03") ; // 03: Chung nhan chat luong kieu loai toan xe
-		
+
+			object.setModule("03"); // 03: Chung nhan chat luong kieu loai toan xe
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-	
-	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXBBCH_VehicleTypeCertificate(LinkedHashMap<String, String> mapValues,
-			Date applicantIdDate, VRApplicantProfile appProfile, VRDossierFile dossierFile)  throws PortalException, SystemException {
+
+	public VRVehicleTypeCertificate updateTT302011BGTVTCNCLKLTXXBBCH_VehicleTypeCertificate(
+			LinkedHashMap<String, String> mapValues, Date applicantIdDate, VRApplicantProfile appProfile,
+			VRDossierFile dossierFile) throws PortalException, SystemException {
 		try {
-			Date now = new Date();	
+			Date now = new Date();
 			boolean flagUpdate = true;
-				
+
 			VRVehicleTypeCertificate object = new VRVehicleTypeCertificateImpl();
-			List <VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDeliverableCode(dossierFile.getDeliverableCode());
+			List<VRVehicleTypeCertificate> lsVRVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+					.findByDeliverableCode(dossierFile.getDeliverableCode());
 			if (Validator.isNotNull(lsVRVehicleTypeCertificate) && lsVRVehicleTypeCertificate.size() > 0) {
-				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0)) && lsVRVehicleTypeCertificate.get(0).getModule().contains("03")) {
+				if (Validator.isNotNull(lsVRVehicleTypeCertificate.get(0))
+						&& lsVRVehicleTypeCertificate.get(0).getModule().contains("03")) {
 					object = lsVRVehicleTypeCertificate.get(0);
 					flagUpdate = true;
 				} else {
 					flagUpdate = false;
-					long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
-					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);				
+					long vrVehicleTypeCertificateId = counterLocalService
+							.increment(VRVehicleTypeCertificate.class.getName());
+					object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 				}
 			} else {
 				flagUpdate = false;
-				long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+				long vrVehicleTypeCertificateId = counterLocalService
+						.increment(VRVehicleTypeCertificate.class.getName());
 				object = vrVehicleTypeCertificatePersistence.create(vrVehicleTypeCertificateId);
 			}
 			object.setMtCore(1);
@@ -3003,7 +3228,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setApplicantContactEmail(mapValues.get("chungchi@bb_XCH01012"));
 				object.setApplicantcontactPhone(mapValues.get("chungchi@bb_XCH01014"));
 				object.setCityCode(appProfile.getApplicantCity());
-				
+
 			} else {
 				return object;
 			}
@@ -3011,44 +3236,48 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			if (dossierFile != null) {
 				object.setDossierId(dossierFile.getDossierId());
 				object.setDeliverableCode(dossierFile.getDeliverableCode());
-				objDossier  = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
+				objDossier = VRDossierLocalServiceUtil.fetchVRDossier(dossierFile.getDossierId());
 			}
 			object.setDossierType(mapValues.get("bien_ban@bb_XCH01019"));
-			
+
 			object.setConvertassembleId(0);
-			
+
 			if (Validator.isNotNull(objDossier)) {
 				object.setDossierNo(objDossier.getDossierNo());
 				object.setReferenceUid(objDossier.getReferenceUid());
 				object.setServiceCode(objDossier.getServiceCode());
-				object.setServiceName(objDossier.getServiceName());		
+				object.setServiceName(objDossier.getServiceName());
 				object.setRegisteredNumber(mapValues.get("ma_ho_so"));
 			}
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
-			/*object.setManufacturerForeignCode(mapValues.get(""));
-			object.setManufacturerName(mapValues.get(""));
-			object.setManufacturerAddress(mapValues.get(""));
-			object.setManufacturerRepresentative(mapValues.get(""));
-			object.setManufacturerRepresentativeTitle(mapValues.get(""));
-			object.setManufacturerEmail(mapValues.get(""));
-			object.setManufacturerPhone(mapValues.get(""));
-			object.setManufacturerFax(mapValues.get(""));*/
-			
+			/*
+			 * object.setManufacturerForeignCode(mapValues.get(""));
+			 * object.setManufacturerName(mapValues.get(""));
+			 * object.setManufacturerAddress(mapValues.get(""));
+			 * object.setManufacturerRepresentative(mapValues.get(""));
+			 * object.setManufacturerRepresentativeTitle(mapValues.get(""));
+			 * object.setManufacturerEmail(mapValues.get(""));
+			 * object.setManufacturerPhone(mapValues.get(""));
+			 * object.setManufacturerFax(mapValues.get(""));
+			 */
+
 			String productionPlantCode = mapValues.get("bien_ban@bb_XCH01007");
-			
+
 			VRProductionPlant objVRProductionPlant = new VRProductionPlantImpl();
-			try {				
-				long productionPlantRegistrationId = Long.parseLong(productionPlantCode) ;
-				
-				List <VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
-				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0 ) {
-					objVRProductionPlant = lstVRProductionPlant.get(0);				
+			try {
+				long productionPlantRegistrationId = Long.parseLong(productionPlantCode);
+
+				List<VRProductionPlant> lstVRProductionPlant = VRProductionPlantLocalServiceUtil
+						.findByRegistrationFormId(1, appProfile.getId(), productionPlantRegistrationId);
+				if (Validator.isNotNull(lstVRProductionPlant) && lstVRProductionPlant.size() > 0) {
+					objVRProductionPlant = lstVRProductionPlant.get(0);
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				productionPlantCode = objVRProductionPlant.getProductionPlantCode();
 				object.setProductionPlantCode(productionPlantCode);
 				object.setProductionPlantName(objVRProductionPlant.getProductionPlantName());
@@ -3057,123 +3286,135 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 				object.setProductionPlantRepresentativeTitle(mapValues.get("bien_ban@bb_XCH01010"));
 
 			}
-			
+
 			try {
 				object.setCopReportNo(mapValues.get("chung_chi@bb_XCH01016"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCH01017")) && mapValues.get("chung_chi@bb_XCH01017").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCH01017"))
+						&& mapValues.get("chung_chi@bb_XCH01017").length() > 9) {
 					object.setCopReportDate(parseStringToDate(mapValues.get("chung_chi@bb_XCH01017")));
-				}				
+				}
 				object.setCopReportExpireDate(null);
-				
+
 				// Kiem tra hieu luc COP cho lan ke tiep
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCH01016")) && mapValues.get("chung_chi@bb_XCH01016").trim().length() > 0) {
-					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil.findBycopReportNo(1, mapValues.get("chung_chi@bb_XCH01016").trim());
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCH01016"))
+						&& mapValues.get("chung_chi@bb_XCH01016").trim().length() > 0) {
+					VRCOPReportRepository objVRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil
+							.findBycopReportNo(1, mapValues.get("chung_chi@bb_XCH01016").trim());
 					if (Validator.isNotNull(objVRCOPReportRepository)) {
 						object.setCopReportDate(objVRCOPReportRepository.getCopReportDate());
 						object.setCopReportExpireDate(objVRCOPReportRepository.getCopReportExpiredDate());
 					}
 				}
-				
+
 			} catch (Exception e) {
 				_log.debug(e);
 			}
 
-			//Khong ap dung voi Chung nhan chat luong kieu loai toan xe
+			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setDesignerCode("");
-			object.setDesignerName("");
-			object.setDesignerAddress("");
-			object.setDesignerRepresentative("");
-			object.setDesignerRepresentativeTitle("");
-			
-			object.setDesignerEmail("");
-			object.setDesignerPhone("");
-			object.setDesignerFax("");
-			object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
-			object.setDesignModelDescription(mapValues.get("bien_ban@loai_hinh_thiet_ke_text"));*/
-			
-			
-			
+			 * object.setDesignerCode(""); object.setDesignerName("");
+			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
+			 * object.setDesignerRepresentativeTitle("");
+			 * 
+			 * object.setDesignerEmail(""); object.setDesignerPhone("");
+			 * object.setDesignerFax("");
+			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
+			 * object.setDesignModelDescription(mapValues.get(
+			 * "bien_ban@loai_hinh_thiet_ke_text"));
+			 */
+
 			try {
 				object.setVerificationCertificateNo(mapValues.get("chung_chi@bb_XCH01024"));
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCH01025")) && mapValues.get("chung_chi@bb_XCH01025").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCH01025"))
+						&& mapValues.get("chung_chi@bb_XCH01025").length() > 9) {
 					object.setVerificationCertificateDate(parseStringToDate(mapValues.get("chung_chi@bb_XCH01025")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban")); 
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")) && mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
+				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban"));
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setVerificationRefDate(parseStringToDate(mapValues.get("chung_chi@ngay_ket_thuc_kiem_tra")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
-				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XCH01020")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCH01021")) && mapValues.get("bien_ban@bb_XCH01021").length() > 9) { // Chua xuat hien trong data bien ban
+				object.setReferenceCertificateNo(mapValues.get("bien_ban@bb_XCH01020")); // Chua xuat hien trong data
+																							// bien ban
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCH01021"))
+						&& mapValues.get("bien_ban@bb_XCH01021").length() > 9) { // Chua xuat hien trong data bien ban
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("bien_ban@bb_XCH01021")));
 				}
-				
+
 				// Mo rong: so_gcn_goc va ngay_gcn_goc;
-				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc")) && mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
+				if (mapValues.get("chung_chi@so_gcn_goc").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_goc"))
+						&& mapValues.get("chung_chi@ngay_gcn_goc").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_goc")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_gcn_goc"));
 				}
-				// Cap lai: so_chung_chi va ngay_gcn_cu; 
-				if (mapValues.get("chung_chi@so_chung_chi").trim().length() >0 && Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu")) && mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
+				// Cap lai: so_chung_chi va ngay_gcn_cu;
+				if (mapValues.get("chung_chi@so_chung_chi").trim().length() > 0
+						&& Validator.isNotNull(mapValues.get("chung_chi@ngay_gcn_cu"))
+						&& mapValues.get("chung_chi@ngay_gcn_cu").length() > 9) {
 					object.setReferenceCertificateDate(parseStringToDate(mapValues.get("chung_chi@ngay_gcn_cu")));
 					object.setReferenceCertificateNo(mapValues.get("chung_chi@so_chung_chi"));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setDesignSymbol(mapValues.get("bien_ban@bb_XCH01026")); // Chua xuat hien trong data bien ban
-			
+
 			try {
-				object.setTypeApprovalCertificateNo(mapValues.get("chung_chi@bb_XCH01027")); // Chua xuat hien trong data bien ban
-				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCH01028")) && mapValues.get("chung_chi@bb_XCH01028").length() > 9) { // Chua xuat hien trong data bien ban
+				object.setTypeApprovalCertificateNo(mapValues.get("chung_chi@bb_XCH01027")); // Chua xuat hien trong
+																								// data bien ban
+				if (Validator.isNotNull(mapValues.get("chung_chi@bb_XCH01028"))
+						&& mapValues.get("chung_chi@bb_XCH01028").length() > 9) { // Chua xuat hien trong data bien ban
 					object.setTypeApprovalCertificateDate(parseStringToDate(mapValues.get("chung_chi@bb_XCH01028")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setInspectorReceiveDate(now);
-			object.setInspectorSubmitDate(now);
-			object.setInspectorendorSementDate(now);
-			object.setInspectorDeadline(now);
-			object.setInspectorFinishDate(now);
-			object.setInspectorCancelDate(now);
-			object.setInspectorOrganization(mapValues.get(""));
-			object.setInspectorDivision(mapValues.get(""));
-			object.setInspectorSignName(mapValues.get(""));
-			object.setInspectorSignTitle(mapValues.get(""));
-			object.setInspectorSignPlace(mapValues.get(""));*/
-			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); //1: Giay chung nhan; 0: Thong bao khong dat
-			
+			 * object.setInspectorReceiveDate(now); object.setInspectorSubmitDate(now);
+			 * object.setInspectorendorSementDate(now); object.setInspectorDeadline(now);
+			 * object.setInspectorFinishDate(now); object.setInspectorCancelDate(now);
+			 * object.setInspectorOrganization(mapValues.get(""));
+			 * object.setInspectorDivision(mapValues.get(""));
+			 * object.setInspectorSignName(mapValues.get(""));
+			 * object.setInspectorSignTitle(mapValues.get(""));
+			 * object.setInspectorSignPlace(mapValues.get(""));
+			 */
+			object.setCertificateType(mapValues.get("chung_chi@ket_luan_chung")); // 1: Giay chung nhan; 0: Thong bao
+																					// khong dat
+
 			object.setCertificateRecordNo(mapValues.get("chung_chi@so_chung_chi"));
 			object.setCertificateSignName(mapValues.get("chung_chi@nguoi_ky_cc_text"));
 			object.setCertificateSignTitle(mapValues.get("chung_chi@chuc_danh_ky"));
 			object.setCertificateSignPlace(mapValues.get("chung_chi@dia_diem_ky"));
 			object.setCertificateNote(mapValues.get("chung_chi@ghi_chu_in_chung_chi"));
 			try {
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc")) && mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_cap_cc"))
+						&& mapValues.get("chung_chi@ngay_cap_cc").length() > 9) {
 					object.setCertificateRecordDate(parseStringToDate(mapValues.get("chung_chi@ngay_cap_cc")));
-				}		
-				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_het_han_gcn")) && mapValues.get("chung_chi@ngay_het_han_gcn").length() > 9) {
-					object.setCertificateRecordExpireDate(parseStringToDate(mapValues.get("chung_chi@ngay_het_han_gcn")));
-				}				
+				}
+				if (Validator.isNotNull(mapValues.get("chung_chi@ngay_het_han_gcn"))
+						&& mapValues.get("chung_chi@ngay_het_han_gcn").length() > 9) {
+					object.setCertificateRecordExpireDate(
+							parseStringToDate(mapValues.get("chung_chi@ngay_het_han_gcn")));
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			object.setExpiredStatus("1");
 			object.setCertificateRecordStatus("2");
 			object.setDigitalIssueStatus("0");
@@ -3190,46 +3431,47 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setCertifiedVINNo(mapValues.get("bien_ban@bb_XCH01055"));
 			object.setCertifiedVINPosition(mapValues.get("bien_ban@bb_XCH01056"));
 			object.setCertifiedFrameNo(mapValues.get("bien_ban@bb_XCH01057"));
-			//object.setCertifiedFrameAttachPlace(mapValues.get(""));
+			// object.setCertifiedFrameAttachPlace(mapValues.get(""));
 			object.setCertifiedFramePosition(mapValues.get("bien_ban@bb_XCH01058"));
 			object.setCertifiedEngineNo(mapValues.get("bien_ban@bb_XCH01059"));
-			//object.setCertifiedEngineAttachPlace(mapValues.get(""));
+			// object.setCertifiedEngineAttachPlace(mapValues.get(""));
 			object.setCertifiedEnginePosition(mapValues.get("bien_ban@bb_XCH01060"));
-			
-			
+
 			object.setCommonSafetyStandard(mapValues.get("bien_ban@bb_XCH01031"));
 			object.setEmissionStandard(mapValues.get("bien_ban@bb_XCH01032"));
 			object.setCommonSafetyDescription(mapValues.get("bien_ban@XCH01031_text"));
 			object.setEmissionDescription(mapValues.get("bien_ban@XCH01032_text"));
-			
+
 			try {
 				object.setSafetyTestReportNo(mapValues.get("bien_ban@bb_XCH01034"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCH01035")) && mapValues.get("bien_ban@bb_XCH01035").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCH01035"))
+						&& mapValues.get("bien_ban@bb_XCH01035").length() > 9) {
 					object.setSafetyTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCH01035")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-						
+
 			try {
 				object.setEmissionTestReportNo(mapValues.get("bien_ban@bb_XCH01040"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCH01041")) && mapValues.get("bien_ban@bb_XCH01041").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCH01041"))
+						&& mapValues.get("bien_ban@bb_XCH01041").length() > 9) {
 					object.setEmissionTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCH01041")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
+
 			try {
 				object.setOtherTestReportNo(mapValues.get("bien_ban@bb_XCH01046"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCH01047")) && mapValues.get("bien_ban@bb_XCH01047").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@bb_XCH01047"))
+						&& mapValues.get("bien_ban@bb_XCH01047").length() > 9) {
 					object.setOtherTestReportDate(parseStringToDate(mapValues.get("bien_ban@bb_XCH01047")));
-				}				
+				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
+
 			object.setSampleFrameNo(mapValues.get("bien_ban@bb_XCH01062"));
 			object.setSampleVINNo(mapValues.get("bien_ban@bb_XCH01062"));
 			object.setSampleEngineNo(mapValues.get("bien_ban@bb_XCH01063"));
@@ -3239,72 +3481,72 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			object.setSampleTrademarkName(mapValues.get("bien_ban@bb_XCH01067_text"));
 			object.setSampleCommercialName(mapValues.get("bien_ban@bb_XCH01068"));
 			object.setSampleModelCode(mapValues.get("bien_ban@bb_XCH01069"));
-			
+
 			// Khong ap dung voi Chung nhan chat luong kieu loai toan xe
 			/*
-			object.setCustomsDeclarationNo(mapValues.get(""));
-			object.setCustomsDeclarationDate(now);
-			object.setProductionCountry(mapValues.get(""));
-			object.setImporterQuantity(Long.valueOf(mapValues.get("")));
-			*/
+			 * object.setCustomsDeclarationNo(mapValues.get(""));
+			 * object.setCustomsDeclarationDate(now);
+			 * object.setProductionCountry(mapValues.get(""));
+			 * object.setImporterQuantity(Long.valueOf(mapValues.get("")));
+			 */
 			object.setInspectionRecordNo(mapValues.get("bien_ban@so_bien_ban"));
 			try {
 				object.setInspectionSite(mapValues.get("bien_ban@bb_XCH01008"));
-				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")) && mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
+				if (Validator.isNotNull(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra"))
+						&& mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra").length() > 9) {
 					object.setInspectionDate(parseStringToDate(mapValues.get("bien_ban@ngay_ket_thuc_kiem_tra")));
 				}
 			} catch (Exception e) {
 				_log.debug(e);
 			}
-			
-			
-			if (Validator.isNotNull(objVRProductionPlant) && objVRProductionPlant.getProductionPlantCode().length() > 0) {
+
+			if (Validator.isNotNull(objVRProductionPlant)
+					&& objVRProductionPlant.getProductionPlantCode().length() > 0) {
 				object.setInspectionDistrictCode(objVRProductionPlant.getProductionPlantDistrictCode());
 				object.setInspectionDistrictName(objVRProductionPlant.getProductionPlantDistrictName());
 				object.setInspectionProvinceCode(objVRProductionPlant.getProductionPlantProvinceCode());
 				object.setInspectionProvinceName(objVRProductionPlant.getProductionPlantProvinceName());
 			}
-			
-			//object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
+
+			// object.setCorporationId(mapValues.get("bien_ban@workingUnitId"));
 			object.setInspectorId(Long.valueOf(mapValues.get("bien_ban@dang_kiem_vien_chinh_userId")));
 			object.setRemarks(mapValues.get(""));
 			object.setInspectionNote(mapValues.get(""));
-			
-			object.setModule("03") ; // 03: Chung nhan chat luong kieu loai toan xe
-		
+
+			object.setModule("03"); // 03: Chung nhan chat luong kieu loai toan xe
+
 			return vrVehicleTypeCertificatePersistence.update(object);
 		} catch (Exception e) {
 			_log.error(e);
-		}		
+		}
 		return null;
 	}
-		
+
 	private Date parseStringToDate(String strDate) {
-			
+
+		try {
+			SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE);
+			return df.parse(strDate);
+		} catch (ParseException e) {
+
 			try {
-				SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE);
+				SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE_2);
 				return df.parse(strDate);
-			}
-			catch (ParseException e) {
-				
+			} catch (Exception e2) {
 				try {
-					SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE_2);
+					SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE_3);
 					return df.parse(strDate);
-				} catch (Exception e2) {
-					try {
-						SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE_3);
-						return df.parse(strDate);
-					} catch (Exception e3) {
-						
-					}
+				} catch (Exception e3) {
+
 				}
-				
-				//_log.error(e);
-				return null;
 			}
-			
+
+			// _log.error(e);
+			return null;
 		}
-	
+
+	}
+
 	public List<VRVehicleTypeCertificate> findByInspectorId(long inspectorId) throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByInspectorId(inspectorId);
@@ -3312,59 +3554,65 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByCorporationId(String corporationId) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByCorporationId(String corporationId)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByCorporationId(corporationId);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByInspectorIdCorporationId(String corporationId, long inspectorId) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByInspectorIdCorporationId(String corporationId, long inspectorId)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByInspectorIdCorporationId(corporationId, inspectorId);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByServiceCode(String serviceCode) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByServiceCode(String serviceCode)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByServiceCode(serviceCode);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByApplicantIdNo(String applicantIdNo) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByApplicantIdNo(String applicantIdNo)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByApplicantIdNo(applicantIdNo);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByApplicantAndProductionPlant(String applicantIdNo, String productionPlantCode) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByApplicantAndProductionPlant(String applicantIdNo,
+			String productionPlantCode) throws PortalException, SystemException {
 		try {
-			return vrVehicleTypeCertificatePersistence.findByApplicantAndProductionPlant(applicantIdNo, productionPlantCode);
+			return vrVehicleTypeCertificatePersistence.findByApplicantAndProductionPlant(applicantIdNo,
+					productionPlantCode);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
+
 	public List<VRVehicleTypeCertificate> findByDossier(String dossierNo) throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByDossier(dossierNo);
@@ -3372,228 +3620,259 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByDeliverableCode(String deliverableCode) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByDeliverableCode(String deliverableCode)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByDeliverableCode(deliverableCode);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByManufacturerForeignCode(String manufacturerForeignCode) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByManufacturerForeignCode(String manufacturerForeignCode)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByManufacturerForeignCode(manufacturerForeignCode);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByCopReportNo(String copReportNo) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByCopReportNo(String copReportNo)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByCopReportNo(copReportNo);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByDesignerCode(String designerCode) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByDesignerCode(String designerCode)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByDesignerCode(designerCode);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByVerificationCertificateNo(String verificationCertificateNo) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByVerificationCertificateNo(String verificationCertificateNo)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByVerificationCertificateNo(verificationCertificateNo);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByDesignsymbol(String designSymbol) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByDesignsymbol(String designSymbol)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByDesignsymbol(designSymbol);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByCertificaterecordno(String certificateRecordNo, String serviceCode) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByCertificaterecordno(String certificateRecordNo, String serviceCode)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByCertificaterecordno(certificateRecordNo, serviceCode);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByExpiredstatus(String expiredStatus) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByExpiredstatus(String expiredStatus)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByExpiredstatus(expiredStatus);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
 
-	public List<VRVehicleTypeCertificate> findByF_EXP_STATUS(String[] expiredStatus) throws PortalException, SystemException {
+	public List<VRVehicleTypeCertificate> findByF_EXP_STATUS(String[] expiredStatus)
+			throws PortalException, SystemException {
 
-			return vrVehicleTypeCertificatePersistence.findByF_EXP_STATUS(expiredStatus);
+		return vrVehicleTypeCertificatePersistence.findByF_EXP_STATUS(expiredStatus);
 	}
-	
-	public List<VRVehicleTypeCertificate> findByExpiredstatusAndServiceCode(String expiredStatus, String serviceCode) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByExpiredstatusAndServiceCode(String expiredStatus, String serviceCode)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByExpiredstatusAndServiceCode(expiredStatus, serviceCode);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByVehicletypeAndServiceCode(String vehicleClass, String certifiedVehicleType, 
-			String certifiedTrademarkName, String certifiedCommercialName, 
+
+	public List<VRVehicleTypeCertificate> findByVehicletypeAndServiceCode(String vehicleClass,
+			String certifiedVehicleType, String certifiedTrademarkName, String certifiedCommercialName,
 			String certifiedModelCode, String serviceCode) throws PortalException, SystemException {
 		try {
-			return vrVehicleTypeCertificatePersistence.findByVehicletypeAndServiceCode(vehicleClass, certifiedVehicleType, certifiedTrademarkName, certifiedCommercialName, certifiedModelCode, serviceCode);
+			return vrVehicleTypeCertificatePersistence.findByVehicletypeAndServiceCode(vehicleClass,
+					certifiedVehicleType, certifiedTrademarkName, certifiedCommercialName, certifiedModelCode,
+					serviceCode);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByCommonsafetystandard(String commonSafetyStandard) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByCommonsafetystandard(String commonSafetyStandard)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByCommonsafetystandard(commonSafetyStandard);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByEmissionstandard(String emissionStandard) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByEmissionstandard(String emissionStandard)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByEmissionstandard(emissionStandard);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByInspectionRecordNo(String inspectionRecordNo) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByInspectionRecordNo(String inspectionRecordNo)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByInspectionRecordNo(inspectionRecordNo);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByApplicantAndService(String serviceCode, String applicantIdNo, long mtCore) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByApplicantAndService(String serviceCode, String applicantIdNo,
+			long mtCore) throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByApplicantAndService(serviceCode, applicantIdNo, mtCore);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByDossierId(long dossierId, long mtCore) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByDossierId(long dossierId, long mtCore)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByDossierId(dossierId, mtCore);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
-	
-	public List<VRVehicleTypeCertificate> findByDossierNo(String dossierNo, long mtCore) throws PortalException, SystemException {
+
+	public List<VRVehicleTypeCertificate> findByDossierNo(String dossierNo, long mtCore)
+			throws PortalException, SystemException {
 		try {
 			return vrVehicleTypeCertificatePersistence.findByDossierNo(dossierNo, mtCore);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleTypeCertificate>();
-		
-	}
-	
-	public List<VRVehicleTypeCertificate> findByServiceCodeAndProductionPlantCode(String serviceCode, String applicantIdNo, String productionPlantCode, long mtCore) throws PortalException, SystemException {
-		try {
-			return vrVehicleTypeCertificatePersistence.findByServiceCodeAndProductionPlantCode(serviceCode, applicantIdNo, productionPlantCode, mtCore);
-		} catch (Exception e) {
-			_log.error(e);
-		}
-		return new ArrayList<VRVehicleTypeCertificate>();
-		
-	}
-	
-	public List<VRVehicleTypeCertificate> findByServiceCodeAndProductionPlant(String serviceCode, String applicantIdNo, String productionPlantName, String productionPlantAddress) throws PortalException, SystemException {
-		try {
-			return vrVehicleTypeCertificatePersistence.findByServiceCodeAndProductionPlant(serviceCode, applicantIdNo, productionPlantName, productionPlantAddress);
-		} catch (Exception e) {
-			_log.error(e);
-		}
-		return new ArrayList<VRVehicleTypeCertificate>();
-		
+
 	}
 
-	public boolean updateVRTechnicalSpec_ALL(LinkedHashMap<String, String> mapValues, long vrVehicleTypeCertificateId, long dossierId, String dossierIdCTN, String dossierNo, Date modifyDate, String VehicleClass, String deliverableCode) {
+	public List<VRVehicleTypeCertificate> findByServiceCodeAndProductionPlantCode(String serviceCode,
+			String applicantIdNo, String productionPlantCode, long mtCore) throws PortalException, SystemException {
+		try {
+			return vrVehicleTypeCertificatePersistence.findByServiceCodeAndProductionPlantCode(serviceCode,
+					applicantIdNo, productionPlantCode, mtCore);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRVehicleTypeCertificate>();
+
+	}
+
+	public List<VRVehicleTypeCertificate> findByServiceCodeAndProductionPlant(String serviceCode, String applicantIdNo,
+			String productionPlantName, String productionPlantAddress) throws PortalException, SystemException {
+		try {
+			return vrVehicleTypeCertificatePersistence.findByServiceCodeAndProductionPlant(serviceCode, applicantIdNo,
+					productionPlantName, productionPlantAddress);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return new ArrayList<VRVehicleTypeCertificate>();
+
+	}
+
+	public boolean updateVRTechnicalSpec_ALL(LinkedHashMap<String, String> mapValues, long vrVehicleTypeCertificateId,
+			long dossierId, String dossierIdCTN, String dossierNo, Date modifyDate, String VehicleClass,
+			String deliverableCode) {
 		try {
 			String strChungChi = mapValues.get("bien_ban");
 			String prefixSpecificationCode = "bb_";
 			String specificationValue = StringPool.BLANK;
-			
+
 			if (VehicleClass.equalsIgnoreCase("LKXCG")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_LKXCG(strChungChi, vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_LKXCG(strChungChi,
+						vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
 			}
-			
+
 			if (VehicleClass.equalsIgnoreCase("LKXMY")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_LKXMY(strChungChi, vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_LKXMY(strChungChi,
+						vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
 			}
-			
+
 			if (VehicleClass.equalsIgnoreCase("XCG")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCG(strChungChi, vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCG(strChungChi,
+						vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
 			}
 
 			if (VehicleClass.equalsIgnoreCase("XMY")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XMY(strChungChi, vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);				
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XMY(strChungChi,
+						vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
 			}
-			
+
 			if (VehicleClass.equalsIgnoreCase("XDD")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XDD(strChungChi, vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XDD(strChungChi,
+						vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
 			}
-			
+
 			if (VehicleClass.equalsIgnoreCase("XCN")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCN(strChungChi, vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCN(strChungChi,
+						vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
 			}
-			
+
 			if (VehicleClass.equalsIgnoreCase("XCH")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCH(strChungChi, vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCH(strChungChi,
+						vrVehicleTypeCertificateId, dossierId, dossierIdCTN, dossierNo, modifyDate, deliverableCode);
 			}
 		} catch (Exception e) {
 			_log.debug(e);
@@ -3610,7 +3889,8 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 	public List<VRVehicleTypeCertificate> finByF_APP_VH_EXP_CERTNO(String applicantIdNo, String vehicleClass,
 			String expiredStatus, String certNo) {
 
-		return vrVehicleTypeCertificatePersistence.findByF_APP_VH_EXP_CERTNO(applicantIdNo, vehicleClass, expiredStatus, certNo);
+		return vrVehicleTypeCertificatePersistence.findByF_APP_VH_EXP_CERTNO(applicantIdNo, vehicleClass, expiredStatus,
+				certNo);
 	}
 
 	public List<VRVehicleTypeCertificate> findByF_APPNO_EXP_STATUS(String applicantIdNo, String expiredStatus) {
@@ -3618,10 +3898,21 @@ public class VRVehicleTypeCertificateLocalServiceImpl
 		return vrVehicleTypeCertificatePersistence.findByF_APPNO_EXP_STATUS(applicantIdNo, expiredStatus);
 	}
 
-	public List<VRVehicleTypeCertificate> findByF_APPNO_EXP_STATUS(String applicantIdNo, String[] expiredStatus) throws PortalException, SystemException {
+	public List<VRVehicleTypeCertificate> findByF_APPNO_EXP_STATUS(String applicantIdNo, String[] expiredStatus)
+			throws PortalException, SystemException {
 
 		return vrVehicleTypeCertificatePersistence.findByF_APPNO_EXP_STATUS(applicantIdNo, expiredStatus);
-}
+	}
 
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
 
+		return vrVehicleTypeCertificateFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start,
+				end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrVehicleTypeCertificateFinder.countData(sql);
+	}
 }

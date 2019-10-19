@@ -82,6 +82,7 @@ import com.fds.vr.business.service.base.VRVehicleSpecificationLocalServiceBaseIm
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -12661,5 +12662,18 @@ public class VRVehicleSpecificationLocalServiceImpl
 		}
 		
 	}
+	/*
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrVehicleSpecificationFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start,
+				end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrVehicleSpecificationFinder.countData(sql);
+	}
+	*/
 	private Log _log = LogFactoryUtil.getLog(VRVehicleSpecificationLocalServiceImpl.class);
 }
