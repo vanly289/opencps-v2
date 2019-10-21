@@ -110,4 +110,13 @@ public interface VRCOPManagement {
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@DefaultValue(" ")@QueryParam("mtCore") long mtCore,
 			@DefaultValue(" ")@QueryParam("COPReportNo") String COPReportNo);
+	
+	@GET
+	@Path("/vrcopdatatemplate")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response getVRCOPDataTemplate(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
+			@DefaultValue(" ")@QueryParam("mtCore") long mtCore,
+			@DefaultValue(" ")@QueryParam("COPReportNo") String COPReportNo);
 }

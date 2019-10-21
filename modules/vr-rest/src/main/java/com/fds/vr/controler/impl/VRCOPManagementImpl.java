@@ -2,7 +2,6 @@ package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRCOPReportRepositoryAction;
 import com.fds.vr.business.action.impl.VRCOPReportRepositoryActionImpl;
-import com.fds.vr.business.exception.NoSuchVRCOPReportRepositoryException;
 import com.fds.vr.business.service.VRCOPProdEquipmentLocalServiceUtil;
 import com.fds.vr.business.service.VRCOPProductTypeLocalServiceUtil;
 import com.fds.vr.business.service.VRCOPProductionPlantEmployeeLocalServiceUtil;
@@ -196,6 +195,38 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			
 			_log.error(e);
 
+			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
+		}
+	}
+	
+	@Override
+	public Response getVRCOPDataTemplate(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext,long mtCore, String COPReportNo ) {
+		
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		
+		try {
+			
+			JSONObject VRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
+			JSONArray VRCOPReportAttach =  VRCOPReportAttachLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
+			JSONArray VRCOPProductType = VRCOPProductTypeLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
+			JSONArray VRCOPProductionPlantEquipment = VRCOPProductionPlantEquipmentLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
+			JSONArray VRCOPProductionPlantEmployee = VRCOPProductionPlantEmployeeLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
+			JSONArray VRCOPProdEquipment = VRCOPProdEquipmentLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
+			
+			result.put("VRCOPReportRepository", VRCOPReportRepository);
+			result.put("VRCOPReportAttach", VRCOPReportAttach);
+			result.put("VRCOPProductType", VRCOPProductType);
+			result.put("VRCOPProductionPlantEquipment", VRCOPProductionPlantEquipment);
+			result.put("VRCOPProductionPlantEmployee", VRCOPProductionPlantEmployee);
+			result.put("VRCOPProdEquipment", VRCOPProdEquipment);
+			
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (Exception e) {
+			
+			_log.error(e);
+			
 			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
 		}
 	}
