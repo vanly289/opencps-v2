@@ -1,6 +1,8 @@
 package com.fds.vr.business.action.util;
 
 import com.fds.vr.business.engine.SQLQueryInstance;
+import com.fds.vr.filterconfig.model.VRCondition;
+import com.fds.vr.filterconfig.service.VRConditionLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -31,7 +33,7 @@ public class ActionUtil {
 
 	public static SQLQueryInstance createSQLQueryInstance(String sqlStatementPattern,
 			LinkedHashMap<String, String> columnMap, StringBuilder conditions, LinkedHashMap<String, String> sortedby,
-			Class<?> returnClassName, String className, String tableAlias,  String joinStatements) {
+			Class<?> returnClassName, String className, String tableAlias, String joinStatements) {
 		SQLQueryInstance instance = new SQLQueryInstance(sqlStatementPattern, columnMap, conditions, sortedby,
 				returnClassName, className, tableAlias, joinStatements);
 		return instance;
@@ -314,24 +316,35 @@ public class ActionUtil {
 				JSONArray params = JSONFactoryUtil.createJSONArray(advanceSearchParams);
 				if (params != null) {
 					for (int i = 0; i < params.length(); i++) {
-						JSONObject param = params.getJSONObject(i);
-						String specificationcode = param.getString("specificationCode");
-						String code = param.getString("code");
-						String value = param.getString("value");
-						String tableName = "vr_copproductionplantequipment";
-						String tableField = "COPreportNO";
-						String operator = "=";
-						if (operator.equalsIgnoreCase("like")) {
-							conditions.append(buildSQLCondition(tableField, "'%" + value + "%'", " AND ",
-									StringPool.LIKE, tableName));
-						} else {
-							conditions.append(buildSQLCondition(tableField, "'" + value + "'", " AND ", operator, tableName));
-						}
+						try {
+							JSONObject param = params.getJSONObject(i);
+							String specificationcode = param.getString("specificationcode");
+							VRCondition vrCondition = VRConditionLocalServiceUtil.getVRCondition(specificationcode);
+							String operator = param.getString("operator");
+							String value = param.getString("value");
+							String tableName = vrCondition.getFilterTableName();
+							String tableField = vrCondition.getFilterTableField();
 
-						String joinStatement = "INNER JOIN vr_copproductionplantequipment ON vr_copreportrepository.id = vr_copproductionplantequipment.copreportrepositoryid";
+							String joinStatement = vrCondition.getSpecificationGroup();
 
-						if (!joinStatements.contains(joinStatement)) {
-							joinStatements.add(joinStatement);
+							if (Validator.isNull(operator) || Validator.isNull(tableField)
+									|| Validator.isNull(tableName) || Validator.isNull(joinStatement)) {
+								continue;
+							}
+
+							if (operator.equalsIgnoreCase("like")) {
+								conditions.append(buildSQLCondition(tableField, "'%" + value + "%'", " AND ",
+										StringPool.LIKE, tableName));
+							} else {
+								conditions.append(
+										buildSQLCondition(tableField, "'" + value + "'", " AND ", operator, tableName));
+							}
+
+							if (!joinStatements.contains(joinStatement)) {
+								joinStatements.add(joinStatement);
+							}
+						} catch (Exception e) {
+							continue;
 						}
 					}
 				}
