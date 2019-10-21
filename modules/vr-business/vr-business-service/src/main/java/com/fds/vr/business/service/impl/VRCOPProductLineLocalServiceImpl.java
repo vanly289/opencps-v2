@@ -23,10 +23,15 @@ import java.util.List;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPProductLine;
 import com.fds.vr.business.model.VRCOPReportAttach;
@@ -116,5 +121,26 @@ public class VRCOPProductLineLocalServiceImpl
 	}
 
 	*/
+	
+	public JSONArray getByCOPReportNo(long mtcore,String COPReportNo) throws SystemException, PortalException{
+		
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		
+		List<VRCOPProductLine> dataList = findBycopReportNo(mtcore,COPReportNo);
+		
+		for(VRCOPProductLine data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRCOPProductLine.class, "vr_copproductline");
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
+	}
+		
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductLineLocalServiceImpl.class);
 }

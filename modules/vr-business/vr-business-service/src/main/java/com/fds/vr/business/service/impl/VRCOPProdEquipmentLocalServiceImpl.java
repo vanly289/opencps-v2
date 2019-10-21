@@ -14,13 +14,18 @@
 
 package com.fds.vr.business.service.impl;
 
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.model.VRCOPProdEquipment;
 import com.fds.vr.business.service.base.VRCOPProdEquipmentLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -113,6 +118,26 @@ public class VRCOPProdEquipmentLocalServiceImpl
 	public long counData(String sql) throws SystemException {
 
 		return vrcopProdEquipmentFinder.countData(sql);
+	}
+	
+	public JSONArray getByCOPReportNo(long mtCore, String COPReportNo) throws SystemException, PortalException {
+
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		List<VRCOPProdEquipment> dataList = findBycopReportNo(mtCore, COPReportNo);
+
+		for (VRCOPProdEquipment data : dataList) {
+
+			jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject = ActionUtil.object2Json(data, VRCOPProdEquipment.class, "vr_copproductionplantprodequipment");
+
+			if (Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRCOPProdEquipmentLocalServiceImpl.class);

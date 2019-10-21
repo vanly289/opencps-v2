@@ -19,14 +19,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPReportAttach;
 import com.fds.vr.business.service.base.VRCOPReportAttachLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -107,6 +112,27 @@ public class VRCOPReportAttachLocalServiceImpl
 	public long counData(String sql) throws SystemException {
 
 		return vrcopReportAttachFinder.countData(sql);
+	}
+	
+	public JSONArray getByCOPReportNo(long mtcore,String COPReportNo) throws SystemException, PortalException{
+		
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		
+		List<VRCOPReportAttach> dataList = findBycopReportNo(mtcore,COPReportNo);
+		
+		
+		for(VRCOPReportAttach data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRCOPReportAttach.class, "vr_copreportattach");
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRCOPReportAttachLocalServiceImpl.class);
