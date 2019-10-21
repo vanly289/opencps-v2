@@ -36,5 +36,5 @@ public interface VRCOPManagement {
 	public Response findReportRepository(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @PathParam("year") Integer year,
-			@BeanParam VRCOPReportRepositoryBeanParam query);
+			@BeanParam VRCOPReportRepositoryBeanParam query, String advancesearchParams);
 }
