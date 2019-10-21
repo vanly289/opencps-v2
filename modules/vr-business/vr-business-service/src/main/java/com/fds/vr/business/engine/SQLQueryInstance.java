@@ -2,6 +2,7 @@ package com.fds.vr.business.engine;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,7 +24,7 @@ public class SQLQueryInstance {
 
 	public SQLQueryInstance(String sqlStatementPattern, LinkedHashMap<String, String> columnMap,
 			StringBuilder conditions, LinkedHashMap<String, String> sortedby, Class<?> returnClassName,
-			String className) {
+			String className, String tableAlias, String joinStatements) {
 
 		List<String> columnDataTypes = new ArrayList<String>();
 		List<String> columnAliasNames = new ArrayList<String>();
@@ -47,6 +48,12 @@ public class SQLQueryInstance {
 
 		String sqlStatemanent = sqlStatementPattern;
 
+		if (Validator.isNotNull(joinStatements)) {
+			sqlStatemanent = sqlStatemanent.replace("[$STATEMENT_JOIN$]", joinStatements);
+		} else {
+			sqlStatemanent = sqlStatemanent.replace("[$STATEMENT_JOIN$]", StringPool.BLANK);
+		}
+		
 		if (conditions != null && conditions.length() > 0) {
 			sqlStatemanent = sqlStatemanent.replace("[$CONDITION$]", conditions.toString());
 		} else {
@@ -61,7 +68,9 @@ public class SQLQueryInstance {
 			});
 		}
 
-		String countStatemanent = sqlStatemanent.replace("[$STATEMENT_COLUMN$]", "count(*) AS total");
+		String countStatemanent = sqlStatemanent.replace("[$STATEMENT_COLUMN$]",
+				Validator.isNotNull(tableAlias) ? "count(DISTINCT " + tableAlias + ".id) AS total"
+						: "count(*) AS total");
 
 		countStatemanent = countStatemanent.replace("[$ORDERBY$]", StringPool.BLANK);
 
@@ -72,7 +81,8 @@ public class SQLQueryInstance {
 		}
 
 		sqlStatemanent = sqlStatemanent.replace("[$STATEMENT_COLUMN$]",
-				(statementColumns != null && !statementColumns.isEmpty()) ? StringUtil.merge(statementColumns) : " * ");
+				(statementColumns != null && !statementColumns.isEmpty()) ? StringUtil.merge(statementColumns)
+						: Validator.isNotNull(tableAlias) ? "DISTINCT " + tableAlias + ".*" : " * ");
 
 		this.setSqlStatemanent(sqlStatemanent);
 		this.setCountStatemanent(countStatemanent);

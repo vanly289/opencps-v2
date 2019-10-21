@@ -15,5 +15,5 @@ public interface VRCOPReportRepositoryAction {
 			LinkedHashMap<String, Object> params);
 	
 	public JSONObject findVRCOPReportRepository(User user, ServiceContext serviceContext, Integer year,
-			LinkedHashMap<String, Object> params);
+			LinkedHashMap<String, Object> params, String advancesearchParams);
 }

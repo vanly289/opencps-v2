@@ -52,12 +52,13 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 
 	@Override
 	public Response findReportRepository(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext, Integer year, VRCOPReportRepositoryBeanParam query) {
+			User user, ServiceContext serviceContext, Integer year, VRCOPReportRepositoryBeanParam query, String advancesearchParams) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		try {
+			_log.info("=========================>>>>>>>>>>>>>>>>>>>>>>>> advancesearchParams " + advancesearchParams);
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
 			VRCOPReportRepositoryAction actionImpl = new VRCOPReportRepositoryActionImpl();
-			result = actionImpl.findVRCOPReportRepository(user, serviceContext, year, params);
+			result = actionImpl.findVRCOPReportRepository(user, serviceContext, year, params, advancesearchParams);
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);

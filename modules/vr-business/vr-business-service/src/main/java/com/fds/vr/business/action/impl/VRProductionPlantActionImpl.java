@@ -85,7 +85,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction{
 		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
 
 		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
-				conditions, sortedby, VRProductionPlantImpl.class, "VRProductionPlant");
+				conditions, sortedby, VRProductionPlantImpl.class, "VRProductionPlant", tableAlias, StringPool.BLANK);
 
 		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
 

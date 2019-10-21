@@ -65,7 +65,7 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
 
 		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
-				conditions, sortedby, VRCOPReportRepositoryImpl.class, StringPool.BLANK);
+				conditions, sortedby, VRCOPReportRepositoryImpl.class, StringPool.BLANK, tableAlias, StringPool.BLANK);
 
 		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
 
@@ -84,7 +84,7 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 
 	@Override
 	public JSONObject findVRCOPReportRepository(User user, ServiceContext serviceContext, Integer year,
-			LinkedHashMap<String, Object> params) {
+			LinkedHashMap<String, Object> params, String advancesearchParams) {
 		int start = ActionUtil.getStart(params);
 		int end = ActionUtil.getEnd(params);
 		Integer mtcore = null;
@@ -100,11 +100,17 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 			}
 		}
 
+		String joinStatements = ActionUtil.buildJoinCondition(advancesearchParams);
+
 		String tableAlias = StringPool.BLANK;
+
+		if (Validator.isNotNull(joinStatements)) {
+			tableAlias = "vr_copreportrepository";
+		}
 
 		String sqlStatementPattern = "SELECT [$STATEMENT_COLUMN$] FROM vr_copreportrepository"
 				+ (Validator.isNotNull(tableAlias) ? " AS " + tableAlias : StringPool.BLANK)
-				+ " [$CONDITION$] [$ORDERBY$]";
+				+ " [$STATEMENT_JOIN$] [$CONDITION$] [$ORDERBY$]";
 
 		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
 
@@ -128,7 +134,7 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
 
 		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
-				conditions, sortedby, VRCOPReportRepositoryImpl.class, "VRCOPReportRepository");
+				conditions, sortedby, VRCOPReportRepositoryImpl.class, "VRCOPReportRepository", tableAlias, joinStatements);
 
 		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
 
@@ -142,6 +148,7 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 
 		result.put("total", total);
 		result.put("data", array);
+
 		return result;
 	}
 

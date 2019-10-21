@@ -1,7 +1,5 @@
 package com.fds.vr.business.action.impl;
 
-import java.util.LinkedHashMap;
-
 import com.fds.vr.business.action.VRApplicantProfileAction;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryInstance;
@@ -14,6 +12,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.LinkedHashMap;
 
 /**
  * @author trungnt
@@ -96,7 +96,7 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
 
 		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
-				conditions, sortedby, VRApplicantProfileImpl.class, StringPool.BLANK);
+				conditions, sortedby, VRApplicantProfileImpl.class, StringPool.BLANK, tableAlias, StringPool.BLANK);
 
 		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
 

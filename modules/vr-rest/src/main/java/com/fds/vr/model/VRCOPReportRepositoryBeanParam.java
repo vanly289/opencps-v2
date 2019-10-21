@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 		"productionplantid", "productionplantcode", "productionplantname", "productionplantaddress", "copreportno",
 		"copreportstatus", "copreporttype", "copreportmetadata", "copreportsignname", "copreportsigntitle",
 		"copreportsignplace", "copreportdate", "copreportapproveddate", "copreportexpireddate", "copfileentryid",
-		"modifydate", "syncdate", "keyword", "start", "end", "order_asc", "order_desc" })
+		"modifydate", "syncdate", "keyword", "start", "end", "order_asc", "order_desc", "advance_search" })
 @XmlRootElement(name = "VRCOPReportRepositoryBeanParam")
 public class VRCOPReportRepositoryBeanParam {
 	@QueryParam(value = "keyword")
@@ -80,6 +80,8 @@ public class VRCOPReportRepositoryBeanParam {
 	protected String modifyDate;
 	@QueryParam(value = "syncdate")
 	protected String syncDate;
+	@QueryParam(value = "advance_search")
+	protected String advance_search;
 
 	public String getKeyword() {
 		return keyword;
@@ -327,6 +329,14 @@ public class VRCOPReportRepositoryBeanParam {
 
 	public void setSyncDate(String syncDate) {
 		this.syncDate = syncDate;
+	}
+
+	public String getAdvance_search() {
+		return advance_search;
+	}
+
+	public void setAdvance_search(String advance_search) {
+		this.advance_search = advance_search;
 	}
 
 }
