@@ -215,12 +215,12 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			JSONArray VRCOPProductionPlantEmployee = VRCOPProductionPlantEmployeeLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
 			JSONArray VRCOPProdEquipment = VRCOPProdEquipmentLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
 			
-			result.put("VRCOPReportRepository", VRCOPReportRepository);
-			result.put("VRCOPReportAttach", VRCOPReportAttach);
-			result.put("VRCOPProductType", VRCOPProductType);
-			result.put("VRCOPProductionPlantEquipment", VRCOPProductionPlantEquipment);
-			result.put("VRCOPProductionPlantEmployee", VRCOPProductionPlantEmployee);
-			result.put("VRCOPProdEquipment", VRCOPProdEquipment);
+			result.put("vrcopreportrepository", VRCOPReportRepository);
+			result.put("vrcopreportattach", VRCOPReportAttach);
+			result.put("vrcopproducttype", VRCOPProductType);
+			result.put("vrcopproductionplantequipment", VRCOPProductionPlantEquipment);
+			result.put("vrcopproductionplantemployee", VRCOPProductionPlantEmployee);
+			result.put("vrcopprodequipment", VRCOPProdEquipment);
 			
 			return Response.status(200).entity(result.toString()).build();
 

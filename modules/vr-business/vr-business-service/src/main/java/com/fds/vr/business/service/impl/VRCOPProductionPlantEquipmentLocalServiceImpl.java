@@ -16,6 +16,7 @@ package com.fds.vr.business.service.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.model.VRCOPProductionPlantEquipment;
+import com.fds.vr.business.model.impl.VRCOPProductionPlantEquipmentImpl;
 import com.fds.vr.business.service.base.VRCOPProductionPlantEquipmentLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -131,7 +133,7 @@ public class VRCOPProductionPlantEquipmentLocalServiceImpl
 			
 			jsonObject = JSONFactoryUtil.createJSONObject();
 			
-			jsonObject = ActionUtil.object2Json(data, VRCOPProductionPlantEquipment.class, "vr_copproductionplantequipment");
+			jsonObject = ActionUtil.object2Json(data, VRCOPProductionPlantEquipmentImpl.class, StringPool.BLANK);
 			
 			if(Validator.isNotNull(jsonObject)) {
 				result.put(jsonObject);

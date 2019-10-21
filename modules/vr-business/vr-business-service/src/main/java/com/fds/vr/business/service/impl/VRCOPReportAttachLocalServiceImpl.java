@@ -22,6 +22,7 @@ import java.util.Map;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPReportAttach;
+import com.fds.vr.business.model.impl.VRCOPReportAttachImpl;
 import com.fds.vr.business.service.base.VRCOPReportAttachLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import aQute.bnd.annotation.ProviderType;
@@ -126,7 +128,7 @@ public class VRCOPReportAttachLocalServiceImpl
 			
 			jsonObject = JSONFactoryUtil.createJSONObject();
 			
-			jsonObject = ActionUtil.object2Json(data, VRCOPReportAttach.class, "vr_copreportattach");
+			jsonObject = ActionUtil.object2Json(data, VRCOPReportAttachImpl.class, StringPool.BLANK);
 			
 			if(Validator.isNotNull(jsonObject)) {
 				result.put(jsonObject);
