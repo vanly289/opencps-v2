@@ -142,6 +142,10 @@ public interface VRCOPProdEquipmentLocalService extends BaseLocalService,
 		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
 		int start, int end) throws SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONArray getByCOPReportNo(long mtCore, java.lang.String COPReportNo)
+		throws PortalException, SystemException;
+
 	/**
 	* @throws PortalException
 	*/

@@ -19,12 +19,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.exception.NoSuchVRCOPReportRepositoryException;
 import com.fds.vr.business.model.VRCOPReportRepository;
 import com.fds.vr.business.service.base.VRCOPReportRepositoryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -151,6 +156,18 @@ public class VRCOPReportRepositoryLocalServiceImpl
 	public long counData(String sql) throws SystemException {
 
 		return vrcopReportRepositoryFinder.countData(sql);
+	}
+	
+	public JSONObject getByCOPReportNo(long mtCore,String COPReportNo) throws SystemException, PortalException{
+		
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		
+		VRCOPReportRepository vrCOPReportRepository = findBycopReportNo(mtCore,COPReportNo);
+		
+		result = ActionUtil.object2Json(vrCOPReportRepository, VRCOPReportRepository.class,"vr_copreportrepository");
+		
+		
+		return result;
 	}
 
 

@@ -1,6 +1,7 @@
 package com.fds.vr.business.action.util;
 
 import com.fds.vr.business.engine.SQLQueryInstance;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
