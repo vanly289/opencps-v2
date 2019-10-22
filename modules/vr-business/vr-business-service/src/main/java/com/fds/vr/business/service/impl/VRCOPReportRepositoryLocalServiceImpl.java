@@ -23,6 +23,7 @@ import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.exception.NoSuchVRCOPReportRepositoryException;
 import com.fds.vr.business.model.VRCOPReportRepository;
+import com.fds.vr.business.model.impl.VRCOPReportRepositoryImpl;
 import com.fds.vr.business.service.base.VRCOPReportRepositoryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -164,7 +166,7 @@ public class VRCOPReportRepositoryLocalServiceImpl
 		
 		VRCOPReportRepository vrCOPReportRepository = findBycopReportNo(mtCore,COPReportNo);
 		
-		result = ActionUtil.object2Json(vrCOPReportRepository, VRCOPReportRepository.class,"vr_copreportrepository");
+		result = ActionUtil.object2Json(vrCOPReportRepository, VRCOPReportRepositoryImpl.class,StringPool.BLANK);
 		
 		
 		return result;

@@ -22,6 +22,7 @@ import java.util.Map;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPProductType;
+import com.fds.vr.business.model.impl.VRCOPProductTypeImpl;
 import com.fds.vr.business.service.base.VRCOPProductTypeLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import aQute.bnd.annotation.ProviderType;
@@ -130,7 +132,7 @@ public class VRCOPProductTypeLocalServiceImpl
 			
 			jsonObject = JSONFactoryUtil.createJSONObject();
 			
-			jsonObject = ActionUtil.object2Json(data, VRCOPProductType.class, "vr_copproducttype");
+			jsonObject = ActionUtil.object2Json(data, VRCOPProductTypeImpl.class, StringPool.BLANK);
 			
 			if(Validator.isNotNull(jsonObject)) {
 				result.put(jsonObject);
