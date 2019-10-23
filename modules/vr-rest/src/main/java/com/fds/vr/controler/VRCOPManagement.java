@@ -43,7 +43,7 @@ public interface VRCOPManagement {
 			@BeanParam VRCOPReportRepositoryBeanParam query, String advancesearchParams);
 
 	@GET
-	@Path("/vrcopreportrepository")
+	@Path("/reportrepository")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getVRCOPReportRepository(@Context HttpServletRequest request, @Context HttpHeaders header,
@@ -52,7 +52,7 @@ public interface VRCOPManagement {
 			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
 	
 	@GET
-	@Path("/vrcopproductionplantemployee")
+	@Path("/roductionplant/employee")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getVRCOPProductionPlantEmployeeList(@Context HttpServletRequest request, @Context HttpHeaders header,
@@ -61,7 +61,7 @@ public interface VRCOPManagement {
 			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
 	
 	@GET
-	@Path("/vrcopproductionplantequipment")
+	@Path("/productionplant/equipment")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getVRCOPProductionPlantEquipmentList(@Context HttpServletRequest request, @Context HttpHeaders header,
@@ -70,7 +70,7 @@ public interface VRCOPManagement {
 			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
 	
 	@GET
-	@Path("/vrcopproductionplantprodequipment")
+	@Path("/productionplant/prodequipment")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getVRCOPProductionPlantProdEquipmentList(@Context HttpServletRequest request, @Context HttpHeaders header,
@@ -79,7 +79,7 @@ public interface VRCOPManagement {
 			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
 	
 	@GET
-	@Path("/vrcopproducttype")
+	@Path("/producttype")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getVRCOPProductTypeList(@Context HttpServletRequest request, @Context HttpHeaders header,
@@ -89,7 +89,7 @@ public interface VRCOPManagement {
 
 	
 	@GET
-	@Path("/vrcopreportattach")
+	@Path("/reportattach")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getVRCOPReportAttachList(@Context HttpServletRequest request, @Context HttpHeaders header,
@@ -98,7 +98,7 @@ public interface VRCOPManagement {
 			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
 	
 	@GET
-	@Path("/vrcopdatatemplate")
+	@Path("/datatemplate")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getVRCOPDataTemplate(@Context HttpServletRequest request, @Context HttpHeaders header,
