@@ -12,6 +12,7 @@ import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -34,7 +35,7 @@ public interface VRCOPManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRCOPReportRepositoryBeanParam query);
 
-	@GET
+	@POST
 	@Path("/reportrepository/{year}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findReportRepository(@Context HttpServletRequest request, @Context HttpHeaders header,

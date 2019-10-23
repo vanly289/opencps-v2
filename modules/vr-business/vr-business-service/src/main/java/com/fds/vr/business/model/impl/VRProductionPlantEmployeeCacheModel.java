@@ -66,14 +66,12 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{id=");
 		sb.append(id);
 		sb.append(", mtCore=");
 		sb.append(mtCore);
-		sb.append(", productPlantID=");
-		sb.append(productPlantID);
 		sb.append(", sequenceNo=");
 		sb.append(sequenceNo);
 		sb.append(", employeeName=");
@@ -103,7 +101,6 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 
 		vrProductionPlantEmployeeImpl.setId(id);
 		vrProductionPlantEmployeeImpl.setMtCore(mtCore);
-		vrProductionPlantEmployeeImpl.setProductPlantID(productPlantID);
 		vrProductionPlantEmployeeImpl.setSequenceNo(sequenceNo);
 
 		if (employeeName == null) {
@@ -168,8 +165,6 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 
 		mtCore = objectInput.readLong();
 
-		productPlantID = objectInput.readLong();
-
 		sequenceNo = objectInput.readLong();
 		employeeName = objectInput.readUTF();
 		employeeCertificateNo = objectInput.readUTF();
@@ -188,8 +183,6 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 		objectOutput.writeLong(id);
 
 		objectOutput.writeLong(mtCore);
-
-		objectOutput.writeLong(productPlantID);
 
 		objectOutput.writeLong(sequenceNo);
 
@@ -236,7 +229,6 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 
 	public long id;
 	public long mtCore;
-	public long productPlantID;
 	public long sequenceNo;
 	public String employeeName;
 	public String employeeCertificateNo;

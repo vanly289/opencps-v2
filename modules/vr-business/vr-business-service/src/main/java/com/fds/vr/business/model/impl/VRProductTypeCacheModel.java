@@ -66,14 +66,12 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{id=");
 		sb.append(id);
 		sb.append(", mtCore=");
 		sb.append(mtCore);
-		sb.append(", productPlantID=");
-		sb.append(productPlantID);
 		sb.append(", sequenceNo=");
 		sb.append(sequenceNo);
 		sb.append(", vehicleClass=");
@@ -115,7 +113,6 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 
 		vrProductTypeImpl.setId(id);
 		vrProductTypeImpl.setMtCore(mtCore);
-		vrProductTypeImpl.setProductPlantID(productPlantID);
 		vrProductTypeImpl.setSequenceNo(sequenceNo);
 
 		if (vehicleClass == null) {
@@ -222,8 +219,6 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 
 		mtCore = objectInput.readLong();
 
-		productPlantID = objectInput.readLong();
-
 		sequenceNo = objectInput.readLong();
 		vehicleClass = objectInput.readUTF();
 		vehicleTypeCode = objectInput.readUTF();
@@ -248,8 +243,6 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 		objectOutput.writeLong(id);
 
 		objectOutput.writeLong(mtCore);
-
-		objectOutput.writeLong(productPlantID);
 
 		objectOutput.writeLong(sequenceNo);
 
@@ -338,7 +331,6 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 
 	public long id;
 	public long mtCore;
-	public long productPlantID;
 	public long sequenceNo;
 	public String vehicleClass;
 	public String vehicleTypeCode;

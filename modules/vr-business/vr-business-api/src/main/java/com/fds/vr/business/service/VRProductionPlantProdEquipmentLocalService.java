@@ -210,10 +210,6 @@ public interface VRProductionPlantProdEquipmentLocalService
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<VRProductionPlantProdEquipment> findByproductPlantID(
-		long mtCore, long productPlantID)
-		throws PortalException, SystemException;
-
 	/**
 	* Returns a range of all the vr production plant prod equipments.
 	*
@@ -248,6 +244,4 @@ public interface VRProductionPlantProdEquipmentLocalService
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
-
-	public void deleteByproductPlantID(long mtCore, long productPlantId);
 }

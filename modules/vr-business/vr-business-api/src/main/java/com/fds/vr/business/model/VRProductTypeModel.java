@@ -91,20 +91,6 @@ public interface VRProductTypeModel extends BaseModel<VRProductType> {
 	public void setMtCore(long mtCore);
 
 	/**
-	 * Returns the product plant ID of this vr product type.
-	 *
-	 * @return the product plant ID of this vr product type
-	 */
-	public long getProductPlantID();
-
-	/**
-	 * Sets the product plant ID of this vr product type.
-	 *
-	 * @param productPlantID the product plant ID of this vr product type
-	 */
-	public void setProductPlantID(long productPlantID);
-
-	/**
 	 * Returns the sequence no of this vr product type.
 	 *
 	 * @return the sequence no of this vr product type

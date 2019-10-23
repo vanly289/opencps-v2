@@ -65,7 +65,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "id", Types.BIGINT },
 			{ "mtCore", Types.BIGINT },
-			{ "productPlantID", Types.BIGINT },
 			{ "sequenceNo", Types.BIGINT },
 			{ "employeeName", Types.VARCHAR },
 			{ "employeeCertificateNo", Types.VARCHAR },
@@ -81,7 +80,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	static {
 		TABLE_COLUMNS_MAP.put("id", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mtCore", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("productPlantID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("sequenceNo", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("employeeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("employeeCertificateNo", Types.VARCHAR);
@@ -93,7 +91,7 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 		TABLE_COLUMNS_MAP.put("productionPlantId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productionplantemployee (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,employeeName VARCHAR(75) null,employeeCertificateNo VARCHAR(75) null,trainningAt VARCHAR(75) null,workingPosition VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,productionPlantCode VARCHAR(75) null,productionPlantId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productionplantemployee (id LONG not null primary key,mtCore LONG,sequenceNo LONG,employeeName VARCHAR(75) null,employeeCertificateNo VARCHAR(75) null,trainningAt VARCHAR(75) null,workingPosition VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,productionPlantCode VARCHAR(75) null,productionPlantId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productionplantemployee";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlantEmployee.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplantemployee.modifyDate DESC";
@@ -106,12 +104,7 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.fds.vr.business.model.VRProductionPlantEmployee"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRProductionPlantEmployee"),
-			true);
-	public static final long MTCORE_COLUMN_BITMASK = 1L;
-	public static final long PRODUCTPLANTID_COLUMN_BITMASK = 2L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 4L;
+	public static final boolean COLUMN_BITMASK_ENABLED = false;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductionPlantEmployee"));
 
@@ -154,7 +147,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
-		attributes.put("productPlantID", getProductPlantID());
 		attributes.put("sequenceNo", getSequenceNo());
 		attributes.put("employeeName", getEmployeeName());
 		attributes.put("employeeCertificateNo", getEmployeeCertificateNo());
@@ -183,12 +175,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 		if (mtCore != null) {
 			setMtCore(mtCore);
-		}
-
-		Long productPlantID = (Long)attributes.get("productPlantID");
-
-		if (productPlantID != null) {
-			setProductPlantID(productPlantID);
 		}
 
 		Long sequenceNo = (Long)attributes.get("sequenceNo");
@@ -265,41 +251,7 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public void setMtCore(long mtCore) {
-		_columnBitmask |= MTCORE_COLUMN_BITMASK;
-
-		if (!_setOriginalMtCore) {
-			_setOriginalMtCore = true;
-
-			_originalMtCore = _mtCore;
-		}
-
 		_mtCore = mtCore;
-	}
-
-	public long getOriginalMtCore() {
-		return _originalMtCore;
-	}
-
-	@Override
-	public long getProductPlantID() {
-		return _productPlantID;
-	}
-
-	@Override
-	public void setProductPlantID(long productPlantID) {
-		_columnBitmask |= PRODUCTPLANTID_COLUMN_BITMASK;
-
-		if (!_setOriginalProductPlantID) {
-			_setOriginalProductPlantID = true;
-
-			_originalProductPlantID = _productPlantID;
-		}
-
-		_productPlantID = productPlantID;
-	}
-
-	public long getOriginalProductPlantID() {
-		return _originalProductPlantID;
 	}
 
 	@Override
@@ -379,8 +331,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public void setModifyDate(Date modifyDate) {
-		_columnBitmask = -1L;
-
 		_modifyDate = modifyDate;
 	}
 
@@ -419,10 +369,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 		_productionPlantId = productionPlantId;
 	}
 
-	public long getColumnBitmask() {
-		return _columnBitmask;
-	}
-
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
@@ -452,7 +398,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 		vrProductionPlantEmployeeImpl.setId(getId());
 		vrProductionPlantEmployeeImpl.setMtCore(getMtCore());
-		vrProductionPlantEmployeeImpl.setProductPlantID(getProductPlantID());
 		vrProductionPlantEmployeeImpl.setSequenceNo(getSequenceNo());
 		vrProductionPlantEmployeeImpl.setEmployeeName(getEmployeeName());
 		vrProductionPlantEmployeeImpl.setEmployeeCertificateNo(getEmployeeCertificateNo());
@@ -523,17 +468,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public void resetOriginalValues() {
-		VRProductionPlantEmployeeModelImpl vrProductionPlantEmployeeModelImpl = this;
-
-		vrProductionPlantEmployeeModelImpl._originalMtCore = vrProductionPlantEmployeeModelImpl._mtCore;
-
-		vrProductionPlantEmployeeModelImpl._setOriginalMtCore = false;
-
-		vrProductionPlantEmployeeModelImpl._originalProductPlantID = vrProductionPlantEmployeeModelImpl._productPlantID;
-
-		vrProductionPlantEmployeeModelImpl._setOriginalProductPlantID = false;
-
-		vrProductionPlantEmployeeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -543,8 +477,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 		vrProductionPlantEmployeeCacheModel.id = getId();
 
 		vrProductionPlantEmployeeCacheModel.mtCore = getMtCore();
-
-		vrProductionPlantEmployeeCacheModel.productPlantID = getProductPlantID();
 
 		vrProductionPlantEmployeeCacheModel.sequenceNo = getSequenceNo();
 
@@ -615,14 +547,12 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{id=");
 		sb.append(getId());
 		sb.append(", mtCore=");
 		sb.append(getMtCore());
-		sb.append(", productPlantID=");
-		sb.append(getProductPlantID());
 		sb.append(", sequenceNo=");
 		sb.append(getSequenceNo());
 		sb.append(", employeeName=");
@@ -648,7 +578,7 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductionPlantEmployee");
@@ -661,10 +591,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 		sb.append(
 			"<column><column-name>mtCore</column-name><column-value><![CDATA[");
 		sb.append(getMtCore());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>productPlantID</column-name><column-value><![CDATA[");
-		sb.append(getProductPlantID());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>sequenceNo</column-name><column-value><![CDATA[");
@@ -714,11 +640,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 		};
 	private long _id;
 	private long _mtCore;
-	private long _originalMtCore;
-	private boolean _setOriginalMtCore;
-	private long _productPlantID;
-	private long _originalProductPlantID;
-	private boolean _setOriginalProductPlantID;
 	private long _sequenceNo;
 	private String _employeeName;
 	private String _employeeCertificateNo;
@@ -728,6 +649,5 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	private Date _syncDate;
 	private String _productionPlantCode;
 	private long _productionPlantId;
-	private long _columnBitmask;
 	private VRProductionPlantEmployee _escapedModel;
 }

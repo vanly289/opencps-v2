@@ -72,7 +72,6 @@ public class VRCOPProductionPlantEquipmentWrapper
 		attributes.put("trademarkName", getTrademarkName());
 		attributes.put("commercialName", getCommercialName());
 		attributes.put("modelCode", getModelCode());
-		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("productionCountryCode", getProductionCountryCode());
 		attributes.put("equipmentStatus", getEquipmentStatus());
 		attributes.put("expireDate", getExpireDate());
@@ -178,12 +177,6 @@ public class VRCOPProductionPlantEquipmentWrapper
 
 		if (modelCode != null) {
 			setModelCode(modelCode);
-		}
-
-		String designSymbolNo = (String)attributes.get("designSymbolNo");
-
-		if (designSymbolNo != null) {
-			setDesignSymbolNo(designSymbolNo);
 		}
 
 		String productionCountryCode = (String)attributes.get(
@@ -462,16 +455,6 @@ public class VRCOPProductionPlantEquipmentWrapper
 	@Override
 	public java.lang.String getDescription() {
 		return _vrcopProductionPlantEquipment.getDescription();
-	}
-
-	/**
-	* Returns the design symbol no of this vrcop production plant equipment.
-	*
-	* @return the design symbol no of this vrcop production plant equipment
-	*/
-	@Override
-	public java.lang.String getDesignSymbolNo() {
-		return _vrcopProductionPlantEquipment.getDesignSymbolNo();
 	}
 
 	/**
@@ -892,16 +875,6 @@ public class VRCOPProductionPlantEquipmentWrapper
 	@Override
 	public void setDescription(java.lang.String description) {
 		_vrcopProductionPlantEquipment.setDescription(description);
-	}
-
-	/**
-	* Sets the design symbol no of this vrcop production plant equipment.
-	*
-	* @param designSymbolNo the design symbol no of this vrcop production plant equipment
-	*/
-	@Override
-	public void setDesignSymbolNo(java.lang.String designSymbolNo) {
-		_vrcopProductionPlantEquipment.setDesignSymbolNo(designSymbolNo);
 	}
 
 	/**

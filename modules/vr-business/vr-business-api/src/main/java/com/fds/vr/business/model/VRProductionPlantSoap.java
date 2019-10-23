@@ -68,9 +68,6 @@ public class VRProductionPlantSoap implements Serializable {
 		soapModel.setRegistrationId(model.getRegistrationId());
 		soapModel.setRegistrationFormId(model.getRegistrationFormId());
 		soapModel.setApplicantProfileId(model.getApplicantProfileId());
-		soapModel.setLatestCOPReportDate(model.getLatestCOPReportDate());
-		soapModel.setLatestCOPReportResult(model.getLatestCOPReportResult());
-		soapModel.setNextCOPReportDate(model.getNextCOPReportDate());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 
@@ -419,30 +416,6 @@ public class VRProductionPlantSoap implements Serializable {
 		_applicantProfileId = applicantProfileId;
 	}
 
-	public Date getLatestCOPReportDate() {
-		return _latestCOPReportDate;
-	}
-
-	public void setLatestCOPReportDate(Date latestCOPReportDate) {
-		_latestCOPReportDate = latestCOPReportDate;
-	}
-
-	public String getLatestCOPReportResult() {
-		return _latestCOPReportResult;
-	}
-
-	public void setLatestCOPReportResult(String latestCOPReportResult) {
-		_latestCOPReportResult = latestCOPReportResult;
-	}
-
-	public Date getNextCOPReportDate() {
-		return _nextCOPReportDate;
-	}
-
-	public void setNextCOPReportDate(Date nextCOPReportDate) {
-		_nextCOPReportDate = nextCOPReportDate;
-	}
-
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -494,9 +467,6 @@ public class VRProductionPlantSoap implements Serializable {
 	private long _registrationId;
 	private long _registrationFormId;
 	private long _applicantProfileId;
-	private Date _latestCOPReportDate;
-	private String _latestCOPReportResult;
-	private Date _nextCOPReportDate;
 	private Date _modifyDate;
 	private Date _syncDate;
 }

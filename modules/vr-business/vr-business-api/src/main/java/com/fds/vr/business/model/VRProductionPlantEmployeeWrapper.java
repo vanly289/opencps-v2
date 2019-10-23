@@ -62,7 +62,6 @@ public class VRProductionPlantEmployeeWrapper
 
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
-		attributes.put("productPlantID", getProductPlantID());
 		attributes.put("sequenceNo", getSequenceNo());
 		attributes.put("employeeName", getEmployeeName());
 		attributes.put("employeeCertificateNo", getEmployeeCertificateNo());
@@ -88,12 +87,6 @@ public class VRProductionPlantEmployeeWrapper
 
 		if (mtCore != null) {
 			setMtCore(mtCore);
-		}
-
-		Long productPlantID = (Long)attributes.get("productPlantID");
-
-		if (productPlantID != null) {
-			setProductPlantID(productPlantID);
 		}
 
 		Long sequenceNo = (Long)attributes.get("sequenceNo");
@@ -319,16 +312,6 @@ public class VRProductionPlantEmployeeWrapper
 	}
 
 	/**
-	* Returns the product plant ID of this vr production plant employee.
-	*
-	* @return the product plant ID of this vr production plant employee
-	*/
-	@Override
-	public long getProductPlantID() {
-		return _vrProductionPlantEmployee.getProductPlantID();
-	}
-
-	/**
 	* Returns the production plant ID of this vr production plant employee.
 	*
 	* @return the production plant ID of this vr production plant employee
@@ -442,16 +425,6 @@ public class VRProductionPlantEmployeeWrapper
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_vrProductionPlantEmployee.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the product plant ID of this vr production plant employee.
-	*
-	* @param productPlantID the product plant ID of this vr production plant employee
-	*/
-	@Override
-	public void setProductPlantID(long productPlantID) {
-		_vrProductionPlantEmployee.setProductPlantID(productPlantID);
 	}
 
 	/**

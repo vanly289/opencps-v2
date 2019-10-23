@@ -51,6 +51,7 @@ public class VRProductionPlantEmployeeLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRProductionPlantEmployeeLocalServiceUtil} to access the vr production plant employee local service.
 	 */
+	/*
 	public List<VRProductionPlantEmployee> findByproductPlantID(long mtCore, long productPlantID) throws PortalException, SystemException {
 		try {
 			return vrProductionPlantEmployeePersistence.findByproductPlantID(mtCore, productPlantID);
@@ -63,7 +64,7 @@ public class VRProductionPlantEmployeeLocalServiceImpl
 	public void deleteByproductPlantId(long mtCore, long productPlantId) {
 		vrProductionPlantEmployeePersistence.removeByproductPlantID(mtCore, productPlantId);
 	}
-
+	*/
 	public VRProductionPlantEmployee updateProductionPlantEmployee(Map<String, String> mapValues, int mtCore) {
 		
 		Date now = new Date();
@@ -78,7 +79,7 @@ public class VRProductionPlantEmployeeLocalServiceImpl
 
 		// Add other fields
 		object.setMtCore(mtCore);
-		object.setProductPlantID(Long.valueOf(mapValues.get("productPlantId")));
+		//object.setProductPlantID(Long.valueOf(mapValues.get("productPlantId")));
 		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
 		object.setEmployeeName(mapValues.get("employeeName"));
 		object.setEmployeeCertificateNo(mapValues.get("employeeCertificateNo"));

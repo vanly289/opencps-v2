@@ -106,9 +106,9 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 		object.setProductionPlantProdEquipmentsNote(mapValues.get(""));
 		object.setRegistrationId(Long.valueOf(mapValues.get("")));
 		object.setApplicantProfileId(Long.valueOf(mapValues.get("")));
-		object.setLatestCOPReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
-		object.setLatestCOPReportResult(mapValues.get(""));
-		object.setNextCOPReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+		//object.setLatestCOPReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+		//object.setLatestCOPReportResult(mapValues.get(""));
+		//object.setNextCOPReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
 		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
 		object.setSyncDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
 

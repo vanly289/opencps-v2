@@ -35,7 +35,6 @@ public class VRProductTypeSoap implements Serializable {
 
 		soapModel.setId(model.getId());
 		soapModel.setMtCore(model.getMtCore());
-		soapModel.setProductPlantID(model.getProductPlantID());
 		soapModel.setSequenceNo(model.getSequenceNo());
 		soapModel.setVehicleClass(model.getVehicleClass());
 		soapModel.setVehicleTypeCode(model.getVehicleTypeCode());
@@ -117,14 +116,6 @@ public class VRProductTypeSoap implements Serializable {
 
 	public void setMtCore(long mtCore) {
 		_mtCore = mtCore;
-	}
-
-	public long getProductPlantID() {
-		return _productPlantID;
-	}
-
-	public void setProductPlantID(long productPlantID) {
-		_productPlantID = productPlantID;
 	}
 
 	public long getSequenceNo() {
@@ -250,7 +241,6 @@ public class VRProductTypeSoap implements Serializable {
 
 	private long _id;
 	private long _mtCore;
-	private long _productPlantID;
 	private long _sequenceNo;
 	private String _vehicleClass;
 	private String _vehicleTypeCode;

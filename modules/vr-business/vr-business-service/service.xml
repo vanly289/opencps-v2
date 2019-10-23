@@ -921,9 +921,9 @@
 		<column name="registrationId" type="long" db-name="registrationId"/>
 		<column name="registrationFormId" type="long" db-name="registrationFormId"/>
 		<column name="applicantProfileId" type="long" db-name="applicantProfileId"/>
-		<column name="latestCOPReportDate" type="Date" db-name="latestCOPReportDate"/>
+		<!-- <column name="latestCOPReportDate" type="Date" db-name="latestCOPReportDate"/>
 		<column name="latestCOPReportResult" type="String" db-name="latestCOPReportResult"/>
-		<column name="nextCOPReportDate" type="Date" db-name="nextCOPReportDate"/>
+		<column name="nextCOPReportDate" type="Date" db-name="nextCOPReportDate"/> -->
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
@@ -1161,7 +1161,7 @@
 		<column name="trademarkName" type="String" db-name="trademarkName"/>
 		<column name="commercialName" type="String" db-name="commercialName"/>
 		<column name="modelCode" type="String" db-name="modelCode"/>
-		<column name="designSymbolNo" type="String" db-name="designSymbolNo"/>
+		<!-- <column name="designSymbolNo" type="String" db-name="designSymbolNo"/> -->
 		<column name="productionCountryCode" type="String" db-name="productionCountryCode"/>
 		<column name="equipmentStatus" type="String" db-name="equipmentStatus"/>
 		<column name="expireDate" type="Date" db-name="expireDate"/>
@@ -1328,7 +1328,7 @@
 		
 		<!-- Audit fields -->
 		<column name="mtCore" type="long" db-name="mtCore"/>
-		<column name="productPlantID" type="long" db-name="productPlantID"/>
+		<!-- <column name="productPlantID" type="long" db-name="productPlantID"/> -->
 		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
 		<column name="employeeName" type="String" db-name="employeeName"/>
 		<column name="employeeCertificateNo" type="String" db-name="employeeCertificateNo"/>
@@ -1343,10 +1343,10 @@
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
         </order>
-        <finder return-type="Collection" name="productPlantID">
+        <!-- <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
-		</finder>
+		</finder> -->
 	</entity>
 
 	<entity name="VRProductionPlantEquipment" local-service="true" table="vr_productionplantequipment"
@@ -1356,7 +1356,7 @@
 		
 		<!-- Audit fields -->
 		<column name="mtCore" type="long" db-name="mtCore"/>
-		<column name="productPlantID" type="long" db-name="productPlantID"/>
+		<!-- <column name="productPlantID" type="long" db-name="productPlantID"/> -->
 		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
 		<column name="equipmentCode" type="String" db-name="equipmentCode"/>
 		<column name="equipmentName" type="String" db-name="equipmentName"/>
@@ -1365,7 +1365,7 @@
 		<column name="trademarkName" type="String" db-name="trademarkName"/>
 		<column name="commercialName" type="String" db-name="commercialName"/>
 		<column name="modelCode" type="String" db-name="modelCode"/>
-		<column name="designSymbolNo" type="String" db-name="designSymbolNo"/>
+		<!-- <column name="designSymbolNo" type="String" db-name="designSymbolNo"/> -->
 		<column name="productionCountryCode" type="String" db-name="productionCountryCode"/>
 		<column name="equipmentStatus" type="String" db-name="equipmentStatus"/>
 		<column name="expireDate" type="Date" db-name="expireDate"/>
@@ -1394,10 +1394,10 @@
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
         </order>
-        <finder return-type="Collection" name="productPlantID">
+       <!--  <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
-		</finder>
+		</finder> -->
 	</entity>
 
 	<entity name="VRProductionPlantProdEquipment" local-service="true" table="vr_productionplantprodequipment"
@@ -1407,7 +1407,7 @@
 		
 		<!-- Audit fields -->
 		<column name="mtCore" type="long" db-name="mtCore"/>
-		<column name="productPlantID" type="long" db-name="productPlantID"/>
+		<!-- <column name="productPlantID" type="long" db-name="productPlantID"/> -->
 		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
 		<column name="equipmentCode" type="String" db-name="equipmentCode"/>
 		<column name="equipmentName" type="String" db-name="equipmentName"/>
@@ -1416,7 +1416,7 @@
 		<column name="trademarkName" type="String" db-name="trademarkName"/>
 		<column name="commercialName" type="String" db-name="commercialName"/>
 		<column name="modelCode" type="String" db-name="modelCode"/>
-		<column name="designSymbolNo" type="String" db-name="designSymbolNo"/>
+		<!-- <column name="designSymbolNo" type="String" db-name="designSymbolNo"/> -->
 		<column name="productionCountryCode" type="String" db-name="productionCountryCode"/>
 		<column name="equipmentStatus" type="String" db-name="equipmentStatus"/>
 		<column name="notes" type="String" db-name="notes"/>
@@ -1429,10 +1429,10 @@
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
         </order>
-        <finder return-type="Collection" name="productPlantID">
+        <!-- <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
-		</finder>
+		</finder> -->
 	</entity>
 
 	<entity name="VRProductType" local-service="true" table="vr_producttype"
@@ -1442,7 +1442,7 @@
 		
 		<!-- Audit fields -->
 		<column name="mtCore" type="long" db-name="mtCore"/>
-		<column name="productPlantID" type="long" db-name="productPlantID"/>
+		<!-- <column name="productPlantID" type="long" db-name="productPlantID"/> -->
 		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
 		<column name="vehicleClass" type="String" db-name="vehicleClass"/>
 		<column name="vehicleTypeCode" type="String" db-name="vehicleTypeCode"/>
@@ -1464,10 +1464,10 @@
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
         </order>
-        <finder return-type="Collection" name="productPlantID">
+        <!-- <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
-		</finder>
+		</finder> -->
 	</entity>
 
 	

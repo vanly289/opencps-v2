@@ -1566,7 +1566,6 @@ public class VRCOPProductionPlantEquipmentPersistenceImpl
 		vrcopProductionPlantEquipmentImpl.setTrademarkName(vrcopProductionPlantEquipment.getTrademarkName());
 		vrcopProductionPlantEquipmentImpl.setCommercialName(vrcopProductionPlantEquipment.getCommercialName());
 		vrcopProductionPlantEquipmentImpl.setModelCode(vrcopProductionPlantEquipment.getModelCode());
-		vrcopProductionPlantEquipmentImpl.setDesignSymbolNo(vrcopProductionPlantEquipment.getDesignSymbolNo());
 		vrcopProductionPlantEquipmentImpl.setProductionCountryCode(vrcopProductionPlantEquipment.getProductionCountryCode());
 		vrcopProductionPlantEquipmentImpl.setEquipmentStatus(vrcopProductionPlantEquipment.getEquipmentStatus());
 		vrcopProductionPlantEquipmentImpl.setExpireDate(vrcopProductionPlantEquipment.getExpireDate());

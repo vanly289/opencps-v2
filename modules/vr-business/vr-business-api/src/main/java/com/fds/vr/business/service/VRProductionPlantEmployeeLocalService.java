@@ -208,9 +208,6 @@ public interface VRProductionPlantEmployeeLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<VRProductionPlantEmployee> findByproductPlantID(long mtCore,
-		long productPlantID) throws PortalException, SystemException;
-
 	/**
 	* Returns a range of all the vr production plant employees.
 	*
@@ -245,6 +242,4 @@ public interface VRProductionPlantEmployeeLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
-
-	public void deleteByproductPlantId(long mtCore, long productPlantId);
 }

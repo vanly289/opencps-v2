@@ -67,7 +67,7 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(83);
+		StringBundler sb = new StringBundler(81);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -93,8 +93,6 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 		sb.append(commercialName);
 		sb.append(", modelCode=");
 		sb.append(modelCode);
-		sb.append(", designSymbolNo=");
-		sb.append(designSymbolNo);
 		sb.append(", productionCountryCode=");
 		sb.append(productionCountryCode);
 		sb.append(", equipmentStatus=");
@@ -220,13 +218,6 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 		}
 		else {
 			vrcopProductionPlantEquipmentImpl.setModelCode(modelCode);
-		}
-
-		if (designSymbolNo == null) {
-			vrcopProductionPlantEquipmentImpl.setDesignSymbolNo(StringPool.BLANK);
-		}
-		else {
-			vrcopProductionPlantEquipmentImpl.setDesignSymbolNo(designSymbolNo);
 		}
 
 		if (productionCountryCode == null) {
@@ -389,7 +380,6 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 		trademarkName = objectInput.readUTF();
 		commercialName = objectInput.readUTF();
 		modelCode = objectInput.readUTF();
-		designSymbolNo = objectInput.readUTF();
 		productionCountryCode = objectInput.readUTF();
 		equipmentStatus = objectInput.readUTF();
 		expireDate = objectInput.readLong();
@@ -496,13 +486,6 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 		}
 		else {
 			objectOutput.writeUTF(modelCode);
-		}
-
-		if (designSymbolNo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(designSymbolNo);
 		}
 
 		if (productionCountryCode == null) {
@@ -621,7 +604,6 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 	public String trademarkName;
 	public String commercialName;
 	public String modelCode;
-	public String designSymbolNo;
 	public String productionCountryCode;
 	public String equipmentStatus;
 	public long expireDate;

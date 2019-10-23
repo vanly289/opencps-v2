@@ -98,9 +98,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			{ "registrationId", Types.BIGINT },
 			{ "registrationFormId", Types.BIGINT },
 			{ "applicantProfileId", Types.BIGINT },
-			{ "latestCOPReportDate", Types.TIMESTAMP },
-			{ "latestCOPReportResult", Types.VARCHAR },
-			{ "nextCOPReportDate", Types.TIMESTAMP },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -143,14 +140,11 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		TABLE_COLUMNS_MAP.put("registrationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("registrationFormId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("applicantProfileId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("latestCOPReportDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("latestCOPReportResult", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("nextCOPReportDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productionplant (id LONG not null primary key,mtCore LONG,mappingMA_CTY VARCHAR(75) null,mappingTEN_CTY VARCHAR(75) null,mappingDIA_CHI_CTY VARCHAR(75) null,mappingMA_XUONG_LR VARCHAR(75) null,mappingTEN_XUONG_LR VARCHAR(75) null,mappingDIA_CHI_XUONG_LR VARCHAR(75) null,mappingNote VARCHAR(75) null,mappingStatus VARCHAR(75) null,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,productionPlantStateCode VARCHAR(75) null,productionPlantStateName VARCHAR(75) null,productionPlantProvinceCode VARCHAR(75) null,productionPlantProvinceName VARCHAR(75) null,productionPlantDistrictCode VARCHAR(75) null,productionPlantDistrictName VARCHAR(75) null,productionPlantEmail VARCHAR(75) null,productionPlantPhone VARCHAR(75) null,productionPlantFax VARCHAR(75) null,productionPlantRepresentative VARCHAR(75) null,productionPlantRepresentativeTitle VARCHAR(75) null,productionPlantContactName VARCHAR(75) null,productionPlantContactEmail VARCHAR(75) null,productionPlantContactPhone VARCHAR(75) null,productionPlantType VARCHAR(75) null,productionPlantStatus VARCHAR(75) null,productionPlantEmployeesNote VARCHAR(75) null,productionPlantEquipmentsNote VARCHAR(75) null,productionPlantProdEquipmentsNote VARCHAR(75) null,registrationId LONG,registrationFormId LONG,applicantProfileId LONG,latestCOPReportDate DATE null,latestCOPReportResult VARCHAR(75) null,nextCOPReportDate DATE null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productionplant (id LONG not null primary key,mtCore LONG,mappingMA_CTY VARCHAR(75) null,mappingTEN_CTY VARCHAR(75) null,mappingDIA_CHI_CTY VARCHAR(75) null,mappingMA_XUONG_LR VARCHAR(75) null,mappingTEN_XUONG_LR VARCHAR(75) null,mappingDIA_CHI_XUONG_LR VARCHAR(75) null,mappingNote VARCHAR(75) null,mappingStatus VARCHAR(75) null,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,productionPlantStateCode VARCHAR(75) null,productionPlantStateName VARCHAR(75) null,productionPlantProvinceCode VARCHAR(75) null,productionPlantProvinceName VARCHAR(75) null,productionPlantDistrictCode VARCHAR(75) null,productionPlantDistrictName VARCHAR(75) null,productionPlantEmail VARCHAR(75) null,productionPlantPhone VARCHAR(75) null,productionPlantFax VARCHAR(75) null,productionPlantRepresentative VARCHAR(75) null,productionPlantRepresentativeTitle VARCHAR(75) null,productionPlantContactName VARCHAR(75) null,productionPlantContactEmail VARCHAR(75) null,productionPlantContactPhone VARCHAR(75) null,productionPlantType VARCHAR(75) null,productionPlantStatus VARCHAR(75) null,productionPlantEmployeesNote VARCHAR(75) null,productionPlantEquipmentsNote VARCHAR(75) null,productionPlantProdEquipmentsNote VARCHAR(75) null,registrationId LONG,registrationFormId LONG,applicantProfileId LONG,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productionplant";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlant.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplant.modifyDate DESC";
@@ -267,9 +261,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		attributes.put("registrationId", getRegistrationId());
 		attributes.put("registrationFormId", getRegistrationFormId());
 		attributes.put("applicantProfileId", getApplicantProfileId());
-		attributes.put("latestCOPReportDate", getLatestCOPReportDate());
-		attributes.put("latestCOPReportResult", getLatestCOPReportResult());
-		attributes.put("nextCOPReportDate", getNextCOPReportDate());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -512,25 +503,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 		if (applicantProfileId != null) {
 			setApplicantProfileId(applicantProfileId);
-		}
-
-		Date latestCOPReportDate = (Date)attributes.get("latestCOPReportDate");
-
-		if (latestCOPReportDate != null) {
-			setLatestCOPReportDate(latestCOPReportDate);
-		}
-
-		String latestCOPReportResult = (String)attributes.get(
-				"latestCOPReportResult");
-
-		if (latestCOPReportResult != null) {
-			setLatestCOPReportResult(latestCOPReportResult);
-		}
-
-		Date nextCOPReportDate = (Date)attributes.get("nextCOPReportDate");
-
-		if (nextCOPReportDate != null) {
-			setNextCOPReportDate(nextCOPReportDate);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -1196,41 +1168,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	}
 
 	@Override
-	public Date getLatestCOPReportDate() {
-		return _latestCOPReportDate;
-	}
-
-	@Override
-	public void setLatestCOPReportDate(Date latestCOPReportDate) {
-		_latestCOPReportDate = latestCOPReportDate;
-	}
-
-	@Override
-	public String getLatestCOPReportResult() {
-		if (_latestCOPReportResult == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _latestCOPReportResult;
-		}
-	}
-
-	@Override
-	public void setLatestCOPReportResult(String latestCOPReportResult) {
-		_latestCOPReportResult = latestCOPReportResult;
-	}
-
-	@Override
-	public Date getNextCOPReportDate() {
-		return _nextCOPReportDate;
-	}
-
-	@Override
-	public void setNextCOPReportDate(Date nextCOPReportDate) {
-		_nextCOPReportDate = nextCOPReportDate;
-	}
-
-	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -1318,9 +1255,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		vrProductionPlantImpl.setRegistrationId(getRegistrationId());
 		vrProductionPlantImpl.setRegistrationFormId(getRegistrationFormId());
 		vrProductionPlantImpl.setApplicantProfileId(getApplicantProfileId());
-		vrProductionPlantImpl.setLatestCOPReportDate(getLatestCOPReportDate());
-		vrProductionPlantImpl.setLatestCOPReportResult(getLatestCOPReportResult());
-		vrProductionPlantImpl.setNextCOPReportDate(getNextCOPReportDate());
 		vrProductionPlantImpl.setModifyDate(getModifyDate());
 		vrProductionPlantImpl.setSyncDate(getSyncDate());
 
@@ -1700,33 +1634,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 		vrProductionPlantCacheModel.applicantProfileId = getApplicantProfileId();
 
-		Date latestCOPReportDate = getLatestCOPReportDate();
-
-		if (latestCOPReportDate != null) {
-			vrProductionPlantCacheModel.latestCOPReportDate = latestCOPReportDate.getTime();
-		}
-		else {
-			vrProductionPlantCacheModel.latestCOPReportDate = Long.MIN_VALUE;
-		}
-
-		vrProductionPlantCacheModel.latestCOPReportResult = getLatestCOPReportResult();
-
-		String latestCOPReportResult = vrProductionPlantCacheModel.latestCOPReportResult;
-
-		if ((latestCOPReportResult != null) &&
-				(latestCOPReportResult.length() == 0)) {
-			vrProductionPlantCacheModel.latestCOPReportResult = null;
-		}
-
-		Date nextCOPReportDate = getNextCOPReportDate();
-
-		if (nextCOPReportDate != null) {
-			vrProductionPlantCacheModel.nextCOPReportDate = nextCOPReportDate.getTime();
-		}
-		else {
-			vrProductionPlantCacheModel.nextCOPReportDate = Long.MIN_VALUE;
-		}
-
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -1750,7 +1657,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(81);
+		StringBundler sb = new StringBundler(75);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1822,12 +1729,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getRegistrationFormId());
 		sb.append(", applicantProfileId=");
 		sb.append(getApplicantProfileId());
-		sb.append(", latestCOPReportDate=");
-		sb.append(getLatestCOPReportDate());
-		sb.append(", latestCOPReportResult=");
-		sb.append(getLatestCOPReportResult());
-		sb.append(", nextCOPReportDate=");
-		sb.append(getNextCOPReportDate());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -1839,7 +1740,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(124);
+		StringBundler sb = new StringBundler(115);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductionPlant");
@@ -1986,18 +1887,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getApplicantProfileId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>latestCOPReportDate</column-name><column-value><![CDATA[");
-		sb.append(getLatestCOPReportDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>latestCOPReportResult</column-name><column-value><![CDATA[");
-		sb.append(getLatestCOPReportResult());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>nextCOPReportDate</column-name><column-value><![CDATA[");
-		sb.append(getNextCOPReportDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
@@ -2067,9 +1956,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	private long _applicantProfileId;
 	private long _originalApplicantProfileId;
 	private boolean _setOriginalApplicantProfileId;
-	private Date _latestCOPReportDate;
-	private String _latestCOPReportResult;
-	private Date _nextCOPReportDate;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

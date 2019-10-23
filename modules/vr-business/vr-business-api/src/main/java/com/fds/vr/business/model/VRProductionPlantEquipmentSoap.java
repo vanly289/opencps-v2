@@ -36,7 +36,6 @@ public class VRProductionPlantEquipmentSoap implements Serializable {
 
 		soapModel.setId(model.getId());
 		soapModel.setMtCore(model.getMtCore());
-		soapModel.setProductPlantID(model.getProductPlantID());
 		soapModel.setSequenceNo(model.getSequenceNo());
 		soapModel.setEquipmentCode(model.getEquipmentCode());
 		soapModel.setEquipmentName(model.getEquipmentName());
@@ -45,7 +44,6 @@ public class VRProductionPlantEquipmentSoap implements Serializable {
 		soapModel.setTrademarkName(model.getTrademarkName());
 		soapModel.setCommercialName(model.getCommercialName());
 		soapModel.setModelCode(model.getModelCode());
-		soapModel.setDesignSymbolNo(model.getDesignSymbolNo());
 		soapModel.setProductionCountryCode(model.getProductionCountryCode());
 		soapModel.setEquipmentStatus(model.getEquipmentStatus());
 		soapModel.setExpireDate(model.getExpireDate());
@@ -140,14 +138,6 @@ public class VRProductionPlantEquipmentSoap implements Serializable {
 		_mtCore = mtCore;
 	}
 
-	public long getProductPlantID() {
-		return _productPlantID;
-	}
-
-	public void setProductPlantID(long productPlantID) {
-		_productPlantID = productPlantID;
-	}
-
 	public long getSequenceNo() {
 		return _sequenceNo;
 	}
@@ -210,14 +200,6 @@ public class VRProductionPlantEquipmentSoap implements Serializable {
 
 	public void setModelCode(String modelCode) {
 		_modelCode = modelCode;
-	}
-
-	public String getDesignSymbolNo() {
-		return _designSymbolNo;
-	}
-
-	public void setDesignSymbolNo(String designSymbolNo) {
-		_designSymbolNo = designSymbolNo;
 	}
 
 	public String getProductionCountryCode() {
@@ -406,7 +388,6 @@ public class VRProductionPlantEquipmentSoap implements Serializable {
 
 	private long _id;
 	private long _mtCore;
-	private long _productPlantID;
 	private long _sequenceNo;
 	private String _equipmentCode;
 	private String _equipmentName;
@@ -415,7 +396,6 @@ public class VRProductionPlantEquipmentSoap implements Serializable {
 	private String _trademarkName;
 	private String _commercialName;
 	private String _modelCode;
-	private String _designSymbolNo;
 	private String _productionCountryCode;
 	private String _equipmentStatus;
 	private Date _expireDate;

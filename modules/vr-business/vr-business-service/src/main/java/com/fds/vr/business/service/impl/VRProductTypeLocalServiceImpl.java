@@ -51,7 +51,7 @@ public class VRProductTypeLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRProductTypeLocalServiceUtil} to access the vr product type local service.
 	 */
-	
+	/*
 	public List<VRProductType> findByproductPlantID(long mtCore, long productPlantID) throws PortalException, SystemException {
 		try {
 			return vrProductTypePersistence.findByproductPlantID(mtCore, productPlantID);
@@ -66,7 +66,7 @@ public class VRProductTypeLocalServiceImpl
 
 		vrProductTypePersistence.removeByproductPlantID(mtCore, productPlantId);
 	}
-
+	*/
 	public VRProductType updateProductType(Map<String, String> mapValues, int mtCore) {
 		
 		Date now = new Date();
@@ -81,7 +81,7 @@ public class VRProductTypeLocalServiceImpl
 
 		// Add other fields
 		object.setMtCore(mtCore);
-		object.setProductPlantID(Long.valueOf(mapValues.get("productPlantId")));
+		//object.setProductPlantID(Long.valueOf(mapValues.get("productPlantId")));
 		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
 		object.setVehicleClass(mapValues.get("vehicleClass"));
 		object.setVehicleTypeCode(mapValues.get("vehicleTypeCode"));

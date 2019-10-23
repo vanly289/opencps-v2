@@ -65,7 +65,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "id", Types.BIGINT },
 			{ "mtCore", Types.BIGINT },
-			{ "productPlantID", Types.BIGINT },
 			{ "sequenceNo", Types.BIGINT },
 			{ "vehicleClass", Types.VARCHAR },
 			{ "vehicleTypeCode", Types.VARCHAR },
@@ -87,7 +86,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	static {
 		TABLE_COLUMNS_MAP.put("id", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mtCore", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("productPlantID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("sequenceNo", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("vehicleClass", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("vehicleTypeCode", Types.VARCHAR);
@@ -105,7 +103,7 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		TABLE_COLUMNS_MAP.put("productionPlantCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_producttype (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_producttype (id LONG not null primary key,mtCore LONG,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_producttype";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductType.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_producttype.modifyDate DESC";
@@ -118,12 +116,7 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.fds.vr.business.model.VRProductType"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRProductType"),
-			true);
-	public static final long MTCORE_COLUMN_BITMASK = 1L;
-	public static final long PRODUCTPLANTID_COLUMN_BITMASK = 2L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 4L;
+	public static final boolean COLUMN_BITMASK_ENABLED = false;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductType"));
 
@@ -166,7 +159,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
-		attributes.put("productPlantID", getProductPlantID());
 		attributes.put("sequenceNo", getSequenceNo());
 		attributes.put("vehicleClass", getVehicleClass());
 		attributes.put("vehicleTypeCode", getVehicleTypeCode());
@@ -203,12 +195,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 		if (mtCore != null) {
 			setMtCore(mtCore);
-		}
-
-		Long productPlantID = (Long)attributes.get("productPlantID");
-
-		if (productPlantID != null) {
-			setProductPlantID(productPlantID);
 		}
 
 		Long sequenceNo = (Long)attributes.get("sequenceNo");
@@ -323,41 +309,7 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void setMtCore(long mtCore) {
-		_columnBitmask |= MTCORE_COLUMN_BITMASK;
-
-		if (!_setOriginalMtCore) {
-			_setOriginalMtCore = true;
-
-			_originalMtCore = _mtCore;
-		}
-
 		_mtCore = mtCore;
-	}
-
-	public long getOriginalMtCore() {
-		return _originalMtCore;
-	}
-
-	@Override
-	public long getProductPlantID() {
-		return _productPlantID;
-	}
-
-	@Override
-	public void setProductPlantID(long productPlantID) {
-		_columnBitmask |= PRODUCTPLANTID_COLUMN_BITMASK;
-
-		if (!_setOriginalProductPlantID) {
-			_setOriginalProductPlantID = true;
-
-			_originalProductPlantID = _productPlantID;
-		}
-
-		_productPlantID = productPlantID;
-	}
-
-	public long getOriginalProductPlantID() {
-		return _originalProductPlantID;
 	}
 
 	@Override
@@ -528,8 +480,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void setModifyDate(Date modifyDate) {
-		_columnBitmask = -1L;
-
 		_modifyDate = modifyDate;
 	}
 
@@ -568,10 +518,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		_productionPlantCode = productionPlantCode;
 	}
 
-	public long getColumnBitmask() {
-		return _columnBitmask;
-	}
-
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
@@ -601,7 +547,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 		vrProductTypeImpl.setId(getId());
 		vrProductTypeImpl.setMtCore(getMtCore());
-		vrProductTypeImpl.setProductPlantID(getProductPlantID());
 		vrProductTypeImpl.setSequenceNo(getSequenceNo());
 		vrProductTypeImpl.setVehicleClass(getVehicleClass());
 		vrProductTypeImpl.setVehicleTypeCode(getVehicleTypeCode());
@@ -678,17 +623,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void resetOriginalValues() {
-		VRProductTypeModelImpl vrProductTypeModelImpl = this;
-
-		vrProductTypeModelImpl._originalMtCore = vrProductTypeModelImpl._mtCore;
-
-		vrProductTypeModelImpl._setOriginalMtCore = false;
-
-		vrProductTypeModelImpl._originalProductPlantID = vrProductTypeModelImpl._productPlantID;
-
-		vrProductTypeModelImpl._setOriginalProductPlantID = false;
-
-		vrProductTypeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -698,8 +632,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		vrProductTypeCacheModel.id = getId();
 
 		vrProductTypeCacheModel.mtCore = getMtCore();
-
-		vrProductTypeCacheModel.productPlantID = getProductPlantID();
 
 		vrProductTypeCacheModel.sequenceNo = getSequenceNo();
 
@@ -820,14 +752,12 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{id=");
 		sb.append(getId());
 		sb.append(", mtCore=");
 		sb.append(getMtCore());
-		sb.append(", productPlantID=");
-		sb.append(getProductPlantID());
 		sb.append(", sequenceNo=");
 		sb.append(getSequenceNo());
 		sb.append(", vehicleClass=");
@@ -865,7 +795,7 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductType");
@@ -878,10 +808,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		sb.append(
 			"<column><column-name>mtCore</column-name><column-value><![CDATA[");
 		sb.append(getMtCore());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>productPlantID</column-name><column-value><![CDATA[");
-		sb.append(getProductPlantID());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>sequenceNo</column-name><column-value><![CDATA[");
@@ -955,11 +881,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		};
 	private long _id;
 	private long _mtCore;
-	private long _originalMtCore;
-	private boolean _setOriginalMtCore;
-	private long _productPlantID;
-	private long _originalProductPlantID;
-	private boolean _setOriginalProductPlantID;
 	private long _sequenceNo;
 	private String _vehicleClass;
 	private String _vehicleTypeCode;
@@ -975,6 +896,5 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	private Date _syncDate;
 	private long _productionPlantId;
 	private String _productionPlantCode;
-	private long _columnBitmask;
 	private VRProductType _escapedModel;
 }
