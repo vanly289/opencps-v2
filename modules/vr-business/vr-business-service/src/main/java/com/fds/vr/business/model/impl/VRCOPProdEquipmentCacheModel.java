@@ -66,7 +66,7 @@ public class VRCOPProdEquipmentCacheModel implements CacheModel<VRCOPProdEquipme
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -104,6 +104,14 @@ public class VRCOPProdEquipmentCacheModel implements CacheModel<VRCOPProdEquipme
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", quantity=");
+		sb.append(quantity);
+		sb.append(", dossierId=");
+		sb.append(dossierId);
+		sb.append(", dossierIdCTN=");
+		sb.append(dossierIdCTN);
+		sb.append(", dossierNo=");
+		sb.append(dossierNo);
 		sb.append("}");
 
 		return sb.toString();
@@ -217,6 +225,23 @@ public class VRCOPProdEquipmentCacheModel implements CacheModel<VRCOPProdEquipme
 			vrcopProdEquipmentImpl.setSyncDate(new Date(syncDate));
 		}
 
+		vrcopProdEquipmentImpl.setQuantity(quantity);
+		vrcopProdEquipmentImpl.setDossierId(dossierId);
+
+		if (dossierIdCTN == null) {
+			vrcopProdEquipmentImpl.setDossierIdCTN(StringPool.BLANK);
+		}
+		else {
+			vrcopProdEquipmentImpl.setDossierIdCTN(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			vrcopProdEquipmentImpl.setDossierNo(StringPool.BLANK);
+		}
+		else {
+			vrcopProdEquipmentImpl.setDossierNo(dossierNo);
+		}
+
 		vrcopProdEquipmentImpl.resetOriginalValues();
 
 		return vrcopProdEquipmentImpl;
@@ -245,6 +270,12 @@ public class VRCOPProdEquipmentCacheModel implements CacheModel<VRCOPProdEquipme
 		notes = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+
+		quantity = objectInput.readInt();
+
+		dossierId = objectInput.readLong();
+		dossierIdCTN = objectInput.readUTF();
+		dossierNo = objectInput.readUTF();
 	}
 
 	@Override
@@ -344,6 +375,24 @@ public class VRCOPProdEquipmentCacheModel implements CacheModel<VRCOPProdEquipme
 
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		objectOutput.writeInt(quantity);
+
+		objectOutput.writeLong(dossierId);
+
+		if (dossierIdCTN == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierNo);
+		}
 	}
 
 	public long id;
@@ -364,4 +413,8 @@ public class VRCOPProdEquipmentCacheModel implements CacheModel<VRCOPProdEquipme
 	public String notes;
 	public long modifyDate;
 	public long syncDate;
+	public int quantity;
+	public long dossierId;
+	public String dossierIdCTN;
+	public String dossierNo;
 }

@@ -81,7 +81,29 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 			{ "expireDate", Types.TIMESTAMP },
 			{ "notes", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
-			{ "syncDate", Types.TIMESTAMP }
+			{ "syncDate", Types.TIMESTAMP },
+			{ "equipmentSerialNo", Types.VARCHAR },
+			{ "productionYear", Types.TIMESTAMP },
+			{ "registrationYear", Types.TIMESTAMP },
+			{ "markupXCG", Types.BIGINT },
+			{ "markupXCGNK", Types.BIGINT },
+			{ "markupSMRM", Types.BIGINT },
+			{ "markupXCH", Types.BIGINT },
+			{ "markupXCN", Types.BIGINT },
+			{ "markupXMY", Types.BIGINT },
+			{ "markupXDD", Types.BIGINT },
+			{ "testingResult", Types.INTEGER },
+			{ "description", Types.VARCHAR },
+			{ "inspectionRecordNumber", Types.VARCHAR },
+			{ "inspectionRecordDate", Types.TIMESTAMP },
+			{ "expiredDate", Types.TIMESTAMP },
+			{ "expiredStatus", Types.INTEGER },
+			{ "stampTestingNo", Types.VARCHAR },
+			{ "dossierId", Types.BIGINT },
+			{ "dossierIdCTN", Types.VARCHAR },
+			{ "dossierNo", Types.VARCHAR },
+			{ "productionPlantId", Types.BIGINT },
+			{ "productionPlantCode", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -105,9 +127,31 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		TABLE_COLUMNS_MAP.put("notes", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("equipmentSerialNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionYear", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("registrationYear", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("markupXCG", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("markupXCGNK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("markupSMRM", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("markupXCH", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("markupXCN", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("markupXMY", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("markupXDD", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("testingResult", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("inspectionRecordNumber", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("inspectionRecordDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("expiredDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("expiredStatus", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("stampTestingNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("dossierIdCTN", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("productionPlantCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copproductionplantequipment (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,expireDate DATE null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copproductionplantequipment (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,expireDate DATE null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,equipmentSerialNo VARCHAR(75) null,productionYear DATE null,registrationYear DATE null,markupXCG LONG,markupXCGNK LONG,markupSMRM LONG,markupXCH LONG,markupXCN LONG,markupXMY LONG,markupXDD LONG,testingResult INTEGER,description VARCHAR(75) null,inspectionRecordNumber VARCHAR(75) null,inspectionRecordDate DATE null,expiredDate DATE null,expiredStatus INTEGER,stampTestingNo VARCHAR(75) null,dossierId LONG,dossierIdCTN VARCHAR(75) null,dossierNo VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copproductionplantequipment";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopProductionPlantEquipment.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copproductionplantequipment.modifyDate DESC";
@@ -186,6 +230,28 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		attributes.put("notes", getNotes());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("equipmentSerialNo", getEquipmentSerialNo());
+		attributes.put("productionYear", getProductionYear());
+		attributes.put("registrationYear", getRegistrationYear());
+		attributes.put("markupXCG", getMarkupXCG());
+		attributes.put("markupXCGNK", getMarkupXCGNK());
+		attributes.put("markupSMRM", getMarkupSMRM());
+		attributes.put("markupXCH", getMarkupXCH());
+		attributes.put("markupXCN", getMarkupXCN());
+		attributes.put("markupXMY", getMarkupXMY());
+		attributes.put("markupXDD", getMarkupXDD());
+		attributes.put("testingResult", getTestingResult());
+		attributes.put("description", getDescription());
+		attributes.put("inspectionRecordNumber", getInspectionRecordNumber());
+		attributes.put("inspectionRecordDate", getInspectionRecordDate());
+		attributes.put("expiredDate", getExpiredDate());
+		attributes.put("expiredStatus", getExpiredStatus());
+		attributes.put("stampTestingNo", getStampTestingNo());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
+		attributes.put("productionPlantId", getProductionPlantId());
+		attributes.put("productionPlantCode", getProductionPlantCode());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -309,6 +375,140 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		String equipmentSerialNo = (String)attributes.get("equipmentSerialNo");
+
+		if (equipmentSerialNo != null) {
+			setEquipmentSerialNo(equipmentSerialNo);
+		}
+
+		Date productionYear = (Date)attributes.get("productionYear");
+
+		if (productionYear != null) {
+			setProductionYear(productionYear);
+		}
+
+		Date registrationYear = (Date)attributes.get("registrationYear");
+
+		if (registrationYear != null) {
+			setRegistrationYear(registrationYear);
+		}
+
+		Long markupXCG = (Long)attributes.get("markupXCG");
+
+		if (markupXCG != null) {
+			setMarkupXCG(markupXCG);
+		}
+
+		Long markupXCGNK = (Long)attributes.get("markupXCGNK");
+
+		if (markupXCGNK != null) {
+			setMarkupXCGNK(markupXCGNK);
+		}
+
+		Long markupSMRM = (Long)attributes.get("markupSMRM");
+
+		if (markupSMRM != null) {
+			setMarkupSMRM(markupSMRM);
+		}
+
+		Long markupXCH = (Long)attributes.get("markupXCH");
+
+		if (markupXCH != null) {
+			setMarkupXCH(markupXCH);
+		}
+
+		Long markupXCN = (Long)attributes.get("markupXCN");
+
+		if (markupXCN != null) {
+			setMarkupXCN(markupXCN);
+		}
+
+		Long markupXMY = (Long)attributes.get("markupXMY");
+
+		if (markupXMY != null) {
+			setMarkupXMY(markupXMY);
+		}
+
+		Long markupXDD = (Long)attributes.get("markupXDD");
+
+		if (markupXDD != null) {
+			setMarkupXDD(markupXDD);
+		}
+
+		Integer testingResult = (Integer)attributes.get("testingResult");
+
+		if (testingResult != null) {
+			setTestingResult(testingResult);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String inspectionRecordNumber = (String)attributes.get(
+				"inspectionRecordNumber");
+
+		if (inspectionRecordNumber != null) {
+			setInspectionRecordNumber(inspectionRecordNumber);
+		}
+
+		Date inspectionRecordDate = (Date)attributes.get("inspectionRecordDate");
+
+		if (inspectionRecordDate != null) {
+			setInspectionRecordDate(inspectionRecordDate);
+		}
+
+		Date expiredDate = (Date)attributes.get("expiredDate");
+
+		if (expiredDate != null) {
+			setExpiredDate(expiredDate);
+		}
+
+		Integer expiredStatus = (Integer)attributes.get("expiredStatus");
+
+		if (expiredStatus != null) {
+			setExpiredStatus(expiredStatus);
+		}
+
+		String stampTestingNo = (String)attributes.get("stampTestingNo");
+
+		if (stampTestingNo != null) {
+			setStampTestingNo(stampTestingNo);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
+		}
+
+		Long productionPlantId = (Long)attributes.get("productionPlantId");
+
+		if (productionPlantId != null) {
+			setProductionPlantId(productionPlantId);
+		}
+
+		String productionPlantCode = (String)attributes.get(
+				"productionPlantCode");
+
+		if (productionPlantCode != null) {
+			setProductionPlantCode(productionPlantCode);
 		}
 	}
 
@@ -598,6 +798,261 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		_syncDate = syncDate;
 	}
 
+	@Override
+	public String getEquipmentSerialNo() {
+		if (_equipmentSerialNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _equipmentSerialNo;
+		}
+	}
+
+	@Override
+	public void setEquipmentSerialNo(String equipmentSerialNo) {
+		_equipmentSerialNo = equipmentSerialNo;
+	}
+
+	@Override
+	public Date getProductionYear() {
+		return _productionYear;
+	}
+
+	@Override
+	public void setProductionYear(Date productionYear) {
+		_productionYear = productionYear;
+	}
+
+	@Override
+	public Date getRegistrationYear() {
+		return _registrationYear;
+	}
+
+	@Override
+	public void setRegistrationYear(Date registrationYear) {
+		_registrationYear = registrationYear;
+	}
+
+	@Override
+	public long getMarkupXCG() {
+		return _markupXCG;
+	}
+
+	@Override
+	public void setMarkupXCG(long markupXCG) {
+		_markupXCG = markupXCG;
+	}
+
+	@Override
+	public long getMarkupXCGNK() {
+		return _markupXCGNK;
+	}
+
+	@Override
+	public void setMarkupXCGNK(long markupXCGNK) {
+		_markupXCGNK = markupXCGNK;
+	}
+
+	@Override
+	public long getMarkupSMRM() {
+		return _markupSMRM;
+	}
+
+	@Override
+	public void setMarkupSMRM(long markupSMRM) {
+		_markupSMRM = markupSMRM;
+	}
+
+	@Override
+	public long getMarkupXCH() {
+		return _markupXCH;
+	}
+
+	@Override
+	public void setMarkupXCH(long markupXCH) {
+		_markupXCH = markupXCH;
+	}
+
+	@Override
+	public long getMarkupXCN() {
+		return _markupXCN;
+	}
+
+	@Override
+	public void setMarkupXCN(long markupXCN) {
+		_markupXCN = markupXCN;
+	}
+
+	@Override
+	public long getMarkupXMY() {
+		return _markupXMY;
+	}
+
+	@Override
+	public void setMarkupXMY(long markupXMY) {
+		_markupXMY = markupXMY;
+	}
+
+	@Override
+	public long getMarkupXDD() {
+		return _markupXDD;
+	}
+
+	@Override
+	public void setMarkupXDD(long markupXDD) {
+		_markupXDD = markupXDD;
+	}
+
+	@Override
+	public int getTestingResult() {
+		return _testingResult;
+	}
+
+	@Override
+	public void setTestingResult(int testingResult) {
+		_testingResult = testingResult;
+	}
+
+	@Override
+	public String getDescription() {
+		if (_description == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _description;
+		}
+	}
+
+	@Override
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	@Override
+	public String getInspectionRecordNumber() {
+		if (_inspectionRecordNumber == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _inspectionRecordNumber;
+		}
+	}
+
+	@Override
+	public void setInspectionRecordNumber(String inspectionRecordNumber) {
+		_inspectionRecordNumber = inspectionRecordNumber;
+	}
+
+	@Override
+	public Date getInspectionRecordDate() {
+		return _inspectionRecordDate;
+	}
+
+	@Override
+	public void setInspectionRecordDate(Date inspectionRecordDate) {
+		_inspectionRecordDate = inspectionRecordDate;
+	}
+
+	@Override
+	public Date getExpiredDate() {
+		return _expiredDate;
+	}
+
+	@Override
+	public void setExpiredDate(Date expiredDate) {
+		_expiredDate = expiredDate;
+	}
+
+	@Override
+	public int getExpiredStatus() {
+		return _expiredStatus;
+	}
+
+	@Override
+	public void setExpiredStatus(int expiredStatus) {
+		_expiredStatus = expiredStatus;
+	}
+
+	@Override
+	public String getStampTestingNo() {
+		if (_stampTestingNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _stampTestingNo;
+		}
+	}
+
+	@Override
+	public void setStampTestingNo(String stampTestingNo) {
+		_stampTestingNo = stampTestingNo;
+	}
+
+	@Override
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	@Override
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	@Override
+	public String getDossierIdCTN() {
+		if (_dossierIdCTN == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierIdCTN;
+		}
+	}
+
+	@Override
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	@Override
+	public String getDossierNo() {
+		if (_dossierNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierNo;
+		}
+	}
+
+	@Override
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
+	@Override
+	public long getProductionPlantId() {
+		return _productionPlantId;
+	}
+
+	@Override
+	public void setProductionPlantId(long productionPlantId) {
+		_productionPlantId = productionPlantId;
+	}
+
+	@Override
+	public String getProductionPlantCode() {
+		if (_productionPlantCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantCode;
+		}
+	}
+
+	@Override
+	public void setProductionPlantCode(String productionPlantCode) {
+		_productionPlantCode = productionPlantCode;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -648,6 +1103,28 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		vrcopProductionPlantEquipmentImpl.setNotes(getNotes());
 		vrcopProductionPlantEquipmentImpl.setModifyDate(getModifyDate());
 		vrcopProductionPlantEquipmentImpl.setSyncDate(getSyncDate());
+		vrcopProductionPlantEquipmentImpl.setEquipmentSerialNo(getEquipmentSerialNo());
+		vrcopProductionPlantEquipmentImpl.setProductionYear(getProductionYear());
+		vrcopProductionPlantEquipmentImpl.setRegistrationYear(getRegistrationYear());
+		vrcopProductionPlantEquipmentImpl.setMarkupXCG(getMarkupXCG());
+		vrcopProductionPlantEquipmentImpl.setMarkupXCGNK(getMarkupXCGNK());
+		vrcopProductionPlantEquipmentImpl.setMarkupSMRM(getMarkupSMRM());
+		vrcopProductionPlantEquipmentImpl.setMarkupXCH(getMarkupXCH());
+		vrcopProductionPlantEquipmentImpl.setMarkupXCN(getMarkupXCN());
+		vrcopProductionPlantEquipmentImpl.setMarkupXMY(getMarkupXMY());
+		vrcopProductionPlantEquipmentImpl.setMarkupXDD(getMarkupXDD());
+		vrcopProductionPlantEquipmentImpl.setTestingResult(getTestingResult());
+		vrcopProductionPlantEquipmentImpl.setDescription(getDescription());
+		vrcopProductionPlantEquipmentImpl.setInspectionRecordNumber(getInspectionRecordNumber());
+		vrcopProductionPlantEquipmentImpl.setInspectionRecordDate(getInspectionRecordDate());
+		vrcopProductionPlantEquipmentImpl.setExpiredDate(getExpiredDate());
+		vrcopProductionPlantEquipmentImpl.setExpiredStatus(getExpiredStatus());
+		vrcopProductionPlantEquipmentImpl.setStampTestingNo(getStampTestingNo());
+		vrcopProductionPlantEquipmentImpl.setDossierId(getDossierId());
+		vrcopProductionPlantEquipmentImpl.setDossierIdCTN(getDossierIdCTN());
+		vrcopProductionPlantEquipmentImpl.setDossierNo(getDossierNo());
+		vrcopProductionPlantEquipmentImpl.setProductionPlantId(getProductionPlantId());
+		vrcopProductionPlantEquipmentImpl.setProductionPlantCode(getProductionPlantCode());
 
 		vrcopProductionPlantEquipmentImpl.resetOriginalValues();
 
@@ -863,12 +1340,128 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 			vrcopProductionPlantEquipmentCacheModel.syncDate = Long.MIN_VALUE;
 		}
 
+		vrcopProductionPlantEquipmentCacheModel.equipmentSerialNo = getEquipmentSerialNo();
+
+		String equipmentSerialNo = vrcopProductionPlantEquipmentCacheModel.equipmentSerialNo;
+
+		if ((equipmentSerialNo != null) && (equipmentSerialNo.length() == 0)) {
+			vrcopProductionPlantEquipmentCacheModel.equipmentSerialNo = null;
+		}
+
+		Date productionYear = getProductionYear();
+
+		if (productionYear != null) {
+			vrcopProductionPlantEquipmentCacheModel.productionYear = productionYear.getTime();
+		}
+		else {
+			vrcopProductionPlantEquipmentCacheModel.productionYear = Long.MIN_VALUE;
+		}
+
+		Date registrationYear = getRegistrationYear();
+
+		if (registrationYear != null) {
+			vrcopProductionPlantEquipmentCacheModel.registrationYear = registrationYear.getTime();
+		}
+		else {
+			vrcopProductionPlantEquipmentCacheModel.registrationYear = Long.MIN_VALUE;
+		}
+
+		vrcopProductionPlantEquipmentCacheModel.markupXCG = getMarkupXCG();
+
+		vrcopProductionPlantEquipmentCacheModel.markupXCGNK = getMarkupXCGNK();
+
+		vrcopProductionPlantEquipmentCacheModel.markupSMRM = getMarkupSMRM();
+
+		vrcopProductionPlantEquipmentCacheModel.markupXCH = getMarkupXCH();
+
+		vrcopProductionPlantEquipmentCacheModel.markupXCN = getMarkupXCN();
+
+		vrcopProductionPlantEquipmentCacheModel.markupXMY = getMarkupXMY();
+
+		vrcopProductionPlantEquipmentCacheModel.markupXDD = getMarkupXDD();
+
+		vrcopProductionPlantEquipmentCacheModel.testingResult = getTestingResult();
+
+		vrcopProductionPlantEquipmentCacheModel.description = getDescription();
+
+		String description = vrcopProductionPlantEquipmentCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			vrcopProductionPlantEquipmentCacheModel.description = null;
+		}
+
+		vrcopProductionPlantEquipmentCacheModel.inspectionRecordNumber = getInspectionRecordNumber();
+
+		String inspectionRecordNumber = vrcopProductionPlantEquipmentCacheModel.inspectionRecordNumber;
+
+		if ((inspectionRecordNumber != null) &&
+				(inspectionRecordNumber.length() == 0)) {
+			vrcopProductionPlantEquipmentCacheModel.inspectionRecordNumber = null;
+		}
+
+		Date inspectionRecordDate = getInspectionRecordDate();
+
+		if (inspectionRecordDate != null) {
+			vrcopProductionPlantEquipmentCacheModel.inspectionRecordDate = inspectionRecordDate.getTime();
+		}
+		else {
+			vrcopProductionPlantEquipmentCacheModel.inspectionRecordDate = Long.MIN_VALUE;
+		}
+
+		Date expiredDate = getExpiredDate();
+
+		if (expiredDate != null) {
+			vrcopProductionPlantEquipmentCacheModel.expiredDate = expiredDate.getTime();
+		}
+		else {
+			vrcopProductionPlantEquipmentCacheModel.expiredDate = Long.MIN_VALUE;
+		}
+
+		vrcopProductionPlantEquipmentCacheModel.expiredStatus = getExpiredStatus();
+
+		vrcopProductionPlantEquipmentCacheModel.stampTestingNo = getStampTestingNo();
+
+		String stampTestingNo = vrcopProductionPlantEquipmentCacheModel.stampTestingNo;
+
+		if ((stampTestingNo != null) && (stampTestingNo.length() == 0)) {
+			vrcopProductionPlantEquipmentCacheModel.stampTestingNo = null;
+		}
+
+		vrcopProductionPlantEquipmentCacheModel.dossierId = getDossierId();
+
+		vrcopProductionPlantEquipmentCacheModel.dossierIdCTN = getDossierIdCTN();
+
+		String dossierIdCTN = vrcopProductionPlantEquipmentCacheModel.dossierIdCTN;
+
+		if ((dossierIdCTN != null) && (dossierIdCTN.length() == 0)) {
+			vrcopProductionPlantEquipmentCacheModel.dossierIdCTN = null;
+		}
+
+		vrcopProductionPlantEquipmentCacheModel.dossierNo = getDossierNo();
+
+		String dossierNo = vrcopProductionPlantEquipmentCacheModel.dossierNo;
+
+		if ((dossierNo != null) && (dossierNo.length() == 0)) {
+			vrcopProductionPlantEquipmentCacheModel.dossierNo = null;
+		}
+
+		vrcopProductionPlantEquipmentCacheModel.productionPlantId = getProductionPlantId();
+
+		vrcopProductionPlantEquipmentCacheModel.productionPlantCode = getProductionPlantCode();
+
+		String productionPlantCode = vrcopProductionPlantEquipmentCacheModel.productionPlantCode;
+
+		if ((productionPlantCode != null) &&
+				(productionPlantCode.length() == 0)) {
+			vrcopProductionPlantEquipmentCacheModel.productionPlantCode = null;
+		}
+
 		return vrcopProductionPlantEquipmentCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(83);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -908,6 +1501,50 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
 		sb.append(getSyncDate());
+		sb.append(", equipmentSerialNo=");
+		sb.append(getEquipmentSerialNo());
+		sb.append(", productionYear=");
+		sb.append(getProductionYear());
+		sb.append(", registrationYear=");
+		sb.append(getRegistrationYear());
+		sb.append(", markupXCG=");
+		sb.append(getMarkupXCG());
+		sb.append(", markupXCGNK=");
+		sb.append(getMarkupXCGNK());
+		sb.append(", markupSMRM=");
+		sb.append(getMarkupSMRM());
+		sb.append(", markupXCH=");
+		sb.append(getMarkupXCH());
+		sb.append(", markupXCN=");
+		sb.append(getMarkupXCN());
+		sb.append(", markupXMY=");
+		sb.append(getMarkupXMY());
+		sb.append(", markupXDD=");
+		sb.append(getMarkupXDD());
+		sb.append(", testingResult=");
+		sb.append(getTestingResult());
+		sb.append(", description=");
+		sb.append(getDescription());
+		sb.append(", inspectionRecordNumber=");
+		sb.append(getInspectionRecordNumber());
+		sb.append(", inspectionRecordDate=");
+		sb.append(getInspectionRecordDate());
+		sb.append(", expiredDate=");
+		sb.append(getExpiredDate());
+		sb.append(", expiredStatus=");
+		sb.append(getExpiredStatus());
+		sb.append(", stampTestingNo=");
+		sb.append(getStampTestingNo());
+		sb.append(", dossierId=");
+		sb.append(getDossierId());
+		sb.append(", dossierIdCTN=");
+		sb.append(getDossierIdCTN());
+		sb.append(", dossierNo=");
+		sb.append(getDossierNo());
+		sb.append(", productionPlantId=");
+		sb.append(getProductionPlantId());
+		sb.append(", productionPlantCode=");
+		sb.append(getProductionPlantCode());
 		sb.append("}");
 
 		return sb.toString();
@@ -915,7 +1552,7 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(127);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPProductionPlantEquipment");
@@ -997,6 +1634,94 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 			"<column><column-name>syncDate</column-name><column-value><![CDATA[");
 		sb.append(getSyncDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>equipmentSerialNo</column-name><column-value><![CDATA[");
+		sb.append(getEquipmentSerialNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionYear</column-name><column-value><![CDATA[");
+		sb.append(getProductionYear());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>registrationYear</column-name><column-value><![CDATA[");
+		sb.append(getRegistrationYear());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>markupXCG</column-name><column-value><![CDATA[");
+		sb.append(getMarkupXCG());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>markupXCGNK</column-name><column-value><![CDATA[");
+		sb.append(getMarkupXCGNK());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>markupSMRM</column-name><column-value><![CDATA[");
+		sb.append(getMarkupSMRM());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>markupXCH</column-name><column-value><![CDATA[");
+		sb.append(getMarkupXCH());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>markupXCN</column-name><column-value><![CDATA[");
+		sb.append(getMarkupXCN());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>markupXMY</column-name><column-value><![CDATA[");
+		sb.append(getMarkupXMY());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>markupXDD</column-name><column-value><![CDATA[");
+		sb.append(getMarkupXDD());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>testingResult</column-name><column-value><![CDATA[");
+		sb.append(getTestingResult());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>description</column-name><column-value><![CDATA[");
+		sb.append(getDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>inspectionRecordNumber</column-name><column-value><![CDATA[");
+		sb.append(getInspectionRecordNumber());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>inspectionRecordDate</column-name><column-value><![CDATA[");
+		sb.append(getInspectionRecordDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expiredDate</column-name><column-value><![CDATA[");
+		sb.append(getExpiredDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expiredStatus</column-name><column-value><![CDATA[");
+		sb.append(getExpiredStatus());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>stampTestingNo</column-name><column-value><![CDATA[");
+		sb.append(getStampTestingNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierId</column-name><column-value><![CDATA[");
+		sb.append(getDossierId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierIdCTN</column-name><column-value><![CDATA[");
+		sb.append(getDossierIdCTN());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierNo</column-name><column-value><![CDATA[");
+		sb.append(getDossierNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantId</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantCode</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantCode());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1031,6 +1756,28 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 	private String _notes;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private String _equipmentSerialNo;
+	private Date _productionYear;
+	private Date _registrationYear;
+	private long _markupXCG;
+	private long _markupXCGNK;
+	private long _markupSMRM;
+	private long _markupXCH;
+	private long _markupXCN;
+	private long _markupXMY;
+	private long _markupXDD;
+	private int _testingResult;
+	private String _description;
+	private String _inspectionRecordNumber;
+	private Date _inspectionRecordDate;
+	private Date _expiredDate;
+	private int _expiredStatus;
+	private String _stampTestingNo;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
+	private long _productionPlantId;
+	private String _productionPlantCode;
 	private long _columnBitmask;
 	private VRCOPProductionPlantEquipment _escapedModel;
 }

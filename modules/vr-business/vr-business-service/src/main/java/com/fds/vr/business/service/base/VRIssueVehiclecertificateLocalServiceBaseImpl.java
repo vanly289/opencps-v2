@@ -70,6 +70,7 @@ import com.fds.vr.business.service.persistence.VROutputSheetDetailsPersistence;
 import com.fds.vr.business.service.persistence.VROutputSheetFinder;
 import com.fds.vr.business.service.persistence.VROutputSheetPersistence;
 import com.fds.vr.business.service.persistence.VRProductTypePersistence;
+import com.fds.vr.business.service.persistence.VRProductionClassificationPersistence;
 import com.fds.vr.business.service.persistence.VRProductionPlantEmployeeFinder;
 import com.fds.vr.business.service.persistence.VRProductionPlantEmployeePersistence;
 import com.fds.vr.business.service.persistence.VRProductionPlantEquipmentFinder;
@@ -1925,6 +1926,44 @@ public abstract class VRIssueVehiclecertificateLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the vr production classification local service.
+	 *
+	 * @return the vr production classification local service
+	 */
+	public com.fds.vr.business.service.VRProductionClassificationLocalService getVRProductionClassificationLocalService() {
+		return vrProductionClassificationLocalService;
+	}
+
+	/**
+	 * Sets the vr production classification local service.
+	 *
+	 * @param vrProductionClassificationLocalService the vr production classification local service
+	 */
+	public void setVRProductionClassificationLocalService(
+		com.fds.vr.business.service.VRProductionClassificationLocalService vrProductionClassificationLocalService) {
+		this.vrProductionClassificationLocalService = vrProductionClassificationLocalService;
+	}
+
+	/**
+	 * Returns the vr production classification persistence.
+	 *
+	 * @return the vr production classification persistence
+	 */
+	public VRProductionClassificationPersistence getVRProductionClassificationPersistence() {
+		return vrProductionClassificationPersistence;
+	}
+
+	/**
+	 * Sets the vr production classification persistence.
+	 *
+	 * @param vrProductionClassificationPersistence the vr production classification persistence
+	 */
+	public void setVRProductionClassificationPersistence(
+		VRProductionClassificationPersistence vrProductionClassificationPersistence) {
+		this.vrProductionClassificationPersistence = vrProductionClassificationPersistence;
+	}
+
+	/**
 	 * Returns the vr production plant local service.
 	 *
 	 * @return the vr production plant local service
@@ -3692,6 +3731,10 @@ public abstract class VRIssueVehiclecertificateLocalServiceBaseImpl
 	protected VROutputSheetDetailsPersistence vrOutputSheetDetailsPersistence;
 	@BeanReference(type = VROutputSheetDetailsFinder.class)
 	protected VROutputSheetDetailsFinder vrOutputSheetDetailsFinder;
+	@BeanReference(type = com.fds.vr.business.service.VRProductionClassificationLocalService.class)
+	protected com.fds.vr.business.service.VRProductionClassificationLocalService vrProductionClassificationLocalService;
+	@BeanReference(type = VRProductionClassificationPersistence.class)
+	protected VRProductionClassificationPersistence vrProductionClassificationPersistence;
 	@BeanReference(type = com.fds.vr.business.service.VRProductionPlantLocalService.class)
 	protected com.fds.vr.business.service.VRProductionPlantLocalService vrProductionPlantLocalService;
 	@BeanReference(type = VRProductionPlantPersistence.class)

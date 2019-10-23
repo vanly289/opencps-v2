@@ -923,8 +923,11 @@ public class VRProductionPlantEmployeePersistenceImpl
 		vrProductionPlantEmployeeImpl.setEmployeeName(vrProductionPlantEmployee.getEmployeeName());
 		vrProductionPlantEmployeeImpl.setEmployeeCertificateNo(vrProductionPlantEmployee.getEmployeeCertificateNo());
 		vrProductionPlantEmployeeImpl.setTrainningAt(vrProductionPlantEmployee.getTrainningAt());
+		vrProductionPlantEmployeeImpl.setWorkingPosition(vrProductionPlantEmployee.getWorkingPosition());
 		vrProductionPlantEmployeeImpl.setModifyDate(vrProductionPlantEmployee.getModifyDate());
 		vrProductionPlantEmployeeImpl.setSyncDate(vrProductionPlantEmployee.getSyncDate());
+		vrProductionPlantEmployeeImpl.setProductionPlantCode(vrProductionPlantEmployee.getProductionPlantCode());
+		vrProductionPlantEmployeeImpl.setProductionPlantId(vrProductionPlantEmployee.getProductionPlantId());
 
 		return vrProductionPlantEmployeeImpl;
 	}

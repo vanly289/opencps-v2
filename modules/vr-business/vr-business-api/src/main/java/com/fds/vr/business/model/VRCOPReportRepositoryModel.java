@@ -443,6 +443,463 @@ public interface VRCOPReportRepositoryModel extends BaseModel<VRCOPReportReposit
 	 */
 	public void setSyncDate(Date syncDate);
 
+	/**
+	 * Returns the importer manufacturer code of this vrcop report repository.
+	 *
+	 * @return the importer manufacturer code of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getImporterManufacturerCode();
+
+	/**
+	 * Sets the importer manufacturer code of this vrcop report repository.
+	 *
+	 * @param importerManufacturerCode the importer manufacturer code of this vrcop report repository
+	 */
+	public void setImporterManufacturerCode(String importerManufacturerCode);
+
+	/**
+	 * Returns the importer manufacturer name of this vrcop report repository.
+	 *
+	 * @return the importer manufacturer name of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getImporterManufacturerName();
+
+	/**
+	 * Sets the importer manufacturer name of this vrcop report repository.
+	 *
+	 * @param importerManufacturerName the importer manufacturer name of this vrcop report repository
+	 */
+	public void setImporterManufacturerName(String importerManufacturerName);
+
+	/**
+	 * Returns the importer manufacturer address of this vrcop report repository.
+	 *
+	 * @return the importer manufacturer address of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getImporterManufacturerAddress();
+
+	/**
+	 * Sets the importer manufacturer address of this vrcop report repository.
+	 *
+	 * @param importerManufacturerAddress the importer manufacturer address of this vrcop report repository
+	 */
+	public void setImporterManufacturerAddress(
+		String importerManufacturerAddress);
+
+	/**
+	 * Returns the markup domestics manufacturer of this vrcop report repository.
+	 *
+	 * @return the markup domestics manufacturer of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getMarkupDomesticsManufacturer();
+
+	/**
+	 * Sets the markup domestics manufacturer of this vrcop report repository.
+	 *
+	 * @param markupDomesticsManufacturer the markup domestics manufacturer of this vrcop report repository
+	 */
+	public void setMarkupDomesticsManufacturer(
+		String markupDomesticsManufacturer);
+
+	/**
+	 * Returns the markup importer of this vrcop report repository.
+	 *
+	 * @return the markup importer of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getMarkupImporter();
+
+	/**
+	 * Sets the markup importer of this vrcop report repository.
+	 *
+	 * @param markupImporter the markup importer of this vrcop report repository
+	 */
+	public void setMarkupImporter(String markupImporter);
+
+	/**
+	 * Returns the cop classification of this vrcop report repository.
+	 *
+	 * @return the cop classification of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getCopClassification();
+
+	/**
+	 * Sets the cop classification of this vrcop report repository.
+	 *
+	 * @param copClassification the cop classification of this vrcop report repository
+	 */
+	public void setCopClassification(String copClassification);
+
+	/**
+	 * Returns the product classification description of this vrcop report repository.
+	 *
+	 * @return the product classification description of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getProductClassificationDescription();
+
+	/**
+	 * Sets the product classification description of this vrcop report repository.
+	 *
+	 * @param productClassificationDescription the product classification description of this vrcop report repository
+	 */
+	public void setProductClassificationDescription(
+		String productClassificationDescription);
+
+	/**
+	 * Returns the total point a of this vrcop report repository.
+	 *
+	 * @return the total point a of this vrcop report repository
+	 */
+	public int getTotalPointA();
+
+	/**
+	 * Sets the total point a of this vrcop report repository.
+	 *
+	 * @param totalPointA the total point a of this vrcop report repository
+	 */
+	public void setTotalPointA(int totalPointA);
+
+	/**
+	 * Returns the total point b of this vrcop report repository.
+	 *
+	 * @return the total point b of this vrcop report repository
+	 */
+	public int getTotalPointB();
+
+	/**
+	 * Sets the total point b of this vrcop report repository.
+	 *
+	 * @param totalPointB the total point b of this vrcop report repository
+	 */
+	public void setTotalPointB(int totalPointB);
+
+	/**
+	 * Returns the total point c of this vrcop report repository.
+	 *
+	 * @return the total point c of this vrcop report repository
+	 */
+	public int getTotalPointC();
+
+	/**
+	 * Sets the total point c of this vrcop report repository.
+	 *
+	 * @param totalPointC the total point c of this vrcop report repository
+	 */
+	public void setTotalPointC(int totalPointC);
+
+	/**
+	 * Returns the cop non conformity of this vrcop report repository.
+	 *
+	 * @return the cop non conformity of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getCopNonConformity();
+
+	/**
+	 * Sets the cop non conformity of this vrcop report repository.
+	 *
+	 * @param copNonConformity the cop non conformity of this vrcop report repository
+	 */
+	public void setCopNonConformity(String copNonConformity);
+
+	/**
+	 * Returns the inspection record no of this vrcop report repository.
+	 *
+	 * @return the inspection record no of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getInspectionRecordNo();
+
+	/**
+	 * Sets the inspection record no of this vrcop report repository.
+	 *
+	 * @param inspectionRecordNo the inspection record no of this vrcop report repository
+	 */
+	public void setInspectionRecordNo(String inspectionRecordNo);
+
+	/**
+	 * Returns the inspection record date of this vrcop report repository.
+	 *
+	 * @return the inspection record date of this vrcop report repository
+	 */
+	public Date getInspectionRecordDate();
+
+	/**
+	 * Sets the inspection record date of this vrcop report repository.
+	 *
+	 * @param inspectionRecordDate the inspection record date of this vrcop report repository
+	 */
+	public void setInspectionRecordDate(Date inspectionRecordDate);
+
+	/**
+	 * Returns the corporation ID of this vrcop report repository.
+	 *
+	 * @return the corporation ID of this vrcop report repository
+	 */
+	public long getCorporationId();
+
+	/**
+	 * Sets the corporation ID of this vrcop report repository.
+	 *
+	 * @param corporationId the corporation ID of this vrcop report repository
+	 */
+	public void setCorporationId(long corporationId);
+
+	/**
+	 * Returns the inspector ID of this vrcop report repository.
+	 *
+	 * @return the inspector ID of this vrcop report repository
+	 */
+	public long getInspectorId();
+
+	/**
+	 * Sets the inspector ID of this vrcop report repository.
+	 *
+	 * @param inspectorId the inspector ID of this vrcop report repository
+	 */
+	public void setInspectorId(long inspectorId);
+
+	/**
+	 * Returns the inspection site of this vrcop report repository.
+	 *
+	 * @return the inspection site of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getInspectionSite();
+
+	/**
+	 * Sets the inspection site of this vrcop report repository.
+	 *
+	 * @param inspectionSite the inspection site of this vrcop report repository
+	 */
+	public void setInspectionSite(String inspectionSite);
+
+	/**
+	 * Returns the inspection date from of this vrcop report repository.
+	 *
+	 * @return the inspection date from of this vrcop report repository
+	 */
+	public Date getInspectionDateFrom();
+
+	/**
+	 * Sets the inspection date from of this vrcop report repository.
+	 *
+	 * @param inspectionDateFrom the inspection date from of this vrcop report repository
+	 */
+	public void setInspectionDateFrom(Date inspectionDateFrom);
+
+	/**
+	 * Returns the inspection date to of this vrcop report repository.
+	 *
+	 * @return the inspection date to of this vrcop report repository
+	 */
+	public Date getInspectionDateTo();
+
+	/**
+	 * Sets the inspection date to of this vrcop report repository.
+	 *
+	 * @param inspectionDateTo the inspection date to of this vrcop report repository
+	 */
+	public void setInspectionDateTo(Date inspectionDateTo);
+
+	/**
+	 * Returns the sub inspector of this vrcop report repository.
+	 *
+	 * @return the sub inspector of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getSubInspector();
+
+	/**
+	 * Sets the sub inspector of this vrcop report repository.
+	 *
+	 * @param subInspector the sub inspector of this vrcop report repository
+	 */
+	public void setSubInspector(String subInspector);
+
+	/**
+	 * Returns the description of this vrcop report repository.
+	 *
+	 * @return the description of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this vrcop report repository.
+	 *
+	 * @param description the description of this vrcop report repository
+	 */
+	public void setDescription(String description);
+
+	/**
+	 * Returns the applicant representative of this vrcop report repository.
+	 *
+	 * @return the applicant representative of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getApplicantRepresentative();
+
+	/**
+	 * Sets the applicant representative of this vrcop report repository.
+	 *
+	 * @param applicantRepresentative the applicant representative of this vrcop report repository
+	 */
+	public void setApplicantRepresentative(String applicantRepresentative);
+
+	/**
+	 * Returns the applicant representative title of this vrcop report repository.
+	 *
+	 * @return the applicant representative title of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getApplicantRepresentativeTitle();
+
+	/**
+	 * Sets the applicant representative title of this vrcop report repository.
+	 *
+	 * @param applicantRepresentativeTitle the applicant representative title of this vrcop report repository
+	 */
+	public void setApplicantRepresentativeTitle(
+		String applicantRepresentativeTitle);
+
+	/**
+	 * Returns the inspection record file entry ID of this vrcop report repository.
+	 *
+	 * @return the inspection record file entry ID of this vrcop report repository
+	 */
+	public long getInspectionRecordFileEntryId();
+
+	/**
+	 * Sets the inspection record file entry ID of this vrcop report repository.
+	 *
+	 * @param inspectionRecordFileEntryId the inspection record file entry ID of this vrcop report repository
+	 */
+	public void setInspectionRecordFileEntryId(long inspectionRecordFileEntryId);
+
+	/**
+	 * Returns the cop report ref no of this vrcop report repository.
+	 *
+	 * @return the cop report ref no of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getCopReportRefNo();
+
+	/**
+	 * Sets the cop report ref no of this vrcop report repository.
+	 *
+	 * @param copReportRefNo the cop report ref no of this vrcop report repository
+	 */
+	public void setCopReportRefNo(String copReportRefNo);
+
+	/**
+	 * Returns the cop report ref date of this vrcop report repository.
+	 *
+	 * @return the cop report ref date of this vrcop report repository
+	 */
+	public Date getCopReportRefDate();
+
+	/**
+	 * Sets the cop report ref date of this vrcop report repository.
+	 *
+	 * @param copReportRefDate the cop report ref date of this vrcop report repository
+	 */
+	public void setCopReportRefDate(Date copReportRefDate);
+
+	/**
+	 * Returns the cop report previous no of this vrcop report repository.
+	 *
+	 * @return the cop report previous no of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getCopReportPreviousNo();
+
+	/**
+	 * Sets the cop report previous no of this vrcop report repository.
+	 *
+	 * @param copReportPreviousNo the cop report previous no of this vrcop report repository
+	 */
+	public void setCopReportPreviousNo(String copReportPreviousNo);
+
+	/**
+	 * Returns the cop report previous date of this vrcop report repository.
+	 *
+	 * @return the cop report previous date of this vrcop report repository
+	 */
+	public Date getCopReportPreviousDate();
+
+	/**
+	 * Sets the cop report previous date of this vrcop report repository.
+	 *
+	 * @param copReportPreviousDate the cop report previous date of this vrcop report repository
+	 */
+	public void setCopReportPreviousDate(Date copReportPreviousDate);
+
+	/**
+	 * Returns the expired status of this vrcop report repository.
+	 *
+	 * @return the expired status of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getExpiredStatus();
+
+	/**
+	 * Sets the expired status of this vrcop report repository.
+	 *
+	 * @param expiredStatus the expired status of this vrcop report repository
+	 */
+	public void setExpiredStatus(String expiredStatus);
+
+	/**
+	 * Returns the dossier ID of this vrcop report repository.
+	 *
+	 * @return the dossier ID of this vrcop report repository
+	 */
+	public long getDossierId();
+
+	/**
+	 * Sets the dossier ID of this vrcop report repository.
+	 *
+	 * @param dossierId the dossier ID of this vrcop report repository
+	 */
+	public void setDossierId(long dossierId);
+
+	/**
+	 * Returns the dossier ID ctn of this vrcop report repository.
+	 *
+	 * @return the dossier ID ctn of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getDossierIdCTN();
+
+	/**
+	 * Sets the dossier ID ctn of this vrcop report repository.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn of this vrcop report repository
+	 */
+	public void setDossierIdCTN(String dossierIdCTN);
+
+	/**
+	 * Returns the dossier no of this vrcop report repository.
+	 *
+	 * @return the dossier no of this vrcop report repository
+	 */
+	@AutoEscape
+	public String getDossierNo();
+
+	/**
+	 * Sets the dossier no of this vrcop report repository.
+	 *
+	 * @param dossierNo the dossier no of this vrcop report repository
+	 */
+	public void setDossierNo(String dossierNo);
+
 	@Override
 	public boolean isNew();
 

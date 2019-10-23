@@ -67,7 +67,7 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -105,6 +105,40 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", equipmentSerialNo=");
+		sb.append(equipmentSerialNo);
+		sb.append(", productionYear=");
+		sb.append(productionYear);
+		sb.append(", registrationYear=");
+		sb.append(registrationYear);
+		sb.append(", markupXCG=");
+		sb.append(markupXCG);
+		sb.append(", markupXCGNK=");
+		sb.append(markupXCGNK);
+		sb.append(", markupSMRM=");
+		sb.append(markupSMRM);
+		sb.append(", markupXCH=");
+		sb.append(markupXCH);
+		sb.append(", markupXCN=");
+		sb.append(markupXCN);
+		sb.append(", markupXMY=");
+		sb.append(markupXMY);
+		sb.append(", markupXDD=");
+		sb.append(markupXDD);
+		sb.append(", testingResult=");
+		sb.append(testingResult);
+		sb.append(", description=");
+		sb.append(description);
+		sb.append(", inspectionRecordNumber=");
+		sb.append(inspectionRecordNumber);
+		sb.append(", inspectionRecordDate=");
+		sb.append(inspectionRecordDate);
+		sb.append(", stampTestingNo=");
+		sb.append(stampTestingNo);
+		sb.append(", productionPlantId=");
+		sb.append(productionPlantId);
+		sb.append(", productionPlantCode=");
+		sb.append(productionPlantCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -217,6 +251,76 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 			vrProductionPlantEquipmentImpl.setSyncDate(new Date(syncDate));
 		}
 
+		if (equipmentSerialNo == null) {
+			vrProductionPlantEquipmentImpl.setEquipmentSerialNo(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantEquipmentImpl.setEquipmentSerialNo(equipmentSerialNo);
+		}
+
+		if (productionYear == Long.MIN_VALUE) {
+			vrProductionPlantEquipmentImpl.setProductionYear(null);
+		}
+		else {
+			vrProductionPlantEquipmentImpl.setProductionYear(new Date(
+					productionYear));
+		}
+
+		if (registrationYear == Long.MIN_VALUE) {
+			vrProductionPlantEquipmentImpl.setRegistrationYear(null);
+		}
+		else {
+			vrProductionPlantEquipmentImpl.setRegistrationYear(new Date(
+					registrationYear));
+		}
+
+		vrProductionPlantEquipmentImpl.setMarkupXCG(markupXCG);
+		vrProductionPlantEquipmentImpl.setMarkupXCGNK(markupXCGNK);
+		vrProductionPlantEquipmentImpl.setMarkupSMRM(markupSMRM);
+		vrProductionPlantEquipmentImpl.setMarkupXCH(markupXCH);
+		vrProductionPlantEquipmentImpl.setMarkupXCN(markupXCN);
+		vrProductionPlantEquipmentImpl.setMarkupXMY(markupXMY);
+		vrProductionPlantEquipmentImpl.setMarkupXDD(markupXDD);
+		vrProductionPlantEquipmentImpl.setTestingResult(testingResult);
+
+		if (description == null) {
+			vrProductionPlantEquipmentImpl.setDescription(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantEquipmentImpl.setDescription(description);
+		}
+
+		if (inspectionRecordNumber == null) {
+			vrProductionPlantEquipmentImpl.setInspectionRecordNumber(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantEquipmentImpl.setInspectionRecordNumber(inspectionRecordNumber);
+		}
+
+		if (inspectionRecordDate == Long.MIN_VALUE) {
+			vrProductionPlantEquipmentImpl.setInspectionRecordDate(null);
+		}
+		else {
+			vrProductionPlantEquipmentImpl.setInspectionRecordDate(new Date(
+					inspectionRecordDate));
+		}
+
+		if (stampTestingNo == null) {
+			vrProductionPlantEquipmentImpl.setStampTestingNo(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantEquipmentImpl.setStampTestingNo(stampTestingNo);
+		}
+
+		vrProductionPlantEquipmentImpl.setProductionPlantId(productionPlantId);
+
+		if (productionPlantCode == null) {
+			vrProductionPlantEquipmentImpl.setProductionPlantCode(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantEquipmentImpl.setProductionPlantCode(productionPlantCode);
+		}
+
 		vrProductionPlantEquipmentImpl.resetOriginalValues();
 
 		return vrProductionPlantEquipmentImpl;
@@ -245,6 +349,32 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 		notes = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+		equipmentSerialNo = objectInput.readUTF();
+		productionYear = objectInput.readLong();
+		registrationYear = objectInput.readLong();
+
+		markupXCG = objectInput.readLong();
+
+		markupXCGNK = objectInput.readLong();
+
+		markupSMRM = objectInput.readLong();
+
+		markupXCH = objectInput.readLong();
+
+		markupXCN = objectInput.readLong();
+
+		markupXMY = objectInput.readLong();
+
+		markupXDD = objectInput.readLong();
+
+		testingResult = objectInput.readInt();
+		description = objectInput.readUTF();
+		inspectionRecordNumber = objectInput.readUTF();
+		inspectionRecordDate = objectInput.readLong();
+		stampTestingNo = objectInput.readUTF();
+
+		productionPlantId = objectInput.readLong();
+		productionPlantCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -339,6 +469,64 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		if (equipmentSerialNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(equipmentSerialNo);
+		}
+
+		objectOutput.writeLong(productionYear);
+		objectOutput.writeLong(registrationYear);
+
+		objectOutput.writeLong(markupXCG);
+
+		objectOutput.writeLong(markupXCGNK);
+
+		objectOutput.writeLong(markupSMRM);
+
+		objectOutput.writeLong(markupXCH);
+
+		objectOutput.writeLong(markupXCN);
+
+		objectOutput.writeLong(markupXMY);
+
+		objectOutput.writeLong(markupXDD);
+
+		objectOutput.writeInt(testingResult);
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		if (inspectionRecordNumber == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(inspectionRecordNumber);
+		}
+
+		objectOutput.writeLong(inspectionRecordDate);
+
+		if (stampTestingNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(stampTestingNo);
+		}
+
+		objectOutput.writeLong(productionPlantId);
+
+		if (productionPlantCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantCode);
+		}
 	}
 
 	public long id;
@@ -359,4 +547,21 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 	public String notes;
 	public long modifyDate;
 	public long syncDate;
+	public String equipmentSerialNo;
+	public long productionYear;
+	public long registrationYear;
+	public long markupXCG;
+	public long markupXCGNK;
+	public long markupSMRM;
+	public long markupXCH;
+	public long markupXCN;
+	public long markupXMY;
+	public long markupXDD;
+	public int testingResult;
+	public String description;
+	public String inspectionRecordNumber;
+	public long inspectionRecordDate;
+	public String stampTestingNo;
+	public long productionPlantId;
+	public String productionPlantCode;
 }

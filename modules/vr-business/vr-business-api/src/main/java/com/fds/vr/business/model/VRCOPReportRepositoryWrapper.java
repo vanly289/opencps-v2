@@ -86,6 +86,42 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 		attributes.put("COPFileEntryId", getCOPFileEntryId());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("importerManufacturerCode", getImporterManufacturerCode());
+		attributes.put("importerManufacturerName", getImporterManufacturerName());
+		attributes.put("importerManufacturerAddress",
+			getImporterManufacturerAddress());
+		attributes.put("markupDomesticsManufacturer",
+			getMarkupDomesticsManufacturer());
+		attributes.put("markupImporter", getMarkupImporter());
+		attributes.put("copClassification", getCopClassification());
+		attributes.put("productClassificationDescription",
+			getProductClassificationDescription());
+		attributes.put("totalPointA", getTotalPointA());
+		attributes.put("totalPointB", getTotalPointB());
+		attributes.put("totalPointC", getTotalPointC());
+		attributes.put("copNonConformity", getCopNonConformity());
+		attributes.put("inspectionRecordNo", getInspectionRecordNo());
+		attributes.put("inspectionRecordDate", getInspectionRecordDate());
+		attributes.put("corporationId", getCorporationId());
+		attributes.put("inspectorId", getInspectorId());
+		attributes.put("inspectionSite", getInspectionSite());
+		attributes.put("inspectionDateFrom", getInspectionDateFrom());
+		attributes.put("inspectionDateTo", getInspectionDateTo());
+		attributes.put("subInspector", getSubInspector());
+		attributes.put("description", getDescription());
+		attributes.put("applicantRepresentative", getApplicantRepresentative());
+		attributes.put("applicantRepresentativeTitle",
+			getApplicantRepresentativeTitle());
+		attributes.put("inspectionRecordFileEntryId",
+			getInspectionRecordFileEntryId());
+		attributes.put("copReportRefNo", getCopReportRefNo());
+		attributes.put("copReportRefDate", getCopReportRefDate());
+		attributes.put("copReportPreviousNo", getCopReportPreviousNo());
+		attributes.put("copReportPreviousDate", getCopReportPreviousDate());
+		attributes.put("expiredStatus", getExpiredStatus());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 
 		return attributes;
 	}
@@ -254,6 +290,202 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 		if (syncDate != null) {
 			setSyncDate(syncDate);
 		}
+
+		String importerManufacturerCode = (String)attributes.get(
+				"importerManufacturerCode");
+
+		if (importerManufacturerCode != null) {
+			setImporterManufacturerCode(importerManufacturerCode);
+		}
+
+		String importerManufacturerName = (String)attributes.get(
+				"importerManufacturerName");
+
+		if (importerManufacturerName != null) {
+			setImporterManufacturerName(importerManufacturerName);
+		}
+
+		String importerManufacturerAddress = (String)attributes.get(
+				"importerManufacturerAddress");
+
+		if (importerManufacturerAddress != null) {
+			setImporterManufacturerAddress(importerManufacturerAddress);
+		}
+
+		String markupDomesticsManufacturer = (String)attributes.get(
+				"markupDomesticsManufacturer");
+
+		if (markupDomesticsManufacturer != null) {
+			setMarkupDomesticsManufacturer(markupDomesticsManufacturer);
+		}
+
+		String markupImporter = (String)attributes.get("markupImporter");
+
+		if (markupImporter != null) {
+			setMarkupImporter(markupImporter);
+		}
+
+		String copClassification = (String)attributes.get("copClassification");
+
+		if (copClassification != null) {
+			setCopClassification(copClassification);
+		}
+
+		String productClassificationDescription = (String)attributes.get(
+				"productClassificationDescription");
+
+		if (productClassificationDescription != null) {
+			setProductClassificationDescription(productClassificationDescription);
+		}
+
+		Integer totalPointA = (Integer)attributes.get("totalPointA");
+
+		if (totalPointA != null) {
+			setTotalPointA(totalPointA);
+		}
+
+		Integer totalPointB = (Integer)attributes.get("totalPointB");
+
+		if (totalPointB != null) {
+			setTotalPointB(totalPointB);
+		}
+
+		Integer totalPointC = (Integer)attributes.get("totalPointC");
+
+		if (totalPointC != null) {
+			setTotalPointC(totalPointC);
+		}
+
+		String copNonConformity = (String)attributes.get("copNonConformity");
+
+		if (copNonConformity != null) {
+			setCopNonConformity(copNonConformity);
+		}
+
+		String inspectionRecordNo = (String)attributes.get("inspectionRecordNo");
+
+		if (inspectionRecordNo != null) {
+			setInspectionRecordNo(inspectionRecordNo);
+		}
+
+		Date inspectionRecordDate = (Date)attributes.get("inspectionRecordDate");
+
+		if (inspectionRecordDate != null) {
+			setInspectionRecordDate(inspectionRecordDate);
+		}
+
+		Long corporationId = (Long)attributes.get("corporationId");
+
+		if (corporationId != null) {
+			setCorporationId(corporationId);
+		}
+
+		Long inspectorId = (Long)attributes.get("inspectorId");
+
+		if (inspectorId != null) {
+			setInspectorId(inspectorId);
+		}
+
+		String inspectionSite = (String)attributes.get("inspectionSite");
+
+		if (inspectionSite != null) {
+			setInspectionSite(inspectionSite);
+		}
+
+		Date inspectionDateFrom = (Date)attributes.get("inspectionDateFrom");
+
+		if (inspectionDateFrom != null) {
+			setInspectionDateFrom(inspectionDateFrom);
+		}
+
+		Date inspectionDateTo = (Date)attributes.get("inspectionDateTo");
+
+		if (inspectionDateTo != null) {
+			setInspectionDateTo(inspectionDateTo);
+		}
+
+		String subInspector = (String)attributes.get("subInspector");
+
+		if (subInspector != null) {
+			setSubInspector(subInspector);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String applicantRepresentative = (String)attributes.get(
+				"applicantRepresentative");
+
+		if (applicantRepresentative != null) {
+			setApplicantRepresentative(applicantRepresentative);
+		}
+
+		String applicantRepresentativeTitle = (String)attributes.get(
+				"applicantRepresentativeTitle");
+
+		if (applicantRepresentativeTitle != null) {
+			setApplicantRepresentativeTitle(applicantRepresentativeTitle);
+		}
+
+		Long inspectionRecordFileEntryId = (Long)attributes.get(
+				"inspectionRecordFileEntryId");
+
+		if (inspectionRecordFileEntryId != null) {
+			setInspectionRecordFileEntryId(inspectionRecordFileEntryId);
+		}
+
+		String copReportRefNo = (String)attributes.get("copReportRefNo");
+
+		if (copReportRefNo != null) {
+			setCopReportRefNo(copReportRefNo);
+		}
+
+		Date copReportRefDate = (Date)attributes.get("copReportRefDate");
+
+		if (copReportRefDate != null) {
+			setCopReportRefDate(copReportRefDate);
+		}
+
+		String copReportPreviousNo = (String)attributes.get(
+				"copReportPreviousNo");
+
+		if (copReportPreviousNo != null) {
+			setCopReportPreviousNo(copReportPreviousNo);
+		}
+
+		Date copReportPreviousDate = (Date)attributes.get(
+				"copReportPreviousDate");
+
+		if (copReportPreviousDate != null) {
+			setCopReportPreviousDate(copReportPreviousDate);
+		}
+
+		String expiredStatus = (String)attributes.get("expiredStatus");
+
+		if (expiredStatus != null) {
+			setExpiredStatus(expiredStatus);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
+		}
 	}
 
 	@Override
@@ -294,6 +526,36 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public int compareTo(VRCOPReportRepository vrcopReportRepository) {
 		return _vrcopReportRepository.compareTo(vrcopReportRepository);
+	}
+
+	/**
+	* Returns the total point a of this vrcop report repository.
+	*
+	* @return the total point a of this vrcop report repository
+	*/
+	@Override
+	public int getTotalPointA() {
+		return _vrcopReportRepository.getTotalPointA();
+	}
+
+	/**
+	* Returns the total point b of this vrcop report repository.
+	*
+	* @return the total point b of this vrcop report repository
+	*/
+	@Override
+	public int getTotalPointB() {
+		return _vrcopReportRepository.getTotalPointB();
+	}
+
+	/**
+	* Returns the total point c of this vrcop report repository.
+	*
+	* @return the total point c of this vrcop report repository
+	*/
+	@Override
+	public int getTotalPointC() {
+		return _vrcopReportRepository.getTotalPointC();
 	}
 
 	@Override
@@ -342,6 +604,46 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Returns the applicant representative of this vrcop report repository.
+	*
+	* @return the applicant representative of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getApplicantRepresentative() {
+		return _vrcopReportRepository.getApplicantRepresentative();
+	}
+
+	/**
+	* Returns the applicant representative title of this vrcop report repository.
+	*
+	* @return the applicant representative title of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getApplicantRepresentativeTitle() {
+		return _vrcopReportRepository.getApplicantRepresentativeTitle();
+	}
+
+	/**
+	* Returns the cop classification of this vrcop report repository.
+	*
+	* @return the cop classification of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getCopClassification() {
+		return _vrcopReportRepository.getCopClassification();
+	}
+
+	/**
+	* Returns the cop non conformity of this vrcop report repository.
+	*
+	* @return the cop non conformity of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getCopNonConformity() {
+		return _vrcopReportRepository.getCopNonConformity();
+	}
+
+	/**
 	* Returns the cop report metadata of this vrcop report repository.
 	*
 	* @return the cop report metadata of this vrcop report repository
@@ -359,6 +661,26 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public java.lang.String getCopReportNo() {
 		return _vrcopReportRepository.getCopReportNo();
+	}
+
+	/**
+	* Returns the cop report previous no of this vrcop report repository.
+	*
+	* @return the cop report previous no of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getCopReportPreviousNo() {
+		return _vrcopReportRepository.getCopReportPreviousNo();
+	}
+
+	/**
+	* Returns the cop report ref no of this vrcop report repository.
+	*
+	* @return the cop report ref no of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getCopReportRefNo() {
+		return _vrcopReportRepository.getCopReportRefNo();
 	}
 
 	/**
@@ -412,6 +734,116 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Returns the description of this vrcop report repository.
+	*
+	* @return the description of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _vrcopReportRepository.getDescription();
+	}
+
+	/**
+	* Returns the dossier ID ctn of this vrcop report repository.
+	*
+	* @return the dossier ID ctn of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getDossierIdCTN() {
+		return _vrcopReportRepository.getDossierIdCTN();
+	}
+
+	/**
+	* Returns the dossier no of this vrcop report repository.
+	*
+	* @return the dossier no of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getDossierNo() {
+		return _vrcopReportRepository.getDossierNo();
+	}
+
+	/**
+	* Returns the expired status of this vrcop report repository.
+	*
+	* @return the expired status of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getExpiredStatus() {
+		return _vrcopReportRepository.getExpiredStatus();
+	}
+
+	/**
+	* Returns the importer manufacturer address of this vrcop report repository.
+	*
+	* @return the importer manufacturer address of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getImporterManufacturerAddress() {
+		return _vrcopReportRepository.getImporterManufacturerAddress();
+	}
+
+	/**
+	* Returns the importer manufacturer code of this vrcop report repository.
+	*
+	* @return the importer manufacturer code of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getImporterManufacturerCode() {
+		return _vrcopReportRepository.getImporterManufacturerCode();
+	}
+
+	/**
+	* Returns the importer manufacturer name of this vrcop report repository.
+	*
+	* @return the importer manufacturer name of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getImporterManufacturerName() {
+		return _vrcopReportRepository.getImporterManufacturerName();
+	}
+
+	/**
+	* Returns the inspection record no of this vrcop report repository.
+	*
+	* @return the inspection record no of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getInspectionRecordNo() {
+		return _vrcopReportRepository.getInspectionRecordNo();
+	}
+
+	/**
+	* Returns the inspection site of this vrcop report repository.
+	*
+	* @return the inspection site of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getInspectionSite() {
+		return _vrcopReportRepository.getInspectionSite();
+	}
+
+	/**
+	* Returns the markup domestics manufacturer of this vrcop report repository.
+	*
+	* @return the markup domestics manufacturer of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getMarkupDomesticsManufacturer() {
+		return _vrcopReportRepository.getMarkupDomesticsManufacturer();
+	}
+
+	/**
+	* Returns the markup importer of this vrcop report repository.
+	*
+	* @return the markup importer of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getMarkupImporter() {
+		return _vrcopReportRepository.getMarkupImporter();
+	}
+
+	/**
 	* Returns the overseas manufacturer address of this vrcop report repository.
 	*
 	* @return the overseas manufacturer address of this vrcop report repository
@@ -442,6 +874,16 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Returns the product classification description of this vrcop report repository.
+	*
+	* @return the product classification description of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getProductClassificationDescription() {
+		return _vrcopReportRepository.getProductClassificationDescription();
+	}
+
+	/**
 	* Returns the production plant address of this vrcop report repository.
 	*
 	* @return the production plant address of this vrcop report repository
@@ -469,6 +911,16 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public java.lang.String getProductionPlantName() {
 		return _vrcopReportRepository.getProductionPlantName();
+	}
+
+	/**
+	* Returns the sub inspector of this vrcop report repository.
+	*
+	* @return the sub inspector of this vrcop report repository
+	*/
+	@Override
+	public java.lang.String getSubInspector() {
+		return _vrcopReportRepository.getSubInspector();
 	}
 
 	@Override
@@ -512,6 +964,56 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Returns the cop report previous date of this vrcop report repository.
+	*
+	* @return the cop report previous date of this vrcop report repository
+	*/
+	@Override
+	public Date getCopReportPreviousDate() {
+		return _vrcopReportRepository.getCopReportPreviousDate();
+	}
+
+	/**
+	* Returns the cop report ref date of this vrcop report repository.
+	*
+	* @return the cop report ref date of this vrcop report repository
+	*/
+	@Override
+	public Date getCopReportRefDate() {
+		return _vrcopReportRepository.getCopReportRefDate();
+	}
+
+	/**
+	* Returns the inspection date from of this vrcop report repository.
+	*
+	* @return the inspection date from of this vrcop report repository
+	*/
+	@Override
+	public Date getInspectionDateFrom() {
+		return _vrcopReportRepository.getInspectionDateFrom();
+	}
+
+	/**
+	* Returns the inspection date to of this vrcop report repository.
+	*
+	* @return the inspection date to of this vrcop report repository
+	*/
+	@Override
+	public Date getInspectionDateTo() {
+		return _vrcopReportRepository.getInspectionDateTo();
+	}
+
+	/**
+	* Returns the inspection record date of this vrcop report repository.
+	*
+	* @return the inspection record date of this vrcop report repository
+	*/
+	@Override
+	public Date getInspectionRecordDate() {
+		return _vrcopReportRepository.getInspectionRecordDate();
+	}
+
+	/**
 	* Returns the modify date of this vrcop report repository.
 	*
 	* @return the modify date of this vrcop report repository
@@ -552,6 +1054,26 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Returns the corporation ID of this vrcop report repository.
+	*
+	* @return the corporation ID of this vrcop report repository
+	*/
+	@Override
+	public long getCorporationId() {
+		return _vrcopReportRepository.getCorporationId();
+	}
+
+	/**
+	* Returns the dossier ID of this vrcop report repository.
+	*
+	* @return the dossier ID of this vrcop report repository
+	*/
+	@Override
+	public long getDossierId() {
+		return _vrcopReportRepository.getDossierId();
+	}
+
+	/**
 	* Returns the ID of this vrcop report repository.
 	*
 	* @return the ID of this vrcop report repository
@@ -559,6 +1081,26 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public long getId() {
 		return _vrcopReportRepository.getId();
+	}
+
+	/**
+	* Returns the inspection record file entry ID of this vrcop report repository.
+	*
+	* @return the inspection record file entry ID of this vrcop report repository
+	*/
+	@Override
+	public long getInspectionRecordFileEntryId() {
+		return _vrcopReportRepository.getInspectionRecordFileEntryId();
+	}
+
+	/**
+	* Returns the inspector ID of this vrcop report repository.
+	*
+	* @return the inspector ID of this vrcop report repository
+	*/
+	@Override
+	public long getInspectorId() {
+		return _vrcopReportRepository.getInspectorId();
 	}
 
 	/**
@@ -637,6 +1179,28 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Sets the applicant representative of this vrcop report repository.
+	*
+	* @param applicantRepresentative the applicant representative of this vrcop report repository
+	*/
+	@Override
+	public void setApplicantRepresentative(
+		java.lang.String applicantRepresentative) {
+		_vrcopReportRepository.setApplicantRepresentative(applicantRepresentative);
+	}
+
+	/**
+	* Sets the applicant representative title of this vrcop report repository.
+	*
+	* @param applicantRepresentativeTitle the applicant representative title of this vrcop report repository
+	*/
+	@Override
+	public void setApplicantRepresentativeTitle(
+		java.lang.String applicantRepresentativeTitle) {
+		_vrcopReportRepository.setApplicantRepresentativeTitle(applicantRepresentativeTitle);
+	}
+
+	/**
 	* Sets the cop file entry ID of this vrcop report repository.
 	*
 	* @param COPFileEntryId the cop file entry ID of this vrcop report repository
@@ -649,6 +1213,26 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_vrcopReportRepository.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the cop classification of this vrcop report repository.
+	*
+	* @param copClassification the cop classification of this vrcop report repository
+	*/
+	@Override
+	public void setCopClassification(java.lang.String copClassification) {
+		_vrcopReportRepository.setCopClassification(copClassification);
+	}
+
+	/**
+	* Sets the cop non conformity of this vrcop report repository.
+	*
+	* @param copNonConformity the cop non conformity of this vrcop report repository
+	*/
+	@Override
+	public void setCopNonConformity(java.lang.String copNonConformity) {
+		_vrcopReportRepository.setCopNonConformity(copNonConformity);
 	}
 
 	/**
@@ -702,6 +1286,46 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Sets the cop report previous date of this vrcop report repository.
+	*
+	* @param copReportPreviousDate the cop report previous date of this vrcop report repository
+	*/
+	@Override
+	public void setCopReportPreviousDate(Date copReportPreviousDate) {
+		_vrcopReportRepository.setCopReportPreviousDate(copReportPreviousDate);
+	}
+
+	/**
+	* Sets the cop report previous no of this vrcop report repository.
+	*
+	* @param copReportPreviousNo the cop report previous no of this vrcop report repository
+	*/
+	@Override
+	public void setCopReportPreviousNo(java.lang.String copReportPreviousNo) {
+		_vrcopReportRepository.setCopReportPreviousNo(copReportPreviousNo);
+	}
+
+	/**
+	* Sets the cop report ref date of this vrcop report repository.
+	*
+	* @param copReportRefDate the cop report ref date of this vrcop report repository
+	*/
+	@Override
+	public void setCopReportRefDate(Date copReportRefDate) {
+		_vrcopReportRepository.setCopReportRefDate(copReportRefDate);
+	}
+
+	/**
+	* Sets the cop report ref no of this vrcop report repository.
+	*
+	* @param copReportRefNo the cop report ref no of this vrcop report repository
+	*/
+	@Override
+	public void setCopReportRefNo(java.lang.String copReportRefNo) {
+		_vrcopReportRepository.setCopReportRefNo(copReportRefNo);
+	}
+
+	/**
 	* Sets the cop report sign name of this vrcop report repository.
 	*
 	* @param copReportSignName the cop report sign name of this vrcop report repository
@@ -751,6 +1375,56 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 		_vrcopReportRepository.setCopReportType(copReportType);
 	}
 
+	/**
+	* Sets the corporation ID of this vrcop report repository.
+	*
+	* @param corporationId the corporation ID of this vrcop report repository
+	*/
+	@Override
+	public void setCorporationId(long corporationId) {
+		_vrcopReportRepository.setCorporationId(corporationId);
+	}
+
+	/**
+	* Sets the description of this vrcop report repository.
+	*
+	* @param description the description of this vrcop report repository
+	*/
+	@Override
+	public void setDescription(java.lang.String description) {
+		_vrcopReportRepository.setDescription(description);
+	}
+
+	/**
+	* Sets the dossier ID of this vrcop report repository.
+	*
+	* @param dossierId the dossier ID of this vrcop report repository
+	*/
+	@Override
+	public void setDossierId(long dossierId) {
+		_vrcopReportRepository.setDossierId(dossierId);
+	}
+
+	/**
+	* Sets the dossier ID ctn of this vrcop report repository.
+	*
+	* @param dossierIdCTN the dossier ID ctn of this vrcop report repository
+	*/
+	@Override
+	public void setDossierIdCTN(java.lang.String dossierIdCTN) {
+		_vrcopReportRepository.setDossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Sets the dossier no of this vrcop report repository.
+	*
+	* @param dossierNo the dossier no of this vrcop report repository
+	*/
+	@Override
+	public void setDossierNo(java.lang.String dossierNo) {
+		_vrcopReportRepository.setDossierNo(dossierNo);
+	}
+
 	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_vrcopReportRepository.setExpandoBridgeAttributes(expandoBridge);
@@ -768,6 +1442,16 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Sets the expired status of this vrcop report repository.
+	*
+	* @param expiredStatus the expired status of this vrcop report repository
+	*/
+	@Override
+	public void setExpiredStatus(java.lang.String expiredStatus) {
+		_vrcopReportRepository.setExpiredStatus(expiredStatus);
+	}
+
+	/**
 	* Sets the ID of this vrcop report repository.
 	*
 	* @param id the ID of this vrcop report repository
@@ -775,6 +1459,130 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public void setId(long id) {
 		_vrcopReportRepository.setId(id);
+	}
+
+	/**
+	* Sets the importer manufacturer address of this vrcop report repository.
+	*
+	* @param importerManufacturerAddress the importer manufacturer address of this vrcop report repository
+	*/
+	@Override
+	public void setImporterManufacturerAddress(
+		java.lang.String importerManufacturerAddress) {
+		_vrcopReportRepository.setImporterManufacturerAddress(importerManufacturerAddress);
+	}
+
+	/**
+	* Sets the importer manufacturer code of this vrcop report repository.
+	*
+	* @param importerManufacturerCode the importer manufacturer code of this vrcop report repository
+	*/
+	@Override
+	public void setImporterManufacturerCode(
+		java.lang.String importerManufacturerCode) {
+		_vrcopReportRepository.setImporterManufacturerCode(importerManufacturerCode);
+	}
+
+	/**
+	* Sets the importer manufacturer name of this vrcop report repository.
+	*
+	* @param importerManufacturerName the importer manufacturer name of this vrcop report repository
+	*/
+	@Override
+	public void setImporterManufacturerName(
+		java.lang.String importerManufacturerName) {
+		_vrcopReportRepository.setImporterManufacturerName(importerManufacturerName);
+	}
+
+	/**
+	* Sets the inspection date from of this vrcop report repository.
+	*
+	* @param inspectionDateFrom the inspection date from of this vrcop report repository
+	*/
+	@Override
+	public void setInspectionDateFrom(Date inspectionDateFrom) {
+		_vrcopReportRepository.setInspectionDateFrom(inspectionDateFrom);
+	}
+
+	/**
+	* Sets the inspection date to of this vrcop report repository.
+	*
+	* @param inspectionDateTo the inspection date to of this vrcop report repository
+	*/
+	@Override
+	public void setInspectionDateTo(Date inspectionDateTo) {
+		_vrcopReportRepository.setInspectionDateTo(inspectionDateTo);
+	}
+
+	/**
+	* Sets the inspection record date of this vrcop report repository.
+	*
+	* @param inspectionRecordDate the inspection record date of this vrcop report repository
+	*/
+	@Override
+	public void setInspectionRecordDate(Date inspectionRecordDate) {
+		_vrcopReportRepository.setInspectionRecordDate(inspectionRecordDate);
+	}
+
+	/**
+	* Sets the inspection record file entry ID of this vrcop report repository.
+	*
+	* @param inspectionRecordFileEntryId the inspection record file entry ID of this vrcop report repository
+	*/
+	@Override
+	public void setInspectionRecordFileEntryId(long inspectionRecordFileEntryId) {
+		_vrcopReportRepository.setInspectionRecordFileEntryId(inspectionRecordFileEntryId);
+	}
+
+	/**
+	* Sets the inspection record no of this vrcop report repository.
+	*
+	* @param inspectionRecordNo the inspection record no of this vrcop report repository
+	*/
+	@Override
+	public void setInspectionRecordNo(java.lang.String inspectionRecordNo) {
+		_vrcopReportRepository.setInspectionRecordNo(inspectionRecordNo);
+	}
+
+	/**
+	* Sets the inspection site of this vrcop report repository.
+	*
+	* @param inspectionSite the inspection site of this vrcop report repository
+	*/
+	@Override
+	public void setInspectionSite(java.lang.String inspectionSite) {
+		_vrcopReportRepository.setInspectionSite(inspectionSite);
+	}
+
+	/**
+	* Sets the inspector ID of this vrcop report repository.
+	*
+	* @param inspectorId the inspector ID of this vrcop report repository
+	*/
+	@Override
+	public void setInspectorId(long inspectorId) {
+		_vrcopReportRepository.setInspectorId(inspectorId);
+	}
+
+	/**
+	* Sets the markup domestics manufacturer of this vrcop report repository.
+	*
+	* @param markupDomesticsManufacturer the markup domestics manufacturer of this vrcop report repository
+	*/
+	@Override
+	public void setMarkupDomesticsManufacturer(
+		java.lang.String markupDomesticsManufacturer) {
+		_vrcopReportRepository.setMarkupDomesticsManufacturer(markupDomesticsManufacturer);
+	}
+
+	/**
+	* Sets the markup importer of this vrcop report repository.
+	*
+	* @param markupImporter the markup importer of this vrcop report repository
+	*/
+	@Override
+	public void setMarkupImporter(java.lang.String markupImporter) {
+		_vrcopReportRepository.setMarkupImporter(markupImporter);
 	}
 
 	/**
@@ -851,6 +1659,17 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Sets the product classification description of this vrcop report repository.
+	*
+	* @param productClassificationDescription the product classification description of this vrcop report repository
+	*/
+	@Override
+	public void setProductClassificationDescription(
+		java.lang.String productClassificationDescription) {
+		_vrcopReportRepository.setProductClassificationDescription(productClassificationDescription);
+	}
+
+	/**
 	* Sets the production plant address of this vrcop report repository.
 	*
 	* @param productionPlantAddress the production plant address of this vrcop report repository
@@ -892,6 +1711,16 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	}
 
 	/**
+	* Sets the sub inspector of this vrcop report repository.
+	*
+	* @param subInspector the sub inspector of this vrcop report repository
+	*/
+	@Override
+	public void setSubInspector(java.lang.String subInspector) {
+		_vrcopReportRepository.setSubInspector(subInspector);
+	}
+
+	/**
 	* Sets the sync date of this vrcop report repository.
 	*
 	* @param syncDate the sync date of this vrcop report repository
@@ -899,6 +1728,36 @@ public class VRCOPReportRepositoryWrapper implements VRCOPReportRepository,
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_vrcopReportRepository.setSyncDate(syncDate);
+	}
+
+	/**
+	* Sets the total point a of this vrcop report repository.
+	*
+	* @param totalPointA the total point a of this vrcop report repository
+	*/
+	@Override
+	public void setTotalPointA(int totalPointA) {
+		_vrcopReportRepository.setTotalPointA(totalPointA);
+	}
+
+	/**
+	* Sets the total point b of this vrcop report repository.
+	*
+	* @param totalPointB the total point b of this vrcop report repository
+	*/
+	@Override
+	public void setTotalPointB(int totalPointB) {
+		_vrcopReportRepository.setTotalPointB(totalPointB);
+	}
+
+	/**
+	* Sets the total point c of this vrcop report repository.
+	*
+	* @param totalPointC the total point c of this vrcop report repository
+	*/
+	@Override
+	public void setTotalPointC(int totalPointC) {
+		_vrcopReportRepository.setTotalPointC(totalPointC);
 	}
 
 	@Override

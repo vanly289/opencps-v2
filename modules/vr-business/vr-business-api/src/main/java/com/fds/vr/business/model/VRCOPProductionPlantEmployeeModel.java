@@ -206,6 +206,65 @@ public interface VRCOPProductionPlantEmployeeModel extends BaseModel<VRCOPProduc
 	 */
 	public void setSyncDate(Date syncDate);
 
+	/**
+	 * Returns the working position of this vrcop production plant employee.
+	 *
+	 * @return the working position of this vrcop production plant employee
+	 */
+	@AutoEscape
+	public String getWorkingPosition();
+
+	/**
+	 * Sets the working position of this vrcop production plant employee.
+	 *
+	 * @param workingPosition the working position of this vrcop production plant employee
+	 */
+	public void setWorkingPosition(String workingPosition);
+
+	/**
+	 * Returns the dossier ID of this vrcop production plant employee.
+	 *
+	 * @return the dossier ID of this vrcop production plant employee
+	 */
+	public long getDossierId();
+
+	/**
+	 * Sets the dossier ID of this vrcop production plant employee.
+	 *
+	 * @param dossierId the dossier ID of this vrcop production plant employee
+	 */
+	public void setDossierId(long dossierId);
+
+	/**
+	 * Returns the dossier ID ctn of this vrcop production plant employee.
+	 *
+	 * @return the dossier ID ctn of this vrcop production plant employee
+	 */
+	@AutoEscape
+	public String getDossierIdCTN();
+
+	/**
+	 * Sets the dossier ID ctn of this vrcop production plant employee.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn of this vrcop production plant employee
+	 */
+	public void setDossierIdCTN(String dossierIdCTN);
+
+	/**
+	 * Returns the dossier no of this vrcop production plant employee.
+	 *
+	 * @return the dossier no of this vrcop production plant employee
+	 */
+	@AutoEscape
+	public String getDossierNo();
+
+	/**
+	 * Sets the dossier no of this vrcop production plant employee.
+	 *
+	 * @param dossierNo the dossier no of this vrcop production plant employee
+	 */
+	public void setDossierNo(String dossierNo);
+
 	@Override
 	public boolean isNew();
 

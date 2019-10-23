@@ -4062,6 +4062,37 @@ public class VRCOPReportRepositoryPersistenceImpl extends BasePersistenceImpl<VR
 		vrcopReportRepositoryImpl.setCOPFileEntryId(vrcopReportRepository.getCOPFileEntryId());
 		vrcopReportRepositoryImpl.setModifyDate(vrcopReportRepository.getModifyDate());
 		vrcopReportRepositoryImpl.setSyncDate(vrcopReportRepository.getSyncDate());
+		vrcopReportRepositoryImpl.setImporterManufacturerCode(vrcopReportRepository.getImporterManufacturerCode());
+		vrcopReportRepositoryImpl.setImporterManufacturerName(vrcopReportRepository.getImporterManufacturerName());
+		vrcopReportRepositoryImpl.setImporterManufacturerAddress(vrcopReportRepository.getImporterManufacturerAddress());
+		vrcopReportRepositoryImpl.setMarkupDomesticsManufacturer(vrcopReportRepository.getMarkupDomesticsManufacturer());
+		vrcopReportRepositoryImpl.setMarkupImporter(vrcopReportRepository.getMarkupImporter());
+		vrcopReportRepositoryImpl.setCopClassification(vrcopReportRepository.getCopClassification());
+		vrcopReportRepositoryImpl.setProductClassificationDescription(vrcopReportRepository.getProductClassificationDescription());
+		vrcopReportRepositoryImpl.setTotalPointA(vrcopReportRepository.getTotalPointA());
+		vrcopReportRepositoryImpl.setTotalPointB(vrcopReportRepository.getTotalPointB());
+		vrcopReportRepositoryImpl.setTotalPointC(vrcopReportRepository.getTotalPointC());
+		vrcopReportRepositoryImpl.setCopNonConformity(vrcopReportRepository.getCopNonConformity());
+		vrcopReportRepositoryImpl.setInspectionRecordNo(vrcopReportRepository.getInspectionRecordNo());
+		vrcopReportRepositoryImpl.setInspectionRecordDate(vrcopReportRepository.getInspectionRecordDate());
+		vrcopReportRepositoryImpl.setCorporationId(vrcopReportRepository.getCorporationId());
+		vrcopReportRepositoryImpl.setInspectorId(vrcopReportRepository.getInspectorId());
+		vrcopReportRepositoryImpl.setInspectionSite(vrcopReportRepository.getInspectionSite());
+		vrcopReportRepositoryImpl.setInspectionDateFrom(vrcopReportRepository.getInspectionDateFrom());
+		vrcopReportRepositoryImpl.setInspectionDateTo(vrcopReportRepository.getInspectionDateTo());
+		vrcopReportRepositoryImpl.setSubInspector(vrcopReportRepository.getSubInspector());
+		vrcopReportRepositoryImpl.setDescription(vrcopReportRepository.getDescription());
+		vrcopReportRepositoryImpl.setApplicantRepresentative(vrcopReportRepository.getApplicantRepresentative());
+		vrcopReportRepositoryImpl.setApplicantRepresentativeTitle(vrcopReportRepository.getApplicantRepresentativeTitle());
+		vrcopReportRepositoryImpl.setInspectionRecordFileEntryId(vrcopReportRepository.getInspectionRecordFileEntryId());
+		vrcopReportRepositoryImpl.setCopReportRefNo(vrcopReportRepository.getCopReportRefNo());
+		vrcopReportRepositoryImpl.setCopReportRefDate(vrcopReportRepository.getCopReportRefDate());
+		vrcopReportRepositoryImpl.setCopReportPreviousNo(vrcopReportRepository.getCopReportPreviousNo());
+		vrcopReportRepositoryImpl.setCopReportPreviousDate(vrcopReportRepository.getCopReportPreviousDate());
+		vrcopReportRepositoryImpl.setExpiredStatus(vrcopReportRepository.getExpiredStatus());
+		vrcopReportRepositoryImpl.setDossierId(vrcopReportRepository.getDossierId());
+		vrcopReportRepositoryImpl.setDossierIdCTN(vrcopReportRepository.getDossierIdCTN());
+		vrcopReportRepositoryImpl.setDossierNo(vrcopReportRepository.getDossierNo());
 
 		return vrcopReportRepositoryImpl;
 	}

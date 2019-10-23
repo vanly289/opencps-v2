@@ -66,7 +66,7 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -122,6 +122,10 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 		sb.append(syncDate);
 		sb.append(", certificaterecordno=");
 		sb.append(certificaterecordno);
+		sb.append(", postPrintingStatus=");
+		sb.append(postPrintingStatus);
+		sb.append(", qrCode=");
+		sb.append(qrCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -263,6 +267,15 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 			vrVehicleRecordImpl.setCertificaterecordno(certificaterecordno);
 		}
 
+		vrVehicleRecordImpl.setPostPrintingStatus(postPrintingStatus);
+
+		if (qrCode == null) {
+			vrVehicleRecordImpl.setQrCode(StringPool.BLANK);
+		}
+		else {
+			vrVehicleRecordImpl.setQrCode(qrCode);
+		}
+
 		vrVehicleRecordImpl.resetOriginalValues();
 
 		return vrVehicleRecordImpl;
@@ -306,6 +319,9 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 		certificaterecordno = objectInput.readUTF();
+
+		postPrintingStatus = objectInput.readInt();
+		qrCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -427,6 +443,15 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 		else {
 			objectOutput.writeUTF(certificaterecordno);
 		}
+
+		objectOutput.writeInt(postPrintingStatus);
+
+		if (qrCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(qrCode);
+		}
 	}
 
 	public long id;
@@ -456,4 +481,6 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 	public long modifyDate;
 	public long syncDate;
 	public String certificaterecordno;
+	public int postPrintingStatus;
+	public String qrCode;
 }

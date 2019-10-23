@@ -340,6 +340,321 @@ public interface VRCOPProductionPlantEquipmentModel extends BaseModel<VRCOPProdu
 	 */
 	public void setSyncDate(Date syncDate);
 
+	/**
+	 * Returns the equipment serial no of this vrcop production plant equipment.
+	 *
+	 * @return the equipment serial no of this vrcop production plant equipment
+	 */
+	@AutoEscape
+	public String getEquipmentSerialNo();
+
+	/**
+	 * Sets the equipment serial no of this vrcop production plant equipment.
+	 *
+	 * @param equipmentSerialNo the equipment serial no of this vrcop production plant equipment
+	 */
+	public void setEquipmentSerialNo(String equipmentSerialNo);
+
+	/**
+	 * Returns the production year of this vrcop production plant equipment.
+	 *
+	 * @return the production year of this vrcop production plant equipment
+	 */
+	public Date getProductionYear();
+
+	/**
+	 * Sets the production year of this vrcop production plant equipment.
+	 *
+	 * @param productionYear the production year of this vrcop production plant equipment
+	 */
+	public void setProductionYear(Date productionYear);
+
+	/**
+	 * Returns the registration year of this vrcop production plant equipment.
+	 *
+	 * @return the registration year of this vrcop production plant equipment
+	 */
+	public Date getRegistrationYear();
+
+	/**
+	 * Sets the registration year of this vrcop production plant equipment.
+	 *
+	 * @param registrationYear the registration year of this vrcop production plant equipment
+	 */
+	public void setRegistrationYear(Date registrationYear);
+
+	/**
+	 * Returns the markup xcg of this vrcop production plant equipment.
+	 *
+	 * @return the markup xcg of this vrcop production plant equipment
+	 */
+	public long getMarkupXCG();
+
+	/**
+	 * Sets the markup xcg of this vrcop production plant equipment.
+	 *
+	 * @param markupXCG the markup xcg of this vrcop production plant equipment
+	 */
+	public void setMarkupXCG(long markupXCG);
+
+	/**
+	 * Returns the markup xcgnk of this vrcop production plant equipment.
+	 *
+	 * @return the markup xcgnk of this vrcop production plant equipment
+	 */
+	public long getMarkupXCGNK();
+
+	/**
+	 * Sets the markup xcgnk of this vrcop production plant equipment.
+	 *
+	 * @param markupXCGNK the markup xcgnk of this vrcop production plant equipment
+	 */
+	public void setMarkupXCGNK(long markupXCGNK);
+
+	/**
+	 * Returns the markup smrm of this vrcop production plant equipment.
+	 *
+	 * @return the markup smrm of this vrcop production plant equipment
+	 */
+	public long getMarkupSMRM();
+
+	/**
+	 * Sets the markup smrm of this vrcop production plant equipment.
+	 *
+	 * @param markupSMRM the markup smrm of this vrcop production plant equipment
+	 */
+	public void setMarkupSMRM(long markupSMRM);
+
+	/**
+	 * Returns the markup xch of this vrcop production plant equipment.
+	 *
+	 * @return the markup xch of this vrcop production plant equipment
+	 */
+	public long getMarkupXCH();
+
+	/**
+	 * Sets the markup xch of this vrcop production plant equipment.
+	 *
+	 * @param markupXCH the markup xch of this vrcop production plant equipment
+	 */
+	public void setMarkupXCH(long markupXCH);
+
+	/**
+	 * Returns the markup xcn of this vrcop production plant equipment.
+	 *
+	 * @return the markup xcn of this vrcop production plant equipment
+	 */
+	public long getMarkupXCN();
+
+	/**
+	 * Sets the markup xcn of this vrcop production plant equipment.
+	 *
+	 * @param markupXCN the markup xcn of this vrcop production plant equipment
+	 */
+	public void setMarkupXCN(long markupXCN);
+
+	/**
+	 * Returns the markup xmy of this vrcop production plant equipment.
+	 *
+	 * @return the markup xmy of this vrcop production plant equipment
+	 */
+	public long getMarkupXMY();
+
+	/**
+	 * Sets the markup xmy of this vrcop production plant equipment.
+	 *
+	 * @param markupXMY the markup xmy of this vrcop production plant equipment
+	 */
+	public void setMarkupXMY(long markupXMY);
+
+	/**
+	 * Returns the markup xdd of this vrcop production plant equipment.
+	 *
+	 * @return the markup xdd of this vrcop production plant equipment
+	 */
+	public long getMarkupXDD();
+
+	/**
+	 * Sets the markup xdd of this vrcop production plant equipment.
+	 *
+	 * @param markupXDD the markup xdd of this vrcop production plant equipment
+	 */
+	public void setMarkupXDD(long markupXDD);
+
+	/**
+	 * Returns the testing result of this vrcop production plant equipment.
+	 *
+	 * @return the testing result of this vrcop production plant equipment
+	 */
+	public int getTestingResult();
+
+	/**
+	 * Sets the testing result of this vrcop production plant equipment.
+	 *
+	 * @param testingResult the testing result of this vrcop production plant equipment
+	 */
+	public void setTestingResult(int testingResult);
+
+	/**
+	 * Returns the description of this vrcop production plant equipment.
+	 *
+	 * @return the description of this vrcop production plant equipment
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this vrcop production plant equipment.
+	 *
+	 * @param description the description of this vrcop production plant equipment
+	 */
+	public void setDescription(String description);
+
+	/**
+	 * Returns the inspection record number of this vrcop production plant equipment.
+	 *
+	 * @return the inspection record number of this vrcop production plant equipment
+	 */
+	@AutoEscape
+	public String getInspectionRecordNumber();
+
+	/**
+	 * Sets the inspection record number of this vrcop production plant equipment.
+	 *
+	 * @param inspectionRecordNumber the inspection record number of this vrcop production plant equipment
+	 */
+	public void setInspectionRecordNumber(String inspectionRecordNumber);
+
+	/**
+	 * Returns the inspection record date of this vrcop production plant equipment.
+	 *
+	 * @return the inspection record date of this vrcop production plant equipment
+	 */
+	public Date getInspectionRecordDate();
+
+	/**
+	 * Sets the inspection record date of this vrcop production plant equipment.
+	 *
+	 * @param inspectionRecordDate the inspection record date of this vrcop production plant equipment
+	 */
+	public void setInspectionRecordDate(Date inspectionRecordDate);
+
+	/**
+	 * Returns the expired date of this vrcop production plant equipment.
+	 *
+	 * @return the expired date of this vrcop production plant equipment
+	 */
+	public Date getExpiredDate();
+
+	/**
+	 * Sets the expired date of this vrcop production plant equipment.
+	 *
+	 * @param expiredDate the expired date of this vrcop production plant equipment
+	 */
+	public void setExpiredDate(Date expiredDate);
+
+	/**
+	 * Returns the expired status of this vrcop production plant equipment.
+	 *
+	 * @return the expired status of this vrcop production plant equipment
+	 */
+	public int getExpiredStatus();
+
+	/**
+	 * Sets the expired status of this vrcop production plant equipment.
+	 *
+	 * @param expiredStatus the expired status of this vrcop production plant equipment
+	 */
+	public void setExpiredStatus(int expiredStatus);
+
+	/**
+	 * Returns the stamp testing no of this vrcop production plant equipment.
+	 *
+	 * @return the stamp testing no of this vrcop production plant equipment
+	 */
+	@AutoEscape
+	public String getStampTestingNo();
+
+	/**
+	 * Sets the stamp testing no of this vrcop production plant equipment.
+	 *
+	 * @param stampTestingNo the stamp testing no of this vrcop production plant equipment
+	 */
+	public void setStampTestingNo(String stampTestingNo);
+
+	/**
+	 * Returns the dossier ID of this vrcop production plant equipment.
+	 *
+	 * @return the dossier ID of this vrcop production plant equipment
+	 */
+	public long getDossierId();
+
+	/**
+	 * Sets the dossier ID of this vrcop production plant equipment.
+	 *
+	 * @param dossierId the dossier ID of this vrcop production plant equipment
+	 */
+	public void setDossierId(long dossierId);
+
+	/**
+	 * Returns the dossier ID ctn of this vrcop production plant equipment.
+	 *
+	 * @return the dossier ID ctn of this vrcop production plant equipment
+	 */
+	@AutoEscape
+	public String getDossierIdCTN();
+
+	/**
+	 * Sets the dossier ID ctn of this vrcop production plant equipment.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn of this vrcop production plant equipment
+	 */
+	public void setDossierIdCTN(String dossierIdCTN);
+
+	/**
+	 * Returns the dossier no of this vrcop production plant equipment.
+	 *
+	 * @return the dossier no of this vrcop production plant equipment
+	 */
+	@AutoEscape
+	public String getDossierNo();
+
+	/**
+	 * Sets the dossier no of this vrcop production plant equipment.
+	 *
+	 * @param dossierNo the dossier no of this vrcop production plant equipment
+	 */
+	public void setDossierNo(String dossierNo);
+
+	/**
+	 * Returns the production plant ID of this vrcop production plant equipment.
+	 *
+	 * @return the production plant ID of this vrcop production plant equipment
+	 */
+	public long getProductionPlantId();
+
+	/**
+	 * Sets the production plant ID of this vrcop production plant equipment.
+	 *
+	 * @param productionPlantId the production plant ID of this vrcop production plant equipment
+	 */
+	public void setProductionPlantId(long productionPlantId);
+
+	/**
+	 * Returns the production plant code of this vrcop production plant equipment.
+	 *
+	 * @return the production plant code of this vrcop production plant equipment
+	 */
+	@AutoEscape
+	public String getProductionPlantCode();
+
+	/**
+	 * Sets the production plant code of this vrcop production plant equipment.
+	 *
+	 * @param productionPlantCode the production plant code of this vrcop production plant equipment
+	 */
+	public void setProductionPlantCode(String productionPlantCode);
+
 	@Override
 	public boolean isNew();
 

@@ -67,7 +67,7 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -103,6 +103,12 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", productionPlantCode=");
+		sb.append(productionPlantCode);
+		sb.append(", productionPlantId=");
+		sb.append(productionPlantId);
+		sb.append(", quantity=");
+		sb.append(quantity);
 		sb.append("}");
 
 		return sb.toString();
@@ -209,6 +215,16 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 			vrProductionPlantProdEquipmentImpl.setSyncDate(new Date(syncDate));
 		}
 
+		if (productionPlantCode == null) {
+			vrProductionPlantProdEquipmentImpl.setProductionPlantCode(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantProdEquipmentImpl.setProductionPlantCode(productionPlantCode);
+		}
+
+		vrProductionPlantProdEquipmentImpl.setProductionPlantId(productionPlantId);
+		vrProductionPlantProdEquipmentImpl.setQuantity(quantity);
+
 		vrProductionPlantProdEquipmentImpl.resetOriginalValues();
 
 		return vrProductionPlantProdEquipmentImpl;
@@ -236,6 +252,11 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 		notes = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+		productionPlantCode = objectInput.readUTF();
+
+		productionPlantId = objectInput.readLong();
+
+		quantity = objectInput.readLong();
 	}
 
 	@Override
@@ -328,6 +349,17 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		if (productionPlantCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantCode);
+		}
+
+		objectOutput.writeLong(productionPlantId);
+
+		objectOutput.writeLong(quantity);
 	}
 
 	public long id;
@@ -347,4 +379,7 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 	public String notes;
 	public long modifyDate;
 	public long syncDate;
+	public String productionPlantCode;
+	public long productionPlantId;
+	public long quantity;
 }

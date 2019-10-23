@@ -76,6 +76,10 @@ public class VRCOPProdEquipmentWrapper implements VRCOPProdEquipment,
 		attributes.put("notes", getNotes());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("quantity", getQuantity());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 
 		return attributes;
 	}
@@ -191,6 +195,30 @@ public class VRCOPProdEquipmentWrapper implements VRCOPProdEquipment,
 		if (syncDate != null) {
 			setSyncDate(syncDate);
 		}
+
+		Integer quantity = (Integer)attributes.get("quantity");
+
+		if (quantity != null) {
+			setQuantity(quantity);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
+		}
 	}
 
 	@Override
@@ -231,6 +259,16 @@ public class VRCOPProdEquipmentWrapper implements VRCOPProdEquipment,
 	@Override
 	public int compareTo(VRCOPProdEquipment vrcopProdEquipment) {
 		return _vrcopProdEquipment.compareTo(vrcopProdEquipment);
+	}
+
+	/**
+	* Returns the quantity of this vrcop prod equipment.
+	*
+	* @return the quantity of this vrcop prod equipment
+	*/
+	@Override
+	public int getQuantity() {
+		return _vrcopProdEquipment.getQuantity();
 	}
 
 	@Override
@@ -276,6 +314,26 @@ public class VRCOPProdEquipmentWrapper implements VRCOPProdEquipment,
 	@Override
 	public java.lang.String getDesignSymbolNo() {
 		return _vrcopProdEquipment.getDesignSymbolNo();
+	}
+
+	/**
+	* Returns the dossier ID ctn of this vrcop prod equipment.
+	*
+	* @return the dossier ID ctn of this vrcop prod equipment
+	*/
+	@Override
+	public java.lang.String getDossierIdCTN() {
+		return _vrcopProdEquipment.getDossierIdCTN();
+	}
+
+	/**
+	* Returns the dossier no of this vrcop prod equipment.
+	*
+	* @return the dossier no of this vrcop prod equipment
+	*/
+	@Override
+	public java.lang.String getDossierNo() {
+		return _vrcopProdEquipment.getDossierNo();
 	}
 
 	/**
@@ -409,6 +467,16 @@ public class VRCOPProdEquipmentWrapper implements VRCOPProdEquipment,
 	}
 
 	/**
+	* Returns the dossier ID of this vrcop prod equipment.
+	*
+	* @return the dossier ID of this vrcop prod equipment
+	*/
+	@Override
+	public long getDossierId() {
+		return _vrcopProdEquipment.getDossierId();
+	}
+
+	/**
 	* Returns the ID of this vrcop prod equipment.
 	*
 	* @return the ID of this vrcop prod equipment
@@ -496,6 +564,36 @@ public class VRCOPProdEquipmentWrapper implements VRCOPProdEquipment,
 	@Override
 	public void setDesignSymbolNo(java.lang.String designSymbolNo) {
 		_vrcopProdEquipment.setDesignSymbolNo(designSymbolNo);
+	}
+
+	/**
+	* Sets the dossier ID of this vrcop prod equipment.
+	*
+	* @param dossierId the dossier ID of this vrcop prod equipment
+	*/
+	@Override
+	public void setDossierId(long dossierId) {
+		_vrcopProdEquipment.setDossierId(dossierId);
+	}
+
+	/**
+	* Sets the dossier ID ctn of this vrcop prod equipment.
+	*
+	* @param dossierIdCTN the dossier ID ctn of this vrcop prod equipment
+	*/
+	@Override
+	public void setDossierIdCTN(java.lang.String dossierIdCTN) {
+		_vrcopProdEquipment.setDossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Sets the dossier no of this vrcop prod equipment.
+	*
+	* @param dossierNo the dossier no of this vrcop prod equipment
+	*/
+	@Override
+	public void setDossierNo(java.lang.String dossierNo) {
+		_vrcopProdEquipment.setDossierNo(dossierNo);
 	}
 
 	/**
@@ -632,6 +730,16 @@ public class VRCOPProdEquipmentWrapper implements VRCOPProdEquipment,
 	@Override
 	public void setProductionCountryCode(java.lang.String productionCountryCode) {
 		_vrcopProdEquipment.setProductionCountryCode(productionCountryCode);
+	}
+
+	/**
+	* Sets the quantity of this vrcop prod equipment.
+	*
+	* @param quantity the quantity of this vrcop prod equipment
+	*/
+	@Override
+	public void setQuantity(int quantity) {
+		_vrcopProdEquipment.setQuantity(quantity);
 	}
 
 	/**

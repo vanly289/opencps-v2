@@ -1573,6 +1573,28 @@ public class VRCOPProductionPlantEquipmentPersistenceImpl
 		vrcopProductionPlantEquipmentImpl.setNotes(vrcopProductionPlantEquipment.getNotes());
 		vrcopProductionPlantEquipmentImpl.setModifyDate(vrcopProductionPlantEquipment.getModifyDate());
 		vrcopProductionPlantEquipmentImpl.setSyncDate(vrcopProductionPlantEquipment.getSyncDate());
+		vrcopProductionPlantEquipmentImpl.setEquipmentSerialNo(vrcopProductionPlantEquipment.getEquipmentSerialNo());
+		vrcopProductionPlantEquipmentImpl.setProductionYear(vrcopProductionPlantEquipment.getProductionYear());
+		vrcopProductionPlantEquipmentImpl.setRegistrationYear(vrcopProductionPlantEquipment.getRegistrationYear());
+		vrcopProductionPlantEquipmentImpl.setMarkupXCG(vrcopProductionPlantEquipment.getMarkupXCG());
+		vrcopProductionPlantEquipmentImpl.setMarkupXCGNK(vrcopProductionPlantEquipment.getMarkupXCGNK());
+		vrcopProductionPlantEquipmentImpl.setMarkupSMRM(vrcopProductionPlantEquipment.getMarkupSMRM());
+		vrcopProductionPlantEquipmentImpl.setMarkupXCH(vrcopProductionPlantEquipment.getMarkupXCH());
+		vrcopProductionPlantEquipmentImpl.setMarkupXCN(vrcopProductionPlantEquipment.getMarkupXCN());
+		vrcopProductionPlantEquipmentImpl.setMarkupXMY(vrcopProductionPlantEquipment.getMarkupXMY());
+		vrcopProductionPlantEquipmentImpl.setMarkupXDD(vrcopProductionPlantEquipment.getMarkupXDD());
+		vrcopProductionPlantEquipmentImpl.setTestingResult(vrcopProductionPlantEquipment.getTestingResult());
+		vrcopProductionPlantEquipmentImpl.setDescription(vrcopProductionPlantEquipment.getDescription());
+		vrcopProductionPlantEquipmentImpl.setInspectionRecordNumber(vrcopProductionPlantEquipment.getInspectionRecordNumber());
+		vrcopProductionPlantEquipmentImpl.setInspectionRecordDate(vrcopProductionPlantEquipment.getInspectionRecordDate());
+		vrcopProductionPlantEquipmentImpl.setExpiredDate(vrcopProductionPlantEquipment.getExpiredDate());
+		vrcopProductionPlantEquipmentImpl.setExpiredStatus(vrcopProductionPlantEquipment.getExpiredStatus());
+		vrcopProductionPlantEquipmentImpl.setStampTestingNo(vrcopProductionPlantEquipment.getStampTestingNo());
+		vrcopProductionPlantEquipmentImpl.setDossierId(vrcopProductionPlantEquipment.getDossierId());
+		vrcopProductionPlantEquipmentImpl.setDossierIdCTN(vrcopProductionPlantEquipment.getDossierIdCTN());
+		vrcopProductionPlantEquipmentImpl.setDossierNo(vrcopProductionPlantEquipment.getDossierNo());
+		vrcopProductionPlantEquipmentImpl.setProductionPlantId(vrcopProductionPlantEquipment.getProductionPlantId());
+		vrcopProductionPlantEquipmentImpl.setProductionPlantCode(vrcopProductionPlantEquipment.getProductionPlantCode());
 
 		return vrcopProductionPlantEquipmentImpl;
 	}

@@ -41,8 +41,11 @@ public class VRProductionPlantEmployeeSoap implements Serializable {
 		soapModel.setEmployeeName(model.getEmployeeName());
 		soapModel.setEmployeeCertificateNo(model.getEmployeeCertificateNo());
 		soapModel.setTrainningAt(model.getTrainningAt());
+		soapModel.setWorkingPosition(model.getWorkingPosition());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
+		soapModel.setProductionPlantCode(model.getProductionPlantCode());
+		soapModel.setProductionPlantId(model.getProductionPlantId());
 
 		return soapModel;
 	}
@@ -154,6 +157,14 @@ public class VRProductionPlantEmployeeSoap implements Serializable {
 		_trainningAt = trainningAt;
 	}
 
+	public String getWorkingPosition() {
+		return _workingPosition;
+	}
+
+	public void setWorkingPosition(String workingPosition) {
+		_workingPosition = workingPosition;
+	}
+
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -170,6 +181,22 @@ public class VRProductionPlantEmployeeSoap implements Serializable {
 		_syncDate = syncDate;
 	}
 
+	public String getProductionPlantCode() {
+		return _productionPlantCode;
+	}
+
+	public void setProductionPlantCode(String productionPlantCode) {
+		_productionPlantCode = productionPlantCode;
+	}
+
+	public long getProductionPlantId() {
+		return _productionPlantId;
+	}
+
+	public void setProductionPlantId(long productionPlantId) {
+		_productionPlantId = productionPlantId;
+	}
+
 	private long _id;
 	private long _mtCore;
 	private long _productPlantID;
@@ -177,6 +204,9 @@ public class VRProductionPlantEmployeeSoap implements Serializable {
 	private String _employeeName;
 	private String _employeeCertificateNo;
 	private String _trainningAt;
+	private String _workingPosition;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private String _productionPlantCode;
+	private long _productionPlantId;
 }

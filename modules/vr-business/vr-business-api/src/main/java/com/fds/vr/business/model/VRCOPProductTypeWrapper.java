@@ -77,6 +77,9 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 		attributes.put("remarks", getRemarks());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 
 		return attributes;
 	}
@@ -188,6 +191,24 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 		if (syncDate != null) {
 			setSyncDate(syncDate);
 		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
+		}
 	}
 
 	@Override
@@ -273,6 +294,26 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 	@Override
 	public java.lang.String getDesignSymbolNo() {
 		return _vrcopProductType.getDesignSymbolNo();
+	}
+
+	/**
+	* Returns the dossier ID ctn of this vrcop product type.
+	*
+	* @return the dossier ID ctn of this vrcop product type
+	*/
+	@Override
+	public java.lang.String getDossierIdCTN() {
+		return _vrcopProductType.getDossierIdCTN();
+	}
+
+	/**
+	* Returns the dossier no of this vrcop product type.
+	*
+	* @return the dossier no of this vrcop product type
+	*/
+	@Override
+	public java.lang.String getDossierNo() {
+		return _vrcopProductType.getDossierNo();
 	}
 
 	/**
@@ -396,6 +437,16 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 	}
 
 	/**
+	* Returns the dossier ID of this vrcop product type.
+	*
+	* @return the dossier ID of this vrcop product type
+	*/
+	@Override
+	public long getDossierId() {
+		return _vrcopProductType.getDossierId();
+	}
+
+	/**
 	* Returns the ID of this vrcop product type.
 	*
 	* @return the ID of this vrcop product type
@@ -483,6 +534,36 @@ public class VRCOPProductTypeWrapper implements VRCOPProductType,
 	@Override
 	public void setDesignSymbolNo(java.lang.String designSymbolNo) {
 		_vrcopProductType.setDesignSymbolNo(designSymbolNo);
+	}
+
+	/**
+	* Sets the dossier ID of this vrcop product type.
+	*
+	* @param dossierId the dossier ID of this vrcop product type
+	*/
+	@Override
+	public void setDossierId(long dossierId) {
+		_vrcopProductType.setDossierId(dossierId);
+	}
+
+	/**
+	* Sets the dossier ID ctn of this vrcop product type.
+	*
+	* @param dossierIdCTN the dossier ID ctn of this vrcop product type
+	*/
+	@Override
+	public void setDossierIdCTN(java.lang.String dossierIdCTN) {
+		_vrcopProductType.setDossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Sets the dossier no of this vrcop product type.
+	*
+	* @param dossierNo the dossier no of this vrcop product type
+	*/
+	@Override
+	public void setDossierNo(java.lang.String dossierNo) {
+		_vrcopProductType.setDossierNo(dossierNo);
 	}
 
 	@Override

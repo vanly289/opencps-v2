@@ -297,6 +297,35 @@ public interface VRProductTypeModel extends BaseModel<VRProductType> {
 	 */
 	public void setSyncDate(Date syncDate);
 
+	/**
+	 * Returns the production plant ID of this vr product type.
+	 *
+	 * @return the production plant ID of this vr product type
+	 */
+	public long getProductionPlantId();
+
+	/**
+	 * Sets the production plant ID of this vr product type.
+	 *
+	 * @param productionPlantId the production plant ID of this vr product type
+	 */
+	public void setProductionPlantId(long productionPlantId);
+
+	/**
+	 * Returns the production plant code of this vr product type.
+	 *
+	 * @return the production plant code of this vr product type
+	 */
+	@AutoEscape
+	public String getProductionPlantCode();
+
+	/**
+	 * Sets the production plant code of this vr product type.
+	 *
+	 * @param productionPlantCode the production plant code of this vr product type
+	 */
+	public void setProductionPlantCode(String productionPlantCode);
+
 	@Override
 	public boolean isNew();
 
