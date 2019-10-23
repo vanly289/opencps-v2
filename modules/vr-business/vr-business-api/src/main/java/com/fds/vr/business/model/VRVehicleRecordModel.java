@@ -453,6 +453,35 @@ public interface VRVehicleRecordModel extends BaseModel<VRVehicleRecord> {
 	 */
 	public void setCertificaterecordno(String certificaterecordno);
 
+	/**
+	 * Returns the post printing status of this vr vehicle record.
+	 *
+	 * @return the post printing status of this vr vehicle record
+	 */
+	public int getPostPrintingStatus();
+
+	/**
+	 * Sets the post printing status of this vr vehicle record.
+	 *
+	 * @param postPrintingStatus the post printing status of this vr vehicle record
+	 */
+	public void setPostPrintingStatus(int postPrintingStatus);
+
+	/**
+	 * Returns the qr code of this vr vehicle record.
+	 *
+	 * @return the qr code of this vr vehicle record
+	 */
+	@AutoEscape
+	public String getQrCode();
+
+	/**
+	 * Sets the qr code of this vr vehicle record.
+	 *
+	 * @param qrCode the qr code of this vr vehicle record
+	 */
+	public void setQrCode(String qrCode);
+
 	@Override
 	public boolean isNew();
 

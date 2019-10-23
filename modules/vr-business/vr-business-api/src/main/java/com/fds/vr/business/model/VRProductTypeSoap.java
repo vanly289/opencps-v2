@@ -49,6 +49,8 @@ public class VRProductTypeSoap implements Serializable {
 		soapModel.setDesignSymbolNo(model.getDesignSymbolNo());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
+		soapModel.setProductionPlantId(model.getProductionPlantId());
+		soapModel.setProductionPlantCode(model.getProductionPlantCode());
 
 		return soapModel;
 	}
@@ -230,6 +232,22 @@ public class VRProductTypeSoap implements Serializable {
 		_syncDate = syncDate;
 	}
 
+	public long getProductionPlantId() {
+		return _productionPlantId;
+	}
+
+	public void setProductionPlantId(long productionPlantId) {
+		_productionPlantId = productionPlantId;
+	}
+
+	public String getProductionPlantCode() {
+		return _productionPlantCode;
+	}
+
+	public void setProductionPlantCode(String productionPlantCode) {
+		_productionPlantCode = productionPlantCode;
+	}
+
 	private long _id;
 	private long _mtCore;
 	private long _productPlantID;
@@ -246,4 +264,6 @@ public class VRProductTypeSoap implements Serializable {
 	private String _designSymbolNo;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private long _productionPlantId;
+	private String _productionPlantCode;
 }

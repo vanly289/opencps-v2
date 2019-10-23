@@ -77,6 +77,9 @@ public class VRProductionPlantProdEquipmentWrapper
 		attributes.put("notes", getNotes());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("productionPlantCode", getProductionPlantCode());
+		attributes.put("productionPlantId", getProductionPlantId());
+		attributes.put("quantity", getQuantity());
 
 		return attributes;
 	}
@@ -184,6 +187,25 @@ public class VRProductionPlantProdEquipmentWrapper
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		String productionPlantCode = (String)attributes.get(
+				"productionPlantCode");
+
+		if (productionPlantCode != null) {
+			setProductionPlantCode(productionPlantCode);
+		}
+
+		Long productionPlantId = (Long)attributes.get("productionPlantId");
+
+		if (productionPlantId != null) {
+			setProductionPlantId(productionPlantId);
+		}
+
+		Long quantity = (Long)attributes.get("quantity");
+
+		if (quantity != null) {
+			setQuantity(quantity);
 		}
 	}
 
@@ -334,6 +356,16 @@ public class VRProductionPlantProdEquipmentWrapper
 	}
 
 	/**
+	* Returns the production plant code of this vr production plant prod equipment.
+	*
+	* @return the production plant code of this vr production plant prod equipment
+	*/
+	@Override
+	public java.lang.String getProductionPlantCode() {
+		return _vrProductionPlantProdEquipment.getProductionPlantCode();
+	}
+
+	/**
 	* Returns the trademark of this vr production plant prod equipment.
 	*
 	* @return the trademark of this vr production plant prod equipment
@@ -421,6 +453,26 @@ public class VRProductionPlantProdEquipmentWrapper
 	@Override
 	public long getProductPlantID() {
 		return _vrProductionPlantProdEquipment.getProductPlantID();
+	}
+
+	/**
+	* Returns the production plant ID of this vr production plant prod equipment.
+	*
+	* @return the production plant ID of this vr production plant prod equipment
+	*/
+	@Override
+	public long getProductionPlantId() {
+		return _vrProductionPlantProdEquipment.getProductionPlantId();
+	}
+
+	/**
+	* Returns the quantity of this vr production plant prod equipment.
+	*
+	* @return the quantity of this vr production plant prod equipment
+	*/
+	@Override
+	public long getQuantity() {
+		return _vrProductionPlantProdEquipment.getQuantity();
 	}
 
 	/**
@@ -607,6 +659,36 @@ public class VRProductionPlantProdEquipmentWrapper
 	@Override
 	public void setProductionCountryCode(java.lang.String productionCountryCode) {
 		_vrProductionPlantProdEquipment.setProductionCountryCode(productionCountryCode);
+	}
+
+	/**
+	* Sets the production plant code of this vr production plant prod equipment.
+	*
+	* @param productionPlantCode the production plant code of this vr production plant prod equipment
+	*/
+	@Override
+	public void setProductionPlantCode(java.lang.String productionPlantCode) {
+		_vrProductionPlantProdEquipment.setProductionPlantCode(productionPlantCode);
+	}
+
+	/**
+	* Sets the production plant ID of this vr production plant prod equipment.
+	*
+	* @param productionPlantId the production plant ID of this vr production plant prod equipment
+	*/
+	@Override
+	public void setProductionPlantId(long productionPlantId) {
+		_vrProductionPlantProdEquipment.setProductionPlantId(productionPlantId);
+	}
+
+	/**
+	* Sets the quantity of this vr production plant prod equipment.
+	*
+	* @param quantity the quantity of this vr production plant prod equipment
+	*/
+	@Override
+	public void setQuantity(long quantity) {
+		_vrProductionPlantProdEquipment.setQuantity(quantity);
 	}
 
 	/**

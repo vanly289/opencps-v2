@@ -60,6 +60,8 @@ public class VRVehicleRecordSoap implements Serializable {
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 		soapModel.setCertificaterecordno(model.getCertificaterecordno());
+		soapModel.setPostPrintingStatus(model.getPostPrintingStatus());
+		soapModel.setQrCode(model.getQrCode());
 
 		return soapModel;
 	}
@@ -330,6 +332,22 @@ public class VRVehicleRecordSoap implements Serializable {
 		_certificaterecordno = certificaterecordno;
 	}
 
+	public int getPostPrintingStatus() {
+		return _postPrintingStatus;
+	}
+
+	public void setPostPrintingStatus(int postPrintingStatus) {
+		_postPrintingStatus = postPrintingStatus;
+	}
+
+	public String getQrCode() {
+		return _qrCode;
+	}
+
+	public void setQrCode(String qrCode) {
+		_qrCode = qrCode;
+	}
+
 	private long _id;
 	private long _mtCore;
 	private long _issueId;
@@ -357,4 +375,6 @@ public class VRVehicleRecordSoap implements Serializable {
 	private Date _modifyDate;
 	private Date _syncDate;
 	private String _certificaterecordno;
+	private int _postPrintingStatus;
+	private String _qrCode;
 }

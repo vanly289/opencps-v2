@@ -311,6 +311,49 @@ public interface VRProductionPlantProdEquipmentModel extends BaseModel<VRProduct
 	 */
 	public void setSyncDate(Date syncDate);
 
+	/**
+	 * Returns the production plant code of this vr production plant prod equipment.
+	 *
+	 * @return the production plant code of this vr production plant prod equipment
+	 */
+	@AutoEscape
+	public String getProductionPlantCode();
+
+	/**
+	 * Sets the production plant code of this vr production plant prod equipment.
+	 *
+	 * @param productionPlantCode the production plant code of this vr production plant prod equipment
+	 */
+	public void setProductionPlantCode(String productionPlantCode);
+
+	/**
+	 * Returns the production plant ID of this vr production plant prod equipment.
+	 *
+	 * @return the production plant ID of this vr production plant prod equipment
+	 */
+	public long getProductionPlantId();
+
+	/**
+	 * Sets the production plant ID of this vr production plant prod equipment.
+	 *
+	 * @param productionPlantId the production plant ID of this vr production plant prod equipment
+	 */
+	public void setProductionPlantId(long productionPlantId);
+
+	/**
+	 * Returns the quantity of this vr production plant prod equipment.
+	 *
+	 * @return the quantity of this vr production plant prod equipment
+	 */
+	public long getQuantity();
+
+	/**
+	 * Sets the quantity of this vr production plant prod equipment.
+	 *
+	 * @param quantity the quantity of this vr production plant prod equipment
+	 */
+	public void setQuantity(long quantity);
+
 	@Override
 	public boolean isNew();
 

@@ -1555,6 +1555,10 @@ public class VRCOPProdEquipmentPersistenceImpl extends BasePersistenceImpl<VRCOP
 		vrcopProdEquipmentImpl.setNotes(vrcopProdEquipment.getNotes());
 		vrcopProdEquipmentImpl.setModifyDate(vrcopProdEquipment.getModifyDate());
 		vrcopProdEquipmentImpl.setSyncDate(vrcopProdEquipment.getSyncDate());
+		vrcopProdEquipmentImpl.setQuantity(vrcopProdEquipment.getQuantity());
+		vrcopProdEquipmentImpl.setDossierId(vrcopProdEquipment.getDossierId());
+		vrcopProdEquipmentImpl.setDossierIdCTN(vrcopProdEquipment.getDossierIdCTN());
+		vrcopProdEquipmentImpl.setDossierNo(vrcopProdEquipment.getDossierNo());
 
 		return vrcopProdEquipmentImpl;
 	}

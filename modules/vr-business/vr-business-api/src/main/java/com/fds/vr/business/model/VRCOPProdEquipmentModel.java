@@ -326,6 +326,64 @@ public interface VRCOPProdEquipmentModel extends BaseModel<VRCOPProdEquipment> {
 	 */
 	public void setSyncDate(Date syncDate);
 
+	/**
+	 * Returns the quantity of this vrcop prod equipment.
+	 *
+	 * @return the quantity of this vrcop prod equipment
+	 */
+	public int getQuantity();
+
+	/**
+	 * Sets the quantity of this vrcop prod equipment.
+	 *
+	 * @param quantity the quantity of this vrcop prod equipment
+	 */
+	public void setQuantity(int quantity);
+
+	/**
+	 * Returns the dossier ID of this vrcop prod equipment.
+	 *
+	 * @return the dossier ID of this vrcop prod equipment
+	 */
+	public long getDossierId();
+
+	/**
+	 * Sets the dossier ID of this vrcop prod equipment.
+	 *
+	 * @param dossierId the dossier ID of this vrcop prod equipment
+	 */
+	public void setDossierId(long dossierId);
+
+	/**
+	 * Returns the dossier ID ctn of this vrcop prod equipment.
+	 *
+	 * @return the dossier ID ctn of this vrcop prod equipment
+	 */
+	@AutoEscape
+	public String getDossierIdCTN();
+
+	/**
+	 * Sets the dossier ID ctn of this vrcop prod equipment.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn of this vrcop prod equipment
+	 */
+	public void setDossierIdCTN(String dossierIdCTN);
+
+	/**
+	 * Returns the dossier no of this vrcop prod equipment.
+	 *
+	 * @return the dossier no of this vrcop prod equipment
+	 */
+	@AutoEscape
+	public String getDossierNo();
+
+	/**
+	 * Sets the dossier no of this vrcop prod equipment.
+	 *
+	 * @param dossierNo the dossier no of this vrcop prod equipment
+	 */
+	public void setDossierNo(String dossierNo);
+
 	@Override
 	public boolean isNew();
 

@@ -67,8 +67,11 @@ public class VRProductionPlantEmployeeWrapper
 		attributes.put("employeeName", getEmployeeName());
 		attributes.put("employeeCertificateNo", getEmployeeCertificateNo());
 		attributes.put("trainningAt", getTrainningAt());
+		attributes.put("workingPosition", getWorkingPosition());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("productionPlantCode", getProductionPlantCode());
+		attributes.put("productionPlantId", getProductionPlantId());
 
 		return attributes;
 	}
@@ -118,6 +121,12 @@ public class VRProductionPlantEmployeeWrapper
 			setTrainningAt(trainningAt);
 		}
 
+		String workingPosition = (String)attributes.get("workingPosition");
+
+		if (workingPosition != null) {
+			setWorkingPosition(workingPosition);
+		}
+
 		Date modifyDate = (Date)attributes.get("modifyDate");
 
 		if (modifyDate != null) {
@@ -128,6 +137,19 @@ public class VRProductionPlantEmployeeWrapper
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		String productionPlantCode = (String)attributes.get(
+				"productionPlantCode");
+
+		if (productionPlantCode != null) {
+			setProductionPlantCode(productionPlantCode);
+		}
+
+		Long productionPlantId = (Long)attributes.get("productionPlantId");
+
+		if (productionPlantId != null) {
+			setProductionPlantId(productionPlantId);
 		}
 	}
 
@@ -207,6 +229,16 @@ public class VRProductionPlantEmployeeWrapper
 	}
 
 	/**
+	* Returns the production plant code of this vr production plant employee.
+	*
+	* @return the production plant code of this vr production plant employee
+	*/
+	@Override
+	public java.lang.String getProductionPlantCode() {
+		return _vrProductionPlantEmployee.getProductionPlantCode();
+	}
+
+	/**
 	* Returns the trainning at of this vr production plant employee.
 	*
 	* @return the trainning at of this vr production plant employee
@@ -214,6 +246,16 @@ public class VRProductionPlantEmployeeWrapper
 	@Override
 	public java.lang.String getTrainningAt() {
 		return _vrProductionPlantEmployee.getTrainningAt();
+	}
+
+	/**
+	* Returns the working position of this vr production plant employee.
+	*
+	* @return the working position of this vr production plant employee
+	*/
+	@Override
+	public java.lang.String getWorkingPosition() {
+		return _vrProductionPlantEmployee.getWorkingPosition();
 	}
 
 	@Override
@@ -284,6 +326,16 @@ public class VRProductionPlantEmployeeWrapper
 	@Override
 	public long getProductPlantID() {
 		return _vrProductionPlantEmployee.getProductPlantID();
+	}
+
+	/**
+	* Returns the production plant ID of this vr production plant employee.
+	*
+	* @return the production plant ID of this vr production plant employee
+	*/
+	@Override
+	public long getProductionPlantId() {
+		return _vrProductionPlantEmployee.getProductionPlantId();
 	}
 
 	/**
@@ -403,6 +455,26 @@ public class VRProductionPlantEmployeeWrapper
 	}
 
 	/**
+	* Sets the production plant code of this vr production plant employee.
+	*
+	* @param productionPlantCode the production plant code of this vr production plant employee
+	*/
+	@Override
+	public void setProductionPlantCode(java.lang.String productionPlantCode) {
+		_vrProductionPlantEmployee.setProductionPlantCode(productionPlantCode);
+	}
+
+	/**
+	* Sets the production plant ID of this vr production plant employee.
+	*
+	* @param productionPlantId the production plant ID of this vr production plant employee
+	*/
+	@Override
+	public void setProductionPlantId(long productionPlantId) {
+		_vrProductionPlantEmployee.setProductionPlantId(productionPlantId);
+	}
+
+	/**
 	* Sets the sequence no of this vr production plant employee.
 	*
 	* @param sequenceNo the sequence no of this vr production plant employee
@@ -430,6 +502,16 @@ public class VRProductionPlantEmployeeWrapper
 	@Override
 	public void setTrainningAt(java.lang.String trainningAt) {
 		_vrProductionPlantEmployee.setTrainningAt(trainningAt);
+	}
+
+	/**
+	* Sets the working position of this vr production plant employee.
+	*
+	* @param workingPosition the working position of this vr production plant employee
+	*/
+	@Override
+	public void setWorkingPosition(java.lang.String workingPosition) {
+		_vrProductionPlantEmployee.setWorkingPosition(workingPosition);
 	}
 
 	@Override

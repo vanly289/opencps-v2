@@ -164,6 +164,21 @@ public interface VRProductionPlantEmployeeModel extends BaseModel<VRProductionPl
 	public void setTrainningAt(String trainningAt);
 
 	/**
+	 * Returns the working position of this vr production plant employee.
+	 *
+	 * @return the working position of this vr production plant employee
+	 */
+	@AutoEscape
+	public String getWorkingPosition();
+
+	/**
+	 * Sets the working position of this vr production plant employee.
+	 *
+	 * @param workingPosition the working position of this vr production plant employee
+	 */
+	public void setWorkingPosition(String workingPosition);
+
+	/**
 	 * Returns the modify date of this vr production plant employee.
 	 *
 	 * @return the modify date of this vr production plant employee
@@ -190,6 +205,35 @@ public interface VRProductionPlantEmployeeModel extends BaseModel<VRProductionPl
 	 * @param syncDate the sync date of this vr production plant employee
 	 */
 	public void setSyncDate(Date syncDate);
+
+	/**
+	 * Returns the production plant code of this vr production plant employee.
+	 *
+	 * @return the production plant code of this vr production plant employee
+	 */
+	@AutoEscape
+	public String getProductionPlantCode();
+
+	/**
+	 * Sets the production plant code of this vr production plant employee.
+	 *
+	 * @param productionPlantCode the production plant code of this vr production plant employee
+	 */
+	public void setProductionPlantCode(String productionPlantCode);
+
+	/**
+	 * Returns the production plant ID of this vr production plant employee.
+	 *
+	 * @return the production plant ID of this vr production plant employee
+	 */
+	public long getProductionPlantId();
+
+	/**
+	 * Sets the production plant ID of this vr production plant employee.
+	 *
+	 * @param productionPlantId the production plant ID of this vr production plant employee
+	 */
+	public void setProductionPlantId(long productionPlantId);
 
 	@Override
 	public boolean isNew();

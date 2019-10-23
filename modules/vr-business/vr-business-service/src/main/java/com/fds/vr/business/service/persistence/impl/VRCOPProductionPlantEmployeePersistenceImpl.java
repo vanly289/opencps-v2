@@ -1564,6 +1564,10 @@ public class VRCOPProductionPlantEmployeePersistenceImpl
 		vrcopProductionPlantEmployeeImpl.setTrainningAt(vrcopProductionPlantEmployee.getTrainningAt());
 		vrcopProductionPlantEmployeeImpl.setModifyDate(vrcopProductionPlantEmployee.getModifyDate());
 		vrcopProductionPlantEmployeeImpl.setSyncDate(vrcopProductionPlantEmployee.getSyncDate());
+		vrcopProductionPlantEmployeeImpl.setWorkingPosition(vrcopProductionPlantEmployee.getWorkingPosition());
+		vrcopProductionPlantEmployeeImpl.setDossierId(vrcopProductionPlantEmployee.getDossierId());
+		vrcopProductionPlantEmployeeImpl.setDossierIdCTN(vrcopProductionPlantEmployee.getDossierIdCTN());
+		vrcopProductionPlantEmployeeImpl.setDossierNo(vrcopProductionPlantEmployee.getDossierNo());
 
 		return vrcopProductionPlantEmployeeImpl;
 	}

@@ -79,7 +79,10 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 			{ "designSymbolNo", Types.VARCHAR },
 			{ "remarks", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
-			{ "syncDate", Types.TIMESTAMP }
+			{ "syncDate", Types.TIMESTAMP },
+			{ "dossierId", Types.BIGINT },
+			{ "dossierIdCTN", Types.VARCHAR },
+			{ "dossierNo", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -101,9 +104,12 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		TABLE_COLUMNS_MAP.put("remarks", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("dossierId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("dossierIdCTN", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierNo", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copproducttype (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,remarks VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copproducttype (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,remarks VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,dossierId LONG,dossierIdCTN VARCHAR(75) null,dossierNo VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copproducttype";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopProductType.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copproducttype.modifyDate DESC";
@@ -182,6 +188,9 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		attributes.put("remarks", getRemarks());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -295,6 +304,24 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 	}
 
@@ -560,6 +587,46 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		_syncDate = syncDate;
 	}
 
+	@Override
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	@Override
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	@Override
+	public String getDossierIdCTN() {
+		if (_dossierIdCTN == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierIdCTN;
+		}
+	}
+
+	@Override
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	@Override
+	public String getDossierNo() {
+		if (_dossierNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierNo;
+		}
+	}
+
+	@Override
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -608,6 +675,9 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		vrcopProductTypeImpl.setRemarks(getRemarks());
 		vrcopProductTypeImpl.setModifyDate(getModifyDate());
 		vrcopProductTypeImpl.setSyncDate(getSyncDate());
+		vrcopProductTypeImpl.setDossierId(getDossierId());
+		vrcopProductTypeImpl.setDossierIdCTN(getDossierIdCTN());
+		vrcopProductTypeImpl.setDossierNo(getDossierNo());
 
 		vrcopProductTypeImpl.resetOriginalValues();
 
@@ -805,12 +875,30 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 			vrcopProductTypeCacheModel.syncDate = Long.MIN_VALUE;
 		}
 
+		vrcopProductTypeCacheModel.dossierId = getDossierId();
+
+		vrcopProductTypeCacheModel.dossierIdCTN = getDossierIdCTN();
+
+		String dossierIdCTN = vrcopProductTypeCacheModel.dossierIdCTN;
+
+		if ((dossierIdCTN != null) && (dossierIdCTN.length() == 0)) {
+			vrcopProductTypeCacheModel.dossierIdCTN = null;
+		}
+
+		vrcopProductTypeCacheModel.dossierNo = getDossierNo();
+
+		String dossierNo = vrcopProductTypeCacheModel.dossierNo;
+
+		if ((dossierNo != null) && (dossierNo.length() == 0)) {
+			vrcopProductTypeCacheModel.dossierNo = null;
+		}
+
 		return vrcopProductTypeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -846,6 +934,12 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
 		sb.append(getSyncDate());
+		sb.append(", dossierId=");
+		sb.append(getDossierId());
+		sb.append(", dossierIdCTN=");
+		sb.append(getDossierIdCTN());
+		sb.append(", dossierNo=");
+		sb.append(getDossierNo());
 		sb.append("}");
 
 		return sb.toString();
@@ -853,7 +947,7 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPProductType");
@@ -927,6 +1021,18 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 			"<column><column-name>syncDate</column-name><column-value><![CDATA[");
 		sb.append(getSyncDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierId</column-name><column-value><![CDATA[");
+		sb.append(getDossierId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierIdCTN</column-name><column-value><![CDATA[");
+		sb.append(getDossierIdCTN());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierNo</column-name><column-value><![CDATA[");
+		sb.append(getDossierNo());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -959,6 +1065,9 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 	private String _remarks;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 	private long _columnBitmask;
 	private VRCOPProductType _escapedModel;
 }

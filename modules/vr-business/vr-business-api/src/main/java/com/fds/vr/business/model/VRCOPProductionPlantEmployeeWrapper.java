@@ -70,6 +70,10 @@ public class VRCOPProductionPlantEmployeeWrapper
 		attributes.put("trainningAt", getTrainningAt());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("workingPosition", getWorkingPosition());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 
 		return attributes;
 	}
@@ -136,6 +140,30 @@ public class VRCOPProductionPlantEmployeeWrapper
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		String workingPosition = (String)attributes.get("workingPosition");
+
+		if (workingPosition != null) {
+			setWorkingPosition(workingPosition);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 	}
 
@@ -206,6 +234,26 @@ public class VRCOPProductionPlantEmployeeWrapper
 	}
 
 	/**
+	* Returns the dossier ID ctn of this vrcop production plant employee.
+	*
+	* @return the dossier ID ctn of this vrcop production plant employee
+	*/
+	@Override
+	public java.lang.String getDossierIdCTN() {
+		return _vrcopProductionPlantEmployee.getDossierIdCTN();
+	}
+
+	/**
+	* Returns the dossier no of this vrcop production plant employee.
+	*
+	* @return the dossier no of this vrcop production plant employee
+	*/
+	@Override
+	public java.lang.String getDossierNo() {
+		return _vrcopProductionPlantEmployee.getDossierNo();
+	}
+
+	/**
 	* Returns the employee certificate no of this vrcop production plant employee.
 	*
 	* @return the employee certificate no of this vrcop production plant employee
@@ -233,6 +281,16 @@ public class VRCOPProductionPlantEmployeeWrapper
 	@Override
 	public java.lang.String getTrainningAt() {
 		return _vrcopProductionPlantEmployee.getTrainningAt();
+	}
+
+	/**
+	* Returns the working position of this vrcop production plant employee.
+	*
+	* @return the working position of this vrcop production plant employee
+	*/
+	@Override
+	public java.lang.String getWorkingPosition() {
+		return _vrcopProductionPlantEmployee.getWorkingPosition();
 	}
 
 	@Override
@@ -273,6 +331,16 @@ public class VRCOPProductionPlantEmployeeWrapper
 	@Override
 	public long getCopReportRepositoryID() {
 		return _vrcopProductionPlantEmployee.getCopReportRepositoryID();
+	}
+
+	/**
+	* Returns the dossier ID of this vrcop production plant employee.
+	*
+	* @return the dossier ID of this vrcop production plant employee
+	*/
+	@Override
+	public long getDossierId() {
+		return _vrcopProductionPlantEmployee.getDossierId();
 	}
 
 	/**
@@ -343,6 +411,36 @@ public class VRCOPProductionPlantEmployeeWrapper
 	@Override
 	public void setCopReportRepositoryID(long copReportRepositoryID) {
 		_vrcopProductionPlantEmployee.setCopReportRepositoryID(copReportRepositoryID);
+	}
+
+	/**
+	* Sets the dossier ID of this vrcop production plant employee.
+	*
+	* @param dossierId the dossier ID of this vrcop production plant employee
+	*/
+	@Override
+	public void setDossierId(long dossierId) {
+		_vrcopProductionPlantEmployee.setDossierId(dossierId);
+	}
+
+	/**
+	* Sets the dossier ID ctn of this vrcop production plant employee.
+	*
+	* @param dossierIdCTN the dossier ID ctn of this vrcop production plant employee
+	*/
+	@Override
+	public void setDossierIdCTN(java.lang.String dossierIdCTN) {
+		_vrcopProductionPlantEmployee.setDossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Sets the dossier no of this vrcop production plant employee.
+	*
+	* @param dossierNo the dossier no of this vrcop production plant employee
+	*/
+	@Override
+	public void setDossierNo(java.lang.String dossierNo) {
+		_vrcopProductionPlantEmployee.setDossierNo(dossierNo);
 	}
 
 	/**
@@ -459,6 +557,16 @@ public class VRCOPProductionPlantEmployeeWrapper
 	@Override
 	public void setTrainningAt(java.lang.String trainningAt) {
 		_vrcopProductionPlantEmployee.setTrainningAt(trainningAt);
+	}
+
+	/**
+	* Sets the working position of this vrcop production plant employee.
+	*
+	* @param workingPosition the working position of this vrcop production plant employee
+	*/
+	@Override
+	public void setWorkingPosition(java.lang.String workingPosition) {
+		_vrcopProductionPlantEmployee.setWorkingPosition(workingPosition);
 	}
 
 	@Override

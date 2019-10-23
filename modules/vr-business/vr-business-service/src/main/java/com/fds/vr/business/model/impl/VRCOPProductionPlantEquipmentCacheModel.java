@@ -67,7 +67,7 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(83);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -107,6 +107,50 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", equipmentSerialNo=");
+		sb.append(equipmentSerialNo);
+		sb.append(", productionYear=");
+		sb.append(productionYear);
+		sb.append(", registrationYear=");
+		sb.append(registrationYear);
+		sb.append(", markupXCG=");
+		sb.append(markupXCG);
+		sb.append(", markupXCGNK=");
+		sb.append(markupXCGNK);
+		sb.append(", markupSMRM=");
+		sb.append(markupSMRM);
+		sb.append(", markupXCH=");
+		sb.append(markupXCH);
+		sb.append(", markupXCN=");
+		sb.append(markupXCN);
+		sb.append(", markupXMY=");
+		sb.append(markupXMY);
+		sb.append(", markupXDD=");
+		sb.append(markupXDD);
+		sb.append(", testingResult=");
+		sb.append(testingResult);
+		sb.append(", description=");
+		sb.append(description);
+		sb.append(", inspectionRecordNumber=");
+		sb.append(inspectionRecordNumber);
+		sb.append(", inspectionRecordDate=");
+		sb.append(inspectionRecordDate);
+		sb.append(", expiredDate=");
+		sb.append(expiredDate);
+		sb.append(", expiredStatus=");
+		sb.append(expiredStatus);
+		sb.append(", stampTestingNo=");
+		sb.append(stampTestingNo);
+		sb.append(", dossierId=");
+		sb.append(dossierId);
+		sb.append(", dossierIdCTN=");
+		sb.append(dossierIdCTN);
+		sb.append(", dossierNo=");
+		sb.append(dossierNo);
+		sb.append(", productionPlantId=");
+		sb.append(productionPlantId);
+		sb.append(", productionPlantCode=");
+		sb.append(productionPlantCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -227,6 +271,102 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 			vrcopProductionPlantEquipmentImpl.setSyncDate(new Date(syncDate));
 		}
 
+		if (equipmentSerialNo == null) {
+			vrcopProductionPlantEquipmentImpl.setEquipmentSerialNo(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setEquipmentSerialNo(equipmentSerialNo);
+		}
+
+		if (productionYear == Long.MIN_VALUE) {
+			vrcopProductionPlantEquipmentImpl.setProductionYear(null);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setProductionYear(new Date(
+					productionYear));
+		}
+
+		if (registrationYear == Long.MIN_VALUE) {
+			vrcopProductionPlantEquipmentImpl.setRegistrationYear(null);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setRegistrationYear(new Date(
+					registrationYear));
+		}
+
+		vrcopProductionPlantEquipmentImpl.setMarkupXCG(markupXCG);
+		vrcopProductionPlantEquipmentImpl.setMarkupXCGNK(markupXCGNK);
+		vrcopProductionPlantEquipmentImpl.setMarkupSMRM(markupSMRM);
+		vrcopProductionPlantEquipmentImpl.setMarkupXCH(markupXCH);
+		vrcopProductionPlantEquipmentImpl.setMarkupXCN(markupXCN);
+		vrcopProductionPlantEquipmentImpl.setMarkupXMY(markupXMY);
+		vrcopProductionPlantEquipmentImpl.setMarkupXDD(markupXDD);
+		vrcopProductionPlantEquipmentImpl.setTestingResult(testingResult);
+
+		if (description == null) {
+			vrcopProductionPlantEquipmentImpl.setDescription(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setDescription(description);
+		}
+
+		if (inspectionRecordNumber == null) {
+			vrcopProductionPlantEquipmentImpl.setInspectionRecordNumber(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setInspectionRecordNumber(inspectionRecordNumber);
+		}
+
+		if (inspectionRecordDate == Long.MIN_VALUE) {
+			vrcopProductionPlantEquipmentImpl.setInspectionRecordDate(null);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setInspectionRecordDate(new Date(
+					inspectionRecordDate));
+		}
+
+		if (expiredDate == Long.MIN_VALUE) {
+			vrcopProductionPlantEquipmentImpl.setExpiredDate(null);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setExpiredDate(new Date(
+					expiredDate));
+		}
+
+		vrcopProductionPlantEquipmentImpl.setExpiredStatus(expiredStatus);
+
+		if (stampTestingNo == null) {
+			vrcopProductionPlantEquipmentImpl.setStampTestingNo(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setStampTestingNo(stampTestingNo);
+		}
+
+		vrcopProductionPlantEquipmentImpl.setDossierId(dossierId);
+
+		if (dossierIdCTN == null) {
+			vrcopProductionPlantEquipmentImpl.setDossierIdCTN(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setDossierIdCTN(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			vrcopProductionPlantEquipmentImpl.setDossierNo(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setDossierNo(dossierNo);
+		}
+
+		vrcopProductionPlantEquipmentImpl.setProductionPlantId(productionPlantId);
+
+		if (productionPlantCode == null) {
+			vrcopProductionPlantEquipmentImpl.setProductionPlantCode(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEquipmentImpl.setProductionPlantCode(productionPlantCode);
+		}
+
 		vrcopProductionPlantEquipmentImpl.resetOriginalValues();
 
 		return vrcopProductionPlantEquipmentImpl;
@@ -256,6 +396,39 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 		notes = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+		equipmentSerialNo = objectInput.readUTF();
+		productionYear = objectInput.readLong();
+		registrationYear = objectInput.readLong();
+
+		markupXCG = objectInput.readLong();
+
+		markupXCGNK = objectInput.readLong();
+
+		markupSMRM = objectInput.readLong();
+
+		markupXCH = objectInput.readLong();
+
+		markupXCN = objectInput.readLong();
+
+		markupXMY = objectInput.readLong();
+
+		markupXDD = objectInput.readLong();
+
+		testingResult = objectInput.readInt();
+		description = objectInput.readUTF();
+		inspectionRecordNumber = objectInput.readUTF();
+		inspectionRecordDate = objectInput.readLong();
+		expiredDate = objectInput.readLong();
+
+		expiredStatus = objectInput.readInt();
+		stampTestingNo = objectInput.readUTF();
+
+		dossierId = objectInput.readLong();
+		dossierIdCTN = objectInput.readUTF();
+		dossierNo = objectInput.readUTF();
+
+		productionPlantId = objectInput.readLong();
+		productionPlantCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -357,6 +530,83 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		if (equipmentSerialNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(equipmentSerialNo);
+		}
+
+		objectOutput.writeLong(productionYear);
+		objectOutput.writeLong(registrationYear);
+
+		objectOutput.writeLong(markupXCG);
+
+		objectOutput.writeLong(markupXCGNK);
+
+		objectOutput.writeLong(markupSMRM);
+
+		objectOutput.writeLong(markupXCH);
+
+		objectOutput.writeLong(markupXCN);
+
+		objectOutput.writeLong(markupXMY);
+
+		objectOutput.writeLong(markupXDD);
+
+		objectOutput.writeInt(testingResult);
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		if (inspectionRecordNumber == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(inspectionRecordNumber);
+		}
+
+		objectOutput.writeLong(inspectionRecordDate);
+		objectOutput.writeLong(expiredDate);
+
+		objectOutput.writeInt(expiredStatus);
+
+		if (stampTestingNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(stampTestingNo);
+		}
+
+		objectOutput.writeLong(dossierId);
+
+		if (dossierIdCTN == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierNo);
+		}
+
+		objectOutput.writeLong(productionPlantId);
+
+		if (productionPlantCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantCode);
+		}
 	}
 
 	public long id;
@@ -378,4 +628,26 @@ public class VRCOPProductionPlantEquipmentCacheModel implements CacheModel<VRCOP
 	public String notes;
 	public long modifyDate;
 	public long syncDate;
+	public String equipmentSerialNo;
+	public long productionYear;
+	public long registrationYear;
+	public long markupXCG;
+	public long markupXCGNK;
+	public long markupSMRM;
+	public long markupXCH;
+	public long markupXCN;
+	public long markupXMY;
+	public long markupXDD;
+	public int testingResult;
+	public String description;
+	public String inspectionRecordNumber;
+	public long inspectionRecordDate;
+	public long expiredDate;
+	public int expiredStatus;
+	public String stampTestingNo;
+	public long dossierId;
+	public String dossierIdCTN;
+	public String dossierNo;
+	public long productionPlantId;
+	public String productionPlantCode;
 }

@@ -51,6 +51,10 @@ public class VRCOPProdEquipmentSoap implements Serializable {
 		soapModel.setNotes(model.getNotes());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
+		soapModel.setQuantity(model.getQuantity());
+		soapModel.setDossierId(model.getDossierId());
+		soapModel.setDossierIdCTN(model.getDossierIdCTN());
+		soapModel.setDossierNo(model.getDossierNo());
 
 		return soapModel;
 	}
@@ -250,6 +254,38 @@ public class VRCOPProdEquipmentSoap implements Serializable {
 		_syncDate = syncDate;
 	}
 
+	public int getQuantity() {
+		return _quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		_quantity = quantity;
+	}
+
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	public String getDossierIdCTN() {
+		return _dossierIdCTN;
+	}
+
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	public String getDossierNo() {
+		return _dossierNo;
+	}
+
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	private long _id;
 	private long _mtCore;
 	private long _copReportRepositoryID;
@@ -268,4 +304,8 @@ public class VRCOPProdEquipmentSoap implements Serializable {
 	private String _notes;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private int _quantity;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 }

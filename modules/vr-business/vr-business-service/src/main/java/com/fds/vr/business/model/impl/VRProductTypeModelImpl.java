@@ -78,7 +78,9 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 			{ "modelCode", Types.VARCHAR },
 			{ "designSymbolNo", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
-			{ "syncDate", Types.TIMESTAMP }
+			{ "syncDate", Types.TIMESTAMP },
+			{ "productionPlantId", Types.BIGINT },
+			{ "productionPlantCode", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -99,9 +101,11 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		TABLE_COLUMNS_MAP.put("designSymbolNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("productionPlantId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("productionPlantCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_producttype (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_producttype (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_producttype";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductType.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_producttype.modifyDate DESC";
@@ -178,6 +182,8 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("productionPlantId", getProductionPlantId());
+		attributes.put("productionPlantCode", getProductionPlantCode());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -284,6 +290,19 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		Long productionPlantId = (Long)attributes.get("productionPlantId");
+
+		if (productionPlantId != null) {
+			setProductionPlantId(productionPlantId);
+		}
+
+		String productionPlantCode = (String)attributes.get(
+				"productionPlantCode");
+
+		if (productionPlantCode != null) {
+			setProductionPlantCode(productionPlantCode);
 		}
 	}
 
@@ -524,6 +543,31 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		_syncDate = syncDate;
 	}
 
+	@Override
+	public long getProductionPlantId() {
+		return _productionPlantId;
+	}
+
+	@Override
+	public void setProductionPlantId(long productionPlantId) {
+		_productionPlantId = productionPlantId;
+	}
+
+	@Override
+	public String getProductionPlantCode() {
+		if (_productionPlantCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantCode;
+		}
+	}
+
+	@Override
+	public void setProductionPlantCode(String productionPlantCode) {
+		_productionPlantCode = productionPlantCode;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -571,6 +615,8 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		vrProductTypeImpl.setDesignSymbolNo(getDesignSymbolNo());
 		vrProductTypeImpl.setModifyDate(getModifyDate());
 		vrProductTypeImpl.setSyncDate(getSyncDate());
+		vrProductTypeImpl.setProductionPlantId(getProductionPlantId());
+		vrProductTypeImpl.setProductionPlantCode(getProductionPlantCode());
 
 		vrProductTypeImpl.resetOriginalValues();
 
@@ -758,12 +804,23 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 			vrProductTypeCacheModel.syncDate = Long.MIN_VALUE;
 		}
 
+		vrProductTypeCacheModel.productionPlantId = getProductionPlantId();
+
+		vrProductTypeCacheModel.productionPlantCode = getProductionPlantCode();
+
+		String productionPlantCode = vrProductTypeCacheModel.productionPlantCode;
+
+		if ((productionPlantCode != null) &&
+				(productionPlantCode.length() == 0)) {
+			vrProductTypeCacheModel.productionPlantCode = null;
+		}
+
 		return vrProductTypeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -797,6 +854,10 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
 		sb.append(getSyncDate());
+		sb.append(", productionPlantId=");
+		sb.append(getProductionPlantId());
+		sb.append(", productionPlantCode=");
+		sb.append(getProductionPlantCode());
 		sb.append("}");
 
 		return sb.toString();
@@ -804,7 +865,7 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductType");
@@ -874,6 +935,14 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 			"<column><column-name>syncDate</column-name><column-value><![CDATA[");
 		sb.append(getSyncDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantId</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantCode</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantCode());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -904,6 +973,8 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	private String _designSymbolNo;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private long _productionPlantId;
+	private String _productionPlantCode;
 	private long _columnBitmask;
 	private VRProductType _escapedModel;
 }

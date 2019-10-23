@@ -78,6 +78,23 @@ public class VRProductionPlantEquipmentWrapper
 		attributes.put("notes", getNotes());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("equipmentSerialNo", getEquipmentSerialNo());
+		attributes.put("productionYear", getProductionYear());
+		attributes.put("registrationYear", getRegistrationYear());
+		attributes.put("markupXCG", getMarkupXCG());
+		attributes.put("markupXCGNK", getMarkupXCGNK());
+		attributes.put("markupSMRM", getMarkupSMRM());
+		attributes.put("markupXCH", getMarkupXCH());
+		attributes.put("markupXCN", getMarkupXCN());
+		attributes.put("markupXMY", getMarkupXMY());
+		attributes.put("markupXDD", getMarkupXDD());
+		attributes.put("testingResult", getTestingResult());
+		attributes.put("description", getDescription());
+		attributes.put("inspectionRecordNumber", getInspectionRecordNumber());
+		attributes.put("inspectionRecordDate", getInspectionRecordDate());
+		attributes.put("stampTestingNo", getStampTestingNo());
+		attributes.put("productionPlantId", getProductionPlantId());
+		attributes.put("productionPlantCode", getProductionPlantCode());
 
 		return attributes;
 	}
@@ -192,6 +209,110 @@ public class VRProductionPlantEquipmentWrapper
 		if (syncDate != null) {
 			setSyncDate(syncDate);
 		}
+
+		String equipmentSerialNo = (String)attributes.get("equipmentSerialNo");
+
+		if (equipmentSerialNo != null) {
+			setEquipmentSerialNo(equipmentSerialNo);
+		}
+
+		Date productionYear = (Date)attributes.get("productionYear");
+
+		if (productionYear != null) {
+			setProductionYear(productionYear);
+		}
+
+		Date registrationYear = (Date)attributes.get("registrationYear");
+
+		if (registrationYear != null) {
+			setRegistrationYear(registrationYear);
+		}
+
+		Long markupXCG = (Long)attributes.get("markupXCG");
+
+		if (markupXCG != null) {
+			setMarkupXCG(markupXCG);
+		}
+
+		Long markupXCGNK = (Long)attributes.get("markupXCGNK");
+
+		if (markupXCGNK != null) {
+			setMarkupXCGNK(markupXCGNK);
+		}
+
+		Long markupSMRM = (Long)attributes.get("markupSMRM");
+
+		if (markupSMRM != null) {
+			setMarkupSMRM(markupSMRM);
+		}
+
+		Long markupXCH = (Long)attributes.get("markupXCH");
+
+		if (markupXCH != null) {
+			setMarkupXCH(markupXCH);
+		}
+
+		Long markupXCN = (Long)attributes.get("markupXCN");
+
+		if (markupXCN != null) {
+			setMarkupXCN(markupXCN);
+		}
+
+		Long markupXMY = (Long)attributes.get("markupXMY");
+
+		if (markupXMY != null) {
+			setMarkupXMY(markupXMY);
+		}
+
+		Long markupXDD = (Long)attributes.get("markupXDD");
+
+		if (markupXDD != null) {
+			setMarkupXDD(markupXDD);
+		}
+
+		Integer testingResult = (Integer)attributes.get("testingResult");
+
+		if (testingResult != null) {
+			setTestingResult(testingResult);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String inspectionRecordNumber = (String)attributes.get(
+				"inspectionRecordNumber");
+
+		if (inspectionRecordNumber != null) {
+			setInspectionRecordNumber(inspectionRecordNumber);
+		}
+
+		Date inspectionRecordDate = (Date)attributes.get("inspectionRecordDate");
+
+		if (inspectionRecordDate != null) {
+			setInspectionRecordDate(inspectionRecordDate);
+		}
+
+		String stampTestingNo = (String)attributes.get("stampTestingNo");
+
+		if (stampTestingNo != null) {
+			setStampTestingNo(stampTestingNo);
+		}
+
+		Long productionPlantId = (Long)attributes.get("productionPlantId");
+
+		if (productionPlantId != null) {
+			setProductionPlantId(productionPlantId);
+		}
+
+		String productionPlantCode = (String)attributes.get(
+				"productionPlantCode");
+
+		if (productionPlantCode != null) {
+			setProductionPlantCode(productionPlantCode);
+		}
 	}
 
 	@Override
@@ -234,6 +355,16 @@ public class VRProductionPlantEquipmentWrapper
 		return _vrProductionPlantEquipment.compareTo(vrProductionPlantEquipment);
 	}
 
+	/**
+	* Returns the testing result of this vr production plant equipment.
+	*
+	* @return the testing result of this vr production plant equipment
+	*/
+	@Override
+	public int getTestingResult() {
+		return _vrProductionPlantEquipment.getTestingResult();
+	}
+
 	@Override
 	public int hashCode() {
 		return _vrProductionPlantEquipment.hashCode();
@@ -257,6 +388,16 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public java.lang.String getCommercialName() {
 		return _vrProductionPlantEquipment.getCommercialName();
+	}
+
+	/**
+	* Returns the description of this vr production plant equipment.
+	*
+	* @return the description of this vr production plant equipment
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _vrProductionPlantEquipment.getDescription();
 	}
 
 	/**
@@ -290,6 +431,16 @@ public class VRProductionPlantEquipmentWrapper
 	}
 
 	/**
+	* Returns the equipment serial no of this vr production plant equipment.
+	*
+	* @return the equipment serial no of this vr production plant equipment
+	*/
+	@Override
+	public java.lang.String getEquipmentSerialNo() {
+		return _vrProductionPlantEquipment.getEquipmentSerialNo();
+	}
+
+	/**
 	* Returns the equipment status of this vr production plant equipment.
 	*
 	* @return the equipment status of this vr production plant equipment
@@ -307,6 +458,16 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public java.lang.String getEquipmentType() {
 		return _vrProductionPlantEquipment.getEquipmentType();
+	}
+
+	/**
+	* Returns the inspection record number of this vr production plant equipment.
+	*
+	* @return the inspection record number of this vr production plant equipment
+	*/
+	@Override
+	public java.lang.String getInspectionRecordNumber() {
+		return _vrProductionPlantEquipment.getInspectionRecordNumber();
 	}
 
 	/**
@@ -337,6 +498,26 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public java.lang.String getProductionCountryCode() {
 		return _vrProductionPlantEquipment.getProductionCountryCode();
+	}
+
+	/**
+	* Returns the production plant code of this vr production plant equipment.
+	*
+	* @return the production plant code of this vr production plant equipment
+	*/
+	@Override
+	public java.lang.String getProductionPlantCode() {
+		return _vrProductionPlantEquipment.getProductionPlantCode();
+	}
+
+	/**
+	* Returns the stamp testing no of this vr production plant equipment.
+	*
+	* @return the stamp testing no of this vr production plant equipment
+	*/
+	@Override
+	public java.lang.String getStampTestingNo() {
+		return _vrProductionPlantEquipment.getStampTestingNo();
 	}
 
 	/**
@@ -380,6 +561,16 @@ public class VRProductionPlantEquipmentWrapper
 	}
 
 	/**
+	* Returns the inspection record date of this vr production plant equipment.
+	*
+	* @return the inspection record date of this vr production plant equipment
+	*/
+	@Override
+	public Date getInspectionRecordDate() {
+		return _vrProductionPlantEquipment.getInspectionRecordDate();
+	}
+
+	/**
 	* Returns the modify date of this vr production plant equipment.
 	*
 	* @return the modify date of this vr production plant equipment
@@ -387,6 +578,26 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public Date getModifyDate() {
 		return _vrProductionPlantEquipment.getModifyDate();
+	}
+
+	/**
+	* Returns the production year of this vr production plant equipment.
+	*
+	* @return the production year of this vr production plant equipment
+	*/
+	@Override
+	public Date getProductionYear() {
+		return _vrProductionPlantEquipment.getProductionYear();
+	}
+
+	/**
+	* Returns the registration year of this vr production plant equipment.
+	*
+	* @return the registration year of this vr production plant equipment
+	*/
+	@Override
+	public Date getRegistrationYear() {
+		return _vrProductionPlantEquipment.getRegistrationYear();
 	}
 
 	/**
@@ -407,6 +618,76 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public long getId() {
 		return _vrProductionPlantEquipment.getId();
+	}
+
+	/**
+	* Returns the markup smrm of this vr production plant equipment.
+	*
+	* @return the markup smrm of this vr production plant equipment
+	*/
+	@Override
+	public long getMarkupSMRM() {
+		return _vrProductionPlantEquipment.getMarkupSMRM();
+	}
+
+	/**
+	* Returns the markup xcg of this vr production plant equipment.
+	*
+	* @return the markup xcg of this vr production plant equipment
+	*/
+	@Override
+	public long getMarkupXCG() {
+		return _vrProductionPlantEquipment.getMarkupXCG();
+	}
+
+	/**
+	* Returns the markup xcgnk of this vr production plant equipment.
+	*
+	* @return the markup xcgnk of this vr production plant equipment
+	*/
+	@Override
+	public long getMarkupXCGNK() {
+		return _vrProductionPlantEquipment.getMarkupXCGNK();
+	}
+
+	/**
+	* Returns the markup xch of this vr production plant equipment.
+	*
+	* @return the markup xch of this vr production plant equipment
+	*/
+	@Override
+	public long getMarkupXCH() {
+		return _vrProductionPlantEquipment.getMarkupXCH();
+	}
+
+	/**
+	* Returns the markup xcn of this vr production plant equipment.
+	*
+	* @return the markup xcn of this vr production plant equipment
+	*/
+	@Override
+	public long getMarkupXCN() {
+		return _vrProductionPlantEquipment.getMarkupXCN();
+	}
+
+	/**
+	* Returns the markup xdd of this vr production plant equipment.
+	*
+	* @return the markup xdd of this vr production plant equipment
+	*/
+	@Override
+	public long getMarkupXDD() {
+		return _vrProductionPlantEquipment.getMarkupXDD();
+	}
+
+	/**
+	* Returns the markup xmy of this vr production plant equipment.
+	*
+	* @return the markup xmy of this vr production plant equipment
+	*/
+	@Override
+	public long getMarkupXMY() {
+		return _vrProductionPlantEquipment.getMarkupXMY();
 	}
 
 	/**
@@ -440,6 +721,16 @@ public class VRProductionPlantEquipmentWrapper
 	}
 
 	/**
+	* Returns the production plant ID of this vr production plant equipment.
+	*
+	* @return the production plant ID of this vr production plant equipment
+	*/
+	@Override
+	public long getProductionPlantId() {
+		return _vrProductionPlantEquipment.getProductionPlantId();
+	}
+
+	/**
 	* Returns the sequence no of this vr production plant equipment.
 	*
 	* @return the sequence no of this vr production plant equipment
@@ -470,6 +761,16 @@ public class VRProductionPlantEquipmentWrapper
 	}
 
 	/**
+	* Sets the description of this vr production plant equipment.
+	*
+	* @param description the description of this vr production plant equipment
+	*/
+	@Override
+	public void setDescription(java.lang.String description) {
+		_vrProductionPlantEquipment.setDescription(description);
+	}
+
+	/**
 	* Sets the design symbol no of this vr production plant equipment.
 	*
 	* @param designSymbolNo the design symbol no of this vr production plant equipment
@@ -497,6 +798,16 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public void setEquipmentName(java.lang.String equipmentName) {
 		_vrProductionPlantEquipment.setEquipmentName(equipmentName);
+	}
+
+	/**
+	* Sets the equipment serial no of this vr production plant equipment.
+	*
+	* @param equipmentSerialNo the equipment serial no of this vr production plant equipment
+	*/
+	@Override
+	public void setEquipmentSerialNo(java.lang.String equipmentSerialNo) {
+		_vrProductionPlantEquipment.setEquipmentSerialNo(equipmentSerialNo);
 	}
 
 	/**
@@ -553,6 +864,97 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public void setId(long id) {
 		_vrProductionPlantEquipment.setId(id);
+	}
+
+	/**
+	* Sets the inspection record date of this vr production plant equipment.
+	*
+	* @param inspectionRecordDate the inspection record date of this vr production plant equipment
+	*/
+	@Override
+	public void setInspectionRecordDate(Date inspectionRecordDate) {
+		_vrProductionPlantEquipment.setInspectionRecordDate(inspectionRecordDate);
+	}
+
+	/**
+	* Sets the inspection record number of this vr production plant equipment.
+	*
+	* @param inspectionRecordNumber the inspection record number of this vr production plant equipment
+	*/
+	@Override
+	public void setInspectionRecordNumber(
+		java.lang.String inspectionRecordNumber) {
+		_vrProductionPlantEquipment.setInspectionRecordNumber(inspectionRecordNumber);
+	}
+
+	/**
+	* Sets the markup smrm of this vr production plant equipment.
+	*
+	* @param markupSMRM the markup smrm of this vr production plant equipment
+	*/
+	@Override
+	public void setMarkupSMRM(long markupSMRM) {
+		_vrProductionPlantEquipment.setMarkupSMRM(markupSMRM);
+	}
+
+	/**
+	* Sets the markup xcg of this vr production plant equipment.
+	*
+	* @param markupXCG the markup xcg of this vr production plant equipment
+	*/
+	@Override
+	public void setMarkupXCG(long markupXCG) {
+		_vrProductionPlantEquipment.setMarkupXCG(markupXCG);
+	}
+
+	/**
+	* Sets the markup xcgnk of this vr production plant equipment.
+	*
+	* @param markupXCGNK the markup xcgnk of this vr production plant equipment
+	*/
+	@Override
+	public void setMarkupXCGNK(long markupXCGNK) {
+		_vrProductionPlantEquipment.setMarkupXCGNK(markupXCGNK);
+	}
+
+	/**
+	* Sets the markup xch of this vr production plant equipment.
+	*
+	* @param markupXCH the markup xch of this vr production plant equipment
+	*/
+	@Override
+	public void setMarkupXCH(long markupXCH) {
+		_vrProductionPlantEquipment.setMarkupXCH(markupXCH);
+	}
+
+	/**
+	* Sets the markup xcn of this vr production plant equipment.
+	*
+	* @param markupXCN the markup xcn of this vr production plant equipment
+	*/
+	@Override
+	public void setMarkupXCN(long markupXCN) {
+		_vrProductionPlantEquipment.setMarkupXCN(markupXCN);
+	}
+
+	/**
+	* Sets the markup xdd of this vr production plant equipment.
+	*
+	* @param markupXDD the markup xdd of this vr production plant equipment
+	*/
+	@Override
+	public void setMarkupXDD(long markupXDD) {
+		_vrProductionPlantEquipment.setMarkupXDD(markupXDD);
+	}
+
+	/**
+	* Sets the markup xmy of this vr production plant equipment.
+	*
+	* @param markupXMY the markup xmy of this vr production plant equipment
+	*/
+	@Override
+	public void setMarkupXMY(long markupXMY) {
+		_vrProductionPlantEquipment.setMarkupXMY(markupXMY);
 	}
 
 	/**
@@ -636,6 +1038,46 @@ public class VRProductionPlantEquipmentWrapper
 	}
 
 	/**
+	* Sets the production plant code of this vr production plant equipment.
+	*
+	* @param productionPlantCode the production plant code of this vr production plant equipment
+	*/
+	@Override
+	public void setProductionPlantCode(java.lang.String productionPlantCode) {
+		_vrProductionPlantEquipment.setProductionPlantCode(productionPlantCode);
+	}
+
+	/**
+	* Sets the production plant ID of this vr production plant equipment.
+	*
+	* @param productionPlantId the production plant ID of this vr production plant equipment
+	*/
+	@Override
+	public void setProductionPlantId(long productionPlantId) {
+		_vrProductionPlantEquipment.setProductionPlantId(productionPlantId);
+	}
+
+	/**
+	* Sets the production year of this vr production plant equipment.
+	*
+	* @param productionYear the production year of this vr production plant equipment
+	*/
+	@Override
+	public void setProductionYear(Date productionYear) {
+		_vrProductionPlantEquipment.setProductionYear(productionYear);
+	}
+
+	/**
+	* Sets the registration year of this vr production plant equipment.
+	*
+	* @param registrationYear the registration year of this vr production plant equipment
+	*/
+	@Override
+	public void setRegistrationYear(Date registrationYear) {
+		_vrProductionPlantEquipment.setRegistrationYear(registrationYear);
+	}
+
+	/**
 	* Sets the sequence no of this vr production plant equipment.
 	*
 	* @param sequenceNo the sequence no of this vr production plant equipment
@@ -646,6 +1088,16 @@ public class VRProductionPlantEquipmentWrapper
 	}
 
 	/**
+	* Sets the stamp testing no of this vr production plant equipment.
+	*
+	* @param stampTestingNo the stamp testing no of this vr production plant equipment
+	*/
+	@Override
+	public void setStampTestingNo(java.lang.String stampTestingNo) {
+		_vrProductionPlantEquipment.setStampTestingNo(stampTestingNo);
+	}
+
+	/**
 	* Sets the sync date of this vr production plant equipment.
 	*
 	* @param syncDate the sync date of this vr production plant equipment
@@ -653,6 +1105,16 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_vrProductionPlantEquipment.setSyncDate(syncDate);
+	}
+
+	/**
+	* Sets the testing result of this vr production plant equipment.
+	*
+	* @param testingResult the testing result of this vr production plant equipment
+	*/
+	@Override
+	public void setTestingResult(int testingResult) {
+		_vrProductionPlantEquipment.setTestingResult(testingResult);
 	}
 
 	/**

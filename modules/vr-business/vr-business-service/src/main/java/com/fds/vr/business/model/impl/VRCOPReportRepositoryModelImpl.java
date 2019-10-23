@@ -88,7 +88,38 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 			{ "copReportExpiredDate", Types.TIMESTAMP },
 			{ "COPFileEntryId", Types.BIGINT },
 			{ "modifyDate", Types.TIMESTAMP },
-			{ "syncDate", Types.TIMESTAMP }
+			{ "syncDate", Types.TIMESTAMP },
+			{ "importerManufacturerCode", Types.VARCHAR },
+			{ "importerManufacturerName", Types.VARCHAR },
+			{ "importerManufacturerAddress", Types.VARCHAR },
+			{ "markupDomesticsManufacturer", Types.VARCHAR },
+			{ "markupImporter", Types.VARCHAR },
+			{ "copClassification", Types.VARCHAR },
+			{ "productClassificationDescription", Types.VARCHAR },
+			{ "totalPointA", Types.INTEGER },
+			{ "totalPointB", Types.INTEGER },
+			{ "totalPointC", Types.INTEGER },
+			{ "copNonConformity", Types.VARCHAR },
+			{ "inspectionRecordNo", Types.VARCHAR },
+			{ "inspectionRecordDate", Types.TIMESTAMP },
+			{ "corporationId", Types.BIGINT },
+			{ "inspectorId", Types.BIGINT },
+			{ "inspectionSite", Types.VARCHAR },
+			{ "inspectionDateFrom", Types.TIMESTAMP },
+			{ "inspectionDateTo", Types.TIMESTAMP },
+			{ "subInspector", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "applicantRepresentative", Types.VARCHAR },
+			{ "applicantRepresentativeTitle", Types.VARCHAR },
+			{ "inspectionRecordFileEntryId", Types.BIGINT },
+			{ "copReportRefNo", Types.VARCHAR },
+			{ "copReportRefDate", Types.TIMESTAMP },
+			{ "copReportPreviousNo", Types.VARCHAR },
+			{ "copReportPreviousDate", Types.TIMESTAMP },
+			{ "expiredStatus", Types.VARCHAR },
+			{ "dossierId", Types.BIGINT },
+			{ "dossierIdCTN", Types.VARCHAR },
+			{ "dossierNo", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -119,9 +150,40 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		TABLE_COLUMNS_MAP.put("COPFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("importerManufacturerCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("importerManufacturerName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("importerManufacturerAddress", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("markupDomesticsManufacturer", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("markupImporter", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("copClassification", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productClassificationDescription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("totalPointA", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("totalPointB", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("totalPointC", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("copNonConformity", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("inspectionRecordNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("inspectionRecordDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("corporationId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("inspectorId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("inspectionSite", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("inspectionDateFrom", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("inspectionDateTo", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("subInspector", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantRepresentative", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantRepresentativeTitle", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("inspectionRecordFileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("copReportRefNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("copReportRefDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("copReportPreviousNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("copReportPreviousDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("expiredStatus", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("dossierIdCTN", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierNo", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copreportrepository (id LONG not null primary key,mtCore LONG,applicantProfileId LONG,applicantCode VARCHAR(75) null,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,overseasManufacturerCode VARCHAR(75) null,overseasManufacturerName VARCHAR(75) null,overseasManufacturerAddress VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,copReportNo VARCHAR(75) null,copReportStatus VARCHAR(75) null,copReportType VARCHAR(75) null,copReportMetadata VARCHAR(75) null,copReportSignName VARCHAR(75) null,copReportSignTitle VARCHAR(75) null,copReportSignPlace VARCHAR(75) null,copReportDate DATE null,copReportApprovedDate DATE null,copReportExpiredDate DATE null,COPFileEntryId LONG,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copreportrepository (id LONG not null primary key,mtCore LONG,applicantProfileId LONG,applicantCode VARCHAR(75) null,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,overseasManufacturerCode VARCHAR(75) null,overseasManufacturerName VARCHAR(75) null,overseasManufacturerAddress VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,copReportNo VARCHAR(75) null,copReportStatus VARCHAR(75) null,copReportType VARCHAR(75) null,copReportMetadata VARCHAR(75) null,copReportSignName VARCHAR(75) null,copReportSignTitle VARCHAR(75) null,copReportSignPlace VARCHAR(75) null,copReportDate DATE null,copReportApprovedDate DATE null,copReportExpiredDate DATE null,COPFileEntryId LONG,modifyDate DATE null,syncDate DATE null,importerManufacturerCode VARCHAR(75) null,importerManufacturerName VARCHAR(75) null,importerManufacturerAddress VARCHAR(75) null,markupDomesticsManufacturer VARCHAR(75) null,markupImporter VARCHAR(75) null,copClassification VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,totalPointA INTEGER,totalPointB INTEGER,totalPointC INTEGER,copNonConformity VARCHAR(75) null,inspectionRecordNo VARCHAR(75) null,inspectionRecordDate DATE null,corporationId LONG,inspectorId LONG,inspectionSite VARCHAR(75) null,inspectionDateFrom DATE null,inspectionDateTo DATE null,subInspector VARCHAR(75) null,description VARCHAR(75) null,applicantRepresentative VARCHAR(75) null,applicantRepresentativeTitle VARCHAR(75) null,inspectionRecordFileEntryId LONG,copReportRefNo VARCHAR(75) null,copReportRefDate DATE null,copReportPreviousNo VARCHAR(75) null,copReportPreviousDate DATE null,expiredStatus VARCHAR(75) null,dossierId LONG,dossierIdCTN VARCHAR(75) null,dossierNo VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copreportrepository";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopReportRepository.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copreportrepository.modifyDate DESC";
@@ -212,6 +274,42 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		attributes.put("COPFileEntryId", getCOPFileEntryId());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("importerManufacturerCode", getImporterManufacturerCode());
+		attributes.put("importerManufacturerName", getImporterManufacturerName());
+		attributes.put("importerManufacturerAddress",
+			getImporterManufacturerAddress());
+		attributes.put("markupDomesticsManufacturer",
+			getMarkupDomesticsManufacturer());
+		attributes.put("markupImporter", getMarkupImporter());
+		attributes.put("copClassification", getCopClassification());
+		attributes.put("productClassificationDescription",
+			getProductClassificationDescription());
+		attributes.put("totalPointA", getTotalPointA());
+		attributes.put("totalPointB", getTotalPointB());
+		attributes.put("totalPointC", getTotalPointC());
+		attributes.put("copNonConformity", getCopNonConformity());
+		attributes.put("inspectionRecordNo", getInspectionRecordNo());
+		attributes.put("inspectionRecordDate", getInspectionRecordDate());
+		attributes.put("corporationId", getCorporationId());
+		attributes.put("inspectorId", getInspectorId());
+		attributes.put("inspectionSite", getInspectionSite());
+		attributes.put("inspectionDateFrom", getInspectionDateFrom());
+		attributes.put("inspectionDateTo", getInspectionDateTo());
+		attributes.put("subInspector", getSubInspector());
+		attributes.put("description", getDescription());
+		attributes.put("applicantRepresentative", getApplicantRepresentative());
+		attributes.put("applicantRepresentativeTitle",
+			getApplicantRepresentativeTitle());
+		attributes.put("inspectionRecordFileEntryId",
+			getInspectionRecordFileEntryId());
+		attributes.put("copReportRefNo", getCopReportRefNo());
+		attributes.put("copReportRefDate", getCopReportRefDate());
+		attributes.put("copReportPreviousNo", getCopReportPreviousNo());
+		attributes.put("copReportPreviousDate", getCopReportPreviousDate());
+		attributes.put("expiredStatus", getExpiredStatus());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -382,6 +480,202 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		String importerManufacturerCode = (String)attributes.get(
+				"importerManufacturerCode");
+
+		if (importerManufacturerCode != null) {
+			setImporterManufacturerCode(importerManufacturerCode);
+		}
+
+		String importerManufacturerName = (String)attributes.get(
+				"importerManufacturerName");
+
+		if (importerManufacturerName != null) {
+			setImporterManufacturerName(importerManufacturerName);
+		}
+
+		String importerManufacturerAddress = (String)attributes.get(
+				"importerManufacturerAddress");
+
+		if (importerManufacturerAddress != null) {
+			setImporterManufacturerAddress(importerManufacturerAddress);
+		}
+
+		String markupDomesticsManufacturer = (String)attributes.get(
+				"markupDomesticsManufacturer");
+
+		if (markupDomesticsManufacturer != null) {
+			setMarkupDomesticsManufacturer(markupDomesticsManufacturer);
+		}
+
+		String markupImporter = (String)attributes.get("markupImporter");
+
+		if (markupImporter != null) {
+			setMarkupImporter(markupImporter);
+		}
+
+		String copClassification = (String)attributes.get("copClassification");
+
+		if (copClassification != null) {
+			setCopClassification(copClassification);
+		}
+
+		String productClassificationDescription = (String)attributes.get(
+				"productClassificationDescription");
+
+		if (productClassificationDescription != null) {
+			setProductClassificationDescription(productClassificationDescription);
+		}
+
+		Integer totalPointA = (Integer)attributes.get("totalPointA");
+
+		if (totalPointA != null) {
+			setTotalPointA(totalPointA);
+		}
+
+		Integer totalPointB = (Integer)attributes.get("totalPointB");
+
+		if (totalPointB != null) {
+			setTotalPointB(totalPointB);
+		}
+
+		Integer totalPointC = (Integer)attributes.get("totalPointC");
+
+		if (totalPointC != null) {
+			setTotalPointC(totalPointC);
+		}
+
+		String copNonConformity = (String)attributes.get("copNonConformity");
+
+		if (copNonConformity != null) {
+			setCopNonConformity(copNonConformity);
+		}
+
+		String inspectionRecordNo = (String)attributes.get("inspectionRecordNo");
+
+		if (inspectionRecordNo != null) {
+			setInspectionRecordNo(inspectionRecordNo);
+		}
+
+		Date inspectionRecordDate = (Date)attributes.get("inspectionRecordDate");
+
+		if (inspectionRecordDate != null) {
+			setInspectionRecordDate(inspectionRecordDate);
+		}
+
+		Long corporationId = (Long)attributes.get("corporationId");
+
+		if (corporationId != null) {
+			setCorporationId(corporationId);
+		}
+
+		Long inspectorId = (Long)attributes.get("inspectorId");
+
+		if (inspectorId != null) {
+			setInspectorId(inspectorId);
+		}
+
+		String inspectionSite = (String)attributes.get("inspectionSite");
+
+		if (inspectionSite != null) {
+			setInspectionSite(inspectionSite);
+		}
+
+		Date inspectionDateFrom = (Date)attributes.get("inspectionDateFrom");
+
+		if (inspectionDateFrom != null) {
+			setInspectionDateFrom(inspectionDateFrom);
+		}
+
+		Date inspectionDateTo = (Date)attributes.get("inspectionDateTo");
+
+		if (inspectionDateTo != null) {
+			setInspectionDateTo(inspectionDateTo);
+		}
+
+		String subInspector = (String)attributes.get("subInspector");
+
+		if (subInspector != null) {
+			setSubInspector(subInspector);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String applicantRepresentative = (String)attributes.get(
+				"applicantRepresentative");
+
+		if (applicantRepresentative != null) {
+			setApplicantRepresentative(applicantRepresentative);
+		}
+
+		String applicantRepresentativeTitle = (String)attributes.get(
+				"applicantRepresentativeTitle");
+
+		if (applicantRepresentativeTitle != null) {
+			setApplicantRepresentativeTitle(applicantRepresentativeTitle);
+		}
+
+		Long inspectionRecordFileEntryId = (Long)attributes.get(
+				"inspectionRecordFileEntryId");
+
+		if (inspectionRecordFileEntryId != null) {
+			setInspectionRecordFileEntryId(inspectionRecordFileEntryId);
+		}
+
+		String copReportRefNo = (String)attributes.get("copReportRefNo");
+
+		if (copReportRefNo != null) {
+			setCopReportRefNo(copReportRefNo);
+		}
+
+		Date copReportRefDate = (Date)attributes.get("copReportRefDate");
+
+		if (copReportRefDate != null) {
+			setCopReportRefDate(copReportRefDate);
+		}
+
+		String copReportPreviousNo = (String)attributes.get(
+				"copReportPreviousNo");
+
+		if (copReportPreviousNo != null) {
+			setCopReportPreviousNo(copReportPreviousNo);
+		}
+
+		Date copReportPreviousDate = (Date)attributes.get(
+				"copReportPreviousDate");
+
+		if (copReportPreviousDate != null) {
+			setCopReportPreviousDate(copReportPreviousDate);
+		}
+
+		String expiredStatus = (String)attributes.get("expiredStatus");
+
+		if (expiredStatus != null) {
+			setExpiredStatus(expiredStatus);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 	}
 
@@ -802,6 +1096,415 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		_syncDate = syncDate;
 	}
 
+	@Override
+	public String getImporterManufacturerCode() {
+		if (_importerManufacturerCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _importerManufacturerCode;
+		}
+	}
+
+	@Override
+	public void setImporterManufacturerCode(String importerManufacturerCode) {
+		_importerManufacturerCode = importerManufacturerCode;
+	}
+
+	@Override
+	public String getImporterManufacturerName() {
+		if (_importerManufacturerName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _importerManufacturerName;
+		}
+	}
+
+	@Override
+	public void setImporterManufacturerName(String importerManufacturerName) {
+		_importerManufacturerName = importerManufacturerName;
+	}
+
+	@Override
+	public String getImporterManufacturerAddress() {
+		if (_importerManufacturerAddress == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _importerManufacturerAddress;
+		}
+	}
+
+	@Override
+	public void setImporterManufacturerAddress(
+		String importerManufacturerAddress) {
+		_importerManufacturerAddress = importerManufacturerAddress;
+	}
+
+	@Override
+	public String getMarkupDomesticsManufacturer() {
+		if (_markupDomesticsManufacturer == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _markupDomesticsManufacturer;
+		}
+	}
+
+	@Override
+	public void setMarkupDomesticsManufacturer(
+		String markupDomesticsManufacturer) {
+		_markupDomesticsManufacturer = markupDomesticsManufacturer;
+	}
+
+	@Override
+	public String getMarkupImporter() {
+		if (_markupImporter == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _markupImporter;
+		}
+	}
+
+	@Override
+	public void setMarkupImporter(String markupImporter) {
+		_markupImporter = markupImporter;
+	}
+
+	@Override
+	public String getCopClassification() {
+		if (_copClassification == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _copClassification;
+		}
+	}
+
+	@Override
+	public void setCopClassification(String copClassification) {
+		_copClassification = copClassification;
+	}
+
+	@Override
+	public String getProductClassificationDescription() {
+		if (_productClassificationDescription == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productClassificationDescription;
+		}
+	}
+
+	@Override
+	public void setProductClassificationDescription(
+		String productClassificationDescription) {
+		_productClassificationDescription = productClassificationDescription;
+	}
+
+	@Override
+	public int getTotalPointA() {
+		return _totalPointA;
+	}
+
+	@Override
+	public void setTotalPointA(int totalPointA) {
+		_totalPointA = totalPointA;
+	}
+
+	@Override
+	public int getTotalPointB() {
+		return _totalPointB;
+	}
+
+	@Override
+	public void setTotalPointB(int totalPointB) {
+		_totalPointB = totalPointB;
+	}
+
+	@Override
+	public int getTotalPointC() {
+		return _totalPointC;
+	}
+
+	@Override
+	public void setTotalPointC(int totalPointC) {
+		_totalPointC = totalPointC;
+	}
+
+	@Override
+	public String getCopNonConformity() {
+		if (_copNonConformity == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _copNonConformity;
+		}
+	}
+
+	@Override
+	public void setCopNonConformity(String copNonConformity) {
+		_copNonConformity = copNonConformity;
+	}
+
+	@Override
+	public String getInspectionRecordNo() {
+		if (_inspectionRecordNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _inspectionRecordNo;
+		}
+	}
+
+	@Override
+	public void setInspectionRecordNo(String inspectionRecordNo) {
+		_inspectionRecordNo = inspectionRecordNo;
+	}
+
+	@Override
+	public Date getInspectionRecordDate() {
+		return _inspectionRecordDate;
+	}
+
+	@Override
+	public void setInspectionRecordDate(Date inspectionRecordDate) {
+		_inspectionRecordDate = inspectionRecordDate;
+	}
+
+	@Override
+	public long getCorporationId() {
+		return _corporationId;
+	}
+
+	@Override
+	public void setCorporationId(long corporationId) {
+		_corporationId = corporationId;
+	}
+
+	@Override
+	public long getInspectorId() {
+		return _inspectorId;
+	}
+
+	@Override
+	public void setInspectorId(long inspectorId) {
+		_inspectorId = inspectorId;
+	}
+
+	@Override
+	public String getInspectionSite() {
+		if (_inspectionSite == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _inspectionSite;
+		}
+	}
+
+	@Override
+	public void setInspectionSite(String inspectionSite) {
+		_inspectionSite = inspectionSite;
+	}
+
+	@Override
+	public Date getInspectionDateFrom() {
+		return _inspectionDateFrom;
+	}
+
+	@Override
+	public void setInspectionDateFrom(Date inspectionDateFrom) {
+		_inspectionDateFrom = inspectionDateFrom;
+	}
+
+	@Override
+	public Date getInspectionDateTo() {
+		return _inspectionDateTo;
+	}
+
+	@Override
+	public void setInspectionDateTo(Date inspectionDateTo) {
+		_inspectionDateTo = inspectionDateTo;
+	}
+
+	@Override
+	public String getSubInspector() {
+		if (_subInspector == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _subInspector;
+		}
+	}
+
+	@Override
+	public void setSubInspector(String subInspector) {
+		_subInspector = subInspector;
+	}
+
+	@Override
+	public String getDescription() {
+		if (_description == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _description;
+		}
+	}
+
+	@Override
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	@Override
+	public String getApplicantRepresentative() {
+		if (_applicantRepresentative == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantRepresentative;
+		}
+	}
+
+	@Override
+	public void setApplicantRepresentative(String applicantRepresentative) {
+		_applicantRepresentative = applicantRepresentative;
+	}
+
+	@Override
+	public String getApplicantRepresentativeTitle() {
+		if (_applicantRepresentativeTitle == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantRepresentativeTitle;
+		}
+	}
+
+	@Override
+	public void setApplicantRepresentativeTitle(
+		String applicantRepresentativeTitle) {
+		_applicantRepresentativeTitle = applicantRepresentativeTitle;
+	}
+
+	@Override
+	public long getInspectionRecordFileEntryId() {
+		return _inspectionRecordFileEntryId;
+	}
+
+	@Override
+	public void setInspectionRecordFileEntryId(long inspectionRecordFileEntryId) {
+		_inspectionRecordFileEntryId = inspectionRecordFileEntryId;
+	}
+
+	@Override
+	public String getCopReportRefNo() {
+		if (_copReportRefNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _copReportRefNo;
+		}
+	}
+
+	@Override
+	public void setCopReportRefNo(String copReportRefNo) {
+		_copReportRefNo = copReportRefNo;
+	}
+
+	@Override
+	public Date getCopReportRefDate() {
+		return _copReportRefDate;
+	}
+
+	@Override
+	public void setCopReportRefDate(Date copReportRefDate) {
+		_copReportRefDate = copReportRefDate;
+	}
+
+	@Override
+	public String getCopReportPreviousNo() {
+		if (_copReportPreviousNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _copReportPreviousNo;
+		}
+	}
+
+	@Override
+	public void setCopReportPreviousNo(String copReportPreviousNo) {
+		_copReportPreviousNo = copReportPreviousNo;
+	}
+
+	@Override
+	public Date getCopReportPreviousDate() {
+		return _copReportPreviousDate;
+	}
+
+	@Override
+	public void setCopReportPreviousDate(Date copReportPreviousDate) {
+		_copReportPreviousDate = copReportPreviousDate;
+	}
+
+	@Override
+	public String getExpiredStatus() {
+		if (_expiredStatus == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _expiredStatus;
+		}
+	}
+
+	@Override
+	public void setExpiredStatus(String expiredStatus) {
+		_expiredStatus = expiredStatus;
+	}
+
+	@Override
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	@Override
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	@Override
+	public String getDossierIdCTN() {
+		if (_dossierIdCTN == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierIdCTN;
+		}
+	}
+
+	@Override
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	@Override
+	public String getDossierNo() {
+		if (_dossierNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierNo;
+		}
+	}
+
+	@Override
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -859,6 +1562,37 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		vrcopReportRepositoryImpl.setCOPFileEntryId(getCOPFileEntryId());
 		vrcopReportRepositoryImpl.setModifyDate(getModifyDate());
 		vrcopReportRepositoryImpl.setSyncDate(getSyncDate());
+		vrcopReportRepositoryImpl.setImporterManufacturerCode(getImporterManufacturerCode());
+		vrcopReportRepositoryImpl.setImporterManufacturerName(getImporterManufacturerName());
+		vrcopReportRepositoryImpl.setImporterManufacturerAddress(getImporterManufacturerAddress());
+		vrcopReportRepositoryImpl.setMarkupDomesticsManufacturer(getMarkupDomesticsManufacturer());
+		vrcopReportRepositoryImpl.setMarkupImporter(getMarkupImporter());
+		vrcopReportRepositoryImpl.setCopClassification(getCopClassification());
+		vrcopReportRepositoryImpl.setProductClassificationDescription(getProductClassificationDescription());
+		vrcopReportRepositoryImpl.setTotalPointA(getTotalPointA());
+		vrcopReportRepositoryImpl.setTotalPointB(getTotalPointB());
+		vrcopReportRepositoryImpl.setTotalPointC(getTotalPointC());
+		vrcopReportRepositoryImpl.setCopNonConformity(getCopNonConformity());
+		vrcopReportRepositoryImpl.setInspectionRecordNo(getInspectionRecordNo());
+		vrcopReportRepositoryImpl.setInspectionRecordDate(getInspectionRecordDate());
+		vrcopReportRepositoryImpl.setCorporationId(getCorporationId());
+		vrcopReportRepositoryImpl.setInspectorId(getInspectorId());
+		vrcopReportRepositoryImpl.setInspectionSite(getInspectionSite());
+		vrcopReportRepositoryImpl.setInspectionDateFrom(getInspectionDateFrom());
+		vrcopReportRepositoryImpl.setInspectionDateTo(getInspectionDateTo());
+		vrcopReportRepositoryImpl.setSubInspector(getSubInspector());
+		vrcopReportRepositoryImpl.setDescription(getDescription());
+		vrcopReportRepositoryImpl.setApplicantRepresentative(getApplicantRepresentative());
+		vrcopReportRepositoryImpl.setApplicantRepresentativeTitle(getApplicantRepresentativeTitle());
+		vrcopReportRepositoryImpl.setInspectionRecordFileEntryId(getInspectionRecordFileEntryId());
+		vrcopReportRepositoryImpl.setCopReportRefNo(getCopReportRefNo());
+		vrcopReportRepositoryImpl.setCopReportRefDate(getCopReportRefDate());
+		vrcopReportRepositoryImpl.setCopReportPreviousNo(getCopReportPreviousNo());
+		vrcopReportRepositoryImpl.setCopReportPreviousDate(getCopReportPreviousDate());
+		vrcopReportRepositoryImpl.setExpiredStatus(getExpiredStatus());
+		vrcopReportRepositoryImpl.setDossierId(getDossierId());
+		vrcopReportRepositoryImpl.setDossierIdCTN(getDossierIdCTN());
+		vrcopReportRepositoryImpl.setDossierNo(getDossierNo());
 
 		vrcopReportRepositoryImpl.resetOriginalValues();
 
@@ -1136,12 +1870,231 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 			vrcopReportRepositoryCacheModel.syncDate = Long.MIN_VALUE;
 		}
 
+		vrcopReportRepositoryCacheModel.importerManufacturerCode = getImporterManufacturerCode();
+
+		String importerManufacturerCode = vrcopReportRepositoryCacheModel.importerManufacturerCode;
+
+		if ((importerManufacturerCode != null) &&
+				(importerManufacturerCode.length() == 0)) {
+			vrcopReportRepositoryCacheModel.importerManufacturerCode = null;
+		}
+
+		vrcopReportRepositoryCacheModel.importerManufacturerName = getImporterManufacturerName();
+
+		String importerManufacturerName = vrcopReportRepositoryCacheModel.importerManufacturerName;
+
+		if ((importerManufacturerName != null) &&
+				(importerManufacturerName.length() == 0)) {
+			vrcopReportRepositoryCacheModel.importerManufacturerName = null;
+		}
+
+		vrcopReportRepositoryCacheModel.importerManufacturerAddress = getImporterManufacturerAddress();
+
+		String importerManufacturerAddress = vrcopReportRepositoryCacheModel.importerManufacturerAddress;
+
+		if ((importerManufacturerAddress != null) &&
+				(importerManufacturerAddress.length() == 0)) {
+			vrcopReportRepositoryCacheModel.importerManufacturerAddress = null;
+		}
+
+		vrcopReportRepositoryCacheModel.markupDomesticsManufacturer = getMarkupDomesticsManufacturer();
+
+		String markupDomesticsManufacturer = vrcopReportRepositoryCacheModel.markupDomesticsManufacturer;
+
+		if ((markupDomesticsManufacturer != null) &&
+				(markupDomesticsManufacturer.length() == 0)) {
+			vrcopReportRepositoryCacheModel.markupDomesticsManufacturer = null;
+		}
+
+		vrcopReportRepositoryCacheModel.markupImporter = getMarkupImporter();
+
+		String markupImporter = vrcopReportRepositoryCacheModel.markupImporter;
+
+		if ((markupImporter != null) && (markupImporter.length() == 0)) {
+			vrcopReportRepositoryCacheModel.markupImporter = null;
+		}
+
+		vrcopReportRepositoryCacheModel.copClassification = getCopClassification();
+
+		String copClassification = vrcopReportRepositoryCacheModel.copClassification;
+
+		if ((copClassification != null) && (copClassification.length() == 0)) {
+			vrcopReportRepositoryCacheModel.copClassification = null;
+		}
+
+		vrcopReportRepositoryCacheModel.productClassificationDescription = getProductClassificationDescription();
+
+		String productClassificationDescription = vrcopReportRepositoryCacheModel.productClassificationDescription;
+
+		if ((productClassificationDescription != null) &&
+				(productClassificationDescription.length() == 0)) {
+			vrcopReportRepositoryCacheModel.productClassificationDescription = null;
+		}
+
+		vrcopReportRepositoryCacheModel.totalPointA = getTotalPointA();
+
+		vrcopReportRepositoryCacheModel.totalPointB = getTotalPointB();
+
+		vrcopReportRepositoryCacheModel.totalPointC = getTotalPointC();
+
+		vrcopReportRepositoryCacheModel.copNonConformity = getCopNonConformity();
+
+		String copNonConformity = vrcopReportRepositoryCacheModel.copNonConformity;
+
+		if ((copNonConformity != null) && (copNonConformity.length() == 0)) {
+			vrcopReportRepositoryCacheModel.copNonConformity = null;
+		}
+
+		vrcopReportRepositoryCacheModel.inspectionRecordNo = getInspectionRecordNo();
+
+		String inspectionRecordNo = vrcopReportRepositoryCacheModel.inspectionRecordNo;
+
+		if ((inspectionRecordNo != null) && (inspectionRecordNo.length() == 0)) {
+			vrcopReportRepositoryCacheModel.inspectionRecordNo = null;
+		}
+
+		Date inspectionRecordDate = getInspectionRecordDate();
+
+		if (inspectionRecordDate != null) {
+			vrcopReportRepositoryCacheModel.inspectionRecordDate = inspectionRecordDate.getTime();
+		}
+		else {
+			vrcopReportRepositoryCacheModel.inspectionRecordDate = Long.MIN_VALUE;
+		}
+
+		vrcopReportRepositoryCacheModel.corporationId = getCorporationId();
+
+		vrcopReportRepositoryCacheModel.inspectorId = getInspectorId();
+
+		vrcopReportRepositoryCacheModel.inspectionSite = getInspectionSite();
+
+		String inspectionSite = vrcopReportRepositoryCacheModel.inspectionSite;
+
+		if ((inspectionSite != null) && (inspectionSite.length() == 0)) {
+			vrcopReportRepositoryCacheModel.inspectionSite = null;
+		}
+
+		Date inspectionDateFrom = getInspectionDateFrom();
+
+		if (inspectionDateFrom != null) {
+			vrcopReportRepositoryCacheModel.inspectionDateFrom = inspectionDateFrom.getTime();
+		}
+		else {
+			vrcopReportRepositoryCacheModel.inspectionDateFrom = Long.MIN_VALUE;
+		}
+
+		Date inspectionDateTo = getInspectionDateTo();
+
+		if (inspectionDateTo != null) {
+			vrcopReportRepositoryCacheModel.inspectionDateTo = inspectionDateTo.getTime();
+		}
+		else {
+			vrcopReportRepositoryCacheModel.inspectionDateTo = Long.MIN_VALUE;
+		}
+
+		vrcopReportRepositoryCacheModel.subInspector = getSubInspector();
+
+		String subInspector = vrcopReportRepositoryCacheModel.subInspector;
+
+		if ((subInspector != null) && (subInspector.length() == 0)) {
+			vrcopReportRepositoryCacheModel.subInspector = null;
+		}
+
+		vrcopReportRepositoryCacheModel.description = getDescription();
+
+		String description = vrcopReportRepositoryCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			vrcopReportRepositoryCacheModel.description = null;
+		}
+
+		vrcopReportRepositoryCacheModel.applicantRepresentative = getApplicantRepresentative();
+
+		String applicantRepresentative = vrcopReportRepositoryCacheModel.applicantRepresentative;
+
+		if ((applicantRepresentative != null) &&
+				(applicantRepresentative.length() == 0)) {
+			vrcopReportRepositoryCacheModel.applicantRepresentative = null;
+		}
+
+		vrcopReportRepositoryCacheModel.applicantRepresentativeTitle = getApplicantRepresentativeTitle();
+
+		String applicantRepresentativeTitle = vrcopReportRepositoryCacheModel.applicantRepresentativeTitle;
+
+		if ((applicantRepresentativeTitle != null) &&
+				(applicantRepresentativeTitle.length() == 0)) {
+			vrcopReportRepositoryCacheModel.applicantRepresentativeTitle = null;
+		}
+
+		vrcopReportRepositoryCacheModel.inspectionRecordFileEntryId = getInspectionRecordFileEntryId();
+
+		vrcopReportRepositoryCacheModel.copReportRefNo = getCopReportRefNo();
+
+		String copReportRefNo = vrcopReportRepositoryCacheModel.copReportRefNo;
+
+		if ((copReportRefNo != null) && (copReportRefNo.length() == 0)) {
+			vrcopReportRepositoryCacheModel.copReportRefNo = null;
+		}
+
+		Date copReportRefDate = getCopReportRefDate();
+
+		if (copReportRefDate != null) {
+			vrcopReportRepositoryCacheModel.copReportRefDate = copReportRefDate.getTime();
+		}
+		else {
+			vrcopReportRepositoryCacheModel.copReportRefDate = Long.MIN_VALUE;
+		}
+
+		vrcopReportRepositoryCacheModel.copReportPreviousNo = getCopReportPreviousNo();
+
+		String copReportPreviousNo = vrcopReportRepositoryCacheModel.copReportPreviousNo;
+
+		if ((copReportPreviousNo != null) &&
+				(copReportPreviousNo.length() == 0)) {
+			vrcopReportRepositoryCacheModel.copReportPreviousNo = null;
+		}
+
+		Date copReportPreviousDate = getCopReportPreviousDate();
+
+		if (copReportPreviousDate != null) {
+			vrcopReportRepositoryCacheModel.copReportPreviousDate = copReportPreviousDate.getTime();
+		}
+		else {
+			vrcopReportRepositoryCacheModel.copReportPreviousDate = Long.MIN_VALUE;
+		}
+
+		vrcopReportRepositoryCacheModel.expiredStatus = getExpiredStatus();
+
+		String expiredStatus = vrcopReportRepositoryCacheModel.expiredStatus;
+
+		if ((expiredStatus != null) && (expiredStatus.length() == 0)) {
+			vrcopReportRepositoryCacheModel.expiredStatus = null;
+		}
+
+		vrcopReportRepositoryCacheModel.dossierId = getDossierId();
+
+		vrcopReportRepositoryCacheModel.dossierIdCTN = getDossierIdCTN();
+
+		String dossierIdCTN = vrcopReportRepositoryCacheModel.dossierIdCTN;
+
+		if ((dossierIdCTN != null) && (dossierIdCTN.length() == 0)) {
+			vrcopReportRepositoryCacheModel.dossierIdCTN = null;
+		}
+
+		vrcopReportRepositoryCacheModel.dossierNo = getDossierNo();
+
+		String dossierNo = vrcopReportRepositoryCacheModel.dossierNo;
+
+		if ((dossierNo != null) && (dossierNo.length() == 0)) {
+			vrcopReportRepositoryCacheModel.dossierNo = null;
+		}
+
 		return vrcopReportRepositoryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(115);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1195,6 +2148,68 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
 		sb.append(getSyncDate());
+		sb.append(", importerManufacturerCode=");
+		sb.append(getImporterManufacturerCode());
+		sb.append(", importerManufacturerName=");
+		sb.append(getImporterManufacturerName());
+		sb.append(", importerManufacturerAddress=");
+		sb.append(getImporterManufacturerAddress());
+		sb.append(", markupDomesticsManufacturer=");
+		sb.append(getMarkupDomesticsManufacturer());
+		sb.append(", markupImporter=");
+		sb.append(getMarkupImporter());
+		sb.append(", copClassification=");
+		sb.append(getCopClassification());
+		sb.append(", productClassificationDescription=");
+		sb.append(getProductClassificationDescription());
+		sb.append(", totalPointA=");
+		sb.append(getTotalPointA());
+		sb.append(", totalPointB=");
+		sb.append(getTotalPointB());
+		sb.append(", totalPointC=");
+		sb.append(getTotalPointC());
+		sb.append(", copNonConformity=");
+		sb.append(getCopNonConformity());
+		sb.append(", inspectionRecordNo=");
+		sb.append(getInspectionRecordNo());
+		sb.append(", inspectionRecordDate=");
+		sb.append(getInspectionRecordDate());
+		sb.append(", corporationId=");
+		sb.append(getCorporationId());
+		sb.append(", inspectorId=");
+		sb.append(getInspectorId());
+		sb.append(", inspectionSite=");
+		sb.append(getInspectionSite());
+		sb.append(", inspectionDateFrom=");
+		sb.append(getInspectionDateFrom());
+		sb.append(", inspectionDateTo=");
+		sb.append(getInspectionDateTo());
+		sb.append(", subInspector=");
+		sb.append(getSubInspector());
+		sb.append(", description=");
+		sb.append(getDescription());
+		sb.append(", applicantRepresentative=");
+		sb.append(getApplicantRepresentative());
+		sb.append(", applicantRepresentativeTitle=");
+		sb.append(getApplicantRepresentativeTitle());
+		sb.append(", inspectionRecordFileEntryId=");
+		sb.append(getInspectionRecordFileEntryId());
+		sb.append(", copReportRefNo=");
+		sb.append(getCopReportRefNo());
+		sb.append(", copReportRefDate=");
+		sb.append(getCopReportRefDate());
+		sb.append(", copReportPreviousNo=");
+		sb.append(getCopReportPreviousNo());
+		sb.append(", copReportPreviousDate=");
+		sb.append(getCopReportPreviousDate());
+		sb.append(", expiredStatus=");
+		sb.append(getExpiredStatus());
+		sb.append(", dossierId=");
+		sb.append(getDossierId());
+		sb.append(", dossierIdCTN=");
+		sb.append(getDossierIdCTN());
+		sb.append(", dossierNo=");
+		sb.append(getDossierNo());
 		sb.append("}");
 
 		return sb.toString();
@@ -1202,7 +2217,7 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(82);
+		StringBundler sb = new StringBundler(175);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPReportRepository");
@@ -1312,6 +2327,130 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 			"<column><column-name>syncDate</column-name><column-value><![CDATA[");
 		sb.append(getSyncDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>importerManufacturerCode</column-name><column-value><![CDATA[");
+		sb.append(getImporterManufacturerCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>importerManufacturerName</column-name><column-value><![CDATA[");
+		sb.append(getImporterManufacturerName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>importerManufacturerAddress</column-name><column-value><![CDATA[");
+		sb.append(getImporterManufacturerAddress());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>markupDomesticsManufacturer</column-name><column-value><![CDATA[");
+		sb.append(getMarkupDomesticsManufacturer());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>markupImporter</column-name><column-value><![CDATA[");
+		sb.append(getMarkupImporter());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>copClassification</column-name><column-value><![CDATA[");
+		sb.append(getCopClassification());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productClassificationDescription</column-name><column-value><![CDATA[");
+		sb.append(getProductClassificationDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>totalPointA</column-name><column-value><![CDATA[");
+		sb.append(getTotalPointA());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>totalPointB</column-name><column-value><![CDATA[");
+		sb.append(getTotalPointB());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>totalPointC</column-name><column-value><![CDATA[");
+		sb.append(getTotalPointC());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>copNonConformity</column-name><column-value><![CDATA[");
+		sb.append(getCopNonConformity());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>inspectionRecordNo</column-name><column-value><![CDATA[");
+		sb.append(getInspectionRecordNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>inspectionRecordDate</column-name><column-value><![CDATA[");
+		sb.append(getInspectionRecordDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>corporationId</column-name><column-value><![CDATA[");
+		sb.append(getCorporationId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>inspectorId</column-name><column-value><![CDATA[");
+		sb.append(getInspectorId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>inspectionSite</column-name><column-value><![CDATA[");
+		sb.append(getInspectionSite());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>inspectionDateFrom</column-name><column-value><![CDATA[");
+		sb.append(getInspectionDateFrom());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>inspectionDateTo</column-name><column-value><![CDATA[");
+		sb.append(getInspectionDateTo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>subInspector</column-name><column-value><![CDATA[");
+		sb.append(getSubInspector());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>description</column-name><column-value><![CDATA[");
+		sb.append(getDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantRepresentative</column-name><column-value><![CDATA[");
+		sb.append(getApplicantRepresentative());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantRepresentativeTitle</column-name><column-value><![CDATA[");
+		sb.append(getApplicantRepresentativeTitle());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>inspectionRecordFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getInspectionRecordFileEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>copReportRefNo</column-name><column-value><![CDATA[");
+		sb.append(getCopReportRefNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>copReportRefDate</column-name><column-value><![CDATA[");
+		sb.append(getCopReportRefDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>copReportPreviousNo</column-name><column-value><![CDATA[");
+		sb.append(getCopReportPreviousNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>copReportPreviousDate</column-name><column-value><![CDATA[");
+		sb.append(getCopReportPreviousDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expiredStatus</column-name><column-value><![CDATA[");
+		sb.append(getExpiredStatus());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierId</column-name><column-value><![CDATA[");
+		sb.append(getDossierId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierIdCTN</column-name><column-value><![CDATA[");
+		sb.append(getDossierIdCTN());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierNo</column-name><column-value><![CDATA[");
+		sb.append(getDossierNo());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1357,6 +2496,37 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 	private long _COPFileEntryId;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private String _importerManufacturerCode;
+	private String _importerManufacturerName;
+	private String _importerManufacturerAddress;
+	private String _markupDomesticsManufacturer;
+	private String _markupImporter;
+	private String _copClassification;
+	private String _productClassificationDescription;
+	private int _totalPointA;
+	private int _totalPointB;
+	private int _totalPointC;
+	private String _copNonConformity;
+	private String _inspectionRecordNo;
+	private Date _inspectionRecordDate;
+	private long _corporationId;
+	private long _inspectorId;
+	private String _inspectionSite;
+	private Date _inspectionDateFrom;
+	private Date _inspectionDateTo;
+	private String _subInspector;
+	private String _description;
+	private String _applicantRepresentative;
+	private String _applicantRepresentativeTitle;
+	private long _inspectionRecordFileEntryId;
+	private String _copReportRefNo;
+	private Date _copReportRefDate;
+	private String _copReportPreviousNo;
+	private Date _copReportPreviousDate;
+	private String _expiredStatus;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 	private long _columnBitmask;
 	private VRCOPReportRepository _escapedModel;
 }

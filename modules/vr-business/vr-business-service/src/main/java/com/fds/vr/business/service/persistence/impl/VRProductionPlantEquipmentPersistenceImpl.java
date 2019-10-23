@@ -937,6 +937,23 @@ public class VRProductionPlantEquipmentPersistenceImpl
 		vrProductionPlantEquipmentImpl.setNotes(vrProductionPlantEquipment.getNotes());
 		vrProductionPlantEquipmentImpl.setModifyDate(vrProductionPlantEquipment.getModifyDate());
 		vrProductionPlantEquipmentImpl.setSyncDate(vrProductionPlantEquipment.getSyncDate());
+		vrProductionPlantEquipmentImpl.setEquipmentSerialNo(vrProductionPlantEquipment.getEquipmentSerialNo());
+		vrProductionPlantEquipmentImpl.setProductionYear(vrProductionPlantEquipment.getProductionYear());
+		vrProductionPlantEquipmentImpl.setRegistrationYear(vrProductionPlantEquipment.getRegistrationYear());
+		vrProductionPlantEquipmentImpl.setMarkupXCG(vrProductionPlantEquipment.getMarkupXCG());
+		vrProductionPlantEquipmentImpl.setMarkupXCGNK(vrProductionPlantEquipment.getMarkupXCGNK());
+		vrProductionPlantEquipmentImpl.setMarkupSMRM(vrProductionPlantEquipment.getMarkupSMRM());
+		vrProductionPlantEquipmentImpl.setMarkupXCH(vrProductionPlantEquipment.getMarkupXCH());
+		vrProductionPlantEquipmentImpl.setMarkupXCN(vrProductionPlantEquipment.getMarkupXCN());
+		vrProductionPlantEquipmentImpl.setMarkupXMY(vrProductionPlantEquipment.getMarkupXMY());
+		vrProductionPlantEquipmentImpl.setMarkupXDD(vrProductionPlantEquipment.getMarkupXDD());
+		vrProductionPlantEquipmentImpl.setTestingResult(vrProductionPlantEquipment.getTestingResult());
+		vrProductionPlantEquipmentImpl.setDescription(vrProductionPlantEquipment.getDescription());
+		vrProductionPlantEquipmentImpl.setInspectionRecordNumber(vrProductionPlantEquipment.getInspectionRecordNumber());
+		vrProductionPlantEquipmentImpl.setInspectionRecordDate(vrProductionPlantEquipment.getInspectionRecordDate());
+		vrProductionPlantEquipmentImpl.setStampTestingNo(vrProductionPlantEquipment.getStampTestingNo());
+		vrProductionPlantEquipmentImpl.setProductionPlantId(vrProductionPlantEquipment.getProductionPlantId());
+		vrProductionPlantEquipmentImpl.setProductionPlantCode(vrProductionPlantEquipment.getProductionPlantCode());
 
 		return vrProductionPlantEquipmentImpl;
 	}

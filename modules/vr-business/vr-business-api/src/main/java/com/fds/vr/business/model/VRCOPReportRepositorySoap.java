@@ -60,6 +60,37 @@ public class VRCOPReportRepositorySoap implements Serializable {
 		soapModel.setCOPFileEntryId(model.getCOPFileEntryId());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
+		soapModel.setImporterManufacturerCode(model.getImporterManufacturerCode());
+		soapModel.setImporterManufacturerName(model.getImporterManufacturerName());
+		soapModel.setImporterManufacturerAddress(model.getImporterManufacturerAddress());
+		soapModel.setMarkupDomesticsManufacturer(model.getMarkupDomesticsManufacturer());
+		soapModel.setMarkupImporter(model.getMarkupImporter());
+		soapModel.setCopClassification(model.getCopClassification());
+		soapModel.setProductClassificationDescription(model.getProductClassificationDescription());
+		soapModel.setTotalPointA(model.getTotalPointA());
+		soapModel.setTotalPointB(model.getTotalPointB());
+		soapModel.setTotalPointC(model.getTotalPointC());
+		soapModel.setCopNonConformity(model.getCopNonConformity());
+		soapModel.setInspectionRecordNo(model.getInspectionRecordNo());
+		soapModel.setInspectionRecordDate(model.getInspectionRecordDate());
+		soapModel.setCorporationId(model.getCorporationId());
+		soapModel.setInspectorId(model.getInspectorId());
+		soapModel.setInspectionSite(model.getInspectionSite());
+		soapModel.setInspectionDateFrom(model.getInspectionDateFrom());
+		soapModel.setInspectionDateTo(model.getInspectionDateTo());
+		soapModel.setSubInspector(model.getSubInspector());
+		soapModel.setDescription(model.getDescription());
+		soapModel.setApplicantRepresentative(model.getApplicantRepresentative());
+		soapModel.setApplicantRepresentativeTitle(model.getApplicantRepresentativeTitle());
+		soapModel.setInspectionRecordFileEntryId(model.getInspectionRecordFileEntryId());
+		soapModel.setCopReportRefNo(model.getCopReportRefNo());
+		soapModel.setCopReportRefDate(model.getCopReportRefDate());
+		soapModel.setCopReportPreviousNo(model.getCopReportPreviousNo());
+		soapModel.setCopReportPreviousDate(model.getCopReportPreviousDate());
+		soapModel.setExpiredStatus(model.getExpiredStatus());
+		soapModel.setDossierId(model.getDossierId());
+		soapModel.setDossierIdCTN(model.getDossierIdCTN());
+		soapModel.setDossierNo(model.getDossierNo());
 
 		return soapModel;
 	}
@@ -324,6 +355,258 @@ public class VRCOPReportRepositorySoap implements Serializable {
 		_syncDate = syncDate;
 	}
 
+	public String getImporterManufacturerCode() {
+		return _importerManufacturerCode;
+	}
+
+	public void setImporterManufacturerCode(String importerManufacturerCode) {
+		_importerManufacturerCode = importerManufacturerCode;
+	}
+
+	public String getImporterManufacturerName() {
+		return _importerManufacturerName;
+	}
+
+	public void setImporterManufacturerName(String importerManufacturerName) {
+		_importerManufacturerName = importerManufacturerName;
+	}
+
+	public String getImporterManufacturerAddress() {
+		return _importerManufacturerAddress;
+	}
+
+	public void setImporterManufacturerAddress(
+		String importerManufacturerAddress) {
+		_importerManufacturerAddress = importerManufacturerAddress;
+	}
+
+	public String getMarkupDomesticsManufacturer() {
+		return _markupDomesticsManufacturer;
+	}
+
+	public void setMarkupDomesticsManufacturer(
+		String markupDomesticsManufacturer) {
+		_markupDomesticsManufacturer = markupDomesticsManufacturer;
+	}
+
+	public String getMarkupImporter() {
+		return _markupImporter;
+	}
+
+	public void setMarkupImporter(String markupImporter) {
+		_markupImporter = markupImporter;
+	}
+
+	public String getCopClassification() {
+		return _copClassification;
+	}
+
+	public void setCopClassification(String copClassification) {
+		_copClassification = copClassification;
+	}
+
+	public String getProductClassificationDescription() {
+		return _productClassificationDescription;
+	}
+
+	public void setProductClassificationDescription(
+		String productClassificationDescription) {
+		_productClassificationDescription = productClassificationDescription;
+	}
+
+	public int getTotalPointA() {
+		return _totalPointA;
+	}
+
+	public void setTotalPointA(int totalPointA) {
+		_totalPointA = totalPointA;
+	}
+
+	public int getTotalPointB() {
+		return _totalPointB;
+	}
+
+	public void setTotalPointB(int totalPointB) {
+		_totalPointB = totalPointB;
+	}
+
+	public int getTotalPointC() {
+		return _totalPointC;
+	}
+
+	public void setTotalPointC(int totalPointC) {
+		_totalPointC = totalPointC;
+	}
+
+	public String getCopNonConformity() {
+		return _copNonConformity;
+	}
+
+	public void setCopNonConformity(String copNonConformity) {
+		_copNonConformity = copNonConformity;
+	}
+
+	public String getInspectionRecordNo() {
+		return _inspectionRecordNo;
+	}
+
+	public void setInspectionRecordNo(String inspectionRecordNo) {
+		_inspectionRecordNo = inspectionRecordNo;
+	}
+
+	public Date getInspectionRecordDate() {
+		return _inspectionRecordDate;
+	}
+
+	public void setInspectionRecordDate(Date inspectionRecordDate) {
+		_inspectionRecordDate = inspectionRecordDate;
+	}
+
+	public long getCorporationId() {
+		return _corporationId;
+	}
+
+	public void setCorporationId(long corporationId) {
+		_corporationId = corporationId;
+	}
+
+	public long getInspectorId() {
+		return _inspectorId;
+	}
+
+	public void setInspectorId(long inspectorId) {
+		_inspectorId = inspectorId;
+	}
+
+	public String getInspectionSite() {
+		return _inspectionSite;
+	}
+
+	public void setInspectionSite(String inspectionSite) {
+		_inspectionSite = inspectionSite;
+	}
+
+	public Date getInspectionDateFrom() {
+		return _inspectionDateFrom;
+	}
+
+	public void setInspectionDateFrom(Date inspectionDateFrom) {
+		_inspectionDateFrom = inspectionDateFrom;
+	}
+
+	public Date getInspectionDateTo() {
+		return _inspectionDateTo;
+	}
+
+	public void setInspectionDateTo(Date inspectionDateTo) {
+		_inspectionDateTo = inspectionDateTo;
+	}
+
+	public String getSubInspector() {
+		return _subInspector;
+	}
+
+	public void setSubInspector(String subInspector) {
+		_subInspector = subInspector;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public String getApplicantRepresentative() {
+		return _applicantRepresentative;
+	}
+
+	public void setApplicantRepresentative(String applicantRepresentative) {
+		_applicantRepresentative = applicantRepresentative;
+	}
+
+	public String getApplicantRepresentativeTitle() {
+		return _applicantRepresentativeTitle;
+	}
+
+	public void setApplicantRepresentativeTitle(
+		String applicantRepresentativeTitle) {
+		_applicantRepresentativeTitle = applicantRepresentativeTitle;
+	}
+
+	public long getInspectionRecordFileEntryId() {
+		return _inspectionRecordFileEntryId;
+	}
+
+	public void setInspectionRecordFileEntryId(long inspectionRecordFileEntryId) {
+		_inspectionRecordFileEntryId = inspectionRecordFileEntryId;
+	}
+
+	public String getCopReportRefNo() {
+		return _copReportRefNo;
+	}
+
+	public void setCopReportRefNo(String copReportRefNo) {
+		_copReportRefNo = copReportRefNo;
+	}
+
+	public Date getCopReportRefDate() {
+		return _copReportRefDate;
+	}
+
+	public void setCopReportRefDate(Date copReportRefDate) {
+		_copReportRefDate = copReportRefDate;
+	}
+
+	public String getCopReportPreviousNo() {
+		return _copReportPreviousNo;
+	}
+
+	public void setCopReportPreviousNo(String copReportPreviousNo) {
+		_copReportPreviousNo = copReportPreviousNo;
+	}
+
+	public Date getCopReportPreviousDate() {
+		return _copReportPreviousDate;
+	}
+
+	public void setCopReportPreviousDate(Date copReportPreviousDate) {
+		_copReportPreviousDate = copReportPreviousDate;
+	}
+
+	public String getExpiredStatus() {
+		return _expiredStatus;
+	}
+
+	public void setExpiredStatus(String expiredStatus) {
+		_expiredStatus = expiredStatus;
+	}
+
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	public String getDossierIdCTN() {
+		return _dossierIdCTN;
+	}
+
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	public String getDossierNo() {
+		return _dossierNo;
+	}
+
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	private long _id;
 	private long _mtCore;
 	private long _applicantProfileId;
@@ -350,4 +633,35 @@ public class VRCOPReportRepositorySoap implements Serializable {
 	private long _COPFileEntryId;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private String _importerManufacturerCode;
+	private String _importerManufacturerName;
+	private String _importerManufacturerAddress;
+	private String _markupDomesticsManufacturer;
+	private String _markupImporter;
+	private String _copClassification;
+	private String _productClassificationDescription;
+	private int _totalPointA;
+	private int _totalPointB;
+	private int _totalPointC;
+	private String _copNonConformity;
+	private String _inspectionRecordNo;
+	private Date _inspectionRecordDate;
+	private long _corporationId;
+	private long _inspectorId;
+	private String _inspectionSite;
+	private Date _inspectionDateFrom;
+	private Date _inspectionDateTo;
+	private String _subInspector;
+	private String _description;
+	private String _applicantRepresentative;
+	private String _applicantRepresentativeTitle;
+	private long _inspectionRecordFileEntryId;
+	private String _copReportRefNo;
+	private Date _copReportRefDate;
+	private String _copReportPreviousNo;
+	private Date _copReportPreviousDate;
+	private String _expiredStatus;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 }

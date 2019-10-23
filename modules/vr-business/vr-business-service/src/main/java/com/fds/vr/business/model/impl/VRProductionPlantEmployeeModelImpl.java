@@ -70,8 +70,11 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 			{ "employeeName", Types.VARCHAR },
 			{ "employeeCertificateNo", Types.VARCHAR },
 			{ "trainningAt", Types.VARCHAR },
+			{ "workingPosition", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
-			{ "syncDate", Types.TIMESTAMP }
+			{ "syncDate", Types.TIMESTAMP },
+			{ "productionPlantCode", Types.VARCHAR },
+			{ "productionPlantId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -83,11 +86,14 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 		TABLE_COLUMNS_MAP.put("employeeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("employeeCertificateNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("trainningAt", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("workingPosition", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("productionPlantCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productionplantemployee (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,employeeName VARCHAR(75) null,employeeCertificateNo VARCHAR(75) null,trainningAt VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productionplantemployee (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,employeeName VARCHAR(75) null,employeeCertificateNo VARCHAR(75) null,trainningAt VARCHAR(75) null,workingPosition VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,productionPlantCode VARCHAR(75) null,productionPlantId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productionplantemployee";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlantEmployee.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplantemployee.modifyDate DESC";
@@ -153,8 +159,11 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 		attributes.put("employeeName", getEmployeeName());
 		attributes.put("employeeCertificateNo", getEmployeeCertificateNo());
 		attributes.put("trainningAt", getTrainningAt());
+		attributes.put("workingPosition", getWorkingPosition());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("productionPlantCode", getProductionPlantCode());
+		attributes.put("productionPlantId", getProductionPlantId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -207,6 +216,12 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 			setTrainningAt(trainningAt);
 		}
 
+		String workingPosition = (String)attributes.get("workingPosition");
+
+		if (workingPosition != null) {
+			setWorkingPosition(workingPosition);
+		}
+
 		Date modifyDate = (Date)attributes.get("modifyDate");
 
 		if (modifyDate != null) {
@@ -217,6 +232,19 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		String productionPlantCode = (String)attributes.get(
+				"productionPlantCode");
+
+		if (productionPlantCode != null) {
+			setProductionPlantCode(productionPlantCode);
+		}
+
+		Long productionPlantId = (Long)attributes.get("productionPlantId");
+
+		if (productionPlantId != null) {
+			setProductionPlantId(productionPlantId);
 		}
 	}
 
@@ -330,6 +358,21 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	}
 
 	@Override
+	public String getWorkingPosition() {
+		if (_workingPosition == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _workingPosition;
+		}
+	}
+
+	@Override
+	public void setWorkingPosition(String workingPosition) {
+		_workingPosition = workingPosition;
+	}
+
+	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -349,6 +392,31 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_syncDate = syncDate;
+	}
+
+	@Override
+	public String getProductionPlantCode() {
+		if (_productionPlantCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantCode;
+		}
+	}
+
+	@Override
+	public void setProductionPlantCode(String productionPlantCode) {
+		_productionPlantCode = productionPlantCode;
+	}
+
+	@Override
+	public long getProductionPlantId() {
+		return _productionPlantId;
+	}
+
+	@Override
+	public void setProductionPlantId(long productionPlantId) {
+		_productionPlantId = productionPlantId;
 	}
 
 	public long getColumnBitmask() {
@@ -389,8 +457,11 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 		vrProductionPlantEmployeeImpl.setEmployeeName(getEmployeeName());
 		vrProductionPlantEmployeeImpl.setEmployeeCertificateNo(getEmployeeCertificateNo());
 		vrProductionPlantEmployeeImpl.setTrainningAt(getTrainningAt());
+		vrProductionPlantEmployeeImpl.setWorkingPosition(getWorkingPosition());
 		vrProductionPlantEmployeeImpl.setModifyDate(getModifyDate());
 		vrProductionPlantEmployeeImpl.setSyncDate(getSyncDate());
+		vrProductionPlantEmployeeImpl.setProductionPlantCode(getProductionPlantCode());
+		vrProductionPlantEmployeeImpl.setProductionPlantId(getProductionPlantId());
 
 		vrProductionPlantEmployeeImpl.resetOriginalValues();
 
@@ -502,6 +573,14 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 			vrProductionPlantEmployeeCacheModel.trainningAt = null;
 		}
 
+		vrProductionPlantEmployeeCacheModel.workingPosition = getWorkingPosition();
+
+		String workingPosition = vrProductionPlantEmployeeCacheModel.workingPosition;
+
+		if ((workingPosition != null) && (workingPosition.length() == 0)) {
+			vrProductionPlantEmployeeCacheModel.workingPosition = null;
+		}
+
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -520,12 +599,23 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 			vrProductionPlantEmployeeCacheModel.syncDate = Long.MIN_VALUE;
 		}
 
+		vrProductionPlantEmployeeCacheModel.productionPlantCode = getProductionPlantCode();
+
+		String productionPlantCode = vrProductionPlantEmployeeCacheModel.productionPlantCode;
+
+		if ((productionPlantCode != null) &&
+				(productionPlantCode.length() == 0)) {
+			vrProductionPlantEmployeeCacheModel.productionPlantCode = null;
+		}
+
+		vrProductionPlantEmployeeCacheModel.productionPlantId = getProductionPlantId();
+
 		return vrProductionPlantEmployeeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -541,10 +631,16 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 		sb.append(getEmployeeCertificateNo());
 		sb.append(", trainningAt=");
 		sb.append(getTrainningAt());
+		sb.append(", workingPosition=");
+		sb.append(getWorkingPosition());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
 		sb.append(getSyncDate());
+		sb.append(", productionPlantCode=");
+		sb.append(getProductionPlantCode());
+		sb.append(", productionPlantId=");
+		sb.append(getProductionPlantId());
 		sb.append("}");
 
 		return sb.toString();
@@ -552,7 +648,7 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductionPlantEmployee");
@@ -587,12 +683,24 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 		sb.append(getTrainningAt());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>workingPosition</column-name><column-value><![CDATA[");
+		sb.append(getWorkingPosition());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>syncDate</column-name><column-value><![CDATA[");
 		sb.append(getSyncDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantCode</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantId</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -615,8 +723,11 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	private String _employeeName;
 	private String _employeeCertificateNo;
 	private String _trainningAt;
+	private String _workingPosition;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private String _productionPlantCode;
+	private long _productionPlantId;
 	private long _columnBitmask;
 	private VRProductionPlantEmployee _escapedModel;
 }
