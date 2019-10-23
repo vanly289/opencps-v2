@@ -76,6 +76,8 @@ public class VRProductTypeWrapper implements VRProductType,
 		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("productionPlantId", getProductionPlantId());
+		attributes.put("productionPlantCode", getProductionPlantCode());
 
 		return attributes;
 	}
@@ -179,6 +181,19 @@ public class VRProductTypeWrapper implements VRProductType,
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		Long productionPlantId = (Long)attributes.get("productionPlantId");
+
+		if (productionPlantId != null) {
+			setProductionPlantId(productionPlantId);
+		}
+
+		String productionPlantCode = (String)attributes.get(
+				"productionPlantCode");
+
+		if (productionPlantCode != null) {
+			setProductionPlantCode(productionPlantCode);
 		}
 	}
 
@@ -285,6 +300,16 @@ public class VRProductTypeWrapper implements VRProductType,
 	@Override
 	public java.lang.String getProductClassificationDescription() {
 		return _vrProductType.getProductClassificationDescription();
+	}
+
+	/**
+	* Returns the production plant code of this vr product type.
+	*
+	* @return the production plant code of this vr product type
+	*/
+	@Override
+	public java.lang.String getProductionPlantCode() {
+		return _vrProductType.getProductionPlantCode();
 	}
 
 	/**
@@ -405,6 +430,16 @@ public class VRProductTypeWrapper implements VRProductType,
 	@Override
 	public long getProductPlantID() {
 		return _vrProductType.getProductPlantID();
+	}
+
+	/**
+	* Returns the production plant ID of this vr product type.
+	*
+	* @return the production plant ID of this vr product type
+	*/
+	@Override
+	public long getProductionPlantId() {
+		return _vrProductType.getProductionPlantId();
 	}
 
 	/**
@@ -553,6 +588,26 @@ public class VRProductTypeWrapper implements VRProductType,
 	@Override
 	public void setProductPlantID(long productPlantID) {
 		_vrProductType.setProductPlantID(productPlantID);
+	}
+
+	/**
+	* Sets the production plant code of this vr product type.
+	*
+	* @param productionPlantCode the production plant code of this vr product type
+	*/
+	@Override
+	public void setProductionPlantCode(java.lang.String productionPlantCode) {
+		_vrProductType.setProductionPlantCode(productionPlantCode);
+	}
+
+	/**
+	* Sets the production plant ID of this vr product type.
+	*
+	* @param productionPlantId the production plant ID of this vr product type
+	*/
+	@Override
+	public void setProductionPlantId(long productionPlantId) {
+		_vrProductType.setProductionPlantId(productionPlantId);
 	}
 
 	/**

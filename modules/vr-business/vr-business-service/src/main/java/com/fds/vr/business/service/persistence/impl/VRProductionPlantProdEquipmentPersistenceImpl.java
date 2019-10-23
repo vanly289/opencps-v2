@@ -938,6 +938,9 @@ public class VRProductionPlantProdEquipmentPersistenceImpl
 		vrProductionPlantProdEquipmentImpl.setNotes(vrProductionPlantProdEquipment.getNotes());
 		vrProductionPlantProdEquipmentImpl.setModifyDate(vrProductionPlantProdEquipment.getModifyDate());
 		vrProductionPlantProdEquipmentImpl.setSyncDate(vrProductionPlantProdEquipment.getSyncDate());
+		vrProductionPlantProdEquipmentImpl.setProductionPlantCode(vrProductionPlantProdEquipment.getProductionPlantCode());
+		vrProductionPlantProdEquipmentImpl.setProductionPlantId(vrProductionPlantProdEquipment.getProductionPlantId());
+		vrProductionPlantProdEquipmentImpl.setQuantity(vrProductionPlantProdEquipment.getQuantity());
 
 		return vrProductionPlantProdEquipmentImpl;
 	}

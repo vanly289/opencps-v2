@@ -89,7 +89,9 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 			{ "signDate", Types.TIMESTAMP },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP },
-			{ "certificaterecordno", Types.VARCHAR }
+			{ "certificaterecordno", Types.VARCHAR },
+			{ "postPrintingStatus", Types.INTEGER },
+			{ "qrCode", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -121,9 +123,11 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("certificaterecordno", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("postPrintingStatus", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("qrCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_vehiclerecord (id LONG not null primary key,mtCore LONG,issueId LONG,issueVehicleCertificateId LONG,dossierId LONG,applicantProfileId LONG,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,certificateId LONG,productionNumber VARCHAR(75) null,productionDate DATE null,frameNo VARCHAR(75) null,boxNo VARCHAR(75) null,engineNo VARCHAR(75) null,color VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialNo VARCHAR(75) null,vehicleRecordStatus LONG,printingStatus LONG,attachedFile LONG,signName VARCHAR(75) null,signTitle VARCHAR(75) null,signPlace VARCHAR(75) null,signDate DATE null,modifyDate DATE null,syncDate DATE null,certificaterecordno VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_vehiclerecord (id LONG not null primary key,mtCore LONG,issueId LONG,issueVehicleCertificateId LONG,dossierId LONG,applicantProfileId LONG,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,certificateId LONG,productionNumber VARCHAR(75) null,productionDate DATE null,frameNo VARCHAR(75) null,boxNo VARCHAR(75) null,engineNo VARCHAR(75) null,color VARCHAR(75) null,stampShortNo VARCHAR(75) null,serialNo VARCHAR(75) null,vehicleRecordStatus LONG,printingStatus LONG,attachedFile LONG,signName VARCHAR(75) null,signTitle VARCHAR(75) null,signPlace VARCHAR(75) null,signDate DATE null,modifyDate DATE null,syncDate DATE null,certificaterecordno VARCHAR(75) null,postPrintingStatus INTEGER,qrCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_vehiclerecord";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrVehicleRecord.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_vehiclerecord.modifyDate DESC";
@@ -215,6 +219,8 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 		attributes.put("certificaterecordno", getCertificaterecordno());
+		attributes.put("postPrintingStatus", getPostPrintingStatus());
+		attributes.put("qrCode", getQrCode());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -386,6 +392,19 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 
 		if (certificaterecordno != null) {
 			setCertificaterecordno(certificaterecordno);
+		}
+
+		Integer postPrintingStatus = (Integer)attributes.get(
+				"postPrintingStatus");
+
+		if (postPrintingStatus != null) {
+			setPostPrintingStatus(postPrintingStatus);
+		}
+
+		String qrCode = (String)attributes.get("qrCode");
+
+		if (qrCode != null) {
+			setQrCode(qrCode);
 		}
 	}
 
@@ -810,6 +829,31 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 		_certificaterecordno = certificaterecordno;
 	}
 
+	@Override
+	public int getPostPrintingStatus() {
+		return _postPrintingStatus;
+	}
+
+	@Override
+	public void setPostPrintingStatus(int postPrintingStatus) {
+		_postPrintingStatus = postPrintingStatus;
+	}
+
+	@Override
+	public String getQrCode() {
+		if (_qrCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _qrCode;
+		}
+	}
+
+	@Override
+	public void setQrCode(String qrCode) {
+		_qrCode = qrCode;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -868,6 +912,8 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 		vrVehicleRecordImpl.setModifyDate(getModifyDate());
 		vrVehicleRecordImpl.setSyncDate(getSyncDate());
 		vrVehicleRecordImpl.setCertificaterecordno(getCertificaterecordno());
+		vrVehicleRecordImpl.setPostPrintingStatus(getPostPrintingStatus());
+		vrVehicleRecordImpl.setQrCode(getQrCode());
 
 		vrVehicleRecordImpl.resetOriginalValues();
 
@@ -1127,12 +1173,22 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 			vrVehicleRecordCacheModel.certificaterecordno = null;
 		}
 
+		vrVehicleRecordCacheModel.postPrintingStatus = getPostPrintingStatus();
+
+		vrVehicleRecordCacheModel.qrCode = getQrCode();
+
+		String qrCode = vrVehicleRecordCacheModel.qrCode;
+
+		if ((qrCode != null) && (qrCode.length() == 0)) {
+			vrVehicleRecordCacheModel.qrCode = null;
+		}
+
 		return vrVehicleRecordCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1188,6 +1244,10 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 		sb.append(getSyncDate());
 		sb.append(", certificaterecordno=");
 		sb.append(getCertificaterecordno());
+		sb.append(", postPrintingStatus=");
+		sb.append(getPostPrintingStatus());
+		sb.append(", qrCode=");
+		sb.append(getQrCode());
 		sb.append("}");
 
 		return sb.toString();
@@ -1195,7 +1255,7 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRVehicleRecord");
@@ -1309,6 +1369,14 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 			"<column><column-name>certificaterecordno</column-name><column-value><![CDATA[");
 		sb.append(getCertificaterecordno());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>postPrintingStatus</column-name><column-value><![CDATA[");
+		sb.append(getPostPrintingStatus());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>qrCode</column-name><column-value><![CDATA[");
+		sb.append(getQrCode());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1360,6 +1428,8 @@ public class VRVehicleRecordModelImpl extends BaseModelImpl<VRVehicleRecord>
 	private Date _modifyDate;
 	private Date _syncDate;
 	private String _certificaterecordno;
+	private int _postPrintingStatus;
+	private String _qrCode;
 	private long _columnBitmask;
 	private VRVehicleRecord _escapedModel;
 }

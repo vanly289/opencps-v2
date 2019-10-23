@@ -44,6 +44,10 @@ public class VRCOPProductionPlantEmployeeSoap implements Serializable {
 		soapModel.setTrainningAt(model.getTrainningAt());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
+		soapModel.setWorkingPosition(model.getWorkingPosition());
+		soapModel.setDossierId(model.getDossierId());
+		soapModel.setDossierIdCTN(model.getDossierIdCTN());
+		soapModel.setDossierNo(model.getDossierNo());
 
 		return soapModel;
 	}
@@ -179,6 +183,38 @@ public class VRCOPProductionPlantEmployeeSoap implements Serializable {
 		_syncDate = syncDate;
 	}
 
+	public String getWorkingPosition() {
+		return _workingPosition;
+	}
+
+	public void setWorkingPosition(String workingPosition) {
+		_workingPosition = workingPosition;
+	}
+
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	public String getDossierIdCTN() {
+		return _dossierIdCTN;
+	}
+
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	public String getDossierNo() {
+		return _dossierNo;
+	}
+
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	private long _id;
 	private long _mtCore;
 	private long _copReportRepositoryID;
@@ -189,4 +225,8 @@ public class VRCOPProductionPlantEmployeeSoap implements Serializable {
 	private String _trainningAt;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private String _workingPosition;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 }

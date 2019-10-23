@@ -745,6 +745,7 @@
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
+		
 		<!-- Filter -->
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
@@ -1035,6 +1036,41 @@
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
+		<column name="importerManufacturerCode" type="String" />
+		<column name="importerManufacturerName" type="String" />
+		<column name="importerManufacturerAddress" type="String" />
+		<column name="markupDomesticsManufacturer" type="String" />
+		<column name="markupImporter" type="String" />
+		
+		<column name="copClassification" type="String" />
+		<column name="productClassificationDescription" type="String" />
+		<column name="totalPointA" type="int" />
+		<column name="totalPointB" type="int" />
+		<column name="totalPointC" type="int" />
+		<column name="copNonConformity" type="String" />
+		<column name="inspectionRecordNo" type="String" />
+		<column name="inspectionRecordDate" type="Date" />
+		<column name="corporationId" type="long" />
+		<column name="inspectorId" type="long" />
+		<column name="inspectionSite" type="String" />
+		<column name="inspectionDateFrom" type="Date" />
+		<column name="inspectionDateTo" type="Date" />
+		<column name="subInspector" type="String" />
+		<column name="description" type="String" />
+		
+		<column name="applicantRepresentative" type="String" />
+		<column name="applicantRepresentativeTitle" type="String" />
+		<column name="inspectionRecordFileEntryId" type="long" />
+		<column name="copReportRefNo" type="String" />
+		<column name="copReportRefDate" type="Date" />
+		<column name="copReportPreviousNo" type="String" />
+		<column name="copReportPreviousDate" type="Date" />
+		<column name="expiredStatus" type="String" />
+		<column name="dossierId" type="long" />
+		<column name="dossierIdCTN" type="String" />
+		<column name="dossierNo" type="String" />
+		
+		
 		
 		<!-- Filter -->
         <order by="desc">
@@ -1089,6 +1125,10 @@
 		<column name="trainningAt" type="String" db-name="trainningAt"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		<column name="workingPosition" type="String"/>
+		<column name="dossierId" type="long"/>
+		<column name="dossierIdCTN" type="String"/>
+		<column name="dossierNo" type="String"/>
 		
 		<!-- Filter -->
         <order by="desc">
@@ -1128,6 +1168,30 @@
 		<column name="notes" type="String" db-name="notes"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		
+		<column name="equipmentSerialNo" type="String"/>
+		<column name="productionYear" type="Date"/>
+		<column name="registrationYear" type="Date"/>
+		<column name="markupXCG" type="long"/>
+		<column name="markupXCGNK" type="long"/>
+		<column name="markupSMRM" type="long"/>
+		<column name="markupXCH" type="long"/>
+		<column name="markupXCN" type="long"/>
+		<column name="markupXMY" type="long"/>
+		<column name="markupXDD" type="long"/>
+		<column name="testingResult" type="int"/>
+		<column name="description" type="String"/>
+		<column name="inspectionRecordNumber" type="String"/>
+		<column name="inspectionRecordDate" type="Date"/>
+		<column name="expiredDate" type="Date"/>
+		<column name="expiredStatus" type="int"/>
+		<column name="stampTestingNo" type="String"/>
+		<column name="dossierId" type="long"/>
+		<column name="dossierIdCTN" type="String"/>
+		<column name="dossierNo" type="String"/>
+		<column name="productionPlantId" type="long" />
+		<column name="productionPlantCode" type="String" />
+		
 		<!-- Filter -->
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
@@ -1165,6 +1229,11 @@
 		<column name="notes" type="String" db-name="notes"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		
+		<column name="quantity" type="int"/>
+		<column name="dossierId" type="long"/>
+		<column name="dossierIdCTN" type="String"/>
+		<column name="dossierNo" type="String"/>
 		<!-- Filter -->
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
@@ -1203,6 +1272,11 @@
 		
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		
+		<column name="dossierId" type="long"/>
+		<column name="dossierIdCTN" type="String"/>
+		<column name="dossierNo" type="String"/>
+		
 		<!-- Filter -->
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
@@ -1259,8 +1333,11 @@
 		<column name="employeeName" type="String" db-name="employeeName"/>
 		<column name="employeeCertificateNo" type="String" db-name="employeeCertificateNo"/>
 		<column name="trainningAt" type="String" db-name="trainningAt"/>
+		<column name="workingPosition" type="String"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		<column name="productionPlantCode" type="String"/>
+		<column name="productionPlantId" type="long"/>
 		
 		<!-- Filter -->
         <order by="desc">
@@ -1295,6 +1372,24 @@
 		<column name="notes" type="String" db-name="notes"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		
+		<column name="equipmentSerialNo" type="String"/>
+		<column name="productionYear" type="Date"/>
+		<column name="registrationYear" type="Date"/>
+		<column name="markupXCG" type="long"/>
+		<column name="markupXCGNK" type="long"/>
+		<column name="markupSMRM" type="long"/>
+		<column name="markupXCH" type="long"/>
+		<column name="markupXCN" type="long"/>
+		<column name="markupXMY" type="long"/>
+		<column name="markupXDD" type="long"/>
+		<column name="testingResult" type="int"/>
+		<column name="description" type="String"/>
+		<column name="inspectionRecordNumber" type="String"/>
+		<column name="inspectionRecordDate" type="Date"/>
+		<column name="stampTestingNo" type="String"/>
+		<column name="productionPlantId" type="long" />
+		<column name="productionPlantCode" type="String"/>
 		<!-- Filter -->
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
@@ -1327,6 +1422,9 @@
 		<column name="notes" type="String" db-name="notes"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		<column name="productionPlantCode" type="String"/>
+		<column name="productionPlantId" type="long"/>
+		<column name="quantity" type="long"/>
 		<!-- Filter -->
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
@@ -1359,6 +1457,9 @@
 		<column name="designSymbolNo" type="String" db-name="designSymbolNo"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		<column name="productionPlantId" type="long" />
+		<column name="productionPlantCode" type="String" />
+		
 		<!-- Filter -->
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
@@ -1869,6 +1970,9 @@
 		
 		<!-- add new  -->
 		<column name="certificaterecordno" type="String"/>
+		<column name="postPrintingStatus" type="int"/>
+		<column name="qrCode" type="String"/>
+		
 		
 		<!-- Filter -->
         <order by="desc">
@@ -7508,6 +7612,36 @@
             <order-column name="modifyDate" order-by="desc" />
         </order>
 	</entity>
+	
+	<entity local-service="true" name="VRProductionClassification" remote-service="false"
+		table="vr_productclassification" uuid="true">
+
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true" db-name="id"/>
+		
+		<!-- Audit fields -->
+		<column name="mtCore" type="long"/>
+		<column name="applicantProfileId" type="long"/>
+		<column name="applicantCode" type="String"/>
+		<column name="productionPlantId" type="long"/>
+		<column name="productionPlantCode" type="String"/>
+		<column name="sequenceNo" type="int"/>
+		<column name="productClassificationCode" type="String"/>
+		<column name="productClassificationDescription" type="String"/>
+		<column name="classificationModel" type="String"/>
+		<column name="remarks" type="String"/>
+		<column name="status" type="String"/>
+		
+		<column name="modifyDate" type="Date" />
+		<column name="syncDate" type="Date" />
+		<!-- Order -->
+
+		<!-- Filter -->
+        <order by="desc">
+            <order-column name="modifyDate" order-by="desc" />
+        </order>
+	</entity>
+	
 
 	<exceptions>
 		<exception>InvalidInputParam</exception>

@@ -67,7 +67,7 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -89,6 +89,14 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", workingPosition=");
+		sb.append(workingPosition);
+		sb.append(", dossierId=");
+		sb.append(dossierId);
+		sb.append(", dossierIdCTN=");
+		sb.append(dossierIdCTN);
+		sb.append(", dossierNo=");
+		sb.append(dossierNo);
 		sb.append("}");
 
 		return sb.toString();
@@ -146,6 +154,29 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 			vrcopProductionPlantEmployeeImpl.setSyncDate(new Date(syncDate));
 		}
 
+		if (workingPosition == null) {
+			vrcopProductionPlantEmployeeImpl.setWorkingPosition(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEmployeeImpl.setWorkingPosition(workingPosition);
+		}
+
+		vrcopProductionPlantEmployeeImpl.setDossierId(dossierId);
+
+		if (dossierIdCTN == null) {
+			vrcopProductionPlantEmployeeImpl.setDossierIdCTN(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEmployeeImpl.setDossierIdCTN(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			vrcopProductionPlantEmployeeImpl.setDossierNo(StringPool.BLANK);
+		}
+		else {
+			vrcopProductionPlantEmployeeImpl.setDossierNo(dossierNo);
+		}
+
 		vrcopProductionPlantEmployeeImpl.resetOriginalValues();
 
 		return vrcopProductionPlantEmployeeImpl;
@@ -166,6 +197,11 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 		trainningAt = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+		workingPosition = objectInput.readUTF();
+
+		dossierId = objectInput.readLong();
+		dossierIdCTN = objectInput.readUTF();
+		dossierNo = objectInput.readUTF();
 	}
 
 	@Override
@@ -209,6 +245,29 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		if (workingPosition == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(workingPosition);
+		}
+
+		objectOutput.writeLong(dossierId);
+
+		if (dossierIdCTN == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierNo);
+		}
 	}
 
 	public long id;
@@ -221,4 +280,8 @@ public class VRCOPProductionPlantEmployeeCacheModel implements CacheModel<VRCOPP
 	public String trainningAt;
 	public long modifyDate;
 	public long syncDate;
+	public String workingPosition;
+	public long dossierId;
+	public String dossierIdCTN;
+	public String dossierNo;
 }

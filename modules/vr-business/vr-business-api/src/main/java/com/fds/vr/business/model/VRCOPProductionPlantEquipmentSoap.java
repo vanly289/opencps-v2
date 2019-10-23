@@ -53,6 +53,28 @@ public class VRCOPProductionPlantEquipmentSoap implements Serializable {
 		soapModel.setNotes(model.getNotes());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
+		soapModel.setEquipmentSerialNo(model.getEquipmentSerialNo());
+		soapModel.setProductionYear(model.getProductionYear());
+		soapModel.setRegistrationYear(model.getRegistrationYear());
+		soapModel.setMarkupXCG(model.getMarkupXCG());
+		soapModel.setMarkupXCGNK(model.getMarkupXCGNK());
+		soapModel.setMarkupSMRM(model.getMarkupSMRM());
+		soapModel.setMarkupXCH(model.getMarkupXCH());
+		soapModel.setMarkupXCN(model.getMarkupXCN());
+		soapModel.setMarkupXMY(model.getMarkupXMY());
+		soapModel.setMarkupXDD(model.getMarkupXDD());
+		soapModel.setTestingResult(model.getTestingResult());
+		soapModel.setDescription(model.getDescription());
+		soapModel.setInspectionRecordNumber(model.getInspectionRecordNumber());
+		soapModel.setInspectionRecordDate(model.getInspectionRecordDate());
+		soapModel.setExpiredDate(model.getExpiredDate());
+		soapModel.setExpiredStatus(model.getExpiredStatus());
+		soapModel.setStampTestingNo(model.getStampTestingNo());
+		soapModel.setDossierId(model.getDossierId());
+		soapModel.setDossierIdCTN(model.getDossierIdCTN());
+		soapModel.setDossierNo(model.getDossierNo());
+		soapModel.setProductionPlantId(model.getProductionPlantId());
+		soapModel.setProductionPlantCode(model.getProductionPlantCode());
 
 		return soapModel;
 	}
@@ -260,6 +282,182 @@ public class VRCOPProductionPlantEquipmentSoap implements Serializable {
 		_syncDate = syncDate;
 	}
 
+	public String getEquipmentSerialNo() {
+		return _equipmentSerialNo;
+	}
+
+	public void setEquipmentSerialNo(String equipmentSerialNo) {
+		_equipmentSerialNo = equipmentSerialNo;
+	}
+
+	public Date getProductionYear() {
+		return _productionYear;
+	}
+
+	public void setProductionYear(Date productionYear) {
+		_productionYear = productionYear;
+	}
+
+	public Date getRegistrationYear() {
+		return _registrationYear;
+	}
+
+	public void setRegistrationYear(Date registrationYear) {
+		_registrationYear = registrationYear;
+	}
+
+	public long getMarkupXCG() {
+		return _markupXCG;
+	}
+
+	public void setMarkupXCG(long markupXCG) {
+		_markupXCG = markupXCG;
+	}
+
+	public long getMarkupXCGNK() {
+		return _markupXCGNK;
+	}
+
+	public void setMarkupXCGNK(long markupXCGNK) {
+		_markupXCGNK = markupXCGNK;
+	}
+
+	public long getMarkupSMRM() {
+		return _markupSMRM;
+	}
+
+	public void setMarkupSMRM(long markupSMRM) {
+		_markupSMRM = markupSMRM;
+	}
+
+	public long getMarkupXCH() {
+		return _markupXCH;
+	}
+
+	public void setMarkupXCH(long markupXCH) {
+		_markupXCH = markupXCH;
+	}
+
+	public long getMarkupXCN() {
+		return _markupXCN;
+	}
+
+	public void setMarkupXCN(long markupXCN) {
+		_markupXCN = markupXCN;
+	}
+
+	public long getMarkupXMY() {
+		return _markupXMY;
+	}
+
+	public void setMarkupXMY(long markupXMY) {
+		_markupXMY = markupXMY;
+	}
+
+	public long getMarkupXDD() {
+		return _markupXDD;
+	}
+
+	public void setMarkupXDD(long markupXDD) {
+		_markupXDD = markupXDD;
+	}
+
+	public int getTestingResult() {
+		return _testingResult;
+	}
+
+	public void setTestingResult(int testingResult) {
+		_testingResult = testingResult;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public String getInspectionRecordNumber() {
+		return _inspectionRecordNumber;
+	}
+
+	public void setInspectionRecordNumber(String inspectionRecordNumber) {
+		_inspectionRecordNumber = inspectionRecordNumber;
+	}
+
+	public Date getInspectionRecordDate() {
+		return _inspectionRecordDate;
+	}
+
+	public void setInspectionRecordDate(Date inspectionRecordDate) {
+		_inspectionRecordDate = inspectionRecordDate;
+	}
+
+	public Date getExpiredDate() {
+		return _expiredDate;
+	}
+
+	public void setExpiredDate(Date expiredDate) {
+		_expiredDate = expiredDate;
+	}
+
+	public int getExpiredStatus() {
+		return _expiredStatus;
+	}
+
+	public void setExpiredStatus(int expiredStatus) {
+		_expiredStatus = expiredStatus;
+	}
+
+	public String getStampTestingNo() {
+		return _stampTestingNo;
+	}
+
+	public void setStampTestingNo(String stampTestingNo) {
+		_stampTestingNo = stampTestingNo;
+	}
+
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	public String getDossierIdCTN() {
+		return _dossierIdCTN;
+	}
+
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	public String getDossierNo() {
+		return _dossierNo;
+	}
+
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
+	public long getProductionPlantId() {
+		return _productionPlantId;
+	}
+
+	public void setProductionPlantId(long productionPlantId) {
+		_productionPlantId = productionPlantId;
+	}
+
+	public String getProductionPlantCode() {
+		return _productionPlantCode;
+	}
+
+	public void setProductionPlantCode(String productionPlantCode) {
+		_productionPlantCode = productionPlantCode;
+	}
+
 	private long _id;
 	private long _mtCore;
 	private long _copReportRepositoryID;
@@ -279,4 +477,26 @@ public class VRCOPProductionPlantEquipmentSoap implements Serializable {
 	private String _notes;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private String _equipmentSerialNo;
+	private Date _productionYear;
+	private Date _registrationYear;
+	private long _markupXCG;
+	private long _markupXCGNK;
+	private long _markupSMRM;
+	private long _markupXCH;
+	private long _markupXCN;
+	private long _markupXMY;
+	private long _markupXDD;
+	private int _testingResult;
+	private String _description;
+	private String _inspectionRecordNumber;
+	private Date _inspectionRecordDate;
+	private Date _expiredDate;
+	private int _expiredStatus;
+	private String _stampTestingNo;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
+	private long _productionPlantId;
+	private String _productionPlantCode;
 }

@@ -1548,6 +1548,9 @@ public class VRCOPProductTypePersistenceImpl extends BasePersistenceImpl<VRCOPPr
 		vrcopProductTypeImpl.setRemarks(vrcopProductType.getRemarks());
 		vrcopProductTypeImpl.setModifyDate(vrcopProductType.getModifyDate());
 		vrcopProductTypeImpl.setSyncDate(vrcopProductType.getSyncDate());
+		vrcopProductTypeImpl.setDossierId(vrcopProductType.getDossierId());
+		vrcopProductTypeImpl.setDossierIdCTN(vrcopProductType.getDossierIdCTN());
+		vrcopProductTypeImpl.setDossierNo(vrcopProductType.getDossierNo());
 
 		return vrcopProductTypeImpl;
 	}

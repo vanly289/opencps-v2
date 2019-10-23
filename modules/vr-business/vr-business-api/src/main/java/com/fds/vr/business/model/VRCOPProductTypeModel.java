@@ -312,6 +312,50 @@ public interface VRCOPProductTypeModel extends BaseModel<VRCOPProductType> {
 	 */
 	public void setSyncDate(Date syncDate);
 
+	/**
+	 * Returns the dossier ID of this vrcop product type.
+	 *
+	 * @return the dossier ID of this vrcop product type
+	 */
+	public long getDossierId();
+
+	/**
+	 * Sets the dossier ID of this vrcop product type.
+	 *
+	 * @param dossierId the dossier ID of this vrcop product type
+	 */
+	public void setDossierId(long dossierId);
+
+	/**
+	 * Returns the dossier ID ctn of this vrcop product type.
+	 *
+	 * @return the dossier ID ctn of this vrcop product type
+	 */
+	@AutoEscape
+	public String getDossierIdCTN();
+
+	/**
+	 * Sets the dossier ID ctn of this vrcop product type.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn of this vrcop product type
+	 */
+	public void setDossierIdCTN(String dossierIdCTN);
+
+	/**
+	 * Returns the dossier no of this vrcop product type.
+	 *
+	 * @return the dossier no of this vrcop product type
+	 */
+	@AutoEscape
+	public String getDossierNo();
+
+	/**
+	 * Sets the dossier no of this vrcop product type.
+	 *
+	 * @param dossierNo the dossier no of this vrcop product type
+	 */
+	public void setDossierNo(String dossierNo);
+
 	@Override
 	public boolean isNew();
 

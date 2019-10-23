@@ -66,7 +66,7 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -82,10 +82,16 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 		sb.append(employeeCertificateNo);
 		sb.append(", trainningAt=");
 		sb.append(trainningAt);
+		sb.append(", workingPosition=");
+		sb.append(workingPosition);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", productionPlantCode=");
+		sb.append(productionPlantCode);
+		sb.append(", productionPlantId=");
+		sb.append(productionPlantId);
 		sb.append("}");
 
 		return sb.toString();
@@ -121,6 +127,13 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 			vrProductionPlantEmployeeImpl.setTrainningAt(trainningAt);
 		}
 
+		if (workingPosition == null) {
+			vrProductionPlantEmployeeImpl.setWorkingPosition(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantEmployeeImpl.setWorkingPosition(workingPosition);
+		}
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrProductionPlantEmployeeImpl.setModifyDate(null);
 		}
@@ -134,6 +147,15 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 		else {
 			vrProductionPlantEmployeeImpl.setSyncDate(new Date(syncDate));
 		}
+
+		if (productionPlantCode == null) {
+			vrProductionPlantEmployeeImpl.setProductionPlantCode(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantEmployeeImpl.setProductionPlantCode(productionPlantCode);
+		}
+
+		vrProductionPlantEmployeeImpl.setProductionPlantId(productionPlantId);
 
 		vrProductionPlantEmployeeImpl.resetOriginalValues();
 
@@ -152,8 +174,12 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 		employeeName = objectInput.readUTF();
 		employeeCertificateNo = objectInput.readUTF();
 		trainningAt = objectInput.readUTF();
+		workingPosition = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+		productionPlantCode = objectInput.readUTF();
+
+		productionPlantId = objectInput.readLong();
 	}
 
 	@Override
@@ -188,8 +214,24 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 			objectOutput.writeUTF(trainningAt);
 		}
 
+		if (workingPosition == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(workingPosition);
+		}
+
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		if (productionPlantCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantCode);
+		}
+
+		objectOutput.writeLong(productionPlantId);
 	}
 
 	public long id;
@@ -199,6 +241,9 @@ public class VRProductionPlantEmployeeCacheModel implements CacheModel<VRProduct
 	public String employeeName;
 	public String employeeCertificateNo;
 	public String trainningAt;
+	public String workingPosition;
 	public long modifyDate;
 	public long syncDate;
+	public String productionPlantCode;
+	public long productionPlantId;
 }

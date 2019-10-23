@@ -86,6 +86,8 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 		attributes.put("certificaterecordno", getCertificaterecordno());
+		attributes.put("postPrintingStatus", getPostPrintingStatus());
+		attributes.put("qrCode", getQrCode());
 
 		return attributes;
 	}
@@ -255,6 +257,19 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 		if (certificaterecordno != null) {
 			setCertificaterecordno(certificaterecordno);
 		}
+
+		Integer postPrintingStatus = (Integer)attributes.get(
+				"postPrintingStatus");
+
+		if (postPrintingStatus != null) {
+			setPostPrintingStatus(postPrintingStatus);
+		}
+
+		String qrCode = (String)attributes.get("qrCode");
+
+		if (qrCode != null) {
+			setQrCode(qrCode);
+		}
 	}
 
 	@Override
@@ -295,6 +310,16 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 	@Override
 	public int compareTo(VRVehicleRecord vrVehicleRecord) {
 		return _vrVehicleRecord.compareTo(vrVehicleRecord);
+	}
+
+	/**
+	* Returns the post printing status of this vr vehicle record.
+	*
+	* @return the post printing status of this vr vehicle record
+	*/
+	@Override
+	public int getPostPrintingStatus() {
+		return _vrVehicleRecord.getPostPrintingStatus();
 	}
 
 	@Override
@@ -390,6 +415,16 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 	@Override
 	public java.lang.String getProductionNumber() {
 		return _vrVehicleRecord.getProductionNumber();
+	}
+
+	/**
+	* Returns the qr code of this vr vehicle record.
+	*
+	* @return the qr code of this vr vehicle record
+	*/
+	@Override
+	public java.lang.String getQrCode() {
+		return _vrVehicleRecord.getQrCode();
 	}
 
 	/**
@@ -794,6 +829,16 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 	}
 
 	/**
+	* Sets the post printing status of this vr vehicle record.
+	*
+	* @param postPrintingStatus the post printing status of this vr vehicle record
+	*/
+	@Override
+	public void setPostPrintingStatus(int postPrintingStatus) {
+		_vrVehicleRecord.setPostPrintingStatus(postPrintingStatus);
+	}
+
+	/**
 	* Sets the primary key of this vr vehicle record.
 	*
 	* @param primaryKey the primary key of this vr vehicle record
@@ -836,6 +881,16 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 	@Override
 	public void setProductionNumber(java.lang.String productionNumber) {
 		_vrVehicleRecord.setProductionNumber(productionNumber);
+	}
+
+	/**
+	* Sets the qr code of this vr vehicle record.
+	*
+	* @param qrCode the qr code of this vr vehicle record
+	*/
+	@Override
+	public void setQrCode(java.lang.String qrCode) {
+		_vrVehicleRecord.setQrCode(qrCode);
 	}
 
 	/**

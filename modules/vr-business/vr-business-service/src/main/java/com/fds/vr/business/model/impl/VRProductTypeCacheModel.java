@@ -66,7 +66,7 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -100,6 +100,10 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", productionPlantId=");
+		sb.append(productionPlantId);
+		sb.append(", productionPlantCode=");
+		sb.append(productionPlantCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -198,6 +202,15 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 			vrProductTypeImpl.setSyncDate(new Date(syncDate));
 		}
 
+		vrProductTypeImpl.setProductionPlantId(productionPlantId);
+
+		if (productionPlantCode == null) {
+			vrProductTypeImpl.setProductionPlantCode(StringPool.BLANK);
+		}
+		else {
+			vrProductTypeImpl.setProductionPlantCode(productionPlantCode);
+		}
+
 		vrProductTypeImpl.resetOriginalValues();
 
 		return vrProductTypeImpl;
@@ -224,6 +237,9 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 		designSymbolNo = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+
+		productionPlantId = objectInput.readLong();
+		productionPlantCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -309,6 +325,15 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		objectOutput.writeLong(productionPlantId);
+
+		if (productionPlantCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantCode);
+		}
 	}
 
 	public long id;
@@ -327,4 +352,6 @@ public class VRProductTypeCacheModel implements CacheModel<VRProductType>,
 	public String designSymbolNo;
 	public long modifyDate;
 	public long syncDate;
+	public long productionPlantId;
+	public String productionPlantCode;
 }

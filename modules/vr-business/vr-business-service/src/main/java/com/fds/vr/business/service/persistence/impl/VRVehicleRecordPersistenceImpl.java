@@ -3940,6 +3940,8 @@ public class VRVehicleRecordPersistenceImpl extends BasePersistenceImpl<VRVehicl
 		vrVehicleRecordImpl.setModifyDate(vrVehicleRecord.getModifyDate());
 		vrVehicleRecordImpl.setSyncDate(vrVehicleRecord.getSyncDate());
 		vrVehicleRecordImpl.setCertificaterecordno(vrVehicleRecord.getCertificaterecordno());
+		vrVehicleRecordImpl.setPostPrintingStatus(vrVehicleRecord.getPostPrintingStatus());
+		vrVehicleRecordImpl.setQrCode(vrVehicleRecord.getQrCode());
 
 		return vrVehicleRecordImpl;
 	}

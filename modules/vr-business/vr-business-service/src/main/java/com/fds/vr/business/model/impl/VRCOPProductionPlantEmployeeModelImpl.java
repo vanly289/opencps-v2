@@ -72,7 +72,11 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 			{ "employeeCertificateNo", Types.VARCHAR },
 			{ "trainningAt", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
-			{ "syncDate", Types.TIMESTAMP }
+			{ "syncDate", Types.TIMESTAMP },
+			{ "workingPosition", Types.VARCHAR },
+			{ "dossierId", Types.BIGINT },
+			{ "dossierIdCTN", Types.VARCHAR },
+			{ "dossierNo", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -87,9 +91,13 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		TABLE_COLUMNS_MAP.put("trainningAt", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("workingPosition", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("dossierIdCTN", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierNo", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copproductionplantemployee (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,employeeName VARCHAR(75) null,employeeCertificateNo VARCHAR(75) null,trainningAt VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copproductionplantemployee (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,employeeName VARCHAR(75) null,employeeCertificateNo VARCHAR(75) null,trainningAt VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,workingPosition VARCHAR(75) null,dossierId LONG,dossierIdCTN VARCHAR(75) null,dossierNo VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copproductionplantemployee";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopProductionPlantEmployee.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copproductionplantemployee.modifyDate DESC";
@@ -159,6 +167,10 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		attributes.put("trainningAt", getTrainningAt());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("workingPosition", getWorkingPosition());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -228,6 +240,30 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		String workingPosition = (String)attributes.get("workingPosition");
+
+		if (workingPosition != null) {
+			setWorkingPosition(workingPosition);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 	}
 
@@ -387,6 +423,61 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		_syncDate = syncDate;
 	}
 
+	@Override
+	public String getWorkingPosition() {
+		if (_workingPosition == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _workingPosition;
+		}
+	}
+
+	@Override
+	public void setWorkingPosition(String workingPosition) {
+		_workingPosition = workingPosition;
+	}
+
+	@Override
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	@Override
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	@Override
+	public String getDossierIdCTN() {
+		if (_dossierIdCTN == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierIdCTN;
+		}
+	}
+
+	@Override
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	@Override
+	public String getDossierNo() {
+		if (_dossierNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierNo;
+		}
+	}
+
+	@Override
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -428,6 +519,10 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		vrcopProductionPlantEmployeeImpl.setTrainningAt(getTrainningAt());
 		vrcopProductionPlantEmployeeImpl.setModifyDate(getModifyDate());
 		vrcopProductionPlantEmployeeImpl.setSyncDate(getSyncDate());
+		vrcopProductionPlantEmployeeImpl.setWorkingPosition(getWorkingPosition());
+		vrcopProductionPlantEmployeeImpl.setDossierId(getDossierId());
+		vrcopProductionPlantEmployeeImpl.setDossierIdCTN(getDossierIdCTN());
+		vrcopProductionPlantEmployeeImpl.setDossierNo(getDossierNo());
 
 		vrcopProductionPlantEmployeeImpl.resetOriginalValues();
 
@@ -570,12 +665,38 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 			vrcopProductionPlantEmployeeCacheModel.syncDate = Long.MIN_VALUE;
 		}
 
+		vrcopProductionPlantEmployeeCacheModel.workingPosition = getWorkingPosition();
+
+		String workingPosition = vrcopProductionPlantEmployeeCacheModel.workingPosition;
+
+		if ((workingPosition != null) && (workingPosition.length() == 0)) {
+			vrcopProductionPlantEmployeeCacheModel.workingPosition = null;
+		}
+
+		vrcopProductionPlantEmployeeCacheModel.dossierId = getDossierId();
+
+		vrcopProductionPlantEmployeeCacheModel.dossierIdCTN = getDossierIdCTN();
+
+		String dossierIdCTN = vrcopProductionPlantEmployeeCacheModel.dossierIdCTN;
+
+		if ((dossierIdCTN != null) && (dossierIdCTN.length() == 0)) {
+			vrcopProductionPlantEmployeeCacheModel.dossierIdCTN = null;
+		}
+
+		vrcopProductionPlantEmployeeCacheModel.dossierNo = getDossierNo();
+
+		String dossierNo = vrcopProductionPlantEmployeeCacheModel.dossierNo;
+
+		if ((dossierNo != null) && (dossierNo.length() == 0)) {
+			vrcopProductionPlantEmployeeCacheModel.dossierNo = null;
+		}
+
 		return vrcopProductionPlantEmployeeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -597,6 +718,14 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
 		sb.append(getSyncDate());
+		sb.append(", workingPosition=");
+		sb.append(getWorkingPosition());
+		sb.append(", dossierId=");
+		sb.append(getDossierId());
+		sb.append(", dossierIdCTN=");
+		sb.append(getDossierIdCTN());
+		sb.append(", dossierNo=");
+		sb.append(getDossierNo());
 		sb.append("}");
 
 		return sb.toString();
@@ -604,7 +733,7 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPProductionPlantEmployee");
@@ -650,6 +779,22 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 			"<column><column-name>syncDate</column-name><column-value><![CDATA[");
 		sb.append(getSyncDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>workingPosition</column-name><column-value><![CDATA[");
+		sb.append(getWorkingPosition());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierId</column-name><column-value><![CDATA[");
+		sb.append(getDossierId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierIdCTN</column-name><column-value><![CDATA[");
+		sb.append(getDossierIdCTN());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierNo</column-name><column-value><![CDATA[");
+		sb.append(getDossierNo());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -675,6 +820,10 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 	private String _trainningAt;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private String _workingPosition;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 	private long _columnBitmask;
 	private VRCOPProductionPlantEmployee _escapedModel;
 }

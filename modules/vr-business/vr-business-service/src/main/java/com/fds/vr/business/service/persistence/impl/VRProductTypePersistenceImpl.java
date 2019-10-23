@@ -909,6 +909,8 @@ public class VRProductTypePersistenceImpl extends BasePersistenceImpl<VRProductT
 		vrProductTypeImpl.setDesignSymbolNo(vrProductType.getDesignSymbolNo());
 		vrProductTypeImpl.setModifyDate(vrProductType.getModifyDate());
 		vrProductTypeImpl.setSyncDate(vrProductType.getSyncDate());
+		vrProductTypeImpl.setProductionPlantId(vrProductType.getProductionPlantId());
+		vrProductTypeImpl.setProductionPlantCode(vrProductType.getProductionPlantCode());
 
 		return vrProductTypeImpl;
 	}

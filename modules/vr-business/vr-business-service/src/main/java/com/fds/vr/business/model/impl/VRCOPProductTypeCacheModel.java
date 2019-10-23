@@ -66,7 +66,7 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -102,6 +102,12 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", dossierId=");
+		sb.append(dossierId);
+		sb.append(", dossierIdCTN=");
+		sb.append(dossierIdCTN);
+		sb.append(", dossierNo=");
+		sb.append(dossierNo);
 		sb.append("}");
 
 		return sb.toString();
@@ -208,6 +214,22 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 			vrcopProductTypeImpl.setSyncDate(new Date(syncDate));
 		}
 
+		vrcopProductTypeImpl.setDossierId(dossierId);
+
+		if (dossierIdCTN == null) {
+			vrcopProductTypeImpl.setDossierIdCTN(StringPool.BLANK);
+		}
+		else {
+			vrcopProductTypeImpl.setDossierIdCTN(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			vrcopProductTypeImpl.setDossierNo(StringPool.BLANK);
+		}
+		else {
+			vrcopProductTypeImpl.setDossierNo(dossierNo);
+		}
+
 		vrcopProductTypeImpl.resetOriginalValues();
 
 		return vrcopProductTypeImpl;
@@ -235,6 +257,10 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 		remarks = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+
+		dossierId = objectInput.readLong();
+		dossierIdCTN = objectInput.readUTF();
+		dossierNo = objectInput.readUTF();
 	}
 
 	@Override
@@ -327,6 +353,22 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		objectOutput.writeLong(dossierId);
+
+		if (dossierIdCTN == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierNo);
+		}
 	}
 
 	public long id;
@@ -346,4 +388,7 @@ public class VRCOPProductTypeCacheModel implements CacheModel<VRCOPProductType>,
 	public String remarks;
 	public long modifyDate;
 	public long syncDate;
+	public long dossierId;
+	public String dossierIdCTN;
+	public String dossierNo;
 }

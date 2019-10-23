@@ -80,7 +80,11 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 			{ "equipmentStatus", Types.VARCHAR },
 			{ "notes", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
-			{ "syncDate", Types.TIMESTAMP }
+			{ "syncDate", Types.TIMESTAMP },
+			{ "quantity", Types.INTEGER },
+			{ "dossierId", Types.BIGINT },
+			{ "dossierIdCTN", Types.VARCHAR },
+			{ "dossierNo", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -103,9 +107,13 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 		TABLE_COLUMNS_MAP.put("notes", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("dossierId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("dossierIdCTN", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierNo", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copproductionplantprodequipment (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copproductionplantprodequipment (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,quantity INTEGER,dossierId LONG,dossierIdCTN VARCHAR(75) null,dossierNo VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copproductionplantprodequipment";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopProdEquipment.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copproductionplantprodequipment.modifyDate DESC";
@@ -183,6 +191,10 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 		attributes.put("notes", getNotes());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("quantity", getQuantity());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -300,6 +312,30 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		Integer quantity = (Integer)attributes.get("quantity");
+
+		if (quantity != null) {
+			setQuantity(quantity);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 	}
 
@@ -579,6 +615,56 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 		_syncDate = syncDate;
 	}
 
+	@Override
+	public int getQuantity() {
+		return _quantity;
+	}
+
+	@Override
+	public void setQuantity(int quantity) {
+		_quantity = quantity;
+	}
+
+	@Override
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	@Override
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	@Override
+	public String getDossierIdCTN() {
+		if (_dossierIdCTN == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierIdCTN;
+		}
+	}
+
+	@Override
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	@Override
+	public String getDossierNo() {
+		if (_dossierNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierNo;
+		}
+	}
+
+	@Override
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -628,6 +714,10 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 		vrcopProdEquipmentImpl.setNotes(getNotes());
 		vrcopProdEquipmentImpl.setModifyDate(getModifyDate());
 		vrcopProdEquipmentImpl.setSyncDate(getSyncDate());
+		vrcopProdEquipmentImpl.setQuantity(getQuantity());
+		vrcopProdEquipmentImpl.setDossierId(getDossierId());
+		vrcopProdEquipmentImpl.setDossierIdCTN(getDossierIdCTN());
+		vrcopProdEquipmentImpl.setDossierNo(getDossierNo());
 
 		vrcopProdEquipmentImpl.resetOriginalValues();
 
@@ -831,12 +921,32 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 			vrcopProdEquipmentCacheModel.syncDate = Long.MIN_VALUE;
 		}
 
+		vrcopProdEquipmentCacheModel.quantity = getQuantity();
+
+		vrcopProdEquipmentCacheModel.dossierId = getDossierId();
+
+		vrcopProdEquipmentCacheModel.dossierIdCTN = getDossierIdCTN();
+
+		String dossierIdCTN = vrcopProdEquipmentCacheModel.dossierIdCTN;
+
+		if ((dossierIdCTN != null) && (dossierIdCTN.length() == 0)) {
+			vrcopProdEquipmentCacheModel.dossierIdCTN = null;
+		}
+
+		vrcopProdEquipmentCacheModel.dossierNo = getDossierNo();
+
+		String dossierNo = vrcopProdEquipmentCacheModel.dossierNo;
+
+		if ((dossierNo != null) && (dossierNo.length() == 0)) {
+			vrcopProdEquipmentCacheModel.dossierNo = null;
+		}
+
 		return vrcopProdEquipmentCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -874,6 +984,14 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
 		sb.append(getSyncDate());
+		sb.append(", quantity=");
+		sb.append(getQuantity());
+		sb.append(", dossierId=");
+		sb.append(getDossierId());
+		sb.append(", dossierIdCTN=");
+		sb.append(getDossierIdCTN());
+		sb.append(", dossierNo=");
+		sb.append(getDossierNo());
 		sb.append("}");
 
 		return sb.toString();
@@ -881,7 +999,7 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(70);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPProdEquipment");
@@ -959,6 +1077,22 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 			"<column><column-name>syncDate</column-name><column-value><![CDATA[");
 		sb.append(getSyncDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>quantity</column-name><column-value><![CDATA[");
+		sb.append(getQuantity());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierId</column-name><column-value><![CDATA[");
+		sb.append(getDossierId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierIdCTN</column-name><column-value><![CDATA[");
+		sb.append(getDossierIdCTN());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierNo</column-name><column-value><![CDATA[");
+		sb.append(getDossierNo());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -992,6 +1126,10 @@ public class VRCOPProdEquipmentModelImpl extends BaseModelImpl<VRCOPProdEquipmen
 	private String _notes;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private int _quantity;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 	private long _columnBitmask;
 	private VRCOPProdEquipment _escapedModel;
 }
