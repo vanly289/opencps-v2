@@ -118,6 +118,11 @@ public class VRProductionClassificationLocalServiceUtil {
 				   .updateVRProductionClassification(vrProductionClassification);
 	}
 
+	public static com.fds.vr.business.model.VRProductionClassification updateVRProductionClassification(
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return getService().updateVRProductionClassification(mapValues, mtCore);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

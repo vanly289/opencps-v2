@@ -116,7 +116,12 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.fds.vr.business.model.VRProductType"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRProductType"),
+			true);
+	public static final long PRODUCTCLASSIFICATIONCODE_COLUMN_BITMASK = 1L;
+	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 2L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductType"));
 
@@ -379,7 +384,17 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void setProductClassificationCode(String productClassificationCode) {
+		_columnBitmask |= PRODUCTCLASSIFICATIONCODE_COLUMN_BITMASK;
+
+		if (_originalProductClassificationCode == null) {
+			_originalProductClassificationCode = _productClassificationCode;
+		}
+
 		_productClassificationCode = productClassificationCode;
+	}
+
+	public String getOriginalProductClassificationCode() {
+		return GetterUtil.getString(_originalProductClassificationCode);
 	}
 
 	@Override
@@ -480,6 +495,8 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void setModifyDate(Date modifyDate) {
+		_columnBitmask = -1L;
+
 		_modifyDate = modifyDate;
 	}
 
@@ -515,7 +532,21 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void setProductionPlantCode(String productionPlantCode) {
+		_columnBitmask |= PRODUCTIONPLANTCODE_COLUMN_BITMASK;
+
+		if (_originalProductionPlantCode == null) {
+			_originalProductionPlantCode = _productionPlantCode;
+		}
+
 		_productionPlantCode = productionPlantCode;
+	}
+
+	public String getOriginalProductionPlantCode() {
+		return GetterUtil.getString(_originalProductionPlantCode);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -623,6 +654,13 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void resetOriginalValues() {
+		VRProductTypeModelImpl vrProductTypeModelImpl = this;
+
+		vrProductTypeModelImpl._originalProductClassificationCode = vrProductTypeModelImpl._productClassificationCode;
+
+		vrProductTypeModelImpl._originalProductionPlantCode = vrProductTypeModelImpl._productionPlantCode;
+
+		vrProductTypeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -886,6 +924,7 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	private String _vehicleTypeCode;
 	private String _vehicleTypeDescription;
 	private String _productClassificationCode;
+	private String _originalProductClassificationCode;
 	private String _productClassificationDescription;
 	private String _trademark;
 	private String _trademarkName;
@@ -896,5 +935,7 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	private Date _syncDate;
 	private long _productionPlantId;
 	private String _productionPlantCode;
+	private String _originalProductionPlantCode;
+	private long _columnBitmask;
 	private VRProductType _escapedModel;
 }

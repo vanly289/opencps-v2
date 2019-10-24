@@ -1327,7 +1327,7 @@
 		<column name="id" type="long" primary="true" db-name="id"/>
 		
 		<!-- Audit fields -->
-		<column name="mtCore" type="long" db-name="mtcore"/>
+		<column name="mtCore" type="long" db-name="mtCore"/>
 		<!-- <column name="productPlantID" type="long" db-name="productPlantID"/> -->
 		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
 		<column name="employeeName" type="String" db-name="employeeName"/>
@@ -1347,6 +1347,9 @@
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
 		</finder> -->
+		<finder return-type="Collection" name="PPC">
+			<finder-column name="productionPlantCode"></finder-column>			
+		</finder>
 	</entity>
 
 	<entity name="VRProductionPlantEquipment" local-service="true" table="vr_productionplantequipment"
@@ -1398,6 +1401,10 @@
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
 		</finder>-->
+		<finder return-type="Collection" name="PPC">		
+			<finder-column name="productionPlantCode"></finder-column>
+		</finder>
+		
 	</entity>
 
 	<entity name="VRProductionPlantProdEquipment" local-service="true" table="vr_productionplantprodequipment"
@@ -1432,7 +1439,10 @@
         <!-- <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
-		</finder> -->
+		</finder>-->
+		<finder return-type="Collection" name="PPC">		
+			<finder-column name="productionPlantCode"></finder-column>
+		</finder>
 	</entity>
 
 	<entity name="VRProductType" local-service="true" table="vr_producttype"
@@ -1467,7 +1477,13 @@
         <!-- <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
-		</finder>-->
+		</finder>
+		-->
+		<finder return-type="Collection" name="PPC_PCC">
+			<finder-column name="productionPlantCode"></finder-column>			
+			<finder-column name="productClassificationCode"></finder-column>
+		</finder>
+		
 	</entity>
 
 	

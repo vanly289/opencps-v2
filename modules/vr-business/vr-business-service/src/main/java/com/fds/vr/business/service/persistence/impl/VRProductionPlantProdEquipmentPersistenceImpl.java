@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
@@ -44,6 +45,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -84,6 +86,576 @@ public class VRProductionPlantProdEquipmentPersistenceImpl
 			VRProductionPlantProdEquipmentModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PPC = new FinderPath(VRProductionPlantProdEquipmentModelImpl.ENTITY_CACHE_ENABLED,
+			VRProductionPlantProdEquipmentModelImpl.FINDER_CACHE_ENABLED,
+			VRProductionPlantProdEquipmentImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPPC",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PPC = new FinderPath(VRProductionPlantProdEquipmentModelImpl.ENTITY_CACHE_ENABLED,
+			VRProductionPlantProdEquipmentModelImpl.FINDER_CACHE_ENABLED,
+			VRProductionPlantProdEquipmentImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPPC",
+			new String[] { String.class.getName() },
+			VRProductionPlantProdEquipmentModelImpl.PRODUCTIONPLANTCODE_COLUMN_BITMASK |
+			VRProductionPlantProdEquipmentModelImpl.MODIFYDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_PPC = new FinderPath(VRProductionPlantProdEquipmentModelImpl.ENTITY_CACHE_ENABLED,
+			VRProductionPlantProdEquipmentModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByPPC", new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the vr production plant prod equipments where productionPlantCode = &#63;.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @return the matching vr production plant prod equipments
+	 */
+	@Override
+	public List<VRProductionPlantProdEquipment> findByPPC(
+		String productionPlantCode) {
+		return findByPPC(productionPlantCode, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the vr production plant prod equipments where productionPlantCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantProdEquipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @param start the lower bound of the range of vr production plant prod equipments
+	 * @param end the upper bound of the range of vr production plant prod equipments (not inclusive)
+	 * @return the range of matching vr production plant prod equipments
+	 */
+	@Override
+	public List<VRProductionPlantProdEquipment> findByPPC(
+		String productionPlantCode, int start, int end) {
+		return findByPPC(productionPlantCode, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the vr production plant prod equipments where productionPlantCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantProdEquipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @param start the lower bound of the range of vr production plant prod equipments
+	 * @param end the upper bound of the range of vr production plant prod equipments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching vr production plant prod equipments
+	 */
+	@Override
+	public List<VRProductionPlantProdEquipment> findByPPC(
+		String productionPlantCode, int start, int end,
+		OrderByComparator<VRProductionPlantProdEquipment> orderByComparator) {
+		return findByPPC(productionPlantCode, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the vr production plant prod equipments where productionPlantCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantProdEquipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @param start the lower bound of the range of vr production plant prod equipments
+	 * @param end the upper bound of the range of vr production plant prod equipments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching vr production plant prod equipments
+	 */
+	@Override
+	public List<VRProductionPlantProdEquipment> findByPPC(
+		String productionPlantCode, int start, int end,
+		OrderByComparator<VRProductionPlantProdEquipment> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PPC;
+			finderArgs = new Object[] { productionPlantCode };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PPC;
+			finderArgs = new Object[] {
+					productionPlantCode,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<VRProductionPlantProdEquipment> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<VRProductionPlantProdEquipment>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (VRProductionPlantProdEquipment vrProductionPlantProdEquipment : list) {
+					if (!Objects.equals(productionPlantCode,
+								vrProductionPlantProdEquipment.getProductionPlantCode())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_VRPRODUCTIONPLANTPRODEQUIPMENT_WHERE);
+
+			boolean bindProductionPlantCode = false;
+
+			if (productionPlantCode == null) {
+				query.append(_FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_1);
+			}
+			else if (productionPlantCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_3);
+			}
+			else {
+				bindProductionPlantCode = true;
+
+				query.append(_FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(VRProductionPlantProdEquipmentModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindProductionPlantCode) {
+					qPos.add(productionPlantCode);
+				}
+
+				if (!pagination) {
+					list = (List<VRProductionPlantProdEquipment>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<VRProductionPlantProdEquipment>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first vr production plant prod equipment in the ordered set where productionPlantCode = &#63;.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vr production plant prod equipment
+	 * @throws NoSuchVRProductionPlantProdEquipmentException if a matching vr production plant prod equipment could not be found
+	 */
+	@Override
+	public VRProductionPlantProdEquipment findByPPC_First(
+		String productionPlantCode,
+		OrderByComparator<VRProductionPlantProdEquipment> orderByComparator)
+		throws NoSuchVRProductionPlantProdEquipmentException {
+		VRProductionPlantProdEquipment vrProductionPlantProdEquipment = fetchByPPC_First(productionPlantCode,
+				orderByComparator);
+
+		if (vrProductionPlantProdEquipment != null) {
+			return vrProductionPlantProdEquipment;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("productionPlantCode=");
+		msg.append(productionPlantCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRProductionPlantProdEquipmentException(msg.toString());
+	}
+
+	/**
+	 * Returns the first vr production plant prod equipment in the ordered set where productionPlantCode = &#63;.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vr production plant prod equipment, or <code>null</code> if a matching vr production plant prod equipment could not be found
+	 */
+	@Override
+	public VRProductionPlantProdEquipment fetchByPPC_First(
+		String productionPlantCode,
+		OrderByComparator<VRProductionPlantProdEquipment> orderByComparator) {
+		List<VRProductionPlantProdEquipment> list = findByPPC(productionPlantCode,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last vr production plant prod equipment in the ordered set where productionPlantCode = &#63;.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vr production plant prod equipment
+	 * @throws NoSuchVRProductionPlantProdEquipmentException if a matching vr production plant prod equipment could not be found
+	 */
+	@Override
+	public VRProductionPlantProdEquipment findByPPC_Last(
+		String productionPlantCode,
+		OrderByComparator<VRProductionPlantProdEquipment> orderByComparator)
+		throws NoSuchVRProductionPlantProdEquipmentException {
+		VRProductionPlantProdEquipment vrProductionPlantProdEquipment = fetchByPPC_Last(productionPlantCode,
+				orderByComparator);
+
+		if (vrProductionPlantProdEquipment != null) {
+			return vrProductionPlantProdEquipment;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("productionPlantCode=");
+		msg.append(productionPlantCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRProductionPlantProdEquipmentException(msg.toString());
+	}
+
+	/**
+	 * Returns the last vr production plant prod equipment in the ordered set where productionPlantCode = &#63;.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vr production plant prod equipment, or <code>null</code> if a matching vr production plant prod equipment could not be found
+	 */
+	@Override
+	public VRProductionPlantProdEquipment fetchByPPC_Last(
+		String productionPlantCode,
+		OrderByComparator<VRProductionPlantProdEquipment> orderByComparator) {
+		int count = countByPPC(productionPlantCode);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<VRProductionPlantProdEquipment> list = findByPPC(productionPlantCode,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the vr production plant prod equipments before and after the current vr production plant prod equipment in the ordered set where productionPlantCode = &#63;.
+	 *
+	 * @param id the primary key of the current vr production plant prod equipment
+	 * @param productionPlantCode the production plant code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next vr production plant prod equipment
+	 * @throws NoSuchVRProductionPlantProdEquipmentException if a vr production plant prod equipment with the primary key could not be found
+	 */
+	@Override
+	public VRProductionPlantProdEquipment[] findByPPC_PrevAndNext(long id,
+		String productionPlantCode,
+		OrderByComparator<VRProductionPlantProdEquipment> orderByComparator)
+		throws NoSuchVRProductionPlantProdEquipmentException {
+		VRProductionPlantProdEquipment vrProductionPlantProdEquipment = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			VRProductionPlantProdEquipment[] array = new VRProductionPlantProdEquipmentImpl[3];
+
+			array[0] = getByPPC_PrevAndNext(session,
+					vrProductionPlantProdEquipment, productionPlantCode,
+					orderByComparator, true);
+
+			array[1] = vrProductionPlantProdEquipment;
+
+			array[2] = getByPPC_PrevAndNext(session,
+					vrProductionPlantProdEquipment, productionPlantCode,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected VRProductionPlantProdEquipment getByPPC_PrevAndNext(
+		Session session,
+		VRProductionPlantProdEquipment vrProductionPlantProdEquipment,
+		String productionPlantCode,
+		OrderByComparator<VRProductionPlantProdEquipment> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_VRPRODUCTIONPLANTPRODEQUIPMENT_WHERE);
+
+		boolean bindProductionPlantCode = false;
+
+		if (productionPlantCode == null) {
+			query.append(_FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_1);
+		}
+		else if (productionPlantCode.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_3);
+		}
+		else {
+			bindProductionPlantCode = true;
+
+			query.append(_FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(VRProductionPlantProdEquipmentModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindProductionPlantCode) {
+			qPos.add(productionPlantCode);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(vrProductionPlantProdEquipment);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<VRProductionPlantProdEquipment> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the vr production plant prod equipments where productionPlantCode = &#63; from the database.
+	 *
+	 * @param productionPlantCode the production plant code
+	 */
+	@Override
+	public void removeByPPC(String productionPlantCode) {
+		for (VRProductionPlantProdEquipment vrProductionPlantProdEquipment : findByPPC(
+				productionPlantCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(vrProductionPlantProdEquipment);
+		}
+	}
+
+	/**
+	 * Returns the number of vr production plant prod equipments where productionPlantCode = &#63;.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @return the number of matching vr production plant prod equipments
+	 */
+	@Override
+	public int countByPPC(String productionPlantCode) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_PPC;
+
+		Object[] finderArgs = new Object[] { productionPlantCode };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_VRPRODUCTIONPLANTPRODEQUIPMENT_WHERE);
+
+			boolean bindProductionPlantCode = false;
+
+			if (productionPlantCode == null) {
+				query.append(_FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_1);
+			}
+			else if (productionPlantCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_3);
+			}
+			else {
+				bindProductionPlantCode = true;
+
+				query.append(_FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindProductionPlantCode) {
+					qPos.add(productionPlantCode);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_1 = "vrProductionPlantProdEquipment.productionPlantCode IS NULL";
+	private static final String _FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_2 = "vrProductionPlantProdEquipment.productionPlantCode = ?";
+	private static final String _FINDER_COLUMN_PPC_PRODUCTIONPLANTCODE_3 = "(vrProductionPlantProdEquipment.productionPlantCode IS NULL OR vrProductionPlantProdEquipment.productionPlantCode = '')";
 
 	public VRProductionPlantProdEquipmentPersistenceImpl() {
 		setModelClass(VRProductionPlantProdEquipment.class);
@@ -282,6 +854,9 @@ public class VRProductionPlantProdEquipmentPersistenceImpl
 
 		boolean isNew = vrProductionPlantProdEquipment.isNew();
 
+		VRProductionPlantProdEquipmentModelImpl vrProductionPlantProdEquipmentModelImpl =
+			(VRProductionPlantProdEquipmentModelImpl)vrProductionPlantProdEquipment;
+
 		Session session = null;
 
 		try {
@@ -305,8 +880,30 @@ public class VRProductionPlantProdEquipmentPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew ||
+				!VRProductionPlantProdEquipmentModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+
+		else {
+			if ((vrProductionPlantProdEquipmentModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PPC.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						vrProductionPlantProdEquipmentModelImpl.getOriginalProductionPlantCode()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_PPC, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PPC,
+					args);
+
+				args = new Object[] {
+						vrProductionPlantProdEquipmentModelImpl.getProductionPlantCode()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_PPC, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PPC,
+					args);
+			}
 		}
 
 		entityCache.putResult(VRProductionPlantProdEquipmentModelImpl.ENTITY_CACHE_ENABLED,
@@ -764,8 +1361,12 @@ public class VRProductionPlantProdEquipmentPersistenceImpl
 	private static final String _SQL_SELECT_VRPRODUCTIONPLANTPRODEQUIPMENT = "SELECT vrProductionPlantProdEquipment FROM VRProductionPlantProdEquipment vrProductionPlantProdEquipment";
 	private static final String _SQL_SELECT_VRPRODUCTIONPLANTPRODEQUIPMENT_WHERE_PKS_IN =
 		"SELECT vrProductionPlantProdEquipment FROM VRProductionPlantProdEquipment vrProductionPlantProdEquipment WHERE id IN (";
+	private static final String _SQL_SELECT_VRPRODUCTIONPLANTPRODEQUIPMENT_WHERE =
+		"SELECT vrProductionPlantProdEquipment FROM VRProductionPlantProdEquipment vrProductionPlantProdEquipment WHERE ";
 	private static final String _SQL_COUNT_VRPRODUCTIONPLANTPRODEQUIPMENT = "SELECT COUNT(vrProductionPlantProdEquipment) FROM VRProductionPlantProdEquipment vrProductionPlantProdEquipment";
+	private static final String _SQL_COUNT_VRPRODUCTIONPLANTPRODEQUIPMENT_WHERE = "SELECT COUNT(vrProductionPlantProdEquipment) FROM VRProductionPlantProdEquipment vrProductionPlantProdEquipment WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "vrProductionPlantProdEquipment.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No VRProductionPlantProdEquipment exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No VRProductionPlantProdEquipment exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(VRProductionPlantProdEquipmentPersistenceImpl.class);
 }
