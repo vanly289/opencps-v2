@@ -19,13 +19,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRProductType;
+import com.fds.vr.business.model.VRProductionPlantProdEquipment;
+import com.fds.vr.business.model.impl.VRProductTypeImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantProdEquipmentImpl;
 import com.fds.vr.business.service.base.VRProductTypeLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -109,5 +118,25 @@ public class VRProductTypeLocalServiceImpl
 		return vrProductTypeFinder.countData(sql);
 	}
 	*/
+	
+	public JSONArray findByProductionPlanCode(String productionPlantCode,String productClassificationCode) throws SystemException, PortalException{
+		
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		
+		List<VRProductType> dataList = vrProductTypePersistence.findByPPC_PCC(productionPlantCode,productClassificationCode);
+		
+		for(VRProductType data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRProductTypeImpl.class, StringPool.BLANK);
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
+	}
 	private Log _log = LogFactoryUtil.getLog(VRProductTypeLocalServiceImpl.class);
 }

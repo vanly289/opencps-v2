@@ -16,7 +16,21 @@ package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.model.VRProductType;
+import com.fds.vr.business.model.VRProductionClassification;
+import com.fds.vr.business.model.impl.VRProductTypeImpl;
+import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
 import com.fds.vr.business.service.base.VRProductionClassificationLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.List;
 
 /**
  * The implementation of the vr production classification local service.
@@ -40,4 +54,24 @@ public class VRProductionClassificationLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRProductionClassificationLocalServiceUtil} to access the vr production classification local service.
 	 */
+	
+	public JSONArray findByProductionPlanCode(String productionPlantCode) throws SystemException, PortalException{
+		
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		
+		List<VRProductionClassification> dataList = vrProductionClassificationPersistence.findByPPC(productionPlantCode);
+		
+		for(VRProductionClassification data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRProductionClassificationImpl.class, StringPool.BLANK);
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
+	}
 }

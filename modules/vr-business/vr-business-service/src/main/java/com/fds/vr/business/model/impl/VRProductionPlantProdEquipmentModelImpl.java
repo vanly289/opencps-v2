@@ -127,7 +127,8 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 			true);
 	public static final long MTCORE_COLUMN_BITMASK = 1L;
 	public static final long PRODUCTPLANTID_COLUMN_BITMASK = 2L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 4L;
+	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 4L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductionPlantProdEquipment"));
 
@@ -583,7 +584,17 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 
 	@Override
 	public void setProductionPlantCode(String productionPlantCode) {
+		_columnBitmask |= PRODUCTIONPLANTCODE_COLUMN_BITMASK;
+
+		if (_originalProductionPlantCode == null) {
+			_originalProductionPlantCode = _productionPlantCode;
+		}
+
 		_productionPlantCode = productionPlantCode;
+	}
+
+	public String getOriginalProductionPlantCode() {
+		return GetterUtil.getString(_originalProductionPlantCode);
 	}
 
 	@Override
@@ -729,6 +740,8 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 		vrProductionPlantProdEquipmentModelImpl._originalProductPlantID = vrProductionPlantProdEquipmentModelImpl._productPlantID;
 
 		vrProductionPlantProdEquipmentModelImpl._setOriginalProductPlantID = false;
+
+		vrProductionPlantProdEquipmentModelImpl._originalProductionPlantCode = vrProductionPlantProdEquipmentModelImpl._productionPlantCode;
 
 		vrProductionPlantProdEquipmentModelImpl._columnBitmask = 0;
 	}
@@ -1038,6 +1051,7 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 	private Date _modifyDate;
 	private Date _syncDate;
 	private String _productionPlantCode;
+	private String _originalProductionPlantCode;
 	private long _productionPlantId;
 	private long _quantity;
 	private long _columnBitmask;

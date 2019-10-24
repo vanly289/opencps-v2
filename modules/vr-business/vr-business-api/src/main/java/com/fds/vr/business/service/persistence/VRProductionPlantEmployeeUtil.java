@@ -300,6 +300,174 @@ public class VRProductionPlantEmployeeUtil {
 	}
 
 	/**
+	* Returns all the vr production plant employees where productionPlantCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @return the matching vr production plant employees
+	*/
+	public static List<VRProductionPlantEmployee> findByPPC(
+		java.lang.String productionPlantCode) {
+		return getPersistence().findByPPC(productionPlantCode);
+	}
+
+	/**
+	* Returns a range of all the vr production plant employees where productionPlantCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantEmployeeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param productionPlantCode the production plant code
+	* @param start the lower bound of the range of vr production plant employees
+	* @param end the upper bound of the range of vr production plant employees (not inclusive)
+	* @return the range of matching vr production plant employees
+	*/
+	public static List<VRProductionPlantEmployee> findByPPC(
+		java.lang.String productionPlantCode, int start, int end) {
+		return getPersistence().findByPPC(productionPlantCode, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the vr production plant employees where productionPlantCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantEmployeeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param productionPlantCode the production plant code
+	* @param start the lower bound of the range of vr production plant employees
+	* @param end the upper bound of the range of vr production plant employees (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vr production plant employees
+	*/
+	public static List<VRProductionPlantEmployee> findByPPC(
+		java.lang.String productionPlantCode, int start, int end,
+		OrderByComparator<VRProductionPlantEmployee> orderByComparator) {
+		return getPersistence()
+				   .findByPPC(productionPlantCode, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the vr production plant employees where productionPlantCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantEmployeeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param productionPlantCode the production plant code
+	* @param start the lower bound of the range of vr production plant employees
+	* @param end the upper bound of the range of vr production plant employees (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vr production plant employees
+	*/
+	public static List<VRProductionPlantEmployee> findByPPC(
+		java.lang.String productionPlantCode, int start, int end,
+		OrderByComparator<VRProductionPlantEmployee> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByPPC(productionPlantCode, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first vr production plant employee in the ordered set where productionPlantCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr production plant employee
+	* @throws NoSuchVRProductionPlantEmployeeException if a matching vr production plant employee could not be found
+	*/
+	public static VRProductionPlantEmployee findByPPC_First(
+		java.lang.String productionPlantCode,
+		OrderByComparator<VRProductionPlantEmployee> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRProductionPlantEmployeeException {
+		return getPersistence()
+				   .findByPPC_First(productionPlantCode, orderByComparator);
+	}
+
+	/**
+	* Returns the first vr production plant employee in the ordered set where productionPlantCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr production plant employee, or <code>null</code> if a matching vr production plant employee could not be found
+	*/
+	public static VRProductionPlantEmployee fetchByPPC_First(
+		java.lang.String productionPlantCode,
+		OrderByComparator<VRProductionPlantEmployee> orderByComparator) {
+		return getPersistence()
+				   .fetchByPPC_First(productionPlantCode, orderByComparator);
+	}
+
+	/**
+	* Returns the last vr production plant employee in the ordered set where productionPlantCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr production plant employee
+	* @throws NoSuchVRProductionPlantEmployeeException if a matching vr production plant employee could not be found
+	*/
+	public static VRProductionPlantEmployee findByPPC_Last(
+		java.lang.String productionPlantCode,
+		OrderByComparator<VRProductionPlantEmployee> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRProductionPlantEmployeeException {
+		return getPersistence()
+				   .findByPPC_Last(productionPlantCode, orderByComparator);
+	}
+
+	/**
+	* Returns the last vr production plant employee in the ordered set where productionPlantCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr production plant employee, or <code>null</code> if a matching vr production plant employee could not be found
+	*/
+	public static VRProductionPlantEmployee fetchByPPC_Last(
+		java.lang.String productionPlantCode,
+		OrderByComparator<VRProductionPlantEmployee> orderByComparator) {
+		return getPersistence()
+				   .fetchByPPC_Last(productionPlantCode, orderByComparator);
+	}
+
+	/**
+	* Returns the vr production plant employees before and after the current vr production plant employee in the ordered set where productionPlantCode = &#63;.
+	*
+	* @param id the primary key of the current vr production plant employee
+	* @param productionPlantCode the production plant code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next vr production plant employee
+	* @throws NoSuchVRProductionPlantEmployeeException if a vr production plant employee with the primary key could not be found
+	*/
+	public static VRProductionPlantEmployee[] findByPPC_PrevAndNext(long id,
+		java.lang.String productionPlantCode,
+		OrderByComparator<VRProductionPlantEmployee> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRProductionPlantEmployeeException {
+		return getPersistence()
+				   .findByPPC_PrevAndNext(id, productionPlantCode,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the vr production plant employees where productionPlantCode = &#63; from the database.
+	*
+	* @param productionPlantCode the production plant code
+	*/
+	public static void removeByPPC(java.lang.String productionPlantCode) {
+		getPersistence().removeByPPC(productionPlantCode);
+	}
+
+	/**
+	* Returns the number of vr production plant employees where productionPlantCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @return the number of matching vr production plant employees
+	*/
+	public static int countByPPC(java.lang.String productionPlantCode) {
+		return getPersistence().countByPPC(productionPlantCode);
+	}
+
+	/**
 	* Caches the vr production plant employee in the entity cache if it is enabled.
 	*
 	* @param vrProductionPlantEmployee the vr production plant employee

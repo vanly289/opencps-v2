@@ -115,8 +115,9 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRProductionClassification"),
 			true);
-	public static final long UUID_COLUMN_BITMASK = 1L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 2L;
+	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 1L;
+	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductionClassification"));
 
@@ -368,7 +369,17 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public void setProductionPlantCode(String productionPlantCode) {
+		_columnBitmask |= PRODUCTIONPLANTCODE_COLUMN_BITMASK;
+
+		if (_originalProductionPlantCode == null) {
+			_originalProductionPlantCode = _productionPlantCode;
+		}
+
 		_productionPlantCode = productionPlantCode;
+	}
+
+	public String getOriginalProductionPlantCode() {
+		return GetterUtil.getString(_originalProductionPlantCode);
 	}
 
 	@Override
@@ -589,6 +600,8 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 		VRProductionClassificationModelImpl vrProductionClassificationModelImpl = this;
 
 		vrProductionClassificationModelImpl._originalUuid = vrProductionClassificationModelImpl._uuid;
+
+		vrProductionClassificationModelImpl._originalProductionPlantCode = vrProductionClassificationModelImpl._productionPlantCode;
 
 		vrProductionClassificationModelImpl._columnBitmask = 0;
 	}
@@ -822,6 +835,7 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	private String _applicantCode;
 	private long _productionPlantId;
 	private String _productionPlantCode;
+	private String _originalProductionPlantCode;
 	private int _sequenceNo;
 	private String _productClassificationCode;
 	private String _productClassificationDescription;

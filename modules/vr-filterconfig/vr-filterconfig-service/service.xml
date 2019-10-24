@@ -23,7 +23,8 @@
 		<column name="syncDate" type="Date" />
 		
 
-		<order by="desc">
+		<order by="asc">
+			<order-column name="sequenceNo" />
 			<order-column name="id" />
 		</order>
 		

@@ -135,6 +135,16 @@ public class VRProductionPlantEquipmentLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByProductionPlanCode(productionPlantCode,
+			productClassificationCode);
+	}
+
 	public static com.liferay.portal.kernel.json.JSONArray findData(
 		java.lang.String sql, java.util.List<java.lang.String> columnNames,
 		java.util.List<java.lang.String> dataTypes,

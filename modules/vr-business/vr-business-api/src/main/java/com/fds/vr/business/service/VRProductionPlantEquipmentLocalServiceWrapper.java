@@ -137,6 +137,16 @@ public class VRProductionPlantEquipmentLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrProductionPlantEquipmentLocalService.findByProductionPlanCode(productionPlantCode,
+			productClassificationCode);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.json.JSONArray findData(
 		java.lang.String sql, java.util.List<java.lang.String> columnNames,
 		java.util.List<java.lang.String> dataTypes,

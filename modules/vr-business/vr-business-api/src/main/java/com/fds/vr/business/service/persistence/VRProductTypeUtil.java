@@ -293,6 +293,208 @@ public class VRProductTypeUtil {
 	}
 
 	/**
+	* Returns all the vr product types where productionPlantCode = &#63; and productClassificationCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	* @return the matching vr product types
+	*/
+	public static List<VRProductType> findByPPC_PCC(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode) {
+		return getPersistence()
+				   .findByPPC_PCC(productionPlantCode, productClassificationCode);
+	}
+
+	/**
+	* Returns a range of all the vr product types where productionPlantCode = &#63; and productClassificationCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	* @param start the lower bound of the range of vr product types
+	* @param end the upper bound of the range of vr product types (not inclusive)
+	* @return the range of matching vr product types
+	*/
+	public static List<VRProductType> findByPPC_PCC(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode, int start, int end) {
+		return getPersistence()
+				   .findByPPC_PCC(productionPlantCode,
+			productClassificationCode, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the vr product types where productionPlantCode = &#63; and productClassificationCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	* @param start the lower bound of the range of vr product types
+	* @param end the upper bound of the range of vr product types (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vr product types
+	*/
+	public static List<VRProductType> findByPPC_PCC(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode, int start, int end,
+		OrderByComparator<VRProductType> orderByComparator) {
+		return getPersistence()
+				   .findByPPC_PCC(productionPlantCode,
+			productClassificationCode, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the vr product types where productionPlantCode = &#63; and productClassificationCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	* @param start the lower bound of the range of vr product types
+	* @param end the upper bound of the range of vr product types (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vr product types
+	*/
+	public static List<VRProductType> findByPPC_PCC(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode, int start, int end,
+		OrderByComparator<VRProductType> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByPPC_PCC(productionPlantCode,
+			productClassificationCode, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first vr product type in the ordered set where productionPlantCode = &#63; and productClassificationCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr product type
+	* @throws NoSuchVRProductTypeException if a matching vr product type could not be found
+	*/
+	public static VRProductType findByPPC_PCC_First(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode,
+		OrderByComparator<VRProductType> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRProductTypeException {
+		return getPersistence()
+				   .findByPPC_PCC_First(productionPlantCode,
+			productClassificationCode, orderByComparator);
+	}
+
+	/**
+	* Returns the first vr product type in the ordered set where productionPlantCode = &#63; and productClassificationCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr product type, or <code>null</code> if a matching vr product type could not be found
+	*/
+	public static VRProductType fetchByPPC_PCC_First(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode,
+		OrderByComparator<VRProductType> orderByComparator) {
+		return getPersistence()
+				   .fetchByPPC_PCC_First(productionPlantCode,
+			productClassificationCode, orderByComparator);
+	}
+
+	/**
+	* Returns the last vr product type in the ordered set where productionPlantCode = &#63; and productClassificationCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr product type
+	* @throws NoSuchVRProductTypeException if a matching vr product type could not be found
+	*/
+	public static VRProductType findByPPC_PCC_Last(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode,
+		OrderByComparator<VRProductType> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRProductTypeException {
+		return getPersistence()
+				   .findByPPC_PCC_Last(productionPlantCode,
+			productClassificationCode, orderByComparator);
+	}
+
+	/**
+	* Returns the last vr product type in the ordered set where productionPlantCode = &#63; and productClassificationCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr product type, or <code>null</code> if a matching vr product type could not be found
+	*/
+	public static VRProductType fetchByPPC_PCC_Last(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode,
+		OrderByComparator<VRProductType> orderByComparator) {
+		return getPersistence()
+				   .fetchByPPC_PCC_Last(productionPlantCode,
+			productClassificationCode, orderByComparator);
+	}
+
+	/**
+	* Returns the vr product types before and after the current vr product type in the ordered set where productionPlantCode = &#63; and productClassificationCode = &#63;.
+	*
+	* @param id the primary key of the current vr product type
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next vr product type
+	* @throws NoSuchVRProductTypeException if a vr product type with the primary key could not be found
+	*/
+	public static VRProductType[] findByPPC_PCC_PrevAndNext(long id,
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode,
+		OrderByComparator<VRProductType> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRProductTypeException {
+		return getPersistence()
+				   .findByPPC_PCC_PrevAndNext(id, productionPlantCode,
+			productClassificationCode, orderByComparator);
+	}
+
+	/**
+	* Removes all the vr product types where productionPlantCode = &#63; and productClassificationCode = &#63; from the database.
+	*
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	*/
+	public static void removeByPPC_PCC(java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode) {
+		getPersistence()
+			.removeByPPC_PCC(productionPlantCode, productClassificationCode);
+	}
+
+	/**
+	* Returns the number of vr product types where productionPlantCode = &#63; and productClassificationCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @param productClassificationCode the product classification code
+	* @return the number of matching vr product types
+	*/
+	public static int countByPPC_PCC(java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode) {
+		return getPersistence()
+				   .countByPPC_PCC(productionPlantCode,
+			productClassificationCode);
+	}
+
+	/**
 	* Caches the vr product type in the entity cache if it is enabled.
 	*
 	* @param vrProductType the vr product type

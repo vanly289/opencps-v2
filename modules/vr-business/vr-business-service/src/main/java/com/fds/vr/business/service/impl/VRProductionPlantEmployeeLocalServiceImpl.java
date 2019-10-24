@@ -19,13 +19,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.model.VRCOPProductType;
+import com.fds.vr.business.model.VRCOPProductionPlantEmployee;
 import com.fds.vr.business.model.VRProductionPlantEmployee;
+import com.fds.vr.business.model.impl.VRCOPProductTypeImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEmployeeImpl;
 import com.fds.vr.business.service.base.VRProductionPlantEmployeeLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -96,6 +105,26 @@ public class VRProductionPlantEmployeeLocalServiceImpl
 	public long counData(String sql) throws SystemException {
 
 		return vrProductionPlantEmployeeFinder.countData(sql);
+	}
+	
+	public JSONArray findByProductionPlanCode(String productionPlantCode) throws SystemException, PortalException{
+		
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		
+		List<VRProductionPlantEmployee> dataList = vrProductionPlantEmployeePersistence.findByPPC(productionPlantCode);
+		
+		for(VRProductionPlantEmployee data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantEmployeeLocalServiceImpl.class);
