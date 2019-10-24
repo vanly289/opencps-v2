@@ -28,7 +28,8 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 		int end = ActionUtil.getEnd(params);
 		Integer mtcore = null;
 		Long productionplantid = null;
-
+		String module = StringPool.BLANK;
+		String productionPlantCode = StringPool.BLANK;
 		if (params != null) {
 
 			if (params.containsKey("mtcore")) {
@@ -36,6 +37,12 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 			}
 			if (params.containsKey("productionplantid")) {
 				productionplantid = (Long) params.get("productionplantid");
+			}
+			if (params.containsKey("module")) {
+				module = (String) params.get("module");
+			}
+			if (params.containsKey("productionplantcode")) {
+				productionPlantCode = (String) params.get("productionplantcode");
 			}
 		}
 
@@ -58,6 +65,16 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 		if (Validator.isNotNull(productionplantid)) {
 			conditions.append(ActionUtil.buildSQLCondition("productionplantid", productionplantid, " AND ",
 					StringPool.EQUAL, tableAlias));
+		}
+
+		if (Validator.isNotNull(module)) {
+			conditions.append(
+					ActionUtil.buildSQLCondition("module", "'" + module + "'", " AND ", StringPool.EQUAL, tableAlias));
+		}
+
+		if (Validator.isNotNull(productionPlantCode)) {
+			conditions.append(ActionUtil.buildSQLCondition("productionplantcode", "'" + productionPlantCode + "'",
+					" AND ", StringPool.EQUAL, tableAlias));
 		}
 
 		conditions.append(" GROUP BY year(COPReportDate) ");
@@ -87,6 +104,8 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 			LinkedHashMap<String, Object> params, String advancesearchParams) {
 		int start = ActionUtil.getStart(params);
 		int end = ActionUtil.getEnd(params);
+		String module = StringPool.BLANK;
+		String productionPlantCode = StringPool.BLANK;
 		Integer mtcore = null;
 		Long productionplantid = null;
 
@@ -97,6 +116,12 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 			}
 			if (params.containsKey("productionplantid")) {
 				productionplantid = (Long) params.get("productionplantid");
+			}
+			if (params.containsKey("module")) {
+				module = (String) params.get("module");
+			}
+			if (params.containsKey("productionplantcode")) {
+				productionPlantCode = (String) params.get("productionplantcode");
 			}
 		}
 
@@ -127,14 +152,25 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 					StringPool.EQUAL, tableAlias));
 		}
 
-		if (year != null) {
+		if (year != null && year > 0) {
 			conditions.append(" AND year(COPReportDate) = " + year);
+		}
+
+		if (Validator.isNotNull(module)) {
+			conditions.append(
+					ActionUtil.buildSQLCondition("module", "'" + module + "'", " AND ", StringPool.EQUAL, tableAlias));
+		}
+
+		if (Validator.isNotNull(productionPlantCode)) {
+			conditions.append(ActionUtil.buildSQLCondition("productionplantcode", "'" + productionPlantCode + "'",
+					" AND ", StringPool.EQUAL, tableAlias));
 		}
 
 		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
 
 		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
-				conditions, sortedby, VRCOPReportRepositoryImpl.class, "VRCOPReportRepository", tableAlias, joinStatements);
+				conditions, sortedby, VRCOPReportRepositoryImpl.class, "VRCOPReportRepository", tableAlias,
+				joinStatements);
 
 		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
 
