@@ -17,8 +17,10 @@ package com.fds.vr.business.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRProductType;
 import com.fds.vr.business.model.VRProductionClassification;
+import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.impl.VRProductTypeImpl;
 import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
 import com.fds.vr.business.service.base.VRProductionClassificationLocalServiceBaseImpl;
@@ -30,7 +32,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The implementation of the vr production classification local service.
@@ -73,5 +77,42 @@ public class VRProductionClassificationLocalServiceImpl
 			}
 		}
 		return result;
+	}
+	
+	public VRProductionClassification updateVRProductionClassification(Map<String, String> mapValues, int mtCore) {
+		
+		Date now = new Date();
+		VRProductionClassification object = new VRProductionClassificationImpl();
+
+		long productionClassificationId = Long.valueOf(mapValues.get("productionClassificationId"));
+		
+		if(productionClassificationId <= 0) {
+			
+			productionClassificationId = counterLocalService.increment(VRProductionClassification.class.getName());
+	
+			object = vrProductionClassificationPersistence.create(productionClassificationId);
+		}
+
+		/// Add audit fields
+		object.setSyncDate(now);
+		object.setModifyDate(now);
+
+		// Add other fields
+		object.setMtCore(mtCore);
+		object.setApplicantProfileId(Long.valueOf(mapValues.get("applicantProfileId")));
+		object.setApplicantCode(mapValues.get("applicantCode"));
+		object.setProductionPlantId(Long.valueOf(mapValues.get("productionPlantId")));
+		object.setProductionPlantCode(mapValues.get("productionPlantCode"));
+		object.setSequenceNo(Integer.valueOf(mapValues.get("sequenceNo")));
+		object.setProductClassificationCode(mapValues.get("productClassificationCode"));
+		object.setProductClassificationDescription(mapValues.get("productClassificationDescription"));
+		object.setClassificationModel(mapValues.get("classificationModel"));
+		object.setRemarks(mapValues.get("remarks"));
+		object.setStatus(mapValues.get("status"));
+		//object.setSyncDate(ConvertFormatDate.parseStringToDate(mapValues.get("syncDate")));
+		
+		object.setProductionPlantCode(mapValues.get("productionPlantCode"));
+
+		return vrProductionClassificationPersistence.update(object);
 	}
 }

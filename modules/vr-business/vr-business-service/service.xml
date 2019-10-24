@@ -1347,6 +1347,9 @@
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
 		</finder> -->
+		<finder return-type="Collection" name="PPC">
+			<finder-column name="productionPlantCode"></finder-column>			
+		</finder>
 	</entity>
 
 	<entity name="VRProductionPlantEquipment" local-service="true" table="vr_productionplantequipment"
@@ -1397,7 +1400,11 @@
        <!--  <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
+		</finder>-->
+		<finder return-type="Collection" name="PPC">		
+			<finder-column name="productionPlantCode"></finder-column>
 		</finder>
+		
 	</entity>
 
 	<entity name="VRProductionPlantProdEquipment" local-service="true" table="vr_productionplantprodequipment"
@@ -1432,6 +1439,9 @@
         <!-- <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
+		</finder>-->
+		<finder return-type="Collection" name="PPC">		
+			<finder-column name="productionPlantCode"></finder-column>
 		</finder>
 	</entity>
 
@@ -1468,6 +1478,12 @@
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
 		</finder>
+		-->
+		<finder return-type="Collection" name="PPC_PCC">
+			<finder-column name="productionPlantCode"></finder-column>			
+			<finder-column name="productClassificationCode"></finder-column>
+		</finder>
+		
 	</entity>
 
 	

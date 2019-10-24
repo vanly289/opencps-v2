@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for VRProductionClassification. Methods of this
@@ -124,6 +125,9 @@ public interface VRProductionClassificationLocalService extends BaseLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public VRProductionClassification updateVRProductionClassification(
 		VRProductionClassification vrProductionClassification);
+
+	public VRProductionClassification updateVRProductionClassification(
+		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

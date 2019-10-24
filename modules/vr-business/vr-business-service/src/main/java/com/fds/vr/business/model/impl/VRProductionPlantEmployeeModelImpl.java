@@ -104,7 +104,11 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.fds.vr.business.model.VRProductionPlantEmployee"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRProductionPlantEmployee"),
+			true);
+	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 1L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductionPlantEmployee"));
 
@@ -331,6 +335,8 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public void setModifyDate(Date modifyDate) {
+		_columnBitmask = -1L;
+
 		_modifyDate = modifyDate;
 	}
 
@@ -377,6 +383,10 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	@Override
 	public void setProductionPlantId(long productionPlantId) {
 		_productionPlantId = productionPlantId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -480,13 +490,7 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	public void resetOriginalValues() {
 		VRProductionPlantEmployeeModelImpl vrProductionPlantEmployeeModelImpl = this;
 
-		vrProductionPlantEmployeeModelImpl._originalMtCore = vrProductionPlantEmployeeModelImpl._mtCore;
-
-		vrProductionPlantEmployeeModelImpl._setOriginalMtCore = false;
-
-		vrProductionPlantEmployeeModelImpl._originalProductPlantID = vrProductionPlantEmployeeModelImpl._productPlantID;
-
-		vrProductionPlantEmployeeModelImpl._setOriginalProductPlantID = false;
+		vrProductionPlantEmployeeModelImpl._originalProductionPlantCode = vrProductionPlantEmployeeModelImpl._productionPlantCode;
 
 		vrProductionPlantEmployeeModelImpl._columnBitmask = 0;
 	}
@@ -671,5 +675,6 @@ public class VRProductionPlantEmployeeModelImpl extends BaseModelImpl<VRProducti
 	private String _productionPlantCode;
 	private String _originalProductionPlantCode;
 	private long _productionPlantId;
+	private long _columnBitmask;
 	private VRProductionPlantEmployee _escapedModel;
 }
