@@ -164,4 +164,7 @@ public interface VRProductionPlantEmployeePersistence extends BasePersistence<VR
 	* @return the number of vr production plant employees
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

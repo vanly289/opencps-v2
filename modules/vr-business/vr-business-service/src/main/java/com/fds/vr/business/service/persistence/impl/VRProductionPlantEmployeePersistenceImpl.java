@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -305,31 +305,6 @@ public class VRProductionPlantEmployeePersistenceImpl
 
 		if (isNew) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-
-		else {
-			if ((vrProductionPlantEmployeeModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTPLANTID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						vrProductionPlantEmployeeModelImpl.getOriginalMtCore(),
-						vrProductionPlantEmployeeModelImpl.getOriginalProductPlantID()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_PRODUCTPLANTID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTPLANTID,
-					args);
-
-				args = new Object[] {
-						vrProductionPlantEmployeeModelImpl.getMtCore(),
-						vrProductionPlantEmployeeModelImpl.getProductPlantID()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_PRODUCTPLANTID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTPLANTID,
-					args);
-			}
 		}
 
 		entityCache.putResult(VRProductionPlantEmployeeModelImpl.ENTITY_CACHE_ENABLED,
@@ -752,6 +727,11 @@ public class VRProductionPlantEmployeePersistenceImpl
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return VRProductionPlantEmployeeModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -780,4 +760,7 @@ public class VRProductionPlantEmployeePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS = "vrProductionPlantEmployee.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No VRProductionPlantEmployee exists with the primary key ";
 	private static final Log _log = LogFactoryUtil.getLog(VRProductionPlantEmployeePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"mtCore"
+			});
 }

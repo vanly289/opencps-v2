@@ -329,7 +329,7 @@ public class ActionUtil {
 							String joinStatement = vrCondition.getSpecificationGroup();
 
 							if (Validator.isNull(operator) || Validator.isNull(tableField)
-									|| Validator.isNull(tableName) || Validator.isNull(joinStatement)) {
+									|| Validator.isNull(tableName)) {
 								continue;
 							}
 

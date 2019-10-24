@@ -1327,7 +1327,7 @@
 		<column name="id" type="long" primary="true" db-name="id"/>
 		
 		<!-- Audit fields -->
-		<column name="mtCore" type="long" db-name="mtCore"/>
+		<column name="mtCore" type="long" db-name="mtcore"/>
 		<!-- <column name="productPlantID" type="long" db-name="productPlantID"/> -->
 		<column name="sequenceNo" type="long" db-name="sequenceNo"/>
 		<column name="employeeName" type="String" db-name="employeeName"/>
@@ -1397,7 +1397,7 @@
        <!--  <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
-		</finder>
+		</finder>-->
 	</entity>
 
 	<entity name="VRProductionPlantProdEquipment" local-service="true" table="vr_productionplantprodequipment"
@@ -1432,7 +1432,7 @@
         <!-- <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
-		</finder>
+		</finder> -->
 	</entity>
 
 	<entity name="VRProductType" local-service="true" table="vr_producttype"
@@ -1467,7 +1467,7 @@
         <!-- <finder return-type="Collection" name="productPlantID">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="productPlantID"></finder-column>
-		</finder>
+		</finder>-->
 	</entity>
 
 	

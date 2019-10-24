@@ -44,7 +44,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -295,31 +294,6 @@ public class VRProductTypePersistenceImpl extends BasePersistenceImpl<VRProductT
 
 		if (isNew) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-
-		else {
-			if ((vrProductTypeModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTPLANTID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						vrProductTypeModelImpl.getOriginalMtCore(),
-						vrProductTypeModelImpl.getOriginalProductPlantID()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_PRODUCTPLANTID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTPLANTID,
-					args);
-
-				args = new Object[] {
-						vrProductTypeModelImpl.getMtCore(),
-						vrProductTypeModelImpl.getProductPlantID()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_PRODUCTPLANTID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTPLANTID,
-					args);
-			}
 		}
 
 		entityCache.putResult(VRProductTypeModelImpl.ENTITY_CACHE_ENABLED,
