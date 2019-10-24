@@ -148,7 +148,11 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.fds.vr.business.model.VRProductionPlantEquipment"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRProductionPlantEquipment"),
+			true);
+	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 1L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductionPlantEquipment"));
 
@@ -630,6 +634,8 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public void setModifyDate(Date modifyDate) {
+		_columnBitmask = -1L;
+
 		_modifyDate = modifyDate;
 	}
 
@@ -844,6 +850,10 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		_productionPlantCode = productionPlantCode;
 	}
 
+	public String getOriginalProductionPlantCode() {
+		return GetterUtil.getString(_originalProductionPlantCode);
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -971,13 +981,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	public void resetOriginalValues() {
 		VRProductionPlantEquipmentModelImpl vrProductionPlantEquipmentModelImpl = this;
 
-		vrProductionPlantEquipmentModelImpl._originalMtCore = vrProductionPlantEquipmentModelImpl._mtCore;
-
-		vrProductionPlantEquipmentModelImpl._setOriginalMtCore = false;
-
-		vrProductionPlantEquipmentModelImpl._originalProductPlantID = vrProductionPlantEquipmentModelImpl._productPlantID;
-
-		vrProductionPlantEquipmentModelImpl._setOriginalProductPlantID = false;
+		vrProductionPlantEquipmentModelImpl._originalProductionPlantCode = vrProductionPlantEquipmentModelImpl._productionPlantCode;
 
 		vrProductionPlantEquipmentModelImpl._columnBitmask = 0;
 	}
@@ -1449,6 +1453,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	private String _stampTestingNo;
 	private long _productionPlantId;
 	private String _productionPlantCode;
+	private String _originalProductionPlantCode;
 	private long _columnBitmask;
 	private VRProductionPlantEquipment _escapedModel;
 }

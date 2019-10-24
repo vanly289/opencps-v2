@@ -115,6 +115,13 @@ public class VRProductionClassificationLocalServiceWrapper
 	}
 
 	@Override
+	public com.fds.vr.business.model.VRProductionClassification updateVRProductionClassification(
+		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
+		return _vrProductionClassificationLocalService.updateVRProductionClassification(mapValues,
+			mtCore);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _vrProductionClassificationLocalService.getActionableDynamicQuery();
 	}
