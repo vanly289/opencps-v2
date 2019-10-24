@@ -347,7 +347,8 @@ public class VRConditionPersistenceImpl extends BasePersistenceImpl<VRCondition>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByFILTER_MODULE_CODE",
 			new String[] { String.class.getName() },
-			VRConditionModelImpl.FILTERMODULECODE_COLUMN_BITMASK);
+			VRConditionModelImpl.FILTERMODULECODE_COLUMN_BITMASK |
+			VRConditionModelImpl.SEQUENCENO_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_FILTER_MODULE_CODE = new FinderPath(VRConditionModelImpl.ENTITY_CACHE_ENABLED,
 			VRConditionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

@@ -130,6 +130,13 @@ public class VRProductionClassificationLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
+		java.lang.String productionPlantCode)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByProductionPlanCode(productionPlantCode);
+	}
+
 	/**
 	* @throws PortalException
 	*/

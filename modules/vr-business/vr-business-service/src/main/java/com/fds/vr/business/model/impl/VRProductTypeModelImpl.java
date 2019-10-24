@@ -379,7 +379,17 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void setProductClassificationCode(String productClassificationCode) {
+		_columnBitmask |= PRODUCTCLASSIFICATIONCODE_COLUMN_BITMASK;
+
+		if (_originalProductClassificationCode == null) {
+			_originalProductClassificationCode = _productClassificationCode;
+		}
+
 		_productClassificationCode = productClassificationCode;
+	}
+
+	public String getOriginalProductClassificationCode() {
+		return GetterUtil.getString(_originalProductClassificationCode);
 	}
 
 	@Override
@@ -515,7 +525,17 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void setProductionPlantCode(String productionPlantCode) {
+		_columnBitmask |= PRODUCTIONPLANTCODE_COLUMN_BITMASK;
+
+		if (_originalProductionPlantCode == null) {
+			_originalProductionPlantCode = _productionPlantCode;
+		}
+
 		_productionPlantCode = productionPlantCode;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -623,6 +643,17 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void resetOriginalValues() {
+		VRProductTypeModelImpl vrProductTypeModelImpl = this;
+
+		vrProductTypeModelImpl._originalMtCore = vrProductTypeModelImpl._mtCore;
+
+		vrProductTypeModelImpl._setOriginalMtCore = false;
+
+		vrProductTypeModelImpl._originalProductPlantID = vrProductTypeModelImpl._productPlantID;
+
+		vrProductTypeModelImpl._setOriginalProductPlantID = false;
+
+		vrProductTypeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -886,6 +917,7 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	private String _vehicleTypeCode;
 	private String _vehicleTypeDescription;
 	private String _productClassificationCode;
+	private String _originalProductClassificationCode;
 	private String _productClassificationDescription;
 	private String _trademark;
 	private String _trademarkName;
@@ -896,5 +928,6 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	private Date _syncDate;
 	private long _productionPlantId;
 	private String _productionPlantCode;
+	private long _columnBitmask;
 	private VRProductType _escapedModel;
 }

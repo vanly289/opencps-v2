@@ -24,13 +24,22 @@ import java.util.Map;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRProductionPlantEmployee;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.VRProductionPlantProdEquipment;
+import com.fds.vr.business.model.impl.VRProductionPlantEmployeeImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantProdEquipmentImpl;
 import com.fds.vr.business.service.base.VRProductionPlantEquipmentLocalServiceBaseImpl;
 
 /**
@@ -99,6 +108,8 @@ public class VRProductionPlantEquipmentLocalServiceImpl
 		object.setEquipmentStatus(mapValues.get("equipmentStatus"));
 		object.setExpireDate(ConvertFormatDate.parseStringToDate(mapValues.get("expireDate")));
 		object.setNotes(mapValues.get("notes"));
+		
+		object.setProductionPlantCode(mapValues.get("productionPlantCode"));
 
 		return vrProductionPlantEquipmentPersistence.update(object);
 	}
@@ -112,6 +123,103 @@ public class VRProductionPlantEquipmentLocalServiceImpl
 	public long counData(String sql) throws SystemException {
 
 		return vrProductionPlantEquipmentFinder.countData(sql);
+	}
+	
+	public JSONArray findByProductionPlanCode(String productionPlantCode,String productClassificationCode) throws SystemException, PortalException{
+		
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		
+		List<VRProductionPlantEquipment> dataList = vrProductionPlantEquipmentPersistence.findByPPC(productionPlantCode);
+		
+		List<VRProductionPlantEquipment> newList = new ArrayList<VRProductionPlantEquipment>();
+		
+		if (productClassificationCode.equals("XCG")) {
+
+			for (VRProductionPlantEquipment data : dataList) {
+
+				if (data.getMarkupXCG() == 1) {
+					newList.add(data);
+				}
+
+			}
+
+		}else if(productClassificationCode.equals("XCGNK")) {
+			
+			for (VRProductionPlantEquipment data : dataList) {
+
+				if (data.getMarkupXCGNK() == 1) {
+					newList.add(data);
+				}
+
+			}
+			
+		}else if(productClassificationCode.equals("SMRM")) {
+			
+			for (VRProductionPlantEquipment data : dataList) {
+
+				if (data.getMarkupSMRM() == 1) {
+					newList.add(data);
+				}
+
+			}
+			
+		}else if(productClassificationCode.equals("XCH")) {
+			
+			for (VRProductionPlantEquipment data : dataList) {
+
+				if (data.getMarkupXCH() == 1) {
+					newList.add(data);
+				}
+
+			}
+			
+		}else if(productClassificationCode.equals("XCN")) {
+			
+			for (VRProductionPlantEquipment data : dataList) {
+
+				if (data.getMarkupXCN() == 1) {
+					newList.add(data);
+				}
+
+			}
+			
+		}else if(productClassificationCode.equals("XMY")) {
+			
+			for (VRProductionPlantEquipment data : dataList) {
+
+				if (data.getMarkupXMY() == 1) {
+					newList.add(data);
+				}
+
+			}
+			
+		}else if(productClassificationCode.equals("XDD")) {
+			
+			for (VRProductionPlantEquipment data : dataList) {
+
+				if (data.getMarkupXDD() == 1) {
+					newList.add(data);
+				}
+
+			}
+			
+		}else {
+			newList.addAll(dataList);
+		}
+		
+
+		for(VRProductionPlantEquipment data:newList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantEquipmentLocalServiceImpl.class);

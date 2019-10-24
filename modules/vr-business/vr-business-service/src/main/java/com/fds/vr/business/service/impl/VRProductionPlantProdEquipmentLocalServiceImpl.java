@@ -19,14 +19,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.VRProductionPlantProdEquipment;
+import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantProdEquipmentImpl;
 import com.fds.vr.business.service.base.VRProductionPlantProdEquipmentLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -108,6 +116,26 @@ public class VRProductionPlantProdEquipmentLocalServiceImpl
 	public long counData(String sql) throws SystemException {
 
 		return vrProductionPlantProdEquipmentFinder.countData(sql);
+	}
+	
+	public JSONArray findByProductionPlanCode(String productionPlantCode) throws SystemException, PortalException{
+		
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		
+		List<VRProductionPlantProdEquipment> dataList = vrProductionPlantProdEquipmentPersistence.findByPPC(productionPlantCode);
+		
+		for(VRProductionPlantProdEquipment data:dataList) {
+			
+			jsonObject = JSONFactoryUtil.createJSONObject();
+			
+			jsonObject = ActionUtil.object2Json(data, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
+			
+			if(Validator.isNotNull(jsonObject)) {
+				result.put(jsonObject);
+			}
+		}
+		return result;
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantProdEquipmentLocalServiceImpl.class);

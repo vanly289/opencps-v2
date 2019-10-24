@@ -509,7 +509,17 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 
 	@Override
 	public void setProductionPlantCode(String productionPlantCode) {
+		_columnBitmask |= PRODUCTIONPLANTCODE_COLUMN_BITMASK;
+
+		if (_originalProductionPlantCode == null) {
+			_originalProductionPlantCode = _productionPlantCode;
+		}
+
 		_productionPlantCode = productionPlantCode;
+	}
+
+	public String getOriginalProductionPlantCode() {
+		return GetterUtil.getString(_originalProductionPlantCode);
 	}
 
 	@Override
@@ -639,6 +649,24 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 
 	@Override
 	public void resetOriginalValues() {
+<<<<<<<
+		VRProductionPlantProdEquipmentModelImpl vrProductionPlantProdEquipmentModelImpl =
+			this;
+
+		vrProductionPlantProdEquipmentModelImpl._originalMtCore = vrProductionPlantProdEquipmentModelImpl._mtCore;
+
+		vrProductionPlantProdEquipmentModelImpl._setOriginalMtCore = false;
+
+		vrProductionPlantProdEquipmentModelImpl._originalProductPlantID = vrProductionPlantProdEquipmentModelImpl._productPlantID;
+
+		vrProductionPlantProdEquipmentModelImpl._setOriginalProductPlantID = false;
+
+		vrProductionPlantProdEquipmentModelImpl._originalProductionPlantCode = vrProductionPlantProdEquipmentModelImpl._productionPlantCode;
+
+		vrProductionPlantProdEquipmentModelImpl._columnBitmask = 0;
+=======
+
+>>>>>>>
 	}
 
 	@Override
@@ -918,6 +946,7 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 	private Date _modifyDate;
 	private Date _syncDate;
 	private String _productionPlantCode;
+	private String _originalProductionPlantCode;
 	private long _productionPlantId;
 	private long _quantity;
 	private VRProductionPlantProdEquipment _escapedModel;

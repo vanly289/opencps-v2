@@ -96,8 +96,8 @@ public class VRConditionModelImpl extends BaseModelImpl<VRCondition>
 
 	public static final String TABLE_SQL_CREATE = "create table vr_condition (id LONG not null primary key,filterModuleCode VARCHAR(75) null,filterTableField VARCHAR(75) null,filterTableName VARCHAR(75) null,specificationCode VARCHAR(75) null,specificationDisplayName VARCHAR(75) null,specificationDataCollectionID VARCHAR(75) null,sequenceNo LONG,specificationBasicUnit VARCHAR(75) null,specificationStandard VARCHAR(75) null,specificationGroup VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_condition";
-	public static final String ORDER_BY_JPQL = " ORDER BY vrCondition.id DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY vr_condition.id DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY vrCondition.sequenceNo ASC, vrCondition.id ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY vr_condition.sequenceNo ASC, vr_condition.id ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -112,7 +112,8 @@ public class VRConditionModelImpl extends BaseModelImpl<VRCondition>
 			true);
 	public static final long FILTERMODULECODE_COLUMN_BITMASK = 1L;
 	public static final long SPECIFICATIONCODE_COLUMN_BITMASK = 2L;
-	public static final long ID_COLUMN_BITMASK = 4L;
+	public static final long SEQUENCENO_COLUMN_BITMASK = 4L;
+	public static final long ID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(vr.filterconfig.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.filterconfig.model.VRCondition"));
 
@@ -389,6 +390,8 @@ public class VRConditionModelImpl extends BaseModelImpl<VRCondition>
 
 	@Override
 	public void setSequenceNo(long sequenceNo) {
+		_columnBitmask = -1L;
+
 		_sequenceNo = sequenceNo;
 	}
 
@@ -511,6 +514,20 @@ public class VRConditionModelImpl extends BaseModelImpl<VRCondition>
 	public int compareTo(VRCondition vrCondition) {
 		int value = 0;
 
+		if (getSequenceNo() < vrCondition.getSequenceNo()) {
+			value = -1;
+		}
+		else if (getSequenceNo() > vrCondition.getSequenceNo()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		if (value != 0) {
+			return value;
+		}
+
 		if (getId() < vrCondition.getId()) {
 			value = -1;
 		}
@@ -520,8 +537,6 @@ public class VRConditionModelImpl extends BaseModelImpl<VRCondition>
 		else {
 			value = 0;
 		}
-
-		value = value * -1;
 
 		if (value != 0) {
 			return value;

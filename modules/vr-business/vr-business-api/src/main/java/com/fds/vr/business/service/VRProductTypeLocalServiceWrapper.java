@@ -133,6 +133,16 @@ public class VRProductTypeLocalServiceWrapper
 		return _vrProductTypeLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _vrProductTypeLocalService.findByProductionPlanCode(productionPlantCode,
+			productClassificationCode);
+	}
+
 	/**
 	* @throws PortalException
 	*/
