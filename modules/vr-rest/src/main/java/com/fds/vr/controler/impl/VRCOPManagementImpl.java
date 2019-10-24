@@ -39,6 +39,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 	public Response findReportRepositoryYear(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRCOPReportRepositoryBeanParam query) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
+		_log.info("rest method:findReportRepositoryYear");
 		try {
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
 			VRCOPReportRepositoryAction actionImpl = new VRCOPReportRepositoryActionImpl();
@@ -52,20 +53,23 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 
 	@Override
 	public Response findReportRepository(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext, Integer year, VRCOPReportRepositoryBeanParam query, String advancesearchParams) {
+			User user, ServiceContext serviceContext, Integer year, VRCOPReportRepositoryBeanParam query,
+			String payload) {
+		_log.info("rest method:findReportRepository");
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		try {
-			_log.info("=========================>>>>>>>>>>>>>>>>>>>>>>>> advancesearchParams " + advancesearchParams);
+			_log.info("=========================>>>>>>>>>>>>>>>>>>>>>>>>>>>> payload: "
+					+ payload);
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
 			VRCOPReportRepositoryAction actionImpl = new VRCOPReportRepositoryActionImpl();
-			result = actionImpl.findVRCOPReportRepository(user, serviceContext, year, params, advancesearchParams);
+			result = actionImpl.findVRCOPReportRepository(user, serviceContext, year, params, payload);
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);
 			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get reportrepository")).build();
 		}
 	}
-	
+
 //	@Override
 //	public Response getVRCOPReportRepositories(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 //			User user, ServiceContext serviceContext, int start,int end ) {
@@ -84,72 +88,71 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 //			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
 //		}
 //	}
-	
+
 //	@Override
 //	public Response getVRCOPReportRepositories(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 //			User user, ServiceContext serviceContext) {
 //		
 //		return getVRCOPReportRepositories(request, header, company, locale, user, serviceContext, 0, 50);
 //	}
-	
+
 	@Override
-	public Response getVRCOPReportRepository(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext,long mtCore, String COPReportNo ) {
-		
+	public Response getVRCOPReportRepository(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long mtCore, String COPReportNo) {
+		_log.info("rest method:getVRCOPReportRepository");
 		try {
-			
+
 			JSONObject result = VRCOPReportRepositoryLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
-			
+
 			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
-			
+
 			_log.error(e);
-			
+
 			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
 		}
 	}
-	
+
 	@Override
-	public Response getVRCOPProductionPlantEmployeeList(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext,long mtCore, String COPReportNo ) {
-		
+	public Response getVRCOPProductionPlantEmployeeList(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long mtCore, String COPReportNo) {
+		_log.info("rest method:getVRCOPProductionPlantEmployeeList");
 		try {
 
-			JSONArray result = VRCOPProductionPlantEmployeeLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
-			
+			JSONArray result = VRCOPProductionPlantEmployeeLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
+
 			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
-			
+
 			_log.error(e);
 			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
 		}
 	}
-	
+
 	@Override
-	public Response getVRCOPProductionPlantEquipmentList(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext,long mtCore, String COPReportNo ) {
-		
+	public Response getVRCOPProductionPlantEquipmentList(HttpServletRequest request, HttpHeaders header,
+			Company company, Locale locale, User user, ServiceContext serviceContext, long mtCore, String COPReportNo) {
+		_log.info("rest method:getVRCOPProductionPlantEquipmentList");
 		try {
 
-			JSONArray result = VRCOPProductionPlantEquipmentLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
-			
+			JSONArray result = VRCOPProductionPlantEquipmentLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
+
 			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
-			
+
 			_log.error(e);
-			
 
 			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
 		}
 	}
-	
+
 	@Override
-	public Response getVRCOPProductionPlantProdEquipmentList(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext,long mtCore, String COPReportNo ) {
-		
+	public Response getVRCOPProductionPlantProdEquipmentList(HttpServletRequest request, HttpHeaders header,
+			Company company, Locale locale, User user, ServiceContext serviceContext, long mtCore, String COPReportNo) {
+		_log.info("rest method:getVRCOPProductionPlantProdEquipmentList");
 		try {
 
 			JSONArray result = VRCOPProdEquipmentLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
@@ -157,77 +160,80 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
-			
+
 			_log.error(e);
 
 			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
 		}
 	}
-	
+
 	@Override
-	public Response getVRCOPProductTypeList(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext,long mtCore, String COPReportNo ) {
-		
+	public Response getVRCOPProductTypeList(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long mtCore, String COPReportNo) {
+		_log.info("rest method:getVRCOPProductTypeList");
 		try {
 
-			JSONArray result = VRCOPProductTypeLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
-			
+			JSONArray result = VRCOPProductTypeLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
+
 			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
-			
+
 			_log.error(e);
 
 			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
 		}
 	}
-	
+
 	@Override
-	public Response getVRCOPReportAttachList(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext,long mtCore, String COPReportNo ) {
-		
+	public Response getVRCOPReportAttachList(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long mtCore, String COPReportNo) {
+		_log.info("rest method:getVRCOPReportAttachList");
 		try {
 
-			JSONArray result = VRCOPReportAttachLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
-			
+			JSONArray result = VRCOPReportAttachLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
+
 			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
-			
+
 			_log.error(e);
 
 			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
 		}
 	}
-	
+
 	@Override
 	public Response getVRCOPDataTemplate(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext,long mtCore, String COPReportNo ) {
-		
+			User user, ServiceContext serviceContext, long mtCore, String COPReportNo) {
+		_log.info("rest method:getVRCOPDataTemplate");
 		JSONObject result = JSONFactoryUtil.createJSONObject();
-		
+
 		try {
-			
-			JSONObject VRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
-			JSONArray VRCOPReportAttach =  VRCOPReportAttachLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
-			JSONArray VRCOPProductType = VRCOPProductTypeLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
-			JSONArray VRCOPProductionPlantEquipment = VRCOPProductionPlantEquipmentLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
-			JSONArray VRCOPProductionPlantEmployee = VRCOPProductionPlantEmployeeLocalServiceUtil.getByCOPReportNo(mtCore,COPReportNo);
+
+			JSONObject VRCOPReportRepository = VRCOPReportRepositoryLocalServiceUtil.getByCOPReportNo(mtCore,
+					COPReportNo);
+			JSONArray VRCOPReportAttach = VRCOPReportAttachLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
+			JSONArray VRCOPProductType = VRCOPProductTypeLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
+			JSONArray VRCOPProductionPlantEquipment = VRCOPProductionPlantEquipmentLocalServiceUtil
+					.getByCOPReportNo(mtCore, COPReportNo);
+			JSONArray VRCOPProductionPlantEmployee = VRCOPProductionPlantEmployeeLocalServiceUtil
+					.getByCOPReportNo(mtCore, COPReportNo);
 			JSONArray VRCOPProdEquipment = VRCOPProdEquipmentLocalServiceUtil.getByCOPReportNo(mtCore, COPReportNo);
-			
+
 			result.put("vrcopreportrepository", VRCOPReportRepository);
 			result.put("vrcopreportattach", VRCOPReportAttach);
 			result.put("vrcopproducttype", VRCOPProductType);
 			result.put("vrcopproductionplantequipment", VRCOPProductionPlantEquipment);
 			result.put("vrcopproductionplantemployee", VRCOPProductionPlantEmployee);
 			result.put("vrcopprodequipment", VRCOPProdEquipment);
-			
+
 			return Response.status(200).entity(result.toString()).build();
 
 		} catch (Exception e) {
-			
+
 			_log.error(e);
-			
+
 			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
 		}
 	}

@@ -105,9 +105,6 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 		attributes.put("registrationId", getRegistrationId());
 		attributes.put("registrationFormId", getRegistrationFormId());
 		attributes.put("applicantProfileId", getApplicantProfileId());
-		attributes.put("latestCOPReportDate", getLatestCOPReportDate());
-		attributes.put("latestCOPReportResult", getLatestCOPReportResult());
-		attributes.put("nextCOPReportDate", getNextCOPReportDate());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -349,25 +346,6 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 			setApplicantProfileId(applicantProfileId);
 		}
 
-		Date latestCOPReportDate = (Date)attributes.get("latestCOPReportDate");
-
-		if (latestCOPReportDate != null) {
-			setLatestCOPReportDate(latestCOPReportDate);
-		}
-
-		String latestCOPReportResult = (String)attributes.get(
-				"latestCOPReportResult");
-
-		if (latestCOPReportResult != null) {
-			setLatestCOPReportResult(latestCOPReportResult);
-		}
-
-		Date nextCOPReportDate = (Date)attributes.get("nextCOPReportDate");
-
-		if (nextCOPReportDate != null) {
-			setNextCOPReportDate(nextCOPReportDate);
-		}
-
 		Date modifyDate = (Date)attributes.get("modifyDate");
 
 		if (modifyDate != null) {
@@ -434,16 +412,6 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public java.lang.Object clone() {
 		return new VRProductionPlantWrapper((VRProductionPlant)_vrProductionPlant.clone());
-	}
-
-	/**
-	* Returns the latest cop report result of this vr production plant.
-	*
-	* @return the latest cop report result of this vr production plant
-	*/
-	@Override
-	public java.lang.String getLatestCOPReportResult() {
-		return _vrProductionPlant.getLatestCOPReportResult();
 	}
 
 	/**
@@ -757,16 +725,6 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
-	* Returns the latest cop report date of this vr production plant.
-	*
-	* @return the latest cop report date of this vr production plant
-	*/
-	@Override
-	public Date getLatestCOPReportDate() {
-		return _vrProductionPlant.getLatestCOPReportDate();
-	}
-
-	/**
 	* Returns the modify date of this vr production plant.
 	*
 	* @return the modify date of this vr production plant
@@ -774,16 +732,6 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public Date getModifyDate() {
 		return _vrProductionPlant.getModifyDate();
-	}
-
-	/**
-	* Returns the next cop report date of this vr production plant.
-	*
-	* @return the next cop report date of this vr production plant
-	*/
-	@Override
-	public Date getNextCOPReportDate() {
-		return _vrProductionPlant.getNextCOPReportDate();
 	}
 
 	/**
@@ -903,26 +851,6 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
-	* Sets the latest cop report date of this vr production plant.
-	*
-	* @param latestCOPReportDate the latest cop report date of this vr production plant
-	*/
-	@Override
-	public void setLatestCOPReportDate(Date latestCOPReportDate) {
-		_vrProductionPlant.setLatestCOPReportDate(latestCOPReportDate);
-	}
-
-	/**
-	* Sets the latest cop report result of this vr production plant.
-	*
-	* @param latestCOPReportResult the latest cop report result of this vr production plant
-	*/
-	@Override
-	public void setLatestCOPReportResult(java.lang.String latestCOPReportResult) {
-		_vrProductionPlant.setLatestCOPReportResult(latestCOPReportResult);
-	}
-
-	/**
 	* Sets the mapping dia_chi_cty of this vr production plant.
 	*
 	* @param mappingDIA_CHI_CTY the mapping dia_chi_cty of this vr production plant
@@ -1026,16 +954,6 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public void setNew(boolean n) {
 		_vrProductionPlant.setNew(n);
-	}
-
-	/**
-	* Sets the next cop report date of this vr production plant.
-	*
-	* @param nextCOPReportDate the next cop report date of this vr production plant
-	*/
-	@Override
-	public void setNextCOPReportDate(Date nextCOPReportDate) {
-		_vrProductionPlant.setNextCOPReportDate(nextCOPReportDate);
 	}
 
 	/**

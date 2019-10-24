@@ -36,7 +36,6 @@ public class VRProductionPlantEmployeeSoap implements Serializable {
 
 		soapModel.setId(model.getId());
 		soapModel.setMtCore(model.getMtCore());
-		soapModel.setProductPlantID(model.getProductPlantID());
 		soapModel.setSequenceNo(model.getSequenceNo());
 		soapModel.setEmployeeName(model.getEmployeeName());
 		soapModel.setEmployeeCertificateNo(model.getEmployeeCertificateNo());
@@ -117,14 +116,6 @@ public class VRProductionPlantEmployeeSoap implements Serializable {
 		_mtCore = mtCore;
 	}
 
-	public long getProductPlantID() {
-		return _productPlantID;
-	}
-
-	public void setProductPlantID(long productPlantID) {
-		_productPlantID = productPlantID;
-	}
-
 	public long getSequenceNo() {
 		return _sequenceNo;
 	}
@@ -199,7 +190,6 @@ public class VRProductionPlantEmployeeSoap implements Serializable {
 
 	private long _id;
 	private long _mtCore;
-	private long _productPlantID;
 	private long _sequenceNo;
 	private String _employeeName;
 	private String _employeeCertificateNo;

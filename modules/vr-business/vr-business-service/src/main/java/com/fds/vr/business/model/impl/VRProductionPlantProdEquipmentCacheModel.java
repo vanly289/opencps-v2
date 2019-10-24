@@ -67,14 +67,12 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{id=");
 		sb.append(id);
 		sb.append(", mtCore=");
 		sb.append(mtCore);
-		sb.append(", productPlantID=");
-		sb.append(productPlantID);
 		sb.append(", sequenceNo=");
 		sb.append(sequenceNo);
 		sb.append(", equipmentCode=");
@@ -91,8 +89,6 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 		sb.append(commercialName);
 		sb.append(", modelCode=");
 		sb.append(modelCode);
-		sb.append(", designSymbolNo=");
-		sb.append(designSymbolNo);
 		sb.append(", productionCountryCode=");
 		sb.append(productionCountryCode);
 		sb.append(", equipmentStatus=");
@@ -120,7 +116,6 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 
 		vrProductionPlantProdEquipmentImpl.setId(id);
 		vrProductionPlantProdEquipmentImpl.setMtCore(mtCore);
-		vrProductionPlantProdEquipmentImpl.setProductPlantID(productPlantID);
 		vrProductionPlantProdEquipmentImpl.setSequenceNo(sequenceNo);
 
 		if (equipmentCode == null) {
@@ -170,13 +165,6 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 		}
 		else {
 			vrProductionPlantProdEquipmentImpl.setModelCode(modelCode);
-		}
-
-		if (designSymbolNo == null) {
-			vrProductionPlantProdEquipmentImpl.setDesignSymbolNo(StringPool.BLANK);
-		}
-		else {
-			vrProductionPlantProdEquipmentImpl.setDesignSymbolNo(designSymbolNo);
 		}
 
 		if (productionCountryCode == null) {
@@ -236,8 +224,6 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 
 		mtCore = objectInput.readLong();
 
-		productPlantID = objectInput.readLong();
-
 		sequenceNo = objectInput.readLong();
 		equipmentCode = objectInput.readUTF();
 		equipmentName = objectInput.readUTF();
@@ -246,7 +232,6 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 		trademarkName = objectInput.readUTF();
 		commercialName = objectInput.readUTF();
 		modelCode = objectInput.readUTF();
-		designSymbolNo = objectInput.readUTF();
 		productionCountryCode = objectInput.readUTF();
 		equipmentStatus = objectInput.readUTF();
 		notes = objectInput.readUTF();
@@ -265,8 +250,6 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 		objectOutput.writeLong(id);
 
 		objectOutput.writeLong(mtCore);
-
-		objectOutput.writeLong(productPlantID);
 
 		objectOutput.writeLong(sequenceNo);
 
@@ -319,13 +302,6 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 			objectOutput.writeUTF(modelCode);
 		}
 
-		if (designSymbolNo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(designSymbolNo);
-		}
-
 		if (productionCountryCode == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -364,7 +340,6 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 
 	public long id;
 	public long mtCore;
-	public long productPlantID;
 	public long sequenceNo;
 	public String equipmentCode;
 	public String equipmentName;
@@ -373,7 +348,6 @@ public class VRProductionPlantProdEquipmentCacheModel implements CacheModel<VRPr
 	public String trademarkName;
 	public String commercialName;
 	public String modelCode;
-	public String designSymbolNo;
 	public String productionCountryCode;
 	public String equipmentStatus;
 	public String notes;

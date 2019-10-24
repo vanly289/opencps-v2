@@ -83,13 +83,14 @@ public class ResultDeliverableCOPUtils {
 			if (jsonData.has("loai_ho_so_cop") && !jsonData.getString("loai_ho_so_cop").equals("BS")) {
 				//TODO: xóa sạch 4 bảng trên, để insert lại
 				// Delete vr_productionplantemployee
-				VRProductionPlantEmployeeLocalServiceUtil.deleteByproductPlantId(mtCore, productPlantId);
+				//Comment by TrungNT
+				//VRProductionPlantEmployeeLocalServiceUtil.deleteByproductPlantId(mtCore, productPlantId);
 				//Delete vr_productionplantprodequipment
-				VRProductionPlantProdEquipmentLocalServiceUtil.deleteByproductPlantID(mtCore, productPlantId);
+				//VRProductionPlantProdEquipmentLocalServiceUtil.deleteByproductPlantID(mtCore, productPlantId);
 				//Delete vr_productionplantequipment
-				VRProductionPlantEquipmentLocalServiceUtil.deleteByproductPlantId(mtCore, productPlantId);
+				//VRProductionPlantEquipmentLocalServiceUtil.deleteByproductPlantId(mtCore, productPlantId);
 				//Delete vr_producttype
-				VRProductTypeLocalServiceUtil.deleteByproductPlantId(mtCore, productPlantId);
+				//VRProductTypeLocalServiceUtil.deleteByproductPlantId(mtCore, productPlantId);
 			}
 			
 			// Process vr_productionplantemployee

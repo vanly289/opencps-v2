@@ -233,15 +233,6 @@ public class VRProductTypeLocalServiceWrapper
 			end, orderByComparator);
 	}
 
-	@Override
-	public java.util.List<com.fds.vr.business.model.VRProductType> findByproductPlantID(
-		long mtCore, long productPlantID)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _vrProductTypeLocalService.findByproductPlantID(mtCore,
-			productPlantID);
-	}
-
 	/**
 	* Returns a range of all the vr product types.
 	*
@@ -284,11 +275,6 @@ public class VRProductTypeLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _vrProductTypeLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
-	}
-
-	@Override
-	public void deleteByproductPlantId(long mtCore, long productPlantId) {
-		_vrProductTypeLocalService.deleteByproductPlantId(mtCore, productPlantId);
 	}
 
 	@Override

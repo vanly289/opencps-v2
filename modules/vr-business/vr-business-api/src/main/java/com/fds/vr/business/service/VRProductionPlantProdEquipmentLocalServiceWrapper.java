@@ -246,15 +246,6 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
-	@Override
-	public java.util.List<com.fds.vr.business.model.VRProductionPlantProdEquipment> findByproductPlantID(
-		long mtCore, long productPlantID)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _vrProductionPlantProdEquipmentLocalService.findByproductPlantID(mtCore,
-			productPlantID);
-	}
-
 	/**
 	* Returns a range of all the vr production plant prod equipments.
 	*
@@ -304,12 +295,6 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _vrProductionPlantProdEquipmentLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
-	}
-
-	@Override
-	public void deleteByproductPlantID(long mtCore, long productPlantId) {
-		_vrProductionPlantProdEquipmentLocalService.deleteByproductPlantID(mtCore,
-			productPlantId);
 	}
 
 	@Override

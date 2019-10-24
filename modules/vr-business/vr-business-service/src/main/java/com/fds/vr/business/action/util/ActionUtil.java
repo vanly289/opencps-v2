@@ -309,6 +309,7 @@ public class ActionUtil {
 	}
 
 	public static String buildJoinCondition(String advanceSearchParams) {
+		_log.info("======advanceSearchParams====>>>>>>>>>>>>>>>>>>> " + advanceSearchParams);
 		StringBuilder conditions = new StringBuilder();
 		List<String> joinStatements = new ArrayList<String>();
 		if (Validator.isNotNull(advanceSearchParams)) {

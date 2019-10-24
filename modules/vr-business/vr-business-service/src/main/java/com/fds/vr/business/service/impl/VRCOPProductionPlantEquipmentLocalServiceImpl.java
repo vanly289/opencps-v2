@@ -103,7 +103,7 @@ public class VRCOPProductionPlantEquipmentLocalServiceImpl
 		object.setTrademarkName(mapValues.get("trademarkName"));
 		object.setCommercialName(mapValues.get("commercialName"));
 		object.setModelCode(mapValues.get("modelCode"));
-		object.setDesignSymbolNo(mapValues.get("designSymbolNo"));
+		//object.setDesignSymbolNo(mapValues.get("designSymbolNo"));
 		object.setProductionCountryCode(mapValues.get("productionCountryCode"));
 		object.setEquipmentStatus(mapValues.get("equipmentStatus"));
 		object.setNotes(mapValues.get("notes"));

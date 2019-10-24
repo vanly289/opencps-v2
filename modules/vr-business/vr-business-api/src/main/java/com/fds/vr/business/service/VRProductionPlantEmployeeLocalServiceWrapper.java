@@ -246,15 +246,6 @@ public class VRProductionPlantEmployeeLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
-	@Override
-	public java.util.List<com.fds.vr.business.model.VRProductionPlantEmployee> findByproductPlantID(
-		long mtCore, long productPlantID)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _vrProductionPlantEmployeeLocalService.findByproductPlantID(mtCore,
-			productPlantID);
-	}
-
 	/**
 	* Returns a range of all the vr production plant employees.
 	*
@@ -304,12 +295,6 @@ public class VRProductionPlantEmployeeLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _vrProductionPlantEmployeeLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
-	}
-
-	@Override
-	public void deleteByproductPlantId(long mtCore, long productPlantId) {
-		_vrProductionPlantEmployeeLocalService.deleteByproductPlantId(mtCore,
-			productPlantId);
 	}
 
 	@Override

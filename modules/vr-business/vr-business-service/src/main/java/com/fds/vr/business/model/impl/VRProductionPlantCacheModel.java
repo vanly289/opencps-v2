@@ -66,7 +66,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(81);
+		StringBundler sb = new StringBundler(75);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -138,12 +138,6 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		sb.append(registrationFormId);
 		sb.append(", applicantProfileId=");
 		sb.append(applicantProfileId);
-		sb.append(", latestCOPReportDate=");
-		sb.append(latestCOPReportDate);
-		sb.append(", latestCOPReportResult=");
-		sb.append(latestCOPReportResult);
-		sb.append(", nextCOPReportDate=");
-		sb.append(nextCOPReportDate);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -374,29 +368,6 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		vrProductionPlantImpl.setRegistrationFormId(registrationFormId);
 		vrProductionPlantImpl.setApplicantProfileId(applicantProfileId);
 
-		if (latestCOPReportDate == Long.MIN_VALUE) {
-			vrProductionPlantImpl.setLatestCOPReportDate(null);
-		}
-		else {
-			vrProductionPlantImpl.setLatestCOPReportDate(new Date(
-					latestCOPReportDate));
-		}
-
-		if (latestCOPReportResult == null) {
-			vrProductionPlantImpl.setLatestCOPReportResult(StringPool.BLANK);
-		}
-		else {
-			vrProductionPlantImpl.setLatestCOPReportResult(latestCOPReportResult);
-		}
-
-		if (nextCOPReportDate == Long.MIN_VALUE) {
-			vrProductionPlantImpl.setNextCOPReportDate(null);
-		}
-		else {
-			vrProductionPlantImpl.setNextCOPReportDate(new Date(
-					nextCOPReportDate));
-		}
-
 		if (modifyDate == Long.MIN_VALUE) {
 			vrProductionPlantImpl.setModifyDate(null);
 		}
@@ -457,9 +428,6 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		registrationFormId = objectInput.readLong();
 
 		applicantProfileId = objectInput.readLong();
-		latestCOPReportDate = objectInput.readLong();
-		latestCOPReportResult = objectInput.readUTF();
-		nextCOPReportDate = objectInput.readLong();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -686,16 +654,6 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		objectOutput.writeLong(registrationFormId);
 
 		objectOutput.writeLong(applicantProfileId);
-		objectOutput.writeLong(latestCOPReportDate);
-
-		if (latestCOPReportResult == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(latestCOPReportResult);
-		}
-
-		objectOutput.writeLong(nextCOPReportDate);
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -735,9 +693,6 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 	public long registrationId;
 	public long registrationFormId;
 	public long applicantProfileId;
-	public long latestCOPReportDate;
-	public String latestCOPReportResult;
-	public long nextCOPReportDate;
 	public long modifyDate;
 	public long syncDate;
 }

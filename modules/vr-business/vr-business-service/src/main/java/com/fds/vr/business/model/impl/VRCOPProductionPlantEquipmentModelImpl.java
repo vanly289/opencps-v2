@@ -75,7 +75,6 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 			{ "trademarkName", Types.VARCHAR },
 			{ "commercialName", Types.VARCHAR },
 			{ "modelCode", Types.VARCHAR },
-			{ "designSymbolNo", Types.VARCHAR },
 			{ "productionCountryCode", Types.VARCHAR },
 			{ "equipmentStatus", Types.VARCHAR },
 			{ "expireDate", Types.TIMESTAMP },
@@ -120,7 +119,6 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		TABLE_COLUMNS_MAP.put("trademarkName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commercialName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modelCode", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("designSymbolNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionCountryCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("equipmentStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("expireDate", Types.TIMESTAMP);
@@ -151,7 +149,7 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		TABLE_COLUMNS_MAP.put("productionPlantCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copproductionplantequipment (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,expireDate DATE null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,equipmentSerialNo VARCHAR(75) null,productionYear DATE null,registrationYear DATE null,markupXCG LONG,markupXCGNK LONG,markupSMRM LONG,markupXCH LONG,markupXCN LONG,markupXMY LONG,markupXDD LONG,testingResult INTEGER,description VARCHAR(75) null,inspectionRecordNumber VARCHAR(75) null,inspectionRecordDate DATE null,expiredDate DATE null,expiredStatus INTEGER,stampTestingNo VARCHAR(75) null,dossierId LONG,dossierIdCTN VARCHAR(75) null,dossierNo VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copproductionplantequipment (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,expireDate DATE null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,equipmentSerialNo VARCHAR(75) null,productionYear DATE null,registrationYear DATE null,markupXCG LONG,markupXCGNK LONG,markupSMRM LONG,markupXCH LONG,markupXCN LONG,markupXMY LONG,markupXDD LONG,testingResult INTEGER,description VARCHAR(75) null,inspectionRecordNumber VARCHAR(75) null,inspectionRecordDate DATE null,expiredDate DATE null,expiredStatus INTEGER,stampTestingNo VARCHAR(75) null,dossierId LONG,dossierIdCTN VARCHAR(75) null,dossierNo VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copproductionplantequipment";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopProductionPlantEquipment.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copproductionplantequipment.modifyDate DESC";
@@ -223,7 +221,6 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		attributes.put("trademarkName", getTrademarkName());
 		attributes.put("commercialName", getCommercialName());
 		attributes.put("modelCode", getModelCode());
-		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("productionCountryCode", getProductionCountryCode());
 		attributes.put("equipmentStatus", getEquipmentStatus());
 		attributes.put("expireDate", getExpireDate());
@@ -332,12 +329,6 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 
 		if (modelCode != null) {
 			setModelCode(modelCode);
-		}
-
-		String designSymbolNo = (String)attributes.get("designSymbolNo");
-
-		if (designSymbolNo != null) {
-			setDesignSymbolNo(designSymbolNo);
 		}
 
 		String productionCountryCode = (String)attributes.get(
@@ -704,21 +695,6 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 	@Override
 	public void setModelCode(String modelCode) {
 		_modelCode = modelCode;
-	}
-
-	@Override
-	public String getDesignSymbolNo() {
-		if (_designSymbolNo == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _designSymbolNo;
-		}
-	}
-
-	@Override
-	public void setDesignSymbolNo(String designSymbolNo) {
-		_designSymbolNo = designSymbolNo;
 	}
 
 	@Override
@@ -1096,7 +1072,6 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		vrcopProductionPlantEquipmentImpl.setTrademarkName(getTrademarkName());
 		vrcopProductionPlantEquipmentImpl.setCommercialName(getCommercialName());
 		vrcopProductionPlantEquipmentImpl.setModelCode(getModelCode());
-		vrcopProductionPlantEquipmentImpl.setDesignSymbolNo(getDesignSymbolNo());
 		vrcopProductionPlantEquipmentImpl.setProductionCountryCode(getProductionCountryCode());
 		vrcopProductionPlantEquipmentImpl.setEquipmentStatus(getEquipmentStatus());
 		vrcopProductionPlantEquipmentImpl.setExpireDate(getExpireDate());
@@ -1280,14 +1255,6 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 			vrcopProductionPlantEquipmentCacheModel.modelCode = null;
 		}
 
-		vrcopProductionPlantEquipmentCacheModel.designSymbolNo = getDesignSymbolNo();
-
-		String designSymbolNo = vrcopProductionPlantEquipmentCacheModel.designSymbolNo;
-
-		if ((designSymbolNo != null) && (designSymbolNo.length() == 0)) {
-			vrcopProductionPlantEquipmentCacheModel.designSymbolNo = null;
-		}
-
 		vrcopProductionPlantEquipmentCacheModel.productionCountryCode = getProductionCountryCode();
 
 		String productionCountryCode = vrcopProductionPlantEquipmentCacheModel.productionCountryCode;
@@ -1461,7 +1428,7 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(83);
+		StringBundler sb = new StringBundler(81);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1487,8 +1454,6 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		sb.append(getCommercialName());
 		sb.append(", modelCode=");
 		sb.append(getModelCode());
-		sb.append(", designSymbolNo=");
-		sb.append(getDesignSymbolNo());
 		sb.append(", productionCountryCode=");
 		sb.append(getProductionCountryCode());
 		sb.append(", equipmentStatus=");
@@ -1552,7 +1517,7 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(127);
+		StringBundler sb = new StringBundler(124);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPProductionPlantEquipment");
@@ -1605,10 +1570,6 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 		sb.append(
 			"<column><column-name>modelCode</column-name><column-value><![CDATA[");
 		sb.append(getModelCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>designSymbolNo</column-name><column-value><![CDATA[");
-		sb.append(getDesignSymbolNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>productionCountryCode</column-name><column-value><![CDATA[");
@@ -1749,7 +1710,6 @@ public class VRCOPProductionPlantEquipmentModelImpl extends BaseModelImpl<VRCOPP
 	private String _trademarkName;
 	private String _commercialName;
 	private String _modelCode;
-	private String _designSymbolNo;
 	private String _productionCountryCode;
 	private String _equipmentStatus;
 	private Date _expireDate;

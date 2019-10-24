@@ -239,21 +239,6 @@ public interface VRCOPProductionPlantEquipmentModel extends BaseModel<VRCOPProdu
 	public void setModelCode(String modelCode);
 
 	/**
-	 * Returns the design symbol no of this vrcop production plant equipment.
-	 *
-	 * @return the design symbol no of this vrcop production plant equipment
-	 */
-	@AutoEscape
-	public String getDesignSymbolNo();
-
-	/**
-	 * Sets the design symbol no of this vrcop production plant equipment.
-	 *
-	 * @param designSymbolNo the design symbol no of this vrcop production plant equipment
-	 */
-	public void setDesignSymbolNo(String designSymbolNo);
-
-	/**
 	 * Returns the production country code of this vrcop production plant equipment.
 	 *
 	 * @return the production country code of this vrcop production plant equipment

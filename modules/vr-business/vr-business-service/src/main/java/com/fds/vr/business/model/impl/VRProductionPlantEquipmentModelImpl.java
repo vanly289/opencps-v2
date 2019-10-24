@@ -65,7 +65,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "id", Types.BIGINT },
 			{ "mtCore", Types.BIGINT },
-			{ "productPlantID", Types.BIGINT },
 			{ "sequenceNo", Types.BIGINT },
 			{ "equipmentCode", Types.VARCHAR },
 			{ "equipmentName", Types.VARCHAR },
@@ -74,7 +73,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 			{ "trademarkName", Types.VARCHAR },
 			{ "commercialName", Types.VARCHAR },
 			{ "modelCode", Types.VARCHAR },
-			{ "designSymbolNo", Types.VARCHAR },
 			{ "productionCountryCode", Types.VARCHAR },
 			{ "equipmentStatus", Types.VARCHAR },
 			{ "expireDate", Types.TIMESTAMP },
@@ -104,7 +102,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	static {
 		TABLE_COLUMNS_MAP.put("id", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mtCore", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("productPlantID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("sequenceNo", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("equipmentCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("equipmentName", Types.VARCHAR);
@@ -113,7 +110,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		TABLE_COLUMNS_MAP.put("trademarkName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commercialName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modelCode", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("designSymbolNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionCountryCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("equipmentStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("expireDate", Types.TIMESTAMP);
@@ -139,7 +135,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		TABLE_COLUMNS_MAP.put("productionPlantCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productionplantequipment (id LONG not null primary key,mtCore LONG,productPlantID LONG,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,expireDate DATE null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,equipmentSerialNo VARCHAR(75) null,productionYear DATE null,registrationYear DATE null,markupXCG LONG,markupXCGNK LONG,markupSMRM LONG,markupXCH LONG,markupXCN LONG,markupXMY LONG,markupXDD LONG,testingResult INTEGER,description VARCHAR(75) null,inspectionRecordNumber VARCHAR(75) null,inspectionRecordDate DATE null,stampTestingNo VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productionplantequipment (id LONG not null primary key,mtCore LONG,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,expireDate DATE null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,equipmentSerialNo VARCHAR(75) null,productionYear DATE null,registrationYear DATE null,markupXCG LONG,markupXCGNK LONG,markupSMRM LONG,markupXCH LONG,markupXCN LONG,markupXMY LONG,markupXDD LONG,testingResult INTEGER,description VARCHAR(75) null,inspectionRecordNumber VARCHAR(75) null,inspectionRecordDate DATE null,stampTestingNo VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productionplantequipment";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlantEquipment.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplantequipment.modifyDate DESC";
@@ -152,13 +148,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.fds.vr.business.model.VRProductionPlantEquipment"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRProductionPlantEquipment"),
-			true);
-	public static final long MTCORE_COLUMN_BITMASK = 1L;
-	public static final long PRODUCTPLANTID_COLUMN_BITMASK = 2L;
-	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 4L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 8L;
+	public static final boolean COLUMN_BITMASK_ENABLED = false;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductionPlantEquipment"));
 
@@ -201,7 +191,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
-		attributes.put("productPlantID", getProductPlantID());
 		attributes.put("sequenceNo", getSequenceNo());
 		attributes.put("equipmentCode", getEquipmentCode());
 		attributes.put("equipmentName", getEquipmentName());
@@ -210,7 +199,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		attributes.put("trademarkName", getTrademarkName());
 		attributes.put("commercialName", getCommercialName());
 		attributes.put("modelCode", getModelCode());
-		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("productionCountryCode", getProductionCountryCode());
 		attributes.put("equipmentStatus", getEquipmentStatus());
 		attributes.put("expireDate", getExpireDate());
@@ -253,12 +241,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 		if (mtCore != null) {
 			setMtCore(mtCore);
-		}
-
-		Long productPlantID = (Long)attributes.get("productPlantID");
-
-		if (productPlantID != null) {
-			setProductPlantID(productPlantID);
 		}
 
 		Long sequenceNo = (Long)attributes.get("sequenceNo");
@@ -307,12 +289,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 		if (modelCode != null) {
 			setModelCode(modelCode);
-		}
-
-		String designSymbolNo = (String)attributes.get("designSymbolNo");
-
-		if (designSymbolNo != null) {
-			setDesignSymbolNo(designSymbolNo);
 		}
 
 		String productionCountryCode = (String)attributes.get(
@@ -474,41 +450,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public void setMtCore(long mtCore) {
-		_columnBitmask |= MTCORE_COLUMN_BITMASK;
-
-		if (!_setOriginalMtCore) {
-			_setOriginalMtCore = true;
-
-			_originalMtCore = _mtCore;
-		}
-
 		_mtCore = mtCore;
-	}
-
-	public long getOriginalMtCore() {
-		return _originalMtCore;
-	}
-
-	@Override
-	public long getProductPlantID() {
-		return _productPlantID;
-	}
-
-	@Override
-	public void setProductPlantID(long productPlantID) {
-		_columnBitmask |= PRODUCTPLANTID_COLUMN_BITMASK;
-
-		if (!_setOriginalProductPlantID) {
-			_setOriginalProductPlantID = true;
-
-			_originalProductPlantID = _productPlantID;
-		}
-
-		_productPlantID = productPlantID;
-	}
-
-	public long getOriginalProductPlantID() {
-		return _originalProductPlantID;
 	}
 
 	@Override
@@ -627,21 +569,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	}
 
 	@Override
-	public String getDesignSymbolNo() {
-		if (_designSymbolNo == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _designSymbolNo;
-		}
-	}
-
-	@Override
-	public void setDesignSymbolNo(String designSymbolNo) {
-		_designSymbolNo = designSymbolNo;
-	}
-
-	@Override
 	public String getProductionCountryCode() {
 		if (_productionCountryCode == null) {
 			return StringPool.BLANK;
@@ -703,8 +630,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public void setModifyDate(Date modifyDate) {
-		_columnBitmask = -1L;
-
 		_modifyDate = modifyDate;
 	}
 
@@ -919,10 +844,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		_productionPlantCode = productionPlantCode;
 	}
 
-	public String getOriginalProductionPlantCode() {
-		return GetterUtil.getString(_originalProductionPlantCode);
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -956,7 +877,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 		vrProductionPlantEquipmentImpl.setId(getId());
 		vrProductionPlantEquipmentImpl.setMtCore(getMtCore());
-		vrProductionPlantEquipmentImpl.setProductPlantID(getProductPlantID());
 		vrProductionPlantEquipmentImpl.setSequenceNo(getSequenceNo());
 		vrProductionPlantEquipmentImpl.setEquipmentCode(getEquipmentCode());
 		vrProductionPlantEquipmentImpl.setEquipmentName(getEquipmentName());
@@ -965,7 +885,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		vrProductionPlantEquipmentImpl.setTrademarkName(getTrademarkName());
 		vrProductionPlantEquipmentImpl.setCommercialName(getCommercialName());
 		vrProductionPlantEquipmentImpl.setModelCode(getModelCode());
-		vrProductionPlantEquipmentImpl.setDesignSymbolNo(getDesignSymbolNo());
 		vrProductionPlantEquipmentImpl.setProductionCountryCode(getProductionCountryCode());
 		vrProductionPlantEquipmentImpl.setEquipmentStatus(getEquipmentStatus());
 		vrProductionPlantEquipmentImpl.setExpireDate(getExpireDate());
@@ -1060,8 +979,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 		vrProductionPlantEquipmentModelImpl._setOriginalProductPlantID = false;
 
-		vrProductionPlantEquipmentModelImpl._originalProductionPlantCode = vrProductionPlantEquipmentModelImpl._productionPlantCode;
-
 		vrProductionPlantEquipmentModelImpl._columnBitmask = 0;
 	}
 
@@ -1073,8 +990,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		vrProductionPlantEquipmentCacheModel.id = getId();
 
 		vrProductionPlantEquipmentCacheModel.mtCore = getMtCore();
-
-		vrProductionPlantEquipmentCacheModel.productPlantID = getProductPlantID();
 
 		vrProductionPlantEquipmentCacheModel.sequenceNo = getSequenceNo();
 
@@ -1132,14 +1047,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 		if ((modelCode != null) && (modelCode.length() == 0)) {
 			vrProductionPlantEquipmentCacheModel.modelCode = null;
-		}
-
-		vrProductionPlantEquipmentCacheModel.designSymbolNo = getDesignSymbolNo();
-
-		String designSymbolNo = vrProductionPlantEquipmentCacheModel.designSymbolNo;
-
-		if ((designSymbolNo != null) && (designSymbolNo.length() == 0)) {
-			vrProductionPlantEquipmentCacheModel.designSymbolNo = null;
 		}
 
 		vrProductionPlantEquipmentCacheModel.productionCountryCode = getProductionCountryCode();
@@ -1286,14 +1193,12 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(71);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{id=");
 		sb.append(getId());
 		sb.append(", mtCore=");
 		sb.append(getMtCore());
-		sb.append(", productPlantID=");
-		sb.append(getProductPlantID());
 		sb.append(", sequenceNo=");
 		sb.append(getSequenceNo());
 		sb.append(", equipmentCode=");
@@ -1310,8 +1215,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		sb.append(getCommercialName());
 		sb.append(", modelCode=");
 		sb.append(getModelCode());
-		sb.append(", designSymbolNo=");
-		sb.append(getDesignSymbolNo());
 		sb.append(", productionCountryCode=");
 		sb.append(getProductionCountryCode());
 		sb.append(", equipmentStatus=");
@@ -1365,7 +1268,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(109);
+		StringBundler sb = new StringBundler(103);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductionPlantEquipment");
@@ -1378,10 +1281,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		sb.append(
 			"<column><column-name>mtCore</column-name><column-value><![CDATA[");
 		sb.append(getMtCore());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>productPlantID</column-name><column-value><![CDATA[");
-		sb.append(getProductPlantID());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>sequenceNo</column-name><column-value><![CDATA[");
@@ -1414,10 +1313,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		sb.append(
 			"<column><column-name>modelCode</column-name><column-value><![CDATA[");
 		sb.append(getModelCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>designSymbolNo</column-name><column-value><![CDATA[");
-		sb.append(getDesignSymbolNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>productionCountryCode</column-name><column-value><![CDATA[");
@@ -1523,11 +1418,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		};
 	private long _id;
 	private long _mtCore;
-	private long _originalMtCore;
-	private boolean _setOriginalMtCore;
-	private long _productPlantID;
-	private long _originalProductPlantID;
-	private boolean _setOriginalProductPlantID;
 	private long _sequenceNo;
 	private String _equipmentCode;
 	private String _equipmentName;
@@ -1536,7 +1426,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	private String _trademarkName;
 	private String _commercialName;
 	private String _modelCode;
-	private String _designSymbolNo;
 	private String _productionCountryCode;
 	private String _equipmentStatus;
 	private Date _expireDate;
@@ -1560,7 +1449,6 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	private String _stampTestingNo;
 	private long _productionPlantId;
 	private String _productionPlantCode;
-	private String _originalProductionPlantCode;
 	private long _columnBitmask;
 	private VRProductionPlantEquipment _escapedModel;
 }

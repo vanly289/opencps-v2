@@ -60,7 +60,6 @@ public class VRProductTypeWrapper implements VRProductType,
 
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
-		attributes.put("productPlantID", getProductPlantID());
 		attributes.put("sequenceNo", getSequenceNo());
 		attributes.put("vehicleClass", getVehicleClass());
 		attributes.put("vehicleTypeCode", getVehicleTypeCode());
@@ -94,12 +93,6 @@ public class VRProductTypeWrapper implements VRProductType,
 
 		if (mtCore != null) {
 			setMtCore(mtCore);
-		}
-
-		Long productPlantID = (Long)attributes.get("productPlantID");
-
-		if (productPlantID != null) {
-			setProductPlantID(productPlantID);
 		}
 
 		Long sequenceNo = (Long)attributes.get("sequenceNo");
@@ -423,16 +416,6 @@ public class VRProductTypeWrapper implements VRProductType,
 	}
 
 	/**
-	* Returns the product plant ID of this vr product type.
-	*
-	* @return the product plant ID of this vr product type
-	*/
-	@Override
-	public long getProductPlantID() {
-		return _vrProductType.getProductPlantID();
-	}
-
-	/**
 	* Returns the production plant ID of this vr product type.
 	*
 	* @return the production plant ID of this vr product type
@@ -578,16 +561,6 @@ public class VRProductTypeWrapper implements VRProductType,
 	public void setProductClassificationDescription(
 		java.lang.String productClassificationDescription) {
 		_vrProductType.setProductClassificationDescription(productClassificationDescription);
-	}
-
-	/**
-	* Sets the product plant ID of this vr product type.
-	*
-	* @param productPlantID the product plant ID of this vr product type
-	*/
-	@Override
-	public void setProductPlantID(long productPlantID) {
-		_vrProductType.setProductPlantID(productPlantID);
 	}
 
 	/**

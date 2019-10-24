@@ -594,49 +594,6 @@ public interface VRProductionPlantModel extends BaseModel<VRProductionPlant> {
 	public void setApplicantProfileId(long applicantProfileId);
 
 	/**
-	 * Returns the latest cop report date of this vr production plant.
-	 *
-	 * @return the latest cop report date of this vr production plant
-	 */
-	public Date getLatestCOPReportDate();
-
-	/**
-	 * Sets the latest cop report date of this vr production plant.
-	 *
-	 * @param latestCOPReportDate the latest cop report date of this vr production plant
-	 */
-	public void setLatestCOPReportDate(Date latestCOPReportDate);
-
-	/**
-	 * Returns the latest cop report result of this vr production plant.
-	 *
-	 * @return the latest cop report result of this vr production plant
-	 */
-	@AutoEscape
-	public String getLatestCOPReportResult();
-
-	/**
-	 * Sets the latest cop report result of this vr production plant.
-	 *
-	 * @param latestCOPReportResult the latest cop report result of this vr production plant
-	 */
-	public void setLatestCOPReportResult(String latestCOPReportResult);
-
-	/**
-	 * Returns the next cop report date of this vr production plant.
-	 *
-	 * @return the next cop report date of this vr production plant
-	 */
-	public Date getNextCOPReportDate();
-
-	/**
-	 * Sets the next cop report date of this vr production plant.
-	 *
-	 * @param nextCOPReportDate the next cop report date of this vr production plant
-	 */
-	public void setNextCOPReportDate(Date nextCOPReportDate);
-
-	/**
 	 * Returns the modify date of this vr production plant.
 	 *
 	 * @return the modify date of this vr production plant

@@ -91,20 +91,6 @@ public interface VRProductionPlantEmployeeModel extends BaseModel<VRProductionPl
 	public void setMtCore(long mtCore);
 
 	/**
-	 * Returns the product plant ID of this vr production plant employee.
-	 *
-	 * @return the product plant ID of this vr production plant employee
-	 */
-	public long getProductPlantID();
-
-	/**
-	 * Sets the product plant ID of this vr production plant employee.
-	 *
-	 * @param productPlantID the product plant ID of this vr production plant employee
-	 */
-	public void setProductPlantID(long productPlantID);
-
-	/**
 	 * Returns the sequence no of this vr production plant employee.
 	 *
 	 * @return the sequence no of this vr production plant employee

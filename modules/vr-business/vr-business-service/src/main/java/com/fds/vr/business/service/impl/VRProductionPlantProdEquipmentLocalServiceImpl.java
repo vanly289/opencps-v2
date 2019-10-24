@@ -60,7 +60,7 @@ public class VRProductionPlantProdEquipmentLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRProductionPlantProdEquipmentLocalServiceUtil} to access the vr production plant prod equipment local service.
 	 */
-	
+	/*
 	public List<VRProductionPlantProdEquipment> findByproductPlantID(long mtCore, long productPlantID) throws PortalException, SystemException {
 		try {
 			return vrProductionPlantProdEquipmentPersistence.findByproductPlantID(mtCore, productPlantID);
@@ -75,7 +75,7 @@ public class VRProductionPlantProdEquipmentLocalServiceImpl
 
 		vrProductionPlantProdEquipmentPersistence.removeByproductPlantID(mtCore, productPlantId);
 	}
-
+	*/
 	public VRProductionPlantProdEquipment updateProductionPlantProdEquipment(Map<String, String> mapValues, int mtCore) {
 		
 		Date now = new Date();
@@ -90,7 +90,7 @@ public class VRProductionPlantProdEquipmentLocalServiceImpl
 
 		// Add other fields
 		object.setMtCore(mtCore);
-		object.setProductPlantID(Long.valueOf(mapValues.get("productPlantId")));
+		//object.setProductPlantID(Long.valueOf(mapValues.get("productPlantId")));
 		object.setSequenceNo(Long.valueOf(mapValues.get("sequenceNo")));
 		object.setEquipmentCode(mapValues.get("equipmentCode"));
 		object.setEquipmentName(mapValues.get("equipmentName"));
@@ -99,7 +99,7 @@ public class VRProductionPlantProdEquipmentLocalServiceImpl
 		object.setTrademarkName(mapValues.get("trademarkName"));
 		object.setCommercialName(mapValues.get("commercialName"));
 		object.setModelCode(mapValues.get("modelCode"));
-		object.setDesignSymbolNo(mapValues.get("designSymbolNo"));
+		//object.setDesignSymbolNo(mapValues.get("designSymbolNo"));
 		object.setProductionCountryCode(mapValues.get("productionCountryCode"));
 		object.setEquipmentStatus(mapValues.get("equipmentStatus"));
 		object.setNotes(mapValues.get("notes"));

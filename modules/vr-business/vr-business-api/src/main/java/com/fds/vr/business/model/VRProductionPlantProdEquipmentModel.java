@@ -91,20 +91,6 @@ public interface VRProductionPlantProdEquipmentModel extends BaseModel<VRProduct
 	public void setMtCore(long mtCore);
 
 	/**
-	 * Returns the product plant ID of this vr production plant prod equipment.
-	 *
-	 * @return the product plant ID of this vr production plant prod equipment
-	 */
-	public long getProductPlantID();
-
-	/**
-	 * Sets the product plant ID of this vr production plant prod equipment.
-	 *
-	 * @param productPlantID the product plant ID of this vr production plant prod equipment
-	 */
-	public void setProductPlantID(long productPlantID);
-
-	/**
 	 * Returns the sequence no of this vr production plant prod equipment.
 	 *
 	 * @return the sequence no of this vr production plant prod equipment
@@ -222,21 +208,6 @@ public interface VRProductionPlantProdEquipmentModel extends BaseModel<VRProduct
 	 * @param modelCode the model code of this vr production plant prod equipment
 	 */
 	public void setModelCode(String modelCode);
-
-	/**
-	 * Returns the design symbol no of this vr production plant prod equipment.
-	 *
-	 * @return the design symbol no of this vr production plant prod equipment
-	 */
-	@AutoEscape
-	public String getDesignSymbolNo();
-
-	/**
-	 * Sets the design symbol no of this vr production plant prod equipment.
-	 *
-	 * @param designSymbolNo the design symbol no of this vr production plant prod equipment
-	 */
-	public void setDesignSymbolNo(String designSymbolNo);
 
 	/**
 	 * Returns the production country code of this vr production plant prod equipment.

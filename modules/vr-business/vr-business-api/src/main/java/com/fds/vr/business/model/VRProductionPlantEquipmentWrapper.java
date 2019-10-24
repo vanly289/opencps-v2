@@ -62,7 +62,6 @@ public class VRProductionPlantEquipmentWrapper
 
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
-		attributes.put("productPlantID", getProductPlantID());
 		attributes.put("sequenceNo", getSequenceNo());
 		attributes.put("equipmentCode", getEquipmentCode());
 		attributes.put("equipmentName", getEquipmentName());
@@ -71,7 +70,6 @@ public class VRProductionPlantEquipmentWrapper
 		attributes.put("trademarkName", getTrademarkName());
 		attributes.put("commercialName", getCommercialName());
 		attributes.put("modelCode", getModelCode());
-		attributes.put("designSymbolNo", getDesignSymbolNo());
 		attributes.put("productionCountryCode", getProductionCountryCode());
 		attributes.put("equipmentStatus", getEquipmentStatus());
 		attributes.put("expireDate", getExpireDate());
@@ -111,12 +109,6 @@ public class VRProductionPlantEquipmentWrapper
 
 		if (mtCore != null) {
 			setMtCore(mtCore);
-		}
-
-		Long productPlantID = (Long)attributes.get("productPlantID");
-
-		if (productPlantID != null) {
-			setProductPlantID(productPlantID);
 		}
 
 		Long sequenceNo = (Long)attributes.get("sequenceNo");
@@ -165,12 +157,6 @@ public class VRProductionPlantEquipmentWrapper
 
 		if (modelCode != null) {
 			setModelCode(modelCode);
-		}
-
-		String designSymbolNo = (String)attributes.get("designSymbolNo");
-
-		if (designSymbolNo != null) {
-			setDesignSymbolNo(designSymbolNo);
 		}
 
 		String productionCountryCode = (String)attributes.get(
@@ -398,16 +384,6 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public java.lang.String getDescription() {
 		return _vrProductionPlantEquipment.getDescription();
-	}
-
-	/**
-	* Returns the design symbol no of this vr production plant equipment.
-	*
-	* @return the design symbol no of this vr production plant equipment
-	*/
-	@Override
-	public java.lang.String getDesignSymbolNo() {
-		return _vrProductionPlantEquipment.getDesignSymbolNo();
 	}
 
 	/**
@@ -711,16 +687,6 @@ public class VRProductionPlantEquipmentWrapper
 	}
 
 	/**
-	* Returns the product plant ID of this vr production plant equipment.
-	*
-	* @return the product plant ID of this vr production plant equipment
-	*/
-	@Override
-	public long getProductPlantID() {
-		return _vrProductionPlantEquipment.getProductPlantID();
-	}
-
-	/**
 	* Returns the production plant ID of this vr production plant equipment.
 	*
 	* @return the production plant ID of this vr production plant equipment
@@ -768,16 +734,6 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public void setDescription(java.lang.String description) {
 		_vrProductionPlantEquipment.setDescription(description);
-	}
-
-	/**
-	* Sets the design symbol no of this vr production plant equipment.
-	*
-	* @param designSymbolNo the design symbol no of this vr production plant equipment
-	*/
-	@Override
-	public void setDesignSymbolNo(java.lang.String designSymbolNo) {
-		_vrProductionPlantEquipment.setDesignSymbolNo(designSymbolNo);
 	}
 
 	/**
@@ -1015,16 +971,6 @@ public class VRProductionPlantEquipmentWrapper
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_vrProductionPlantEquipment.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the product plant ID of this vr production plant equipment.
-	*
-	* @param productPlantID the product plant ID of this vr production plant equipment
-	*/
-	@Override
-	public void setProductPlantID(long productPlantID) {
-		_vrProductionPlantEquipment.setProductPlantID(productPlantID);
 	}
 
 	/**
