@@ -433,10 +433,6 @@ public class VRProductionPlantEmployeeUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static VRProductionPlantEmployeePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}
