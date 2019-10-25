@@ -118,6 +118,9 @@ public interface VRProductionPlantProdEquipmentLocalService
 	public VRProductionPlantProdEquipment getVRProductionPlantProdEquipment(
 		long id) throws PortalException;
 
+	public VRProductionPlantProdEquipment updatePlantProdEquipment(
+		VRProductionPlantProdEquipment object);
+
 	public VRProductionPlantProdEquipment updateProductionPlantProdEquipment(
 		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 

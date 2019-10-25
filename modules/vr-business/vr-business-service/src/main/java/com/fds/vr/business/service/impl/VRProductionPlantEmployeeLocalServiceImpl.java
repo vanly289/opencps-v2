@@ -127,6 +127,18 @@ public class VRProductionPlantEmployeeLocalServiceImpl
 		}
 		return result;
 	}
+	
+	public VRProductionPlantEmployee updateProductionPlantEmployee(VRProductionPlantEmployee object) {
+
+		if (object.getId() <= 0) {
+
+			long vrProductionPlantEmployeeId = counterLocalService.increment(VRProductionPlantEmployee.class.getName());
+
+			object = vrProductionPlantEmployeePersistence.create(vrProductionPlantEmployeeId);
+		}
+
+		return vrProductionPlantEmployeePersistence.update(object);
+	}
 
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantEmployeeLocalServiceImpl.class);
 }

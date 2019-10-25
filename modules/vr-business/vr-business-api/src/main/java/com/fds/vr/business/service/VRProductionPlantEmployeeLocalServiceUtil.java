@@ -107,6 +107,11 @@ public class VRProductionPlantEmployeeLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRProductionPlantEmployee updateProductionPlantEmployee(
+		com.fds.vr.business.model.VRProductionPlantEmployee object) {
+		return getService().updateProductionPlantEmployee(object);
+	}
+
+	public static com.fds.vr.business.model.VRProductionPlantEmployee updateProductionPlantEmployee(
 		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
 		return getService().updateProductionPlantEmployee(mapValues, mtCore);
 	}

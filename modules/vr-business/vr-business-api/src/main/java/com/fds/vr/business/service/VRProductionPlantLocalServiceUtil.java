@@ -112,6 +112,11 @@ public class VRProductionPlantLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRProductionPlant updateProductionPlant(
+		com.fds.vr.business.model.VRProductionPlant object) {
+		return getService().updateProductionPlant(object);
+	}
+
+	public static com.fds.vr.business.model.VRProductionPlant updateProductionPlant(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
 		return getService().updateProductionPlant(mapValues);
 	}
