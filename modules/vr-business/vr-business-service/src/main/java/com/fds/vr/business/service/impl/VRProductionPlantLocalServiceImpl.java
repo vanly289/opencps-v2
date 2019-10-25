@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRProductionPlant;
+import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.service.base.VRProductionPlantLocalServiceBaseImpl;
 
 import aQute.bnd.annotation.ProviderType;
@@ -189,6 +190,18 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 	public long counData(String sql) throws SystemException {
 
 		return vrProductionPlantFinder.countData(sql);
+	}
+	
+	public VRProductionPlant updateProductionPlant(VRProductionPlant object) {
+
+		if (object.getId() <= 0) {
+
+			long id = counterLocalService.increment(VRProductionPlant.class.getName());
+
+			object = vrProductionPlantPersistence.create(id);
+		}
+
+		return vrProductionPlantPersistence.update(object);
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantLocalServiceImpl.class);

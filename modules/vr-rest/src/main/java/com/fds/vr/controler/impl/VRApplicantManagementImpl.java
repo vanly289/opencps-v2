@@ -2,9 +2,18 @@ package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRApplicantProfileAction;
 import com.fds.vr.business.action.impl.VRApplicantProfileActionImpl;
+import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRProductionPlantEmployee;
+import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEmployeeImpl;
+import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
+import com.fds.vr.business.service.VRProductionPlantEmployeeLocalServiceUtil;
 import com.fds.vr.controler.VRApplicantManagement;
+import com.fds.vr.model.VRApplicantProfileApiModel;
 import com.fds.vr.model.VRApplicantProfileBeanParam;
+import com.fds.vr.model.VRProductionPlantEmployeeApiModel;
 import com.fds.vr.util.VRRestUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -60,6 +69,35 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 			_log.error(e);
 			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrappicantprofile")).build();
 		}
+	}
+	
+	@Override
+	public Response updateVRApplicantProfile(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRApplicantProfileApiModel model) {
+
+		_log.info("=============>>>> model:" + model.getId());
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		VRApplicantProfile targetModel = new VRApplicantProfileImpl();
+		try {
+			targetModel = VRApplicantProfileLocalServiceUtil.getVRApplicantProfile(model.getId());
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+		VRApplicantProfile object = (VRApplicantProfile) VRRestUtil.mappingModel(model,
+				VRProductionPlantEmployeeApiModel.class, targetModel, VRApplicantProfileImpl.class);
+
+		return Response.status(200).entity(result.toString()).build();
+	}
+
+	@Override
+	public Response createVRApplicantProfile(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRApplicantProfileApiModel model) {
+
+		return updateVRApplicantProfile(request, header, company, locale, user, serviceContext, model);
 	}
 
 }

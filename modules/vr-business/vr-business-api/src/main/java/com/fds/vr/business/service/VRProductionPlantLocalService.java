@@ -119,6 +119,8 @@ public interface VRProductionPlantLocalService extends BaseLocalService,
 	public VRProductionPlant getVRProductionPlant(long id)
 		throws PortalException;
 
+	public VRProductionPlant updateProductionPlant(VRProductionPlant object);
+
 	public VRProductionPlant updateProductionPlant(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues);
 
