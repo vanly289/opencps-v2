@@ -25,6 +25,13 @@ import javax.ws.rs.core.Response;
 public interface VRApplicantManagement {
 
 	@GET
+	@Path("/applicant/profile/detail")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findApplicantProfileDetail(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
+			@BeanParam VRApplicantProfileBeanParam query);
+	
+	@GET
 	@Path("/applicant/profile/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findApplicantProfile(@Context HttpServletRequest request, @Context HttpHeaders header,
