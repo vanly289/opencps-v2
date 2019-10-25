@@ -48,10 +48,13 @@ public class SQLQueryInstance {
 
 		String sqlStatemanent = sqlStatementPattern;
 
-		if (Validator.isNotNull(joinStatements)) {
+		if (Validator.isNotNull(joinStatements) && joinStatements.contains("JOIN")) {
 			sqlStatemanent = sqlStatemanent.replace("[$STATEMENT_JOIN$]", joinStatements);
 		} else {
 			sqlStatemanent = sqlStatemanent.replace("[$STATEMENT_JOIN$]", StringPool.BLANK);
+			if(Validator.isNotNull(joinStatements)) {
+				conditions.append(joinStatements);
+			}
 		}
 		
 		if (conditions != null && conditions.length() > 0) {

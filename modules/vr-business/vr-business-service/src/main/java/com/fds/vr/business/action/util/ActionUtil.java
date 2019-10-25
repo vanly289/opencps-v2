@@ -309,7 +309,8 @@ public class ActionUtil {
 	}
 
 	public static String buildJoinCondition(String advanceSearchParams) {
-		_log.info("======advanceSearchParams====>>>>>>>>>>>>>>>>>>> " + advanceSearchParams);
+		// _log.info("======advanceSearchParams====>>>>>>>>>>>>>>>>>>> " +
+		// advanceSearchParams);
 		StringBuilder conditions = new StringBuilder();
 		List<String> joinStatements = new ArrayList<String>();
 		if (Validator.isNotNull(advanceSearchParams)) {
@@ -327,9 +328,11 @@ public class ActionUtil {
 							String tableField = vrCondition.getFilterTableField();
 
 							String joinStatement = vrCondition.getSpecificationGroup();
-
+							_log.info("===>>> specificationcode|operator|value|specificationgroup|tableName|tableField "
+									+ specificationcode + "|" + "|" + operator + "|" + value + "|" + joinStatement + "|"
+									+ tableName + "|" + tableField);
 							if (Validator.isNull(operator) || Validator.isNull(tableField)
-									|| Validator.isNull(tableName) || Validator.isNull(joinStatement)) {
+									|| Validator.isNull(tableName)) {
 								continue;
 							}
 
@@ -345,6 +348,7 @@ public class ActionUtil {
 								joinStatements.add(joinStatement);
 							}
 						} catch (Exception e) {
+							_log.info(e.getMessage());
 							continue;
 						}
 					}

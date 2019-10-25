@@ -1,6 +1,5 @@
 package com.fds.vr.controler;
 
-import com.fds.vr.model.VRCOPReportRepositoryAdvanceBeanParam;
 import com.fds.vr.model.VRCOPReportRepositoryBeanParam;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -110,4 +109,5 @@ public interface VRCOPManagement {
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@DefaultValue(" ")@QueryParam("mtcore") long mtCore,
 			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
+	
 }

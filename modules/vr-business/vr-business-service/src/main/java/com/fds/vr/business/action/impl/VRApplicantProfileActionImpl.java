@@ -3,11 +3,15 @@ package com.fds.vr.business.action.impl;
 import com.fds.vr.business.action.VRApplicantProfileAction;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryInstance;
+import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
+import com.fds.vr.business.model.impl.VRApplicantProfileModelImpl;
 import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
@@ -20,6 +24,50 @@ import java.util.LinkedHashMap;
  *
  */
 public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
+	private Log _log = LogFactoryUtil.getLog(VRApplicantProfileActionImpl.class);
+
+	@Override
+	public JSONObject findVRApplicantProfileDetail(User user, ServiceContext serviceContext,
+			LinkedHashMap<String, Object> params) {
+		Long id = null;
+		Long mtCore = null;
+		String applicantCode = StringPool.BLANK;
+		if (params != null) {
+			if (params.containsKey("applicantcode") && params.containsKey("mtcore")) {
+				applicantCode = (String) params.get("applicantcode");
+				mtCore = (Long) params.get("mtcore");
+				if (Validator.isNotNull(applicantCode) && (mtCore != null)) {
+					try {
+						VRApplicantProfile applicantProfile = VRApplicantProfileLocalServiceUtil
+								.findByMT_APP_CODE(mtCore, applicantCode);
+						if (applicantProfile != null) {
+							return ActionUtil.object2Json(applicantProfile, VRApplicantProfileModelImpl.class,
+									StringPool.BLANK);
+						}
+
+						return null;
+
+					} catch (Exception e) {
+						_log.error(e);
+						return null;
+					}
+				}
+			}
+
+			if (params.containsKey("id")) {
+				try {
+					id = (Long) params.get("id");
+					VRApplicantProfile applicantProfile = VRApplicantProfileLocalServiceUtil.getVRApplicantProfile(id);
+					return ActionUtil.object2Json(applicantProfile, VRApplicantProfileModelImpl.class,
+							StringPool.BLANK);
+				} catch (Exception e) {
+					_log.error(e);
+					return null;
+				}
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public JSONObject findVRApplicantProfile(User user, ServiceContext serviceContext,
