@@ -4,11 +4,13 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 /**
@@ -58,6 +60,48 @@ public class VRRestUtil {
 
 	public static Object mappingModel(Object sourceModel, Class<?> sourceClass, Object targetModel,
 			Class<?> targetClass) {
+		LinkedHashMap<String, Class<?>> TABLE_COLUMNS_DATA_MAP = null;
+		try {
+			Field tableColumnsDataMapField = sourceClass.getField("TABLE_COLUMNS_DATA_MAP");
+
+			TABLE_COLUMNS_DATA_MAP = (LinkedHashMap<String, Class<?>>) tableColumnsDataMapField.get(null);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+
+		if (TABLE_COLUMNS_DATA_MAP != null && !TABLE_COLUMNS_DATA_MAP.isEmpty()) {
+			Method[] methods = sourceClass.getDeclaredMethods();
+			if (methods != null && methods.length > 0) {
+
+				for (int m = 0; m < methods.length; m++) {
+					Method method = methods[m];
+					String name = method.getName();
+					if (name.startsWith("get")) {
+						String setMethodName = name.replaceAll("get", "set");
+						String fileName = name.replaceFirst("get", StringPool.BLANK).toLowerCase();
+						Class<?> dataType = TABLE_COLUMNS_DATA_MAP.get(fileName);
+
+						try {
+							Method setMethod = targetClass.getMethod(setMethodName, dataType);
+							Object value = method.invoke(sourceModel);
+							_log.info("==============>>>>> value " + value + "|" + setMethodName);
+							if (setMethod != null) {
+								if (dataType.getName().equals(Date.class.getName())) {
+									setMethod.invoke(targetModel, new Date());
+								} else {
+									setMethod.invoke(targetModel, value);
+								}
+							}
+
+						} catch (Exception e) {
+							continue;
+						}
+					}
+
+				}
+			}
+		}
+
 		return targetModel;
 	}
 }
