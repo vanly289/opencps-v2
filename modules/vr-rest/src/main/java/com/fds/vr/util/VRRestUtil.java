@@ -84,6 +84,7 @@ public class VRRestUtil {
 						try {
 							Method setMethod = targetClass.getMethod(setMethodName, dataType);
 							Object value = method.invoke(sourceModel);
+							_log.info("==============>>>>> value " + value + "|" + setMethodName);
 							if (setMethod != null) {
 								if (dataType.getName().equals(Date.class.getName())) {
 									setMethod.invoke(targetModel, new Date());
