@@ -150,7 +150,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	public Response createVRProductionPlant(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantApiModel model) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
-		_log.info("=============>>>> model:" + model.getMappingTEN_CTY());
+		_log.info("=============>>>> model:" + model.getMappingNote());
 		return Response.status(200).entity(result.toString()).build();
 	}
 }
