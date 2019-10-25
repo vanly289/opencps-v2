@@ -55,4 +55,9 @@ public class VRRestUtil {
 		}
 		return error;
 	}
+
+	public static Object mappingModel(Object sourceModel, Class<?> sourceClass, Object targetModel,
+			Class<?> targetClass) {
+		return targetModel;
+	}
 }

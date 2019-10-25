@@ -2,6 +2,9 @@ package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRProductionPlantAction;
 import com.fds.vr.business.action.impl.VRProductionPlantActionImpl;
+import com.fds.vr.business.model.VRProductionPlant;
+import com.fds.vr.business.model.impl.VRProductionPlantImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantModelImpl;
 import com.fds.vr.business.service.VRProductTypeLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionClassificationLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantEmployeeLocalServiceUtil;
@@ -150,6 +153,9 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	public Response createVRProductionPlant(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantApiModel model) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
+		VRProductionPlant targetModel = new VRProductionPlantImpl();
+		Object object = VRRestUtil.mappingModel(model, VRProductionPlantApiModel.class, targetModel,
+				VRProductionPlantModelImpl.class);
 		_log.info("=============>>>> model:" + model.getMappingNote());
 		return Response.status(200).entity(result.toString()).build();
 	}
