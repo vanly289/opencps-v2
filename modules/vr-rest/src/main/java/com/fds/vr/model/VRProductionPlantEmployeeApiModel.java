@@ -15,40 +15,48 @@ public class VRProductionPlantEmployeeApiModel {
 		TABLE_COLUMNS_MAP.put("id", "id");
 		TABLE_COLUMNS_DATA_MAP.put("id", long.class);
 		TABLE_COLUMNS_MAP.put("mtCore", "mtcore");
-		TABLE_COLUMNS_DATA_MAP.put("mtCore", long.class);
-		TABLE_COLUMNS_MAP.put("productPlantID", "productplantid");
-		TABLE_COLUMNS_DATA_MAP.put("productPlantID", long.class);
+		TABLE_COLUMNS_DATA_MAP.put("mtcore", long.class);
 		TABLE_COLUMNS_MAP.put("sequenceNo", "sequenceno");
-		TABLE_COLUMNS_DATA_MAP.put("sequenceNo", long.class);
+		TABLE_COLUMNS_DATA_MAP.put("sequenceno", long.class);
 		TABLE_COLUMNS_MAP.put("employeeName", "employeename");
-		TABLE_COLUMNS_DATA_MAP.put("employeeName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("employeename", String.class);
 		TABLE_COLUMNS_MAP.put("employeeCertificateNo", "employeecertificateno");
-		TABLE_COLUMNS_DATA_MAP.put("employeeCertificateNo", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("employeecertificateno", String.class);
 		TABLE_COLUMNS_MAP.put("trainningAt", "trainningat");
-		TABLE_COLUMNS_DATA_MAP.put("trainningAt", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("trainningat", String.class);
+		TABLE_COLUMNS_MAP.put("workingPosition", "workingposition");
+		TABLE_COLUMNS_DATA_MAP.put("workingposition", String.class);
 		TABLE_COLUMNS_MAP.put("modifyDate", "modifydate");
-		TABLE_COLUMNS_DATA_MAP.put("modifyDate", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("modifydate", Date.class);
 		TABLE_COLUMNS_MAP.put("syncDate", "syncdate");
-		TABLE_COLUMNS_DATA_MAP.put("syncDate", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("syncdate", Date.class);
+		TABLE_COLUMNS_MAP.put("productionPlantCode", "productionplantcode");
+		TABLE_COLUMNS_DATA_MAP.put("productionplantcode", String.class);
+		TABLE_COLUMNS_MAP.put("productionPlantId", "productionplantid");
+		TABLE_COLUMNS_DATA_MAP.put("productionplantid", long.class);
 	}
-	@ApiModelProperty(example = "null", value = "", name = "id")
+	@ApiModelProperty(name = "id", example = "null", value = "")
 	protected Long id;
-	@ApiModelProperty(example = "null", value = "", name = "mtcore")
+	@ApiModelProperty(name = "mtcore", example = "null", value = "")
 	protected Long mtCore;
-	@ApiModelProperty(example = "null", value = "", name = "productplantid")
-	protected Long productPlantID;
-	@ApiModelProperty(example = "null", value = "", name = "sequenceno")
+	@ApiModelProperty(name = "sequenceno", example = "null", value = "")
 	protected Long sequenceNo;
-	@ApiModelProperty(example = "null", value = "", name = "employeename")
+	@ApiModelProperty(name = "employeename", example = "null", value = "")
 	protected String employeeName;
-	@ApiModelProperty(example = "null", value = "", name = "employeecertificateno")
+	@ApiModelProperty(name = "employeecertificateno", example = "null", value = "")
 	protected String employeeCertificateNo;
-	@ApiModelProperty(example = "null", value = "", name = "trainningat")
+	@ApiModelProperty(name = "trainningat", example = "null", value = "")
 	protected String trainningAt;
-	@ApiModelProperty(example = "null", value = "", name = "modifydate")
+	@ApiModelProperty(name = "workingposition", example = "null", value = "")
+	protected String workingPosition;
+	@ApiModelProperty(name = "modifydate", example = "null", value = "")
 	protected String modifyDate;
-	@ApiModelProperty(example = "null", value = "", name = "syncdate")
+	@ApiModelProperty(name = "syncdate", example = "null", value = "")
 	protected String syncDate;
+	@ApiModelProperty(name = "productionplantcode", example = "null", value = "")
+	protected String productionPlantCode;
+	@ApiModelProperty(name = "productionplantid", example = "null", value = "")
+	protected Long productionPlantId;
 
 	public Long getId() {
 		return id;
@@ -64,14 +72,6 @@ public class VRProductionPlantEmployeeApiModel {
 
 	public void setMtCore(Long mtCore) {
 		this.mtCore = mtCore;
-	}
-
-	public Long getProductPlantID() {
-		return productPlantID;
-	}
-
-	public void setProductPlantID(Long productPlantID) {
-		this.productPlantID = productPlantID;
 	}
 
 	public Long getSequenceNo() {
@@ -106,6 +106,14 @@ public class VRProductionPlantEmployeeApiModel {
 		this.trainningAt = trainningAt;
 	}
 
+	public String getWorkingPosition() {
+		return workingPosition;
+	}
+
+	public void setWorkingPosition(String workingPosition) {
+		this.workingPosition = workingPosition;
+	}
+
 	public String getModifyDate() {
 		return modifyDate;
 	}
@@ -120,6 +128,22 @@ public class VRProductionPlantEmployeeApiModel {
 
 	public void setSyncDate(String syncDate) {
 		this.syncDate = syncDate;
+	}
+
+	public String getProductionPlantCode() {
+		return productionPlantCode;
+	}
+
+	public void setProductionPlantCode(String productionPlantCode) {
+		this.productionPlantCode = productionPlantCode;
+	}
+
+	public Long getProductionPlantId() {
+		return productionPlantId;
+	}
+
+	public void setProductionPlantId(Long productionPlantId) {
+		this.productionPlantId = productionPlantId;
 	}
 
 }

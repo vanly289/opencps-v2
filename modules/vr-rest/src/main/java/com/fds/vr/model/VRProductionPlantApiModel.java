@@ -15,163 +15,151 @@ public class VRProductionPlantApiModel {
 		TABLE_COLUMNS_MAP.put("id", "id");
 		TABLE_COLUMNS_DATA_MAP.put("id", long.class);
 		TABLE_COLUMNS_MAP.put("mtCore", "mtcore");
-		TABLE_COLUMNS_DATA_MAP.put("mtCore", long.class);
+		TABLE_COLUMNS_DATA_MAP.put("mtcore", long.class);
 		TABLE_COLUMNS_MAP.put("mappingMA_CTY", "mappingma_cty");
-		TABLE_COLUMNS_DATA_MAP.put("mappingMA_CTY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingma_cty", String.class);
 		TABLE_COLUMNS_MAP.put("mappingTEN_CTY", "mappingten_cty");
-		TABLE_COLUMNS_DATA_MAP.put("mappingTEN_CTY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingten_cty", String.class);
 		TABLE_COLUMNS_MAP.put("mappingDIA_CHI_CTY", "mappingdia_chi_cty");
-		TABLE_COLUMNS_DATA_MAP.put("mappingDIA_CHI_CTY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingdia_chi_cty", String.class);
 		TABLE_COLUMNS_MAP.put("mappingMA_XUONG_LR", "mappingma_xuong_lr");
-		TABLE_COLUMNS_DATA_MAP.put("mappingMA_XUONG_LR", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingma_xuong_lr", String.class);
 		TABLE_COLUMNS_MAP.put("mappingTEN_XUONG_LR", "mappingten_xuong_lr");
-		TABLE_COLUMNS_DATA_MAP.put("mappingTEN_XUONG_LR", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingten_xuong_lr", String.class);
 		TABLE_COLUMNS_MAP.put("mappingDIA_CHI_XUONG_LR", "mappingdia_chi_xuong_lr");
-		TABLE_COLUMNS_DATA_MAP.put("mappingDIA_CHI_XUONG_LR", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingdia_chi_xuong_lr", String.class);
 		TABLE_COLUMNS_MAP.put("mappingNote", "mappingnote");
-		TABLE_COLUMNS_DATA_MAP.put("mappingNote", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingnote", String.class);
 		TABLE_COLUMNS_MAP.put("mappingStatus", "mappingstatus");
-		TABLE_COLUMNS_DATA_MAP.put("mappingStatus", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingstatus", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantCode", "productionplantcode");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantCode", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantcode", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantName", "productionplantname");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantname", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantAddress", "productionplantaddress");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantAddress", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantaddress", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantStateCode", "productionplantstatecode");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantStateCode", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantstatecode", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantStateName", "productionplantstatename");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantStateName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantstatename", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantProvinceCode", "productionplantprovincecode");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantProvinceCode", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantprovincecode", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantProvinceName", "productionplantprovincename");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantProvinceName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantprovincename", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantDistrictCode", "productionplantdistrictcode");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantDistrictCode", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantdistrictcode", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantDistrictName", "productionplantdistrictname");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantDistrictName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantdistrictname", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantEmail", "productionplantemail");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantEmail", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantemail", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantPhone", "productionplantphone");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantPhone", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantphone", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantFax", "productionplantfax");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantFax", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantfax", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantRepresentative", "productionplantrepresentative");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantRepresentative", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantrepresentative", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantRepresentativeTitle", "productionplantrepresentativetitle");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantRepresentativeTitle", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantrepresentativetitle", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantContactName", "productionplantcontactname");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantContactName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantcontactname", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantContactEmail", "productionplantcontactemail");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantContactEmail", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantcontactemail", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantContactPhone", "productionplantcontactphone");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantContactPhone", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantcontactphone", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantType", "productionplanttype");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantType", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplanttype", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantStatus", "productionplantstatus");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantStatus", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantstatus", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantEmployeesNote", "productionplantemployeesnote");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantEmployeesNote", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantemployeesnote", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantEquipmentsNote", "productionplantequipmentsnote");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantEquipmentsNote", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantequipmentsnote", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantProdEquipmentsNote", "productionplantprodequipmentsnote");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantProdEquipmentsNote", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantprodequipmentsnote", String.class);
 		TABLE_COLUMNS_MAP.put("registrationId", "registrationid");
-		TABLE_COLUMNS_DATA_MAP.put("registrationId", long.class);
+		TABLE_COLUMNS_DATA_MAP.put("registrationid", long.class);
 		TABLE_COLUMNS_MAP.put("registrationFormId", "registrationformid");
-		TABLE_COLUMNS_DATA_MAP.put("registrationFormId", long.class);
+		TABLE_COLUMNS_DATA_MAP.put("registrationformid", long.class);
 		TABLE_COLUMNS_MAP.put("applicantProfileId", "applicantprofileid");
-		TABLE_COLUMNS_DATA_MAP.put("applicantProfileId", long.class);
-		TABLE_COLUMNS_MAP.put("latestCOPReportDate", "latestcopreportdate");
-		TABLE_COLUMNS_DATA_MAP.put("latestCOPReportDate", Date.class);
-		TABLE_COLUMNS_MAP.put("latestCOPReportResult", "latestcopreportresult");
-		TABLE_COLUMNS_DATA_MAP.put("latestCOPReportResult", String.class);
-		TABLE_COLUMNS_MAP.put("nextCOPReportDate", "nextcopreportdate");
-		TABLE_COLUMNS_DATA_MAP.put("nextCOPReportDate", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantprofileid", long.class);
 		TABLE_COLUMNS_MAP.put("modifyDate", "modifydate");
-		TABLE_COLUMNS_DATA_MAP.put("modifyDate", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("modifydate", Date.class);
 		TABLE_COLUMNS_MAP.put("syncDate", "syncdate");
-		TABLE_COLUMNS_DATA_MAP.put("syncDate", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("syncdate", Date.class);
 	}
-	@ApiModelProperty(example = "null", value = "", name = "id")
+	@ApiModelProperty(name = "id", example = "null", value = "")
 	protected Long id;
-	@ApiModelProperty(example = "null", value = "", name = "mtcore")
+	@ApiModelProperty(name = "mtcore", example = "null", value = "")
 	protected Long mtCore;
-	@ApiModelProperty(example = "null", value = "", name = "mappingma_cty")
+	@ApiModelProperty(name = "mappingma_cty", example = "null", value = "")
 	protected String mappingMA_CTY;
-	@ApiModelProperty(example = "null", value = "", name = "mappingten_cty")
+	@ApiModelProperty(name = "mappingten_cty", example = "null", value = "")
 	protected String mappingTEN_CTY;
-	@ApiModelProperty(example = "null", value = "", name = "mappingdia_chi_cty")
+	@ApiModelProperty(name = "mappingdia_chi_cty", example = "null", value = "")
 	protected String mappingDIA_CHI_CTY;
-	@ApiModelProperty(example = "null", value = "", name = "mappingma_xuong_lr")
+	@ApiModelProperty(name = "mappingma_xuong_lr", example = "null", value = "")
 	protected String mappingMA_XUONG_LR;
-	@ApiModelProperty(example = "null", value = "", name = "mappingten_xuong_lr")
+	@ApiModelProperty(name = "mappingten_xuong_lr", example = "null", value = "")
 	protected String mappingTEN_XUONG_LR;
-	@ApiModelProperty(example = "null", value = "", name = "mappingdia_chi_xuong_lr")
+	@ApiModelProperty(name = "mappingdia_chi_xuong_lr", example = "null", value = "")
 	protected String mappingDIA_CHI_XUONG_LR;
-	@ApiModelProperty(example = "null", value = "", name = "mappingnote")
+	@ApiModelProperty(name = "mappingnote", example = "null", value = "")
 	protected String mappingNote;
-	@ApiModelProperty(example = "null", value = "", name = "mappingstatus")
+	@ApiModelProperty(name = "mappingstatus", example = "null", value = "")
 	protected String mappingStatus;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantcode")
+	@ApiModelProperty(name = "productionplantcode", example = "null", value = "")
 	protected String productionPlantCode;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantname")
+	@ApiModelProperty(name = "productionplantname", example = "null", value = "")
 	protected String productionPlantName;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantaddress")
+	@ApiModelProperty(name = "productionplantaddress", example = "null", value = "")
 	protected String productionPlantAddress;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantstatecode")
+	@ApiModelProperty(name = "productionplantstatecode", example = "null", value = "")
 	protected String productionPlantStateCode;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantstatename")
+	@ApiModelProperty(name = "productionplantstatename", example = "null", value = "")
 	protected String productionPlantStateName;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantprovincecode")
+	@ApiModelProperty(name = "productionplantprovincecode", example = "null", value = "")
 	protected String productionPlantProvinceCode;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantprovincename")
+	@ApiModelProperty(name = "productionplantprovincename", example = "null", value = "")
 	protected String productionPlantProvinceName;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantdistrictcode")
+	@ApiModelProperty(name = "productionplantdistrictcode", example = "null", value = "")
 	protected String productionPlantDistrictCode;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantdistrictname")
+	@ApiModelProperty(name = "productionplantdistrictname", example = "null", value = "")
 	protected String productionPlantDistrictName;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantemail")
+	@ApiModelProperty(name = "productionplantemail", example = "null", value = "")
 	protected String productionPlantEmail;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantphone")
+	@ApiModelProperty(name = "productionplantphone", example = "null", value = "")
 	protected String productionPlantPhone;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantfax")
+	@ApiModelProperty(name = "productionplantfax", example = "null", value = "")
 	protected String productionPlantFax;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantrepresentative")
+	@ApiModelProperty(name = "productionplantrepresentative", example = "null", value = "")
 	protected String productionPlantRepresentative;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantrepresentativetitle")
+	@ApiModelProperty(name = "productionplantrepresentativetitle", example = "null", value = "")
 	protected String productionPlantRepresentativeTitle;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantcontactname")
+	@ApiModelProperty(name = "productionplantcontactname", example = "null", value = "")
 	protected String productionPlantContactName;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantcontactemail")
+	@ApiModelProperty(name = "productionplantcontactemail", example = "null", value = "")
 	protected String productionPlantContactEmail;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantcontactphone")
+	@ApiModelProperty(name = "productionplantcontactphone", example = "null", value = "")
 	protected String productionPlantContactPhone;
-	@ApiModelProperty(example = "null", value = "", name = "productionplanttype")
+	@ApiModelProperty(name = "productionplanttype", example = "null", value = "")
 	protected String productionPlantType;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantstatus")
+	@ApiModelProperty(name = "productionplantstatus", example = "null", value = "")
 	protected String productionPlantStatus;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantemployeesnote")
+	@ApiModelProperty(name = "productionplantemployeesnote", example = "null", value = "")
 	protected String productionPlantEmployeesNote;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantequipmentsnote")
+	@ApiModelProperty(name = "productionplantequipmentsnote", example = "null", value = "")
 	protected String productionPlantEquipmentsNote;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantprodequipmentsnote")
+	@ApiModelProperty(name = "productionplantprodequipmentsnote", example = "null", value = "")
 	protected String productionPlantProdEquipmentsNote;
-	@ApiModelProperty(example = "null", value = "", name = "registrationid")
+	@ApiModelProperty(name = "registrationid", example = "null", value = "")
 	protected Long registrationId;
-	@ApiModelProperty(example = "null", value = "", name = "registrationformid")
+	@ApiModelProperty(name = "registrationformid", example = "null", value = "")
 	protected Long registrationFormId;
-	@ApiModelProperty(example = "null", value = "", name = "applicantprofileid")
+	@ApiModelProperty(name = "applicantprofileid", example = "null", value = "")
 	protected Long applicantProfileId;
-	@ApiModelProperty(example = "null", value = "", name = "latestcopreportdate")
-	protected String latestCOPReportDate;
-	@ApiModelProperty(example = "null", value = "", name = "latestcopreportresult")
-	protected String latestCOPReportResult;
-	@ApiModelProperty(example = "null", value = "", name = "nextcopreportdate")
-	protected String nextCOPReportDate;
-	@ApiModelProperty(example = "null", value = "", name = "modifydate")
+	@ApiModelProperty(name = "modifydate", example = "null", value = "")
 	protected String modifyDate;
-	@ApiModelProperty(example = "null", value = "", name = "syncdate")
+	@ApiModelProperty(name = "syncdate", example = "null", value = "")
 	protected String syncDate;
 
 	public Long getId() {
@@ -452,30 +440,6 @@ public class VRProductionPlantApiModel {
 
 	public void setApplicantProfileId(Long applicantProfileId) {
 		this.applicantProfileId = applicantProfileId;
-	}
-
-	public String getLatestCOPReportDate() {
-		return latestCOPReportDate;
-	}
-
-	public void setLatestCOPReportDate(String latestCOPReportDate) {
-		this.latestCOPReportDate = latestCOPReportDate;
-	}
-
-	public String getLatestCOPReportResult() {
-		return latestCOPReportResult;
-	}
-
-	public void setLatestCOPReportResult(String latestCOPReportResult) {
-		this.latestCOPReportResult = latestCOPReportResult;
-	}
-
-	public String getNextCOPReportDate() {
-		return nextCOPReportDate;
-	}
-
-	public void setNextCOPReportDate(String nextCOPReportDate) {
-		this.nextCOPReportDate = nextCOPReportDate;
 	}
 
 	public String getModifyDate() {

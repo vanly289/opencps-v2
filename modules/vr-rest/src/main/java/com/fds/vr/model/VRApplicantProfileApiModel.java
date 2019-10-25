@@ -15,215 +15,215 @@ public class VRApplicantProfileApiModel {
 		TABLE_COLUMNS_MAP.put("id", "id");
 		TABLE_COLUMNS_DATA_MAP.put("id", long.class);
 		TABLE_COLUMNS_MAP.put("mtCore", "mtcore");
-		TABLE_COLUMNS_DATA_MAP.put("mtCore", long.class);
+		TABLE_COLUMNS_DATA_MAP.put("mtcore", long.class);
 		TABLE_COLUMNS_MAP.put("mappingMA_CTY", "mappingma_cty");
-		TABLE_COLUMNS_DATA_MAP.put("mappingMA_CTY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingma_cty", String.class);
 		TABLE_COLUMNS_MAP.put("mappingTEN_CTY", "mappingten_cty");
-		TABLE_COLUMNS_DATA_MAP.put("mappingTEN_CTY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingten_cty", String.class);
 		TABLE_COLUMNS_MAP.put("mappingDIA_CHI_CTY", "mappingdia_chi_cty");
-		TABLE_COLUMNS_DATA_MAP.put("mappingDIA_CHI_CTY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingdia_chi_cty", String.class);
 		TABLE_COLUMNS_MAP.put("mappingNote", "mappingnote");
-		TABLE_COLUMNS_DATA_MAP.put("mappingNote", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingnote", String.class);
 		TABLE_COLUMNS_MAP.put("mappingStatus", "mappingstatus");
-		TABLE_COLUMNS_DATA_MAP.put("mappingStatus", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingstatus", String.class);
 		TABLE_COLUMNS_MAP.put("applicantCode", "applicantcode");
-		TABLE_COLUMNS_DATA_MAP.put("applicantCode", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantcode", String.class);
 		TABLE_COLUMNS_MAP.put("applicantName", "applicantname");
-		TABLE_COLUMNS_DATA_MAP.put("applicantName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantname", String.class);
 		TABLE_COLUMNS_MAP.put("applicantAddress", "applicantaddress");
-		TABLE_COLUMNS_DATA_MAP.put("applicantAddress", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantaddress", String.class);
 		TABLE_COLUMNS_MAP.put("applicantPhone", "applicantphone");
-		TABLE_COLUMNS_DATA_MAP.put("applicantPhone", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantphone", String.class);
 		TABLE_COLUMNS_MAP.put("applicantEmail", "applicantemail");
-		TABLE_COLUMNS_DATA_MAP.put("applicantEmail", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantemail", String.class);
 		TABLE_COLUMNS_MAP.put("applicantFax", "applicantfax");
-		TABLE_COLUMNS_DATA_MAP.put("applicantFax", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantfax", String.class);
 		TABLE_COLUMNS_MAP.put("applicantRepresentative", "applicantrepresentative");
-		TABLE_COLUMNS_DATA_MAP.put("applicantRepresentative", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantrepresentative", String.class);
 		TABLE_COLUMNS_MAP.put("applicantRepresentativeTitle", "applicantrepresentativetitle");
-		TABLE_COLUMNS_DATA_MAP.put("applicantRepresentativeTitle", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantrepresentativetitle", String.class);
 		TABLE_COLUMNS_MAP.put("applicantContactName", "applicantcontactname");
-		TABLE_COLUMNS_DATA_MAP.put("applicantContactName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantcontactname", String.class);
 		TABLE_COLUMNS_MAP.put("applicantContactEmail", "applicantcontactemail");
-		TABLE_COLUMNS_DATA_MAP.put("applicantContactEmail", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantcontactemail", String.class);
 		TABLE_COLUMNS_MAP.put("applicantContactPhone", "applicantcontactphone");
-		TABLE_COLUMNS_DATA_MAP.put("applicantContactPhone", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantcontactphone", String.class);
 		TABLE_COLUMNS_MAP.put("applicantNationality", "applicantnationality");
-		TABLE_COLUMNS_DATA_MAP.put("applicantNationality", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantnationality", String.class);
 		TABLE_COLUMNS_MAP.put("applicantRegion", "applicantregion");
-		TABLE_COLUMNS_DATA_MAP.put("applicantRegion", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantregion", String.class);
 		TABLE_COLUMNS_MAP.put("applicantCity", "applicantcity");
-		TABLE_COLUMNS_DATA_MAP.put("applicantCity", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantcity", String.class);
 		TABLE_COLUMNS_MAP.put("markupCorporation", "markupcorporation");
-		TABLE_COLUMNS_DATA_MAP.put("markupCorporation", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupcorporation", String.class);
 		TABLE_COLUMNS_MAP.put("corporationId", "corporationid");
-		TABLE_COLUMNS_DATA_MAP.put("corporationId", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("corporationid", String.class);
 		TABLE_COLUMNS_MAP.put("markupDesigner", "markupdesigner");
-		TABLE_COLUMNS_DATA_MAP.put("markupDesigner", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupdesigner", String.class);
 		TABLE_COLUMNS_MAP.put("markupOverseasManufacturer", "markupoverseasmanufacturer");
-		TABLE_COLUMNS_DATA_MAP.put("markupOverseasManufacturer", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupoverseasmanufacturer", String.class);
 		TABLE_COLUMNS_MAP.put("markupDomesticsManufacturer", "markupdomesticsmanufacturer");
-		TABLE_COLUMNS_DATA_MAP.put("markupDomesticsManufacturer", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupdomesticsmanufacturer", String.class);
 		TABLE_COLUMNS_MAP.put("markupImporter", "markupimporter");
-		TABLE_COLUMNS_DATA_MAP.put("markupImporter", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupimporter", String.class);
 		TABLE_COLUMNS_MAP.put("markupComponentXCG", "markupcomponentxcg");
-		TABLE_COLUMNS_DATA_MAP.put("markupComponentXCG", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupcomponentxcg", String.class);
 		TABLE_COLUMNS_MAP.put("markupComponentXMY", "markupcomponentxmy");
-		TABLE_COLUMNS_DATA_MAP.put("markupComponentXMY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupcomponentxmy", String.class);
 		TABLE_COLUMNS_MAP.put("markupComponentXCD", "markupcomponentxcd");
-		TABLE_COLUMNS_DATA_MAP.put("markupComponentXCD", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupcomponentxcd", String.class);
 		TABLE_COLUMNS_MAP.put("markupComponentXDD", "markupcomponentxdd");
-		TABLE_COLUMNS_DATA_MAP.put("markupComponentXDD", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupcomponentxdd", String.class);
 		TABLE_COLUMNS_MAP.put("markupComponentXCN", "markupcomponentxcn");
-		TABLE_COLUMNS_DATA_MAP.put("markupComponentXCN", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupcomponentxcn", String.class);
 		TABLE_COLUMNS_MAP.put("markupComponentXCH", "markupcomponentxch");
-		TABLE_COLUMNS_DATA_MAP.put("markupComponentXCH", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupcomponentxch", String.class);
 		TABLE_COLUMNS_MAP.put("markupXCG", "markupxcg");
-		TABLE_COLUMNS_DATA_MAP.put("markupXCG", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupxcg", String.class);
 		TABLE_COLUMNS_MAP.put("markupXMY", "markupxmy");
-		TABLE_COLUMNS_DATA_MAP.put("markupXMY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupxmy", String.class);
 		TABLE_COLUMNS_MAP.put("markupXCD", "markupxcd");
-		TABLE_COLUMNS_DATA_MAP.put("markupXCD", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupxcd", String.class);
 		TABLE_COLUMNS_MAP.put("markupXDD", "markupxdd");
-		TABLE_COLUMNS_DATA_MAP.put("markupXDD", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupxdd", String.class);
 		TABLE_COLUMNS_MAP.put("markupXCN", "markupxcn");
-		TABLE_COLUMNS_DATA_MAP.put("markupXCN", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupxcn", String.class);
 		TABLE_COLUMNS_MAP.put("markupXCH", "markupxch");
-		TABLE_COLUMNS_DATA_MAP.put("markupXCH", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupxch", String.class);
 		TABLE_COLUMNS_MAP.put("issueTypeXCG", "issuetypexcg");
-		TABLE_COLUMNS_DATA_MAP.put("issueTypeXCG", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("issuetypexcg", String.class);
 		TABLE_COLUMNS_MAP.put("issueTypeXMY", "issuetypexmy");
-		TABLE_COLUMNS_DATA_MAP.put("issueTypeXMY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("issuetypexmy", String.class);
 		TABLE_COLUMNS_MAP.put("issueTypeXCD", "issuetypexcd");
-		TABLE_COLUMNS_DATA_MAP.put("issueTypeXCD", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("issuetypexcd", String.class);
 		TABLE_COLUMNS_MAP.put("issueTypeXDD", "issuetypexdd");
-		TABLE_COLUMNS_DATA_MAP.put("issueTypeXDD", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("issuetypexdd", String.class);
 		TABLE_COLUMNS_MAP.put("issueTypeXCN", "issuetypexcn");
-		TABLE_COLUMNS_DATA_MAP.put("issueTypeXCN", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("issuetypexcn", String.class);
 		TABLE_COLUMNS_MAP.put("issueTypeXCH", "issuetypexch");
-		TABLE_COLUMNS_DATA_MAP.put("issueTypeXCH", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("issuetypexch", String.class);
 		TABLE_COLUMNS_MAP.put("issueTypeDescription", "issuetypedescription");
-		TABLE_COLUMNS_DATA_MAP.put("issueTypeDescription", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("issuetypedescription", String.class);
 		TABLE_COLUMNS_MAP.put("applicantCeremonyDate", "applicantceremonydate");
-		TABLE_COLUMNS_DATA_MAP.put("applicantCeremonyDate", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantceremonydate", String.class);
 		TABLE_COLUMNS_MAP.put("applicantOperationPeriod", "applicantoperationperiod");
-		TABLE_COLUMNS_DATA_MAP.put("applicantOperationPeriod", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantoperationperiod", String.class);
 		TABLE_COLUMNS_MAP.put("applicantBusinessType", "applicantbusinesstype");
-		TABLE_COLUMNS_DATA_MAP.put("applicantBusinessType", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantbusinesstype", String.class);
 		TABLE_COLUMNS_MAP.put("applicantMetadata", "applicantmetadata");
-		TABLE_COLUMNS_DATA_MAP.put("applicantMetadata", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantmetadata", String.class);
 		TABLE_COLUMNS_MAP.put("applicantStatus", "applicantstatus");
-		TABLE_COLUMNS_DATA_MAP.put("applicantStatus", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantstatus", String.class);
 		TABLE_COLUMNS_MAP.put("modifyDate", "modifydate");
-		TABLE_COLUMNS_DATA_MAP.put("modifyDate", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("modifydate", Date.class);
 		TABLE_COLUMNS_MAP.put("syncDate", "syncdate");
-		TABLE_COLUMNS_DATA_MAP.put("syncDate", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("syncdate", Date.class);
 	}
-	@ApiModelProperty(example = "null", value = "", name = "id")
+	@ApiModelProperty(name = "id", example = "null", value = "")
 	protected Long id;
-	@ApiModelProperty(example = "null", value = "", name = "mtcore")
+	@ApiModelProperty(name = "mtcore", example = "null", value = "")
 	protected Long mtCore;
-	@ApiModelProperty(example = "null", value = "", name = "mappingma_cty")
+	@ApiModelProperty(name = "mappingma_cty", example = "null", value = "")
 	protected String mappingMA_CTY;
-	@ApiModelProperty(example = "null", value = "", name = "mappingten_cty")
+	@ApiModelProperty(name = "mappingten_cty", example = "null", value = "")
 	protected String mappingTEN_CTY;
-	@ApiModelProperty(example = "null", value = "", name = "mappingdia_chi_cty")
+	@ApiModelProperty(name = "mappingdia_chi_cty", example = "null", value = "")
 	protected String mappingDIA_CHI_CTY;
-	@ApiModelProperty(example = "null", value = "", name = "mappingnote")
+	@ApiModelProperty(name = "mappingnote", example = "null", value = "")
 	protected String mappingNote;
-	@ApiModelProperty(example = "null", value = "", name = "mappingstatus")
+	@ApiModelProperty(name = "mappingstatus", example = "null", value = "")
 	protected String mappingStatus;
-	@ApiModelProperty(example = "null", value = "", name = "applicantcode")
+	@ApiModelProperty(name = "applicantcode", example = "null", value = "")
 	protected String applicantCode;
-	@ApiModelProperty(example = "null", value = "", name = "applicantname")
+	@ApiModelProperty(name = "applicantname", example = "null", value = "")
 	protected String applicantName;
-	@ApiModelProperty(example = "null", value = "", name = "applicantaddress")
+	@ApiModelProperty(name = "applicantaddress", example = "null", value = "")
 	protected String applicantAddress;
-	@ApiModelProperty(example = "null", value = "", name = "applicantphone")
+	@ApiModelProperty(name = "applicantphone", example = "null", value = "")
 	protected String applicantPhone;
-	@ApiModelProperty(example = "null", value = "", name = "applicantemail")
+	@ApiModelProperty(name = "applicantemail", example = "null", value = "")
 	protected String applicantEmail;
-	@ApiModelProperty(example = "null", value = "", name = "applicantfax")
+	@ApiModelProperty(name = "applicantfax", example = "null", value = "")
 	protected String applicantFax;
-	@ApiModelProperty(example = "null", value = "", name = "applicantrepresentative")
+	@ApiModelProperty(name = "applicantrepresentative", example = "null", value = "")
 	protected String applicantRepresentative;
-	@ApiModelProperty(example = "null", value = "", name = "applicantrepresentativetitle")
+	@ApiModelProperty(name = "applicantrepresentativetitle", example = "null", value = "")
 	protected String applicantRepresentativeTitle;
-	@ApiModelProperty(example = "null", value = "", name = "applicantcontactname")
+	@ApiModelProperty(name = "applicantcontactname", example = "null", value = "")
 	protected String applicantContactName;
-	@ApiModelProperty(example = "null", value = "", name = "applicantcontactemail")
+	@ApiModelProperty(name = "applicantcontactemail", example = "null", value = "")
 	protected String applicantContactEmail;
-	@ApiModelProperty(example = "null", value = "", name = "applicantcontactphone")
+	@ApiModelProperty(name = "applicantcontactphone", example = "null", value = "")
 	protected String applicantContactPhone;
-	@ApiModelProperty(example = "null", value = "", name = "applicantnationality")
+	@ApiModelProperty(name = "applicantnationality", example = "null", value = "")
 	protected String applicantNationality;
-	@ApiModelProperty(example = "null", value = "", name = "applicantregion")
+	@ApiModelProperty(name = "applicantregion", example = "null", value = "")
 	protected String applicantRegion;
-	@ApiModelProperty(example = "null", value = "", name = "applicantcity")
+	@ApiModelProperty(name = "applicantcity", example = "null", value = "")
 	protected String applicantCity;
-	@ApiModelProperty(example = "null", value = "", name = "markupcorporation")
+	@ApiModelProperty(name = "markupcorporation", example = "null", value = "")
 	protected String markupCorporation;
-	@ApiModelProperty(example = "null", value = "", name = "corporationid")
+	@ApiModelProperty(name = "corporationid", example = "null", value = "")
 	protected String corporationId;
-	@ApiModelProperty(example = "null", value = "", name = "markupdesigner")
+	@ApiModelProperty(name = "markupdesigner", example = "null", value = "")
 	protected String markupDesigner;
-	@ApiModelProperty(example = "null", value = "", name = "markupoverseasmanufacturer")
+	@ApiModelProperty(name = "markupoverseasmanufacturer", example = "null", value = "")
 	protected String markupOverseasManufacturer;
-	@ApiModelProperty(example = "null", value = "", name = "markupdomesticsmanufacturer")
+	@ApiModelProperty(name = "markupdomesticsmanufacturer", example = "null", value = "")
 	protected String markupDomesticsManufacturer;
-	@ApiModelProperty(example = "null", value = "", name = "markupimporter")
+	@ApiModelProperty(name = "markupimporter", example = "null", value = "")
 	protected String markupImporter;
-	@ApiModelProperty(example = "null", value = "", name = "markupcomponentxcg")
+	@ApiModelProperty(name = "markupcomponentxcg", example = "null", value = "")
 	protected String markupComponentXCG;
-	@ApiModelProperty(example = "null", value = "", name = "markupcomponentxmy")
+	@ApiModelProperty(name = "markupcomponentxmy", example = "null", value = "")
 	protected String markupComponentXMY;
-	@ApiModelProperty(example = "null", value = "", name = "markupcomponentxcd")
+	@ApiModelProperty(name = "markupcomponentxcd", example = "null", value = "")
 	protected String markupComponentXCD;
-	@ApiModelProperty(example = "null", value = "", name = "markupcomponentxdd")
+	@ApiModelProperty(name = "markupcomponentxdd", example = "null", value = "")
 	protected String markupComponentXDD;
-	@ApiModelProperty(example = "null", value = "", name = "markupcomponentxcn")
+	@ApiModelProperty(name = "markupcomponentxcn", example = "null", value = "")
 	protected String markupComponentXCN;
-	@ApiModelProperty(example = "null", value = "", name = "markupcomponentxch")
+	@ApiModelProperty(name = "markupcomponentxch", example = "null", value = "")
 	protected String markupComponentXCH;
-	@ApiModelProperty(example = "null", value = "", name = "markupxcg")
+	@ApiModelProperty(name = "markupxcg", example = "null", value = "")
 	protected String markupXCG;
-	@ApiModelProperty(example = "null", value = "", name = "markupxmy")
+	@ApiModelProperty(name = "markupxmy", example = "null", value = "")
 	protected String markupXMY;
-	@ApiModelProperty(example = "null", value = "", name = "markupxcd")
+	@ApiModelProperty(name = "markupxcd", example = "null", value = "")
 	protected String markupXCD;
-	@ApiModelProperty(example = "null", value = "", name = "markupxdd")
+	@ApiModelProperty(name = "markupxdd", example = "null", value = "")
 	protected String markupXDD;
-	@ApiModelProperty(example = "null", value = "", name = "markupxcn")
+	@ApiModelProperty(name = "markupxcn", example = "null", value = "")
 	protected String markupXCN;
-	@ApiModelProperty(example = "null", value = "", name = "markupxch")
+	@ApiModelProperty(name = "markupxch", example = "null", value = "")
 	protected String markupXCH;
-	@ApiModelProperty(example = "null", value = "", name = "issuetypexcg")
+	@ApiModelProperty(name = "issuetypexcg", example = "null", value = "")
 	protected String issueTypeXCG;
-	@ApiModelProperty(example = "null", value = "", name = "issuetypexmy")
+	@ApiModelProperty(name = "issuetypexmy", example = "null", value = "")
 	protected String issueTypeXMY;
-	@ApiModelProperty(example = "null", value = "", name = "issuetypexcd")
+	@ApiModelProperty(name = "issuetypexcd", example = "null", value = "")
 	protected String issueTypeXCD;
-	@ApiModelProperty(example = "null", value = "", name = "issuetypexdd")
+	@ApiModelProperty(name = "issuetypexdd", example = "null", value = "")
 	protected String issueTypeXDD;
-	@ApiModelProperty(example = "null", value = "", name = "issuetypexcn")
+	@ApiModelProperty(name = "issuetypexcn", example = "null", value = "")
 	protected String issueTypeXCN;
-	@ApiModelProperty(example = "null", value = "", name = "issuetypexch")
+	@ApiModelProperty(name = "issuetypexch", example = "null", value = "")
 	protected String issueTypeXCH;
-	@ApiModelProperty(example = "null", value = "", name = "issuetypedescription")
+	@ApiModelProperty(name = "issuetypedescription", example = "null", value = "")
 	protected String issueTypeDescription;
-	@ApiModelProperty(example = "null", value = "", name = "applicantceremonydate")
+	@ApiModelProperty(name = "applicantceremonydate", example = "null", value = "")
 	protected String applicantCeremonyDate;
-	@ApiModelProperty(example = "null", value = "", name = "applicantoperationperiod")
+	@ApiModelProperty(name = "applicantoperationperiod", example = "null", value = "")
 	protected String applicantOperationPeriod;
-	@ApiModelProperty(example = "null", value = "", name = "applicantbusinesstype")
+	@ApiModelProperty(name = "applicantbusinesstype", example = "null", value = "")
 	protected String applicantBusinessType;
-	@ApiModelProperty(example = "null", value = "", name = "applicantmetadata")
+	@ApiModelProperty(name = "applicantmetadata", example = "null", value = "")
 	protected String applicantMetadata;
-	@ApiModelProperty(example = "null", value = "", name = "applicantstatus")
+	@ApiModelProperty(name = "applicantstatus", example = "null", value = "")
 	protected String applicantStatus;
-	@ApiModelProperty(example = "null", value = "", name = "modifydate")
+	@ApiModelProperty(name = "modifydate", example = "null", value = "")
 	protected String modifyDate;
-	@ApiModelProperty(example = "null", value = "", name = "syncdate")
+	@ApiModelProperty(name = "syncdate", example = "null", value = "")
 	protected String syncDate;
 
 	public Long getId() {

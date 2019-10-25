@@ -15,91 +15,91 @@ public class VRProductionPlantSupplierApiModel {
 		TABLE_COLUMNS_MAP.put("id", "id");
 		TABLE_COLUMNS_DATA_MAP.put("id", long.class);
 		TABLE_COLUMNS_MAP.put("mtCore", "mtcore");
-		TABLE_COLUMNS_DATA_MAP.put("mtCore", long.class);
+		TABLE_COLUMNS_DATA_MAP.put("mtcore", long.class);
 		TABLE_COLUMNS_MAP.put("supplierId", "supplierid");
-		TABLE_COLUMNS_DATA_MAP.put("supplierId", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("supplierid", String.class);
 		TABLE_COLUMNS_MAP.put("supplierName", "suppliername");
-		TABLE_COLUMNS_DATA_MAP.put("supplierName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("suppliername", String.class);
 		TABLE_COLUMNS_MAP.put("supplieraddress", "supplieraddress");
 		TABLE_COLUMNS_DATA_MAP.put("supplieraddress", String.class);
 		TABLE_COLUMNS_MAP.put("corporationCode", "corporationcode");
-		TABLE_COLUMNS_DATA_MAP.put("corporationCode", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("corporationcode", String.class);
 		TABLE_COLUMNS_MAP.put("corporationName", "corporationname");
-		TABLE_COLUMNS_DATA_MAP.put("corporationName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("corporationname", String.class);
 		TABLE_COLUMNS_MAP.put("corporationAddress", "corporationaddress");
-		TABLE_COLUMNS_DATA_MAP.put("corporationAddress", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("corporationaddress", String.class);
 		TABLE_COLUMNS_MAP.put("applicantprofileId", "applicantprofileid");
-		TABLE_COLUMNS_DATA_MAP.put("applicantprofileId", long.class);
+		TABLE_COLUMNS_DATA_MAP.put("applicantprofileid", long.class);
 		TABLE_COLUMNS_MAP.put("productPlantID", "productplantid");
-		TABLE_COLUMNS_DATA_MAP.put("productPlantID", long.class);
+		TABLE_COLUMNS_DATA_MAP.put("productplantid", long.class);
 		TABLE_COLUMNS_MAP.put("productionPlantCode", "productionplantcode");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantCode", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantcode", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantName", "productionplantname");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantName", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantname", String.class);
 		TABLE_COLUMNS_MAP.put("productionPlantAddress", "productionplantaddress");
-		TABLE_COLUMNS_DATA_MAP.put("productionPlantAddress", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionplantaddress", String.class);
 		TABLE_COLUMNS_MAP.put("markupImporter", "markupimporter");
-		TABLE_COLUMNS_DATA_MAP.put("markupImporter", int.class);
+		TABLE_COLUMNS_DATA_MAP.put("markupimporter", int.class);
 		TABLE_COLUMNS_MAP.put("mappingMA_CTY", "mappingma_cty");
-		TABLE_COLUMNS_DATA_MAP.put("mappingMA_CTY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingma_cty", String.class);
 		TABLE_COLUMNS_MAP.put("mappingTEN_CTY", "mappingten_cty");
-		TABLE_COLUMNS_DATA_MAP.put("mappingTEN_CTY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingten_cty", String.class);
 		TABLE_COLUMNS_MAP.put("mappingDIA_CHI_CTY", "mappingdia_chi_cty");
-		TABLE_COLUMNS_DATA_MAP.put("mappingDIA_CHI_CTY", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingdia_chi_cty", String.class);
 		TABLE_COLUMNS_MAP.put("mappingMA_XUONG_LR", "mappingma_xuong_lr");
-		TABLE_COLUMNS_DATA_MAP.put("mappingMA_XUONG_LR", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingma_xuong_lr", String.class);
 		TABLE_COLUMNS_MAP.put("mappingTEN_XUONG_LR", "mappingten_xuong_lr");
-		TABLE_COLUMNS_DATA_MAP.put("mappingTEN_XUONG_LR", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingten_xuong_lr", String.class);
 		TABLE_COLUMNS_MAP.put("mappingDIA_CHI_XUONG_LR", "mappingdia_chi_xuong_lr");
-		TABLE_COLUMNS_DATA_MAP.put("mappingDIA_CHI_XUONG_LR", String.class);
+		TABLE_COLUMNS_DATA_MAP.put("mappingdia_chi_xuong_lr", String.class);
 		TABLE_COLUMNS_MAP.put("modifyDate", "modifydate");
-		TABLE_COLUMNS_DATA_MAP.put("modifyDate", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("modifydate", Date.class);
 		TABLE_COLUMNS_MAP.put("syncDate", "syncdate");
-		TABLE_COLUMNS_DATA_MAP.put("syncDate", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("syncdate", Date.class);
 	}
-	@ApiModelProperty(example = "null", value = "", name = "id")
+	@ApiModelProperty(name = "id", example = "null", value = "")
 	protected Long id;
-	@ApiModelProperty(example = "null", value = "", name = "mtcore")
+	@ApiModelProperty(name = "mtcore", example = "null", value = "")
 	protected Long mtCore;
-	@ApiModelProperty(example = "null", value = "", name = "supplierid")
+	@ApiModelProperty(name = "supplierid", example = "null", value = "")
 	protected String supplierId;
-	@ApiModelProperty(example = "null", value = "", name = "suppliername")
+	@ApiModelProperty(name = "suppliername", example = "null", value = "")
 	protected String supplierName;
-	@ApiModelProperty(example = "null", value = "", name = "supplieraddress")
+	@ApiModelProperty(name = "supplieraddress", example = "null", value = "")
 	protected String supplieraddress;
-	@ApiModelProperty(example = "null", value = "", name = "corporationcode")
+	@ApiModelProperty(name = "corporationcode", example = "null", value = "")
 	protected String corporationCode;
-	@ApiModelProperty(example = "null", value = "", name = "corporationname")
+	@ApiModelProperty(name = "corporationname", example = "null", value = "")
 	protected String corporationName;
-	@ApiModelProperty(example = "null", value = "", name = "corporationaddress")
+	@ApiModelProperty(name = "corporationaddress", example = "null", value = "")
 	protected String corporationAddress;
-	@ApiModelProperty(example = "null", value = "", name = "applicantprofileid")
+	@ApiModelProperty(name = "applicantprofileid", example = "null", value = "")
 	protected Long applicantprofileId;
-	@ApiModelProperty(example = "null", value = "", name = "productplantid")
+	@ApiModelProperty(name = "productplantid", example = "null", value = "")
 	protected Long productPlantID;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantcode")
+	@ApiModelProperty(name = "productionplantcode", example = "null", value = "")
 	protected String productionPlantCode;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantname")
+	@ApiModelProperty(name = "productionplantname", example = "null", value = "")
 	protected String productionPlantName;
-	@ApiModelProperty(example = "null", value = "", name = "productionplantaddress")
+	@ApiModelProperty(name = "productionplantaddress", example = "null", value = "")
 	protected String productionPlantAddress;
-	@ApiModelProperty(example = "null", value = "", name = "markupimporter")
+	@ApiModelProperty(name = "markupimporter", example = "null", value = "")
 	protected Integer markupImporter;
-	@ApiModelProperty(example = "null", value = "", name = "mappingma_cty")
+	@ApiModelProperty(name = "mappingma_cty", example = "null", value = "")
 	protected String mappingMA_CTY;
-	@ApiModelProperty(example = "null", value = "", name = "mappingten_cty")
+	@ApiModelProperty(name = "mappingten_cty", example = "null", value = "")
 	protected String mappingTEN_CTY;
-	@ApiModelProperty(example = "null", value = "", name = "mappingdia_chi_cty")
+	@ApiModelProperty(name = "mappingdia_chi_cty", example = "null", value = "")
 	protected String mappingDIA_CHI_CTY;
-	@ApiModelProperty(example = "null", value = "", name = "mappingma_xuong_lr")
+	@ApiModelProperty(name = "mappingma_xuong_lr", example = "null", value = "")
 	protected String mappingMA_XUONG_LR;
-	@ApiModelProperty(example = "null", value = "", name = "mappingten_xuong_lr")
+	@ApiModelProperty(name = "mappingten_xuong_lr", example = "null", value = "")
 	protected String mappingTEN_XUONG_LR;
-	@ApiModelProperty(example = "null", value = "", name = "mappingdia_chi_xuong_lr")
+	@ApiModelProperty(name = "mappingdia_chi_xuong_lr", example = "null", value = "")
 	protected String mappingDIA_CHI_XUONG_LR;
-	@ApiModelProperty(example = "null", value = "", name = "modifydate")
+	@ApiModelProperty(name = "modifydate", example = "null", value = "")
 	protected String modifyDate;
-	@ApiModelProperty(example = "null", value = "", name = "syncdate")
+	@ApiModelProperty(name = "syncdate", example = "null", value = "")
 	protected String syncDate;
 
 	public Long getId() {
