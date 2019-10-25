@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.VRProductionPlantProdEquipment;
 import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
@@ -136,6 +137,18 @@ public class VRProductionPlantProdEquipmentLocalServiceImpl
 			}
 		}
 		return result;
+	}
+	
+	public VRProductionPlantProdEquipment updatePlantProdEquipment(VRProductionPlantProdEquipment object) {
+
+		if (object.getId() <= 0) {
+
+			long id = counterLocalService.increment(VRProductionPlantProdEquipment.class.getName());
+
+			object = vrProductionPlantProdEquipmentPersistence.create(id);
+		}
+
+		return vrProductionPlantProdEquipmentPersistence.update(object);
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantProdEquipmentLocalServiceImpl.class);

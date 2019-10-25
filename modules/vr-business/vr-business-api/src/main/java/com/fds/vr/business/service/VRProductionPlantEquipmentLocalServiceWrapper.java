@@ -104,6 +104,12 @@ public class VRProductionPlantEquipmentLocalServiceWrapper
 
 	@Override
 	public com.fds.vr.business.model.VRProductionPlantEquipment updateProductionPlantEquipment(
+		com.fds.vr.business.model.VRProductionPlantEquipment object) {
+		return _vrProductionPlantEquipmentLocalService.updateProductionPlantEquipment(object);
+	}
+
+	@Override
+	public com.fds.vr.business.model.VRProductionPlantEquipment updateProductionPlantEquipment(
 		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
 		return _vrProductionPlantEquipmentLocalService.updateProductionPlantEquipment(mapValues,
 			mtCore);

@@ -104,6 +104,12 @@ public class VRProductionPlantEmployeeLocalServiceWrapper
 
 	@Override
 	public com.fds.vr.business.model.VRProductionPlantEmployee updateProductionPlantEmployee(
+		com.fds.vr.business.model.VRProductionPlantEmployee object) {
+		return _vrProductionPlantEmployeeLocalService.updateProductionPlantEmployee(object);
+	}
+
+	@Override
+	public com.fds.vr.business.model.VRProductionPlantEmployee updateProductionPlantEmployee(
 		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
 		return _vrProductionPlantEmployeeLocalService.updateProductionPlantEmployee(mapValues,
 			mtCore);
