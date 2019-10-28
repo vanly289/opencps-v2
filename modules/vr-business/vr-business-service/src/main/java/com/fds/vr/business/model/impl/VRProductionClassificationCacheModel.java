@@ -67,11 +67,9 @@ public class VRProductionClassificationCacheModel implements CacheModel<VRProduc
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{uuid=");
-		sb.append(uuid);
-		sb.append(", id=");
+		sb.append("{id=");
 		sb.append(id);
 		sb.append(", mtCore=");
 		sb.append(mtCore);
@@ -107,13 +105,6 @@ public class VRProductionClassificationCacheModel implements CacheModel<VRProduc
 	@Override
 	public VRProductionClassification toEntityModel() {
 		VRProductionClassificationImpl vrProductionClassificationImpl = new VRProductionClassificationImpl();
-
-		if (uuid == null) {
-			vrProductionClassificationImpl.setUuid(StringPool.BLANK);
-		}
-		else {
-			vrProductionClassificationImpl.setUuid(uuid);
-		}
 
 		vrProductionClassificationImpl.setId(id);
 		vrProductionClassificationImpl.setMtCore(mtCore);
@@ -193,8 +184,6 @@ public class VRProductionClassificationCacheModel implements CacheModel<VRProduc
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		uuid = objectInput.readUTF();
-
 		id = objectInput.readLong();
 
 		mtCore = objectInput.readLong();
@@ -218,13 +207,6 @@ public class VRProductionClassificationCacheModel implements CacheModel<VRProduc
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(uuid);
-		}
-
 		objectOutput.writeLong(id);
 
 		objectOutput.writeLong(mtCore);
@@ -288,7 +270,6 @@ public class VRProductionClassificationCacheModel implements CacheModel<VRProduc
 		objectOutput.writeLong(syncDate);
 	}
 
-	public String uuid;
 	public long id;
 	public long mtCore;
 	public long applicantProfileId;

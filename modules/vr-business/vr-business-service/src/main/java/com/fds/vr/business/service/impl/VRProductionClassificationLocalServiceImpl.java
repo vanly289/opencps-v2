@@ -21,6 +21,7 @@ import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRProductType;
 import com.fds.vr.business.model.VRProductionClassification;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
+import com.fds.vr.business.model.VRProductionPlantProdEquipment;
 import com.fds.vr.business.model.impl.VRProductTypeImpl;
 import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
 import com.fds.vr.business.service.base.VRProductionClassificationLocalServiceBaseImpl;
@@ -112,6 +113,18 @@ public class VRProductionClassificationLocalServiceImpl
 		//object.setSyncDate(ConvertFormatDate.parseStringToDate(mapValues.get("syncDate")));
 		
 		object.setProductionPlantCode(mapValues.get("productionPlantCode"));
+
+		return vrProductionClassificationPersistence.update(object);
+	}
+	
+	public VRProductionClassification updateProductionClassification(VRProductionClassification object) {
+
+		if (object.getId() <= 0) {
+
+			long id = counterLocalService.increment(VRProductionClassification.class.getName());
+
+			object = vrProductionClassificationPersistence.create(id);
+		}
 
 		return vrProductionClassificationPersistence.update(object);
 	}

@@ -2,13 +2,16 @@ package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRProductionPlantAction;
 import com.fds.vr.business.action.impl.VRProductionPlantActionImpl;
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.model.VRProductType;
+import com.fds.vr.business.model.VRProductionClassification;
 import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.model.VRProductionPlantEmployee;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.VRProductionPlantProdEquipment;
 import com.fds.vr.business.model.impl.VRProductTypeImpl;
 import com.fds.vr.business.model.impl.VRProductTypeModelImpl;
+import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantEmployeeImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
@@ -22,6 +25,7 @@ import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantProdEquipmentLocalServiceUtil;
 import com.fds.vr.controler.VRProductionManagement;
 import com.fds.vr.model.VRProductTypeApiModel;
+import com.fds.vr.model.VRProductionClassificationApiModel;
 import com.fds.vr.model.VRProductionPlantApiModel;
 import com.fds.vr.model.VRProductionPlantBeanParam;
 import com.fds.vr.model.VRProductionPlantEmployeeApiModel;
@@ -30,6 +34,7 @@ import com.fds.vr.model.VRProductionPlantProdEquipmentApiModel;
 import com.fds.vr.util.VRRestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -168,7 +173,6 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	public Response updateVRProductionPlant(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantApiModel model) {
 
-		_log.info("=============>>>> model:" + model.getMappingNote());
 
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		VRProductionPlant targetModel = new VRProductionPlantImpl();
@@ -182,6 +186,16 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		VRProductionPlant object = (VRProductionPlant) VRRestUtil.mappingModel(model, VRProductionPlantApiModel.class,
 				targetModel, VRProductionPlantModelImpl.class);
+		
+		
+		object = VRProductionPlantLocalServiceUtil.updateProductionPlant(object);
+		
+		try {
+			result = ActionUtil.object2Json(object, VRProductionPlantImpl.class, StringPool.BLANK);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return Response.status(200).entity(result.toString()).build();
 	}
@@ -197,7 +211,6 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	public Response updateVRProductType(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, VRProductTypeApiModel model) {
 
-		_log.info("=============>>>> model:" + model.getId());
 
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		VRProductType targetModel = new VRProductTypeImpl();
@@ -211,6 +224,15 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		VRProductType object = (VRProductType) VRRestUtil.mappingModel(model, VRProductTypeApiModel.class, targetModel,
 				VRProductTypeModelImpl.class);
+		
+		object = VRProductTypeLocalServiceUtil.updateVRProductType(object);
+		
+		try {
+			result = ActionUtil.object2Json(object, VRProductTypeImpl.class, StringPool.BLANK);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return Response.status(200).entity(result.toString()).build();
 	}
@@ -226,8 +248,6 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	public Response updateVRProductionPlantProdEquiment(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantProdEquipmentApiModel model) {
 
-		_log.info("=============>>>> model:" + model.getId());
-
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		VRProductionPlantProdEquipment targetModel = new VRProductionPlantProdEquipmentImpl();
 		try {
@@ -241,6 +261,15 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		VRProductionPlantProdEquipment object = (VRProductionPlantProdEquipment) VRRestUtil.mappingModel(model,
 				VRProductionPlantProdEquipmentApiModel.class, targetModel, VRProductionPlantProdEquipmentImpl.class);
+		
+		object = VRProductionPlantProdEquipmentLocalServiceUtil.updatePlantProdEquipment(object);
+		
+		try {
+			result = ActionUtil.object2Json(object, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return Response.status(200).entity(result.toString()).build();
 	}
@@ -256,8 +285,6 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	public Response updateVRProductionPlantEquiptment(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model) {
 
-		_log.info("=============>>>> model:" + model.getId());
-
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		VRProductionPlantEquipment targetModel = new VRProductionPlantEquipmentImpl();
 		try {
@@ -270,6 +297,16 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
 				VRProductionPlantEquipmentApiModel.class, targetModel, VRProductTypeModelImpl.class);
+		
+		
+		object = VRProductionPlantEquipmentLocalServiceUtil.updateProductionPlantEquipment(object);
+		
+		try {
+			result = ActionUtil.object2Json(object, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return Response.status(200).entity(result.toString()).build();
 	}
@@ -285,7 +322,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	public Response updateVRProductionPlantEmployee(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model) {
 
-		_log.info("=============>>>> model:" + model.getId());
+	
 
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		VRProductionPlantEmployee targetModel = new VRProductionPlantEmployeeImpl();
@@ -299,6 +336,15 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		VRProductionPlantEmployee object = (VRProductionPlantEmployee) VRRestUtil.mappingModel(model,
 				VRProductionPlantEmployeeApiModel.class, targetModel, VRProductionPlantEmployeeImpl.class);
+		
+		object = VRProductionPlantEmployeeLocalServiceUtil.updateProductionPlantEmployee(object);
+		
+		try {
+			result = ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return Response.status(200).entity(result.toString()).build();
 	}
@@ -308,5 +354,44 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model) {
 
 		return updateVRProductionPlantEmployee(request, header, company, locale, user, serviceContext, model);
+	}
+	
+	
+	@Override
+	public Response updateVRProductionClassification(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRProductionClassificationApiModel model) {
+
+	
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		VRProductionClassification targetModel = new VRProductionClassificationImpl();
+		try {
+			targetModel = VRProductionClassificationLocalServiceUtil.getVRProductionClassification(model.getId());
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+		VRProductionClassification object = (VRProductionClassification) VRRestUtil.mappingModel(model,
+				VRProductionClassificationApiModel.class, targetModel, VRProductionClassificationImpl.class);
+		
+		object = VRProductionClassificationLocalServiceUtil.updateProductionClassification(object);
+		
+		try {
+			result = ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return Response.status(200).entity(result.toString()).build();
+	}
+
+	@Override
+	public Response createVRProductionClassification(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRProductionClassificationApiModel model) {
+
+		return updateVRProductionClassification(request, header, company, locale, user, serviceContext, model);
 	}
 }

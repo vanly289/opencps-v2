@@ -60,7 +60,6 @@ public class VRProductionClassificationWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
 		attributes.put("applicantProfileId", getApplicantProfileId());
@@ -83,12 +82,6 @@ public class VRProductionClassificationWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long id = (Long)attributes.get("id");
 
 		if (id != null) {
@@ -311,16 +304,6 @@ public class VRProductionClassificationWrapper
 	@Override
 	public java.lang.String getStatus() {
 		return _vrProductionClassification.getStatus();
-	}
-
-	/**
-	* Returns the uuid of this vr production classification.
-	*
-	* @return the uuid of this vr production classification
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _vrProductionClassification.getUuid();
 	}
 
 	@Override
@@ -589,16 +572,6 @@ public class VRProductionClassificationWrapper
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_vrProductionClassification.setSyncDate(syncDate);
-	}
-
-	/**
-	* Sets the uuid of this vr production classification.
-	*
-	* @param uuid the uuid of this vr production classification
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_vrProductionClassification.setUuid(uuid);
 	}
 
 	@Override

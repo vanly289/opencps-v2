@@ -116,6 +116,9 @@ public interface VRProductionClassificationLocalService extends BaseLocalService
 	public VRProductionClassification getVRProductionClassification(long id)
 		throws PortalException;
 
+	public VRProductionClassification updateProductionClassification(
+		VRProductionClassification object);
+
 	/**
 	* Updates the vr production classification in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

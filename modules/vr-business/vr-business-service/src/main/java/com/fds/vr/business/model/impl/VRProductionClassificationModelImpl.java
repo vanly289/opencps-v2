@@ -63,7 +63,6 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	 */
 	public static final String TABLE_NAME = "vr_productclassification";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
 			{ "id", Types.BIGINT },
 			{ "mtCore", Types.BIGINT },
 			{ "applicantProfileId", Types.BIGINT },
@@ -82,7 +81,6 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("id", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("mtCore", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("applicantProfileId", Types.BIGINT);
@@ -99,7 +97,7 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productclassification (uuid_ VARCHAR(75) null,id LONG not null primary key,mtCore LONG,applicantProfileId LONG,applicantCode VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,sequenceNo INTEGER,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,classificationModel VARCHAR(75) null,remarks VARCHAR(75) null,status VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productclassification (id LONG not null primary key,mtCore LONG,applicantProfileId LONG,applicantCode VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,sequenceNo INTEGER,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,classificationModel VARCHAR(75) null,remarks VARCHAR(75) null,status VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productclassification";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionClassification.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productclassification.modifyDate DESC";
@@ -116,8 +114,7 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRProductionClassification"),
 			true);
 	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 1L;
-	public static final long UUID_COLUMN_BITMASK = 2L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 4L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductionClassification"));
 
@@ -158,7 +155,6 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
 		attributes.put("applicantProfileId", getApplicantProfileId());
@@ -184,12 +180,6 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long id = (Long)attributes.get("id");
 
 		if (id != null) {
@@ -277,29 +267,6 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 		if (syncDate != null) {
 			setSyncDate(syncDate);
 		}
-	}
-
-	@Override
-	public String getUuid() {
-		if (_uuid == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _uuid;
-		}
-	}
-
-	@Override
-	public void setUuid(String uuid) {
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
-		}
-
-		_uuid = uuid;
-	}
-
-	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
 	}
 
 	@Override
@@ -521,7 +488,6 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	public Object clone() {
 		VRProductionClassificationImpl vrProductionClassificationImpl = new VRProductionClassificationImpl();
 
-		vrProductionClassificationImpl.setUuid(getUuid());
 		vrProductionClassificationImpl.setId(getId());
 		vrProductionClassificationImpl.setMtCore(getMtCore());
 		vrProductionClassificationImpl.setApplicantProfileId(getApplicantProfileId());
@@ -599,8 +565,6 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	public void resetOriginalValues() {
 		VRProductionClassificationModelImpl vrProductionClassificationModelImpl = this;
 
-		vrProductionClassificationModelImpl._originalUuid = vrProductionClassificationModelImpl._uuid;
-
 		vrProductionClassificationModelImpl._originalProductionPlantCode = vrProductionClassificationModelImpl._productionPlantCode;
 
 		vrProductionClassificationModelImpl._columnBitmask = 0;
@@ -610,14 +574,6 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	public CacheModel<VRProductionClassification> toCacheModel() {
 		VRProductionClassificationCacheModel vrProductionClassificationCacheModel =
 			new VRProductionClassificationCacheModel();
-
-		vrProductionClassificationCacheModel.uuid = getUuid();
-
-		String uuid = vrProductionClassificationCacheModel.uuid;
-
-		if ((uuid != null) && (uuid.length() == 0)) {
-			vrProductionClassificationCacheModel.uuid = null;
-		}
 
 		vrProductionClassificationCacheModel.id = getId();
 
@@ -712,11 +668,9 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", id=");
+		sb.append("{id=");
 		sb.append(getId());
 		sb.append(", mtCore=");
 		sb.append(getMtCore());
@@ -751,16 +705,12 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductionClassification");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>id</column-name><column-value><![CDATA[");
 		sb.append(getId());
@@ -827,8 +777,6 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			VRProductionClassification.class
 		};
-	private String _uuid;
-	private String _originalUuid;
 	private long _id;
 	private long _mtCore;
 	private long _applicantProfileId;
