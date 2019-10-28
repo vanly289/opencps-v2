@@ -63,21 +63,6 @@ public interface VRProductionClassificationModel extends BaseModel<VRProductionC
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this vr production classification.
-	 *
-	 * @return the uuid of this vr production classification
-	 */
-	@AutoEscape
-	public String getUuid();
-
-	/**
-	 * Sets the uuid of this vr production classification.
-	 *
-	 * @param uuid the uuid of this vr production classification
-	 */
-	public void setUuid(String uuid);
-
-	/**
 	 * Returns the ID of this vr production classification.
 	 *
 	 * @return the ID of this vr production classification

@@ -34,7 +34,6 @@ public class VRProductionClassificationSoap implements Serializable {
 		VRProductionClassification model) {
 		VRProductionClassificationSoap soapModel = new VRProductionClassificationSoap();
 
-		soapModel.setUuid(model.getUuid());
 		soapModel.setId(model.getId());
 		soapModel.setMtCore(model.getMtCore());
 		soapModel.setApplicantProfileId(model.getApplicantProfileId());
@@ -102,14 +101,6 @@ public class VRProductionClassificationSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setId(pk);
-	}
-
-	public String getUuid() {
-		return _uuid;
-	}
-
-	public void setUuid(String uuid) {
-		_uuid = uuid;
 	}
 
 	public long getId() {
@@ -225,7 +216,6 @@ public class VRProductionClassificationSoap implements Serializable {
 		_syncDate = syncDate;
 	}
 
-	private String _uuid;
 	private long _id;
 	private long _mtCore;
 	private long _applicantProfileId;

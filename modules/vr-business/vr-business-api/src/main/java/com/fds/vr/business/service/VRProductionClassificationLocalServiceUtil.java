@@ -106,6 +106,11 @@ public class VRProductionClassificationLocalServiceUtil {
 		return getService().getVRProductionClassification(id);
 	}
 
+	public static com.fds.vr.business.model.VRProductionClassification updateProductionClassification(
+		com.fds.vr.business.model.VRProductionClassification object) {
+		return getService().updateProductionClassification(object);
+	}
+
 	/**
 	* Updates the vr production classification in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

@@ -44,7 +44,7 @@ public interface VRApplicantManagement {
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@BeanParam VRApplicantProfileBeanParam query);
 	
-	@PUT
+	@POST
 	@Path("/applicant/")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces(MediaType.APPLICATION_JSON)
@@ -53,7 +53,7 @@ public interface VRApplicantManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, VRApplicantProfileApiModel model);
 	
-	@POST
+	@PUT
 	@Path("/applicant/")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces(MediaType.APPLICATION_JSON)
