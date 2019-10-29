@@ -222,7 +222,7 @@ public class VRProductionPlantEquipmentLocalServiceImpl
 		return result;
 	}
 	
-	public VRProductionPlantEquipment updateProductionPlantEquipment(VRProductionPlantEquipment object) {
+	public VRProductionPlantEquipment updateProductionPlantEquipment(VRProductionPlantEquipment object) throws SystemException {
 
 		if (object.getId() <= 0) {
 
@@ -230,6 +230,7 @@ public class VRProductionPlantEquipmentLocalServiceImpl
 
 			object = vrProductionPlantEquipmentPersistence.create(id);
 		}
+		
 
 		return vrProductionPlantEquipmentPersistence.update(object);
 	}

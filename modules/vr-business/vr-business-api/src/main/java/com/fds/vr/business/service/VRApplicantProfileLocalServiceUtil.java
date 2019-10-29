@@ -119,9 +119,11 @@ public class VRApplicantProfileLocalServiceUtil {
 	*
 	* @param vrApplicantProfile the vr applicant profile
 	* @return the vr applicant profile that was updated
+	* @throws SystemException
 	*/
 	public static com.fds.vr.business.model.VRApplicantProfile updateVRApplicantProfile(
-		com.fds.vr.business.model.VRApplicantProfile vrApplicantProfile) {
+		com.fds.vr.business.model.VRApplicantProfile vrApplicantProfile)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateVRApplicantProfile(vrApplicantProfile);
 	}
 

@@ -107,7 +107,8 @@ public class VRProductionClassificationLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRProductionClassification updateProductionClassification(
-		com.fds.vr.business.model.VRProductionClassification object) {
+		com.fds.vr.business.model.VRProductionClassification object)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateProductionClassification(object);
 	}
 
