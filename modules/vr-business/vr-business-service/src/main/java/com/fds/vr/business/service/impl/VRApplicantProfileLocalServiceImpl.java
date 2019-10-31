@@ -210,7 +210,7 @@ public class VRApplicantProfileLocalServiceImpl
 
 			long id = counterLocalService.increment(VRApplicantProfile.class.getName());
 
-			object = vrApplicantProfilePersistence.create(id);
+			object.setId(id);
 		}
 
 		return vrApplicantProfilePersistence.update(object);

@@ -43,7 +43,7 @@ public class VRProductionClassificationSoap implements Serializable {
 		soapModel.setSequenceNo(model.getSequenceNo());
 		soapModel.setProductClassificationCode(model.getProductClassificationCode());
 		soapModel.setProductClassificationDescription(model.getProductClassificationDescription());
-		soapModel.setClassificationModel(model.getClassificationModel());
+		soapModel.setClassificationMode(model.getClassificationMode());
 		soapModel.setRemarks(model.getRemarks());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setModifyDate(model.getModifyDate());
@@ -176,12 +176,12 @@ public class VRProductionClassificationSoap implements Serializable {
 		_productClassificationDescription = productClassificationDescription;
 	}
 
-	public String getClassificationModel() {
-		return _classificationModel;
+	public String getClassificationMode() {
+		return _classificationMode;
 	}
 
-	public void setClassificationModel(String classificationModel) {
-		_classificationModel = classificationModel;
+	public void setClassificationMode(String classificationMode) {
+		_classificationMode = classificationMode;
 	}
 
 	public String getRemarks() {
@@ -225,7 +225,7 @@ public class VRProductionClassificationSoap implements Serializable {
 	private int _sequenceNo;
 	private String _productClassificationCode;
 	private String _productClassificationDescription;
-	private String _classificationModel;
+	private String _classificationMode;
 	private String _remarks;
 	private String _status;
 	private Date _modifyDate;

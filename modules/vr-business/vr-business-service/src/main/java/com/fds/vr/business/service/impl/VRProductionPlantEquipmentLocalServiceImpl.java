@@ -228,7 +228,7 @@ public class VRProductionPlantEquipmentLocalServiceImpl
 
 			long id = counterLocalService.increment(VRProductionPlantEquipment.class.getName());
 
-			object = vrProductionPlantEquipmentPersistence.create(id);
+			object.setId(id);
 		}
 		
 

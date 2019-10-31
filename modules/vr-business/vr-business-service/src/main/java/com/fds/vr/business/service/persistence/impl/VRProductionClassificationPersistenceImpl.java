@@ -934,7 +934,7 @@ public class VRProductionClassificationPersistenceImpl
 		vrProductionClassificationImpl.setSequenceNo(vrProductionClassification.getSequenceNo());
 		vrProductionClassificationImpl.setProductClassificationCode(vrProductionClassification.getProductClassificationCode());
 		vrProductionClassificationImpl.setProductClassificationDescription(vrProductionClassification.getProductClassificationDescription());
-		vrProductionClassificationImpl.setClassificationModel(vrProductionClassification.getClassificationModel());
+		vrProductionClassificationImpl.setClassificationMode(vrProductionClassification.getClassificationMode());
 		vrProductionClassificationImpl.setRemarks(vrProductionClassification.getRemarks());
 		vrProductionClassificationImpl.setStatus(vrProductionClassification.getStatus());
 		vrProductionClassificationImpl.setModifyDate(vrProductionClassification.getModifyDate());

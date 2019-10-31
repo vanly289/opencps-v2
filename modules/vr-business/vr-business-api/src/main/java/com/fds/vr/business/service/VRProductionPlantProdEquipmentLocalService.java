@@ -146,6 +146,10 @@ public interface VRProductionPlantProdEquipmentLocalService
 		java.lang.String productionPlantCode)
 		throws PortalException, SystemException;
 
+	public JSONArray findByProductionPlanCode(
+		java.lang.String[] productionPlantCodes)
+		throws PortalException, SystemException;
+
 	public JSONArray findData(java.lang.String sql,
 		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
 		java.lang.Class<?> modelClazz, java.lang.String modelClassName,

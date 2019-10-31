@@ -1,7 +1,9 @@
 package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRApplicantProfileAction;
+import com.fds.vr.business.action.VRProductionPlantAction;
 import com.fds.vr.business.action.impl.VRApplicantProfileActionImpl;
+import com.fds.vr.business.action.impl.VRProductionPlantActionImpl;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.exception.NoSuchVRApplicantProfileException;
 import com.fds.vr.business.exception.NoSuchVRProductionPlantException;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
@@ -90,7 +93,6 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
 			VRApplicantProfile targetModel = new VRApplicantProfileImpl();
 
 			targetModel = VRApplicantProfileLocalServiceUtil.getVRApplicantProfile(model.getId());
@@ -98,34 +100,29 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 			VRApplicantProfile object = (VRApplicantProfile) VRRestUtil.mappingModel(model,
 					VRProductionPlantEmployeeApiModel.class, targetModel, VRApplicantProfileImpl.class);
 
-			object = VRApplicantProfileLocalServiceUtil.updateVRApplicantProfile(object);
+			VRApplicantProfileAction action = new VRApplicantProfileActionImpl();
 
-			result = ActionUtil.object2Json(object, VRApplicantProfileImpl.class, StringPool.BLANK);
+			JSONObject result = action.updateVRApplicantProfile(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (SystemException | PortalException | NullPointerException e) {
 
 			ErrorMsg error = new ErrorMsg();
 			if (e instanceof NoSuchVRApplicantProfileException) {
 
-				error.setCode(500);
-				error.setMessage(NoSuchVRApplicantProfileException.class.toString());
 				error.setDescription("id not found");
 
 			} else if (e instanceof NullPointerException) {
 
-				error.setCode(500);
-				error.setMessage(NullPointerException.class.toString());
 				error.setDescription("id required");
 
 			} else {
 
 				_log.error(e);
-				error.setMessage(e.toString());
 			}
 
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
 		}
 
 	}
@@ -136,28 +133,22 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
-			VRApplicantProfile targetModel = new VRApplicantProfileImpl();
-
-			model.setId((long) 0);
+	
 
 			VRApplicantProfile object = (VRApplicantProfile) VRRestUtil.mappingModel(model,
-					VRProductionPlantEmployeeApiModel.class, targetModel, VRApplicantProfileImpl.class);
+					VRProductionPlantEmployeeApiModel.class, new VRApplicantProfileImpl(), VRApplicantProfileImpl.class);
 
-			object = VRApplicantProfileLocalServiceUtil.updateVRApplicantProfile(object);
+			VRApplicantProfileAction action = new VRApplicantProfileActionImpl();
 
-			result = ActionUtil.object2Json(object, VRApplicantProfileImpl.class, StringPool.BLANK);
+			JSONObject result = action.createVRApplicantProfile(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+
+			
 		} catch (Exception e) {
 			_log.error(e);
 
-			ErrorMsg error = new ErrorMsg();
-
-			error.setCode(500);
-			error.setMessage(e.toString());
-
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
 		}
 
 	}

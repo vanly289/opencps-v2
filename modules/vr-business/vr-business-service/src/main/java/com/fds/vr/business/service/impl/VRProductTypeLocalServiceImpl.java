@@ -146,7 +146,7 @@ public class VRProductTypeLocalServiceImpl
 
 			long id = counterLocalService.increment(VRProductType.class.getName());
 
-			object = vrProductTypePersistence.create(id);
+			object.setId(id);
 		}
 
 		return vrProductTypePersistence.update(object);
