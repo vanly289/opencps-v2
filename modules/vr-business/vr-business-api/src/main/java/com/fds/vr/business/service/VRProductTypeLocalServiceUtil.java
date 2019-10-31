@@ -114,9 +114,11 @@ public class VRProductTypeLocalServiceUtil {
 	*
 	* @param vrProductType the vr product type
 	* @return the vr product type that was updated
+	* @throws SystemException
 	*/
 	public static com.fds.vr.business.model.VRProductType updateVRProductType(
-		com.fds.vr.business.model.VRProductType vrProductType) {
+		com.fds.vr.business.model.VRProductType vrProductType)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateVRProductType(vrProductType);
 	}
 

@@ -140,7 +140,7 @@ public class VRProductTypeLocalServiceImpl
 		return result;
 	}
 	
-	public VRProductType updateVRProductType(VRProductType object) {
+	public VRProductType updateVRProductType(VRProductType object) throws SystemException {
 
 		if (object.getId() <= 0) {
 

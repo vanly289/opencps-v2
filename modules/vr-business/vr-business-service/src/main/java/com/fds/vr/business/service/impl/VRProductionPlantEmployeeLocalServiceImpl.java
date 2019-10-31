@@ -128,7 +128,7 @@ public class VRProductionPlantEmployeeLocalServiceImpl
 		return result;
 	}
 	
-	public VRProductionPlantEmployee updateProductionPlantEmployee(VRProductionPlantEmployee object) {
+	public VRProductionPlantEmployee updateProductionPlantEmployee(VRProductionPlantEmployee object) throws SystemException {
 
 		if (object.getId() <= 0) {
 

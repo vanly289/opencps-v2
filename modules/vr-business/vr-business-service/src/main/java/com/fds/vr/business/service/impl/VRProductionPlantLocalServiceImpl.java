@@ -192,7 +192,7 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 		return vrProductionPlantFinder.countData(sql);
 	}
 	
-	public VRProductionPlant updateProductionPlant(VRProductionPlant object) {
+	public VRProductionPlant updateProductionPlant(VRProductionPlant object) throws SystemException {
 
 		if (object.getId() <= 0) {
 

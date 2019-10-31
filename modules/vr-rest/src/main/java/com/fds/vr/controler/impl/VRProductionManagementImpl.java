@@ -3,6 +3,12 @@ package com.fds.vr.controler.impl;
 import com.fds.vr.business.action.VRProductionPlantAction;
 import com.fds.vr.business.action.impl.VRProductionPlantActionImpl;
 import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.exception.NoSuchVRProductTypeException;
+import com.fds.vr.business.exception.NoSuchVRProductionClassificationException;
+import com.fds.vr.business.exception.NoSuchVRProductionPlantEmployeeException;
+import com.fds.vr.business.exception.NoSuchVRProductionPlantEquipmentException;
+import com.fds.vr.business.exception.NoSuchVRProductionPlantException;
+import com.fds.vr.business.exception.NoSuchVRProductionPlantProdEquipmentException;
 import com.fds.vr.business.model.VRProductType;
 import com.fds.vr.business.model.VRProductionClassification;
 import com.fds.vr.business.model.VRProductionPlant;
@@ -33,6 +39,7 @@ import com.fds.vr.model.VRProductionPlantEquipmentApiModel;
 import com.fds.vr.model.VRProductionPlantProdEquipmentApiModel;
 import com.fds.vr.util.VRRestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -43,6 +50,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -173,225 +181,472 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	public Response updateVRProductionPlant(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantApiModel model) {
 
-
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		VRProductionPlant targetModel = new VRProductionPlantImpl();
 		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductionPlant targetModel = new VRProductionPlantImpl();
+
 			targetModel = VRProductionPlantLocalServiceUtil.getVRProductionPlant(model.getId());
-		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 
-		}
+			VRProductionPlant object = (VRProductionPlant) VRRestUtil.mappingModel(model,
+					VRProductionPlantApiModel.class, targetModel, VRProductionPlantModelImpl.class);
 
-		VRProductionPlant object = (VRProductionPlant) VRRestUtil.mappingModel(model, VRProductionPlantApiModel.class,
-				targetModel, VRProductionPlantModelImpl.class);
-		
-		
-		object = VRProductionPlantLocalServiceUtil.updateProductionPlant(object);
-		
-		try {
+			object = VRProductionPlantLocalServiceUtil.updateProductionPlant(object);
+
 			result = ActionUtil.object2Json(object, VRProductionPlantImpl.class, StringPool.BLANK);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (SystemException | PortalException | NullPointerException e) {
+
+			ErrorMsg error = new ErrorMsg();
+			if (e instanceof NoSuchVRProductionPlantException) {
+
+				error.setCode(500);
+				error.setMessage(NoSuchVRProductionPlantException.class.toString());
+				error.setDescription("id not found");
+
+			} else if (e instanceof NullPointerException) {
+
+				error.setCode(500);
+				error.setMessage(NullPointerException.class.toString());
+				error.setDescription("id required");
+
+			} else {
+
+				_log.error(e);
+				error.setMessage(e.toString());
+			}
+
+			return Response.status(500).entity(error).build();
 		}
 
-		return Response.status(200).entity(result.toString()).build();
 	}
 
 	@Override
 	public Response createVRProductionPlant(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantApiModel model) {
 
-		return updateVRProductionPlant(request, header, company, locale, user, serviceContext, model);
+		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductionPlant targetModel = new VRProductionPlantImpl();
+
+			model.setId((long) 0);
+
+			VRProductionPlant object = (VRProductionPlant) VRRestUtil.mappingModel(model,
+					VRProductionPlantApiModel.class, targetModel, VRProductionPlantModelImpl.class);
+
+			object = VRProductionPlantLocalServiceUtil.updateProductionPlant(object);
+
+			result = ActionUtil.object2Json(object, VRProductionPlantImpl.class, StringPool.BLANK);
+
+			return Response.status(200).entity(result.toString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+
+			ErrorMsg error = new ErrorMsg();
+
+			error.setCode(500);
+			error.setMessage(e.toString());
+
+			return Response.status(500).entity(error).build();
+		}
+
 	}
 
 	@Override
 	public Response updateVRProductType(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, VRProductTypeApiModel model) {
 
-
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		VRProductType targetModel = new VRProductTypeImpl();
 		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductType targetModel = new VRProductTypeImpl();
+
 			targetModel = VRProductTypeLocalServiceUtil.getVRProductType(model.getId());
-		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 
-		}
+			VRProductType object = (VRProductType) VRRestUtil.mappingModel(model, VRProductTypeApiModel.class,
+					targetModel, VRProductTypeModelImpl.class);
 
-		VRProductType object = (VRProductType) VRRestUtil.mappingModel(model, VRProductTypeApiModel.class, targetModel,
-				VRProductTypeModelImpl.class);
-		
-		object = VRProductTypeLocalServiceUtil.updateVRProductType(object);
-		
-		try {
+			object = VRProductTypeLocalServiceUtil.updateVRProductType(object);
+
 			result = ActionUtil.object2Json(object, VRProductTypeImpl.class, StringPool.BLANK);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (SystemException | PortalException | NullPointerException e) {
+
+			ErrorMsg error = new ErrorMsg();
+			if (e instanceof NoSuchVRProductTypeException) {
+
+				error.setCode(500);
+				error.setMessage(NoSuchVRProductTypeException.class.toString());
+				error.setDescription("id not found");
+
+			} else if (e instanceof NullPointerException) {
+
+				error.setCode(500);
+				error.setMessage(NullPointerException.class.toString());
+				error.setDescription("id required");
+
+			} else {
+
+				_log.error(e);
+				error.setMessage(e.toString());
+			}
+
+			return Response.status(500).entity(error).build();
 		}
 
-		return Response.status(200).entity(result.toString()).build();
 	}
 
 	@Override
 	public Response createVRProductType(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, VRProductTypeApiModel model) {
 
-		return updateVRProductType(request, header, company, locale, user, serviceContext, model);
+		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductType targetModel = new VRProductTypeImpl();
+
+			model.setId((long) 0);
+
+			VRProductType object = (VRProductType) VRRestUtil.mappingModel(model, VRProductTypeApiModel.class,
+					targetModel, VRProductTypeModelImpl.class);
+
+			object = VRProductTypeLocalServiceUtil.updateVRProductType(object);
+
+			result = ActionUtil.object2Json(object, VRProductTypeImpl.class, StringPool.BLANK);
+
+			return Response.status(200).entity(result.toString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+
+			ErrorMsg error = new ErrorMsg();
+
+			error.setCode(500);
+			error.setMessage(e.toString());
+
+			return Response.status(500).entity(error).build();
+		}
+
 	}
 
 	@Override
 	public Response updateVRProductionPlantProdEquiment(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantProdEquipmentApiModel model) {
 
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		VRProductionPlantProdEquipment targetModel = new VRProductionPlantProdEquipmentImpl();
 		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductionPlantProdEquipment targetModel = new VRProductionPlantProdEquipmentImpl();
+
 			targetModel = VRProductionPlantProdEquipmentLocalServiceUtil
 					.getVRProductionPlantProdEquipment(model.getId());
-		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 
-		}
+			VRProductionPlantProdEquipment object = (VRProductionPlantProdEquipment) VRRestUtil.mappingModel(model,
+					VRProductionPlantProdEquipmentApiModel.class, targetModel,
+					VRProductionPlantProdEquipmentImpl.class);
 
-		VRProductionPlantProdEquipment object = (VRProductionPlantProdEquipment) VRRestUtil.mappingModel(model,
-				VRProductionPlantProdEquipmentApiModel.class, targetModel, VRProductionPlantProdEquipmentImpl.class);
-		
-		object = VRProductionPlantProdEquipmentLocalServiceUtil.updatePlantProdEquipment(object);
-		
-		try {
+			object = VRProductionPlantProdEquipmentLocalServiceUtil.updatePlantProdEquipment(object);
+
 			result = ActionUtil.object2Json(object, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (SystemException | PortalException | NullPointerException e) {
+
+			ErrorMsg error = new ErrorMsg();
+			if (e instanceof NoSuchVRProductionPlantProdEquipmentException) {
+
+				error.setCode(500);
+				error.setMessage(NoSuchVRProductionPlantProdEquipmentException.class.toString());
+				error.setDescription("id not found");
+
+			} else if (e instanceof NullPointerException) {
+
+				error.setCode(500);
+				error.setMessage(NullPointerException.class.toString());
+				error.setDescription("id required");
+
+			} else {
+
+				_log.error(e);
+				error.setMessage(e.toString());
+			}
+
+			return Response.status(500).entity(error).build();
 		}
 
-		return Response.status(200).entity(result.toString()).build();
 	}
 
 	@Override
 	public Response createVRProductionPlantProdEquiment(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantProdEquipmentApiModel model) {
 
-		return updateVRProductionPlantProdEquiment(request, header, company, locale, user, serviceContext, model);
+		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductionPlantProdEquipment targetModel = new VRProductionPlantProdEquipmentImpl();
+
+			model.setId((long) 0);
+
+			VRProductionPlantProdEquipment object = (VRProductionPlantProdEquipment) VRRestUtil.mappingModel(model,
+					VRProductionPlantProdEquipmentApiModel.class, targetModel,
+					VRProductionPlantProdEquipmentImpl.class);
+
+			object = VRProductionPlantProdEquipmentLocalServiceUtil.updatePlantProdEquipment(object);
+
+			result = ActionUtil.object2Json(object, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
+
+			return Response.status(200).entity(result.toString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+
+			ErrorMsg error = new ErrorMsg();
+
+			error.setCode(500);
+			error.setMessage(e.toString());
+
+			return Response.status(500).entity(error).build();
+		}
+
 	}
 
 	@Override
 	public Response updateVRProductionPlantEquiptment(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model) {
 
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		VRProductionPlantEquipment targetModel = new VRProductionPlantEquipmentImpl();
 		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductionPlantEquipment targetModel = new VRProductionPlantEquipmentImpl();
+
 			targetModel = VRProductionPlantEquipmentLocalServiceUtil.getVRProductionPlantEquipment(model.getId());
-		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 
-		}
+			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
+					VRProductionPlantEquipmentApiModel.class, targetModel, VRProductTypeModelImpl.class);
 
-		VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
-				VRProductionPlantEquipmentApiModel.class, targetModel, VRProductTypeModelImpl.class);
-		
-		
-		object = VRProductionPlantEquipmentLocalServiceUtil.updateProductionPlantEquipment(object);
-		
-		try {
+			object = VRProductionPlantEquipmentLocalServiceUtil.updateProductionPlantEquipment(object);
+
 			result = ActionUtil.object2Json(object, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (SystemException | PortalException | NullPointerException e) {
+
+			ErrorMsg error = new ErrorMsg();
+			if (e instanceof NoSuchVRProductionPlantEquipmentException) {
+
+				error.setCode(500);
+				error.setMessage(NoSuchVRProductionPlantEquipmentException.class.toString());
+				error.setDescription("id not found");
+
+			} else if (e instanceof NullPointerException) {
+
+				error.setCode(500);
+				error.setMessage(NullPointerException.class.toString());
+				error.setDescription("id required");
+
+			} else {
+
+				_log.error(e);
+				error.setMessage(e.toString());
+			}
+
+			return Response.status(500).entity(error).build();
 		}
 
-		return Response.status(200).entity(result.toString()).build();
 	}
 
 	@Override
 	public Response createVRProductionPlantEquiptment(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model) {
 
-		return updateVRProductionPlantEquiptment(request, header, company, locale, user, serviceContext, model);
+		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductionPlantEquipment targetModel = new VRProductionPlantEquipmentImpl();
+
+			model.setId((long) 0);
+
+			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
+					VRProductionPlantEquipmentApiModel.class, targetModel, VRProductTypeModelImpl.class);
+
+			object = VRProductionPlantEquipmentLocalServiceUtil.updateProductionPlantEquipment(object);
+
+			result = ActionUtil.object2Json(object, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
+
+			return Response.status(200).entity(result.toString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+
+			ErrorMsg error = new ErrorMsg();
+
+			error.setCode(500);
+			error.setMessage(e.toString());
+
+			return Response.status(500).entity(error).build();
+		}
+
 	}
 
 	@Override
 	public Response updateVRProductionPlantEmployee(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model) {
 
-	
-
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		VRProductionPlantEmployee targetModel = new VRProductionPlantEmployeeImpl();
 		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductionPlantEmployee targetModel = new VRProductionPlantEmployeeImpl();
+
 			targetModel = VRProductionPlantEmployeeLocalServiceUtil.getVRProductionPlantEmployee(model.getId());
-		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 
-		}
+			VRProductionPlantEmployee object = (VRProductionPlantEmployee) VRRestUtil.mappingModel(model,
+					VRProductionPlantEmployeeApiModel.class, targetModel, VRProductionPlantEmployeeImpl.class);
 
-		VRProductionPlantEmployee object = (VRProductionPlantEmployee) VRRestUtil.mappingModel(model,
-				VRProductionPlantEmployeeApiModel.class, targetModel, VRProductionPlantEmployeeImpl.class);
-		
-		object = VRProductionPlantEmployeeLocalServiceUtil.updateProductionPlantEmployee(object);
-		
-		try {
+			object = VRProductionPlantEmployeeLocalServiceUtil.updateProductionPlantEmployee(object);
+
 			result = ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (SystemException | PortalException | NullPointerException e) {
+
+			ErrorMsg error = new ErrorMsg();
+			if (e instanceof NoSuchVRProductionPlantEmployeeException) {
+
+				error.setCode(500);
+				error.setMessage(NoSuchVRProductionPlantEmployeeException.class.toString());
+				error.setDescription("id not found");
+
+			} else if (e instanceof NullPointerException) {
+
+				error.setCode(500);
+				error.setMessage(NullPointerException.class.toString());
+				error.setDescription("id required");
+
+			} else {
+
+				_log.error(e);
+				error.setMessage(e.toString());
+			}
+
+			return Response.status(500).entity(error).build();
 		}
 
-		return Response.status(200).entity(result.toString()).build();
 	}
 
 	@Override
 	public Response createVRProductionPlantEmployee(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model) {
 
-		return updateVRProductionPlantEmployee(request, header, company, locale, user, serviceContext, model);
+		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductionPlantEmployee targetModel = new VRProductionPlantEmployeeImpl();
+
+			model.setId((long) 0);
+
+			VRProductionPlantEmployee object = (VRProductionPlantEmployee) VRRestUtil.mappingModel(model,
+					VRProductionPlantEmployeeApiModel.class, targetModel, VRProductionPlantEmployeeImpl.class);
+
+			object = VRProductionPlantEmployeeLocalServiceUtil.updateProductionPlantEmployee(object);
+
+			result = ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			ErrorMsg error = new ErrorMsg();
+
+			error.setCode(500);
+			error.setMessage(e.toString());
+
+			return Response.status(500).entity(error).build();
+		}
+
 	}
-	
-	
+
 	@Override
 	public Response updateVRProductionClassification(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionClassificationApiModel model) {
 
-	
-
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		VRProductionClassification targetModel = new VRProductionClassificationImpl();
 		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductionClassification targetModel = new VRProductionClassificationImpl();
+
 			targetModel = VRProductionClassificationLocalServiceUtil.getVRProductionClassification(model.getId());
-		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 
+			VRProductionClassification object = (VRProductionClassification) VRRestUtil.mappingModel(model,
+					VRProductionClassificationApiModel.class, targetModel, VRProductionClassificationImpl.class);
+
+			object = VRProductionClassificationLocalServiceUtil.updateProductionClassification(object);
+
+			result = ActionUtil.object2Json(object, VRProductionClassificationImpl.class, StringPool.BLANK);
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (SystemException | PortalException | NullPointerException e) {
+
+			ErrorMsg error = new ErrorMsg();
+			if (e instanceof NoSuchVRProductionClassificationException) {
+
+				error.setCode(500);
+				error.setMessage(NoSuchVRProductionClassificationException.class.toString());
+				error.setDescription("id not found");
+
+			} else if (e instanceof NullPointerException) {
+
+				error.setCode(500);
+				error.setMessage(NullPointerException.class.toString());
+				error.setDescription("id required");
+
+			} else {
+
+				_log.error(e);
+				error.setMessage(e.toString());
+			}
+
+			return Response.status(500).entity(error).build();
 		}
 
-		VRProductionClassification object = (VRProductionClassification) VRRestUtil.mappingModel(model,
-				VRProductionClassificationApiModel.class, targetModel, VRProductionClassificationImpl.class);
-		
-		object = VRProductionClassificationLocalServiceUtil.updateProductionClassification(object);
-		
-		try {
-			result = ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return Response.status(200).entity(result.toString()).build();
 	}
 
 	@Override
 	public Response createVRProductionClassification(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionClassificationApiModel model) {
 
-		return updateVRProductionClassification(request, header, company, locale, user, serviceContext, model);
+		try {
+
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+			VRProductionClassification targetModel = new VRProductionClassificationImpl();
+
+			model.setId((long) 0);
+
+			VRProductionClassification object = (VRProductionClassification) VRRestUtil.mappingModel(model,
+					VRProductionClassificationApiModel.class, targetModel, VRProductionClassificationImpl.class);
+
+			object = VRProductionClassificationLocalServiceUtil.updateProductionClassification(object);
+
+			result = ActionUtil.object2Json(object, VRProductionClassificationImpl.class, StringPool.BLANK);
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			ErrorMsg error = new ErrorMsg();
+
+			error.setCode(500);
+			error.setMessage(e.toString());
+
+			return Response.status(500).entity(error).build();
+		}
+
 	}
 }

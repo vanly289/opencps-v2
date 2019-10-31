@@ -119,7 +119,7 @@ public interface VRProductionPlantProdEquipmentLocalService
 		long id) throws PortalException;
 
 	public VRProductionPlantProdEquipment updatePlantProdEquipment(
-		VRProductionPlantProdEquipment object);
+		VRProductionPlantProdEquipment object) throws SystemException;
 
 	public VRProductionPlantProdEquipment updateProductionPlantProdEquipment(
 		Map<java.lang.String, java.lang.String> mapValues, int mtCore);

@@ -401,11 +401,12 @@ public abstract class VRApplicantProfileLocalServiceBaseImpl
 	 *
 	 * @param vrApplicantProfile the vr applicant profile
 	 * @return the vr applicant profile that was updated
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public VRApplicantProfile updateVRApplicantProfile(
-		VRApplicantProfile vrApplicantProfile) {
+		VRApplicantProfile vrApplicantProfile) throws SystemException {
 		return vrApplicantProfilePersistence.update(vrApplicantProfile);
 	}
 
