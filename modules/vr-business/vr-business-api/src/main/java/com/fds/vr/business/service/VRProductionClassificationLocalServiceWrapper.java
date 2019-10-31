@@ -104,7 +104,8 @@ public class VRProductionClassificationLocalServiceWrapper
 
 	@Override
 	public com.fds.vr.business.model.VRProductionClassification updateProductionClassification(
-		com.fds.vr.business.model.VRProductionClassification object) {
+		com.fds.vr.business.model.VRProductionClassification object)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _vrProductionClassificationLocalService.updateProductionClassification(object);
 	}
 

@@ -397,10 +397,12 @@ public abstract class VRProductTypeLocalServiceBaseImpl
 	 *
 	 * @param vrProductType the vr product type
 	 * @return the vr product type that was updated
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public VRProductType updateVRProductType(VRProductType vrProductType) {
+	public VRProductType updateVRProductType(VRProductType vrProductType)
+		throws SystemException {
 		return vrProductTypePersistence.update(vrProductType);
 	}
 

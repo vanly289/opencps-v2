@@ -117,7 +117,7 @@ public interface VRProductionPlantEquipmentLocalService extends BaseLocalService
 		throws PortalException;
 
 	public VRProductionPlantEquipment updateProductionPlantEquipment(
-		VRProductionPlantEquipment object);
+		VRProductionPlantEquipment object) throws SystemException;
 
 	public VRProductionPlantEquipment updateProductionPlantEquipment(
 		Map<java.lang.String, java.lang.String> mapValues, int mtCore);

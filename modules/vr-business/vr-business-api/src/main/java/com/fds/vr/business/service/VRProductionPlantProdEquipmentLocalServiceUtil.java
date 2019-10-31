@@ -107,7 +107,8 @@ public class VRProductionPlantProdEquipmentLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRProductionPlantProdEquipment updatePlantProdEquipment(
-		com.fds.vr.business.model.VRProductionPlantProdEquipment object) {
+		com.fds.vr.business.model.VRProductionPlantProdEquipment object)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().updatePlantProdEquipment(object);
 	}
 

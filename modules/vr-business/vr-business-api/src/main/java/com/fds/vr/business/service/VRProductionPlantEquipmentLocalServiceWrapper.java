@@ -104,7 +104,8 @@ public class VRProductionPlantEquipmentLocalServiceWrapper
 
 	@Override
 	public com.fds.vr.business.model.VRProductionPlantEquipment updateProductionPlantEquipment(
-		com.fds.vr.business.model.VRProductionPlantEquipment object) {
+		com.fds.vr.business.model.VRProductionPlantEquipment object)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _vrProductionPlantEquipmentLocalService.updateProductionPlantEquipment(object);
 	}
 

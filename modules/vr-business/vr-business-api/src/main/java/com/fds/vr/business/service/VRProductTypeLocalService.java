@@ -120,9 +120,11 @@ public interface VRProductTypeLocalService extends BaseLocalService,
 	*
 	* @param vrProductType the vr product type
 	* @return the vr product type that was updated
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
-	public VRProductType updateVRProductType(VRProductType vrProductType);
+	public VRProductType updateVRProductType(VRProductType vrProductType)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

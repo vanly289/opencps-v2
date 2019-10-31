@@ -117,7 +117,7 @@ public class VRProductionClassificationLocalServiceImpl
 		return vrProductionClassificationPersistence.update(object);
 	}
 	
-	public VRProductionClassification updateProductionClassification(VRProductionClassification object) {
+	public VRProductionClassification updateProductionClassification(VRProductionClassification object) throws SystemException {
 
 		if (object.getId() <= 0) {
 

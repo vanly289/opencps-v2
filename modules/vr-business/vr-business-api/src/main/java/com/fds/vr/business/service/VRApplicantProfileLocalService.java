@@ -127,10 +127,11 @@ public interface VRApplicantProfileLocalService extends BaseLocalService,
 	*
 	* @param vrApplicantProfile the vr applicant profile
 	* @return the vr applicant profile that was updated
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VRApplicantProfile updateVRApplicantProfile(
-		VRApplicantProfile vrApplicantProfile);
+		VRApplicantProfile vrApplicantProfile) throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

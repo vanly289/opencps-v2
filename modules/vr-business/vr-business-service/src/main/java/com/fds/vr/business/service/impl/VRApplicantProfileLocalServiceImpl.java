@@ -204,7 +204,7 @@ public class VRApplicantProfileLocalServiceImpl
 		return vrApplicantProfileFinder.countVRAppicantProfile(sql);
 	}
 	
-	public VRApplicantProfile updateVRApplicantProfile(VRApplicantProfile object) {
+	public VRApplicantProfile updateVRApplicantProfile(VRApplicantProfile object) throws SystemException{
 
 		if (object.getId() <= 0) {
 
