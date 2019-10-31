@@ -50,5 +50,4 @@ public interface VRVehicleManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @DefaultValue(" ") @QueryParam("mtcore") long mtCore,
 			@DefaultValue(" ") @QueryParam("copreportno") String COPReportNo);
-
 }
