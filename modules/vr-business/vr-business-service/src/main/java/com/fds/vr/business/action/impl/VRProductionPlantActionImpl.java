@@ -129,21 +129,14 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 					StringPool.LIKE, tableAlias));
 		}
 		
-		//_log.info("supplierId:"+supplierId);
 		
 		if (Validator.isNotNull(supplierId)) {
-			
-			//_log.info("supplierId:"+supplierId);
-			
 			
 			conditions.append(ActionUtil.buildSQLCondition("supplierid", supplierId, " AND ",
 					StringPool.GREATER_THAN, tableAlias));
 			
 			
-			
 		}
-		
-		//_log.info("conditions:"+conditions);
 
 		if (Validator.isNotNull(keyword)) {
 			conditions
