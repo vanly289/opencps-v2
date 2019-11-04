@@ -9814,6 +9814,7 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 		vrProductionPlantImpl.setRegistrationId(vrProductionPlant.getRegistrationId());
 		vrProductionPlantImpl.setRegistrationFormId(vrProductionPlant.getRegistrationFormId());
 		vrProductionPlantImpl.setApplicantProfileId(vrProductionPlant.getApplicantProfileId());
+		vrProductionPlantImpl.setSupplierId(vrProductionPlant.getSupplierId());
 		vrProductionPlantImpl.setModifyDate(vrProductionPlant.getModifyDate());
 		vrProductionPlantImpl.setSyncDate(vrProductionPlant.getSyncDate());
 

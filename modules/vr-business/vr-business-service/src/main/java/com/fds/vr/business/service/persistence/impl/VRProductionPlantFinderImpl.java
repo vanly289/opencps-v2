@@ -2,6 +2,7 @@ package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.model.VRProductionPlant;
+import com.fds.vr.business.model.impl.VRProductionPlantImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantModelImpl;
 import com.fds.vr.business.service.persistence.VRProductionPlantFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -41,6 +42,7 @@ public class VRProductionPlantFinderImpl extends VRProductionPlantFinderBaseImpl
 				q.addEntity(modelClassName, modelClazz);
 				List<VRProductionPlant> vrProductionPlants = (List<VRProductionPlant>) QueryUtil.list(q, getDialect(),
 						start, end);
+				
 				if (vrProductionPlants != null) {
 					for (VRProductionPlant vrProductionPlant : vrProductionPlants) {
 						JSONObject json = ActionUtil.object2Json(vrProductionPlant, VRProductionPlantModelImpl.class,
@@ -75,9 +77,12 @@ public class VRProductionPlantFinderImpl extends VRProductionPlantFinderBaseImpl
 					}
 				}
 			}
+			
+			log.info("results:"+results);
 
 			return results;
 		} catch (Exception e) {
+			log.info(e);
 			throw new SystemException(e);
 		} finally {
 			closeSession(session);

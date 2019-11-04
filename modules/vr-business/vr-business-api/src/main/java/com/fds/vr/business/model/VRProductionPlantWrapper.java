@@ -105,6 +105,7 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 		attributes.put("registrationId", getRegistrationId());
 		attributes.put("registrationFormId", getRegistrationFormId());
 		attributes.put("applicantProfileId", getApplicantProfileId());
+		attributes.put("supplierId", getSupplierId());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -344,6 +345,12 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 
 		if (applicantProfileId != null) {
 			setApplicantProfileId(applicantProfileId);
+		}
+
+		Long supplierId = (Long)attributes.get("supplierId");
+
+		if (supplierId != null) {
+			setSupplierId(supplierId);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -804,6 +811,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 		return _vrProductionPlant.getRegistrationId();
 	}
 
+	/**
+	* Returns the supplier ID of this vr production plant.
+	*
+	* @return the supplier ID of this vr production plant
+	*/
+	@Override
+	public long getSupplierId() {
+		return _vrProductionPlant.getSupplierId();
+	}
+
 	@Override
 	public void persist() {
 		_vrProductionPlant.persist();
@@ -1224,6 +1241,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public void setRegistrationId(long registrationId) {
 		_vrProductionPlant.setRegistrationId(registrationId);
+	}
+
+	/**
+	* Sets the supplier ID of this vr production plant.
+	*
+	* @param supplierId the supplier ID of this vr production plant
+	*/
+	@Override
+	public void setSupplierId(long supplierId) {
+		_vrProductionPlant.setSupplierId(supplierId);
 	}
 
 	/**

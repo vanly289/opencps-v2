@@ -594,6 +594,20 @@ public interface VRProductionPlantModel extends BaseModel<VRProductionPlant> {
 	public void setApplicantProfileId(long applicantProfileId);
 
 	/**
+	 * Returns the supplier ID of this vr production plant.
+	 *
+	 * @return the supplier ID of this vr production plant
+	 */
+	public long getSupplierId();
+
+	/**
+	 * Sets the supplier ID of this vr production plant.
+	 *
+	 * @param supplierId the supplier ID of this vr production plant
+	 */
+	public void setSupplierId(long supplierId);
+
+	/**
 	 * Returns the modify date of this vr production plant.
 	 *
 	 * @return the modify date of this vr production plant

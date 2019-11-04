@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -49,16 +50,49 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		int start = ActionUtil.getStart(params);
 		int end = ActionUtil.getEnd(params);
 		String keyword = ActionUtil.getKeyword(params);
-		Integer mtcore = null;
+		Long mtcore = null;
 		Long applicantprofileid = null;
+		String productionPlantStatus = StringPool.BLANK;
+		String productionPlantType = StringPool.BLANK;
+		Long supplierId = null;
 
 		if (params != null) {
 
 			if (params.containsKey("mtcore")) {
-				mtcore = (Integer) params.get("mtcore");
+				mtcore = GetterUtil.getLong( params.get("mtcore"));
 			}
+			
 			if (params.containsKey("applicantprofileid")) {
-				applicantprofileid = (Long) params.get("applicantprofileid");
+				applicantprofileid = GetterUtil.getLong(params.get("applicantprofileid"));
+			}
+			
+			if(params.containsKey("applicantcode")) {
+				
+				String applicantCode = GetterUtil.getString(params.get("applicantcode"));
+				
+				LinkedHashMap<String, Object> applicantParams = new LinkedHashMap<String, Object>();
+				applicantParams.put("applicantcode", applicantCode);
+				applicantParams.put("mtcore", mtcore);
+				
+				VRApplicantProfileActionImpl applicantProfileAction = new VRApplicantProfileActionImpl();
+
+				JSONObject applicantProfile = applicantProfileAction.findVRApplicantProfileDetail(null, null,
+						applicantParams);
+				
+				applicantprofileid= GetterUtil.getLong(applicantProfile.getLong("primaryKey"));
+				
+			}
+			
+			
+			if (params.containsKey("productionplantstatus")) {
+				productionPlantStatus = GetterUtil.getString(params.get("productionplantstatus"));
+			}
+			if (params.containsKey("productionplanttype")) {
+				productionPlantType = GetterUtil.getString(params.get("productionplanttype"));
+			}
+			
+			if (params.containsKey("supplierid")) {
+				supplierId = GetterUtil.getLong(params.get("supplierid")) ;
 			}
 		}
 
@@ -84,6 +118,32 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 			conditions.append(ActionUtil.buildSQLCondition("applicantprofileid", applicantprofileid, " AND ",
 					StringPool.EQUAL, tableAlias));
 		}
+		
+		if (Validator.isNotNull(productionPlantStatus)) {
+			conditions.append(ActionUtil.buildSQLCondition("productionplantstatus", "'"+productionPlantStatus+"'", " AND ",
+					StringPool.LIKE, tableAlias));
+		}
+		
+		if (Validator.isNotNull(productionPlantType)) {
+			conditions.append(ActionUtil.buildSQLCondition("productionplanttype", "'"+productionPlantType+"'", " AND ",
+					StringPool.LIKE, tableAlias));
+		}
+		
+		//_log.info("supplierId:"+supplierId);
+		
+		if (Validator.isNotNull(supplierId)) {
+			
+			//_log.info("supplierId:"+supplierId);
+			
+			
+			conditions.append(ActionUtil.buildSQLCondition("supplierid", supplierId, " AND ",
+					StringPool.GREATER_THAN, tableAlias));
+			
+			
+			
+		}
+		
+		//_log.info("conditions:"+conditions);
 
 		if (Validator.isNotNull(keyword)) {
 			conditions
@@ -129,6 +189,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		result.put("data", array);
 		return result;
 	}
+	
 
 	public JSONObject updatePlantProdEquipment(VRProductionPlantProdEquipment object) {
 

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -39,8 +40,8 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 		String applicantCode = StringPool.BLANK;
 		if (params != null) {
 			if (params.containsKey("applicantcode") && params.containsKey("mtcore")) {
-				applicantCode = (String) params.get("applicantcode");
-				mtCore = (Long) params.get("mtcore");
+				applicantCode = GetterUtil.getString(params.get("applicantcode"));
+				mtCore = GetterUtil.getLong(params.get("mtcore"));
 				if (Validator.isNotNull(applicantCode) && (mtCore != null)) {
 					try {
 						VRApplicantProfile applicantProfile = VRApplicantProfileLocalServiceUtil
@@ -61,7 +62,7 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 
 			if (params.containsKey("id")) {
 				try {
-					id = (Long) params.get("id");
+					id = GetterUtil.getLong(params.get("id"));
 					VRApplicantProfile applicantProfile = VRApplicantProfileLocalServiceUtil.getVRApplicantProfile(id);
 					return ActionUtil.object2Json(applicantProfile, VRApplicantProfileModelImpl.class,
 							StringPool.BLANK);
