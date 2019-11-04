@@ -194,19 +194,19 @@ public interface VRProductionClassificationModel extends BaseModel<VRProductionC
 		String productClassificationDescription);
 
 	/**
-	 * Returns the classification model of this vr production classification.
+	 * Returns the classification mode of this vr production classification.
 	 *
-	 * @return the classification model of this vr production classification
+	 * @return the classification mode of this vr production classification
 	 */
 	@AutoEscape
-	public String getClassificationModel();
+	public String getClassificationMode();
 
 	/**
-	 * Sets the classification model of this vr production classification.
+	 * Sets the classification mode of this vr production classification.
 	 *
-	 * @param classificationModel the classification model of this vr production classification
+	 * @param classificationMode the classification mode of this vr production classification
 	 */
-	public void setClassificationModel(String classificationModel);
+	public void setClassificationMode(String classificationMode);
 
 	/**
 	 * Returns the remarks of this vr production classification.

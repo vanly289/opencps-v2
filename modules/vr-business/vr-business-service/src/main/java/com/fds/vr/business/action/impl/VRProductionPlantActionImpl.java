@@ -3,11 +3,29 @@ package com.fds.vr.business.action.impl;
 import com.fds.vr.business.action.VRProductionPlantAction;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryInstance;
+import com.fds.vr.business.model.VRProductType;
+import com.fds.vr.business.model.VRProductionClassification;
+import com.fds.vr.business.model.VRProductionPlant;
+import com.fds.vr.business.model.VRProductionPlantEmployee;
+import com.fds.vr.business.model.VRProductionPlantEquipment;
+import com.fds.vr.business.model.VRProductionPlantProdEquipment;
+import com.fds.vr.business.model.impl.VRProductTypeImpl;
+import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEmployeeImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantProdEquipmentImpl;
+import com.fds.vr.business.service.VRProductTypeLocalServiceUtil;
+import com.fds.vr.business.service.VRProductionClassificationLocalServiceUtil;
+import com.fds.vr.business.service.VRProductionPlantEmployeeLocalServiceUtil;
+import com.fds.vr.business.service.VRProductionPlantEquipmentLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
+import com.fds.vr.business.service.VRProductionPlantProdEquipmentLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
@@ -15,11 +33,15 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
 
+import javax.net.ssl.HttpsURLConnection;
+
 /**
  * @author trungnt
  *
  */
-public class VRProductionPlantActionImpl implements VRProductionPlantAction{
+public class VRProductionPlantActionImpl implements VRProductionPlantAction {
+
+	private static Log _log = LogFactoryUtil.getLog(VRProductionPlantActionImpl.class);
 
 	@Override
 	public JSONObject findVRVRProductionPlant(User user, ServiceContext serviceContext,
@@ -29,7 +51,6 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction{
 		String keyword = ActionUtil.getKeyword(params);
 		Integer mtcore = null;
 		Long applicantprofileid = null;
-		
 
 		if (params != null) {
 
@@ -48,15 +69,15 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction{
 				+ " [$CONDITION$] [$ORDERBY$]";
 
 		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
-		//columnStatementMap.put(ActionUtil.createSCNWTAS("*", tableAlias), StringPool.BLANK);
+		// columnStatementMap.put(ActionUtil.createSCNWTAS("*", tableAlias),
+		// StringPool.BLANK);
 
 		StringBuilder conditions = new StringBuilder();
 
 		conditions.append(" WHERE 1 = 1 ");
 
 		if (mtcore != null) {
-			conditions.append(ActionUtil.buildSQLCondition("mtcore", mtcore, " AND ", StringPool.EQUAL,
-					tableAlias));
+			conditions.append(ActionUtil.buildSQLCondition("mtcore", mtcore, " AND ", StringPool.EQUAL, tableAlias));
 		}
 
 		if (Validator.isNotNull(applicantprofileid)) {
@@ -67,18 +88,25 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction{
 		if (Validator.isNotNull(keyword)) {
 			conditions
 					.append(ActionUtil.buildSQLCondition(
-							"(" 
-									+ ActionUtil.buildSQLCondition("mappingma_cty", "'%" + keyword + "%'", "", StringPool.LIKE, tableAlias)
-									+ ActionUtil.buildSQLCondition("mappingten_cty", "'%" + keyword + "%'", " OR ", StringPool.LIKE, tableAlias)
-									+ ActionUtil.buildSQLCondition("mappingdia_chi_cty", "'%" + keyword + "%'", " OR ", StringPool.LIKE, tableAlias)
-									+ ActionUtil.buildSQLCondition("mappingma_xuong_lr", "'%" + keyword + "%'", " OR ", StringPool.LIKE, tableAlias)
-									+ ActionUtil.buildSQLCondition("mappingten_xuong_lr", "'%" + keyword + "%'", " OR ", StringPool.LIKE, tableAlias)
-									+ ActionUtil.buildSQLCondition("mappingdia_chi_xuong_lr", "'%" + keyword + "%'", " OR ", StringPool.LIKE, tableAlias)
-									+ ActionUtil.buildSQLCondition("productionplantcode", "'%" + keyword + "%'", " OR ", StringPool.LIKE, tableAlias)
-									+ ActionUtil.buildSQLCondition("productionplantname", "'%" + keyword + "%'", " OR ", StringPool.LIKE, tableAlias)
-									+ ActionUtil.buildSQLCondition("productionplantaddress", "'%" + keyword + "%'", " OR ", StringPool.LIKE, tableAlias)
-									+ 
-							")",
+							"(" + ActionUtil.buildSQLCondition("mappingma_cty", "'%" + keyword + "%'", "",
+									StringPool.LIKE, tableAlias)
+									+ ActionUtil.buildSQLCondition("mappingten_cty", "'%" + keyword + "%'", " OR ",
+											StringPool.LIKE, tableAlias)
+									+ ActionUtil.buildSQLCondition("mappingdia_chi_cty", "'%" + keyword + "%'", " OR ",
+											StringPool.LIKE, tableAlias)
+									+ ActionUtil.buildSQLCondition("mappingma_xuong_lr", "'%" + keyword + "%'", " OR ",
+											StringPool.LIKE, tableAlias)
+									+ ActionUtil.buildSQLCondition("mappingten_xuong_lr", "'%" + keyword + "%'", " OR ",
+											StringPool.LIKE, tableAlias)
+									+ ActionUtil.buildSQLCondition("mappingdia_chi_xuong_lr", "'%" + keyword + "%'",
+											" OR ", StringPool.LIKE, tableAlias)
+									+ ActionUtil.buildSQLCondition("productionplantcode", "'%" + keyword + "%'", " OR ",
+											StringPool.LIKE, tableAlias)
+									+ ActionUtil.buildSQLCondition("productionplantname", "'%" + keyword + "%'", " OR ",
+											StringPool.LIKE, tableAlias)
+									+ ActionUtil.buildSQLCondition("productionplantaddress", "'%" + keyword + "%'",
+											" OR ", StringPool.LIKE, tableAlias)
+									+ ")",
 							StringPool.BLANK, " AND ", StringPool.BLANK));
 		}
 
@@ -101,5 +129,191 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction{
 		result.put("data", array);
 		return result;
 	}
-	
+
+	public JSONObject updatePlantProdEquipment(VRProductionPlantProdEquipment object) {
+
+		JSONObject returnObj = JSONFactoryUtil.createJSONObject();
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		try {
+
+			object = VRProductionPlantProdEquipmentLocalServiceUtil.updatePlantProdEquipment(object);
+
+			result = ActionUtil.object2Json(object, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_OK);
+			returnObj.put("content", result);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_INTERNAL_ERROR);
+
+		}
+
+		return returnObj;
+	}
+
+	public JSONObject createPlantProdEquipment(VRProductionPlantProdEquipment object) {
+
+		object.setId(0);
+
+		return updatePlantProdEquipment(object);
+	}
+
+	public JSONObject createVRProductionPlant(VRProductionPlant object) {
+
+		object.setId(0);
+
+		return updateVRProductionPlant(object);
+	}
+
+	public JSONObject updateVRProductionPlant(VRProductionPlant object) {
+
+		JSONObject returnObj = JSONFactoryUtil.createJSONObject();
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		try {
+
+			object = VRProductionPlantLocalServiceUtil.updateProductionPlant(object);
+
+			result = ActionUtil.object2Json(object, VRProductionPlantImpl.class, StringPool.BLANK);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_OK);
+			returnObj.put("content", result);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_INTERNAL_ERROR);
+
+		}
+
+		return returnObj;
+	}
+
+	public JSONObject createVRProductionPlantEmployee(VRProductionPlantEmployee object) {
+
+		object.setId(0);
+
+		return updateVRProductionPlantEmployee(object);
+	}
+
+	public JSONObject updateVRProductionPlantEmployee(VRProductionPlantEmployee object) {
+
+		JSONObject returnObj = JSONFactoryUtil.createJSONObject();
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		try {
+
+			object = VRProductionPlantEmployeeLocalServiceUtil.updateVRProductionPlantEmployee(object);
+
+			result = ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_OK);
+			returnObj.put("content", result);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_INTERNAL_ERROR);
+
+		}
+
+		return returnObj;
+	}
+
+	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment object) {
+
+		object.setId(0);
+
+		return updateVRProductionPlantEquiptment(object);
+	}
+
+	public JSONObject updateVRProductionPlantEquiptment(VRProductionPlantEquipment object) {
+
+		JSONObject returnObj = JSONFactoryUtil.createJSONObject();
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		try {
+
+			object = VRProductionPlantEquipmentLocalServiceUtil.updateProductionPlantEquipment(object);
+
+			result = ActionUtil.object2Json(object, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_OK);
+			returnObj.put("content", result);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_INTERNAL_ERROR);
+
+		}
+
+		return returnObj;
+	}
+
+	public JSONObject createVRProductType(VRProductType object) {
+
+		object.setId(0);
+
+		return updateVRProductType(object);
+	}
+
+	public JSONObject updateVRProductType(VRProductType object) {
+
+		JSONObject returnObj = JSONFactoryUtil.createJSONObject();
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		try {
+
+			object = VRProductTypeLocalServiceUtil.updateVRProductType(object);
+
+			result = ActionUtil.object2Json(object, VRProductTypeImpl.class, StringPool.BLANK);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_OK);
+			returnObj.put("content", result.toString());
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_INTERNAL_ERROR);
+
+		}
+
+		return returnObj;
+	}
+
+	public JSONObject createVRProductionClassification(VRProductionClassification object) {
+
+		object.setId(0);
+
+		return updateVRProductionClassification(object);
+	}
+
+	public JSONObject updateVRProductionClassification(VRProductionClassification object) {
+
+		JSONObject returnObj = JSONFactoryUtil.createJSONObject();
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		try {
+
+			object = VRProductionClassificationLocalServiceUtil.updateProductionClassification(object);
+
+			result = ActionUtil.object2Json(object, VRProductionClassificationImpl.class, StringPool.BLANK);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_OK);
+			returnObj.put("content", result);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_INTERNAL_ERROR);
+
+		}
+
+		return returnObj;
+	}
+
 }

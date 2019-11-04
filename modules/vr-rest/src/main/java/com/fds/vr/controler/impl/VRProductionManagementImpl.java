@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.core.Context;
@@ -106,6 +107,25 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	@Override
 	public Response getProductionPlantProdEquipment(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, String productionPlantCode) {
+
+		try {
+
+			JSONArray result = VRProductionPlantProdEquipmentLocalServiceUtil
+					.findByProductionPlanCode(productionPlantCode);
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (Exception e) {
+
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
+		}
+	}
+
+	@Override
+	public Response getProductionPlantProdEquipment(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String[] productionPlantCode) {
 
 		try {
 
@@ -183,7 +203,6 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
 			VRProductionPlant targetModel = new VRProductionPlantImpl();
 
 			targetModel = VRProductionPlantLocalServiceUtil.getVRProductionPlant(model.getId());
@@ -191,31 +210,26 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 			VRProductionPlant object = (VRProductionPlant) VRRestUtil.mappingModel(model,
 					VRProductionPlantApiModel.class, targetModel, VRProductionPlantModelImpl.class);
 
-			object = VRProductionPlantLocalServiceUtil.updateProductionPlant(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductionPlantImpl.class, StringPool.BLANK);
+			JSONObject result = action.updateVRProductionPlant(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (SystemException | PortalException | NullPointerException e) {
 
 			ErrorMsg error = new ErrorMsg();
 			if (e instanceof NoSuchVRProductionPlantException) {
 
-				error.setCode(500);
-				error.setMessage(NoSuchVRProductionPlantException.class.toString());
 				error.setDescription("id not found");
 
 			} else if (e instanceof NullPointerException) {
 
-				error.setCode(500);
-				error.setMessage(NullPointerException.class.toString());
 				error.setDescription("id required");
 
 			} else {
 
 				_log.error(e);
-				error.setMessage(e.toString());
 			}
 
 			return Response.status(500).entity(error).build();
@@ -229,28 +243,18 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
-			VRProductionPlant targetModel = new VRProductionPlantImpl();
-
-			model.setId((long) 0);
-
 			VRProductionPlant object = (VRProductionPlant) VRRestUtil.mappingModel(model,
-					VRProductionPlantApiModel.class, targetModel, VRProductionPlantModelImpl.class);
+					VRProductionPlantApiModel.class, new VRProductionPlantImpl(), VRProductionPlantModelImpl.class);
 
-			object = VRProductionPlantLocalServiceUtil.updateProductionPlant(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductionPlantImpl.class, StringPool.BLANK);
+			JSONObject result = action.createVRProductionPlant(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 		} catch (Exception e) {
 			_log.error(e);
 
-			ErrorMsg error = new ErrorMsg();
-
-			error.setCode(500);
-			error.setMessage(e.toString());
-
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
 		}
 
 	}
@@ -269,34 +273,30 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 			VRProductType object = (VRProductType) VRRestUtil.mappingModel(model, VRProductTypeApiModel.class,
 					targetModel, VRProductTypeModelImpl.class);
 
-			object = VRProductTypeLocalServiceUtil.updateVRProductType(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductTypeImpl.class, StringPool.BLANK);
+			result = action.updateVRProductType(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (SystemException | PortalException | NullPointerException e) {
 
 			ErrorMsg error = new ErrorMsg();
 			if (e instanceof NoSuchVRProductTypeException) {
 
-				error.setCode(500);
-				error.setMessage(NoSuchVRProductTypeException.class.toString());
 				error.setDescription("id not found");
 
 			} else if (e instanceof NullPointerException) {
 
-				error.setCode(500);
-				error.setMessage(NullPointerException.class.toString());
 				error.setDescription("id required");
 
 			} else {
 
 				_log.error(e);
-				error.setMessage(e.toString());
+				error.setDescription(e.toString());
 			}
 
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
 		}
 
 	}
@@ -307,28 +307,19 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
-			VRProductType targetModel = new VRProductTypeImpl();
-
-			model.setId((long) 0);
-
 			VRProductType object = (VRProductType) VRRestUtil.mappingModel(model, VRProductTypeApiModel.class,
-					targetModel, VRProductTypeModelImpl.class);
+					new VRProductTypeImpl(), VRProductTypeModelImpl.class);
 
-			object = VRProductTypeLocalServiceUtil.updateVRProductType(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductTypeImpl.class, StringPool.BLANK);
+			JSONObject result = action.createVRProductType(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 		} catch (Exception e) {
+
 			_log.error(e);
 
-			ErrorMsg error = new ErrorMsg();
-
-			error.setCode(500);
-			error.setMessage(e.toString());
-
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
 		}
 
 	}
@@ -349,25 +340,21 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 					VRProductionPlantProdEquipmentApiModel.class, targetModel,
 					VRProductionPlantProdEquipmentImpl.class);
 
-			object = VRProductionPlantProdEquipmentLocalServiceUtil.updatePlantProdEquipment(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
+			result = action.updatePlantProdEquipment(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (SystemException | PortalException | NullPointerException e) {
 
 			ErrorMsg error = new ErrorMsg();
 			if (e instanceof NoSuchVRProductionPlantProdEquipmentException) {
 
-				error.setCode(500);
-				error.setMessage(NoSuchVRProductionPlantProdEquipmentException.class.toString());
 				error.setDescription("id not found");
 
 			} else if (e instanceof NullPointerException) {
 
-				error.setCode(500);
-				error.setMessage(NullPointerException.class.toString());
 				error.setDescription("id required");
 
 			} else {
@@ -376,7 +363,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 				error.setMessage(e.toString());
 			}
 
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
 		}
 
 	}
@@ -387,29 +374,19 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
-			VRProductionPlantProdEquipment targetModel = new VRProductionPlantProdEquipmentImpl();
-
-			model.setId((long) 0);
-
 			VRProductionPlantProdEquipment object = (VRProductionPlantProdEquipment) VRRestUtil.mappingModel(model,
-					VRProductionPlantProdEquipmentApiModel.class, targetModel,
+					VRProductionPlantProdEquipmentApiModel.class, new VRProductionPlantProdEquipmentImpl(),
 					VRProductionPlantProdEquipmentImpl.class);
 
-			object = VRProductionPlantProdEquipmentLocalServiceUtil.updatePlantProdEquipment(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
+			JSONObject result = action.createPlantProdEquipment(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 		} catch (Exception e) {
 			_log.error(e);
 
-			ErrorMsg error = new ErrorMsg();
-
-			error.setCode(500);
-			error.setMessage(e.toString());
-
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
 		}
 
 	}
@@ -420,7 +397,6 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
 			VRProductionPlantEquipment targetModel = new VRProductionPlantEquipmentImpl();
 
 			targetModel = VRProductionPlantEquipmentLocalServiceUtil.getVRProductionPlantEquipment(model.getId());
@@ -428,34 +404,29 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
 					VRProductionPlantEquipmentApiModel.class, targetModel, VRProductTypeModelImpl.class);
 
-			object = VRProductionPlantEquipmentLocalServiceUtil.updateProductionPlantEquipment(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
+			JSONObject result = action.updateVRProductionPlantEquiptment(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (SystemException | PortalException | NullPointerException e) {
 
 			ErrorMsg error = new ErrorMsg();
 			if (e instanceof NoSuchVRProductionPlantEquipmentException) {
 
-				error.setCode(500);
-				error.setMessage(NoSuchVRProductionPlantEquipmentException.class.toString());
 				error.setDescription("id not found");
 
 			} else if (e instanceof NullPointerException) {
 
-				error.setCode(500);
-				error.setMessage(NullPointerException.class.toString());
 				error.setDescription("id required");
 
 			} else {
 
 				_log.error(e);
-				error.setMessage(e.toString());
 			}
 
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
 		}
 
 	}
@@ -466,28 +437,19 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
-			VRProductionPlantEquipment targetModel = new VRProductionPlantEquipmentImpl();
-
-			model.setId((long) 0);
-
 			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
-					VRProductionPlantEquipmentApiModel.class, targetModel, VRProductTypeModelImpl.class);
+					VRProductionPlantEquipmentApiModel.class, new VRProductionPlantEquipmentImpl(),
+					VRProductTypeModelImpl.class);
 
-			object = VRProductionPlantEquipmentLocalServiceUtil.updateProductionPlantEquipment(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
+			JSONObject result = action.createVRProductionPlantEquiptment(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 		} catch (Exception e) {
 			_log.error(e);
 
-			ErrorMsg error = new ErrorMsg();
-
-			error.setCode(500);
-			error.setMessage(e.toString());
-
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
 		}
 
 	}
@@ -498,7 +460,6 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
 			VRProductionPlantEmployee targetModel = new VRProductionPlantEmployeeImpl();
 
 			targetModel = VRProductionPlantEmployeeLocalServiceUtil.getVRProductionPlantEmployee(model.getId());
@@ -506,34 +467,29 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 			VRProductionPlantEmployee object = (VRProductionPlantEmployee) VRRestUtil.mappingModel(model,
 					VRProductionPlantEmployeeApiModel.class, targetModel, VRProductionPlantEmployeeImpl.class);
 
-			object = VRProductionPlantEmployeeLocalServiceUtil.updateProductionPlantEmployee(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
+			JSONObject result = action.updateVRProductionPlantEmployee(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (SystemException | PortalException | NullPointerException e) {
 
 			ErrorMsg error = new ErrorMsg();
 			if (e instanceof NoSuchVRProductionPlantEmployeeException) {
 
-				error.setCode(500);
-				error.setMessage(NoSuchVRProductionPlantEmployeeException.class.toString());
 				error.setDescription("id not found");
 
 			} else if (e instanceof NullPointerException) {
 
-				error.setCode(500);
-				error.setMessage(NullPointerException.class.toString());
 				error.setDescription("id required");
 
 			} else {
 
 				_log.error(e);
-				error.setMessage(e.toString());
 			}
 
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
 		}
 
 	}
@@ -544,29 +500,20 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
-			VRProductionPlantEmployee targetModel = new VRProductionPlantEmployeeImpl();
-
-			model.setId((long) 0);
-
 			VRProductionPlantEmployee object = (VRProductionPlantEmployee) VRRestUtil.mappingModel(model,
-					VRProductionPlantEmployeeApiModel.class, targetModel, VRProductionPlantEmployeeImpl.class);
+					VRProductionPlantEmployeeApiModel.class, new VRProductionPlantEmployeeImpl(),
+					VRProductionPlantEmployeeImpl.class);
 
-			object = VRProductionPlantEmployeeLocalServiceUtil.updateProductionPlantEmployee(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
+			JSONObject result = action.createVRProductionPlantEmployee(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (Exception e) {
 			_log.error(e);
 
-			ErrorMsg error = new ErrorMsg();
-
-			error.setCode(500);
-			error.setMessage(e.toString());
-
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
 		}
 
 	}
@@ -577,7 +524,6 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
 			VRProductionClassification targetModel = new VRProductionClassificationImpl();
 
 			targetModel = VRProductionClassificationLocalServiceUtil.getVRProductionClassification(model.getId());
@@ -585,34 +531,30 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 			VRProductionClassification object = (VRProductionClassification) VRRestUtil.mappingModel(model,
 					VRProductionClassificationApiModel.class, targetModel, VRProductionClassificationImpl.class);
 
-			object = VRProductionClassificationLocalServiceUtil.updateProductionClassification(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductionClassificationImpl.class, StringPool.BLANK);
+			JSONObject result = action.createVRProductionClassification(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (SystemException | PortalException | NullPointerException e) {
 
 			ErrorMsg error = new ErrorMsg();
 			if (e instanceof NoSuchVRProductionClassificationException) {
 
-				error.setCode(500);
-				error.setMessage(NoSuchVRProductionClassificationException.class.toString());
 				error.setDescription("id not found");
 
 			} else if (e instanceof NullPointerException) {
 
-				error.setCode(500);
-				error.setMessage(NullPointerException.class.toString());
 				error.setDescription("id required");
 
 			} else {
 
 				_log.error(e);
-				error.setMessage(e.toString());
+
 			}
 
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
 		}
 
 	}
@@ -623,29 +565,20 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 		try {
 
-			JSONObject result = JSONFactoryUtil.createJSONObject();
-			VRProductionClassification targetModel = new VRProductionClassificationImpl();
-
-			model.setId((long) 0);
-
 			VRProductionClassification object = (VRProductionClassification) VRRestUtil.mappingModel(model,
-					VRProductionClassificationApiModel.class, targetModel, VRProductionClassificationImpl.class);
+					VRProductionClassificationApiModel.class, new VRProductionClassificationImpl(),
+					VRProductionClassificationImpl.class);
 
-			object = VRProductionClassificationLocalServiceUtil.updateProductionClassification(object);
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			result = ActionUtil.object2Json(object, VRProductionClassificationImpl.class, StringPool.BLANK);
+			JSONObject result = action.createVRProductionClassification(object);
 
-			return Response.status(200).entity(result.toString()).build();
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (Exception e) {
 			_log.error(e);
 
-			ErrorMsg error = new ErrorMsg();
-
-			error.setCode(500);
-			error.setMessage(e.toString());
-
-			return Response.status(500).entity(error).build();
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
 		}
 
 	}

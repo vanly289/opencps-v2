@@ -30,8 +30,8 @@ public class VRProductionClassificationApiModel {
 		TABLE_COLUMNS_DATA_MAP.put("productclassificationcode", String.class);
 		TABLE_COLUMNS_MAP.put("productClassificationDescription", "productclassificationdescription");
 		TABLE_COLUMNS_DATA_MAP.put("productclassificationdescription", String.class);
-		TABLE_COLUMNS_MAP.put("classificationModel", "classificationmodel");
-		TABLE_COLUMNS_DATA_MAP.put("classificationmodel", String.class);
+		TABLE_COLUMNS_MAP.put("classificationMode", "classificationmode");
+		TABLE_COLUMNS_DATA_MAP.put("classificationmode", String.class);
 		TABLE_COLUMNS_MAP.put("remarks", "remarks");
 		TABLE_COLUMNS_DATA_MAP.put("remarks", String.class);
 		TABLE_COLUMNS_MAP.put("status", "status");
@@ -59,8 +59,8 @@ public class VRProductionClassificationApiModel {
 	protected String productClassificationCode;
 	@ApiModelProperty(name = "productclassificationdescription", example = "null", value = "")
 	protected String productClassificationDescription;
-	@ApiModelProperty(name = "classificationmodel", example = "null", value = "")
-	protected String classificationModel;
+	@ApiModelProperty(name = "classificationmode", example = "null", value = "")
+	protected String classificationMode;
 	@ApiModelProperty(name = "remarks", example = "null", value = "")
 	protected String remarks;
 	@ApiModelProperty(name = "status", example = "null", value = "")
@@ -142,12 +142,12 @@ public class VRProductionClassificationApiModel {
 		this.productClassificationDescription = productClassificationDescription;
 	}
 
-	public String getClassificationModel() {
-		return classificationModel;
+	public String getClassificationMode() {
+		return classificationMode;
 	}
 
-	public void setClassificationModel(String classificationModel) {
-		this.classificationModel = classificationModel;
+	public void setClassificationMode(String classificationMode) {
+		this.classificationMode = classificationMode;
 	}
 
 	public String getRemarks() {

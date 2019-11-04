@@ -87,8 +87,8 @@ public class VRProductionClassificationCacheModel implements CacheModel<VRProduc
 		sb.append(productClassificationCode);
 		sb.append(", productClassificationDescription=");
 		sb.append(productClassificationDescription);
-		sb.append(", classificationModel=");
-		sb.append(classificationModel);
+		sb.append(", classificationMode=");
+		sb.append(classificationMode);
 		sb.append(", remarks=");
 		sb.append(remarks);
 		sb.append(", status=");
@@ -142,11 +142,11 @@ public class VRProductionClassificationCacheModel implements CacheModel<VRProduc
 			vrProductionClassificationImpl.setProductClassificationDescription(productClassificationDescription);
 		}
 
-		if (classificationModel == null) {
-			vrProductionClassificationImpl.setClassificationModel(StringPool.BLANK);
+		if (classificationMode == null) {
+			vrProductionClassificationImpl.setClassificationMode(StringPool.BLANK);
 		}
 		else {
-			vrProductionClassificationImpl.setClassificationModel(classificationModel);
+			vrProductionClassificationImpl.setClassificationMode(classificationMode);
 		}
 
 		if (remarks == null) {
@@ -197,7 +197,7 @@ public class VRProductionClassificationCacheModel implements CacheModel<VRProduc
 		sequenceNo = objectInput.readInt();
 		productClassificationCode = objectInput.readUTF();
 		productClassificationDescription = objectInput.readUTF();
-		classificationModel = objectInput.readUTF();
+		classificationMode = objectInput.readUTF();
 		remarks = objectInput.readUTF();
 		status = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
@@ -245,11 +245,11 @@ public class VRProductionClassificationCacheModel implements CacheModel<VRProduc
 			objectOutput.writeUTF(productClassificationDescription);
 		}
 
-		if (classificationModel == null) {
+		if (classificationMode == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(classificationModel);
+			objectOutput.writeUTF(classificationMode);
 		}
 
 		if (remarks == null) {
@@ -279,7 +279,7 @@ public class VRProductionClassificationCacheModel implements CacheModel<VRProduc
 	public int sequenceNo;
 	public String productClassificationCode;
 	public String productClassificationDescription;
-	public String classificationModel;
+	public String classificationMode;
 	public String remarks;
 	public String status;
 	public long modifyDate;

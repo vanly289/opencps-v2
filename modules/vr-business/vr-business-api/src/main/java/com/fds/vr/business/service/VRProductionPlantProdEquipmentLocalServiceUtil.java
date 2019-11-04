@@ -148,6 +148,13 @@ public class VRProductionPlantProdEquipmentLocalServiceUtil {
 		return getService().findByProductionPlanCode(productionPlantCode);
 	}
 
+	public static com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
+		java.lang.String[] productionPlantCodes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByProductionPlanCode(productionPlantCodes);
+	}
+
 	public static com.liferay.portal.kernel.json.JSONArray findData(
 		java.lang.String sql, java.util.List<java.lang.String> columnNames,
 		java.util.List<java.lang.String> dataTypes,

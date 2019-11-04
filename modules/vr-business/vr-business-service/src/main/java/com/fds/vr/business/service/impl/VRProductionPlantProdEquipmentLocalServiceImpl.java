@@ -139,13 +139,36 @@ public class VRProductionPlantProdEquipmentLocalServiceImpl
 		return result;
 	}
 	
+	public JSONArray findByProductionPlanCode(String[] productionPlantCodes) throws SystemException, PortalException{
+		
+		JSONArray result = JSONFactoryUtil.createJSONArray();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		
+		for(String productionPlantCode:productionPlantCodes) {
+		
+			List<VRProductionPlantProdEquipment> dataList = vrProductionPlantProdEquipmentPersistence.findByPPC(productionPlantCode);
+			
+			for(VRProductionPlantProdEquipment data:dataList) {
+				
+				jsonObject = JSONFactoryUtil.createJSONObject();
+				
+				jsonObject = ActionUtil.object2Json(data, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
+				
+				if(Validator.isNotNull(jsonObject)) {
+					result.put(jsonObject);
+				}
+			}
+		}
+		return result;
+	}
+	
 	public VRProductionPlantProdEquipment updatePlantProdEquipment(VRProductionPlantProdEquipment object) throws SystemException {
 
 		if (object.getId() <= 0) {
 
 			long id = counterLocalService.increment(VRProductionPlantProdEquipment.class.getName());
 
-			object = vrProductionPlantProdEquipmentPersistence.create(id);
+			object.setId(id);
 		}
 
 		return vrProductionPlantProdEquipmentPersistence.update(object);
