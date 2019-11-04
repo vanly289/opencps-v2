@@ -17,7 +17,8 @@ import javax.xml.bind.annotation.XmlType;
 		"productionplantcontactname", "productionplantcontactemail", "productionplantcontactphone",
 		"productionplanttype", "productionplantstatus", "productionplantemployeesnote", "productionplantequipmentsnote",
 		"productionplantprodequipmentsnote", "registrationid", "registrationformid", "applicantprofileid",
-		"latestcopreportdate", "latestcopreportresult", "nextcopreportdate", "modifydate", "syncdate", "keyword",
+		"latestcopreportdate", "latestcopreportresult", "nextcopreportdate", "modifydate", "syncdate", "keyword","applicantcode",
+		"supplierid",
 		"start", "end", "order_asc", "order_desc" })
 @XmlRootElement(name = "VRProductionPlantBeanParam")
 public class VRProductionPlantBeanParam {
@@ -113,6 +114,27 @@ public class VRProductionPlantBeanParam {
 	protected String modifyDate;
 	@QueryParam(value = "syncdate")
 	protected String syncDate;
+	@QueryParam(value = "applicantcode")
+	protected String applicantCode;
+	@QueryParam(value = "supplierid")
+	protected Long supplierId;
+	
+
+	public Long getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(Long supplierId) {
+		this.supplierId = supplierId;
+	}
+
+	public String getApplicantCode() {
+		return applicantCode;
+	}
+
+	public void setApplicantCode(String applicantCode) {
+		this.applicantCode = applicantCode;
+	}
 
 	public String getKeyword() {
 		return keyword;

@@ -2,7 +2,6 @@ package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRProductionPlantAction;
 import com.fds.vr.business.action.impl.VRProductionPlantActionImpl;
-import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.exception.NoSuchVRProductTypeException;
 import com.fds.vr.business.exception.NoSuchVRProductionClassificationException;
 import com.fds.vr.business.exception.NoSuchVRProductionPlantEmployeeException;
@@ -41,7 +40,6 @@ import com.fds.vr.util.VRRestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -50,7 +48,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -68,10 +65,11 @@ import javax.ws.rs.core.Response;
  */
 public class VRProductionManagementImpl implements VRProductionManagement {
 	private Log _log = LogFactoryUtil.getLog(VRProductionManagementImpl.class);
-
-	public Response findProductionPlant(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, @BeanParam VRProductionPlantBeanParam query) {
+	
+	@Override
+	public Response findProductionPlant( HttpServletRequest request,  HttpHeaders header,
+			 Company company,  Locale locale,  User user,
+			 ServiceContext serviceContext,  VRProductionPlantBeanParam query) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		try {
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
@@ -533,7 +531,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 			VRProductionPlantAction action = new VRProductionPlantActionImpl();
 
-			JSONObject result = action.createVRProductionClassification(object);
+			JSONObject result = action.updateVRProductionClassification(object);
 
 			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
@@ -582,4 +580,5 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 		}
 
 	}
+	
 }
