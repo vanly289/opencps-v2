@@ -72,7 +72,7 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 			{ "sequenceNo", Types.INTEGER },
 			{ "productClassificationCode", Types.VARCHAR },
 			{ "productClassificationDescription", Types.VARCHAR },
-			{ "classificationModel", Types.VARCHAR },
+			{ "classificationMode", Types.VARCHAR },
 			{ "remarks", Types.VARCHAR },
 			{ "status", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
@@ -90,14 +90,14 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 		TABLE_COLUMNS_MAP.put("sequenceNo", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("productClassificationCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productClassificationDescription", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("classificationModel", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("classificationMode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("remarks", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productclassification (id LONG not null primary key,mtCore LONG,applicantProfileId LONG,applicantCode VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,sequenceNo INTEGER,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,classificationModel VARCHAR(75) null,remarks VARCHAR(75) null,status VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productclassification (id LONG not null primary key,mtCore LONG,applicantProfileId LONG,applicantCode VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,sequenceNo INTEGER,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,classificationMode VARCHAR(75) null,remarks VARCHAR(75) null,status VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productclassification";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionClassification.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productclassification.modifyDate DESC";
@@ -166,7 +166,7 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 			getProductClassificationCode());
 		attributes.put("productClassificationDescription",
 			getProductClassificationDescription());
-		attributes.put("classificationModel", getClassificationModel());
+		attributes.put("classificationMode", getClassificationMode());
 		attributes.put("remarks", getRemarks());
 		attributes.put("status", getStatus());
 		attributes.put("modifyDate", getModifyDate());
@@ -237,11 +237,10 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 			setProductClassificationDescription(productClassificationDescription);
 		}
 
-		String classificationModel = (String)attributes.get(
-				"classificationModel");
+		String classificationMode = (String)attributes.get("classificationMode");
 
-		if (classificationModel != null) {
-			setClassificationModel(classificationModel);
+		if (classificationMode != null) {
+			setClassificationMode(classificationMode);
 		}
 
 		String remarks = (String)attributes.get("remarks");
@@ -391,18 +390,18 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	}
 
 	@Override
-	public String getClassificationModel() {
-		if (_classificationModel == null) {
+	public String getClassificationMode() {
+		if (_classificationMode == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _classificationModel;
+			return _classificationMode;
 		}
 	}
 
 	@Override
-	public void setClassificationModel(String classificationModel) {
-		_classificationModel = classificationModel;
+	public void setClassificationMode(String classificationMode) {
+		_classificationMode = classificationMode;
 	}
 
 	@Override
@@ -497,7 +496,7 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 		vrProductionClassificationImpl.setSequenceNo(getSequenceNo());
 		vrProductionClassificationImpl.setProductClassificationCode(getProductClassificationCode());
 		vrProductionClassificationImpl.setProductClassificationDescription(getProductClassificationDescription());
-		vrProductionClassificationImpl.setClassificationModel(getClassificationModel());
+		vrProductionClassificationImpl.setClassificationMode(getClassificationMode());
 		vrProductionClassificationImpl.setRemarks(getRemarks());
 		vrProductionClassificationImpl.setStatus(getStatus());
 		vrProductionClassificationImpl.setModifyDate(getModifyDate());
@@ -620,13 +619,12 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 			vrProductionClassificationCacheModel.productClassificationDescription = null;
 		}
 
-		vrProductionClassificationCacheModel.classificationModel = getClassificationModel();
+		vrProductionClassificationCacheModel.classificationMode = getClassificationMode();
 
-		String classificationModel = vrProductionClassificationCacheModel.classificationModel;
+		String classificationMode = vrProductionClassificationCacheModel.classificationMode;
 
-		if ((classificationModel != null) &&
-				(classificationModel.length() == 0)) {
-			vrProductionClassificationCacheModel.classificationModel = null;
+		if ((classificationMode != null) && (classificationMode.length() == 0)) {
+			vrProductionClassificationCacheModel.classificationMode = null;
 		}
 
 		vrProductionClassificationCacheModel.remarks = getRemarks();
@@ -688,8 +686,8 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 		sb.append(getProductClassificationCode());
 		sb.append(", productClassificationDescription=");
 		sb.append(getProductClassificationDescription());
-		sb.append(", classificationModel=");
-		sb.append(getClassificationModel());
+		sb.append(", classificationMode=");
+		sb.append(getClassificationMode());
 		sb.append(", remarks=");
 		sb.append(getRemarks());
 		sb.append(", status=");
@@ -748,8 +746,8 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 		sb.append(getProductClassificationDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>classificationModel</column-name><column-value><![CDATA[");
-		sb.append(getClassificationModel());
+			"<column><column-name>classificationMode</column-name><column-value><![CDATA[");
+		sb.append(getClassificationMode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>remarks</column-name><column-value><![CDATA[");
@@ -787,7 +785,7 @@ public class VRProductionClassificationModelImpl extends BaseModelImpl<VRProduct
 	private int _sequenceNo;
 	private String _productClassificationCode;
 	private String _productClassificationDescription;
-	private String _classificationModel;
+	private String _classificationMode;
 	private String _remarks;
 	private String _status;
 	private Date _modifyDate;

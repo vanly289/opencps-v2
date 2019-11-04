@@ -4,9 +4,12 @@ import com.fds.vr.business.action.VRApplicantProfileAction;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryInstance;
 import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.model.VRProductionClassification;
 import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
 import com.fds.vr.business.model.impl.VRApplicantProfileModelImpl;
+import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
 import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
+import com.fds.vr.business.service.VRProductionClassificationLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -18,6 +21,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * @author trungnt
@@ -159,6 +164,37 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 		result.put("total", total);
 		result.put("data", array);
 		return result;
+	}
+	
+	public JSONObject createVRApplicantProfile(VRApplicantProfile object) {
+
+		object.setId(0);
+
+		return updateVRApplicantProfile(object);
+	}
+
+	public JSONObject updateVRApplicantProfile(VRApplicantProfile object) {
+
+		JSONObject returnObj = JSONFactoryUtil.createJSONObject();
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		try {
+
+			object = VRApplicantProfileLocalServiceUtil.updateVRApplicantProfile(object);
+
+			result = ActionUtil.object2Json(object, VRApplicantProfileImpl.class, StringPool.BLANK);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_OK);
+			returnObj.put("content", result);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			returnObj.put("status", HttpsURLConnection.HTTP_INTERNAL_ERROR);
+
+		}
+
+		return returnObj;
 	}
 
 }

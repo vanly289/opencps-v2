@@ -107,7 +107,7 @@ public class VRProductionClassificationLocalServiceImpl
 		object.setSequenceNo(Integer.valueOf(mapValues.get("sequenceNo")));
 		object.setProductClassificationCode(mapValues.get("productClassificationCode"));
 		object.setProductClassificationDescription(mapValues.get("productClassificationDescription"));
-		object.setClassificationModel(mapValues.get("classificationModel"));
+		object.setClassificationMode(mapValues.get("classificationMode"));
 		object.setRemarks(mapValues.get("remarks"));
 		object.setStatus(mapValues.get("status"));
 		//object.setSyncDate(ConvertFormatDate.parseStringToDate(mapValues.get("syncDate")));
@@ -123,7 +123,7 @@ public class VRProductionClassificationLocalServiceImpl
 
 			long id = counterLocalService.increment(VRProductionClassification.class.getName());
 
-			object = vrProductionClassificationPersistence.create(id);
+			object.setId(id);
 		}
 
 		return vrProductionClassificationPersistence.update(object);

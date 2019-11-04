@@ -71,7 +71,7 @@ public class VRProductionClassificationWrapper
 			getProductClassificationCode());
 		attributes.put("productClassificationDescription",
 			getProductClassificationDescription());
-		attributes.put("classificationModel", getClassificationModel());
+		attributes.put("classificationMode", getClassificationMode());
 		attributes.put("remarks", getRemarks());
 		attributes.put("status", getStatus());
 		attributes.put("modifyDate", getModifyDate());
@@ -139,11 +139,10 @@ public class VRProductionClassificationWrapper
 			setProductClassificationDescription(productClassificationDescription);
 		}
 
-		String classificationModel = (String)attributes.get(
-				"classificationModel");
+		String classificationMode = (String)attributes.get("classificationMode");
 
-		if (classificationModel != null) {
-			setClassificationModel(classificationModel);
+		if (classificationMode != null) {
+			setClassificationMode(classificationMode);
 		}
 
 		String remarks = (String)attributes.get("remarks");
@@ -247,13 +246,13 @@ public class VRProductionClassificationWrapper
 	}
 
 	/**
-	* Returns the classification model of this vr production classification.
+	* Returns the classification mode of this vr production classification.
 	*
-	* @return the classification model of this vr production classification
+	* @return the classification mode of this vr production classification
 	*/
 	@Override
-	public java.lang.String getClassificationModel() {
-		return _vrProductionClassification.getClassificationModel();
+	public java.lang.String getClassificationMode() {
+		return _vrProductionClassification.getClassificationMode();
 	}
 
 	/**
@@ -417,13 +416,13 @@ public class VRProductionClassificationWrapper
 	}
 
 	/**
-	* Sets the classification model of this vr production classification.
+	* Sets the classification mode of this vr production classification.
 	*
-	* @param classificationModel the classification model of this vr production classification
+	* @param classificationMode the classification mode of this vr production classification
 	*/
 	@Override
-	public void setClassificationModel(java.lang.String classificationModel) {
-		_vrProductionClassification.setClassificationModel(classificationModel);
+	public void setClassificationMode(java.lang.String classificationMode) {
+		_vrProductionClassification.setClassificationMode(classificationMode);
 	}
 
 	@Override

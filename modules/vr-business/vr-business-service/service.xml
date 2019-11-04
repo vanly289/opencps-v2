@@ -7644,7 +7644,7 @@
 		<column name="sequenceNo" type="int"/>
 		<column name="productClassificationCode" type="String"/>
 		<column name="productClassificationDescription" type="String"/>
-		<column name="classificationModel" type="String"/>
+		<column name="classificationMode" type="String"/>
 		<column name="remarks" type="String"/>
 		<column name="status" type="String"/>
 		

@@ -198,7 +198,7 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 
 			long id = counterLocalService.increment(VRProductionPlant.class.getName());
 
-			object = vrProductionPlantPersistence.create(id);
+			object.setId(id);
 		}
 
 		return vrProductionPlantPersistence.update(object);

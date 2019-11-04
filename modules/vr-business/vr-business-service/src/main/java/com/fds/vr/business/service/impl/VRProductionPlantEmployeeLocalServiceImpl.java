@@ -132,9 +132,9 @@ public class VRProductionPlantEmployeeLocalServiceImpl
 
 		if (object.getId() <= 0) {
 
-			long vrProductionPlantEmployeeId = counterLocalService.increment(VRProductionPlantEmployee.class.getName());
+			long id = counterLocalService.increment(VRProductionPlantEmployee.class.getName());
 
-			object = vrProductionPlantEmployeePersistence.create(vrProductionPlantEmployeeId);
+			object.setId(id);
 		}
 
 		return vrProductionPlantEmployeePersistence.update(object);
