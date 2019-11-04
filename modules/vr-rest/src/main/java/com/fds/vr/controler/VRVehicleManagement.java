@@ -30,14 +30,14 @@ public interface VRVehicleManagement {
 	@GET
 	@Path("/certificate/year")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findReportRepositoryYear(@Context HttpServletRequest request, @Context HttpHeaders header,
+	public Response findVRVehicleCertificateRecordYear(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRVehicleTypeCertificateBeanParam query);
 
 	@GET
 	@Path("/certificate/{year}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findReportRepository(@Context HttpServletRequest request, @Context HttpHeaders header,
+	public Response findVRVehicleCertificate(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @PathParam("year") Integer year,
 			@BeanParam VRVehicleTypeCertificateBeanParam query, String advancesearchParams);
@@ -46,7 +46,7 @@ public interface VRVehicleManagement {
 	@Path("/certificate")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Response getVRCOPReportRepository(@Context HttpServletRequest request, @Context HttpHeaders header,
+	public Response getVRVehicleCertificate(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @DefaultValue(" ") @QueryParam("mtcore") long mtCore,
 			@DefaultValue(" ") @QueryParam("copreportno") String COPReportNo);

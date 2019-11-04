@@ -1,7 +1,9 @@
 package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRCOPReportRepositoryAction;
+import com.fds.vr.business.action.VRVehicleTypeCertificateAction;
 import com.fds.vr.business.action.impl.VRCOPReportRepositoryActionImpl;
+import com.fds.vr.business.action.impl.VRVehicleTypeCertificateActionImpl;
 import com.fds.vr.controler.VRVehicleManagement;
 import com.fds.vr.model.VRVehicleTypeCertificateBeanParam;
 import com.fds.vr.util.VRRestUtil;
@@ -28,31 +30,40 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 	private Log _log = LogFactoryUtil.getLog(VRVehicleManagementImpl.class);
 
 	@Override
-	public Response findReportRepositoryYear(HttpServletRequest request, HttpHeaders header, Company company,
+	public Response findVRVehicleCertificateRecordYear(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRVehicleTypeCertificateBeanParam query) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
-		_log.info("rest method:findReportRepositoryYear");
+		_log.info("rest method:findVRVehicleCertificateRecordYear");
 		try {
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
-			VRCOPReportRepositoryAction actionImpl = new VRCOPReportRepositoryActionImpl();
-			result = actionImpl.findVRCOPReportRepositoryYear(user, serviceContext, params);
+			VRVehicleTypeCertificateAction actionImpl = new VRVehicleTypeCertificateActionImpl();
+			result = actionImpl.findVehicleTypeCertificateYear(user, serviceContext, params);
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);
-			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get reportrepositoryyear")).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get certificateYear")).build();
 		}
 	}
 
 	@Override
-	public Response findReportRepository(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+	public Response findVRVehicleCertificate(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, Integer year, VRVehicleTypeCertificateBeanParam query,
 			String advancesearchParams) {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		_log.info("rest method:findVRVehicleCertificate");
+		try {
+			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
+			VRVehicleTypeCertificateAction actionImpl = new VRVehicleTypeCertificateActionImpl();
+			result = actionImpl.findVehicleTypeCertificate(user, serviceContext, year, params, advancesearchParams);
+			return Response.status(200).entity(result.toJSONString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get certificateYear")).build();
+		}
 	}
 
 	@Override
-	public Response getVRCOPReportRepository(HttpServletRequest request, HttpHeaders header, Company company,
+	public Response getVRVehicleCertificate(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, long mtCore, String COPReportNo) {
 		// TODO Auto-generated method stub
 		return null;
