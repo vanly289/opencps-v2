@@ -86,6 +86,8 @@ public class VRProductionPlantApiModel {
 		TABLE_COLUMNS_DATA_MAP.put("modifydate", Date.class);
 		TABLE_COLUMNS_MAP.put("syncDate", "syncdate");
 		TABLE_COLUMNS_DATA_MAP.put("syncdate", Date.class);
+		TABLE_COLUMNS_MAP.put("supplierId", "supplierId");
+		TABLE_COLUMNS_DATA_MAP.put("supplierId", Long.class);
 	}
 	@ApiModelProperty(name = "id", example = "null", value = "")
 	protected Long id;
@@ -161,9 +163,19 @@ public class VRProductionPlantApiModel {
 	protected String modifyDate;
 	@ApiModelProperty(name = "syncdate", example = "null", value = "")
 	protected String syncDate;
+	@ApiModelProperty(name = "supplierId", example = "null", value = "")
+	protected Long supplierId;
 
 	public Long getId() {
 		return id;
+	}
+
+	public Long getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(Long supplierId) {
+		this.supplierId = supplierId;
 	}
 
 	public void setId(Long id) {

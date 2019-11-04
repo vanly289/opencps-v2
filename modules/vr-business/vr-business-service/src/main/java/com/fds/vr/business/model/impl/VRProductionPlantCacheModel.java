@@ -66,7 +66,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(75);
+		StringBundler sb = new StringBundler(77);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -138,6 +138,8 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		sb.append(registrationFormId);
 		sb.append(", applicantProfileId=");
 		sb.append(applicantProfileId);
+		sb.append(", supplierId=");
+		sb.append(supplierId);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -367,6 +369,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		vrProductionPlantImpl.setRegistrationId(registrationId);
 		vrProductionPlantImpl.setRegistrationFormId(registrationFormId);
 		vrProductionPlantImpl.setApplicantProfileId(applicantProfileId);
+		vrProductionPlantImpl.setSupplierId(supplierId);
 
 		if (modifyDate == Long.MIN_VALUE) {
 			vrProductionPlantImpl.setModifyDate(null);
@@ -428,6 +431,8 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		registrationFormId = objectInput.readLong();
 
 		applicantProfileId = objectInput.readLong();
+
+		supplierId = objectInput.readLong();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -654,6 +659,8 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		objectOutput.writeLong(registrationFormId);
 
 		objectOutput.writeLong(applicantProfileId);
+
+		objectOutput.writeLong(supplierId);
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -693,6 +700,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 	public long registrationId;
 	public long registrationFormId;
 	public long applicantProfileId;
+	public long supplierId;
 	public long modifyDate;
 	public long syncDate;
 }
