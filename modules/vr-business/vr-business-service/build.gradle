@@ -8,6 +8,14 @@ dependencies {
 	compileOnly project(":modules:backend-datamgt:backend-datamgt-service")
 	compileOnly project(":modules:vr-filterconfig:vr-filterconfig-service")
 	compileOnly project(":modules:vr-filterconfig:vr-filterconfig-api")
+	
+	compile group: 'org.apache.poi', name: 'poi', version: '4.0.0'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.0'
+    compile group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.0.2'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.2'
+    compile group: 'org.apache.commons', name: 'commons-compress', version: '1.18'
+    compile group: 'org.apache.poi', name: 'ooxml-schemas', version: '1.4'
+	
 }
 
 buildService {

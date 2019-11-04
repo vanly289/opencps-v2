@@ -12,6 +12,7 @@ import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,6 +21,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
 /**
  * @author trungnt
@@ -49,5 +53,13 @@ public interface VRVehicleManagement {
 	public Response getVRVehicleCertificate(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @DefaultValue(" ") @QueryParam("mtcore") long mtCore,
-			@DefaultValue(" ") @QueryParam("copreportno") String COPReportNo);
+			@DefaultValue(" ") @QueryParam("copreportno") String copReportNo);
+	
+	@POST
+	@Path("/record/import")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response importVRVehiclerecord(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @Multipart("file") Attachment attachment);
 }
