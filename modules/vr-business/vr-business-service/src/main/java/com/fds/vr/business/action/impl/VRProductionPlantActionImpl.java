@@ -95,7 +95,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
 		
 		
-		if (Validator.isNotNull(supplierId)) {
+		if (supplierid != null) {
 			
 			tableAlias = "vr_productionplant";
 			joinWithTableAlias = "vr_productionplantsupplier";
@@ -178,21 +178,6 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 					" AND ", StringPool.LIKE, tableAlias));
 		}
 		
-		//_log.info("supplierId:"+supplierId);
-		
-		if (Validator.isNotNull(supplierId)) {
-			
-			//_log.info("supplierId:"+supplierId);
-			
-			
-			conditions.append(ActionUtil.buildSQLCondition("supplierid", supplierId, " AND ",
-					StringPool.GREATER_THAN, tableAlias));
-			
-			
-			
-		}
-		
-		//_log.info("conditions:"+conditions);
 
 		if (Validator.isNotNull(keyword)) {
 			conditions
