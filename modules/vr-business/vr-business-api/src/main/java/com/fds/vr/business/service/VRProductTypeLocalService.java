@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -71,6 +70,9 @@ public interface VRProductTypeLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VRProductType addVRProductType(VRProductType vrProductType);
+
+	public VRProductType createVRProductType(VRProductType object)
+		throws SystemException;
 
 	/**
 	* Creates a new vr product type with the primary key. Does not add the vr product type to the database.
@@ -133,11 +135,6 @@ public interface VRProductTypeLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	public JSONArray findByProductionPlanCode(
-		java.lang.String productionPlantCode,
-		java.lang.String productClassificationCode)
-		throws PortalException, SystemException;
 
 	/**
 	* @throws PortalException
@@ -204,6 +201,10 @@ public interface VRProductTypeLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	public List<VRProductType> findByProductionPlantCode_ProductClassificationCode(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode);
 
 	/**
 	* Returns a range of all the vr product types.

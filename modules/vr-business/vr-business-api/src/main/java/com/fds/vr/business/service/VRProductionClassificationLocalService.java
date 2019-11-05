@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -73,6 +72,9 @@ public interface VRProductionClassificationLocalService extends BaseLocalService
 	public VRProductionClassification addVRProductionClassification(
 		VRProductionClassification vrProductionClassification);
 
+	public VRProductionClassification createVRProductionClassification(
+		VRProductionClassification object) throws SystemException;
+
 	/**
 	* Creates a new vr production classification with the primary key. Does not add the vr production classification to the database.
 	*
@@ -116,18 +118,17 @@ public interface VRProductionClassificationLocalService extends BaseLocalService
 	public VRProductionClassification getVRProductionClassification(long id)
 		throws PortalException;
 
-	public VRProductionClassification updateProductionClassification(
-		VRProductionClassification object) throws SystemException;
-
 	/**
 	* Updates the vr production classification in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param vrProductionClassification the vr production classification
 	* @return the vr production classification that was updated
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VRProductionClassification updateVRProductionClassification(
-		VRProductionClassification vrProductionClassification);
+		VRProductionClassification vrProductionClassification)
+		throws SystemException;
 
 	public VRProductionClassification updateVRProductionClassification(
 		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
@@ -139,10 +140,6 @@ public interface VRProductionClassificationLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	public JSONArray findByProductionPlanCode(
-		java.lang.String productionPlantCode)
-		throws PortalException, SystemException;
 
 	/**
 	* @throws PortalException
@@ -209,6 +206,9 @@ public interface VRProductionClassificationLocalService extends BaseLocalService
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	public List<VRProductionClassification> findByProductionPlantCode(
+		java.lang.String productionPlantCode);
 
 	/**
 	* Returns a range of all the vr production classifications.

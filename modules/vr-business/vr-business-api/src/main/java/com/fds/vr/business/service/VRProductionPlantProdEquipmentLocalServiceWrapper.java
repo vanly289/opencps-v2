@@ -46,6 +46,13 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 		return _vrProductionPlantProdEquipmentLocalService.addVRProductionPlantProdEquipment(vrProductionPlantProdEquipment);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductionPlantProdEquipment createVRProductionPlantProdEquipment(
+		com.fds.vr.business.model.VRProductionPlantProdEquipment object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrProductionPlantProdEquipmentLocalService.createVRProductionPlantProdEquipment(object);
+	}
+
 	/**
 	* Creates a new vr production plant prod equipment with the primary key. Does not add the vr production plant prod equipment to the database.
 	*
@@ -103,13 +110,6 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 	}
 
 	@Override
-	public com.fds.vr.business.model.VRProductionPlantProdEquipment updatePlantProdEquipment(
-		com.fds.vr.business.model.VRProductionPlantProdEquipment object)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _vrProductionPlantProdEquipmentLocalService.updatePlantProdEquipment(object);
-	}
-
-	@Override
 	public com.fds.vr.business.model.VRProductionPlantProdEquipment updateProductionPlantProdEquipment(
 		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
 		return _vrProductionPlantProdEquipmentLocalService.updateProductionPlantProdEquipment(mapValues,
@@ -121,10 +121,12 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 	*
 	* @param vrProductionPlantProdEquipment the vr production plant prod equipment
 	* @return the vr production plant prod equipment that was updated
+	* @throws SystemException
 	*/
 	@Override
 	public com.fds.vr.business.model.VRProductionPlantProdEquipment updateVRProductionPlantProdEquipment(
-		com.fds.vr.business.model.VRProductionPlantProdEquipment vrProductionPlantProdEquipment) {
+		com.fds.vr.business.model.VRProductionPlantProdEquipment vrProductionPlantProdEquipment)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _vrProductionPlantProdEquipmentLocalService.updateVRProductionPlantProdEquipment(vrProductionPlantProdEquipment);
 	}
 
@@ -141,22 +143,6 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _vrProductionPlantProdEquipmentLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
-		java.lang.String productionPlantCode)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _vrProductionPlantProdEquipmentLocalService.findByProductionPlanCode(productionPlantCode);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
-		java.lang.String[] productionPlantCodes)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _vrProductionPlantProdEquipmentLocalService.findByProductionPlanCode(productionPlantCodes);
 	}
 
 	@Override
@@ -259,6 +245,12 @@ public class VRProductionPlantProdEquipmentLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _vrProductionPlantProdEquipmentLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRProductionPlantProdEquipment> findByProductionPlanCode(
+		java.lang.String productionPlantCode) {
+		return _vrProductionPlantProdEquipmentLocalService.findByProductionPlanCode(productionPlantCode);
 	}
 
 	/**

@@ -14,22 +14,15 @@
 
 package com.fds.vr.business.service.impl;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRProductionPlant;
-import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.service.base.VRProductionPlantLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -107,9 +100,9 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 		object.setProductionPlantProdEquipmentsNote(mapValues.get(""));
 		object.setRegistrationId(Long.valueOf(mapValues.get("")));
 		object.setApplicantProfileId(Long.valueOf(mapValues.get("")));
-		//object.setLatestCOPReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
-		//object.setLatestCOPReportResult(mapValues.get(""));
-		//object.setNextCOPReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+		// object.setLatestCOPReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
+		// object.setLatestCOPReportResult(mapValues.get(""));
+		// object.setNextCOPReportDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
 		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
 		object.setSyncDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
 
@@ -191,19 +184,27 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 
 		return vrProductionPlantFinder.countData(sql);
 	}
-	
-	public VRProductionPlant updateProductionPlant(VRProductionPlant object) throws SystemException {
 
-		if (object.getId() <= 0) {
+	public VRProductionPlant createVRProductionPlant(VRProductionPlant object) throws SystemException {
 
-			long id = counterLocalService.increment(VRProductionPlant.class.getName());
+		long id = counterLocalService.increment(VRProductionPlant.class.getName());
 
-			object.setId(id);
-		}
+		object.setId(id);
+
+		Date now = new Date();
+
+		object.setModifyDate(now);
 
 		return vrProductionPlantPersistence.update(object);
 	}
 
-	private Log _log = LogFactoryUtil.getLog(VRProductionPlantLocalServiceImpl.class);
+	public VRProductionPlant updateVRProductionPlant(VRProductionPlant object) throws SystemException {
+
+		Date now = new Date();
+
+		object.setModifyDate(now);
+
+		return vrProductionPlantPersistence.update(object);
+	}
 
 }

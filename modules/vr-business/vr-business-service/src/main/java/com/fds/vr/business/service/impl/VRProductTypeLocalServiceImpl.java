@@ -14,28 +14,13 @@
 
 package com.fds.vr.business.service.impl;
 
-import java.util.ArrayList;
+import com.fds.vr.business.model.VRProductType;
+import com.fds.vr.business.service.base.VRProductTypeLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.SystemException;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.action.util.ConvertFormatDate;
-import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.VRProductType;
-import com.fds.vr.business.model.VRProductionPlantProdEquipment;
-import com.fds.vr.business.model.impl.VRProductTypeImpl;
-import com.fds.vr.business.model.impl.VRProductionPlantProdEquipmentImpl;
-import com.fds.vr.business.service.base.VRProductTypeLocalServiceBaseImpl;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -61,22 +46,6 @@ public class VRProductTypeLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRProductTypeLocalServiceUtil} to access the vr product type local service.
 	 */
-	/*
-	public List<VRProductType> findByproductPlantID(long mtCore, long productPlantID) throws PortalException, SystemException {
-		try {
-			return vrProductTypePersistence.findByproductPlantID(mtCore, productPlantID);
-		} catch (Exception e) {
-			_log.error(e);
-		}
-		return new ArrayList<VRProductType>();
-		
-	}
-
-	public void deleteByproductPlantId(long mtCore, long productPlantId) {
-
-		vrProductTypePersistence.removeByproductPlantID(mtCore, productPlantId);
-	}
-	*/
 	public VRProductType updateProductType(Map<String, String> mapValues, int mtCore) {
 		
 		Date now = new Date();
@@ -120,36 +89,30 @@ public class VRProductTypeLocalServiceImpl
 	}
 	*/
 	
-	public JSONArray findByProductionPlanCode(String productionPlantCode,String productClassificationCode) throws SystemException, PortalException{
-		
-		JSONArray result = JSONFactoryUtil.createJSONArray();
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-		
-		List<VRProductType> dataList = vrProductTypePersistence.findByPPC_PCC(productionPlantCode,productClassificationCode);
-		
-		for(VRProductType data:dataList) {
-			
-			jsonObject = JSONFactoryUtil.createJSONObject();
-			
-			jsonObject = ActionUtil.object2Json(data, VRProductTypeImpl.class, StringPool.BLANK);
-			
-			if(Validator.isNotNull(jsonObject)) {
-				result.put(jsonObject);
-			}
-		}
-		return result;
+	public List<VRProductType> findByProductionPlantCode_ProductClassificationCode(String productionPlantCode,String productClassificationCode){
+		return vrProductTypePersistence.findByPPC_PCC(productionPlantCode,productClassificationCode);
 	}
 	
-	public VRProductType updateVRProductType(VRProductType object) throws SystemException {
+	public VRProductType createVRProductType(VRProductType object) throws SystemException {
 
-		if (object.getId() <= 0) {
+		long id = counterLocalService.increment(VRProductType.class.getName());
 
-			long id = counterLocalService.increment(VRProductType.class.getName());
-
-			object.setId(id);
-		}
+		object.setId(id);
+		
+		Date now = new Date();
+		
+		object.setModifyDate(now);
 
 		return vrProductTypePersistence.update(object);
 	}
-	private Log _log = LogFactoryUtil.getLog(VRProductTypeLocalServiceImpl.class);
+
+	public VRProductType updateVRProductType(VRProductType object) throws SystemException {
+
+		Date now = new Date();
+
+		object.setModifyDate(now);
+
+		return vrProductTypePersistence.update(object);
+	}
+	
 }

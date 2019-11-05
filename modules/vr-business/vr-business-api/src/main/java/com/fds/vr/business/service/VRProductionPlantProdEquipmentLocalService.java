@@ -73,6 +73,9 @@ public interface VRProductionPlantProdEquipmentLocalService
 	public VRProductionPlantProdEquipment addVRProductionPlantProdEquipment(
 		VRProductionPlantProdEquipment vrProductionPlantProdEquipment);
 
+	public VRProductionPlantProdEquipment createVRProductionPlantProdEquipment(
+		VRProductionPlantProdEquipment object) throws SystemException;
+
 	/**
 	* Creates a new vr production plant prod equipment with the primary key. Does not add the vr production plant prod equipment to the database.
 	*
@@ -118,9 +121,6 @@ public interface VRProductionPlantProdEquipmentLocalService
 	public VRProductionPlantProdEquipment getVRProductionPlantProdEquipment(
 		long id) throws PortalException;
 
-	public VRProductionPlantProdEquipment updatePlantProdEquipment(
-		VRProductionPlantProdEquipment object) throws SystemException;
-
 	public VRProductionPlantProdEquipment updateProductionPlantProdEquipment(
 		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 
@@ -129,10 +129,12 @@ public interface VRProductionPlantProdEquipmentLocalService
 	*
 	* @param vrProductionPlantProdEquipment the vr production plant prod equipment
 	* @return the vr production plant prod equipment that was updated
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VRProductionPlantProdEquipment updateVRProductionPlantProdEquipment(
-		VRProductionPlantProdEquipment vrProductionPlantProdEquipment);
+		VRProductionPlantProdEquipment vrProductionPlantProdEquipment)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -141,14 +143,6 @@ public interface VRProductionPlantProdEquipmentLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	public JSONArray findByProductionPlanCode(
-		java.lang.String productionPlantCode)
-		throws PortalException, SystemException;
-
-	public JSONArray findByProductionPlanCode(
-		java.lang.String[] productionPlantCodes)
-		throws PortalException, SystemException;
 
 	public JSONArray findData(java.lang.String sql,
 		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
@@ -220,6 +214,9 @@ public interface VRProductionPlantProdEquipmentLocalService
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	public List<VRProductionPlantProdEquipment> findByProductionPlanCode(
+		java.lang.String productionPlantCode);
 
 	/**
 	* Returns a range of all the vr production plant prod equipments.

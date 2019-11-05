@@ -73,6 +73,9 @@ public interface VRProductionPlantLocalService extends BaseLocalService,
 	public VRProductionPlant addVRProductionPlant(
 		VRProductionPlant vrProductionPlant);
 
+	public VRProductionPlant createVRProductionPlant(VRProductionPlant object)
+		throws SystemException;
+
 	/**
 	* Creates a new vr production plant with the primary key. Does not add the vr production plant to the database.
 	*
@@ -119,9 +122,6 @@ public interface VRProductionPlantLocalService extends BaseLocalService,
 	public VRProductionPlant getVRProductionPlant(long id)
 		throws PortalException;
 
-	public VRProductionPlant updateProductionPlant(VRProductionPlant object)
-		throws SystemException;
-
 	public VRProductionPlant updateProductionPlant(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues);
 
@@ -130,10 +130,11 @@ public interface VRProductionPlantLocalService extends BaseLocalService,
 	*
 	* @param vrProductionPlant the vr production plant
 	* @return the vr production plant that was updated
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VRProductionPlant updateVRProductionPlant(
-		VRProductionPlant vrProductionPlant);
+		VRProductionPlant vrProductionPlant) throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

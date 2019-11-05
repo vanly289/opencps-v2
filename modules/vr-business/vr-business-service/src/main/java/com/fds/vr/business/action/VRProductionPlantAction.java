@@ -20,8 +20,10 @@ public interface VRProductionPlantAction {
 	public JSONObject findVRVRProductionPlant(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params);
 	
-	public JSONObject updatePlantProdEquipment(VRProductionPlantProdEquipment object);
-	public JSONObject createPlantProdEquipment(VRProductionPlantProdEquipment object);
+	public JSONObject findVRProductionPlant(long id);
+	
+	public JSONObject createVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object);
+	public JSONObject updateVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object);
 	
 	public JSONObject createVRProductionPlant(VRProductionPlant object);
 	public JSONObject updateVRProductionPlant(VRProductionPlant object);

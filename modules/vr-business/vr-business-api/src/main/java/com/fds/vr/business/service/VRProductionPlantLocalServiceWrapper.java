@@ -46,6 +46,13 @@ public class VRProductionPlantLocalServiceWrapper
 		return _vrProductionPlantLocalService.addVRProductionPlant(vrProductionPlant);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductionPlant createVRProductionPlant(
+		com.fds.vr.business.model.VRProductionPlant object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrProductionPlantLocalService.createVRProductionPlant(object);
+	}
+
 	/**
 	* Creates a new vr production plant with the primary key. Does not add the vr production plant to the database.
 	*
@@ -111,13 +118,6 @@ public class VRProductionPlantLocalServiceWrapper
 
 	@Override
 	public com.fds.vr.business.model.VRProductionPlant updateProductionPlant(
-		com.fds.vr.business.model.VRProductionPlant object)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _vrProductionPlantLocalService.updateProductionPlant(object);
-	}
-
-	@Override
-	public com.fds.vr.business.model.VRProductionPlant updateProductionPlant(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
 		return _vrProductionPlantLocalService.updateProductionPlant(mapValues);
 	}
@@ -127,10 +127,12 @@ public class VRProductionPlantLocalServiceWrapper
 	*
 	* @param vrProductionPlant the vr production plant
 	* @return the vr production plant that was updated
+	* @throws SystemException
 	*/
 	@Override
 	public com.fds.vr.business.model.VRProductionPlant updateVRProductionPlant(
-		com.fds.vr.business.model.VRProductionPlant vrProductionPlant) {
+		com.fds.vr.business.model.VRProductionPlant vrProductionPlant)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _vrProductionPlantLocalService.updateVRProductionPlant(vrProductionPlant);
 	}
 
