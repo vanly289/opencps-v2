@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -87,16 +88,72 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 				supplierid = GetterUtil.getLong(params.get("supplierid"));
 			}
 		}
-
+		
+		String joinStatements = StringPool.BLANK;
 		String tableAlias = StringPool.BLANK;
+		String joinWithTableAlias = StringPool.BLANK;
+		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
+		
+		
+		if (supplierid != null) {
+			
+			tableAlias = "vr_productionplant";
+			joinWithTableAlias = "vr_productionplantsupplier";
+			
+			joinStatements = "INNER JOIN  "+joinWithTableAlias+" ON "+tableAlias+".supplierid = "+joinWithTableAlias+".id";
+			
+			columnStatementMap.put(ActionUtil.createSCNWTAS("id", tableAlias),long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantType", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantName", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantCode", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mtCore", tableAlias),long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingMA_CTY", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingTEN_CTY", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingDIA_CHI_CTY", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingMA_XUONG_LR", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingTEN_XUONG_LR", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingDIA_CHI_XUONG_LR", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingNote", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingStatus", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantAddress", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantStateCode", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantStateName", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantProvinceCode", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantProvinceName", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantDistrictCode", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantDistrictName", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantEmail", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantPhone", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantFax", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantRepresentative", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantRepresentativeTitle", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantContactName", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantContactEmail", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantContactPhone", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantStatus", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantEmployeesNote", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantEquipmentsNote", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantProdEquipmentsNote", tableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("registrationId", tableAlias),long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("registrationFormId", tableAlias),long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("applicantProfileId", tableAlias),long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("supplierId", tableAlias),long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("modifyDate", tableAlias),Date.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("syncDate", tableAlias),Date.class.getName());
+			
+			
+			columnStatementMap.put(ActionUtil.createSCNWTAS("corporationCode", joinWithTableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("corporationName", joinWithTableAlias),String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("corporationAddress", joinWithTableAlias),String.class.getName());
+		
+		}
 
 		String sqlStatementPattern = "SELECT [$STATEMENT_COLUMN$] FROM vr_productionplant"
 				+ (Validator.isNotNull(tableAlias) ? " AS " + tableAlias : StringPool.BLANK)
-				+ " [$CONDITION$] [$ORDERBY$]";
+				+ " [$STATEMENT_JOIN$] [$CONDITION$] [$ORDERBY$]";
 
-		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
-		// columnStatementMap.put(ActionUtil.createSCNWTAS("*", tableAlias),
-		// StringPool.BLANK);
+		
+		
 
 		StringBuilder conditions = new StringBuilder();
 
@@ -120,11 +177,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 			conditions.append(ActionUtil.buildSQLCondition("productionplanttype", "'" + productionplanttype + "'",
 					" AND ", StringPool.LIKE, tableAlias));
 		}
-
-		if (supplierid != null) {
-			conditions.append(ActionUtil.buildSQLCondition("supplierid", supplierid, " AND ", StringPool.GREATER_THAN,
-					tableAlias));
-		}
+		
 
 		if (Validator.isNotNull(keyword)) {
 			conditions
@@ -154,13 +207,25 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
 
 		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
-				conditions, sortedby, VRProductionPlantImpl.class, "VRProductionPlant", tableAlias, StringPool.BLANK);
+				conditions, sortedby, VRProductionPlantImpl.class, "VRProductionPlant", tableAlias, joinStatements);
 
 		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
-
-		JSONArray array = VRProductionPlantLocalServiceUtil.findData(instance.getSqlStatemanent(),
-				instance.getColumnAliasNames(), instance.getColumnDataTypes(), instance.getReturnClassName(),
-				instance.getClassName(), start, end);
+		
+		JSONArray array = null;
+		
+		if(Validator.isNotNull(joinStatements)) {
+			
+			 array = VRProductionPlantLocalServiceUtil.findData(instance.getSqlStatemanent(),
+					instance.getColumnAliasNames(), instance.getColumnDataTypes(),  null,
+					StringPool.BLANK, start, end);
+			
+		}else {
+			
+			 array = VRProductionPlantLocalServiceUtil.findData(instance.getSqlStatemanent(),
+					instance.getColumnAliasNames(), instance.getColumnDataTypes(),  instance.getReturnClassName(),
+					instance.getClassName(), start, end);
+		}
+		
 
 		long total = VRProductionPlantLocalServiceUtil.counData(instance.getCountStatemanent());
 

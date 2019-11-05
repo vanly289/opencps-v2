@@ -77,8 +77,6 @@ public class VRProductionPlantFinderImpl extends VRProductionPlantFinderBaseImpl
 					}
 				}
 			}
-			
-			log.info("results:"+results);
 
 			return results;
 		} catch (Exception e) {
