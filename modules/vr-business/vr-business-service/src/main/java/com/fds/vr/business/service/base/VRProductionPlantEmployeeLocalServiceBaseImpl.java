@@ -402,11 +402,13 @@ public abstract class VRProductionPlantEmployeeLocalServiceBaseImpl
 	 *
 	 * @param vrProductionPlantEmployee the vr production plant employee
 	 * @return the vr production plant employee that was updated
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public VRProductionPlantEmployee updateVRProductionPlantEmployee(
-		VRProductionPlantEmployee vrProductionPlantEmployee) {
+		VRProductionPlantEmployee vrProductionPlantEmployee)
+		throws SystemException {
 		return vrProductionPlantEmployeePersistence.update(vrProductionPlantEmployee);
 	}
 

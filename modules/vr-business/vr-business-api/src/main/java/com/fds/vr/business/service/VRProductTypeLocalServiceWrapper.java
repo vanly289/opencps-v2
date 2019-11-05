@@ -46,6 +46,13 @@ public class VRProductTypeLocalServiceWrapper
 		return _vrProductTypeLocalService.addVRProductType(vrProductType);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductType createVRProductType(
+		com.fds.vr.business.model.VRProductType object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrProductTypeLocalService.createVRProductType(object);
+	}
+
 	/**
 	* Creates a new vr product type with the primary key. Does not add the vr product type to the database.
 	*
@@ -133,16 +140,6 @@ public class VRProductTypeLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _vrProductTypeLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
-		java.lang.String productionPlantCode,
-		java.lang.String productClassificationCode)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _vrProductTypeLocalService.findByProductionPlanCode(productionPlantCode,
-			productClassificationCode);
 	}
 
 	/**
@@ -233,6 +230,14 @@ public class VRProductTypeLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _vrProductTypeLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRProductType> findByProductionPlantCode_ProductClassificationCode(
+		java.lang.String productionPlantCode,
+		java.lang.String productClassificationCode) {
+		return _vrProductTypeLocalService.findByProductionPlantCode_ProductClassificationCode(productionPlantCode,
+			productClassificationCode);
 	}
 
 	/**

@@ -58,8 +58,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 		_log.info("rest method:findReportRepository");
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		try {
-			_log.info("=========================>>>>>>>>>>>>>>>>>>>>>>>>>>>> payload: "
-					+ payload);
+			
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
 			VRCOPReportRepositoryAction actionImpl = new VRCOPReportRepositoryActionImpl();
 			result = actionImpl.findVRCOPReportRepository(user, serviceContext, year, params, payload);
@@ -69,32 +68,6 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get reportrepository")).build();
 		}
 	}
-
-//	@Override
-//	public Response getVRCOPReportRepositories(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-//			User user, ServiceContext serviceContext, int start,int end ) {
-//		
-//		try {
-//			
-//
-//			JSONArray result = VRCOPReportRepositoryLocalServiceUtil.getCOPReports(start, end);
-//			
-//			return Response.status(200).entity(result.toString()).build();
-//
-//		} catch (Exception e) {
-//			
-//			_log.error(e);
-//
-//			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
-//		}
-//	}
-
-//	@Override
-//	public Response getVRCOPReportRepositories(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-//			User user, ServiceContext serviceContext) {
-//		
-//		return getVRCOPReportRepositories(request, header, company, locale, user, serviceContext, 0, 50);
-//	}
 
 	@Override
 	public Response getVRCOPReportRepository(HttpServletRequest request, HttpHeaders header, Company company,

@@ -73,6 +73,9 @@ public interface VRProductionPlantEmployeeLocalService extends BaseLocalService,
 	public VRProductionPlantEmployee addVRProductionPlantEmployee(
 		VRProductionPlantEmployee vrProductionPlantEmployee);
 
+	public VRProductionPlantEmployee createVRProductionPlantEmployee(
+		VRProductionPlantEmployee object) throws SystemException;
+
 	/**
 	* Creates a new vr production plant employee with the primary key. Does not add the vr production plant employee to the database.
 	*
@@ -117,9 +120,6 @@ public interface VRProductionPlantEmployeeLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public VRProductionPlantEmployee updateProductionPlantEmployee(
-		VRProductionPlantEmployee object) throws SystemException;
-
-	public VRProductionPlantEmployee updateProductionPlantEmployee(
 		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 
 	/**
@@ -127,10 +127,12 @@ public interface VRProductionPlantEmployeeLocalService extends BaseLocalService,
 	*
 	* @param vrProductionPlantEmployee the vr production plant employee
 	* @return the vr production plant employee that was updated
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VRProductionPlantEmployee updateVRProductionPlantEmployee(
-		VRProductionPlantEmployee vrProductionPlantEmployee);
+		VRProductionPlantEmployee vrProductionPlantEmployee)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -139,10 +141,6 @@ public interface VRProductionPlantEmployeeLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	public JSONArray findByProductionPlanCode(
-		java.lang.String productionPlantCode)
-		throws PortalException, SystemException;
 
 	public JSONArray findData(java.lang.String sql,
 		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
@@ -214,6 +212,9 @@ public interface VRProductionPlantEmployeeLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	public List<VRProductionPlantEmployee> findByProductionPlanCode(
+		java.lang.String productionPlantCode);
 
 	/**
 	* Returns a range of all the vr production plant employees.

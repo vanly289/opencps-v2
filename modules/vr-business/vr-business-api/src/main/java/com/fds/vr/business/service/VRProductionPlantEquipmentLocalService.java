@@ -73,6 +73,9 @@ public interface VRProductionPlantEquipmentLocalService extends BaseLocalService
 	public VRProductionPlantEquipment addVRProductionPlantEquipment(
 		VRProductionPlantEquipment vrProductionPlantEquipment);
 
+	public VRProductionPlantEquipment createVRProductionPlantEquipment(
+		VRProductionPlantEquipment object) throws SystemException;
+
 	/**
 	* Creates a new vr production plant equipment with the primary key. Does not add the vr production plant equipment to the database.
 	*
@@ -117,9 +120,6 @@ public interface VRProductionPlantEquipmentLocalService extends BaseLocalService
 		throws PortalException;
 
 	public VRProductionPlantEquipment updateProductionPlantEquipment(
-		VRProductionPlantEquipment object) throws SystemException;
-
-	public VRProductionPlantEquipment updateProductionPlantEquipment(
 		Map<java.lang.String, java.lang.String> mapValues, int mtCore);
 
 	/**
@@ -127,10 +127,12 @@ public interface VRProductionPlantEquipmentLocalService extends BaseLocalService
 	*
 	* @param vrProductionPlantEquipment the vr production plant equipment
 	* @return the vr production plant equipment that was updated
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VRProductionPlantEquipment updateVRProductionPlantEquipment(
-		VRProductionPlantEquipment vrProductionPlantEquipment);
+		VRProductionPlantEquipment vrProductionPlantEquipment)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -139,11 +141,6 @@ public interface VRProductionPlantEquipmentLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	public JSONArray findByProductionPlanCode(
-		java.lang.String productionPlantCode,
-		java.lang.String productClassificationCode)
-		throws PortalException, SystemException;
 
 	public JSONArray findData(java.lang.String sql,
 		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
@@ -215,6 +212,9 @@ public interface VRProductionPlantEquipmentLocalService extends BaseLocalService
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	public List<VRProductionPlantEquipment> findByProductionPlanCode(
+		java.lang.String productionPlantCode);
 
 	/**
 	* Returns a range of all the vr production plant equipments.

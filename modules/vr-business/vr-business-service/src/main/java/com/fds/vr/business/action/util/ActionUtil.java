@@ -360,4 +360,12 @@ public class ActionUtil {
 
 		return StringUtil.merge(joinStatements, StringPool.SPACE) + StringPool.SPACE + conditions.toString();
 	}
+
+	public static JSONObject createResponseContent(int status, Object content) {
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		result.put("status", status);
+		result.put("content", content);
+
+		return result;
+	}
 }

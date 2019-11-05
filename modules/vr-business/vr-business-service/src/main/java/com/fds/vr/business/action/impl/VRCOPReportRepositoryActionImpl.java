@@ -138,7 +138,7 @@ public class VRCOPReportRepositoryActionImpl implements VRCOPReportRepositoryAct
 				+ " [$STATEMENT_JOIN$] [$CONDITION$] [$ORDERBY$]";
 
 		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
-
+		
 		StringBuilder conditions = new StringBuilder();
 
 		conditions.append(" WHERE 1 = 1 ");

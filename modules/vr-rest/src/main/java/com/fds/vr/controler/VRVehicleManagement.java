@@ -12,6 +12,7 @@ import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,6 +21,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
 /**
  * @author trungnt
@@ -30,14 +34,14 @@ public interface VRVehicleManagement {
 	@GET
 	@Path("/certificate/year")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findReportRepositoryYear(@Context HttpServletRequest request, @Context HttpHeaders header,
+	public Response findVRVehicleCertificateRecordYear(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRVehicleTypeCertificateBeanParam query);
 
 	@GET
 	@Path("/certificate/{year}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findReportRepository(@Context HttpServletRequest request, @Context HttpHeaders header,
+	public Response findVRVehicleCertificate(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @PathParam("year") Integer year,
 			@BeanParam VRVehicleTypeCertificateBeanParam query, String advancesearchParams);
@@ -46,8 +50,16 @@ public interface VRVehicleManagement {
 	@Path("/certificate")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Response getVRCOPReportRepository(@Context HttpServletRequest request, @Context HttpHeaders header,
+	public Response getVRVehicleCertificate(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @DefaultValue(" ") @QueryParam("mtcore") long mtCore,
-			@DefaultValue(" ") @QueryParam("copreportno") String COPReportNo);
+			@DefaultValue(" ") @QueryParam("copreportno") String copReportNo);
+	
+	@POST
+	@Path("/record/import")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response importVRVehiclerecord(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @Multipart("file") Attachment attachment);
 }

@@ -52,8 +52,8 @@ public interface VRCOPManagement {
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getVRCOPReportRepository(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
-			@DefaultValue(" ")@QueryParam("mtCore") long mtCore,
-			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
+			@DefaultValue(" ")@QueryParam("mtcore") long mtCore,
+			@DefaultValue(" ")@QueryParam("copreportno") String copReportNo);
 	
 	@GET
 	@Path("/roductionplant/employee")
@@ -62,7 +62,7 @@ public interface VRCOPManagement {
 	public Response getVRCOPProductionPlantEmployeeList(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@DefaultValue(" ")@QueryParam("mtcore") long mtCore,
-			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
+			@DefaultValue(" ")@QueryParam("copreportno") String copReportNo);
 	
 	@GET
 	@Path("/productionplant/equipment")
@@ -71,7 +71,7 @@ public interface VRCOPManagement {
 	public Response getVRCOPProductionPlantEquipmentList(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@DefaultValue(" ")@QueryParam("mtcore") long mtCore,
-			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
+			@DefaultValue(" ")@QueryParam("copreportno") String copReportNo);
 	
 	@GET
 	@Path("/productionplant/prodequipment")
@@ -80,7 +80,7 @@ public interface VRCOPManagement {
 	public Response getVRCOPProductionPlantProdEquipmentList(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@DefaultValue(" ")@QueryParam("mtcore") long mtCore,
-			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
+			@DefaultValue(" ")@QueryParam("copreportno") String copReportNo);
 	
 	@GET
 	@Path("/producttype")
@@ -89,7 +89,7 @@ public interface VRCOPManagement {
 	public Response getVRCOPProductTypeList(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@DefaultValue(" ")@QueryParam("mtcore") long mtCore,
-			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
+			@DefaultValue(" ")@QueryParam("copreportno") String copReportNo);
 
 	
 	@GET
@@ -99,7 +99,7 @@ public interface VRCOPManagement {
 	public Response getVRCOPReportAttachList(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@DefaultValue(" ")@QueryParam("mtcore") long mtCore,
-			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
+			@DefaultValue(" ")@QueryParam("copreportno") String copReportNo);
 	
 	@GET
 	@Path("/datatemplate")
@@ -108,6 +108,6 @@ public interface VRCOPManagement {
 	public Response getVRCOPDataTemplate(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@DefaultValue(" ")@QueryParam("mtcore") long mtCore,
-			@DefaultValue(" ")@QueryParam("copreportno") String COPReportNo);
+			@DefaultValue(" ")@QueryParam("copreportno") String copReportNo);
 	
 }

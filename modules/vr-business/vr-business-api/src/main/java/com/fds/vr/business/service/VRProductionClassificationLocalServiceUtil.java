@@ -54,6 +54,12 @@ public class VRProductionClassificationLocalServiceUtil {
 				   .addVRProductionClassification(vrProductionClassification);
 	}
 
+	public static com.fds.vr.business.model.VRProductionClassification createVRProductionClassification(
+		com.fds.vr.business.model.VRProductionClassification object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().createVRProductionClassification(object);
+	}
+
 	/**
 	* Creates a new vr production classification with the primary key. Does not add the vr production classification to the database.
 	*
@@ -106,20 +112,16 @@ public class VRProductionClassificationLocalServiceUtil {
 		return getService().getVRProductionClassification(id);
 	}
 
-	public static com.fds.vr.business.model.VRProductionClassification updateProductionClassification(
-		com.fds.vr.business.model.VRProductionClassification object)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateProductionClassification(object);
-	}
-
 	/**
 	* Updates the vr production classification in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param vrProductionClassification the vr production classification
 	* @return the vr production classification that was updated
+	* @throws SystemException
 	*/
 	public static com.fds.vr.business.model.VRProductionClassification updateVRProductionClassification(
-		com.fds.vr.business.model.VRProductionClassification vrProductionClassification) {
+		com.fds.vr.business.model.VRProductionClassification vrProductionClassification)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateVRProductionClassification(vrProductionClassification);
 	}
@@ -139,13 +141,6 @@ public class VRProductionClassificationLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
-		java.lang.String productionPlantCode)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().findByProductionPlanCode(productionPlantCode);
 	}
 
 	/**
@@ -229,6 +224,11 @@ public class VRProductionClassificationLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRProductionClassification> findByProductionPlantCode(
+		java.lang.String productionPlantCode) {
+		return getService().findByProductionPlantCode(productionPlantCode);
 	}
 
 	/**

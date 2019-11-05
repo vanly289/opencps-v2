@@ -54,6 +54,12 @@ public class VRProductionPlantEmployeeLocalServiceUtil {
 				   .addVRProductionPlantEmployee(vrProductionPlantEmployee);
 	}
 
+	public static com.fds.vr.business.model.VRProductionPlantEmployee createVRProductionPlantEmployee(
+		com.fds.vr.business.model.VRProductionPlantEmployee object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().createVRProductionPlantEmployee(object);
+	}
+
 	/**
 	* Creates a new vr production plant employee with the primary key. Does not add the vr production plant employee to the database.
 	*
@@ -107,12 +113,6 @@ public class VRProductionPlantEmployeeLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRProductionPlantEmployee updateProductionPlantEmployee(
-		com.fds.vr.business.model.VRProductionPlantEmployee object)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateProductionPlantEmployee(object);
-	}
-
-	public static com.fds.vr.business.model.VRProductionPlantEmployee updateProductionPlantEmployee(
 		java.util.Map<java.lang.String, java.lang.String> mapValues, int mtCore) {
 		return getService().updateProductionPlantEmployee(mapValues, mtCore);
 	}
@@ -122,9 +122,11 @@ public class VRProductionPlantEmployeeLocalServiceUtil {
 	*
 	* @param vrProductionPlantEmployee the vr production plant employee
 	* @return the vr production plant employee that was updated
+	* @throws SystemException
 	*/
 	public static com.fds.vr.business.model.VRProductionPlantEmployee updateVRProductionPlantEmployee(
-		com.fds.vr.business.model.VRProductionPlantEmployee vrProductionPlantEmployee) {
+		com.fds.vr.business.model.VRProductionPlantEmployee vrProductionPlantEmployee)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateVRProductionPlantEmployee(vrProductionPlantEmployee);
 	}
@@ -139,13 +141,6 @@ public class VRProductionPlantEmployeeLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
-		java.lang.String productionPlantCode)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().findByProductionPlanCode(productionPlantCode);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray findData(
@@ -240,6 +235,11 @@ public class VRProductionPlantEmployeeLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.fds.vr.business.model.VRProductionPlantEmployee> findByProductionPlanCode(
+		java.lang.String productionPlantCode) {
+		return getService().findByProductionPlanCode(productionPlantCode);
 	}
 
 	/**

@@ -53,6 +53,12 @@ public class VRProductionPlantLocalServiceUtil {
 		return getService().addVRProductionPlant(vrProductionPlant);
 	}
 
+	public static com.fds.vr.business.model.VRProductionPlant createVRProductionPlant(
+		com.fds.vr.business.model.VRProductionPlant object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().createVRProductionPlant(object);
+	}
+
 	/**
 	* Creates a new vr production plant with the primary key. Does not add the vr production plant to the database.
 	*
@@ -112,12 +118,6 @@ public class VRProductionPlantLocalServiceUtil {
 	}
 
 	public static com.fds.vr.business.model.VRProductionPlant updateProductionPlant(
-		com.fds.vr.business.model.VRProductionPlant object)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateProductionPlant(object);
-	}
-
-	public static com.fds.vr.business.model.VRProductionPlant updateProductionPlant(
 		java.util.LinkedHashMap<java.lang.String, java.lang.String> mapValues) {
 		return getService().updateProductionPlant(mapValues);
 	}
@@ -127,9 +127,11 @@ public class VRProductionPlantLocalServiceUtil {
 	*
 	* @param vrProductionPlant the vr production plant
 	* @return the vr production plant that was updated
+	* @throws SystemException
 	*/
 	public static com.fds.vr.business.model.VRProductionPlant updateVRProductionPlant(
-		com.fds.vr.business.model.VRProductionPlant vrProductionPlant) {
+		com.fds.vr.business.model.VRProductionPlant vrProductionPlant)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateVRProductionPlant(vrProductionPlant);
 	}
 

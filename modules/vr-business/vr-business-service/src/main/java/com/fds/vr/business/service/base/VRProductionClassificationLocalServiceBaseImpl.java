@@ -402,11 +402,13 @@ public abstract class VRProductionClassificationLocalServiceBaseImpl
 	 *
 	 * @param vrProductionClassification the vr production classification
 	 * @return the vr production classification that was updated
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public VRProductionClassification updateVRProductionClassification(
-		VRProductionClassification vrProductionClassification) {
+		VRProductionClassification vrProductionClassification)
+		throws SystemException {
 		return vrProductionClassificationPersistence.update(vrProductionClassification);
 	}
 

@@ -401,11 +401,12 @@ public abstract class VRProductionPlantLocalServiceBaseImpl
 	 *
 	 * @param vrProductionPlant the vr production plant
 	 * @return the vr production plant that was updated
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public VRProductionPlant updateVRProductionPlant(
-		VRProductionPlant vrProductionPlant) {
+		VRProductionPlant vrProductionPlant) throws SystemException {
 		return vrProductionPlantPersistence.update(vrProductionPlant);
 	}
 

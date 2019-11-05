@@ -46,6 +46,13 @@ public class VRProductionClassificationLocalServiceWrapper
 		return _vrProductionClassificationLocalService.addVRProductionClassification(vrProductionClassification);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductionClassification createVRProductionClassification(
+		com.fds.vr.business.model.VRProductionClassification object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrProductionClassificationLocalService.createVRProductionClassification(object);
+	}
+
 	/**
 	* Creates a new vr production classification with the primary key. Does not add the vr production classification to the database.
 	*
@@ -102,22 +109,17 @@ public class VRProductionClassificationLocalServiceWrapper
 		return _vrProductionClassificationLocalService.getVRProductionClassification(id);
 	}
 
-	@Override
-	public com.fds.vr.business.model.VRProductionClassification updateProductionClassification(
-		com.fds.vr.business.model.VRProductionClassification object)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _vrProductionClassificationLocalService.updateProductionClassification(object);
-	}
-
 	/**
 	* Updates the vr production classification in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param vrProductionClassification the vr production classification
 	* @return the vr production classification that was updated
+	* @throws SystemException
 	*/
 	@Override
 	public com.fds.vr.business.model.VRProductionClassification updateVRProductionClassification(
-		com.fds.vr.business.model.VRProductionClassification vrProductionClassification) {
+		com.fds.vr.business.model.VRProductionClassification vrProductionClassification)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _vrProductionClassificationLocalService.updateVRProductionClassification(vrProductionClassification);
 	}
 
@@ -141,14 +143,6 @@ public class VRProductionClassificationLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _vrProductionClassificationLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.json.JSONArray findByProductionPlanCode(
-		java.lang.String productionPlantCode)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _vrProductionClassificationLocalService.findByProductionPlanCode(productionPlantCode);
 	}
 
 	/**
@@ -240,6 +234,12 @@ public class VRProductionClassificationLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _vrProductionClassificationLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRProductionClassification> findByProductionPlantCode(
+		java.lang.String productionPlantCode) {
+		return _vrProductionClassificationLocalService.findByProductionPlantCode(productionPlantCode);
 	}
 
 	/**
