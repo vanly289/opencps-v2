@@ -1,37 +1,29 @@
 package org.opencps.datamgt.service.persistence.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.sql.Timestamp;
-import java.util.Date;
-
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import org.opencps.datamgt.model.DictCollection;
-import org.opencps.datamgt.model.DictGroup;
-import org.opencps.datamgt.model.impl.DictCollectionImpl;
-import org.opencps.datamgt.model.impl.DictCollectionModelImpl;
-import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
-import org.opencps.datamgt.service.DictGroupLocalServiceUtil;
-import org.opencps.datamgt.service.DictItemGroupLocalServiceUtil;
-import org.opencps.datamgt.service.persistence.DictCollectionPersistence;
-import org.opencps.datamgt.service.persistence.DictItemFinder;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.model.impl.DictItemImpl;
 import org.opencps.datamgt.model.impl.DictItemModelImpl;
-import org.opencps.datamgt.service.persistence.DictItemPersistence;
-import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import org.opencps.datamgt.service.persistence.DictItemFinder;
+import org.opencps.datamgt.util.ActionUtil;
 
 public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictItemFinder {
 	
@@ -286,6 +278,100 @@ public class DictItemFinderImpl extends DictItemFinderBaseImpl implements DictIt
 		}
 		
 		return new ArrayList<DictItem>();
+	}
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		Session session = null;
+		JSONArray results = JSONFactoryUtil.createJSONArray();
+		try {
+			session = openSession();
+
+			log.info("===>>>>>>>>>>>>> DictItemFinder " + sql + "|" + start + "|" + end);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.setCacheable(false);
+
+			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
+				q.addEntity(modelClassName, modelClazz);
+				List<DictItem> vrProductionPlants = (List<DictItem>) QueryUtil.list(q, getDialect(),
+						start, end);
+				
+				if (vrProductionPlants != null) {
+					for (DictItem vrProductionPlant : vrProductionPlants) {
+						JSONObject json = ActionUtil.object2Json(vrProductionPlant, DictItemModelImpl.class,
+								"");
+						results.put(json);
+					}
+				}
+			} else {
+
+				if (columnNames.size() > 1) {
+					Iterator<Object[]> itr = (Iterator<Object[]>) QueryUtil.iterate(q, getDialect(), start, end);
+
+					if (itr.hasNext()) {
+						while (itr.hasNext()) {
+							Object[] objects = itr.next();
+							JSONObject json = ActionUtil.array2Json(objects, columnNames, dataTypes);
+							results.put(json);
+						}
+
+					}
+				} else if (columnNames.size() == 1) {
+					Iterator itr = QueryUtil.iterate(q, getDialect(), start, end);
+
+					if (itr.hasNext()) {
+						while (itr.hasNext()) {
+
+							JSONObject json = JSONFactoryUtil.createJSONObject();
+							json.put(columnNames.get(0), itr.next());
+							results.put(json);
+						}
+
+					}
+				}
+			}
+
+			return results;
+		} catch (Exception e) {
+			log.info(e);
+			throw new SystemException(e);
+		} finally {
+			closeSession(session);
+		}
+	}
+
+	public long countData(String sql) throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			log.info("===>>>DictItemFinder " + sql);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.setCacheable(false);
+
+			q.addScalar("total", Type.LONG);
+
+			Iterator<Long> itr = q.list().iterator();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+			return 0;
+		} catch (Exception e) {
+			throw new SystemException(e);
+		} finally {
+			closeSession(session);
+		}
 	}
 	
 	

@@ -1,9 +1,5 @@
-package com.fds.vr.business.action.util;
+package org.opencps.datamgt.util;
 
-import com.fds.vr.business.engine.SQLQueryInstance;
-import com.fds.vr.filterconfig.model.VRCondition;
-import com.fds.vr.filterconfig.service.VRConditionLocalServiceUtil;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -14,7 +10,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,15 +28,17 @@ public class ActionUtil {
 
 	public static SQLQueryInstance createSQLQueryInstance(String sqlStatementPattern,
 			LinkedHashMap<String, String> columnMap, StringBuilder conditions, LinkedHashMap<String, String> sortedby,
-			Class<?> returnClassName, String className, String tableAlias, String joinStatements) {
+			Class<?> returnClassName, String className, String tableAlias, String joinStatements,String coutPrimaryKey) {
 		SQLQueryInstance instance = new SQLQueryInstance(sqlStatementPattern, columnMap, conditions, sortedby,
-				returnClassName, className, tableAlias, joinStatements);
+				returnClassName, className, tableAlias, joinStatements,coutPrimaryKey);
 		return instance;
 	}
 
 	// create statement column name with table alias
 	public static String createSCNWTAS(String columnName, String tableAlias) {
+		
 		columnName = columnName.toLowerCase();
+		
 		if (Validator.isNotNull(tableAlias)) {
 			_log.info("====>>> tableAlias " + tableAlias);
 			return tableAlias + "." + columnName + " AS " + tableAlias + "_" + columnName;
@@ -59,9 +56,21 @@ public class ActionUtil {
 						? (Validator.isNotNull(alias[0]) ? (alias[0] + StringPool.PERIOD) : StringPool.BLANK)
 						: StringPool.BLANK)
 				+ columnName + StringPool.SPACE + searchOperator + StringPool.SPACE + value;
-
+		
+		_log.info("+++queryCondition:"+queryCondition);
 		return queryCondition;
 	}
+	
+//	public static String buildSQLCondition(String columnName, Object[] value, String condition, String searchOperator,
+//			String... alias) {
+//		String queryCondition = StringPool.BLANK;
+//		
+//		queryCondition += StringPool.SPACE + condition + StringPool.SPACE+ 
+//				(alias != null && alias.length > 0 ? (Validator.isNotNull(alias[0]) ? (alias[0] + StringPool.PERIOD) : StringPool.BLANK): StringPool.BLANK)
+//				+ columnName + StringPool.SPACE + searchOperator + StringPool.SPACE + value;
+//
+//		return queryCondition;
+//	}
 
 	public static JSONObject array2Json(Object[] objects, List<String> columnNames, List<String> dataTypes) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
@@ -108,6 +117,33 @@ public class ActionUtil {
 			}
 		}
 		return result;
+	}
+	
+	public static LinkedHashMap<String, String> createSCNWTAS(LinkedHashMap<String, String> columnStatementMap,
+			 Class<?> clazz, String tableAlias) {
+
+		if (clazz.getDeclaredFields() != null) {
+			for (int i = 0; i < clazz.getDeclaredFields().length; i++) {
+
+				String fieldName = clazz.getDeclaredFields()[i].getName();
+				fieldName = fieldName.replaceFirst("_", "").toLowerCase();
+				String dataType = clazz.getDeclaredFields()[i].getType().getName();
+
+				String key = StringPool.BLANK;
+
+				if (Validator.isNotNull(tableAlias)) {
+
+					key = tableAlias + "." + fieldName + " AS " + tableAlias + "_" + fieldName;
+				} else {
+					key = fieldName;
+				}
+
+				columnStatementMap.put(key, dataType);
+
+			}
+		}
+
+		return columnStatementMap;
 	}
 
 	public static JSONObject mergeJSON(JSONObject object1, JSONObject object2, Class<?> clazz) {
@@ -309,64 +345,5 @@ public class ActionUtil {
 		return orderMap;
 	}
 
-	public static String buildJoinCondition(String advanceSearchParams) {
-		// _log.info("======advanceSearchParams====>>>>>>>>>>>>>>>>>>> " +
-		// advanceSearchParams);
-		StringBuilder conditions = new StringBuilder();
-		List<String> joinStatements = new ArrayList<String>();
-		if (Validator.isNotNull(advanceSearchParams)) {
-			try {
-				JSONArray params = JSONFactoryUtil.createJSONArray(advanceSearchParams);
-				if (params != null) {
-					for (int i = 0; i < params.length(); i++) {
-						try {
-							JSONObject param = params.getJSONObject(i);
-							String specificationcode = param.getString("specificationcode");
-							VRCondition vrCondition = VRConditionLocalServiceUtil.getVRCondition(specificationcode);
-							String operator = param.getString("operator");
-							String value = param.getString("value");
-							String tableName = vrCondition.getFilterTableName();
-							String tableField = vrCondition.getFilterTableField();
-
-							String joinStatement = vrCondition.getSpecificationGroup();
-							_log.info("===>>> specificationcode|operator|value|specificationgroup|tableName|tableField "
-									+ specificationcode + "|" + "|" + operator + "|" + value + "|" + joinStatement + "|"
-									+ tableName + "|" + tableField);
-							if (Validator.isNull(operator) || Validator.isNull(tableField)
-									|| Validator.isNull(tableName)) {
-								continue;
-							}
-
-							if (operator.equalsIgnoreCase("like")) {
-								conditions.append(buildSQLCondition(tableField, "'%" + value + "%'", " AND ",
-										StringPool.LIKE, tableName));
-							} else {
-								conditions.append(
-										buildSQLCondition(tableField, "'" + value + "'", " AND ", operator, tableName));
-							}
-
-							if (!joinStatements.contains(joinStatement)) {
-								joinStatements.add(joinStatement);
-							}
-						} catch (Exception e) {
-							_log.info(e.getMessage());
-							continue;
-						}
-					}
-				}
-			} catch (Exception e) {
-				_log.error(e);
-			}
-		}
-
-		return StringUtil.merge(joinStatements, StringPool.SPACE) + StringPool.SPACE + conditions.toString();
-	}
-
-	public static JSONObject createResponseContent(int status, Object content) {
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		result.put("status", status);
-		result.put("content", content);
-
-		return result;
-	}
+	
 }

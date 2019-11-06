@@ -14,30 +14,12 @@
 
 package org.opencps.datamgt.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import org.opencps.auth.api.BackendAuthImpl;
-import org.opencps.auth.api.exception.NotFoundException;
-import org.opencps.auth.api.exception.UnauthenticationException;
-import org.opencps.auth.api.exception.UnauthorizationException;
-import org.opencps.auth.api.keys.ActionKeys;
-import org.opencps.auth.api.keys.ModelNameKeys;
-import org.opencps.datamgt.constants.DictItemTerm;
-import org.opencps.datamgt.exception.NoSuchDictItemException;
-import org.opencps.datamgt.model.DictItem;
-import org.opencps.datamgt.model.DictItemGroup;
-import org.opencps.datamgt.model.impl.DictItemImpl;
-import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
-import org.opencps.datamgt.service.base.DictItemLocalServiceBaseImpl;
-
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -66,6 +48,25 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+import org.opencps.auth.api.BackendAuthImpl;
+import org.opencps.auth.api.exception.NotFoundException;
+import org.opencps.auth.api.exception.UnauthenticationException;
+import org.opencps.auth.api.exception.UnauthorizationException;
+import org.opencps.auth.api.keys.ActionKeys;
+import org.opencps.auth.api.keys.ModelNameKeys;
+import org.opencps.datamgt.constants.DictItemTerm;
+import org.opencps.datamgt.exception.NoSuchDictItemException;
+import org.opencps.datamgt.model.DictItem;
+import org.opencps.datamgt.model.DictItemGroup;
+import org.opencps.datamgt.model.impl.DictItemImpl;
+import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
+import org.opencps.datamgt.service.base.DictItemLocalServiceBaseImpl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -819,6 +820,16 @@ public class DictItemLocalServiceImpl extends DictItemLocalServiceBaseImpl {
 			_log.error(e);
 		}
 		return new ArrayList<DictItem>();
+	}
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return dictItemFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+	
+	public long counData(String sql) throws SystemException {
+
+		return dictItemFinder.countData(sql);
 	}
 	private static final Log _log = LogFactoryUtil.getLog(DictItemLocalServiceImpl.class);
 }

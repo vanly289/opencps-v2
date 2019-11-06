@@ -1,5 +1,9 @@
 package org.opencps.api.controller;
 
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+
 import java.net.HttpURLConnection;
 import java.util.Locale;
 
@@ -27,10 +31,6 @@ import org.opencps.api.datamgt.model.DictGroupInputModel;
 import org.opencps.api.datamgt.model.DictItemInputModel;
 import org.opencps.api.datamgt.model.DictItemModel;
 import org.opencps.api.datamgt.model.DictItemResults;
-
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -447,4 +447,18 @@ public interface DataManagement {
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@ApiParam(value = "code of DictCollection of DictItem that need to be gotten list", required = true) @PathParam("collectionCode") String collectionCode,
 			@BeanParam DataSearchModel query);
+	
+	@GET
+	@Path("/dictgroup/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findDictGroup(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,@BeanParam DataSearchModel query);
+	
+	@GET
+	@Path("/dictitem/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findDictItem(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,@BeanParam DataSearchModel query);
 }

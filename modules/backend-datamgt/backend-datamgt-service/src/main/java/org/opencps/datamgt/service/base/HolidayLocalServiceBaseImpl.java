@@ -52,6 +52,7 @@ import org.opencps.datamgt.model.Holiday;
 import org.opencps.datamgt.service.HolidayLocalService;
 import org.opencps.datamgt.service.persistence.CommentPersistence;
 import org.opencps.datamgt.service.persistence.DictCollectionPersistence;
+import org.opencps.datamgt.service.persistence.DictGroupFinder;
 import org.opencps.datamgt.service.persistence.DictGroupPersistence;
 import org.opencps.datamgt.service.persistence.DictItemFinder;
 import org.opencps.datamgt.service.persistence.DictItemGroupPersistence;
@@ -547,6 +548,24 @@ public abstract class HolidayLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the dict group finder.
+	 *
+	 * @return the dict group finder
+	 */
+	public DictGroupFinder getDictGroupFinder() {
+		return dictGroupFinder;
+	}
+
+	/**
+	 * Sets the dict group finder.
+	 *
+	 * @param dictGroupFinder the dict group finder
+	 */
+	public void setDictGroupFinder(DictGroupFinder dictGroupFinder) {
+		this.dictGroupFinder = dictGroupFinder;
+	}
+
+	/**
 	 * Returns the dict item local service.
 	 *
 	 * @return the dict item local service
@@ -1002,6 +1021,8 @@ public abstract class HolidayLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected org.opencps.datamgt.service.DictGroupLocalService dictGroupLocalService;
 	@BeanReference(type = DictGroupPersistence.class)
 	protected DictGroupPersistence dictGroupPersistence;
+	@BeanReference(type = DictGroupFinder.class)
+	protected DictGroupFinder dictGroupFinder;
 	@BeanReference(type = org.opencps.datamgt.service.DictItemLocalService.class)
 	protected org.opencps.datamgt.service.DictItemLocalService dictItemLocalService;
 	@BeanReference(type = DictItemPersistence.class)

@@ -310,10 +310,11 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model) {
 
 		try {
+			
 
 			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
 					VRProductionPlantEquipmentApiModel.class, new VRProductionPlantEquipmentImpl(),
-					VRProductTypeModelImpl.class);
+					VRProductionPlantEquipment.class);
 
 			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 
@@ -338,7 +339,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
 					VRProductionPlantEquipmentApiModel.class, new VRProductionPlantEquipmentImpl(),
-					VRProductTypeModelImpl.class);
+					VRProductionPlantEquipment.class);
 
 			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 

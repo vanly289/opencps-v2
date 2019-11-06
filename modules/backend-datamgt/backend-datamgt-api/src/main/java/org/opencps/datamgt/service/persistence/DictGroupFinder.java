@@ -21,21 +21,7 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public interface DictItemFinder {
-	public java.util.List<org.opencps.datamgt.model.DictItem> findByCollection_Level_OrderBy(
-		long groupId, java.lang.String collectionCode, java.lang.String level,
-		java.lang.String OrderBy);
-
-	public java.util.List<org.opencps.datamgt.model.DictItem> findByCollection_Parent_Level_OrderBy(
-		long groupId, java.lang.String collectionCode,
-		java.lang.String parentItemCode, java.lang.String level,
-		java.lang.String OrderBy);
-
-	public java.util.List<org.opencps.datamgt.model.DictItem> findByCollection_Group_Level_OrderBy(
-		long groupId, java.lang.String collectionCode,
-		java.lang.String groupCode, java.lang.String level,
-		java.lang.String OrderBy);
-
+public interface DictGroupFinder {
 	public com.liferay.portal.kernel.json.JSONArray findData(
 		java.lang.String sql, java.util.List<java.lang.String> columnNames,
 		java.util.List<java.lang.String> dataTypes,
