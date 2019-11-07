@@ -44,6 +44,7 @@ import org.opencps.datamgt.model.DictCollection;
 import org.opencps.datamgt.model.DictGroup;
 import org.opencps.datamgt.model.DictItem;
 import org.opencps.datamgt.model.DictItemGroup;
+import org.opencps.datamgt.model.impl.DictItemModelImpl;
 import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
 import org.opencps.datamgt.service.DictGroupLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemGroupLocalServiceUtil;
@@ -1208,23 +1209,36 @@ public class DictCollectionActions implements DictcollectionInterface {
 		String table2Alias = StringPool.BLANK;
 		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
 
-		if (Validator.isNotNull(collectionCode)) {
+		if (Validator.isNotNull(dictGroupName) && Validator.isNotNull(collectionCode)) {
 
 			tableAlias = "opencps_dictitem";
 			joinWithTableAlias = "opencps_dictitemgroup";
 			table2Alias = "opencps_dictcollection";
 
-			joinStatements = "INNER JOIN "+joinWithTableAlias+" ON "+joinWithTableAlias+".dictItemId = "+tableAlias+".dictItemId [$DICT_GROUP_NAME$]" + 
+			joinStatements = "INNER JOIN "+joinWithTableAlias+" ON "+joinWithTableAlias+".dictItemId = "+tableAlias+".dictItemId [$DICT_GROUP_NAME$] " + 
 					"WHERE dictCollectionId IN (SELECT dictCollectionId FROM "+table2Alias+" WHERE 1=1 [$COLLECTION_CODE$] [$GROUP_ID$])";
-
-			joinStatements.replace("[$COLLECTION_CODE$]", ActionUtil.buildSQLCondition("collectionCode", StringPool.AMPERSAND+collectionCode+StringPool.AMPERSAND," AND ", StringPool.EQUAL, table2Alias));
-			joinStatements.replace("[$GROUP_ID$]",ActionUtil.buildSQLCondition("groupId", groupId, " AND ", StringPool.EQUAL, table2Alias));
 			
-			joinStatements.replace("[$DICT_GROUP_NAME$]", ActionUtil.buildSQLCondition("dictgroupname",dictGroupName, " AND ", "IN", joinWithTableAlias));
+			joinStatements = StringUtil.replace(joinStatements, "[$COLLECTION_CODE$]", ActionUtil.buildSQLCondition("collectionCode", StringPool.APOSTROPHE+collectionCode+StringPool.APOSTROPHE," AND ", StringPool.EQUAL, table2Alias));
+			joinStatements = StringUtil.replace(joinStatements, "[$GROUP_ID$]", ActionUtil.buildSQLCondition("groupId", groupId, " AND ", StringPool.EQUAL, table2Alias));
+			joinStatements = StringUtil.replace(joinStatements, "[$DICT_GROUP_NAME$]", ActionUtil.buildSQLCondition("dictgroupname",StringUtil.split(dictGroupName), " AND ", "IN", joinWithTableAlias));
+		
 			
-			columnStatementMap = ActionUtil.createSCNWTAS(columnStatementMap,DictItem.class, tableAlias);
+			columnStatementMap.put(ActionUtil.createSCNWTAS("dictItemId", tableAlias), Long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("groupId", tableAlias), Long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("dictCollectionId", tableAlias), Long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("itemCode", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("itemName", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("itemNameEN", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("itemDescription", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("parentItemId", tableAlias), Long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("level", tableAlias), 	Integer.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("sibling", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("treeIndex", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("metaData", tableAlias), String.class.getName());
+			
+			
 			columnStatementMap.put(ActionUtil.createSCNWTAS("dictGroupId", joinWithTableAlias), String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("groupName", joinWithTableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("dictgroupName", joinWithTableAlias), String.class.getName());
 
 		}
 
@@ -1233,8 +1247,6 @@ public class DictCollectionActions implements DictcollectionInterface {
 				+ " [$STATEMENT_JOIN$] [$CONDITION$] [$ORDERBY$]";
 
 		StringBuilder conditions = new StringBuilder();
-
-		conditions.append(" WHERE 1 = 1 ");
 
 		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
 

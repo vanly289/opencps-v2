@@ -44,8 +44,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-	"collectionCode",
-	"groupId","productionPlantId",
+	"collectioncode",
+	"groupId","productionplantid",
     "parent","dictgroupname",
     "ancestor",
     "level",
@@ -79,7 +79,7 @@ public class DataSearchModel {
     @QueryParam(value = "groupid")
     protected long groupId;
     @QueryParam(value = "dictgroupname")
-    protected long dictGroupName;
+    protected String dictGroupName;
     @QueryParam(value = "productionplantid")
     protected long productionPlantId;
 
@@ -91,11 +91,11 @@ public class DataSearchModel {
 		this.productionPlantId = productionPlantId;
 	}
 
-	public long getDictGroupName() {
+	public String getDictGroupName() {
 		return dictGroupName;
 	}
 
-	public void setDictGroupItemName(long dictGroupName) {
+	public void setDictGroupItemName(String dictGroupName) {
 		this.dictGroupName = dictGroupName;
 	}
     

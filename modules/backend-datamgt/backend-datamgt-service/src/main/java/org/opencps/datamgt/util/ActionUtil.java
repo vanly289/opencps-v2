@@ -57,20 +57,44 @@ public class ActionUtil {
 						: StringPool.BLANK)
 				+ columnName + StringPool.SPACE + searchOperator + StringPool.SPACE + value;
 		
-		_log.info("+++queryCondition:"+queryCondition);
 		return queryCondition;
 	}
 	
-//	public static String buildSQLCondition(String columnName, Object[] value, String condition, String searchOperator,
-//			String... alias) {
-//		String queryCondition = StringPool.BLANK;
-//		
-//		queryCondition += StringPool.SPACE + condition + StringPool.SPACE+ 
-//				(alias != null && alias.length > 0 ? (Validator.isNotNull(alias[0]) ? (alias[0] + StringPool.PERIOD) : StringPool.BLANK): StringPool.BLANK)
-//				+ columnName + StringPool.SPACE + searchOperator + StringPool.SPACE + value;
-//
-//		return queryCondition;
-//	}
+	public static String buildSQLCondition(String columnName, String[] values, String condition, String searchOperator,
+			String... alias) {
+		String queryCondition = StringPool.BLANK;
+		
+		if(searchOperator.equals("IN")) {
+		
+			queryCondition += StringPool.SPACE + condition + StringPool.SPACE+ 
+					(alias != null && alias.length > 0 ? (Validator.isNotNull(alias[0]) ? (alias[0] + StringPool.PERIOD) : StringPool.BLANK): StringPool.BLANK)
+					+ columnName + StringPool.SPACE + searchOperator + StringPool.SPACE + buildSQLArrayCondition(values);
+		}
+
+		return queryCondition;
+	}
+	
+	public static String buildSQLArrayCondition(String[] values) {
+		String queryCondition = StringPool.OPEN_PARENTHESIS;
+		
+		for(int i=0;i <values.length;i++) {
+			String value = values[i];
+			
+			if(i ==  values.length -1) {
+				
+				queryCondition += StringPool.APOSTROPHE+value+StringPool.APOSTROPHE+StringPool.CLOSE_PARENTHESIS;
+				
+			}else {
+				queryCondition += StringPool.APOSTROPHE+value+StringPool.APOSTROPHE;
+				
+				if(values.length > 1) {
+					queryCondition+= StringPool.COMMA;
+				}
+			}
+		}
+
+		return queryCondition;
+	}
 
 	public static JSONObject array2Json(Object[] objects, List<String> columnNames, List<String> dataTypes) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
@@ -119,32 +143,53 @@ public class ActionUtil {
 		return result;
 	}
 	
-	public static LinkedHashMap<String, String> createSCNWTAS(LinkedHashMap<String, String> columnStatementMap,
-			 Class<?> clazz, String tableAlias) {
-
-		if (clazz.getDeclaredFields() != null) {
-			for (int i = 0; i < clazz.getDeclaredFields().length; i++) {
-
-				String fieldName = clazz.getDeclaredFields()[i].getName();
-				fieldName = fieldName.replaceFirst("_", "").toLowerCase();
-				String dataType = clazz.getDeclaredFields()[i].getType().getName();
-
-				String key = StringPool.BLANK;
-
-				if (Validator.isNotNull(tableAlias)) {
-
-					key = tableAlias + "." + fieldName + " AS " + tableAlias + "_" + fieldName;
-				} else {
-					key = fieldName;
-				}
-
-				columnStatementMap.put(key, dataType);
-
-			}
-		}
-
-		return columnStatementMap;
-	}
+//	public static LinkedHashMap<String, String> createSCNWTAS(LinkedHashMap<String, String> columnStatementMap,
+//			 Class<?> clazz, String tableAlias) {
+//		
+//		
+//		
+//		_log.info("clazz.getDeclaredFields():"+clazz.getDeclaredFields());
+//		if (clazz.getDeclaredFields() != null) {
+//			
+//			Field[] fileds = clazz.getFields();
+//			
+//			
+//			
+//			for (int i = 0; i < clazz.getDeclaredFields().length; i++) {
+//				Field field = fileds[i];
+//				
+//				_log.info("=====field.getName().length:"+field.getName());
+//				_log.info("--+++field.getType():"+field.getType());
+//				
+//			}
+//			
+//			_log.info("clazz.getDeclaredFields().length:"+clazz.getDeclaredFields().length);
+//			for (int i = 0; i < clazz.getDeclaredFields().length; i++) {
+//
+//				String fieldName = clazz.getDeclaredFields()[i].getName();
+//				_log.info("--fieldName(1):"+fieldName);
+//				fieldName = fieldName.replaceFirst("_", "").toLowerCase();
+//				_log.info("++fieldName(2):"+fieldName);
+//				String dataType = clazz.getDeclaredFields()[i].getType().getName();
+//				_log.info("++dataType:"+dataType);
+//
+//				String key = StringPool.BLANK;
+//				
+//				
+//				if (Validator.isNotNull(tableAlias)) {
+//
+//					key = tableAlias + "." + fieldName + " AS " + tableAlias + "_" + fieldName;
+//				} else {
+//					key = fieldName;
+//				}
+//
+//				columnStatementMap.put(key, dataType);
+//
+//			}
+//		}
+//
+//		return columnStatementMap;
+//	}
 
 	public static JSONObject mergeJSON(JSONObject object1, JSONObject object2, Class<?> clazz) {
 
