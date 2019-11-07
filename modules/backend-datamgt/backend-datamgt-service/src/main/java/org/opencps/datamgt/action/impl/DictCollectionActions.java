@@ -1,12 +1,38 @@
 
 package org.opencps.datamgt.action.impl;
 
+import com.liferay.asset.kernel.exception.DuplicateCategoryException;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.opencps.auth.api.exception.DataInUsedException;
+import org.opencps.auth.api.exception.NotFoundException;
+import org.opencps.auth.api.exception.UnauthenticationException;
+import org.opencps.auth.api.exception.UnauthorizationException;
 import org.opencps.datamgt.action.DictcollectionInterface;
 import org.opencps.datamgt.constants.DataMGTConstants;
 import org.opencps.datamgt.constants.DictCollectionTerm;
@@ -22,30 +48,8 @@ import org.opencps.datamgt.service.DictCollectionLocalServiceUtil;
 import org.opencps.datamgt.service.DictGroupLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemGroupLocalServiceUtil;
 import org.opencps.datamgt.service.DictItemLocalServiceUtil;
-
-import com.liferay.asset.kernel.exception.DuplicateCategoryException;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-
-import org.opencps.auth.api.exception.DataInUsedException;
-import org.opencps.auth.api.exception.NotFoundException;
-import org.opencps.auth.api.exception.UnauthenticationException;
-import org.opencps.auth.api.exception.UnauthorizationException;
+import org.opencps.datamgt.util.ActionUtil;
+import org.opencps.datamgt.util.SQLQueryInstance;
 
 public class DictCollectionActions implements DictcollectionInterface {
 
@@ -1087,6 +1091,178 @@ public class DictCollectionActions implements DictcollectionInterface {
 			int end, ServiceContext serviceContext) {
 		// TODO Auto-generated method stub
 		return DictItemGroupLocalServiceUtil.countOlderThanDate(date, groupId);
+	}
+	
+	public JSONObject findDictGroup(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params) {
+
+		int start = ActionUtil.getStart(params);
+		int end = ActionUtil.getEnd(params);
+		String collectionCode = StringPool.BLANK;
+		Long groupId = null;
+		Long productionPlantId = null;
+
+		if (params != null) {
+
+			if (params.containsKey("collectioncode")) {
+				collectionCode = GetterUtil.getString(params.get("collectioncode"));
+			}
+
+			if (params.containsKey("groupid")) {
+				groupId = GetterUtil.getLong(params.get("groupid"));
+			}
+
+			if (params.containsKey("productionplantid")) {
+				productionPlantId = GetterUtil.getLong(params.get("productionplantid"));
+			}
+
+		}
+
+		String joinStatements = StringPool.BLANK;
+		String tableAlias = StringPool.BLANK;
+		String table2Alias = StringPool.BLANK;
+		String table3Alias = StringPool.BLANK;
+		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
+		
+		if (Validator.isNotNull(collectionCode)) {
+
+			tableAlias = "opencps_dictgroup";
+			table2Alias = "opencps_dictcollection";
+			table3Alias = "vr_productclassification";
+
+			joinStatements = "dictCollectionId IN (SELECT dictCollectionId FROM opencps_dictcollection WHERE 1=1 [$COLLECTION_CODE$] [$GROUP_ID$])"
+					+ " AND groupCode NOT IN (SELECT ProductClassificationCode FROM vr_productclassification WHERE 1=1 [$PRODUCTION_PLAN_ID$])";
+
+			joinStatements = joinStatements.replace("[$COLLECTION_CODE$]", ActionUtil.buildSQLCondition("collectionCode", StringPool.APOSTROPHE+collectionCode+StringPool.APOSTROPHE," AND ", StringPool.EQUAL, table2Alias));
+			joinStatements = joinStatements.replace("[$GROUP_ID$]",ActionUtil.buildSQLCondition("groupId", groupId, " AND ", StringPool.EQUAL, table2Alias));
+			joinStatements = joinStatements.replace("[$PRODUCTION_PLAN_ID$]", ActionUtil.buildSQLCondition("productionplantid",productionPlantId, " AND ", StringPool.EQUAL, table3Alias));
+
+			columnStatementMap.put(ActionUtil.createSCNWTAS("groupCode", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("groupName", tableAlias), String.class.getName());
+
+		}
+
+		String sqlStatementPattern = "SELECT [$STATEMENT_COLUMN$] FROM opencps_dictgroup"
+				+ (Validator.isNotNull(tableAlias) ? " AS " + tableAlias : StringPool.BLANK)
+				+ " [$STATEMENT_JOIN$] [$CONDITION$] [$ORDERBY$]";
+
+		StringBuilder conditions = new StringBuilder();
+
+		conditions.append(" WHERE ");
+
+		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
+
+		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
+				conditions, sortedby, DictGroup.class, "DictGroup", tableAlias, joinStatements,"dictGroupId");
+
+		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
+
+		JSONArray array = null;
+
+		if (Validator.isNotNull(joinStatements)) {
+
+			array = DictGroupLocalServiceUtil.findData(instance.getSqlStatemanent(), instance.getColumnAliasNames(),
+					instance.getColumnDataTypes(), null, StringPool.BLANK, start, end);
+
+		} else {
+
+			array = DictGroupLocalServiceUtil.findData(instance.getSqlStatemanent(), instance.getColumnAliasNames(),
+					instance.getColumnDataTypes(), instance.getReturnClassName(), instance.getClassName(), start, end);
+		}
+
+		long total = DictGroupLocalServiceUtil.counData(instance.getCountStatemanent());
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		result.put("total", total);
+		result.put("data", array);
+		return result;
+	}
+	
+	public JSONObject findDictItem(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params) {
+
+		int start = ActionUtil.getStart(params);
+		int end = ActionUtil.getEnd(params);
+		String collectionCode = StringPool.BLANK;
+		Long groupId = null;
+		String dictGroupName = StringPool.BLANK;
+
+		if (params != null) {
+
+			if (params.containsKey("collectioncode")) {
+				collectionCode = GetterUtil.getString(params.get("collectioncode"));
+			}
+
+			if (params.containsKey("groupid")) {
+				groupId = GetterUtil.getLong(params.get("groupid"));
+			}
+
+			if (params.containsKey("dictgroupname")) {
+				dictGroupName = GetterUtil.getString(params.get("dictgroupname"));
+			}
+
+		}
+
+		String joinStatements = StringPool.BLANK;
+		String tableAlias = StringPool.BLANK;
+		String joinWithTableAlias = StringPool.BLANK;
+		String table2Alias = StringPool.BLANK;
+		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
+
+		if (Validator.isNotNull(collectionCode)) {
+
+			tableAlias = "opencps_dictitem";
+			joinWithTableAlias = "opencps_dictitemgroup";
+			table2Alias = "opencps_dictcollection";
+
+			joinStatements = "INNER JOIN "+joinWithTableAlias+" ON "+joinWithTableAlias+".dictItemId = "+tableAlias+".dictItemId [$DICT_GROUP_NAME$]" + 
+					"WHERE dictCollectionId IN (SELECT dictCollectionId FROM "+table2Alias+" WHERE 1=1 [$COLLECTION_CODE$] [$GROUP_ID$])";
+
+			joinStatements.replace("[$COLLECTION_CODE$]", ActionUtil.buildSQLCondition("collectionCode", StringPool.AMPERSAND+collectionCode+StringPool.AMPERSAND," AND ", StringPool.EQUAL, table2Alias));
+			joinStatements.replace("[$GROUP_ID$]",ActionUtil.buildSQLCondition("groupId", groupId, " AND ", StringPool.EQUAL, table2Alias));
+			
+			joinStatements.replace("[$DICT_GROUP_NAME$]", ActionUtil.buildSQLCondition("dictgroupname",dictGroupName, " AND ", "IN", joinWithTableAlias));
+			
+			columnStatementMap = ActionUtil.createSCNWTAS(columnStatementMap,DictItem.class, tableAlias);
+			columnStatementMap.put(ActionUtil.createSCNWTAS("dictGroupId", joinWithTableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("groupName", joinWithTableAlias), String.class.getName());
+
+		}
+
+		String sqlStatementPattern = "SELECT [$STATEMENT_COLUMN$] FROM opencps_dictitem"
+				+ (Validator.isNotNull(tableAlias) ? " AS " + tableAlias : StringPool.BLANK)
+				+ " [$STATEMENT_JOIN$] [$CONDITION$] [$ORDERBY$]";
+
+		StringBuilder conditions = new StringBuilder();
+
+		conditions.append(" WHERE 1 = 1 ");
+
+		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
+
+		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
+				conditions, sortedby, DictItem.class, "DictItem", tableAlias, joinStatements,"dictItemId");
+
+		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
+
+		JSONArray array = null;
+
+		if (Validator.isNotNull(joinStatements)) {
+
+			array = DictItemLocalServiceUtil.findData(instance.getSqlStatemanent(), instance.getColumnAliasNames(),
+					instance.getColumnDataTypes(), null, StringPool.BLANK, start, end);
+
+		} else {
+
+			array = DictItemLocalServiceUtil.findData(instance.getSqlStatemanent(), instance.getColumnAliasNames(),
+					instance.getColumnDataTypes(), instance.getReturnClassName(), instance.getClassName(), start, end);
+		}
+
+		long total = DictItemLocalServiceUtil.counData(instance.getCountStatemanent());
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		result.put("total", total);
+		result.put("data", array);
+		return result;
 	}
 
 }

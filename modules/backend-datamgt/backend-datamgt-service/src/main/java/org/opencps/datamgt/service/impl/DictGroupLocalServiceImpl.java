@@ -14,25 +14,10 @@
 
 package org.opencps.datamgt.service.impl;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import org.opencps.auth.api.BackendAuthImpl;
-import org.opencps.auth.api.exception.DataInUsedException;
-import org.opencps.auth.api.exception.NotFoundException;
-import org.opencps.auth.api.exception.UnauthenticationException;
-import org.opencps.auth.api.exception.UnauthorizationException;
-import org.opencps.auth.api.keys.ActionKeys;
-import org.opencps.auth.api.keys.ModelNameKeys;
-import org.opencps.datamgt.constants.DictGroupTerm;
-import org.opencps.datamgt.exception.NoSuchDictGroupException;
-import org.opencps.datamgt.model.DictGroup;
-import org.opencps.datamgt.model.impl.DictItemGroupImpl;
-import org.opencps.datamgt.service.base.DictGroupLocalServiceBaseImpl;
-
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -55,6 +40,23 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+import org.opencps.auth.api.BackendAuthImpl;
+import org.opencps.auth.api.exception.DataInUsedException;
+import org.opencps.auth.api.exception.NotFoundException;
+import org.opencps.auth.api.exception.UnauthenticationException;
+import org.opencps.auth.api.exception.UnauthorizationException;
+import org.opencps.auth.api.keys.ActionKeys;
+import org.opencps.auth.api.keys.ModelNameKeys;
+import org.opencps.datamgt.constants.DictGroupTerm;
+import org.opencps.datamgt.exception.NoSuchDictGroupException;
+import org.opencps.datamgt.model.DictGroup;
+import org.opencps.datamgt.model.impl.DictItemGroupImpl;
+import org.opencps.datamgt.service.base.DictGroupLocalServiceBaseImpl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -533,6 +535,17 @@ public class DictGroupLocalServiceImpl extends DictGroupLocalServiceBaseImpl {
 	@Override
 	public long countOlderThanDate(Date date, long groupId) {
 		return dictGroupPersistence.countByF_dictGroupNewerThan(date, groupId);
+	}
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return dictGroupFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+	
+	public long counData(String sql) throws SystemException {
+
+		return dictGroupFinder.countData(sql);
 	}
 	
 }

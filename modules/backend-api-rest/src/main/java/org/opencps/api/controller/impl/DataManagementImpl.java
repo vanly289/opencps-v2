@@ -1,5 +1,27 @@
 package org.opencps.api.controller.impl;
 
+
+import com.liferay.asset.kernel.exception.DuplicateCategoryException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,6 +34,7 @@ import javax.ws.rs.core.Response;
 import org.opencps.api.controller.DataManagement;
 import org.opencps.api.controller.exception.ErrorMsg;
 import org.opencps.api.controller.util.DataManagementUtils;
+import org.opencps.api.controller.util.VRRestUtil;
 import org.opencps.api.datamgt.model.DataSearchModel;
 import org.opencps.api.datamgt.model.DictCollectionInputModel;
 import org.opencps.api.datamgt.model.DictCollectionModel;
@@ -50,27 +73,6 @@ import org.opencps.synchronization.action.impl.PushDictItemActions;
 import org.opencps.synchronization.constants.DataMGTTempConstants;
 import org.opencps.synchronization.constants.SyncServerTerm;
 import org.opencps.synchronization.service.DictItemTempLocalServiceUtil;
-
-import com.liferay.asset.kernel.exception.DuplicateCategoryException;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 public class DataManagementImpl implements DataManagement {
 
@@ -2424,6 +2426,52 @@ public class DataManagementImpl implements DataManagement {
 			error.setDescription("not found!");
 
 			return Response.status(404).entity(error).build();
+		}
+	}
+	
+	@Override
+	public Response findDictGroup( HttpServletRequest request,  HttpHeaders header,
+			 Company company,  Locale locale,  User user,
+			 ServiceContext serviceContext,  DataSearchModel query) {
+		
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		
+		_log.info("===findDictGroup===");
+		
+		try {
+			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
+			
+			DictcollectionInterface action = new DictCollectionActions();
+			
+			result = action.findDictGroup(user, serviceContext, params);
+			return Response.status(200).entity(result.toJSONString()).build();
+			
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get dict group")).build();
+		}
+	}
+	
+	@Override
+	public Response findDictItem( HttpServletRequest request,  HttpHeaders header,
+			 Company company,  Locale locale,  User user,
+			 ServiceContext serviceContext,  DataSearchModel query) {
+		
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		
+		_log.info("===findDictItem===");
+		
+		try {
+			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
+			
+			DictcollectionInterface action = new DictCollectionActions();
+			
+			result = action.findDictItem(user, serviceContext, params);
+			return Response.status(200).entity(result.toJSONString()).build();
+			
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get dict group")).build();
 		}
 	}
 }

@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "parent",
+	"collectionCode",
+	"groupId","productionPlantId",
+    "parent","dictgroupname",
     "ancestor",
     "level",
     "keywords",
@@ -72,6 +74,46 @@ public class DataSearchModel {
     protected int start;
 	@QueryParam(value = "end")
     protected int end;
+	@QueryParam(value = "collectioncode")
+    protected String collectionCode;
+    @QueryParam(value = "groupid")
+    protected long groupId;
+    @QueryParam(value = "dictgroupname")
+    protected long dictGroupName;
+    @QueryParam(value = "productionplantid")
+    protected long productionPlantId;
+
+	public long getProductionPlantId() {
+		return productionPlantId;
+	}
+
+	public void setProductionPlantId(long productionPlantId) {
+		this.productionPlantId = productionPlantId;
+	}
+
+	public long getDictGroupName() {
+		return dictGroupName;
+	}
+
+	public void setDictGroupItemName(long dictGroupName) {
+		this.dictGroupName = dictGroupName;
+	}
+    
+    public String getCollectionCode() {
+		return collectionCode;
+	}
+
+	public void setCollectionCode(String collectionCode) {
+		this.collectionCode = collectionCode;
+	}
+
+	public long getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		this.groupId = groupId;
+	}
 
     /**
      * Gets the value of the parent property.

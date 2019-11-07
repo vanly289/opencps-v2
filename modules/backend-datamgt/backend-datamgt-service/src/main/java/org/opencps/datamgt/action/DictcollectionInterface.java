@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -109,4 +110,7 @@ public interface DictcollectionInterface {
 
 	public List<DictItemGroup> getListDictItemGroupsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
 	public long countDictItemGroupsOlderThanDate(long userId, long companyId, long groupId, Date date, int start, int end, ServiceContext serviceContext);
+	
+	public JSONObject findDictGroup(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params);
+	public JSONObject findDictItem(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params);
 }

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -92,6 +93,11 @@ public interface DictItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	public JSONArray findData(java.lang.String sql,
+		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
+		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
+		int start, int end) throws SystemException;
 
 	/**
 	* @throws PortalException
@@ -238,6 +244,8 @@ public interface DictItemLocalService extends BaseLocalService,
 	public List<DictItem> getDictItemsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<DictItem> orderByComparator);
+
+	public long counData(java.lang.String sql) throws SystemException;
 
 	public long countByOlderThanDate(Date date, long groupId);
 

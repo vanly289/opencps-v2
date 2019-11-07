@@ -54,6 +54,17 @@ public class DictGroupLocalServiceWrapper implements DictGroupLocalService,
 		return _dictGroupLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray findData(
+		java.lang.String sql, java.util.List<java.lang.String> columnNames,
+		java.util.List<java.lang.String> dataTypes,
+		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dictGroupLocalService.findData(sql, columnNames, dataTypes,
+			modelClazz, modelClassName, start, end);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -74,7 +85,7 @@ public class DictGroupLocalServiceWrapper implements DictGroupLocalService,
 	/**
 	* @author binhth
 	* @param params
-	
+
 	<pre>
 	<ol>
 	<li> keywords </li>
@@ -235,6 +246,12 @@ public class DictGroupLocalServiceWrapper implements DictGroupLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<org.opencps.datamgt.model.DictGroup> orderByComparator) {
 		return _dictGroupLocalService.getDictGroupsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public long counData(java.lang.String sql)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dictGroupLocalService.counData(sql);
 	}
 
 	@Override
