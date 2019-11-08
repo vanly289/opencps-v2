@@ -258,19 +258,19 @@ public class VRProductionPlantEquipmentSoap implements Serializable {
 		_equipmentSerialNo = equipmentSerialNo;
 	}
 
-	public Date getProductionYear() {
+	public String getProductionYear() {
 		return _productionYear;
 	}
 
-	public void setProductionYear(Date productionYear) {
+	public void setProductionYear(String productionYear) {
 		_productionYear = productionYear;
 	}
 
-	public Date getRegistrationYear() {
+	public String getRegistrationYear() {
 		return _registrationYear;
 	}
 
-	public void setRegistrationYear(Date registrationYear) {
+	public void setRegistrationYear(String registrationYear) {
 		_registrationYear = registrationYear;
 	}
 
@@ -403,8 +403,8 @@ public class VRProductionPlantEquipmentSoap implements Serializable {
 	private Date _modifyDate;
 	private Date _syncDate;
 	private String _equipmentSerialNo;
-	private Date _productionYear;
-	private Date _registrationYear;
+	private String _productionYear;
+	private String _registrationYear;
 	private long _markupXCG;
 	private long _markupXCGNK;
 	private long _markupSMRM;

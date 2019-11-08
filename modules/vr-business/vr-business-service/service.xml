@@ -1378,8 +1378,8 @@
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
 		<column name="equipmentSerialNo" type="String"/>
-		<column name="productionYear" type="Date"/>
-		<column name="registrationYear" type="Date"/>
+		<column name="productionYear" type="String"/>
+		<column name="registrationYear" type="String"/>
 		<column name="markupXCG" type="long"/>
 		<column name="markupXCGNK" type="long"/>
 		<column name="markupSMRM" type="long"/>

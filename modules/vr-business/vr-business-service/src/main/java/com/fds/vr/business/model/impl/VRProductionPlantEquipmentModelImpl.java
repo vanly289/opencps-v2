@@ -80,8 +80,8 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP },
 			{ "equipmentSerialNo", Types.VARCHAR },
-			{ "productionYear", Types.TIMESTAMP },
-			{ "registrationYear", Types.TIMESTAMP },
+			{ "productionYear", Types.VARCHAR },
+			{ "registrationYear", Types.VARCHAR },
 			{ "markupXCG", Types.BIGINT },
 			{ "markupXCGNK", Types.BIGINT },
 			{ "markupSMRM", Types.BIGINT },
@@ -117,8 +117,8 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("equipmentSerialNo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("productionYear", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("registrationYear", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("productionYear", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("registrationYear", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("markupXCG", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("markupXCGNK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("markupSMRM", Types.BIGINT);
@@ -135,7 +135,7 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 		TABLE_COLUMNS_MAP.put("productionPlantCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productionplantequipment (id LONG not null primary key,mtCore LONG,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,expireDate DATE null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,equipmentSerialNo VARCHAR(75) null,productionYear DATE null,registrationYear DATE null,markupXCG LONG,markupXCGNK LONG,markupSMRM LONG,markupXCH LONG,markupXCN LONG,markupXMY LONG,markupXDD LONG,testingResult INTEGER,description VARCHAR(75) null,inspectionRecordNumber VARCHAR(75) null,inspectionRecordDate DATE null,stampTestingNo VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productionplantequipment (id LONG not null primary key,mtCore LONG,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,expireDate DATE null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,equipmentSerialNo VARCHAR(75) null,productionYear VARCHAR(75) null,registrationYear VARCHAR(75) null,markupXCG LONG,markupXCGNK LONG,markupSMRM LONG,markupXCH LONG,markupXCN LONG,markupXMY LONG,markupXDD LONG,testingResult INTEGER,description VARCHAR(75) null,inspectionRecordNumber VARCHAR(75) null,inspectionRecordDate DATE null,stampTestingNo VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productionplantequipment";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlantEquipment.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplantequipment.modifyDate DESC";
@@ -338,13 +338,13 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 			setEquipmentSerialNo(equipmentSerialNo);
 		}
 
-		Date productionYear = (Date)attributes.get("productionYear");
+		String productionYear = (String)attributes.get("productionYear");
 
 		if (productionYear != null) {
 			setProductionYear(productionYear);
 		}
 
-		Date registrationYear = (Date)attributes.get("registrationYear");
+		String registrationYear = (String)attributes.get("registrationYear");
 
 		if (registrationYear != null) {
 			setRegistrationYear(registrationYear);
@@ -665,22 +665,32 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	}
 
 	@Override
-	public Date getProductionYear() {
-		return _productionYear;
+	public String getProductionYear() {
+		if (_productionYear == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionYear;
+		}
 	}
 
 	@Override
-	public void setProductionYear(Date productionYear) {
+	public void setProductionYear(String productionYear) {
 		_productionYear = productionYear;
 	}
 
 	@Override
-	public Date getRegistrationYear() {
-		return _registrationYear;
+	public String getRegistrationYear() {
+		if (_registrationYear == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _registrationYear;
+		}
 	}
 
 	@Override
-	public void setRegistrationYear(Date registrationYear) {
+	public void setRegistrationYear(String registrationYear) {
 		_registrationYear = registrationYear;
 	}
 
@@ -1113,22 +1123,20 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 			vrProductionPlantEquipmentCacheModel.equipmentSerialNo = null;
 		}
 
-		Date productionYear = getProductionYear();
+		vrProductionPlantEquipmentCacheModel.productionYear = getProductionYear();
 
-		if (productionYear != null) {
-			vrProductionPlantEquipmentCacheModel.productionYear = productionYear.getTime();
-		}
-		else {
-			vrProductionPlantEquipmentCacheModel.productionYear = Long.MIN_VALUE;
+		String productionYear = vrProductionPlantEquipmentCacheModel.productionYear;
+
+		if ((productionYear != null) && (productionYear.length() == 0)) {
+			vrProductionPlantEquipmentCacheModel.productionYear = null;
 		}
 
-		Date registrationYear = getRegistrationYear();
+		vrProductionPlantEquipmentCacheModel.registrationYear = getRegistrationYear();
 
-		if (registrationYear != null) {
-			vrProductionPlantEquipmentCacheModel.registrationYear = registrationYear.getTime();
-		}
-		else {
-			vrProductionPlantEquipmentCacheModel.registrationYear = Long.MIN_VALUE;
+		String registrationYear = vrProductionPlantEquipmentCacheModel.registrationYear;
+
+		if ((registrationYear != null) && (registrationYear.length() == 0)) {
+			vrProductionPlantEquipmentCacheModel.registrationYear = null;
 		}
 
 		vrProductionPlantEquipmentCacheModel.markupXCG = getMarkupXCG();
@@ -1437,8 +1445,8 @@ public class VRProductionPlantEquipmentModelImpl extends BaseModelImpl<VRProduct
 	private Date _modifyDate;
 	private Date _syncDate;
 	private String _equipmentSerialNo;
-	private Date _productionYear;
-	private Date _registrationYear;
+	private String _productionYear;
+	private String _registrationYear;
 	private long _markupXCG;
 	private long _markupXCGNK;
 	private long _markupSMRM;

@@ -47,9 +47,9 @@ public class VRProductionPlantEquipmentApiModel {
 		TABLE_COLUMNS_MAP.put("equipmentSerialNo", "equipmentserialno");
 		TABLE_COLUMNS_DATA_MAP.put("equipmentserialno", String.class);
 		TABLE_COLUMNS_MAP.put("productionYear", "productionyear");
-		TABLE_COLUMNS_DATA_MAP.put("productionyear", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("productionyear", String.class);
 		TABLE_COLUMNS_MAP.put("registrationYear", "registrationyear");
-		TABLE_COLUMNS_DATA_MAP.put("registrationyear", Date.class);
+		TABLE_COLUMNS_DATA_MAP.put("registrationyear", String.class);
 		TABLE_COLUMNS_MAP.put("markupXCG", "markupxcg");
 		TABLE_COLUMNS_DATA_MAP.put("markupxcg", long.class);
 		TABLE_COLUMNS_MAP.put("markupXCGNK", "markupxcgnk");
