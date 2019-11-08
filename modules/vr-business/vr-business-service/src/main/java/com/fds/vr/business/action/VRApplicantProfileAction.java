@@ -12,6 +12,8 @@ import java.util.LinkedHashMap;
  *
  */
 public interface VRApplicantProfileAction {
+	public JSONObject createVRApplicantProfile(VRApplicantProfile object);
+	
 	public JSONObject findVRApplicantProfile(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params);
 	
@@ -19,6 +21,4 @@ public interface VRApplicantProfileAction {
 			LinkedHashMap<String, Object> params);
 	
 	public JSONObject updateVRApplicantProfile(VRApplicantProfile object);
-	
-	public JSONObject createVRApplicantProfile(VRApplicantProfile object);
 }

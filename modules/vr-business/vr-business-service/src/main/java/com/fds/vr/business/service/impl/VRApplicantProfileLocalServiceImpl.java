@@ -16,7 +16,6 @@ package com.fds.vr.business.service.impl;
 
 import com.fds.vr.business.exception.NoSuchVRApplicantProfileException;
 import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.VRProductionPlantProdEquipment;
 import com.fds.vr.business.service.base.VRApplicantProfileLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -204,14 +203,25 @@ public class VRApplicantProfileLocalServiceImpl
 		return vrApplicantProfileFinder.countVRAppicantProfile(sql);
 	}
 	
+	public VRApplicantProfile createVRApplicantProfile(VRApplicantProfile object)
+			throws SystemException {
+
+		long id = counterLocalService.increment(VRApplicantProfile.class.getName());
+
+		object.setId(id);
+
+		Date now = new Date();
+
+		object.setModifyDate(now);
+
+		return vrApplicantProfilePersistence.update(object);
+	}
+	
 	public VRApplicantProfile updateVRApplicantProfile(VRApplicantProfile object) throws SystemException{
 
-		if (object.getId() <= 0) {
+		Date now = new Date();
 
-			long id = counterLocalService.increment(VRApplicantProfile.class.getName());
-
-			object.setId(id);
-		}
+		object.setModifyDate(now);
 
 		return vrApplicantProfilePersistence.update(object);
 	}

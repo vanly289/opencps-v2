@@ -82,6 +82,8 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 			DataHandler dataHandler = attachment.getDataHandler();
 
 			inputStream = dataHandler.getInputStream();
+			
+			_log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> import data");
 
 			VRVehicleRecordActionImpl actionImpl = new VRVehicleRecordActionImpl();
 
