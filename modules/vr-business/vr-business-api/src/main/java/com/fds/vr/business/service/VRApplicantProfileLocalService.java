@@ -73,6 +73,9 @@ public interface VRApplicantProfileLocalService extends BaseLocalService,
 	public VRApplicantProfile addVRApplicantProfile(
 		VRApplicantProfile vrApplicantProfile);
 
+	public VRApplicantProfile createVRApplicantProfile(
+		VRApplicantProfile object) throws SystemException;
+
 	/**
 	* Creates a new vr applicant profile with the primary key. Does not add the vr applicant profile to the database.
 	*

@@ -14,13 +14,10 @@ import com.fds.vr.business.model.VRProductionPlantEmployee;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.VRProductionPlantProdEquipment;
 import com.fds.vr.business.model.impl.VRProductTypeImpl;
-import com.fds.vr.business.model.impl.VRProductTypeModelImpl;
 import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantEmployeeImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
-import com.fds.vr.business.model.impl.VRProductionPlantEquipmentModelImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
-import com.fds.vr.business.model.impl.VRProductionPlantModelImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantProdEquipmentImpl;
 import com.fds.vr.controler.VRProductionManagement;
 import com.fds.vr.model.VRProductTypeApiModel;
@@ -55,6 +52,139 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	private Log _log = LogFactoryUtil.getLog(VRProductionManagementImpl.class);
 
 	@Override
+	public Response createVRProductionClassification(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRProductionClassificationApiModel model) {
+
+		try {
+
+			VRProductionClassification object = (VRProductionClassification) VRRestUtil.mappingModel(model,
+					new VRProductionClassificationImpl());
+
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
+
+			JSONObject result = action.createVRProductionClassification(object);
+
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+
+	}
+
+	@Override
+	public Response createVRProductionPlant(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantApiModel model) {
+
+		try {
+
+			VRProductionPlant object = (VRProductionPlant) VRRestUtil.mappingModel(model, new VRProductionPlantImpl());
+
+			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
+
+			JSONObject result = actionImpl.createVRProductionPlant(object);
+
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+		} catch (Exception e) {
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+
+	}
+
+	@Override
+	public Response createVRProductionPlantEmployee(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model) {
+
+		try {
+
+			VRProductionPlantEmployee object = (VRProductionPlantEmployee) VRRestUtil.mappingModel(model,
+					new VRProductionPlantEmployeeImpl());
+
+			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
+
+			JSONObject result = actionImpl.createVRProductionPlantEmployee(object);
+
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+
+	}
+
+	@Override
+	public Response createVRProductionPlantEquiptment(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model) {
+
+		try {
+
+			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
+					new VRProductionPlantEquipmentImpl());
+
+			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
+
+			JSONObject result = actionImpl.createVRProductionPlantEquiptment(object);
+
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+		} catch (Exception e) {
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+
+	}
+
+	@Override
+	public Response createVRProductionPlantProdEquiment(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantProdEquipmentApiModel model) {
+
+		try {
+
+			VRProductionPlantProdEquipment object = (VRProductionPlantProdEquipment) VRRestUtil.mappingModel(model,
+					new VRProductionPlantProdEquipmentImpl());
+
+			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
+
+			JSONObject result = actionImpl.createVRProductionPlantProdEquipment(object);
+
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+		} catch (Exception e) {
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+
+	}
+
+	@Override
+	public Response createVRProductType(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, VRProductTypeApiModel model) {
+
+		try {
+
+			VRProductType object = (VRProductType) VRRestUtil.mappingModel(model, new VRProductTypeImpl());
+
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
+
+			JSONObject result = action.createVRProductType(object);
+
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+		} catch (Exception e) {
+
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+
+	}
+
+	@Override
 	public Response findProductionPlant(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, VRProductionPlantBeanParam query) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
@@ -66,64 +196,6 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 		} catch (Exception e) {
 			_log.error(e);
 			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrproductionplant")).build();
-		}
-	}
-
-	@Override
-	public Response findVRProductionPlantProdEquipment(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, String productionPlantCodes) {
-
-		try {
-			VRProductionPlantProdEquipmentActionImpl actionImpl = new VRProductionPlantProdEquipmentActionImpl();
-
-			JSONArray result = actionImpl.findByProductionPlanCode(productionPlantCodes);
-
-			return Response.status(200).entity(result.toString()).build();
-
-		} catch (Exception e) {
-
-			_log.error(e);
-
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
-		}
-	}
-
-	@Override
-	public Response findVRProductionPlantEquipment(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, String productionPlantCode,
-			String productClassificationCode) {
-
-		try {
-
-			VRProductionPlantEquipmentActionImpl actionImpl = new VRProductionPlantEquipmentActionImpl();
-
-			JSONArray result = actionImpl.findByProductionPlanCode_ProductClassificationCode(productionPlantCode,
-					productClassificationCode);
-
-			return Response.status(200).entity(result.toString()).build();
-
-		} catch (Exception e) {
-
-			_log.error(e);
-
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
-		}
-	}
-
-	@Override
-	public Response findVRProductType(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext, String productionPlantCode, String productClassificationCode) {
-
-		try {
-			VRProductionTypeActionImpl actionImpl = new VRProductionTypeActionImpl();
-			JSONArray result = actionImpl.findProductType(productionPlantCode, productClassificationCode);
-			return Response.status(200).entity(result.toString()).build();
-
-		} catch (Exception e) {
-
-			_log.error(e);
-
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
 		}
 	}
 
@@ -165,15 +237,96 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	}
 
 	@Override
+	public Response findVRProductionPlantEquipment(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String productionPlantCode,
+			String productClassificationCode) {
+
+		try {
+
+			VRProductionPlantEquipmentActionImpl actionImpl = new VRProductionPlantEquipmentActionImpl();
+
+			JSONArray result = actionImpl.findByProductionPlanCode_ProductClassificationCode(productionPlantCode,
+					productClassificationCode);
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (Exception e) {
+
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+	}
+
+	@Override
+	public Response findVRProductionPlantProdEquipment(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String productionPlantCodes) {
+
+		try {
+			VRProductionPlantProdEquipmentActionImpl actionImpl = new VRProductionPlantProdEquipmentActionImpl();
+
+			JSONArray result = actionImpl.findByProductionPlanCode(productionPlantCodes);
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (Exception e) {
+
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+	}
+
+	@Override
+	public Response findVRProductType(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, String productionPlantCode, String productClassificationCode) {
+
+		try {
+			VRProductionTypeActionImpl actionImpl = new VRProductionTypeActionImpl();
+			JSONArray result = actionImpl.findProductType(productionPlantCode, productClassificationCode);
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (Exception e) {
+
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+	}
+
+	@Override
+	public Response updateVRProductionClassification(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRProductionClassificationApiModel model) {
+
+		try {
+			VRProductionClassification object = (VRProductionClassification) VRRestUtil.mappingModel(model,
+					new VRProductionClassificationImpl());
+
+			VRProductionPlantAction action = new VRProductionPlantActionImpl();
+
+			JSONObject result = action.updateVRProductionClassification(object);
+
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+
+		} catch (Exception e) {
+
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+
+	}
+
+	@Override
 	public Response updateVRProductionPlant(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantApiModel model) {
 
 		try {
 
+
 			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 
-			VRProductionPlant object = (VRProductionPlant) VRRestUtil.mappingModel(model,
-					VRProductionPlantApiModel.class, new VRProductionPlantImpl(), VRProductionPlantModelImpl.class);
+			VRProductionPlant object = (VRProductionPlant) VRRestUtil.mappingModel(model, new VRProductionPlantImpl());
 
 			JSONObject result = actionImpl.updateVRProductionPlant(object);
 
@@ -189,39 +342,17 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	}
 
 	@Override
-	public Response createVRProductionPlant(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantApiModel model) {
+	public Response updateVRProductionPlantEmployee(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model) {
 
 		try {
 
-			VRProductionPlant object = (VRProductionPlant) VRRestUtil.mappingModel(model,
-					VRProductionPlantApiModel.class, new VRProductionPlantImpl(), VRProductionPlantModelImpl.class);
+			VRProductionPlantEmployee object = (VRProductionPlantEmployee) VRRestUtil.mappingModel(model,
+					new VRProductionPlantEmployeeImpl());
 
 			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 
-			JSONObject result = actionImpl.createVRProductionPlant(object);
-
-			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
-		} catch (Exception e) {
-			_log.error(e);
-
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
-		}
-
-	}
-
-	@Override
-	public Response updateVRProductType(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext, VRProductTypeApiModel model) {
-
-		try {
-
-			VRProductType object = (VRProductType) VRRestUtil.mappingModel(model, VRProductTypeApiModel.class,
-					new VRProductTypeImpl(), VRProductTypeModelImpl.class);
-
-			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
-
-			JSONObject result = actionImpl.updateVRProductType(object);
+			JSONObject result = actionImpl.updateVRProductionPlantEmployee(object);
 
 			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
@@ -235,19 +366,20 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	}
 
 	@Override
-	public Response createVRProductType(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext, VRProductTypeApiModel model) {
+	public Response updateVRProductionPlantEquiptment(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model) {
 
 		try {
 
-			VRProductType object = (VRProductType) VRRestUtil.mappingModel(model, VRProductTypeApiModel.class,
-					new VRProductTypeImpl(), VRProductTypeModelImpl.class);
+			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
+					new VRProductionPlantEquipmentImpl());
 
-			VRProductionPlantAction action = new VRProductionPlantActionImpl();
+			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 
-			JSONObject result = action.createVRProductType(object);
+			JSONObject result = actionImpl.updateVRProductionPlantEquiptment(object);
 
 			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+
 		} catch (Exception e) {
 
 			_log.error(e);
@@ -266,8 +398,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 			JSONObject result = JSONFactoryUtil.createJSONObject();
 
 			VRProductionPlantProdEquipment object = (VRProductionPlantProdEquipment) VRRestUtil.mappingModel(model,
-					VRProductionPlantProdEquipmentApiModel.class, new VRProductionPlantProdEquipmentImpl(),
-					VRProductionPlantProdEquipmentImpl.class);
+					new VRProductionPlantProdEquipmentImpl());
 
 			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 
@@ -284,168 +415,21 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	}
 
 	@Override
-	public Response createVRProductionPlantProdEquiment(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantProdEquipmentApiModel model) {
+	public Response updateVRProductType(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, VRProductTypeApiModel model) {
 
 		try {
 
-			VRProductionPlantProdEquipment object = (VRProductionPlantProdEquipment) VRRestUtil.mappingModel(model,
-					VRProductionPlantProdEquipmentApiModel.class, new VRProductionPlantProdEquipmentImpl(),
-					VRProductionPlantProdEquipmentImpl.class);
+			VRProductType object = (VRProductType) VRRestUtil.mappingModel(model, new VRProductTypeImpl());
 
 			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 
-			JSONObject result = actionImpl.createVRProductionPlantProdEquipment(object);
-
-			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
-		} catch (Exception e) {
-			_log.error(e);
-
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
-		}
-
-	}
-
-	@Override
-	public Response updateVRProductionPlantEquiptment(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model) {
-
-		try {
-			
-
-			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
-					VRProductionPlantEquipmentApiModel.class, new VRProductionPlantEquipmentImpl(),
-					VRProductionPlantEquipmentModelImpl.class);
-
-			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
-
-			JSONObject result = actionImpl.updateVRProductionPlantEquiptment(object);
+			JSONObject result = actionImpl.updateVRProductType(object);
 
 			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (Exception e) {
 
-			_log.error(e);
-
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
-		}
-
-	}
-
-	@Override
-	public Response createVRProductionPlantEquiptment(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model) {
-
-		try {
-
-			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
-					VRProductionPlantEquipmentApiModel.class, new VRProductionPlantEquipmentImpl(),
-					VRProductionPlantEquipmentModelImpl.class);
-
-			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
-
-			JSONObject result = actionImpl.createVRProductionPlantEquiptment(object);
-
-			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
-		} catch (Exception e) {
-			_log.error(e);
-
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
-		}
-
-	}
-
-	@Override
-	public Response updateVRProductionPlantEmployee(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model) {
-
-		try {
-
-			VRProductionPlantEmployee object = (VRProductionPlantEmployee) VRRestUtil.mappingModel(model,
-					VRProductionPlantEmployeeApiModel.class, new VRProductionPlantEmployeeImpl(),
-					VRProductionPlantEmployeeImpl.class);
-
-			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
-
-			JSONObject result = actionImpl.updateVRProductionPlantEmployee(object);
-
-			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
-
-		} catch (Exception e) {
-
-			_log.error(e);
-
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
-		}
-
-	}
-
-	@Override
-	public Response createVRProductionPlantEmployee(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model) {
-
-		try {
-
-			VRProductionPlantEmployee object = (VRProductionPlantEmployee) VRRestUtil.mappingModel(model,
-					VRProductionPlantEmployeeApiModel.class, new VRProductionPlantEmployeeImpl(),
-					VRProductionPlantEmployeeImpl.class);
-
-			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
-
-			JSONObject result = actionImpl.createVRProductionPlantEmployee(object);
-
-			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
-
-		} catch (Exception e) {
-			_log.error(e);
-
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
-		}
-
-	}
-
-	@Override
-	public Response updateVRProductionClassification(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, VRProductionClassificationApiModel model) {
-
-		try {
-
-			VRProductionClassification object = (VRProductionClassification) VRRestUtil.mappingModel(model,
-					VRProductionClassificationApiModel.class, new VRProductionClassificationImpl(),
-					VRProductionClassificationImpl.class);
-
-			VRProductionPlantAction action = new VRProductionPlantActionImpl();
-
-			JSONObject result = action.updateVRProductionClassification(object);
-
-			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
-
-		} catch (Exception e) {
-
-			_log.error(e);
-
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
-		}
-
-	}
-
-	@Override
-	public Response createVRProductionClassification(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, VRProductionClassificationApiModel model) {
-
-		try {
-
-			VRProductionClassification object = (VRProductionClassification) VRRestUtil.mappingModel(model,
-					VRProductionClassificationApiModel.class, new VRProductionClassificationImpl(),
-					VRProductionClassificationImpl.class);
-
-			VRProductionPlantAction action = new VRProductionPlantActionImpl();
-
-			JSONObject result = action.createVRProductionClassification(object);
-
-			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
-
-		} catch (Exception e) {
 			_log.error(e);
 
 			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();

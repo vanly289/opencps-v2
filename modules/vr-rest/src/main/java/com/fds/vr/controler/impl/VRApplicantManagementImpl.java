@@ -1,33 +1,13 @@
 package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRApplicantProfileAction;
-import com.fds.vr.business.action.VRProductionPlantAction;
 import com.fds.vr.business.action.impl.VRApplicantProfileActionImpl;
-import com.fds.vr.business.action.impl.VRProductionPlantActionImpl;
-import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.exception.NoSuchVRApplicantProfileException;
-import com.fds.vr.business.exception.NoSuchVRProductionPlantException;
 import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.VRProductionPlant;
-import com.fds.vr.business.model.VRProductionPlantEmployee;
 import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
-import com.fds.vr.business.model.impl.VRProductTypeImpl;
-import com.fds.vr.business.model.impl.VRProductionPlantEmployeeImpl;
-import com.fds.vr.business.model.impl.VRProductionPlantImpl;
-import com.fds.vr.business.model.impl.VRProductionPlantModelImpl;
-import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
-import com.fds.vr.business.service.VRProductTypeLocalServiceUtil;
-import com.fds.vr.business.service.VRProductionPlantEmployeeLocalServiceUtil;
-import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
 import com.fds.vr.controler.VRApplicantManagement;
 import com.fds.vr.model.VRApplicantProfileApiModel;
 import com.fds.vr.model.VRApplicantProfileBeanParam;
-import com.fds.vr.model.VRProductionPlantApiModel;
-import com.fds.vr.model.VRProductionPlantEmployeeApiModel;
 import com.fds.vr.util.VRRestUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -35,7 +15,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -93,36 +72,22 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 
 		try {
 
-			VRApplicantProfile targetModel = new VRApplicantProfileImpl();
-
-			targetModel = VRApplicantProfileLocalServiceUtil.getVRApplicantProfile(model.getId());
-
 			VRApplicantProfile object = (VRApplicantProfile) VRRestUtil.mappingModel(model,
-					VRProductionPlantEmployeeApiModel.class, targetModel, VRApplicantProfileImpl.class);
+					new VRApplicantProfileImpl());
 
-			VRApplicantProfileAction action = new VRApplicantProfileActionImpl();
+			VRApplicantProfileActionImpl actionImpl = new VRApplicantProfileActionImpl();
 
-			JSONObject result = action.updateVRApplicantProfile(object);
+			_log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> object " + JSONFactoryUtil.looseSerializeDeep(object));
+
+			JSONObject result = actionImpl.updateVRApplicantProfile(object);
 
 			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
-		} catch (SystemException | PortalException | NullPointerException e) {
+		} catch (Exception e) {
 
-			ErrorMsg error = new ErrorMsg();
-			if (e instanceof NoSuchVRApplicantProfileException) {
+			_log.error(e);
 
-				error.setDescription("id not found");
-
-			} else if (e instanceof NullPointerException) {
-
-				error.setDescription("id required");
-
-			} else {
-
-				_log.error(e);
-			}
-
-			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
 		}
 
 	}
@@ -133,10 +98,8 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 
 		try {
 
-	
-
 			VRApplicantProfile object = (VRApplicantProfile) VRRestUtil.mappingModel(model,
-					VRProductionPlantEmployeeApiModel.class, new VRApplicantProfileImpl(), VRApplicantProfileImpl.class);
+					new VRApplicantProfileImpl());
 
 			VRApplicantProfileAction action = new VRApplicantProfileActionImpl();
 
@@ -144,7 +107,6 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 
 			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
-			
 		} catch (Exception e) {
 			_log.error(e);
 

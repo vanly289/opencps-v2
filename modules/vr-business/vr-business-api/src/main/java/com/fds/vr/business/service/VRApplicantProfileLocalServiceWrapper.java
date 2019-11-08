@@ -46,6 +46,13 @@ public class VRApplicantProfileLocalServiceWrapper
 		return _vrApplicantProfileLocalService.addVRApplicantProfile(vrApplicantProfile);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRApplicantProfile createVRApplicantProfile(
+		com.fds.vr.business.model.VRApplicantProfile object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrApplicantProfileLocalService.createVRApplicantProfile(object);
+	}
+
 	/**
 	* Creates a new vr applicant profile with the primary key. Does not add the vr applicant profile to the database.
 	*

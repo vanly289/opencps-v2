@@ -1,11 +1,14 @@
 package com.fds.vr.model;
 
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
-import io.swagger.annotations.ApiModelProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Date;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @XmlRootElement(name = "VRApplicantProfileApiModel")
 public class VRApplicantProfileApiModel {
@@ -223,6 +226,8 @@ public class VRApplicantProfileApiModel {
 	protected String applicantStatus;
 	@ApiModelProperty(name = "modifydate", example = "null", value = "")
 	protected String modifyDate;
+	
+	@JsonProperty("syncdate")
 	@ApiModelProperty(name = "syncdate", example = "null", value = "")
 	protected String syncDate;
 

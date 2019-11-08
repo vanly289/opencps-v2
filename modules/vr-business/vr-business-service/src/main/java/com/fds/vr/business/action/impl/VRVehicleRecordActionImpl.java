@@ -25,6 +25,7 @@ public class VRVehicleRecordActionImpl implements VRVehicleRecordAction {
 	public JSONObject importVRVehicleRecord(User user, ServiceContext serviceContext, InputStream inputStream) {
 		try {
 			XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+			
 			XSSFSheet sheet = workbook.getSheetAt(0);
 			int count = 0;
 			Iterator<Row> rowIterator = sheet.iterator();

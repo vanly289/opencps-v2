@@ -17,28 +17,33 @@ import java.util.LinkedHashMap;
  *
  */
 public interface VRProductionPlantAction {
+	public JSONObject createVRProductionClassification(VRProductionClassification object);
+
+	public JSONObject createVRProductionPlant(VRProductionPlant object);
+
+	public JSONObject createVRProductionPlantEmployee(VRProductionPlantEmployee object);
+
+	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment object);
+
+	public JSONObject createVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object);
+
+	public JSONObject createVRProductType(VRProductType object);
+
+	public JSONObject findVRProductionPlant(long id);
+
 	public JSONObject findVRVRProductionPlant(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params);
-	
-	public JSONObject findVRProductionPlant(long id);
-	
-	public JSONObject createVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object);
-	public JSONObject updateVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object);
-	
-	public JSONObject createVRProductionPlant(VRProductionPlant object);
-	public JSONObject updateVRProductionPlant(VRProductionPlant object);
-	
-	public JSONObject createVRProductionPlantEmployee(VRProductionPlantEmployee object);
-	public JSONObject updateVRProductionPlantEmployee(VRProductionPlantEmployee object);
-	
-	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment object);
-	public JSONObject updateVRProductionPlantEquiptment(VRProductionPlantEquipment object);
-	
-	public JSONObject createVRProductType(VRProductType object);
-	public JSONObject updateVRProductType(VRProductType object);
-	
-	public JSONObject createVRProductionClassification(VRProductionClassification object);
+
 	public JSONObject updateVRProductionClassification(VRProductionClassification object);
-	
-	
+
+	public JSONObject updateVRProductionPlant(VRProductionPlant object);
+
+	public JSONObject updateVRProductionPlantEmployee(VRProductionPlantEmployee object);
+
+	public JSONObject updateVRProductionPlantEquiptment(VRProductionPlantEquipment object);
+
+	public JSONObject updateVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object);
+
+	public JSONObject updateVRProductType(VRProductType object);
+
 }

@@ -10,12 +10,7 @@ import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.model.VRProductionPlantEmployee;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.VRProductionPlantProdEquipment;
-import com.fds.vr.business.model.impl.VRProductTypeImpl;
-import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
-import com.fds.vr.business.model.impl.VRProductionPlantEmployeeImpl;
-import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
-import com.fds.vr.business.model.impl.VRProductionPlantProdEquipmentImpl;
 import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
 import com.fds.vr.business.service.VRProductTypeLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionClassificationLocalServiceUtil;
@@ -46,6 +41,138 @@ import javax.net.ssl.HttpsURLConnection;
 public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 	private static Log _log = LogFactoryUtil.getLog(VRProductionPlantActionImpl.class);
+
+	public JSONObject createVRProductionClassification(VRProductionClassification object) {
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			object = VRProductionClassificationLocalServiceUtil.createVRProductionClassification(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRProductionClassification.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
+
+	public JSONObject createVRProductionPlant(VRProductionPlant object) {
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+
+			object = VRProductionPlantLocalServiceUtil.createVRProductionPlant(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRProductionPlant.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
+
+	public JSONObject createVRProductionPlantEmployee(VRProductionPlantEmployee object) {
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			object = VRProductionPlantEmployeeLocalServiceUtil.createVRProductionPlantEmployee(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantEmployee.class, StringPool.BLANK);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
+
+	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment object) {
+
+		_log.info("object(1):" + object);
+
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			object = VRProductionPlantEquipmentLocalServiceUtil.createVRProductionPlantEquipment(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantEquipment.class, StringPool.BLANK);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
+
+	public JSONObject createVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object) {
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+
+			object = VRProductionPlantProdEquipmentLocalServiceUtil.createVRProductionPlantProdEquipment(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantProdEquipment.class, StringPool.BLANK);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+
+	}
+
+	public JSONObject createVRProductType(VRProductType object) {
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			object = VRProductTypeLocalServiceUtil.createVRProductType(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRProductType.class, StringPool.BLANK);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
+
+	@Override
+	public JSONObject findVRProductionPlant(long id) {
+
+		try {
+
+			VRProductionPlant vrProductionPlant = VRProductionPlantLocalServiceUtil.getVRProductionPlant(id);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, vrProductionPlant);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+
+		}
+
+	}
 
 	@Override
 	public JSONObject findVRVRProductionPlant(User user, ServiceContext serviceContext,
@@ -93,72 +220,90 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 				supplierid = GetterUtil.getLong(params.get("supplierid"));
 			}
 		}
-		
+
 		String joinStatements = StringPool.BLANK;
 		String tableAlias = StringPool.BLANK;
 		String joinWithTableAlias = StringPool.BLANK;
 		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
-		
-		
+
 		if (supplierid != null) {
-			
+
 			tableAlias = "vr_productionplant";
 			joinWithTableAlias = "vr_productionplantsupplier";
-			
-			joinStatements = "INNER JOIN  "+joinWithTableAlias+" ON "+tableAlias+".supplierid = "+joinWithTableAlias+".id";
-			
-			columnStatementMap.put(ActionUtil.createSCNWTAS("id", tableAlias),long.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantType", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantName", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantCode", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("mtCore", tableAlias),long.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingMA_CTY", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingTEN_CTY", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingDIA_CHI_CTY", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingMA_XUONG_LR", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingTEN_XUONG_LR", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingDIA_CHI_XUONG_LR", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingNote", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingStatus", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantAddress", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantStateCode", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantStateName", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantProvinceCode", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantProvinceName", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantDistrictCode", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantDistrictName", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantEmail", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantPhone", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantFax", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantRepresentative", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantRepresentativeTitle", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantContactName", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantContactEmail", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantContactPhone", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantStatus", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantEmployeesNote", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantEquipmentsNote", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantProdEquipmentsNote", tableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("registrationId", tableAlias),long.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("registrationFormId", tableAlias),long.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("applicantProfileId", tableAlias),long.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("supplierId", tableAlias),long.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("modifyDate", tableAlias),Date.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("syncDate", tableAlias),Date.class.getName());
-			
-			
-			columnStatementMap.put(ActionUtil.createSCNWTAS("corporationCode", joinWithTableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("corporationName", joinWithTableAlias),String.class.getName());
-			columnStatementMap.put(ActionUtil.createSCNWTAS("corporationAddress", joinWithTableAlias),String.class.getName());
-		
+
+			joinStatements = "INNER JOIN  " + joinWithTableAlias + " ON " + tableAlias + ".supplierid = "
+					+ joinWithTableAlias + ".id";
+
+			columnStatementMap.put(ActionUtil.createSCNWTAS("id", tableAlias), long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantType", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantName", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantCode", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mtCore", tableAlias), long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingMA_CTY", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingTEN_CTY", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingDIA_CHI_CTY", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingMA_XUONG_LR", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingTEN_XUONG_LR", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingDIA_CHI_XUONG_LR", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingNote", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("mappingStatus", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantAddress", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantStateCode", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantStateName", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantProvinceCode", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantProvinceName", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantDistrictCode", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantDistrictName", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantEmail", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantPhone", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantFax", tableAlias), String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantRepresentative", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantRepresentativeTitle", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantContactName", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantContactEmail", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantContactPhone", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantStatus", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantEmployeesNote", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantEquipmentsNote", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("productionPlantProdEquipmentsNote", tableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("registrationId", tableAlias), long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("registrationFormId", tableAlias), long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("applicantProfileId", tableAlias), long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("supplierId", tableAlias), long.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("modifyDate", tableAlias), Date.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("syncDate", tableAlias), Date.class.getName());
+
+			columnStatementMap.put(ActionUtil.createSCNWTAS("corporationCode", joinWithTableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("corporationName", joinWithTableAlias),
+					String.class.getName());
+			columnStatementMap.put(ActionUtil.createSCNWTAS("corporationAddress", joinWithTableAlias),
+					String.class.getName());
+
 		}
 
 		String sqlStatementPattern = "SELECT [$STATEMENT_COLUMN$] FROM vr_productionplant"
 				+ (Validator.isNotNull(tableAlias) ? " AS " + tableAlias : StringPool.BLANK)
 				+ " [$STATEMENT_JOIN$] [$CONDITION$] [$ORDERBY$]";
-
-		
-		
 
 		StringBuilder conditions = new StringBuilder();
 
@@ -182,7 +327,6 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 			conditions.append(ActionUtil.buildSQLCondition("productionplanttype", "'" + productionplanttype + "'",
 					" AND ", StringPool.LIKE, tableAlias));
 		}
-		
 
 		if (Validator.isNotNull(keyword)) {
 			conditions
@@ -215,22 +359,20 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 				conditions, sortedby, VRProductionPlantImpl.class, "VRProductionPlant", tableAlias, joinStatements);
 
 		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
-		
+
 		JSONArray array = null;
-		
-		if(Validator.isNotNull(joinStatements)) {
-			
-			 array = VRProductionPlantLocalServiceUtil.findData(instance.getSqlStatemanent(),
-					instance.getColumnAliasNames(), instance.getColumnDataTypes(),  null,
-					StringPool.BLANK, start, end);
-			
-		}else {
-			
-			 array = VRProductionPlantLocalServiceUtil.findData(instance.getSqlStatemanent(),
-					instance.getColumnAliasNames(), instance.getColumnDataTypes(),  instance.getReturnClassName(),
+
+		if (Validator.isNotNull(joinStatements)) {
+
+			array = VRProductionPlantLocalServiceUtil.findData(instance.getSqlStatemanent(),
+					instance.getColumnAliasNames(), instance.getColumnDataTypes(), null, StringPool.BLANK, start, end);
+
+		} else {
+
+			array = VRProductionPlantLocalServiceUtil.findData(instance.getSqlStatemanent(),
+					instance.getColumnAliasNames(), instance.getColumnDataTypes(), instance.getReturnClassName(),
 					instance.getClassName(), start, end);
 		}
-		
 
 		long total = VRProductionPlantLocalServiceUtil.counData(instance.getCountStatemanent());
 
@@ -241,70 +383,38 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		return result;
 	}
 
-	public JSONObject updateVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object) {
+	public JSONObject updateVRProductionClassification(VRProductionClassification object) {
 
 		// validate
+
 		if (object == null) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
 		}
+
 		if (object.getId() <= 0) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
 		}
-		VRProductionPlantProdEquipment _tmp = VRProductionPlantProdEquipmentLocalServiceUtil.fetchVRProductionPlantProdEquipment(object.getId());
+
+		VRProductionClassification _tmp = VRProductionClassificationLocalServiceUtil
+				.fetchVRProductionClassification(object.getId());
 		if (_tmp == null) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
 		}
 
 		try {
-			object = VRProductionPlantProdEquipmentLocalServiceUtil.updateVRProductionPlantProdEquipment(object);
-			object.setSequenceNo(object.getPrimaryKey());
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
-			
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+			_tmp = (VRProductionClassification) ActionUtil.mergeObject(object, _tmp);
+
+			_tmp = VRProductionClassificationLocalServiceUtil.updateVRProductionClassification(_tmp);
+
+			// JSONObject result = ActionUtil.object2Json(object,
+			// VRProductionClassification.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
+
 
 		} catch (Exception e) {
 			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
 
-		}
-	}
-
-	public JSONObject createVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object) {
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		try {
-
-			object = VRProductionPlantProdEquipmentLocalServiceUtil.createVRProductionPlantProdEquipment(object);
-			object.setSequenceNo(object.getPrimaryKey());
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
-
-		} catch (Exception e) {
-			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
-		
-	}
-
-	public JSONObject createVRProductionPlant(VRProductionPlant object) {
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		try {
-
-			object = VRProductionPlantLocalServiceUtil.createVRProductionPlant(object);
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantImpl.class, StringPool.BLANK);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
-
-		} catch (Exception e) {
-			_log.error(e);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
 
 		}
@@ -325,38 +435,21 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		}
 
 		try {
+			_tmp = (VRProductionPlant) ActionUtil.mergeObject(object, _tmp);
 
-			object = VRProductionPlantLocalServiceUtil.updateVRProductionPlant(object);
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantImpl.class, StringPool.BLANK);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+			_tmp = VRProductionPlantLocalServiceUtil.updateVRProductionPlant(_tmp);
 
-		} catch (Exception e) {
-			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+			// JSONObject result = ActionUtil.object2Json(object, VRProductionPlant.class,
+			// StringPool.BLANK);
 
-		}
-
-	}
-
-	public JSONObject createVRProductionPlantEmployee(VRProductionPlantEmployee object) {
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		try {
-			object = VRProductionPlantEmployeeLocalServiceUtil.createVRProductionPlantEmployee(object);
-			
-			object.setSequenceNo(object.getPrimaryKey());
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
 
 		} catch (Exception e) {
 			_log.error(e);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
 
 		}
+
 	}
 
 	public JSONObject updateVRProductionPlantEmployee(VRProductionPlantEmployee object) {
@@ -377,13 +470,14 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 		try {
 
-			object = VRProductionPlantEmployeeLocalServiceUtil.updateVRProductionPlantEmployee(object);
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
-			
-			object.setSequenceNo(object.getPrimaryKey());
+			_tmp = (VRProductionPlantEmployee) ActionUtil.mergeObject(object, _tmp);
 
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+			_tmp = VRProductionPlantEmployeeLocalServiceUtil.updateVRProductionPlantEmployee(_tmp);
+
+			// JSONObject result = ActionUtil.object2Json(object,
+			// VRProductionPlantEmployee.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
 
 		} catch (Exception e) {
 			_log.error(e);
@@ -392,31 +486,10 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 		}
 
-	}
-
-	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment object) {
-		
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		try {
-			object = VRProductionPlantEquipmentLocalServiceUtil.createVRProductionPlantEquipment(object);
-			
-			object.setSequenceNo(object.getPrimaryKey());
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
-
-		} catch (Exception e) {
-			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
 	}
 
 	public JSONObject updateVRProductionPlantEquiptment(VRProductionPlantEquipment object) {
-		
+
 		// validate
 		if (object == null) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
@@ -432,15 +505,15 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		}
 
 		try {
-			
 
-			object = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(object);
-			
-			object.setSequenceNo(object.getPrimaryKey());
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
+			_tmp = (VRProductionPlantEquipment) ActionUtil.mergeObject(object, _tmp);
 
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+			_tmp = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(_tmp);
+
+			// JSONObject result = ActionUtil.object2Json(object,
+			// VRProductionPlantEquipment.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
 
 		} catch (Exception e) {
 			_log.error(e);
@@ -450,18 +523,32 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		}
 	}
 
-	public JSONObject createVRProductType(VRProductType object) {
+	public JSONObject updateVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object) {
+
 		// validate
 		if (object == null) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
 		}
+		if (object.getId() <= 0) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
+		VRProductionPlantProdEquipment _tmp = VRProductionPlantProdEquipmentLocalServiceUtil
+				.fetchVRProductionPlantProdEquipment(object.getId());
+
+		if (_tmp == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
 		try {
-			object = VRProductTypeLocalServiceUtil.createVRProductType(object);
-			
-			object.setSequenceNo(object.getPrimaryKey());
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductTypeImpl.class, StringPool.BLANK);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+			_tmp = (VRProductionPlantProdEquipment) ActionUtil.mergeObject(object, _tmp);
+
+			_tmp = VRProductionPlantProdEquipmentLocalServiceUtil.updateVRProductionPlantProdEquipment(_tmp);
+
+			// JSONObject result = ActionUtil.object2Json(object,
+			// VRProductionPlantProdEquipment.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
 
 		} catch (Exception e) {
 			_log.error(e);
@@ -486,13 +573,14 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		}
 
 		try {
+			_tmp = (VRProductType) ActionUtil.mergeObject(object, _tmp);
 
-			object = VRProductTypeLocalServiceUtil.updateVRProductType(object);
+			_tmp = VRProductTypeLocalServiceUtil.updateVRProductType(_tmp);
+
+
+			//JSONObject result = ActionUtil.object2Json(object, VRProductType.class, StringPool.BLANK);
 			
-			object.setSequenceNo(object.getPrimaryKey());
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductTypeImpl.class, StringPool.BLANK);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
 
 		} catch (Exception e) {
 			_log.error(e);
@@ -500,74 +588,6 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
 
 		}
-	}
-
-	public JSONObject createVRProductionClassification(VRProductionClassification object) {
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		try {
-			object = VRProductionClassificationLocalServiceUtil.createVRProductionClassification(object);
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionClassificationImpl.class, StringPool.BLANK);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
-
-		} catch (Exception e) {
-			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
-	}
-
-	public JSONObject updateVRProductionClassification(VRProductionClassification object) {
-
-		// validate
-
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-
-		if (object.getId() <= 0) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
-		}
-
-		VRProductionClassification _tmp = VRProductionClassificationLocalServiceUtil
-				.fetchVRProductionClassification(object.getId());
-		if (_tmp == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
-		}
-
-		try {
-
-			object = VRProductionClassificationLocalServiceUtil.updateVRProductionClassification(object);
-			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionClassificationImpl.class, StringPool.BLANK);
-
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
-
-		} catch (Exception e) {
-			_log.error(e);
-
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
-	}
-
-	@Override
-	public JSONObject findVRProductionPlant(long id) {
-
-		try {
-
-			VRProductionPlant vrProductionPlant = VRProductionPlantLocalServiceUtil.getVRProductionPlant(id);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, vrProductionPlant);
-
-		} catch (Exception e) {
-			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
-
-		}
-
 	}
 
 }

@@ -4,12 +4,9 @@ import com.fds.vr.business.action.VRApplicantProfileAction;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryInstance;
 import com.fds.vr.business.model.VRApplicantProfile;
-import com.fds.vr.business.model.VRProductionClassification;
 import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
 import com.fds.vr.business.model.impl.VRApplicantProfileModelImpl;
-import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
 import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
-import com.fds.vr.business.service.VRProductionClassificationLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -166,36 +163,58 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 		result.put("data", array);
 		return result;
 	}
-	
+
 	public JSONObject createVRApplicantProfile(VRApplicantProfile object) {
 
-		object.setId(0);
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			object = VRApplicantProfileLocalServiceUtil.createVRApplicantProfile(object);
 
-		return updateVRApplicantProfile(object);
+			JSONObject result = ActionUtil.object2Json(object, VRApplicantProfile.class, StringPool.BLANK);
+			
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
 	}
 
 	public JSONObject updateVRApplicantProfile(VRApplicantProfile object) {
 
-		JSONObject returnObj = JSONFactoryUtil.createJSONObject();
-		JSONObject result = JSONFactoryUtil.createJSONObject();
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+
+		if (object.getId() <= 0) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
+		VRApplicantProfile _tmp = VRApplicantProfileLocalServiceUtil.fetchVRApplicantProfile(object.getId());
+		
+		if (_tmp == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
 
 		try {
+			
+			_tmp = (VRApplicantProfile) ActionUtil.mergeObject(object, _tmp);
 
-			object = VRApplicantProfileLocalServiceUtil.updateVRApplicantProfile(object);
+			_tmp = VRApplicantProfileLocalServiceUtil.updateVRApplicantProfile(_tmp);
 
-			result = ActionUtil.object2Json(object, VRApplicantProfileImpl.class, StringPool.BLANK);
-
-			returnObj.put("status", HttpsURLConnection.HTTP_OK);
-			returnObj.put("content", result);
+			//JSONObject result = ActionUtil.object2Json(object, VRApplicantProfile.class, StringPool.BLANK);
+			
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
 
 		} catch (Exception e) {
 			_log.error(e);
-
-			returnObj.put("status", HttpsURLConnection.HTTP_INTERNAL_ERROR);
-
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
 		}
-
-		return returnObj;
 	}
 
 }

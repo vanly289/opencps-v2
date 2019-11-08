@@ -53,6 +53,12 @@ public class VRApplicantProfileLocalServiceUtil {
 		return getService().addVRApplicantProfile(vrApplicantProfile);
 	}
 
+	public static com.fds.vr.business.model.VRApplicantProfile createVRApplicantProfile(
+		com.fds.vr.business.model.VRApplicantProfile object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().createVRApplicantProfile(object);
+	}
+
 	/**
 	* Creates a new vr applicant profile with the primary key. Does not add the vr applicant profile to the database.
 	*

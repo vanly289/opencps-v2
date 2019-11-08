@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -368,5 +369,35 @@ public class ActionUtil {
 		result.put("content", content);
 
 		return result;
+	}
+
+	public static Object mergeObject(Object source, Object target) throws Exception {
+		if (source != null && target != null) {
+			Method[] methods = source.getClass().getMethods();
+			if (methods != null && methods.length > 0) {
+				for (Method method : methods) {
+					String getMethodName = method.getName();
+					if (getMethodName.startsWith("get")) {
+						Class<?> dataType = method.getReturnType();
+						String setMethodName = getMethodName.replace("get", "set");
+
+						Object sourceValue = method.invoke(source);
+						try {
+							Method setMethod = target.getClass().getMethod(setMethodName, dataType);
+							if (dataType.getName().equals(Date.class.getName())) {
+								setMethod.invoke(target, sourceValue);
+							} else {
+								if (sourceValue != null) {
+									setMethod.invoke(target, sourceValue);
+								}
+							}
+						} catch (Exception e) {
+							continue;
+						}
+					}
+				}
+			}
+		}
+		return target;
 	}
 }
