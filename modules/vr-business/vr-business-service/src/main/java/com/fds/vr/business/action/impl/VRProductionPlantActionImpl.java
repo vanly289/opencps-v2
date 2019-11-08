@@ -411,6 +411,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
 
+
 		} catch (Exception e) {
 			_log.error(e);
 
@@ -573,8 +574,9 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 		try {
 			_tmp = (VRProductType) ActionUtil.mergeObject(object, _tmp);
-			
+
 			_tmp = VRProductTypeLocalServiceUtil.updateVRProductType(_tmp);
+
 
 			//JSONObject result = ActionUtil.object2Json(object, VRProductType.class, StringPool.BLANK);
 			

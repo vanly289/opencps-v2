@@ -2436,7 +2436,6 @@ public class DataManagementImpl implements DataManagement {
 		
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		
-		_log.info("===findDictGroup===");
 		
 		try {
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
@@ -2458,8 +2457,6 @@ public class DataManagementImpl implements DataManagement {
 			 ServiceContext serviceContext,  DataSearchModel query) {
 		
 		JSONObject result = JSONFactoryUtil.createJSONObject();
-		
-		_log.info("===findDictItem===");
 		
 		try {
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
