@@ -18,6 +18,7 @@ import com.fds.vr.business.model.impl.VRProductTypeModelImpl;
 import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantEmployeeImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEquipmentModelImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantModelImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantProdEquipmentImpl;
@@ -314,7 +315,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
 					VRProductionPlantEquipmentApiModel.class, new VRProductionPlantEquipmentImpl(),
-					VRProductionPlantEquipment.class);
+					VRProductionPlantEquipmentModelImpl.class);
 
 			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 
@@ -339,7 +340,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
 					VRProductionPlantEquipmentApiModel.class, new VRProductionPlantEquipmentImpl(),
-					VRProductionPlantEquipment.class);
+					VRProductionPlantEquipmentModelImpl.class);
 
 			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 

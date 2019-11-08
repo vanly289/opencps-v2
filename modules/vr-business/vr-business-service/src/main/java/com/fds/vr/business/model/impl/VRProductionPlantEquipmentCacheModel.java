@@ -246,20 +246,18 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 			vrProductionPlantEquipmentImpl.setEquipmentSerialNo(equipmentSerialNo);
 		}
 
-		if (productionYear == Long.MIN_VALUE) {
-			vrProductionPlantEquipmentImpl.setProductionYear(null);
+		if (productionYear == null) {
+			vrProductionPlantEquipmentImpl.setProductionYear(StringPool.BLANK);
 		}
 		else {
-			vrProductionPlantEquipmentImpl.setProductionYear(new Date(
-					productionYear));
+			vrProductionPlantEquipmentImpl.setProductionYear(productionYear);
 		}
 
-		if (registrationYear == Long.MIN_VALUE) {
-			vrProductionPlantEquipmentImpl.setRegistrationYear(null);
+		if (registrationYear == null) {
+			vrProductionPlantEquipmentImpl.setRegistrationYear(StringPool.BLANK);
 		}
 		else {
-			vrProductionPlantEquipmentImpl.setRegistrationYear(new Date(
-					registrationYear));
+			vrProductionPlantEquipmentImpl.setRegistrationYear(registrationYear);
 		}
 
 		vrProductionPlantEquipmentImpl.setMarkupXCG(markupXCG);
@@ -335,8 +333,8 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 		equipmentSerialNo = objectInput.readUTF();
-		productionYear = objectInput.readLong();
-		registrationYear = objectInput.readLong();
+		productionYear = objectInput.readUTF();
+		registrationYear = objectInput.readUTF();
 
 		markupXCG = objectInput.readLong();
 
@@ -453,8 +451,19 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 			objectOutput.writeUTF(equipmentSerialNo);
 		}
 
-		objectOutput.writeLong(productionYear);
-		objectOutput.writeLong(registrationYear);
+		if (productionYear == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionYear);
+		}
+
+		if (registrationYear == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(registrationYear);
+		}
 
 		objectOutput.writeLong(markupXCG);
 
@@ -522,8 +531,8 @@ public class VRProductionPlantEquipmentCacheModel implements CacheModel<VRProduc
 	public long modifyDate;
 	public long syncDate;
 	public String equipmentSerialNo;
-	public long productionYear;
-	public long registrationYear;
+	public String productionYear;
+	public String registrationYear;
 	public long markupXCG;
 	public long markupXCGNK;
 	public long markupSMRM;

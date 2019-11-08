@@ -10,7 +10,12 @@ import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.model.VRProductionPlantEmployee;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.VRProductionPlantProdEquipment;
+import com.fds.vr.business.model.impl.VRProductTypeImpl;
+import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEmployeeImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantProdEquipmentImpl;
 import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
 import com.fds.vr.business.service.VRProductTypeLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionClassificationLocalServiceUtil;
@@ -245,15 +250,16 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		if (object.getId() <= 0) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
 		}
-		VRProductionPlant _tmp = VRProductionPlantLocalServiceUtil.fetchVRProductionPlant(object.getId());
+		VRProductionPlantProdEquipment _tmp = VRProductionPlantProdEquipmentLocalServiceUtil.fetchVRProductionPlantProdEquipment(object.getId());
 		if (_tmp == null) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
 		}
 
 		try {
 			object = VRProductionPlantProdEquipmentLocalServiceUtil.updateVRProductionPlantProdEquipment(object);
+			object.setSequenceNo(object.getPrimaryKey());
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantProdEquipment.class, StringPool.BLANK);
+			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
 			
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
@@ -272,8 +278,9 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		try {
 
 			object = VRProductionPlantProdEquipmentLocalServiceUtil.createVRProductionPlantProdEquipment(object);
+			object.setSequenceNo(object.getPrimaryKey());
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantProdEquipment.class, StringPool.BLANK);
+			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantProdEquipmentImpl.class, StringPool.BLANK);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
 		} catch (Exception e) {
@@ -293,7 +300,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 			object = VRProductionPlantLocalServiceUtil.createVRProductionPlant(object);
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlant.class, StringPool.BLANK);
+			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantImpl.class, StringPool.BLANK);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
 		} catch (Exception e) {
@@ -321,7 +328,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 			object = VRProductionPlantLocalServiceUtil.updateVRProductionPlant(object);
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlant.class, StringPool.BLANK);
+			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantImpl.class, StringPool.BLANK);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
 		} catch (Exception e) {
@@ -340,7 +347,9 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		try {
 			object = VRProductionPlantEmployeeLocalServiceUtil.createVRProductionPlantEmployee(object);
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEmployee.class, StringPool.BLANK);
+			object.setSequenceNo(object.getPrimaryKey());
+			
+			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
 		} catch (Exception e) {
@@ -370,7 +379,9 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 			object = VRProductionPlantEmployeeLocalServiceUtil.updateVRProductionPlantEmployee(object);
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEmployee.class, StringPool.BLANK);
+			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEmployeeImpl.class, StringPool.BLANK);
+			
+			object.setSequenceNo(object.getPrimaryKey());
 
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
@@ -385,8 +396,6 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment object) {
 		
-		_log.info("object(1):"+object);
-		
 		// validate
 		if (object == null) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
@@ -394,7 +403,9 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		try {
 			object = VRProductionPlantEquipmentLocalServiceUtil.createVRProductionPlantEquipment(object);
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEquipment.class, StringPool.BLANK);
+			object.setSequenceNo(object.getPrimaryKey());
+			
+			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
 		} catch (Exception e) {
@@ -425,7 +436,9 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 			object = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(object);
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEquipment.class, StringPool.BLANK);
+			object.setSequenceNo(object.getPrimaryKey());
+			
+			JSONObject result =  ActionUtil.object2Json(object, VRProductionPlantEquipmentImpl.class, StringPool.BLANK);
 
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
@@ -445,7 +458,9 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		try {
 			object = VRProductTypeLocalServiceUtil.createVRProductType(object);
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductType.class, StringPool.BLANK);
+			object.setSequenceNo(object.getPrimaryKey());
+			
+			JSONObject result =  ActionUtil.object2Json(object, VRProductTypeImpl.class, StringPool.BLANK);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
 		} catch (Exception e) {
@@ -474,7 +489,9 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 			object = VRProductTypeLocalServiceUtil.updateVRProductType(object);
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductType.class, StringPool.BLANK);
+			object.setSequenceNo(object.getPrimaryKey());
+			
+			JSONObject result =  ActionUtil.object2Json(object, VRProductTypeImpl.class, StringPool.BLANK);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
 		} catch (Exception e) {
@@ -493,7 +510,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		try {
 			object = VRProductionClassificationLocalServiceUtil.createVRProductionClassification(object);
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionClassification.class, StringPool.BLANK);
+			JSONObject result =  ActionUtil.object2Json(object, VRProductionClassificationImpl.class, StringPool.BLANK);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
 		} catch (Exception e) {
@@ -525,7 +542,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 			object = VRProductionClassificationLocalServiceUtil.updateVRProductionClassification(object);
 			
-			JSONObject result =  ActionUtil.object2Json(object, VRProductionClassification.class, StringPool.BLANK);
+			JSONObject result =  ActionUtil.object2Json(object, VRProductionClassificationImpl.class, StringPool.BLANK);
 
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
