@@ -9,4 +9,5 @@ import com.liferay.portal.kernel.json.JSONArray;
 public interface VRProductionPlantEquipmentAction {
 	public JSONArray findByProductionPlanCode_ProductClassificationCode(String productionPlantCode,
 			String productClassificationCode);
+	public boolean deleteProductionPlantEquipment(String ids);
 }

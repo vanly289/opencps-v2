@@ -2,6 +2,7 @@ package com.fds.vr.business.action.impl;
 
 import com.fds.vr.business.action.VRProductionPlantEquipmentAction;
 import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.exception.NoSuchVRProductionPlantEquipmentException;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
 import com.fds.vr.business.service.VRProductionPlantEquipmentLocalServiceUtil;
@@ -9,7 +10,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -129,6 +132,45 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 		}
 
 		return result;
+	}
+	
+	@Override
+	public boolean deleteProductionPlantEquipment(String ids) {
+
+		boolean flag = false;
+
+		long defaultValue = 0;
+
+		long[] idArray = StringUtil.split(ids, defaultValue);
+
+		VRProductionPlantEquipment vrProductionPlantEquipment = null;
+
+		for (long id : idArray) {
+
+			vrProductionPlantEquipment = null;
+
+			try {
+
+				vrProductionPlantEquipment = VRProductionPlantEquipmentLocalServiceUtil
+						.getVRProductionPlantEquipment(id);
+
+				VRProductionPlantEquipmentLocalServiceUtil.deleteVRProductionPlantEquipment(vrProductionPlantEquipment);
+
+				flag = true;
+
+			} catch (Exception e) {
+
+				if (e instanceof NoSuchVRProductionPlantEquipmentException) {
+
+					flag = false;
+
+				}
+
+			}
+
+		}
+
+		return flag;
 	}
 
 }

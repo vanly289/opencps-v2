@@ -1,6 +1,7 @@
 package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRProductionPlantAction;
+import com.fds.vr.business.action.VRProductionPlantEquipmentAction;
 import com.fds.vr.business.action.impl.VRProductionClassificationActionImpl;
 import com.fds.vr.business.action.impl.VRProductionPlantActionImpl;
 import com.fds.vr.business.action.impl.VRProductionPlantEmployeeActionImpl;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -435,6 +437,33 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
 		}
 
+	}
+	
+	@Override
+	public Response deleteProductionPlantEquipment(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String ids) {
+
+		try {
+
+			VRProductionPlantEquipmentAction actionImpl = new VRProductionPlantEquipmentActionImpl();
+
+			boolean flag  = actionImpl.deleteProductionPlantEquipment(ids);
+			
+			
+			if(flag ) {
+				return Response.status(200).build();
+			}else {
+				return Response.status(404).build();
+			}
+
+			
+
+		} catch (Exception e) {
+
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
 	}
 
 }
