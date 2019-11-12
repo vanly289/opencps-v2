@@ -27,6 +27,7 @@ import com.fds.vr.model.VRProductionPlantApiModel;
 import com.fds.vr.model.VRProductionPlantBeanParam;
 import com.fds.vr.model.VRProductionPlantEmployeeApiModel;
 import com.fds.vr.model.VRProductionPlantEquipmentApiModel;
+import com.fds.vr.model.VRProductionPlantEquipmentBeanParam;
 import com.fds.vr.model.VRProductionPlantProdEquipmentApiModel;
 import com.fds.vr.util.VRRestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -465,5 +466,24 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
 		}
 	}
+	
+	@Override
+	public Response searchVRProductionPlantEquipment(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, VRProductionPlantEquipmentBeanParam query) {
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		try {
+			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
+			
+			VRProductionPlantEquipmentAction actionImpl = new VRProductionPlantEquipmentActionImpl();
+			
+			result = actionImpl.findVRProductionPlantEquipment(user, serviceContext, params);
+			
+			return Response.status(200).entity(result.toJSONString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrproductionplant")).build();
+		}
+	}
+	
 
 }
