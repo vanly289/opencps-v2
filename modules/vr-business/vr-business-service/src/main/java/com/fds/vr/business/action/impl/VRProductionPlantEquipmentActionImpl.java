@@ -182,69 +182,87 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 	private String createMarkUpParam(String productClassificationCodes) {
 		
 		StringBuilder result = new StringBuilder();
+		StringBuilder condition = new StringBuilder();
 
 		String[] productClassificationCodesArray = StringUtil.split(productClassificationCodes);
 		
-		result.append(StringPool.OPEN_PARENTHESIS);
 		
-		String defaultCode = StringPool.BLANK;
-		defaultCode = productClassificationCodesArray[0];
 		
-		if(defaultCode.equals("XCG")) {
-			
-			result.append(ActionUtil.buildSQLCondition("markupXCG", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
-		}else if(defaultCode.equals("XCGNK")) {
-			
-			result.append(ActionUtil.buildSQLCondition("markupXCGNK", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
-		}else if(defaultCode.equals("SMRM")) {
-			
-			result.append(ActionUtil.buildSQLCondition("markupSMRM", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
-		}else if(defaultCode.equals("XCH")) {
-			
-			result.append(ActionUtil.buildSQLCondition("markupXCH", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
-		}else if(defaultCode.equals("XCN")) {
-			
-			result.append(ActionUtil.buildSQLCondition("markupXCN", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
-		}else if(defaultCode.equals("XMY")) {
-			
-			result.append(ActionUtil.buildSQLCondition("markupXMY", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
-		}else if(defaultCode.equals("XDD")) {
-			
-			result.append(ActionUtil.buildSQLCondition("markupXDD", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
+		for(String productClassificationCode: productClassificationCodesArray) {
+		
+			if(productClassificationCode.equals("XCG")) {
+				
+				condition.append(ActionUtil.buildSQLCondition("markupXCG", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
+				break;
+				
+			}else if(productClassificationCode.equals("XCGNK")) {
+				
+				condition.append(ActionUtil.buildSQLCondition("markupXCGNK", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
+				break;
+				
+			}else if(productClassificationCode.equals("SMRM")) {
+				
+				condition.append(ActionUtil.buildSQLCondition("markupSMRM", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
+				break;
+				
+			}else if(productClassificationCode.equals("XCH")) {
+				
+				condition.append(ActionUtil.buildSQLCondition("markupXCH", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
+				break;
+				
+			}else if(productClassificationCode.equals("XCN")) {
+				
+				condition.append(ActionUtil.buildSQLCondition("markupXCN", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
+				break;
+				
+			}else if(productClassificationCode.equals("XMY")) {
+				
+				condition.append(ActionUtil.buildSQLCondition("markupXMY", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
+				break;
+				
+			}else if(productClassificationCode.equals("XDD")) {
+				
+				condition.append(ActionUtil.buildSQLCondition("markupXDD", 1, StringPool.BLANK,StringPool.EQUAL, StringPool.BLANK));
+				break;
+			}
 		}
 		
 		for(String productClassificationCode: productClassificationCodesArray) {
 			
 			if(productClassificationCode.equals("XCG")) {
 				
-				result.append(ActionUtil.buildSQLCondition("markupXCG", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
+				condition.append(ActionUtil.buildSQLCondition("markupXCG", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
 			}else if(productClassificationCode.equals("XCGNK")) {
 				
-				result.append(ActionUtil.buildSQLCondition("markupXCGNK", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
+				condition.append(ActionUtil.buildSQLCondition("markupXCGNK", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
 			}else if(productClassificationCode.equals("SMRM")) {
 				
-				result.append(ActionUtil.buildSQLCondition("markupSMRM", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
+				condition.append(ActionUtil.buildSQLCondition("markupSMRM", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
 			}else if(productClassificationCode.equals("XCH")) {
 				
-				result.append(ActionUtil.buildSQLCondition("markupXCH", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
+				condition.append(ActionUtil.buildSQLCondition("markupXCH", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
 			}else if(productClassificationCode.equals("XCN")) {
 				
-				result.append(ActionUtil.buildSQLCondition("markupXCN", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
+				condition.append(ActionUtil.buildSQLCondition("markupXCN", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
 			}else if(productClassificationCode.equals("XMY")) {
 				
-				result.append(ActionUtil.buildSQLCondition("markupXMY", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
+				condition.append(ActionUtil.buildSQLCondition("markupXMY", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
 			}else if(productClassificationCode.equals("XDD")) {
 				
-				result.append(ActionUtil.buildSQLCondition("markupXDD", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
+				condition.append(ActionUtil.buildSQLCondition("markupXDD", 1, " OR ",StringPool.EQUAL, StringPool.BLANK));
 			}
 			
 		}
 		
-		result.append(StringPool.CLOSE_PARENTHESIS);
+		
+		if(condition.length() > 0) {
+			result.append(StringPool.OPEN_PARENTHESIS);
+			result.append(condition);
+			result.append(StringPool.CLOSE_PARENTHESIS);
+		}
 
 		return result.toString();
 	}
-	
 	
 	@Override
 	public JSONObject findVRProductionPlantEquipment(User user, ServiceContext serviceContext,
@@ -288,11 +306,13 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 
 		if (Validator.isNotNull(productClassificationCodes)) {
 			
-			conditions.append(ActionUtil.buildSQLCondition(createMarkUpParam(productClassificationCodes),StringPool.BLANK, " AND ",StringPool.BLANK));
+			String condition = createMarkUpParam(productClassificationCodes);
+			
+			if(condition.length() > 0) {
+				conditions.append(ActionUtil.buildSQLCondition(condition,StringPool.BLANK, " AND ",StringPool.BLANK));
+			}
 			
 		}
-
-		
 
 		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
 
@@ -307,6 +327,7 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 					instance.getColumnAliasNames(), instance.getColumnDataTypes(), null, StringPool.BLANK, start, end);
 
 		} else {
+			
 
 			array = VRProductionPlantEquipmentLocalServiceUtil.findData(instance.getSqlStatemanent(),
 					instance.getColumnAliasNames(), instance.getColumnDataTypes(), instance.getReturnClassName(),
