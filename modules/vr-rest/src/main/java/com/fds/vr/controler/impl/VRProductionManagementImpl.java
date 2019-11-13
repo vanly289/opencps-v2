@@ -442,7 +442,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 	
 	@Override
 	public Response deleteProductionPlantEquipment(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, String ids) {
+			Locale locale, User user, ServiceContext serviceContext, long ids) {
 
 		try {
 

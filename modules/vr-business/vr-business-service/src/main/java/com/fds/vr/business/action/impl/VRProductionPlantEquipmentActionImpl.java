@@ -140,36 +140,27 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 	}
 	
 	@Override
-	public boolean deleteProductionPlantEquipment(String ids) {
+	public boolean deleteProductionPlantEquipment(long ids) {
 
 		boolean flag = false;
 
-		long defaultValue = 0;
-
-		long[] idArray = StringUtil.split(ids, defaultValue);
+		long id = GetterUtil.getLong(ids);
 
 		VRProductionPlantEquipment vrProductionPlantEquipment = null;
 
-		for (long id : idArray) {
+		try {
 
-			vrProductionPlantEquipment = null;
+			vrProductionPlantEquipment = VRProductionPlantEquipmentLocalServiceUtil.getVRProductionPlantEquipment(id);
 
-			try {
+			VRProductionPlantEquipmentLocalServiceUtil.deleteVRProductionPlantEquipment(vrProductionPlantEquipment);
 
-				vrProductionPlantEquipment = VRProductionPlantEquipmentLocalServiceUtil
-						.getVRProductionPlantEquipment(id);
+			flag = true;
 
-				VRProductionPlantEquipmentLocalServiceUtil.deleteVRProductionPlantEquipment(vrProductionPlantEquipment);
+		} catch (Exception e) {
 
-				flag = true;
+			if (e instanceof NoSuchVRProductionPlantEquipmentException) {
 
-			} catch (Exception e) {
-
-				if (e instanceof NoSuchVRProductionPlantEquipmentException) {
-
-					flag = false;
-
-				}
+				flag = false;
 
 			}
 

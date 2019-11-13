@@ -44,8 +44,10 @@ public class VRProductionPlantEquipmentFinderImpl extends VRProductionPlantEquip
 						start, end);
 				if (vrProductionPlantEquipments != null) {
 					for (VRProductionPlantEquipment vrProductionPlantEquipment : vrProductionPlantEquipments) {
+						
 						JSONObject json = ActionUtil.object2Json(vrProductionPlantEquipment,
 								VRProductionPlantEquipmentModelImpl.class, "");
+
 						results.put(json);
 					}
 				}
