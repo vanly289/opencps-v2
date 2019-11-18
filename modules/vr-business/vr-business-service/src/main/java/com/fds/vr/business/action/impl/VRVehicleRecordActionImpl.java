@@ -10,10 +10,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.InputStream;
 import java.util.Iterator;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * @author trungnt
@@ -23,6 +19,8 @@ public class VRVehicleRecordActionImpl implements VRVehicleRecordAction {
 	private Log _log = LogFactoryUtil.getLog(VRVehicleTypeCertificateActionImpl.class);
 	@Override
 	public JSONObject importVRVehicleRecord(User user, ServiceContext serviceContext, InputStream inputStream) {
+		_log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>POI");
+		/*
 		try {
 			XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 			
@@ -44,7 +42,7 @@ public class VRVehicleRecordActionImpl implements VRVehicleRecordAction {
 		} catch (Exception e) {
 			_log.error(e);
 		}
-
+		 */
 		return null;
 	}
 
