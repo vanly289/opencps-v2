@@ -102,6 +102,7 @@ public class VRProductTypePersistenceImpl extends BasePersistenceImpl<VRProductT
 			new String[] { String.class.getName(), String.class.getName() },
 			VRProductTypeModelImpl.PRODUCTIONPLANTCODE_COLUMN_BITMASK |
 			VRProductTypeModelImpl.PRODUCTCLASSIFICATIONCODE_COLUMN_BITMASK |
+			VRProductTypeModelImpl.SEQUENCENO_COLUMN_BITMASK |
 			VRProductTypeModelImpl.MODIFYDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_PPC_PCC = new FinderPath(VRProductTypeModelImpl.ENTITY_CACHE_ENABLED,
 			VRProductTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,

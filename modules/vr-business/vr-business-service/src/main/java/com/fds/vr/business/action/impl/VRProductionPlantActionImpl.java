@@ -101,8 +101,6 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment object) {
 
-		_log.info("object(1):" + object);
-
 		// validate
 		if (object == null) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);

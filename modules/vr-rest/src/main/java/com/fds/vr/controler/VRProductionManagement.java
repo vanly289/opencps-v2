@@ -6,6 +6,7 @@ import com.fds.vr.model.VRProductionPlantApiModel;
 import com.fds.vr.model.VRProductionPlantBeanParam;
 import com.fds.vr.model.VRProductionPlantEmployeeApiModel;
 import com.fds.vr.model.VRProductionPlantEquipmentApiModel;
+import com.fds.vr.model.VRProductionPlantEquipmentBeanParam;
 import com.fds.vr.model.VRProductionPlantProdEquipmentApiModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -16,6 +17,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,6 +25,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -60,6 +63,15 @@ public interface VRProductionManagement {
 			@Context ServiceContext serviceContext,
 			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode,
 			@DefaultValue("") @PathParam("productclassificationcode") String productClassificationCode);
+	
+	@GET
+	@Path("/equipment")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchVRProductionPlantEquipment(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@BeanParam VRProductionPlantEquipmentBeanParam query);
+
 
 	@GET
 	@Path("/type/{productionplantcode}/{productclassificationcode}")
@@ -139,6 +151,14 @@ public interface VRProductionManagement {
 	public Response updateVRProductionPlantEquiptment(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model);
+	
+	@DELETE
+	@Path("/equipment/")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteProductionPlantEquipment(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,@QueryParam("id") long id);
 	
 	@POST
 	@Path("/prodequipment/")

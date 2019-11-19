@@ -1395,7 +1395,8 @@
 		<column name="productionPlantId" type="long" />
 		<column name="productionPlantCode" type="String"/>
 		<!-- Filter -->
-        <order by="desc">
+        <order>
+        	<order-column name="sequenceNo" order-by="desc"></order-column>
             <order-column name="modifyDate" order-by="desc"></order-column>
         </order>
        <!--  <finder return-type="Collection" name="productPlantID">
@@ -1434,7 +1435,8 @@
 		<column name="productionPlantId" type="long"/>
 		<column name="quantity" type="long"/>
 		<!-- Filter -->
-        <order by="desc">
+        <order>
+            <order-column name="sequenceNo" order-by="desc"></order-column>
             <order-column name="modifyDate" order-by="desc"></order-column>
         </order>
         <!-- <finder return-type="Collection" name="productPlantID">
@@ -1472,7 +1474,8 @@
 		<column name="productionPlantCode" type="String" />
 		
 		<!-- Filter -->
-        <order by="desc">
+        <order>
+        	<order-column name="sequenceNo" order-by="desc"></order-column>
             <order-column name="modifyDate" order-by="desc"></order-column>
         </order>
         <!-- <finder return-type="Collection" name="productPlantID">
