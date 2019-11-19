@@ -13,4 +13,5 @@ import java.io.InputStream;
 public interface VRVehicleRecordAction {
 	public JSONObject importVRVehicleRecord(User user, ServiceContext serviceContext,
 			InputStream inputStream);
+
 }

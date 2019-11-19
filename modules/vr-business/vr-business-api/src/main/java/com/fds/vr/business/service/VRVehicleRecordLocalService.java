@@ -72,6 +72,9 @@ public interface VRVehicleRecordLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public VRVehicleRecord addVRVehicleRecord(VRVehicleRecord vrVehicleRecord);
 
+	public VRVehicleRecord createVRVehicleRecord(
+		VRVehicleRecord vrVehicleRecord);
+
 	/**
 	* Creates a new vr vehicle record with the primary key. Does not add the vr vehicle record to the database.
 	*

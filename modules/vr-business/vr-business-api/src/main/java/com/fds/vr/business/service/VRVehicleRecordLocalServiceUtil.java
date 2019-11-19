@@ -53,6 +53,11 @@ public class VRVehicleRecordLocalServiceUtil {
 		return getService().addVRVehicleRecord(vrVehicleRecord);
 	}
 
+	public static com.fds.vr.business.model.VRVehicleRecord createVRVehicleRecord(
+		com.fds.vr.business.model.VRVehicleRecord vrVehicleRecord) {
+		return getService().createVRVehicleRecord(vrVehicleRecord);
+	}
+
 	/**
 	* Creates a new vr vehicle record with the primary key. Does not add the vr vehicle record to the database.
 	*

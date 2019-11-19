@@ -58,6 +58,13 @@ public class VRVehicleRecordLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRVehicleRecordLocalServiceUtil} to access the vr vehicle record local service.
 	 */
 	
+	public VRVehicleRecord createVRVehicleRecord(VRVehicleRecord vrVehicleRecord) {
+		long id = counterLocalService.increment(VRVehicleRecord.class.getName());
+		vrVehicleRecord.setPrimaryKey(id);
+		vrVehicleRecord.setModifyDate(new Date());
+		return vrVehicleRecordPersistence.update(vrVehicleRecord);
+	}
+	
 	public List<VRVehicleRecord> findByissueVehicleCertificateId(long mtCore, long issueVehicleCertificateId) throws PortalException, SystemException {
 		try {
 			return vrVehicleRecordPersistence.findByissueVehicleCertificateId(mtCore, issueVehicleCertificateId);
@@ -121,7 +128,6 @@ public class VRVehicleRecordLocalServiceImpl
 			_log.error(e);
 		}
 		return new ArrayList<VRVehicleRecord>();
-		
 	}
 
 	public VRVehicleRecord updateVRVehicleRecord(Map<String, String> mapValue, int mtCore) {

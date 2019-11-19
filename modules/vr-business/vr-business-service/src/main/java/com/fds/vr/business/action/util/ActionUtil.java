@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.zip.ZipEntry;
 
 import org.opencps.datamgt.utils.DateTimeUtils;
 
@@ -399,5 +402,18 @@ public class ActionUtil {
 			}
 		}
 		return target;
+	}
+
+	public static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
+		File destFile = new File(destinationDir, zipEntry.getName());
+
+		String destDirPath = destinationDir.getCanonicalPath();
+		String destFilePath = destFile.getCanonicalPath();
+
+		if (!destFilePath.startsWith(destDirPath + File.separator)) {
+			throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
+		}
+
+		return destFile;
 	}
 }

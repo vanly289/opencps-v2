@@ -83,11 +83,11 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 
 			inputStream = dataHandler.getInputStream();
 			
-			_log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> import data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+			_log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> import data");
 
-			//VRVehicleRecordActionImpl actionImpl = new VRVehicleRecordActionImpl();
+			VRVehicleRecordActionImpl actionImpl = new VRVehicleRecordActionImpl();
 
-			//actionImpl.importVRVehicleRecord(user, serviceContext, inputStream);
+			actionImpl.importVRVehicleRecord(user, serviceContext, inputStream);
 
 			return Response.status(200).entity("").build();
 

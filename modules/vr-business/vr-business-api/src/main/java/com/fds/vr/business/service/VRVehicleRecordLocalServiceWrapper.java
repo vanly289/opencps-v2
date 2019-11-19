@@ -46,6 +46,12 @@ public class VRVehicleRecordLocalServiceWrapper
 		return _vrVehicleRecordLocalService.addVRVehicleRecord(vrVehicleRecord);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRVehicleRecord createVRVehicleRecord(
+		com.fds.vr.business.model.VRVehicleRecord vrVehicleRecord) {
+		return _vrVehicleRecordLocalService.createVRVehicleRecord(vrVehicleRecord);
+	}
+
 	/**
 	* Creates a new vr vehicle record with the primary key. Does not add the vr vehicle record to the database.
 	*
