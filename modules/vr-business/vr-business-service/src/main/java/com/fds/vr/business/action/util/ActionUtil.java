@@ -89,6 +89,7 @@ public class ActionUtil {
 				String fieldName = clazz.getDeclaredFields()[i].getName();
 				fieldName = fieldName.replaceFirst("_", "");
 				String dataType = clazz.getDeclaredFields()[i].getType().getName();
+				
 				if (result.has(fieldName)) {
 					String key = Validator.isNotNull(tableAlias) ? (tableAlias + "_")
 							: StringPool.BLANK + fieldName.toLowerCase();
@@ -105,8 +106,9 @@ public class ActionUtil {
 							value = strDate;
 						}
 					}
-					result.put(key, value);
 					result.remove(fieldName);
+					result.put(key, value);
+					
 				}
 
 			}

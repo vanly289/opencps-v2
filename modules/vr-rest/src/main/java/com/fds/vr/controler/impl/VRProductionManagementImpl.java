@@ -1,6 +1,7 @@
 package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRProductionPlantAction;
+import com.fds.vr.business.action.VRProductionPlantEquipmentAction;
 import com.fds.vr.business.action.impl.VRProductionClassificationActionImpl;
 import com.fds.vr.business.action.impl.VRProductionPlantActionImpl;
 import com.fds.vr.business.action.impl.VRProductionPlantEmployeeActionImpl;
@@ -26,6 +27,7 @@ import com.fds.vr.model.VRProductionPlantApiModel;
 import com.fds.vr.model.VRProductionPlantBeanParam;
 import com.fds.vr.model.VRProductionPlantEmployeeApiModel;
 import com.fds.vr.model.VRProductionPlantEquipmentApiModel;
+import com.fds.vr.model.VRProductionPlantEquipmentBeanParam;
 import com.fds.vr.model.VRProductionPlantProdEquipmentApiModel;
 import com.fds.vr.util.VRRestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -436,5 +439,51 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 		}
 
 	}
+	
+	@Override
+	public Response deleteProductionPlantEquipment(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, long ids) {
+
+		try {
+
+			VRProductionPlantEquipmentAction actionImpl = new VRProductionPlantEquipmentActionImpl();
+
+			boolean flag  = actionImpl.deleteProductionPlantEquipment(ids);
+			
+			
+			if(flag ) {
+				return Response.status(200).build();
+			}else {
+				return Response.status(404).build();
+			}
+
+			
+
+		} catch (Exception e) {
+
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+		}
+	}
+	
+	@Override
+	public Response searchVRProductionPlantEquipment(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, VRProductionPlantEquipmentBeanParam query) {
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		try {
+			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
+			
+			VRProductionPlantEquipmentAction actionImpl = new VRProductionPlantEquipmentActionImpl();
+			
+			result = actionImpl.findVRProductionPlantEquipment(user, serviceContext, params);
+			
+			return Response.status(200).entity(result.toJSONString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrproductionplant")).build();
+		}
+	}
+	
 
 }

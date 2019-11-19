@@ -10,8 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "id", "mtcore", "productplantid", "sequenceno", "equipmentcode", "equipmentname",
 		"equipmenttype", "trademark", "trademarkname", "commercialname", "modelcode", "designsymbolno",
-		"productioncountrycode", "equipmentstatus", "expiredate", "notes", "modifydate", "syncdate", "keyword", "start",
-		"end", "order_asc", "order_desc" })
+		"productioncountrycode", "equipmentstatus", "expiredate", "notes", "modifydate", "syncdate", "keyword",
+		"productclassificationcode",
+		"start","end", "order_asc", "order_desc" })
 @XmlRootElement(name = "VRProductionPlantEquipmentBeanParam")
 public class VRProductionPlantEquipmentBeanParam {
 	@QueryParam(value = "keyword")
@@ -62,6 +63,17 @@ public class VRProductionPlantEquipmentBeanParam {
 	protected String modifyDate;
 	@QueryParam(value = "syncdate")
 	protected String syncDate;
+	@QueryParam(value = "productclassificationcode")
+	protected String productClassificationCode;
+	
+
+	public String getProductClassificationCode() {
+		return productClassificationCode;
+	}
+
+	public void setProductClassificationCode(String productClassificationCode) {
+		this.productClassificationCode = productClassificationCode;
+	}
 
 	public String getKeyword() {
 		return keyword;

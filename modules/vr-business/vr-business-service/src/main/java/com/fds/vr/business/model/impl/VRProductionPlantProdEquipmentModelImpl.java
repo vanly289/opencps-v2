@@ -107,8 +107,8 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 
 	public static final String TABLE_SQL_CREATE = "create table vr_productionplantprodequipment (id LONG not null primary key,mtCore LONG,sequenceNo LONG,equipmentCode VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,productionCountryCode VARCHAR(75) null,equipmentStatus VARCHAR(75) null,notes VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,productionPlantCode VARCHAR(75) null,productionPlantId LONG,quantity LONG)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productionplantprodequipment";
-	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlantProdEquipment.modifyDate DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplantprodequipment.modifyDate DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlantProdEquipment.sequenceNo DESC, vrProductionPlantProdEquipment.modifyDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplantprodequipment.sequenceNo DESC, vr_productionplantprodequipment.modifyDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -122,7 +122,8 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRProductionPlantProdEquipment"),
 			true);
 	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 1L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 2L;
+	public static final long SEQUENCENO_COLUMN_BITMASK = 2L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductionPlantProdEquipment"));
 
@@ -328,6 +329,8 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 
 	@Override
 	public void setSequenceNo(long sequenceNo) {
+		_columnBitmask = -1L;
+
 		_sequenceNo = sequenceNo;
 	}
 
@@ -607,6 +610,22 @@ public class VRProductionPlantProdEquipmentModelImpl extends BaseModelImpl<VRPro
 	public int compareTo(
 		VRProductionPlantProdEquipment vrProductionPlantProdEquipment) {
 		int value = 0;
+
+		if (getSequenceNo() < vrProductionPlantProdEquipment.getSequenceNo()) {
+			value = -1;
+		}
+		else if (getSequenceNo() > vrProductionPlantProdEquipment.getSequenceNo()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
 
 		value = DateUtil.compareTo(getModifyDate(),
 				vrProductionPlantProdEquipment.getModifyDate());

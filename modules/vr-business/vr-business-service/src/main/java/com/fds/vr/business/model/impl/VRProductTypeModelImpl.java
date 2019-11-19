@@ -105,8 +105,8 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	public static final String TABLE_SQL_CREATE = "create table vr_producttype (id LONG not null primary key,mtCore LONG,sequenceNo LONG,vehicleClass VARCHAR(75) null,vehicleTypeCode VARCHAR(75) null,vehicleTypeDescription VARCHAR(75) null,productClassificationCode VARCHAR(75) null,productClassificationDescription VARCHAR(75) null,trademark VARCHAR(75) null,trademarkName VARCHAR(75) null,commercialName VARCHAR(75) null,modelCode VARCHAR(75) null,designSymbolNo VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,productionPlantId LONG,productionPlantCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_producttype";
-	public static final String ORDER_BY_JPQL = " ORDER BY vrProductType.modifyDate DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY vr_producttype.modifyDate DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY vrProductType.sequenceNo DESC, vrProductType.modifyDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY vr_producttype.sequenceNo DESC, vr_producttype.modifyDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -121,7 +121,8 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 			true);
 	public static final long PRODUCTCLASSIFICATIONCODE_COLUMN_BITMASK = 1L;
 	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 2L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 4L;
+	public static final long SEQUENCENO_COLUMN_BITMASK = 4L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductType"));
 
@@ -324,6 +325,8 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 
 	@Override
 	public void setSequenceNo(long sequenceNo) {
+		_columnBitmask = -1L;
+
 		_sequenceNo = sequenceNo;
 	}
 
@@ -602,6 +605,22 @@ public class VRProductTypeModelImpl extends BaseModelImpl<VRProductType>
 	@Override
 	public int compareTo(VRProductType vrProductType) {
 		int value = 0;
+
+		if (getSequenceNo() < vrProductType.getSequenceNo()) {
+			value = -1;
+		}
+		else if (getSequenceNo() > vrProductType.getSequenceNo()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
 
 		value = DateUtil.compareTo(getModifyDate(),
 				vrProductType.getModifyDate());

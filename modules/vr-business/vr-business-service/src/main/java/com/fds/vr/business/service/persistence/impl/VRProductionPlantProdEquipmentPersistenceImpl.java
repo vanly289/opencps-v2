@@ -102,6 +102,7 @@ public class VRProductionPlantProdEquipmentPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPPC",
 			new String[] { String.class.getName() },
 			VRProductionPlantProdEquipmentModelImpl.PRODUCTIONPLANTCODE_COLUMN_BITMASK |
+			VRProductionPlantProdEquipmentModelImpl.SEQUENCENO_COLUMN_BITMASK |
 			VRProductionPlantProdEquipmentModelImpl.MODIFYDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_PPC = new FinderPath(VRProductionPlantProdEquipmentModelImpl.ENTITY_CACHE_ENABLED,
 			VRProductionPlantProdEquipmentModelImpl.FINDER_CACHE_ENABLED,
