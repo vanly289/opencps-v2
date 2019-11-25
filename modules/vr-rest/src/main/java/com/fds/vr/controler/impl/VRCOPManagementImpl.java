@@ -47,7 +47,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);
-			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get reportrepositoryyear")).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get reportrepositoryyear").toJSONString()).build();
 		}
 	}
 
@@ -65,7 +65,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);
-			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get reportrepository")).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get reportrepository").toJSONString()).build();
 		}
 	}
 
@@ -83,7 +83,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 
 			_log.error(e);
 
-			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK).toJSONString()).build();
 		}
 	}
 
@@ -100,7 +100,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 		} catch (Exception e) {
 
 			_log.error(e);
-			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK).toJSONString()).build();
 		}
 	}
 
@@ -118,7 +118,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 
 			_log.error(e);
 
-			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK).toJSONString()).build();
 		}
 	}
 
@@ -136,7 +136,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 
 			_log.error(e);
 
-			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK).toJSONString()).build();
 		}
 	}
 
@@ -154,7 +154,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 
 			_log.error(e);
 
-			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK).toJSONString()).build();
 		}
 	}
 
@@ -172,7 +172,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 
 			_log.error(e);
 
-			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK).toJSONString()).build();
 		}
 	}
 
@@ -207,7 +207,7 @@ public class VRCOPManagementImpl implements VRCOPManagement {
 
 			_log.error(e);
 
-			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK)).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage(StringPool.BLANK).toJSONString()).build();
 		}
 	}
 

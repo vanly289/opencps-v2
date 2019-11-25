@@ -91,7 +91,7 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 				applicantcode = (String) params.get("applicantcode");
 			}
 			if (params.containsKey("applicantname")) {
-				applicantcode = (String) params.get("applicantname");
+				applicantname = (String) params.get("applicantname");
 			}
 
 			if (params.containsKey("mappingma_cty")) {
@@ -118,6 +118,8 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingma_cty", tableAlias), String.class.getName());
 		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingten_cty", tableAlias), String.class.getName());
 		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingdia_chi_cty", tableAlias), String.class.getName());
+		columnStatementMap.put(ActionUtil.createSCNWTAS("applicantcode", tableAlias), String.class.getName());
+		columnStatementMap.put(ActionUtil.createSCNWTAS("applicantname", tableAlias), String.class.getName());
 
 		StringBuilder conditions = new StringBuilder();
 
@@ -142,6 +144,11 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 											StringPool.LIKE, tableAlias)
 									+ ")",
 							StringPool.BLANK, " AND ", StringPool.BLANK));
+		}
+		
+		if (Validator.isNotNull(applicantcode)) {
+			conditions.append(ActionUtil.buildSQLCondition("applicantcode", applicantcode, " AND ", StringPool.EQUAL,
+					tableAlias));
 		}
 
 		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);

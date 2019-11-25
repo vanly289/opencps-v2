@@ -13,7 +13,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author trungnt
@@ -115,5 +119,69 @@ public class VRRestUtil {
 		}
 
 		return targetModel;
+	}
+
+	public static Map<String, Object> json2Object(JSONObject data, Object... objects) {
+
+		if (objects == null || objects.length == 0) {
+			return null;
+		} else {
+			Map<String, Object> objectMap = new HashMap<String, Object>();
+			for (Object object : objects) {
+				_log.info("===>> object class: " + object.getClass().getName());
+				Map<String, Method> methodMap = getMethodMap(object.getClass());
+
+				for (Entry<String, Method> entry : methodMap.entrySet()) {
+					String methodName = entry.getKey();
+					if (methodName.startsWith("set")) {
+						String _tmpFieldName = methodName.replace("set", "").toLowerCase();
+						Iterator<String> keys = data.keys();
+						while (keys.hasNext()) {
+							String key = keys.next();
+							_log.info("===> " + key + "|" + _tmpFieldName);
+							if (key.equals(_tmpFieldName)) {
+
+								Method method = methodMap.get(methodName);
+								Class<?> paramType = method.getParameterTypes()[0];
+								Object value = data.get(key);
+								if (value != null) {
+									if (!paramType.getName().equals(value.getClass().getName())) {
+										return null;
+									}
+									try {
+										method.invoke(object, value);
+									} catch (Exception e) {
+										_log.error(e);
+										return null;
+									}
+									_log.info("---> " + methodName + "|" + key + "|" + paramType.getName() + "|" + value
+											+ "|" + value.getClass().getName());
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+				objectMap.put(object.getClass().getName(), object);
+			}
+
+			return objectMap;
+		}
+
+	}
+
+	public static Map<String, Method> getMethodMap(Class<?> clazz) {
+		Map<String, Method> map = new HashMap<String, Method>();
+		Method[] methods = clazz.getMethods();
+		if (methods != null) {
+
+			for (Method method : methods) {
+				map.put(method.getName(), method);
+			}
+		}
+		return map;
 	}
 }

@@ -42,7 +42,7 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);
-			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrappicantprofile")).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrappicantprofile").toJSONString()).build();
 		}
 	}
 
@@ -52,17 +52,18 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		try {
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
-			VRApplicantProfileAction actionImpl = new VRApplicantProfileActionImpl();
+			VRApplicantProfileActionImpl actionImpl = new VRApplicantProfileActionImpl();
 			result = actionImpl.findVRApplicantProfileDetail(user, serviceContext, params);
+		
 			if (result != null && result.length() > 0) {
 				return Response.status(200).entity(result.toJSONString()).build();
 			} else {
-				return Response.status(404).entity(VRRestUtil.errorMessage("Not found")).build();
+				return Response.status(404).entity(VRRestUtil.errorMessage("Not found").toJSONString()).build();
 			}
 
 		} catch (Exception e) {
 			_log.error(e);
-			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrappicantprofile")).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrappicantprofile").toJSONString()).build();
 		}
 	}
 
@@ -87,7 +88,7 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 
 			_log.error(e);
 
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!")).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!").toJSONString()).build();
 		}
 
 	}

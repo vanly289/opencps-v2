@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 
 import org.opencps.datamgt.utils.DateTimeUtils;
@@ -74,7 +76,7 @@ public class ActionUtil {
 			for (int o = 0; o < objects.length; o++) {
 				Object object = objects[o];
 				String columnName = columnNames.get(o);
-				result.put(columnName, object);
+				result.put(columnName.toLowerCase(), object);
 			}
 		}
 		return result;
@@ -84,20 +86,27 @@ public class ActionUtil {
 
 		JSONObject result = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(object));
 
-		if (clazz.getDeclaredFields() != null) {
-			for (int i = 0; i < clazz.getDeclaredFields().length; i++) {
-				String fieldName = clazz.getDeclaredFields()[i].getName();
-				fieldName = fieldName.replaceFirst("_", "");
-				String dataType = clazz.getDeclaredFields()[i].getType().getName();
-				
-				if (result.has(fieldName)) {
-					String key = Validator.isNotNull(tableAlias) ? (tableAlias + "_")
-							: StringPool.BLANK + fieldName.toLowerCase();
-					Object value = result.get(fieldName);
+		LinkedHashMap<String, Integer> TABLE_COLUMNS_MAP = null;
+		try {
+			Field tableColumnsMapField = clazz.getField("TABLE_COLUMNS_MAP");
+			TABLE_COLUMNS_MAP = (LinkedHashMap<String, Integer>) tableColumnsMapField.get(null);
+		} catch (Exception e) {
+			_log.error(e);
+		}
 
-					if (dataType.equals("java.util.Date")) {
+		if (TABLE_COLUMNS_MAP != null) {
+
+			for (Entry<String, Integer> entry : TABLE_COLUMNS_MAP.entrySet()) {
+				String columnName = entry.getKey();
+				int type = entry.getValue();
+				if (result.has(columnName)) {
+
+					Object value = result.get(columnName);
+
+					if (type == Types.DATE || type == Types.TIME || type == Types.TIMESTAMP
+							|| type == Types.TIME_WITH_TIMEZONE || type == Types.TIMESTAMP_WITH_TIMEZONE) {
 						String strDate = StringPool.BLANK;
-						long time = (Long) result.getLong(fieldName);
+						long time = (Long) result.getLong(columnName);
 						if (time > 0) {
 							Calendar c = Calendar.getInstance();
 							c.setTimeInMillis(time);
@@ -106,13 +115,13 @@ public class ActionUtil {
 							value = strDate;
 						}
 					}
-					result.remove(fieldName);
-					result.put(key, value);
-					
-				}
+					result.remove(columnName);
+					result.put(columnName.toLowerCase(), value);
 
+				}
 			}
 		}
+
 		return result;
 	}
 
@@ -418,4 +427,5 @@ public class ActionUtil {
 
 		return destFile;
 	}
+
 }
