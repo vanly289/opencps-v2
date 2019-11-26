@@ -13,6 +13,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -77,6 +78,8 @@ public class DictDataRestClient {
 		
 		CloseableHttpClient httpClient = null;
 
+		CloseableHttpResponse clientResponse = null;
+		
 		BufferedReader br = null;
 		
 		try {
@@ -98,10 +101,10 @@ public class DictDataRestClient {
  			getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
  			getRequest.addHeader(groupHeader);
  			
-			HttpResponse getqueryresponse = httpClient.execute(getRequest);
+ 			clientResponse = httpClient.execute(getRequest);
  			 			
-			if (getqueryresponse.getStatusLine().getStatusCode() == SyncServerTerm.STATUS_OK) {
-				br = new BufferedReader(new InputStreamReader((getqueryresponse.getEntity().getContent())));
+			if (clientResponse.getStatusLine().getStatusCode() == SyncServerTerm.STATUS_OK) {
+				br = new BufferedReader(new InputStreamReader((clientResponse.getEntity().getContent())));
 				String output = "";
 				StringBuilder jsonStr = new StringBuilder();
 				
@@ -125,6 +128,14 @@ public class DictDataRestClient {
 				}
 			}
 			
+			if(clientResponse != null) {
+				try {
+					clientResponse.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
 			if(br != null) {
 				try {
 					br.close();
@@ -141,6 +152,7 @@ public class DictDataRestClient {
 		DictItemModel result = null;
 		
 		CloseableHttpClient httpClient = null;
+		CloseableHttpResponse clientResponse = null;
 		BufferedReader br = null;
 		
 		try {
@@ -163,10 +175,10 @@ public class DictDataRestClient {
  			getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
  			getRequest.addHeader(groupHeader);
  			
-			HttpResponse getqueryresponse = httpClient.execute(getRequest);
+ 			clientResponse = httpClient.execute(getRequest);
 						
-			if (getqueryresponse.getStatusLine().getStatusCode() == SyncServerTerm.STATUS_OK) {
-				br = new BufferedReader(new InputStreamReader((getqueryresponse.getEntity().getContent())));
+			if (clientResponse.getStatusLine().getStatusCode() == SyncServerTerm.STATUS_OK) {
+				br = new BufferedReader(new InputStreamReader((clientResponse.getEntity().getContent())));
 				String output = "";
 				StringBuilder jsonStr = new StringBuilder();
 				
@@ -190,6 +202,14 @@ public class DictDataRestClient {
 				}
 			}
 			
+			if(clientResponse != null) {
+				try {
+					clientResponse.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
 			if(br != null) {
 				try {
 					br.close();
@@ -206,7 +226,7 @@ public class DictDataRestClient {
 		DictGroupModel result = null;
 		
 		CloseableHttpClient httpClient = null;
-
+		CloseableHttpResponse clientResponse = null;
 		BufferedReader br = null;
 		try {
 			CredentialsProvider provider = new BasicCredentialsProvider();
@@ -227,10 +247,10 @@ public class DictDataRestClient {
  			getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
  			getRequest.addHeader(groupHeader);
  			
-			HttpResponse getqueryresponse = httpClient.execute(getRequest);
+ 			clientResponse = httpClient.execute(getRequest);
  			 			
-			if (getqueryresponse.getStatusLine().getStatusCode() == SyncServerTerm.STATUS_OK) {
-				br = new BufferedReader(new InputStreamReader((getqueryresponse.getEntity().getContent())));
+			if (clientResponse.getStatusLine().getStatusCode() == SyncServerTerm.STATUS_OK) {
+				br = new BufferedReader(new InputStreamReader((clientResponse.getEntity().getContent())));
 				String output = "";
 				StringBuilder jsonStr = new StringBuilder();
 				
@@ -249,6 +269,14 @@ public class DictDataRestClient {
 			if(httpClient != null) {
 				try {
 					httpClient.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
+			if(clientResponse != null) {
+				try {
+					clientResponse.close();
 				} catch (IOException e) {
 					_log.error(e);
 				}

@@ -45,9 +45,10 @@ public class OpenCPSRestClient {
 		MessageQueueDetailModel result = null;
 		
 		CloseableHttpClient httpClient = null;
+		CloseableHttpResponse clientResponse = null;
 		BufferedReader br = null;
 		
-		_log.info("===postMessageQueue===" + model.getReference() + "="+ model.getType() + "=" + model.getFunction() + "=" + model.getMessageId());
+//		_log.info("===postMessageQueue===" + model.getReference() + "="+ model.getType() + "=" + model.getFunction() + "=" + model.getMessageId());
 
 		try {
 
@@ -65,12 +66,12 @@ public class OpenCPSRestClient {
 			postRequest.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
 //			System.out.println("Params: " + params.toString());
-			CloseableHttpResponse httpresponse = httpClient.execute(postRequest);
+			clientResponse = httpClient.execute(postRequest);
 			
-			_log.info("===postMessageQueue===" + model.getMessageId() + "=" + httpresponse.getStatusLine().getStatusCode());
+//			_log.info("===postMessageQueue===" + model.getMessageId() + "=" + clientResponse.getStatusLine().getStatusCode());
 			
-			if (httpresponse.getStatusLine().getStatusCode() == 200) {
-				br = new BufferedReader(new InputStreamReader((httpresponse.getEntity().getContent())));
+			if (clientResponse.getStatusLine().getStatusCode() == 200) {
+				br = new BufferedReader(new InputStreamReader((clientResponse.getEntity().getContent())));
 				String output = "";
 
 				StringBuilder jsonString = new StringBuilder();
@@ -90,6 +91,14 @@ public class OpenCPSRestClient {
 			if(httpClient != null) {
 				try {
 					httpClient.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
+			if(clientResponse != null) {
+				try {
+					clientResponse.close();
 				} catch (IOException e) {
 					_log.error(e);
 				}

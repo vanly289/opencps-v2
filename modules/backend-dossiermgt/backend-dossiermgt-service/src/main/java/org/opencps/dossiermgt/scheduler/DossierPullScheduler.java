@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -517,6 +516,9 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			if (object.getLong("confirmFileEntryId") != 0) {
 				// Download confirmFile form SERVER
 
+				InputStream is = null;
+				FileOutputStream outStream = null;
+				HttpURLConnection conn = null;
 				try {
 
 					String fileRef = object.getString("referenceUid");
@@ -526,7 +528,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 					URL url = new URL(RESTFulConfiguration.SERVER_PATH_BASE + path);
 
-					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					conn = (HttpURLConnection) url.openConnection();
 
 					String authString = RESTFulConfiguration.SERVER_USER + ":" + RESTFulConfiguration.SERVER_PASS;
 
@@ -549,7 +551,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 					} else {
 
-						InputStream is = conn.getInputStream();
+						is = conn.getInputStream();
 
 						String raw = conn.getHeaderField("Content-Disposition");
 						// raw = "attachment; filename=abc.jpg"
@@ -568,16 +570,13 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 									StringPool.PERIOD + "tmp");
 						}
 
-						FileOutputStream outStream = new FileOutputStream(tempFile);
+						outStream = new FileOutputStream(tempFile);
 
 						int bytesRead = -1;
 						byte[] buffer = new byte[BUFFER_SIZE];
 						while ((bytesRead = is.read(buffer)) != -1) {
 							outStream.write(buffer, 0, bytesRead);
 						}
-
-						outStream.close();
-						is.close();
 
 						String requestURL = RESTFulConfiguration.CLIENT_PATH_BASE + "dossiers/" + dossierId
 								+ "/payments/" + fileRef + "/confirm";
@@ -592,19 +591,33 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 					}
 
-					conn.disconnect();
-
-				} catch (MalformedURLException e) {
-
+				} catch (Exception e) {
 					_log.error(e);
-				} catch (IOException e) {
-
-					_log.error(e);
-
+				} finally {
+					if (is != null) {
+						try {
+							is.close();
+						} catch (IOException e) {
+						}
+					}
+					
+					if (conn != null) {
+						conn.disconnect();
+					}
+					
+					if (outStream != null) {
+						try {
+							outStream.close();
+						} catch (IOException e) {
+						}
+					}
 				}
 
 				// Add conformFile to CLIENT
 			} else {
+				HttpURLConnection conn = null;
+				InputStream is = null;
+				
 				try {
 
 					String fileRef = object.getString("referenceUid");
@@ -614,7 +627,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 					URL url = new URL(RESTFulConfiguration.SERVER_PATH_BASE + path);
 
-					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					conn = (HttpURLConnection) url.openConnection();
 
 					String authString = RESTFulConfiguration.SERVER_USER + ":" + RESTFulConfiguration.SERVER_PASS;
 
@@ -672,15 +685,20 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 					}
 
-					conn.disconnect();
-
-				} catch (MalformedURLException e) {
+				} catch (Exception e) {
 
 					_log.error(e);
-				} catch (IOException e) {
-
-					_log.error(e);
-
+				} finally {
+					if (is != null) {
+						try {
+							is.close();
+						} catch (IOException e) {
+						}
+					}
+					
+					if (conn != null) {
+						conn.disconnect();
+					}
 				}
 
 			}
@@ -789,6 +807,10 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 			} else {
 
+				HttpURLConnection conn = null;
+				InputStream is = null;
+				FileOutputStream outStream = null;
+				
 				try {
 					// String fileRef = ref.getString("referenceUid");
 
@@ -805,7 +827,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 					URL url = new URL(RESTFulConfiguration.SERVER_PATH_BASE + path);
 
-					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					conn = (HttpURLConnection) url.openConnection();
 
 					String authString = RESTFulConfiguration.SERVER_USER + ":" + RESTFulConfiguration.SERVER_PASS;
 
@@ -853,21 +875,18 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 						if (Validator.isNull(dossierFile)) {
 
 							_log.info("dossierFile NULL:****** ");
-							InputStream is = conn.getInputStream();
+							is = conn.getInputStream();
 
 							File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()),
 									StringPool.PERIOD + ref.getString("fileType"));
 
-							FileOutputStream outStream = new FileOutputStream(tempFile);
+							outStream = new FileOutputStream(tempFile);
 
 							int bytesRead = -1;
 							byte[] buffer = new byte[BUFFER_SIZE];
 							while ((bytesRead = is.read(buffer)) != -1) {
 								outStream.write(buffer, 0, bytesRead);
 							}
-
-							outStream.close();
-							is.close();
 
 							String requestURL = RESTFulConfiguration.CLIENT_PATH_BASE + "dossiers/" + dossierId
 									+ "/files";
@@ -895,12 +914,12 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 									serviceContext);
 
 							// TODO: Write file upload sync
-							InputStream is = conn.getInputStream();
+							is = conn.getInputStream();
 
 							File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()),
 									StringPool.PERIOD + ref.getString("fileType"));
 
-							FileOutputStream outStream = new FileOutputStream(tempFile);
+							outStream = new FileOutputStream(tempFile);
 
 							int bytesRead = -1;
 							byte[] buffer = new byte[BUFFER_SIZE];
@@ -908,8 +927,6 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 								outStream.write(buffer, 0, bytesRead);
 							}
 
-							outStream.close();
-							is.close();
 							// Update file entry
 							_log.info("START UPDATE FILE ENTRY");
 							DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil
@@ -923,15 +940,26 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 					}
 
-					conn.disconnect();
-
-				} catch (MalformedURLException e) {
-
+				} catch (Exception e) {
 					_log.error(e);
-				} catch (IOException e) {
-
-					_log.error(e);
-
+				} finally {
+					if (is != null) {
+						try {
+							is.close();
+						} catch (IOException e) {
+						}
+					}
+					
+					if (conn != null) {
+						conn.disconnect();
+					}
+					
+					if (outStream != null) {
+						try {
+							outStream.close();
+						} catch (IOException e) {
+						}
+					}
 				}
 			}
 		}

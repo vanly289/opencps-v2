@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.Validator;
 
-@Component(immediate = true, service = ModelListener.class)
+@Component(immediate = false, service = ModelListener.class)
 public class DossierSyncListener extends BaseModelListener<DossierSync> {
 	@Override
 	public void onAfterCreate(DossierSync model) throws ModelListenerException {

@@ -44,6 +44,7 @@ public class InvokeREST {
 		JSONObject response = JSONFactoryUtil.createJSONObject();
 		
 		CloseableHttpClient httpClient = null;
+		CloseableHttpResponse clientResponse = null;
 		BufferedReader br = null;
 
 		try {
@@ -79,7 +80,7 @@ public class InvokeREST {
 				}
 			}
  			
- 			CloseableHttpResponse clientResponse = httpClient.execute(request);
+ 			clientResponse = httpClient.execute(request);
 
 			/*URL url = new URL(pathBase + endPoint);
 
@@ -138,6 +139,14 @@ public class InvokeREST {
 				}
 			}
 			
+			if(clientResponse != null) {
+				try {
+					clientResponse.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
 			if(br != null) {
 				try {
 					br.close();
@@ -159,6 +168,7 @@ public class InvokeREST {
 		/*HttpURLConnection conn = null;*/
 		 
 		CloseableHttpClient httpClient = null;
+		CloseableHttpResponse clientResponse = null;
 
 		BufferedReader br = null;
 
@@ -196,7 +206,7 @@ public class InvokeREST {
 			
 			clientRequest.setEntity(new UrlEncodedFormEntity(clientParams, "UTF-8"));
 			
-			CloseableHttpResponse clientResponse = httpClient.execute(clientRequest);
+			clientResponse = httpClient.execute(clientRequest);
 
 			if (clientResponse.getStatusLine().getStatusCode() == 200) {
 				br = new BufferedReader(new InputStreamReader((clientResponse.getEntity().getContent())));
@@ -290,6 +300,14 @@ public class InvokeREST {
 				}
 			}
 			
+			if(clientResponse != null) {
+				try {
+					clientResponse.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
 			if(br != null) {
 				try {
 					br.close();
@@ -308,6 +326,8 @@ public class InvokeREST {
 		JSONObject response = JSONFactoryUtil.createJSONObject();
 
 		CloseableHttpClient httpClient = null;
+		
+		CloseableHttpResponse clientResponse = null;
 
 		BufferedReader br = null;
 
@@ -343,7 +363,7 @@ public class InvokeREST {
 			HttpEntity multipart = builder.build();
 			clientRequest.setEntity(multipart);
 			
-			CloseableHttpResponse clientResponse = httpClient.execute(clientRequest);
+			clientResponse = httpClient.execute(clientRequest);
 
 			if (clientResponse.getStatusLine().getStatusCode() == 200) {
 				br = new BufferedReader(new InputStreamReader((clientResponse.getEntity().getContent())));
@@ -367,6 +387,14 @@ public class InvokeREST {
 			if(httpClient != null) {
 				try {
 					httpClient.close();
+				} catch (IOException e) {
+					_log.error(e);
+				}
+			}
+			
+			if(clientResponse != null) {
+				try {
+					clientResponse.close();
 				} catch (IOException e) {
 					_log.error(e);
 				}

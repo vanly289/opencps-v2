@@ -1,17 +1,11 @@
 package org.opencps.api.controller.impl;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -73,10 +67,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 public class DossierSyncManagementImpl implements DossierSyncManagement {
-	private final String baseUrl = "http://localhost:8080/o/rest/v2/";
-	private final String username = "test@liferay.com";
-	private final String password = "test";
-	// private final String serectKey = "OPENCPSV2";
 
 	@Override
 	public Response getDossierSyncs(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
@@ -490,24 +480,6 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 
 	}
 
-	private void syncDossierFile(long dossierFileId) throws PortalException {
-
-		try {
-			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFile(dossierFileId);
-			// in case add
-
-			// in case update
-
-			// in case remove, check remove flag
-
-		} catch (Exception e) {
-			if (e instanceof PortalException) {
-				throw new PortalException("Can not get file with dossierFileId = " + dossierFileId);
-			}
-		}
-
-	}
-
 	protected Dossier getDossier(String id, long groupId) throws PortalException {
 		// TODO update logic here
 		long dossierId = GetterUtil.getLong(id);
@@ -594,85 +566,6 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 		return params;
 	}
 
-	@Deprecated
-	private void doSync(long groupId, String actionCode, String actionUser, String actionNote, long assignUserId,
-			String refId, long clientDossierActionId, long dossierSyncId) {
-		try {
-			String path = "dossiers/" + refId + "/actions";
-			URL url = new URL(baseUrl + path);
-
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-			String authString = username + ":" + password;
-
-			String authStringEnc = new String(Base64.getEncoder().encodeToString(authString.getBytes()));
-			conn.setRequestProperty("Authorization", "Basic " + authStringEnc);
-
-			conn.setRequestMethod(HttpMethods.POST);
-			conn.setDoInput(true);
-			conn.setDoOutput(true);
-			conn.setRequestProperty("Accept", "application/json");
-			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			conn.setRequestProperty("groupId", String.valueOf(groupId));
-
-			Map<String, Object> params = new LinkedHashMap<>();
-			params.put("actionCode", actionCode);
-			params.put("actionUser", actionUser);
-			params.put("actionNote", actionNote);
-			params.put("assignUserId", assignUserId);
-			params.put("isSynAction", 1);
-
-			StringBuilder postData = new StringBuilder();
-			for (Map.Entry<String, Object> param : params.entrySet()) {
-				if (postData.length() != 0)
-					postData.append('&');
-				postData.append(java.net.URLEncoder.encode(param.getKey(), "UTF-8"));
-				postData.append('=');
-				postData.append(java.net.URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
-			}
-
-			byte[] postDataBytes = postData.toString().getBytes("UTF-8");
-
-			conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-
-			conn.getOutputStream().write(postDataBytes);
-
-			if (conn.getResponseCode() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-			} else {
-				try {
-					// remove flag pending
-					DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
-					// remove DOSSIER_SYNC
-					DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
-
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-			String output;
-
-			StringBuffer sb = new StringBuffer();
-
-			while ((output = br.readLine()) != null) {
-				sb.append(output);
-
-			}
-
-			conn.disconnect();
-
-		} catch (MalformedURLException e) {
-
-			e.printStackTrace();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
-	}
 
 	protected ProcessAction getProcessAction(long groupId, long dossierId, String refId, String actionCode,
 			long serviceProcessId) throws PortalException {
@@ -722,52 +615,6 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 		}
 
 		return dossier;
-	}
-
-	private void resetDossier(long groupId, String refId) {
-		try {
-			String path = "dossiers/" + refId + "/reset";
-			URL url = new URL(baseUrl + path);
-
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-			String authString = username + ":" + password;
-
-			String authStringEnc = new String(Base64.getEncoder().encodeToString(authString.getBytes()));
-			conn.setRequestProperty("Authorization", "Basic " + authStringEnc);
-
-			conn.setRequestMethod(HttpMethods.GET);
-			conn.setDoInput(true);
-			conn.setDoOutput(true);
-			conn.setRequestProperty("Accept", "application/json");
-			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			conn.setRequestProperty("groupId", String.valueOf(groupId));
-
-			if (conn.getResponseCode() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-			}
-
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-			String output;
-
-			StringBuffer sb = new StringBuffer();
-
-			while ((output = br.readLine()) != null) {
-				sb.append(output);
-
-			}
-
-			conn.disconnect();
-
-		} catch (MalformedURLException e) {
-
-			e.printStackTrace();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
 	}
 
 	Log _log = LogFactoryUtil.getLog(DossierSyncManagementImpl.class.getName());
