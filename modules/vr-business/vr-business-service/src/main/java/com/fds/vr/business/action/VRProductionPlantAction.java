@@ -31,7 +31,7 @@ public interface VRProductionPlantAction {
 
 	public JSONObject findVRProductionPlant(long id);
 
-	public JSONObject findVRVRProductionPlant(User user, ServiceContext serviceContext,
+	public JSONObject findVRProductionPlant(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params);
 
 	public JSONObject updateVRProductionClassification(VRProductionClassification object);

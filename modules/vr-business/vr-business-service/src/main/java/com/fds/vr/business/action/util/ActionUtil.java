@@ -57,15 +57,62 @@ public class ActionUtil {
 		}
 	}
 
-	public static String buildSQLCondition(String columnName, Object value, String condition, String searchOperator,
+	public static String buildSQLCondition(String column, Object value, String condition, String searchOperator,
 			String... alias) {
 		String queryCondition = StringPool.BLANK;
-		queryCondition += StringPool.SPACE + condition + StringPool.SPACE
-				+ (alias != null && alias.length > 0
-						? (Validator.isNotNull(alias[0]) ? (alias[0] + StringPool.PERIOD) : StringPool.BLANK)
-						: StringPool.BLANK)
-				+ columnName + StringPool.SPACE + searchOperator + StringPool.SPACE + value;
+		if (value != null) {
 
+			queryCondition += StringPool.SPACE + condition + StringPool.SPACE
+					+ (alias != null && alias.length > 0
+							? (Validator.isNotNull(alias[0]) ? (alias[0] + StringPool.PERIOD) : StringPool.BLANK)
+							: StringPool.BLANK)
+					+ column + StringPool.SPACE + searchOperator + StringPool.SPACE;
+
+			if (Validator.isNotNull(searchOperator)) {
+				if (searchOperator.equals(StringPool.LIKE)) {
+					queryCondition += "'%" + value + "%'";
+				} else {
+					if (value instanceof String) {
+						queryCondition += "'" + value + "'";
+					} else {
+						queryCondition += value;
+					}
+				}
+
+			}
+		}
+
+		return queryCondition;
+	}
+
+	public static String buildSQLCondition(String column, Object value, String condition, String searchOperator,
+			boolean parenthesis, String... alias) {
+		String queryCondition = StringPool.BLANK;
+		if (value != null) {
+
+			queryCondition += StringPool.SPACE + condition + StringPool.SPACE + (parenthesis ? "(" : StringPool.BLANK)
+					+ (alias != null && alias.length > 0
+							? (Validator.isNotNull(alias[0]) ? (alias[0] + StringPool.PERIOD) : StringPool.BLANK)
+							: StringPool.BLANK)
+					+ column + StringPool.SPACE + searchOperator + StringPool.SPACE;
+
+			if (Validator.isNotNull(searchOperator)) {
+				if (searchOperator.equals(StringPool.LIKE)) {
+					queryCondition += "'%" + value + "%'";
+				} else {
+					if (value instanceof String) {
+						queryCondition += "'" + value + "'";
+					} else {
+						queryCondition += value;
+					}
+				}
+
+			}
+			if (parenthesis) {
+				queryCondition += ")";
+			}
+
+		}
 		return queryCondition;
 	}
 
@@ -86,10 +133,10 @@ public class ActionUtil {
 
 		JSONObject result = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(object));
 
-		LinkedHashMap<String, Integer> TABLE_COLUMNS_MAP = null;
+		HashMap<String, Integer> TABLE_COLUMNS_MAP = null;
 		try {
 			Field tableColumnsMapField = clazz.getField("TABLE_COLUMNS_MAP");
-			TABLE_COLUMNS_MAP = (LinkedHashMap<String, Integer>) tableColumnsMapField.get(null);
+			TABLE_COLUMNS_MAP = (HashMap<String, Integer>) tableColumnsMapField.get(null);
 		} catch (Exception e) {
 			_log.error(e);
 		}
@@ -219,12 +266,13 @@ public class ActionUtil {
 	}
 
 	public static String getKeyword(LinkedHashMap<String, Object> params) {
-		String keyword = StringPool.BLANK;
+		String keyword = null;
 		if (params != null) {
 			if (params.containsKey("keyword")) {
 				keyword = (String) params.get("keyword");
 			}
 		}
+		_log.info("keyword==========>>> " + keyword);
 		return keyword;
 	}
 

@@ -193,7 +193,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 		try {
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
 			VRProductionPlantAction actionImpl = new VRProductionPlantActionImpl();
-			result = actionImpl.findVRVRProductionPlant(user, serviceContext, params);
+			result = actionImpl.findVRProductionPlant(user, serviceContext, params);
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);

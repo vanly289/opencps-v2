@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -42,12 +42,12 @@ public class SQLQueryBuilder {
 		}
 
 		if (!getConditions().isEmpty()) {
-			query += " WHERE 1 = 1 " + StringUtil.merge(getJoinConditions(), StringPool.SPACE);
+			query += " WHERE 1 = 1 " + StringUtil.merge(getConditions(), StringPool.SPACE);
 		}
 
 		this.setSelectQuery(getSelect() + StringPool.SPACE + query);
 
-		this.setCountQuery("SELECT COUNT * " + query);
+		this.setCountQuery("SELECT count(*) AS total " + query);
 
 		return this;
 	}
@@ -87,10 +87,10 @@ public class SQLQueryBuilder {
 	public SQLQueryBuilder select(Class<?>... clazzs) {
 		if (clazzs != null && clazzs.length >= 0) {
 			for (int i = 0; i < clazzs.length; i++) {
-				LinkedHashMap<String, Integer> TABLE_COLUMNS_MAP = null;
+				HashMap<String, Integer> TABLE_COLUMNS_MAP = null;
 				try {
 					Field tableColumnsMapField = clazzs[i].getField("TABLE_COLUMNS_MAP");
-					TABLE_COLUMNS_MAP = (LinkedHashMap<String, Integer>) tableColumnsMapField.get(null);
+					TABLE_COLUMNS_MAP = (HashMap<String, Integer>) tableColumnsMapField.get(null);
 				} catch (Exception e) {
 					_log.error(e);
 				}
@@ -120,10 +120,10 @@ public class SQLQueryBuilder {
 		} else {
 			if (clazzs != null && clazzs.length >= 0) {
 				for (int i = 0; i < clazzs.length; i++) {
-					LinkedHashMap<String, Integer> TABLE_COLUMNS_MAP = null;
+					HashMap<String, Integer> TABLE_COLUMNS_MAP = null;
 					try {
 						Field tableColumnsMapField = clazzs[i].getField("TABLE_COLUMNS_MAP");
-						TABLE_COLUMNS_MAP = (LinkedHashMap<String, Integer>) tableColumnsMapField.get(null);
+						TABLE_COLUMNS_MAP = (HashMap<String, Integer>) tableColumnsMapField.get(null);
 					} catch (Exception e) {
 						_log.error(e);
 					}
@@ -186,6 +186,7 @@ public class SQLQueryBuilder {
 	public SQLQueryBuilder where(String column, Object value, String condition, String searchOperator) {
 
 		String queryCondition = condition(column, value, condition, searchOperator);
+
 		if (queryCondition != null) {
 			this.setConditions(queryCondition);
 		}
@@ -207,23 +208,24 @@ public class SQLQueryBuilder {
 	public String condition(String column, Object value, String condition, String searchOperator) {
 
 		String queryCondition = StringPool.BLANK;
+
 		if (value != null) {
 
 			queryCondition += StringPool.SPACE + condition + StringPool.SPACE
 
 					+ column + StringPool.SPACE + searchOperator + StringPool.SPACE;
-
-			if (searchOperator.equals(StringPool.LIKE)) {
-				queryCondition += "'%" + value + "%'";
-			} else {
-				if (value instanceof String) {
-					queryCondition += "'" + value + "'";
+			if (Validator.isNotNull(searchOperator)) {
+				if (searchOperator.equals(StringPool.LIKE)) {
+					queryCondition += "'%" + value + "%'";
 				} else {
-					queryCondition += value;
+					if (value instanceof String) {
+						queryCondition += "'" + value + "'";
+					} else {
+						queryCondition += value;
+					}
 				}
-			}
 
-			this.setConditions(queryCondition);
+			}
 		}
 
 		return queryCondition;
@@ -235,24 +237,26 @@ public class SQLQueryBuilder {
 		String queryCondition = StringPool.BLANK;
 		if (value != null) {
 
-			queryCondition += StringPool.SPACE + condition + StringPool.SPACE
+			queryCondition += StringPool.SPACE + condition + StringPool.SPACE + (parenthesis ? "(" : StringPool.BLANK)
 					+ (alias != null && alias.length > 0
 							? (Validator.isNotNull(alias[0]) ? (alias[0] + StringPool.PERIOD) : StringPool.BLANK)
 							: StringPool.BLANK)
 					+ column + StringPool.SPACE + searchOperator + StringPool.SPACE;
 
-			if (searchOperator.equals(StringPool.LIKE)) {
-				queryCondition += "'%" + value + "%'";
-			} else {
-				if (value instanceof String) {
-					queryCondition += "'" + value + "'";
+			if (Validator.isNotNull(searchOperator)) {
+				if (searchOperator.equals(StringPool.LIKE)) {
+					queryCondition += "'%" + value + "%'";
 				} else {
-					queryCondition += value;
+					if (value instanceof String) {
+						queryCondition += "'" + value + "'";
+					} else {
+						queryCondition += value;
+					}
 				}
-			}
 
+			}
 			if (parenthesis) {
-				queryCondition = "(" + queryCondition + ")";
+				queryCondition += ")";
 			}
 
 		}

@@ -87,7 +87,7 @@ public class VRProductionPlantSupplierLocalServiceImpl
 		return vrProductionPlantSupplierPersistence.update(object);
 	}
 	
-	/*
+
 	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
 			String modelClassName, int start, int end) throws SystemException {
 
@@ -98,5 +98,5 @@ public class VRProductionPlantSupplierLocalServiceImpl
 
 		return vrProductionPlantSupplierFinder.countData(sql);
 	}
-	*/
+	
 }
