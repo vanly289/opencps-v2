@@ -54,6 +54,12 @@ public class VRProductionPlantEquipmentMarkupLocalServiceUtil {
 				   .addVRProductionPlantEquipmentMarkup(vrProductionPlantEquipmentMarkup);
 	}
 
+	public static com.fds.vr.business.model.VRProductionPlantEquipmentMarkup createVRProductionPlantEquipmentMarkup(
+		com.fds.vr.business.model.VRProductionPlantEquipmentMarkup object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().createVRProductionPlantEquipmentMarkup(object);
+	}
+
 	/**
 	* Creates a new vr production plant equipment markup with the primary key. Does not add the vr production plant equipment markup to the database.
 	*
@@ -111,9 +117,11 @@ public class VRProductionPlantEquipmentMarkupLocalServiceUtil {
 	*
 	* @param vrProductionPlantEquipmentMarkup the vr production plant equipment markup
 	* @return the vr production plant equipment markup that was updated
+	* @throws SystemException
 	*/
 	public static com.fds.vr.business.model.VRProductionPlantEquipmentMarkup updateVRProductionPlantEquipmentMarkup(
-		com.fds.vr.business.model.VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup) {
+		com.fds.vr.business.model.VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateVRProductionPlantEquipmentMarkup(vrProductionPlantEquipmentMarkup);
 	}

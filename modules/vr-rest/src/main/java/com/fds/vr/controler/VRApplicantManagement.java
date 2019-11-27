@@ -30,12 +30,23 @@ import io.swagger.annotations.ApiOperation;
  */
 public interface VRApplicantManagement {
 
-	@GET
-	@Path("/applicant/profile/detail")
+	@POST
+	@Path("/applicant/profile/create")
+	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findApplicantProfileDetail(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
-			@BeanParam VRApplicantProfileBeanParam query);
+	@ApiOperation(value = "create VRProductionPlant", tags={ "vrproductionplantapimodel"})
+	public Response createVRApplicantProfile(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, String data);
+	
+	@POST
+	@Path("/applicant/profile/create")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "create VRProductionPlant", tags={ "vrproductionplantapimodel"})
+	public Response createVRApplicantProfile(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, VRApplicantProfileApiModel model);
 	
 	@GET
 	@Path("/applicant/profile/search")
@@ -44,17 +55,15 @@ public interface VRApplicantManagement {
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@BeanParam VRApplicantProfileBeanParam query);
 	
-	@POST
-	@Path("/applicant/")
-	@Consumes({ MediaType.APPLICATION_JSON })
+	@GET
+	@Path("/applicant/profile/detail")
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "create VRProductionPlant", tags={ "vrproductionplantapimodel"})
-	public Response createVRApplicantProfile(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRApplicantProfileApiModel model);
+	public Response findApplicantProfileDetail(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
+			@BeanParam VRApplicantProfileBeanParam query);
 	
 	@PUT
-	@Path("/applicant/")
+	@Path("/applicant/profile/update")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "update VRProductionPlant", tags={ "vrproductionplantapimodel"})

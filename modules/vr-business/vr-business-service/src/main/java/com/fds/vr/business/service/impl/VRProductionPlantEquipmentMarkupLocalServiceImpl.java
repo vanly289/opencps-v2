@@ -16,7 +16,11 @@ package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.fds.vr.business.model.VRProductionPlantEquipmentMarkup;
 import com.fds.vr.business.service.base.VRProductionPlantEquipmentMarkupLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.SystemException;
+
+import java.util.Date;
 
 /**
  * The implementation of the vr production plant equipment markup local service.
@@ -34,10 +38,26 @@ import com.fds.vr.business.service.base.VRProductionPlantEquipmentMarkupLocalSer
  */
 @ProviderType
 public class VRProductionPlantEquipmentMarkupLocalServiceImpl
-	extends VRProductionPlantEquipmentMarkupLocalServiceBaseImpl {
+		extends VRProductionPlantEquipmentMarkupLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRProductionPlantEquipmentMarkupLocalServiceUtil} to access the vr production plant equipment markup local service.
 	 */
+
+	public VRProductionPlantEquipmentMarkup createVRProductionPlantEquipmentMarkup(
+			VRProductionPlantEquipmentMarkup object) throws SystemException {
+
+		long id = counterLocalService.increment(VRProductionPlantEquipmentMarkup.class.getName());
+
+		object.setId(id);
+
+		return vrProductionPlantEquipmentMarkupPersistence.update(object);
+	}
+
+	public VRProductionPlantEquipmentMarkup updateVRProductionPlantEquipmentMarkup(
+			VRProductionPlantEquipmentMarkup object) throws SystemException {
+
+		return vrProductionPlantEquipmentMarkupPersistence.update(object);
+	}
 }

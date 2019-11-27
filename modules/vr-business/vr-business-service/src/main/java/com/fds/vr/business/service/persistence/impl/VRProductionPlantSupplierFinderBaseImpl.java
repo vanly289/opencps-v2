@@ -20,19 +20,11 @@ import com.fds.vr.business.service.persistence.VRProductionPlantSupplierPersiste
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
-import java.util.Set;
-
 /**
  * @author LamTV
  * @generated
  */
 public class VRProductionPlantSupplierFinderBaseImpl extends BasePersistenceImpl<VRProductionPlantSupplier> {
-	@Override
-	public Set<String> getBadColumnNames() {
-		return getVRProductionPlantSupplierPersistence()
-				   .getBadColumnNames();
-	}
-
 	/**
 	 * Returns the vr production plant supplier persistence.
 	 *

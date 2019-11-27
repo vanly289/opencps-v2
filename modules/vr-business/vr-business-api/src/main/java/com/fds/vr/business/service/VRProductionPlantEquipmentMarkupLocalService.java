@@ -71,6 +71,9 @@ public interface VRProductionPlantEquipmentMarkupLocalService
 	public VRProductionPlantEquipmentMarkup addVRProductionPlantEquipmentMarkup(
 		VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup);
 
+	public VRProductionPlantEquipmentMarkup createVRProductionPlantEquipmentMarkup(
+		VRProductionPlantEquipmentMarkup object) throws SystemException;
+
 	/**
 	* Creates a new vr production plant equipment markup with the primary key. Does not add the vr production plant equipment markup to the database.
 	*
@@ -121,10 +124,12 @@ public interface VRProductionPlantEquipmentMarkupLocalService
 	*
 	* @param vrProductionPlantEquipmentMarkup the vr production plant equipment markup
 	* @return the vr production plant equipment markup that was updated
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VRProductionPlantEquipmentMarkup updateVRProductionPlantEquipmentMarkup(
-		VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup);
+		VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

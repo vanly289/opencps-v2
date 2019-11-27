@@ -8,12 +8,16 @@ import com.fds.vr.business.model.VRProductionClassification;
 import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.model.VRProductionPlantEmployee;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
+import com.fds.vr.business.model.VRProductionPlantEquipmentMarkup;
 import com.fds.vr.business.model.VRProductionPlantProdEquipment;
+import com.fds.vr.business.model.impl.VRProductionPlantEquipmentMarkupModelImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEquipmentModelImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
 import com.fds.vr.business.service.VRProductTypeLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionClassificationLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantEmployeeLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantEquipmentLocalServiceUtil;
+import com.fds.vr.business.service.VRProductionPlantEquipmentMarkupLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantProdEquipmentLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -26,7 +30,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -105,6 +111,40 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 			object = VRProductionPlantEquipmentLocalServiceUtil.createVRProductionPlantEquipment(object);
 
 			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantEquipment.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
+
+	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment vrProductionPlantEquipment,
+			List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups) {
+
+		// validate
+		if (vrProductionPlantEquipment == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			vrProductionPlantEquipment = VRProductionPlantEquipmentLocalServiceUtil
+					.createVRProductionPlantEquipment(vrProductionPlantEquipment);
+			JSONArray _tmpVRProductionPlantEquipmentMarkups = JSONFactoryUtil.createJSONArray();
+			for (VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup : vrProductionPlantEquipmentMarkups) {
+				vrProductionPlantEquipmentMarkup.setProductionPlantEquipmentId(vrProductionPlantEquipment.getId());
+				vrProductionPlantEquipmentMarkup = VRProductionPlantEquipmentMarkupLocalServiceUtil
+						.createVRProductionPlantEquipmentMarkup(vrProductionPlantEquipmentMarkup);
+				_tmpVRProductionPlantEquipmentMarkups.put(ActionUtil.object2Json(vrProductionPlantEquipmentMarkup,
+						VRProductionPlantEquipmentMarkupModelImpl.class, StringPool.BLANK));
+			}
+
+			JSONObject result = ActionUtil.object2Json(vrProductionPlantEquipment, VRProductionPlantEquipmentModelImpl.class,
+					StringPool.BLANK);
+			
+			result.put("vrproductionplantequipmentmarkup", _tmpVRProductionPlantEquipmentMarkups);
+
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
 		} catch (Exception e) {
@@ -330,8 +370,7 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 			}*/
 		}
 
-		String _keywordSearchCondition =
-				ActionUtil.buildSQLCondition("mappingma_cty", keyword, "", StringPool.LIKE, "")
+		String _keywordSearchCondition = ActionUtil.buildSQLCondition("mappingma_cty", keyword, "", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("mappingten_cty", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("mappingdia_chi_cty", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("mappingma_xuong_lr", keyword, "OR", StringPool.LIKE, "")
@@ -339,11 +378,10 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 				+ ActionUtil.buildSQLCondition("mappingdia_chi_xuong_lr", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("productionplantcode", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("productionplantname", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("productionplantaddress", keyword, "OR", StringPool.LIKE, "") ;
-			
-		
+				+ ActionUtil.buildSQLCondition("productionplantaddress", keyword, "OR", StringPool.LIKE, "");
+
 		SQLQueryBuilder builder = new SQLQueryBuilder();
-		
+
 		builder.selectAll().from("vr_productionplant")
 				//.where("id", id, "AND", StringPool.EQUAL)
 				.where("mtcore", mtCore, "AND", StringPool.EQUAL)
@@ -381,7 +419,8 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 				.where("registrationid", registrationId, "AND", StringPool.EQUAL)
 				.where("registrationformid", registrationFormId, "AND", StringPool.EQUAL)
 				.where("applicantprofileid", applicantProfileId, "AND", StringPool.EQUAL)
-				.where("supplierid", supplierId, "AND", StringPool.EQUAL).where(_keywordSearchCondition, null, "AND", "", true)
+				.where("supplierid", supplierId, "AND", StringPool.EQUAL)
+				.where(_keywordSearchCondition, null, "AND", "", true)
 				//.where("modifydate", modifyDate, "AND", StringPool.EQUAL)
 				//.where("syncdate", syncDate, "AND", StringPool.EQUAL)
 				.build();

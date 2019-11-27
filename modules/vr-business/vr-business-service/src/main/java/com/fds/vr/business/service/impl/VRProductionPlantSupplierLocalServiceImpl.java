@@ -62,25 +62,10 @@ public class VRProductionPlantSupplierLocalServiceImpl
 
 		// Add other fields
 		object.setMtCore(Long.valueOf(mapValues.get("")));
-		object.setProductPlantID(Long.valueOf(mapValues.get("")));
-		object.setSupplierId(mapValues.get(""));
-		object.setSupplierName(mapValues.get(""));
-		object.setSupplieraddress(mapValues.get(""));
 		object.setCorporationCode(mapValues.get(""));
 		object.setCorporationName(mapValues.get(""));
 		object.setCorporationAddress(mapValues.get(""));
-		object.setApplicantprofileId(Long.valueOf(mapValues.get("")));
-		object.setProductPlantID(Long.valueOf(mapValues.get("")));
-		object.setProductionPlantCode(mapValues.get(""));
-		object.setProductionPlantName(mapValues.get(""));
-		object.setProductionPlantAddress(mapValues.get(""));
-		object.setMarkupImporter(Integer.valueOf(mapValues.get("")));
-		object.setMappingMA_CTY(mapValues.get(""));
-		object.setMappingTEN_CTY(mapValues.get(""));
-		object.setMappingDIA_CHI_CTY(mapValues.get(""));
-		object.setMappingMA_XUONG_LR(mapValues.get(""));
-		object.setMappingTEN_XUONG_LR(mapValues.get(""));
-		object.setMappingDIA_CHI_XUONG_LR(mapValues.get(""));
+
 
 		object.setModifyDate(ConvertFormatDate.parseStringToDate(mapValues.get("")));
 

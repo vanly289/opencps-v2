@@ -2,7 +2,7 @@ package com.fds.vr.business.action.impl;
 
 import com.fds.vr.business.action.VRApplicantProfileAction;
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.engine.SQLQueryInstance;
+import com.fds.vr.business.engine.SQLQueryBuilder;
 import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
 import com.fds.vr.business.model.impl.VRApplicantProfileModelImpl;
@@ -28,6 +28,360 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 	private Log _log = LogFactoryUtil.getLog(VRApplicantProfileActionImpl.class);
+
+	public JSONObject createVRApplicantProfile(VRApplicantProfile object) {
+
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			object = VRApplicantProfileLocalServiceUtil.createVRApplicantProfile(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRApplicantProfile.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
+
+	@Override
+	public JSONObject findVRApplicantProfile(User user, ServiceContext serviceContext,
+			LinkedHashMap<String, Object> params) {
+
+		int start = ActionUtil.getStart(params);
+		int end = ActionUtil.getEnd(params);
+		String keyword = ActionUtil.getKeyword(params);
+		Long id = null;
+		Long mtCore = null;
+		//String mappingMA_CTY = null;
+		//String mappingTEN_CTY = null;
+		//String mappingDIA_CHI_CTY = null;
+		//String mappingNote = null;
+		//String mappingStatus = null;
+		String applicantCode = null;
+		//String applicantName = null;
+		//String applicantAddress = null;
+		//String applicantPhone = null;
+		//String applicantEmail = null;
+		//String applicantFax = null;
+		//String applicantRepresentative = null;
+		//String applicantRepresentativeTitle = null;
+		//String applicantContactName = null;
+		//String applicantContactEmail = null;
+		//String applicantContactPhone = null;
+		//String applicantNationality = null;
+		//String applicantRegion = null;
+		//String applicantCity = null;
+		//String markupCorporation = null;
+		String corporationId = null;
+		//String markupDesigner = null;
+		//String markupOverseasManufacturer = null;
+		//String markupDomesticsManufacturer = null;
+		String markupImporter = null;
+		String markupComponentXCG = null;
+		String markupComponentXMY = null;
+		String markupComponentXCD = null;
+		String markupComponentXDD = null;
+		String markupComponentXCN = null;
+		String markupComponentXCH = null;
+		String markupXCG = null;
+		String markupXMY = null;
+		String markupXCD = null;
+		String markupXDD = null;
+		String markupXCN = null;
+		String markupXCH = null;
+		String issueTypeXCG = null;
+		String issueTypeXMY = null;
+		String issueTypeXCD = null;
+		String issueTypeXDD = null;
+		String issueTypeXCN = null;
+		String issueTypeXCH = null;
+		//String issueTypeDescription = null;
+		//String applicantCeremonyDate = null;
+		//String applicantOperationPeriod = null;
+		String applicantBusinessType = null;
+		//String applicantMetadata = null;
+		String applicantStatus = null;
+		//String modifyDate = null;
+		//String syncDate = null;
+		if (params != null) {
+			if (params.containsKey("id")) {
+				id = GetterUtil.getLong(params.get("id"));
+			}
+			if (params.containsKey("mtcore")) {
+				mtCore = GetterUtil.getLong(params.get("mtcore"));
+			}
+			/*if (params.containsKey("mappingma_cty")) {
+				mappingMA_CTY = GetterUtil.getString(params.get("mappingma_cty"));
+			}
+			if (params.containsKey("mappingten_cty")) {
+				mappingTEN_CTY = GetterUtil.getString(params.get("mappingten_cty"));
+			}
+			if (params.containsKey("mappingdia_chi_cty")) {
+				mappingDIA_CHI_CTY = GetterUtil.getString(params.get("mappingdia_chi_cty"));
+			}
+			if (params.containsKey("mappingnote")) {
+				mappingNote = GetterUtil.getString(params.get("mappingnote"));
+			}
+			if (params.containsKey("mappingstatus")) {
+				mappingStatus = GetterUtil.getString(params.get("mappingstatus"));
+			}*/
+			if (params.containsKey("applicantcode")) {
+				applicantCode = GetterUtil.getString(params.get("applicantcode"));
+			}
+			/*if (params.containsKey("applicantname")) {
+				applicantName = GetterUtil.getString(params.get("applicantname"));
+			}
+			if (params.containsKey("applicantaddress")) {
+				applicantAddress = GetterUtil.getString(params.get("applicantaddress"));
+			}
+			if (params.containsKey("applicantphone")) {
+				applicantPhone = GetterUtil.getString(params.get("applicantphone"));
+			}
+			if (params.containsKey("applicantemail")) {
+				applicantEmail = GetterUtil.getString(params.get("applicantemail"));
+			}
+			if (params.containsKey("applicantfax")) {
+				applicantFax = GetterUtil.getString(params.get("applicantfax"));
+			}
+			if (params.containsKey("applicantrepresentative")) {
+				applicantRepresentative = GetterUtil.getString(params.get("applicantrepresentative"));
+			}
+			if (params.containsKey("applicantrepresentativetitle")) {
+				applicantRepresentativeTitle = GetterUtil.getString(params.get("applicantrepresentativetitle"));
+			}
+			if (params.containsKey("applicantcontactname")) {
+				applicantContactName = GetterUtil.getString(params.get("applicantcontactname"));
+			}
+			if (params.containsKey("applicantcontactemail")) {
+				applicantContactEmail = GetterUtil.getString(params.get("applicantcontactemail"));
+			}
+			if (params.containsKey("applicantcontactphone")) {
+				applicantContactPhone = GetterUtil.getString(params.get("applicantcontactphone"));
+			}
+			if (params.containsKey("applicantnationality")) {
+				applicantNationality = GetterUtil.getString(params.get("applicantnationality"));
+			}
+			if (params.containsKey("applicantregion")) {
+				applicantRegion = GetterUtil.getString(params.get("applicantregion"));
+			}
+			if (params.containsKey("applicantcity")) {
+				applicantCity = GetterUtil.getString(params.get("applicantcity"));
+			}
+			if (params.containsKey("markupcorporation")) {
+				markupCorporation = GetterUtil.getString(params.get("markupcorporation"));
+			}*/
+			if (params.containsKey("corporationid")) {
+				corporationId = GetterUtil.getString(params.get("corporationid"));
+			}
+			/*if (params.containsKey("markupdesigner")) {
+				markupDesigner = GetterUtil.getString(params.get("markupdesigner"));
+			}
+			if (params.containsKey("markupoverseasmanufacturer")) {
+				markupOverseasManufacturer = GetterUtil.getString(params.get("markupoverseasmanufacturer"));
+			}
+			if (params.containsKey("markupdomesticsmanufacturer")) {
+				markupDomesticsManufacturer = GetterUtil.getString(params.get("markupdomesticsmanufacturer"));
+			}*/
+			if (params.containsKey("markupimporter")) {
+				markupImporter = GetterUtil.getString(params.get("markupimporter"));
+			}
+			if (params.containsKey("markupcomponentxcg")) {
+				markupComponentXCG = GetterUtil.getString(params.get("markupcomponentxcg"));
+			}
+			if (params.containsKey("markupcomponentxmy")) {
+				markupComponentXMY = GetterUtil.getString(params.get("markupcomponentxmy"));
+			}
+			if (params.containsKey("markupcomponentxcd")) {
+				markupComponentXCD = GetterUtil.getString(params.get("markupcomponentxcd"));
+			}
+			if (params.containsKey("markupcomponentxdd")) {
+				markupComponentXDD = GetterUtil.getString(params.get("markupcomponentxdd"));
+			}
+			if (params.containsKey("markupcomponentxcn")) {
+				markupComponentXCN = GetterUtil.getString(params.get("markupcomponentxcn"));
+			}
+			if (params.containsKey("markupcomponentxch")) {
+				markupComponentXCH = GetterUtil.getString(params.get("markupcomponentxch"));
+			}
+			if (params.containsKey("markupxcg")) {
+				markupXCG = GetterUtil.getString(params.get("markupxcg"));
+			}
+			if (params.containsKey("markupxmy")) {
+				markupXMY = GetterUtil.getString(params.get("markupxmy"));
+			}
+			if (params.containsKey("markupxcd")) {
+				markupXCD = GetterUtil.getString(params.get("markupxcd"));
+			}
+			if (params.containsKey("markupxdd")) {
+				markupXDD = GetterUtil.getString(params.get("markupxdd"));
+			}
+			if (params.containsKey("markupxcn")) {
+				markupXCN = GetterUtil.getString(params.get("markupxcn"));
+			}
+			if (params.containsKey("markupxch")) {
+				markupXCH = GetterUtil.getString(params.get("markupxch"));
+			}
+			if (params.containsKey("issuetypexcg")) {
+				issueTypeXCG = GetterUtil.getString(params.get("issuetypexcg"));
+			}
+			if (params.containsKey("issuetypexmy")) {
+				issueTypeXMY = GetterUtil.getString(params.get("issuetypexmy"));
+			}
+			if (params.containsKey("issuetypexcd")) {
+				issueTypeXCD = GetterUtil.getString(params.get("issuetypexcd"));
+			}
+			if (params.containsKey("issuetypexdd")) {
+				issueTypeXDD = GetterUtil.getString(params.get("issuetypexdd"));
+			}
+			if (params.containsKey("issuetypexcn")) {
+				issueTypeXCN = GetterUtil.getString(params.get("issuetypexcn"));
+			}
+			if (params.containsKey("issuetypexch")) {
+				issueTypeXCH = GetterUtil.getString(params.get("issuetypexch"));
+			}
+			/*if (params.containsKey("issuetypedescription")) {
+				issueTypeDescription = GetterUtil.getString(params.get("issuetypedescription"));
+			}
+			if (params.containsKey("applicantceremonydate")) {
+				applicantCeremonyDate = GetterUtil.getString(params.get("applicantceremonydate"));
+			}
+			if (params.containsKey("applicantoperationperiod")) {
+				applicantOperationPeriod = GetterUtil.getString(params.get("applicantoperationperiod"));
+			}*/
+			if (params.containsKey("applicantbusinesstype")) {
+				applicantBusinessType = GetterUtil.getString(params.get("applicantbusinesstype"));
+			}
+			/*if (params.containsKey("applicantmetadata")) {
+				applicantMetadata = GetterUtil.getString(params.get("applicantmetadata"));
+			}*/
+			if (params.containsKey("applicantstatus")) {
+				applicantStatus = GetterUtil.getString(params.get("applicantstatus"));
+			}
+			/*if (params.containsKey("modifydate")) {
+				modifyDate = GetterUtil.getString(params.get("modifydate"));
+			}
+			if (params.containsKey("syncdate")) {
+				syncDate = GetterUtil.getString(params.get("syncdate"));
+			}*/
+		}
+		String _keywordSearchCondition = ActionUtil.buildSQLCondition("mappingMA_CTY", keyword, "", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("mappingTEN_CTY", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("mappingDIA_CHI_CTY", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("mappingNote", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("mappingStatus", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantCode", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantName", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantAddress", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantPhone", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantEmail", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantFax", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantRepresentative", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantRepresentativeTitle", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantContactName", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantContactEmail", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantContactPhone", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantNationality", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantRegion", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantCity", keyword, "OR", StringPool.LIKE, "");
+				//+ ActionUtil.buildSQLCondition("markupCorporation", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("corporationId", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupDesigner", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupOverseasManufacturer", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupDomesticsManufacturer", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupImporter", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupComponentXCG", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupComponentXMY", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupComponentXCD", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupComponentXDD", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupComponentXCN", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupComponentXCH", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupXCG", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupXMY", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupXCD", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupXDD", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupXCN", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("markupXCH", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("issueTypeXCG", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("issueTypeXMY", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("issueTypeXCD", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("issueTypeXDD", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("issueTypeXCN", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("issueTypeXCH", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("issueTypeDescription", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("applicantCeremonyDate", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("applicantOperationPeriod", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("applicantBusinessType", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("applicantMetadata", keyword, "OR", StringPool.LIKE, "")
+				//+ ActionUtil.buildSQLCondition("applicantStatus", keyword, "OR", StringPool.LIKE, "");
+		SQLQueryBuilder builder = new SQLQueryBuilder();
+		builder.selectAll().from("vr_applicantprofile").where("id", id, "AND", StringPool.EQUAL)
+				.where("mtcore", mtCore, "AND", StringPool.EQUAL)
+				//.where("mappingma_cty", mappingMA_CTY, "AND", StringPool.EQUAL)
+				//.where("mappingten_cty", mappingTEN_CTY, "AND", StringPool.EQUAL)
+				//.where("mappingdia_chi_cty", mappingDIA_CHI_CTY, "AND", StringPool.EQUAL)
+				//.where("mappingnote", mappingNote, "AND", StringPool.EQUAL)
+				//.where("mappingstatus", mappingStatus, "AND", StringPool.EQUAL)
+				.where("applicantcode", applicantCode, "AND", StringPool.EQUAL)
+				//.where("applicantname", applicantName, "AND", StringPool.EQUAL)
+				//.where("applicantaddress", applicantAddress, "AND", StringPool.EQUAL)
+				//.where("applicantphone", applicantPhone, "AND", StringPool.EQUAL)
+				//.where("applicantemail", applicantEmail, "AND", StringPool.EQUAL)
+				//.where("applicantfax", applicantFax, "AND", StringPool.EQUAL)
+				//.where("applicantrepresentative", applicantRepresentative, "AND", StringPool.EQUAL)
+				//.where("applicantrepresentativetitle", applicantRepresentativeTitle, "AND", StringPool.EQUAL)
+				//.where("applicantcontactname", applicantContactName, "AND", StringPool.EQUAL)
+				//.where("applicantcontactemail", applicantContactEmail, "AND", StringPool.EQUAL)
+				//.where("applicantcontactphone", applicantContactPhone, "AND", StringPool.EQUAL)
+				//.where("applicantnationality", applicantNationality, "AND", StringPool.EQUAL)
+				//.where("applicantregion", applicantRegion, "AND", StringPool.EQUAL)
+				//.where("applicantcity", applicantCity, "AND", StringPool.EQUAL)
+				//.where("markupcorporation", markupCorporation, "AND", StringPool.EQUAL)
+				.where("corporationid", corporationId, "AND", StringPool.EQUAL)
+				//.where("markupdesigner", markupDesigner, "AND", StringPool.EQUAL)
+				//.where("markupoverseasmanufacturer", markupOverseasManufacturer, "AND", StringPool.EQUAL)
+				//.where("markupdomesticsmanufacturer", markupDomesticsManufacturer, "AND", StringPool.EQUAL)
+				.where("markupimporter", markupImporter, "AND", StringPool.EQUAL)
+				.where("markupcomponentxcg", markupComponentXCG, "AND", StringPool.EQUAL)
+				.where("markupcomponentxmy", markupComponentXMY, "AND", StringPool.EQUAL)
+				.where("markupcomponentxcd", markupComponentXCD, "AND", StringPool.EQUAL)
+				.where("markupcomponentxdd", markupComponentXDD, "AND", StringPool.EQUAL)
+				.where("markupcomponentxcn", markupComponentXCN, "AND", StringPool.EQUAL)
+				.where("markupcomponentxch", markupComponentXCH, "AND", StringPool.EQUAL)
+				.where("markupxcg", markupXCG, "AND", StringPool.EQUAL)
+				.where("markupxmy", markupXMY, "AND", StringPool.EQUAL)
+				.where("markupxcd", markupXCD, "AND", StringPool.EQUAL)
+				.where("markupxdd", markupXDD, "AND", StringPool.EQUAL)
+				.where("markupxcn", markupXCN, "AND", StringPool.EQUAL)
+				.where("markupxch", markupXCH, "AND", StringPool.EQUAL)
+				.where("issuetypexcg", issueTypeXCG, "AND", StringPool.EQUAL)
+				.where("issuetypexmy", issueTypeXMY, "AND", StringPool.EQUAL)
+				.where("issuetypexcd", issueTypeXCD, "AND", StringPool.EQUAL)
+				.where("issuetypexdd", issueTypeXDD, "AND", StringPool.EQUAL)
+				.where("issuetypexcn", issueTypeXCN, "AND", StringPool.EQUAL)
+				.where("issuetypexch", issueTypeXCH, "AND", StringPool.EQUAL)
+				//.where("issuetypedescription", issueTypeDescription, "AND", StringPool.EQUAL)
+				//.where("applicantceremonydate", applicantCeremonyDate, "AND", StringPool.EQUAL)
+				//.where("applicantoperationperiod", applicantOperationPeriod, "AND", StringPool.EQUAL)
+				.where("applicantbusinesstype", applicantBusinessType, "AND", StringPool.EQUAL)
+				//.where("applicantmetadata", applicantMetadata, "AND", StringPool.EQUAL)
+				.where("applicantstatus", applicantStatus, "AND", StringPool.EQUAL)
+				//.where("modifydate", modifyDate, "AND", StringPool.EQUAL)
+				//.where("syncdate", syncDate, "AND", StringPool.EQUAL)
+				.where(_keywordSearchCondition, null, "AND", "", true).build();
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		long total = VRApplicantProfileLocalServiceUtil.countVRAppicantProfile(builder.getCountQuery());
+		JSONArray data = VRApplicantProfileLocalServiceUtil.findVRAppicantProfile(builder.getSelectQuery(), null, null,
+				VRApplicantProfileImpl.class, "VRApplicantProfile", start, end);
+		result.put("total", total);
+		result.put("data", data);
+		return result;
+	}
 
 	@Override
 	public JSONObject findVRApplicantProfileDetail(User user, ServiceContext serviceContext,
@@ -72,125 +426,6 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 		return null;
 	}
 
-	@Override
-	public JSONObject findVRApplicantProfile(User user, ServiceContext serviceContext,
-			LinkedHashMap<String, Object> params) {
-
-		int start = ActionUtil.getStart(params);
-		int end = ActionUtil.getEnd(params);
-		String keyword = ActionUtil.getKeyword(params);
-		String applicantcode = StringPool.BLANK;
-		String applicantname = StringPool.BLANK;
-		String mappingma_cty = StringPool.BLANK;
-		String mappingten_cty = StringPool.BLANK;
-		String mappingdia_chi_cty = StringPool.BLANK;
-
-		if (params != null) {
-
-			if (params.containsKey("applicantcode")) {
-				applicantcode = (String) params.get("applicantcode");
-			}
-			if (params.containsKey("applicantname")) {
-				applicantname = (String) params.get("applicantname");
-			}
-
-			if (params.containsKey("mappingma_cty")) {
-				mappingma_cty = (String) params.get("mappingma_cty");
-			}
-			if (params.containsKey("mappingten_cty")) {
-				mappingten_cty = (String) params.get("mappingten_cty");
-			}
-			if (params.containsKey("mappingdia_chi_cty")) {
-				mappingdia_chi_cty = (String) params.get("mappingdia_chi_cty");
-			}
-
-		}
-
-		String tableAlias = StringPool.BLANK;
-
-		String sqlStatementPattern = "SELECT [$STATEMENT_COLUMN$] FROM vr_applicantprofile"
-				+ (Validator.isNotNull(tableAlias) ? " AS " + tableAlias : StringPool.BLANK)
-				+ " [$CONDITION$] [$ORDERBY$]";
-
-		LinkedHashMap<String, String> columnStatementMap = new LinkedHashMap<String, String>();
-		columnStatementMap.put(ActionUtil.createSCNWTAS("id", tableAlias), long.class.getName());
-		columnStatementMap.put(ActionUtil.createSCNWTAS("mtcore", tableAlias), long.class.getName());
-		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingma_cty", tableAlias), String.class.getName());
-		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingten_cty", tableAlias), String.class.getName());
-		columnStatementMap.put(ActionUtil.createSCNWTAS("mappingdia_chi_cty", tableAlias), String.class.getName());
-		columnStatementMap.put(ActionUtil.createSCNWTAS("applicantcode", tableAlias), String.class.getName());
-		columnStatementMap.put(ActionUtil.createSCNWTAS("applicantname", tableAlias), String.class.getName());
-
-		StringBuilder conditions = new StringBuilder();
-
-		conditions.append(" WHERE 1 = 1 ");
-
-		if (Validator.isNotNull(mappingma_cty)) {
-			conditions.append(ActionUtil.buildSQLCondition("mappingma_cty", mappingma_cty, " AND ", StringPool.EQUAL,
-					tableAlias));
-		}
-
-		if (Validator.isNotNull(mappingten_cty)) {
-			conditions.append(ActionUtil.buildSQLCondition("mappingten_cty", "'%" + mappingten_cty + "%'", " AND ",
-					StringPool.LIKE, tableAlias));
-		}
-
-		if (Validator.isNotNull(keyword)) {
-			conditions
-					.append(ActionUtil.buildSQLCondition(
-							"(" + ActionUtil.buildSQLCondition("mappingten_cty", "'%" + keyword + "%'", "",
-									StringPool.LIKE, tableAlias)
-									+ ActionUtil.buildSQLCondition("mappingdia_chi_cty", "'%" + keyword + "%'", " OR ",
-											StringPool.LIKE, tableAlias)
-									+ ")",
-							StringPool.BLANK, " AND ", StringPool.BLANK));
-		}
-		
-		if (Validator.isNotNull(applicantcode)) {
-			conditions.append(ActionUtil.buildSQLCondition("applicantcode", applicantcode, " AND ", StringPool.EQUAL,
-					tableAlias));
-		}
-
-		LinkedHashMap<String, String> sortedby = ActionUtil.getOrderFiledMap(params, columnStatementMap);
-
-		SQLQueryInstance instance = ActionUtil.createSQLQueryInstance(sqlStatementPattern, columnStatementMap,
-				conditions, sortedby, VRApplicantProfileImpl.class, StringPool.BLANK, tableAlias, StringPool.BLANK);
-
-		// System.out.println("SQL Statement:" + instance.getSqlStatemanent());
-
-		JSONArray array = VRApplicantProfileLocalServiceUtil.findVRAppicantProfile(instance.getSqlStatemanent(),
-				instance.getColumnAliasNames(), instance.getColumnDataTypes(), instance.getReturnClassName(),
-				instance.getClassName(), start, end);
-
-		long total = VRApplicantProfileLocalServiceUtil.countVRAppicantProfile(instance.getCountStatemanent());
-
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-
-		result.put("total", total);
-		result.put("data", array);
-		return result;
-	}
-
-	public JSONObject createVRApplicantProfile(VRApplicantProfile object) {
-
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		try {
-			object = VRApplicantProfileLocalServiceUtil.createVRApplicantProfile(object);
-
-			JSONObject result = ActionUtil.object2Json(object, VRApplicantProfile.class, StringPool.BLANK);
-			
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
-
-		} catch (Exception e) {
-			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
-	}
-
 	public JSONObject updateVRApplicantProfile(VRApplicantProfile object) {
 
 		// validate
@@ -203,19 +438,19 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 		}
 
 		VRApplicantProfile _tmp = VRApplicantProfileLocalServiceUtil.fetchVRApplicantProfile(object.getId());
-		
+
 		if (_tmp == null) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
 		}
 
 		try {
-			
+
 			_tmp = (VRApplicantProfile) ActionUtil.mergeObject(object, _tmp);
 
 			_tmp = VRApplicantProfileLocalServiceUtil.updateVRApplicantProfile(_tmp);
 
 			//JSONObject result = ActionUtil.object2Json(object, VRApplicantProfile.class, StringPool.BLANK);
-			
+
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
 
 		} catch (Exception e) {

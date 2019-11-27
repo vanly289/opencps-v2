@@ -2,8 +2,10 @@ package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRApplicantProfileAction;
 import com.fds.vr.business.action.impl.VRApplicantProfileActionImpl;
+import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
+import com.fds.vr.business.model.impl.VRApplicantProfileModelImpl;
 import com.fds.vr.controler.VRApplicantManagement;
 import com.fds.vr.model.VRApplicantProfileApiModel;
 import com.fds.vr.model.VRApplicantProfileBeanParam;
@@ -18,6 +20,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
@@ -32,17 +35,57 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 	private Log _log = LogFactoryUtil.getLog(VRApplicantManagementImpl.class);
 
 	@Override
+	public Response createVRApplicantProfile(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String data) {
+		try {
+			JSONObject object = JSONFactoryUtil.createJSONObject(data);
+			Map<String, Object> map = VRRestUtil.json2Object(object, new Object[] { new VRApplicantProfileImpl() });
+			Object result = map.get(VRApplicantProfileImpl.class.getName());
+			_log.info(ActionUtil.object2Json(result, VRApplicantProfileModelImpl.class, ""));
+			return Response.status(200).entity(object.toJSONString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500)
+					.entity(VRRestUtil.errorMessage("Can't create VRApplicantProfile").toJSONString()).build();
+		}
+	}
+
+	@Override
+	public Response createVRApplicantProfile(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRApplicantProfileApiModel model) {
+
+		try {
+
+			VRApplicantProfile object = (VRApplicantProfile) VRRestUtil.mappingModel(model,
+					new VRApplicantProfileImpl());
+
+			VRApplicantProfileAction action = new VRApplicantProfileActionImpl();
+
+			JSONObject result = action.createVRApplicantProfile(object);
+
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
+		}
+
+	}
+
+	@Override
 	public Response findApplicantProfile(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
 			User user, ServiceContext serviceContext, VRApplicantProfileBeanParam query) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		try {
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
-			VRApplicantProfileAction actionImpl = new VRApplicantProfileActionImpl();
+			VRApplicantProfileActionImpl actionImpl = new VRApplicantProfileActionImpl();
 			result = actionImpl.findVRApplicantProfile(user, serviceContext, params);
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);
-			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrappicantprofile").toJSONString()).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrappicantprofile").toJSONString())
+					.build();
 		}
 	}
 
@@ -54,7 +97,7 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
 			VRApplicantProfileActionImpl actionImpl = new VRApplicantProfileActionImpl();
 			result = actionImpl.findVRApplicantProfileDetail(user, serviceContext, params);
-		
+
 			if (result != null && result.length() > 0) {
 				return Response.status(200).entity(result.toJSONString()).build();
 			} else {
@@ -63,7 +106,8 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 
 		} catch (Exception e) {
 			_log.error(e);
-			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrappicantprofile").toJSONString()).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrappicantprofile").toJSONString())
+					.build();
 		}
 	}
 
@@ -88,30 +132,8 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 
 			_log.error(e);
 
-			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!").toJSONString()).build();
-		}
-
-	}
-
-	@Override
-	public Response createVRApplicantProfile(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, VRApplicantProfileApiModel model) {
-
-		try {
-
-			VRApplicantProfile object = (VRApplicantProfile) VRRestUtil.mappingModel(model,
-					new VRApplicantProfileImpl());
-
-			VRApplicantProfileAction action = new VRApplicantProfileActionImpl();
-
-			JSONObject result = action.createVRApplicantProfile(object);
-
-			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
-
-		} catch (Exception e) {
-			_log.error(e);
-
-			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!").toJSONString())
+					.build();
 		}
 
 	}

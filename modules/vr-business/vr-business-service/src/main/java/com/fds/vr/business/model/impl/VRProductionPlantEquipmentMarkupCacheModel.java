@@ -107,7 +107,7 @@ public class VRProductionPlantEquipmentMarkupCacheModel implements CacheModel<VR
 		id = objectInput.readLong();
 		productClassificationCode = objectInput.readUTF();
 
-		productionPlantEquipmentId = objectInput.readInt();
+		productionPlantEquipmentId = objectInput.readLong();
 
 		status = objectInput.readInt();
 	}
@@ -124,13 +124,13 @@ public class VRProductionPlantEquipmentMarkupCacheModel implements CacheModel<VR
 			objectOutput.writeUTF(productClassificationCode);
 		}
 
-		objectOutput.writeInt(productionPlantEquipmentId);
+		objectOutput.writeLong(productionPlantEquipmentId);
 
 		objectOutput.writeInt(status);
 	}
 
 	public long id;
 	public String productClassificationCode;
-	public int productionPlantEquipmentId;
+	public long productionPlantEquipmentId;
 	public int status;
 }

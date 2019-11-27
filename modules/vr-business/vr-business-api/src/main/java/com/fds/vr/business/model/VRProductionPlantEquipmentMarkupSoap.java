@@ -108,11 +108,11 @@ public class VRProductionPlantEquipmentMarkupSoap implements Serializable {
 		_productClassificationCode = productClassificationCode;
 	}
 
-	public int getProductionPlantEquipmentId() {
+	public long getProductionPlantEquipmentId() {
 		return _productionPlantEquipmentId;
 	}
 
-	public void setProductionPlantEquipmentId(int productionPlantEquipmentId) {
+	public void setProductionPlantEquipmentId(long productionPlantEquipmentId) {
 		_productionPlantEquipmentId = productionPlantEquipmentId;
 	}
 
@@ -126,6 +126,6 @@ public class VRProductionPlantEquipmentMarkupSoap implements Serializable {
 
 	private long _id;
 	private String _productClassificationCode;
-	private int _productionPlantEquipmentId;
+	private long _productionPlantEquipmentId;
 	private int _status;
 }

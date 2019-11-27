@@ -63,7 +63,7 @@ public class VRProductionPlantEquipmentMarkupModelImpl extends BaseModelImpl<VRP
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "id_", Types.BIGINT },
 			{ "productClassificationCode", Types.VARCHAR },
-			{ "productionPlantEquipmentId", Types.INTEGER },
+			{ "productionPlantEquipmentId", Types.BIGINT },
 			{ "status", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -71,11 +71,11 @@ public class VRProductionPlantEquipmentMarkupModelImpl extends BaseModelImpl<VRP
 	static {
 		TABLE_COLUMNS_MAP.put("id_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("productClassificationCode", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("productionPlantEquipmentId", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("productionPlantEquipmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table VRProductionPlantEquipmentMarkup (id_ LONG not null primary key,productClassificationCode VARCHAR(75) null,productionPlantEquipmentId INTEGER,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table VRProductionPlantEquipmentMarkup (id_ LONG not null primary key,productClassificationCode VARCHAR(75) null,productionPlantEquipmentId LONG,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table VRProductionPlantEquipmentMarkup";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlantEquipmentMarkup.id ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY VRProductionPlantEquipmentMarkup.id_ ASC";
@@ -157,7 +157,7 @@ public class VRProductionPlantEquipmentMarkupModelImpl extends BaseModelImpl<VRP
 			setProductClassificationCode(productClassificationCode);
 		}
 
-		Integer productionPlantEquipmentId = (Integer)attributes.get(
+		Long productionPlantEquipmentId = (Long)attributes.get(
 				"productionPlantEquipmentId");
 
 		if (productionPlantEquipmentId != null) {
@@ -197,12 +197,12 @@ public class VRProductionPlantEquipmentMarkupModelImpl extends BaseModelImpl<VRP
 	}
 
 	@Override
-	public int getProductionPlantEquipmentId() {
+	public long getProductionPlantEquipmentId() {
 		return _productionPlantEquipmentId;
 	}
 
 	@Override
-	public void setProductionPlantEquipmentId(int productionPlantEquipmentId) {
+	public void setProductionPlantEquipmentId(long productionPlantEquipmentId) {
 		_productionPlantEquipmentId = productionPlantEquipmentId;
 	}
 
@@ -387,7 +387,7 @@ public class VRProductionPlantEquipmentMarkupModelImpl extends BaseModelImpl<VRP
 		};
 	private long _id;
 	private String _productClassificationCode;
-	private int _productionPlantEquipmentId;
+	private long _productionPlantEquipmentId;
 	private int _status;
 	private VRProductionPlantEquipmentMarkup _escapedModel;
 }

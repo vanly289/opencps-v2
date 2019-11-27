@@ -2,12 +2,14 @@ package com.fds.vr.controler;
 
 import com.fds.vr.model.VRProductTypeApiModel;
 import com.fds.vr.model.VRProductionClassificationApiModel;
+import com.fds.vr.model.VRProductionClassificationBeanParam;
 import com.fds.vr.model.VRProductionPlantApiModel;
 import com.fds.vr.model.VRProductionPlantBeanParam;
 import com.fds.vr.model.VRProductionPlantEmployeeApiModel;
 import com.fds.vr.model.VRProductionPlantEquipmentApiModel;
 import com.fds.vr.model.VRProductionPlantEquipmentBeanParam;
 import com.fds.vr.model.VRProductionPlantProdEquipmentApiModel;
+import com.fds.vr.model.VRProductionPlantSupplierBeanParam;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,6 +48,13 @@ public interface VRProductionManagement {
 	public Response findProductionPlant(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRProductionPlantBeanParam query);
+	@GET
+	@Path("/plantsupplier/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findProductionPlantSupplier(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam VRProductionPlantSupplierBeanParam query);
+	
 	
 	@GET
 	@Path("/prodequipment/{productionplantcode}")
@@ -65,7 +74,7 @@ public interface VRProductionManagement {
 			@DefaultValue("") @PathParam("productclassificationcode") String productClassificationCode);
 	
 	@GET
-	@Path("/equipment")
+	@Path("/equipment/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchVRProductionPlantEquipment(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
@@ -83,9 +92,17 @@ public interface VRProductionManagement {
 			@DefaultValue("") @PathParam("productclassificationcode") String productClassificationCode);
 
 	@GET
+	@Path("/classification/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findVRProductclassification(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam VRProductionClassificationBeanParam query);
+	
+	
+	@GET
 	@Path("/classification/{productionplantcode}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findVRProductionClassification(@Context HttpServletRequest request, @Context HttpHeaders header,
+	public Response findVRProductclassification(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext,
 			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode);
@@ -134,17 +151,17 @@ public interface VRProductionManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model);
 	
+	
 	@POST
-	@Path("/equipment/")
+	@Path("/equipment/create")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "create VRProductionPlantEquiptment", tags={ "vrproductionplantequipmentapimodel"})
 	public Response createVRProductionPlantEquiptment(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model);
+			@Context ServiceContext serviceContext, String data);
 	
 	@PUT
-	@Path("/equipment/")
+	@Path("/equipment/update")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "update VRProductionPlantEquiptment", tags={ "vrproductionplantequipmentapimodel"})

@@ -94,14 +94,14 @@ public interface VRProductionPlantEquipmentMarkupModel extends BaseModel<VRProdu
 	 *
 	 * @return the production plant equipment ID of this vr production plant equipment markup
 	 */
-	public int getProductionPlantEquipmentId();
+	public long getProductionPlantEquipmentId();
 
 	/**
 	 * Sets the production plant equipment ID of this vr production plant equipment markup.
 	 *
 	 * @param productionPlantEquipmentId the production plant equipment ID of this vr production plant equipment markup
 	 */
-	public void setProductionPlantEquipmentId(int productionPlantEquipmentId);
+	public void setProductionPlantEquipmentId(long productionPlantEquipmentId);
 
 	/**
 	 * Returns the status of this vr production plant equipment markup.

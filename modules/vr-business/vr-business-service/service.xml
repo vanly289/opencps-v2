@@ -7598,31 +7598,16 @@
 	</entity>
 
 	<entity local-service="true" name="VRProductionPlantSupplier" remote-service="false"
-		table="vr_productionplantsupplier" uuid="true">
+		table="vr_productionplantsupplier" uuid="false">
 
 		<!-- PK fields -->
 		<column name="id" type="long" primary="true" db-name="id"/>
 		
 		<!-- Audit fields -->
 		<column name="mtCore" type="long" db-name="mtCore"/>
-		<column name="supplierId" type="String" db-name="supplierid"/>
-		<column name="supplierName" type="String" db-name="suppliername"/>
-		<column name="supplieraddress" type="String" db-name="supplieraddress"/>
 		<column name="corporationCode" type="String" db-name="corporationCode"/>
 		<column name="corporationName" type="String" db-name="corporationName"/>
 		<column name="corporationAddress" type="String" db-name="corporationAddress"/>
-		<column name="applicantprofileId" type="long" db-name="applicantprofileid"/>
-		<column name="productPlantID" type="long" db-name="ProductPlantID"/>
-		<column name="productionPlantCode" type="String" db-name="productionPlantCode"/>
-		<column name="productionPlantName" type="String" db-name="productionPlantName"/>
-		<column name="productionPlantAddress" type="String" db-name="productionPlantAddress"/>
-		<column name="markupImporter" type="int" db-name="markupImporter"/>
-		<column name="mappingMA_CTY" type="String" db-name="mappingMA_CTY"/>
-		<column name="mappingTEN_CTY" type="String" db-name="mappingTEN_CTY"/>
-		<column name="mappingDIA_CHI_CTY" type="String" db-name="mappingDIA_CHI_CTY"/>
-		<column name="mappingMA_XUONG_LR" type="String" db-name="mappingMA_XUONG_LR"/>
-		<column name="mappingTEN_XUONG_LR" type="String" db-name="mappingTEN_XUONG_LR"/>
-		<column name="mappingDIA_CHI_XUONG_LR" type="String" db-name="mappingDIA_CHI_XUONG_LR"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		<!-- Order -->
@@ -7669,7 +7654,7 @@
     <entity name="VRProductionPlantEquipmentMarkup" local-service="true" remote-service="false">
         <column name="id" type="long" primary="true"></column>
         <column name="productClassificationCode" type="String"></column>
-        <column name="productionPlantEquipmentId" type="int"></column>
+        <column name="productionPlantEquipmentId" type="long"></column>
         <column name="status" type="int"></column>
     </entity>
     <entity name="VRActionconfig" local-service="true" remote-service="false">

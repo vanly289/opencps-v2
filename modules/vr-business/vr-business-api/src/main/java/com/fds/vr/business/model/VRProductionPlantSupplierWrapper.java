@@ -60,27 +60,11 @@ public class VRProductionPlantSupplierWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("id", getId());
 		attributes.put("mtCore", getMtCore());
-		attributes.put("supplierId", getSupplierId());
-		attributes.put("supplierName", getSupplierName());
-		attributes.put("supplieraddress", getSupplieraddress());
 		attributes.put("corporationCode", getCorporationCode());
 		attributes.put("corporationName", getCorporationName());
 		attributes.put("corporationAddress", getCorporationAddress());
-		attributes.put("applicantprofileId", getApplicantprofileId());
-		attributes.put("productPlantID", getProductPlantID());
-		attributes.put("productionPlantCode", getProductionPlantCode());
-		attributes.put("productionPlantName", getProductionPlantName());
-		attributes.put("productionPlantAddress", getProductionPlantAddress());
-		attributes.put("markupImporter", getMarkupImporter());
-		attributes.put("mappingMA_CTY", getMappingMA_CTY());
-		attributes.put("mappingTEN_CTY", getMappingTEN_CTY());
-		attributes.put("mappingDIA_CHI_CTY", getMappingDIA_CHI_CTY());
-		attributes.put("mappingMA_XUONG_LR", getMappingMA_XUONG_LR());
-		attributes.put("mappingTEN_XUONG_LR", getMappingTEN_XUONG_LR());
-		attributes.put("mappingDIA_CHI_XUONG_LR", getMappingDIA_CHI_XUONG_LR());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -89,12 +73,6 @@ public class VRProductionPlantSupplierWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long id = (Long)attributes.get("id");
 
 		if (id != null) {
@@ -105,24 +83,6 @@ public class VRProductionPlantSupplierWrapper
 
 		if (mtCore != null) {
 			setMtCore(mtCore);
-		}
-
-		String supplierId = (String)attributes.get("supplierId");
-
-		if (supplierId != null) {
-			setSupplierId(supplierId);
-		}
-
-		String supplierName = (String)attributes.get("supplierName");
-
-		if (supplierName != null) {
-			setSupplierName(supplierName);
-		}
-
-		String supplieraddress = (String)attributes.get("supplieraddress");
-
-		if (supplieraddress != null) {
-			setSupplieraddress(supplieraddress);
 		}
 
 		String corporationCode = (String)attributes.get("corporationCode");
@@ -141,83 +101,6 @@ public class VRProductionPlantSupplierWrapper
 
 		if (corporationAddress != null) {
 			setCorporationAddress(corporationAddress);
-		}
-
-		Long applicantprofileId = (Long)attributes.get("applicantprofileId");
-
-		if (applicantprofileId != null) {
-			setApplicantprofileId(applicantprofileId);
-		}
-
-		Long productPlantID = (Long)attributes.get("productPlantID");
-
-		if (productPlantID != null) {
-			setProductPlantID(productPlantID);
-		}
-
-		String productionPlantCode = (String)attributes.get(
-				"productionPlantCode");
-
-		if (productionPlantCode != null) {
-			setProductionPlantCode(productionPlantCode);
-		}
-
-		String productionPlantName = (String)attributes.get(
-				"productionPlantName");
-
-		if (productionPlantName != null) {
-			setProductionPlantName(productionPlantName);
-		}
-
-		String productionPlantAddress = (String)attributes.get(
-				"productionPlantAddress");
-
-		if (productionPlantAddress != null) {
-			setProductionPlantAddress(productionPlantAddress);
-		}
-
-		Integer markupImporter = (Integer)attributes.get("markupImporter");
-
-		if (markupImporter != null) {
-			setMarkupImporter(markupImporter);
-		}
-
-		String mappingMA_CTY = (String)attributes.get("mappingMA_CTY");
-
-		if (mappingMA_CTY != null) {
-			setMappingMA_CTY(mappingMA_CTY);
-		}
-
-		String mappingTEN_CTY = (String)attributes.get("mappingTEN_CTY");
-
-		if (mappingTEN_CTY != null) {
-			setMappingTEN_CTY(mappingTEN_CTY);
-		}
-
-		String mappingDIA_CHI_CTY = (String)attributes.get("mappingDIA_CHI_CTY");
-
-		if (mappingDIA_CHI_CTY != null) {
-			setMappingDIA_CHI_CTY(mappingDIA_CHI_CTY);
-		}
-
-		String mappingMA_XUONG_LR = (String)attributes.get("mappingMA_XUONG_LR");
-
-		if (mappingMA_XUONG_LR != null) {
-			setMappingMA_XUONG_LR(mappingMA_XUONG_LR);
-		}
-
-		String mappingTEN_XUONG_LR = (String)attributes.get(
-				"mappingTEN_XUONG_LR");
-
-		if (mappingTEN_XUONG_LR != null) {
-			setMappingTEN_XUONG_LR(mappingTEN_XUONG_LR);
-		}
-
-		String mappingDIA_CHI_XUONG_LR = (String)attributes.get(
-				"mappingDIA_CHI_XUONG_LR");
-
-		if (mappingDIA_CHI_XUONG_LR != null) {
-			setMappingDIA_CHI_XUONG_LR(mappingDIA_CHI_XUONG_LR);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -273,16 +156,6 @@ public class VRProductionPlantSupplierWrapper
 		return _vrProductionPlantSupplier.compareTo(vrProductionPlantSupplier);
 	}
 
-	/**
-	* Returns the markup importer of this vr production plant supplier.
-	*
-	* @return the markup importer of this vr production plant supplier
-	*/
-	@Override
-	public int getMarkupImporter() {
-		return _vrProductionPlantSupplier.getMarkupImporter();
-	}
-
 	@Override
 	public int hashCode() {
 		return _vrProductionPlantSupplier.hashCode();
@@ -328,136 +201,6 @@ public class VRProductionPlantSupplierWrapper
 		return _vrProductionPlantSupplier.getCorporationName();
 	}
 
-	/**
-	* Returns the mapping dia_chi_cty of this vr production plant supplier.
-	*
-	* @return the mapping dia_chi_cty of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getMappingDIA_CHI_CTY() {
-		return _vrProductionPlantSupplier.getMappingDIA_CHI_CTY();
-	}
-
-	/**
-	* Returns the mapping dia_chi_xuong_lr of this vr production plant supplier.
-	*
-	* @return the mapping dia_chi_xuong_lr of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getMappingDIA_CHI_XUONG_LR() {
-		return _vrProductionPlantSupplier.getMappingDIA_CHI_XUONG_LR();
-	}
-
-	/**
-	* Returns the mapping ma_cty of this vr production plant supplier.
-	*
-	* @return the mapping ma_cty of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getMappingMA_CTY() {
-		return _vrProductionPlantSupplier.getMappingMA_CTY();
-	}
-
-	/**
-	* Returns the mapping ma_xuong_lr of this vr production plant supplier.
-	*
-	* @return the mapping ma_xuong_lr of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getMappingMA_XUONG_LR() {
-		return _vrProductionPlantSupplier.getMappingMA_XUONG_LR();
-	}
-
-	/**
-	* Returns the mapping ten_cty of this vr production plant supplier.
-	*
-	* @return the mapping ten_cty of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getMappingTEN_CTY() {
-		return _vrProductionPlantSupplier.getMappingTEN_CTY();
-	}
-
-	/**
-	* Returns the mapping ten_xuong_lr of this vr production plant supplier.
-	*
-	* @return the mapping ten_xuong_lr of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getMappingTEN_XUONG_LR() {
-		return _vrProductionPlantSupplier.getMappingTEN_XUONG_LR();
-	}
-
-	/**
-	* Returns the production plant address of this vr production plant supplier.
-	*
-	* @return the production plant address of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getProductionPlantAddress() {
-		return _vrProductionPlantSupplier.getProductionPlantAddress();
-	}
-
-	/**
-	* Returns the production plant code of this vr production plant supplier.
-	*
-	* @return the production plant code of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getProductionPlantCode() {
-		return _vrProductionPlantSupplier.getProductionPlantCode();
-	}
-
-	/**
-	* Returns the production plant name of this vr production plant supplier.
-	*
-	* @return the production plant name of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getProductionPlantName() {
-		return _vrProductionPlantSupplier.getProductionPlantName();
-	}
-
-	/**
-	* Returns the supplier ID of this vr production plant supplier.
-	*
-	* @return the supplier ID of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getSupplierId() {
-		return _vrProductionPlantSupplier.getSupplierId();
-	}
-
-	/**
-	* Returns the supplier name of this vr production plant supplier.
-	*
-	* @return the supplier name of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getSupplierName() {
-		return _vrProductionPlantSupplier.getSupplierName();
-	}
-
-	/**
-	* Returns the supplieraddress of this vr production plant supplier.
-	*
-	* @return the supplieraddress of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getSupplieraddress() {
-		return _vrProductionPlantSupplier.getSupplieraddress();
-	}
-
-	/**
-	* Returns the uuid of this vr production plant supplier.
-	*
-	* @return the uuid of this vr production plant supplier
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _vrProductionPlantSupplier.getUuid();
-	}
-
 	@Override
 	public java.lang.String toString() {
 		return _vrProductionPlantSupplier.toString();
@@ -486,16 +229,6 @@ public class VRProductionPlantSupplierWrapper
 	@Override
 	public Date getSyncDate() {
 		return _vrProductionPlantSupplier.getSyncDate();
-	}
-
-	/**
-	* Returns the applicantprofile ID of this vr production plant supplier.
-	*
-	* @return the applicantprofile ID of this vr production plant supplier
-	*/
-	@Override
-	public long getApplicantprofileId() {
-		return _vrProductionPlantSupplier.getApplicantprofileId();
 	}
 
 	/**
@@ -528,29 +261,9 @@ public class VRProductionPlantSupplierWrapper
 		return _vrProductionPlantSupplier.getPrimaryKey();
 	}
 
-	/**
-	* Returns the product plant ID of this vr production plant supplier.
-	*
-	* @return the product plant ID of this vr production plant supplier
-	*/
-	@Override
-	public long getProductPlantID() {
-		return _vrProductionPlantSupplier.getProductPlantID();
-	}
-
 	@Override
 	public void persist() {
 		_vrProductionPlantSupplier.persist();
-	}
-
-	/**
-	* Sets the applicantprofile ID of this vr production plant supplier.
-	*
-	* @param applicantprofileId the applicantprofile ID of this vr production plant supplier
-	*/
-	@Override
-	public void setApplicantprofileId(long applicantprofileId) {
-		_vrProductionPlantSupplier.setApplicantprofileId(applicantprofileId);
 	}
 
 	@Override
@@ -615,77 +328,6 @@ public class VRProductionPlantSupplierWrapper
 	}
 
 	/**
-	* Sets the mapping dia_chi_cty of this vr production plant supplier.
-	*
-	* @param mappingDIA_CHI_CTY the mapping dia_chi_cty of this vr production plant supplier
-	*/
-	@Override
-	public void setMappingDIA_CHI_CTY(java.lang.String mappingDIA_CHI_CTY) {
-		_vrProductionPlantSupplier.setMappingDIA_CHI_CTY(mappingDIA_CHI_CTY);
-	}
-
-	/**
-	* Sets the mapping dia_chi_xuong_lr of this vr production plant supplier.
-	*
-	* @param mappingDIA_CHI_XUONG_LR the mapping dia_chi_xuong_lr of this vr production plant supplier
-	*/
-	@Override
-	public void setMappingDIA_CHI_XUONG_LR(
-		java.lang.String mappingDIA_CHI_XUONG_LR) {
-		_vrProductionPlantSupplier.setMappingDIA_CHI_XUONG_LR(mappingDIA_CHI_XUONG_LR);
-	}
-
-	/**
-	* Sets the mapping ma_cty of this vr production plant supplier.
-	*
-	* @param mappingMA_CTY the mapping ma_cty of this vr production plant supplier
-	*/
-	@Override
-	public void setMappingMA_CTY(java.lang.String mappingMA_CTY) {
-		_vrProductionPlantSupplier.setMappingMA_CTY(mappingMA_CTY);
-	}
-
-	/**
-	* Sets the mapping ma_xuong_lr of this vr production plant supplier.
-	*
-	* @param mappingMA_XUONG_LR the mapping ma_xuong_lr of this vr production plant supplier
-	*/
-	@Override
-	public void setMappingMA_XUONG_LR(java.lang.String mappingMA_XUONG_LR) {
-		_vrProductionPlantSupplier.setMappingMA_XUONG_LR(mappingMA_XUONG_LR);
-	}
-
-	/**
-	* Sets the mapping ten_cty of this vr production plant supplier.
-	*
-	* @param mappingTEN_CTY the mapping ten_cty of this vr production plant supplier
-	*/
-	@Override
-	public void setMappingTEN_CTY(java.lang.String mappingTEN_CTY) {
-		_vrProductionPlantSupplier.setMappingTEN_CTY(mappingTEN_CTY);
-	}
-
-	/**
-	* Sets the mapping ten_xuong_lr of this vr production plant supplier.
-	*
-	* @param mappingTEN_XUONG_LR the mapping ten_xuong_lr of this vr production plant supplier
-	*/
-	@Override
-	public void setMappingTEN_XUONG_LR(java.lang.String mappingTEN_XUONG_LR) {
-		_vrProductionPlantSupplier.setMappingTEN_XUONG_LR(mappingTEN_XUONG_LR);
-	}
-
-	/**
-	* Sets the markup importer of this vr production plant supplier.
-	*
-	* @param markupImporter the markup importer of this vr production plant supplier
-	*/
-	@Override
-	public void setMarkupImporter(int markupImporter) {
-		_vrProductionPlantSupplier.setMarkupImporter(markupImporter);
-	}
-
-	/**
 	* Sets the modify date of this vr production plant supplier.
 	*
 	* @param modifyDate the modify date of this vr production plant supplier
@@ -726,77 +368,6 @@ public class VRProductionPlantSupplierWrapper
 	}
 
 	/**
-	* Sets the product plant ID of this vr production plant supplier.
-	*
-	* @param productPlantID the product plant ID of this vr production plant supplier
-	*/
-	@Override
-	public void setProductPlantID(long productPlantID) {
-		_vrProductionPlantSupplier.setProductPlantID(productPlantID);
-	}
-
-	/**
-	* Sets the production plant address of this vr production plant supplier.
-	*
-	* @param productionPlantAddress the production plant address of this vr production plant supplier
-	*/
-	@Override
-	public void setProductionPlantAddress(
-		java.lang.String productionPlantAddress) {
-		_vrProductionPlantSupplier.setProductionPlantAddress(productionPlantAddress);
-	}
-
-	/**
-	* Sets the production plant code of this vr production plant supplier.
-	*
-	* @param productionPlantCode the production plant code of this vr production plant supplier
-	*/
-	@Override
-	public void setProductionPlantCode(java.lang.String productionPlantCode) {
-		_vrProductionPlantSupplier.setProductionPlantCode(productionPlantCode);
-	}
-
-	/**
-	* Sets the production plant name of this vr production plant supplier.
-	*
-	* @param productionPlantName the production plant name of this vr production plant supplier
-	*/
-	@Override
-	public void setProductionPlantName(java.lang.String productionPlantName) {
-		_vrProductionPlantSupplier.setProductionPlantName(productionPlantName);
-	}
-
-	/**
-	* Sets the supplier ID of this vr production plant supplier.
-	*
-	* @param supplierId the supplier ID of this vr production plant supplier
-	*/
-	@Override
-	public void setSupplierId(java.lang.String supplierId) {
-		_vrProductionPlantSupplier.setSupplierId(supplierId);
-	}
-
-	/**
-	* Sets the supplier name of this vr production plant supplier.
-	*
-	* @param supplierName the supplier name of this vr production plant supplier
-	*/
-	@Override
-	public void setSupplierName(java.lang.String supplierName) {
-		_vrProductionPlantSupplier.setSupplierName(supplierName);
-	}
-
-	/**
-	* Sets the supplieraddress of this vr production plant supplier.
-	*
-	* @param supplieraddress the supplieraddress of this vr production plant supplier
-	*/
-	@Override
-	public void setSupplieraddress(java.lang.String supplieraddress) {
-		_vrProductionPlantSupplier.setSupplieraddress(supplieraddress);
-	}
-
-	/**
 	* Sets the sync date of this vr production plant supplier.
 	*
 	* @param syncDate the sync date of this vr production plant supplier
@@ -804,16 +375,6 @@ public class VRProductionPlantSupplierWrapper
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_vrProductionPlantSupplier.setSyncDate(syncDate);
-	}
-
-	/**
-	* Sets the uuid of this vr production plant supplier.
-	*
-	* @param uuid the uuid of this vr production plant supplier
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_vrProductionPlantSupplier.setUuid(uuid);
 	}
 
 	@Override

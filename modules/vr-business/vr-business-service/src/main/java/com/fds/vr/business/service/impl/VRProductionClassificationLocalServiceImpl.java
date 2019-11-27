@@ -18,6 +18,7 @@ import com.fds.vr.business.model.VRProductionClassification;
 import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
 import com.fds.vr.business.service.base.VRProductionClassificationLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 
 import java.util.Date;
 import java.util.List;
@@ -117,5 +118,16 @@ public class VRProductionClassificationLocalServiceImpl extends VRProductionClas
 		object.setModifyDate(now);
 
 		return vrProductionClassificationPersistence.update(object);
+	}
+	
+	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
+			String modelClassName, int start, int end) throws SystemException {
+
+		return vrProductionClassificationFinder.findData(sql, columnNames, dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	public long counData(String sql) throws SystemException {
+
+		return vrProductionClassificationFinder.countData(sql);
 	}
 }

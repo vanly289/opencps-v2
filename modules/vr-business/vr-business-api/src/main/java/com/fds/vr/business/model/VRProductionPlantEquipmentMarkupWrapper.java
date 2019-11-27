@@ -84,7 +84,7 @@ public class VRProductionPlantEquipmentMarkupWrapper
 			setProductClassificationCode(productClassificationCode);
 		}
 
-		Integer productionPlantEquipmentId = (Integer)attributes.get(
+		Long productionPlantEquipmentId = (Long)attributes.get(
 				"productionPlantEquipmentId");
 
 		if (productionPlantEquipmentId != null) {
@@ -137,16 +137,6 @@ public class VRProductionPlantEquipmentMarkupWrapper
 	public int compareTo(
 		VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup) {
 		return _vrProductionPlantEquipmentMarkup.compareTo(vrProductionPlantEquipmentMarkup);
-	}
-
-	/**
-	* Returns the production plant equipment ID of this vr production plant equipment markup.
-	*
-	* @return the production plant equipment ID of this vr production plant equipment markup
-	*/
-	@Override
-	public int getProductionPlantEquipmentId() {
-		return _vrProductionPlantEquipmentMarkup.getProductionPlantEquipmentId();
 	}
 
 	/**
@@ -212,6 +202,16 @@ public class VRProductionPlantEquipmentMarkupWrapper
 	@Override
 	public long getPrimaryKey() {
 		return _vrProductionPlantEquipmentMarkup.getPrimaryKey();
+	}
+
+	/**
+	* Returns the production plant equipment ID of this vr production plant equipment markup.
+	*
+	* @return the production plant equipment ID of this vr production plant equipment markup
+	*/
+	@Override
+	public long getProductionPlantEquipmentId() {
+		return _vrProductionPlantEquipmentMarkup.getProductionPlantEquipmentId();
 	}
 
 	@Override
@@ -287,7 +287,7 @@ public class VRProductionPlantEquipmentMarkupWrapper
 	* @param productionPlantEquipmentId the production plant equipment ID of this vr production plant equipment markup
 	*/
 	@Override
-	public void setProductionPlantEquipmentId(int productionPlantEquipmentId) {
+	public void setProductionPlantEquipmentId(long productionPlantEquipmentId) {
 		_vrProductionPlantEquipmentMarkup.setProductionPlantEquipmentId(productionPlantEquipmentId);
 	}
 

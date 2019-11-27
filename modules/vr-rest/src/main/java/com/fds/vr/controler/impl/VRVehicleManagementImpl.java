@@ -97,10 +97,12 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 
 	@Override
 	public Response importVRVehiclerecord(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, Attachment attachment) {
+			Locale locale, User user, ServiceContext serviceContext, long dossierid, Attachment attachment) {
 		InputStream inputStream = null;
 
 		try {
+			
+			_log.info(">>>>>>>>>>>>>>>>>>>>>>> dossierid: " + dossierid);
 
 			DataHandler dataHandler = attachment.getDataHandler();
 
@@ -115,7 +117,7 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 		} catch (Exception e) {
 
 			_log.error(e);
-			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get certificateYear").toJSONString())
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't import vehiclerecord").toJSONString())
 					.build();
 
 		}

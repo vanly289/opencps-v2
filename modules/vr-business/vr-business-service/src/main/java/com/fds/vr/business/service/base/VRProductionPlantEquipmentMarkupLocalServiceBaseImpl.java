@@ -71,6 +71,7 @@ import com.fds.vr.business.service.persistence.VROutputSheetDetailsPersistence;
 import com.fds.vr.business.service.persistence.VROutputSheetFinder;
 import com.fds.vr.business.service.persistence.VROutputSheetPersistence;
 import com.fds.vr.business.service.persistence.VRProductTypePersistence;
+import com.fds.vr.business.service.persistence.VRProductionClassificationFinder;
 import com.fds.vr.business.service.persistence.VRProductionClassificationPersistence;
 import com.fds.vr.business.service.persistence.VRProductionPlantEmployeeFinder;
 import com.fds.vr.business.service.persistence.VRProductionPlantEmployeePersistence;
@@ -408,11 +409,13 @@ public abstract class VRProductionPlantEquipmentMarkupLocalServiceBaseImpl
 	 *
 	 * @param vrProductionPlantEquipmentMarkup the vr production plant equipment markup
 	 * @return the vr production plant equipment markup that was updated
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public VRProductionPlantEquipmentMarkup updateVRProductionPlantEquipmentMarkup(
-		VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup) {
+		VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup)
+		throws SystemException {
 		return vrProductionPlantEquipmentMarkupPersistence.update(vrProductionPlantEquipmentMarkup);
 	}
 
@@ -2005,6 +2008,25 @@ public abstract class VRProductionPlantEquipmentMarkupLocalServiceBaseImpl
 	public void setVRProductionClassificationPersistence(
 		VRProductionClassificationPersistence vrProductionClassificationPersistence) {
 		this.vrProductionClassificationPersistence = vrProductionClassificationPersistence;
+	}
+
+	/**
+	 * Returns the vr production classification finder.
+	 *
+	 * @return the vr production classification finder
+	 */
+	public VRProductionClassificationFinder getVRProductionClassificationFinder() {
+		return vrProductionClassificationFinder;
+	}
+
+	/**
+	 * Sets the vr production classification finder.
+	 *
+	 * @param vrProductionClassificationFinder the vr production classification finder
+	 */
+	public void setVRProductionClassificationFinder(
+		VRProductionClassificationFinder vrProductionClassificationFinder) {
+		this.vrProductionClassificationFinder = vrProductionClassificationFinder;
 	}
 
 	/**
@@ -3840,6 +3862,8 @@ public abstract class VRProductionPlantEquipmentMarkupLocalServiceBaseImpl
 	protected com.fds.vr.business.service.VRProductionClassificationLocalService vrProductionClassificationLocalService;
 	@BeanReference(type = VRProductionClassificationPersistence.class)
 	protected VRProductionClassificationPersistence vrProductionClassificationPersistence;
+	@BeanReference(type = VRProductionClassificationFinder.class)
+	protected VRProductionClassificationFinder vrProductionClassificationFinder;
 	@BeanReference(type = com.fds.vr.business.service.VRProductionPlantLocalService.class)
 	protected com.fds.vr.business.service.VRProductionPlantLocalService vrProductionPlantLocalService;
 	@BeanReference(type = VRProductionPlantPersistence.class)

@@ -71,6 +71,7 @@ import com.fds.vr.business.service.persistence.VROutputSheetDetailsPersistence;
 import com.fds.vr.business.service.persistence.VROutputSheetFinder;
 import com.fds.vr.business.service.persistence.VROutputSheetPersistence;
 import com.fds.vr.business.service.persistence.VRProductTypePersistence;
+import com.fds.vr.business.service.persistence.VRProductionClassificationFinder;
 import com.fds.vr.business.service.persistence.VRProductionClassificationPersistence;
 import com.fds.vr.business.service.persistence.VRProductionPlantEmployeeFinder;
 import com.fds.vr.business.service.persistence.VRProductionPlantEmployeePersistence;
@@ -2004,6 +2005,25 @@ public abstract class VRTechnicalSpec_XDDLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the vr production classification finder.
+	 *
+	 * @return the vr production classification finder
+	 */
+	public VRProductionClassificationFinder getVRProductionClassificationFinder() {
+		return vrProductionClassificationFinder;
+	}
+
+	/**
+	 * Sets the vr production classification finder.
+	 *
+	 * @param vrProductionClassificationFinder the vr production classification finder
+	 */
+	public void setVRProductionClassificationFinder(
+		VRProductionClassificationFinder vrProductionClassificationFinder) {
+		this.vrProductionClassificationFinder = vrProductionClassificationFinder;
+	}
+
+	/**
 	 * Returns the vr production plant local service.
 	 *
 	 * @return the vr production plant local service
@@ -3836,6 +3856,8 @@ public abstract class VRTechnicalSpec_XDDLocalServiceBaseImpl
 	protected com.fds.vr.business.service.VRProductionClassificationLocalService vrProductionClassificationLocalService;
 	@BeanReference(type = VRProductionClassificationPersistence.class)
 	protected VRProductionClassificationPersistence vrProductionClassificationPersistence;
+	@BeanReference(type = VRProductionClassificationFinder.class)
+	protected VRProductionClassificationFinder vrProductionClassificationFinder;
 	@BeanReference(type = com.fds.vr.business.service.VRProductionPlantLocalService.class)
 	protected com.fds.vr.business.service.VRProductionPlantLocalService vrProductionPlantLocalService;
 	@BeanReference(type = VRProductionPlantPersistence.class)
