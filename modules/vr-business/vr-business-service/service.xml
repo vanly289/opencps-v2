@@ -7666,6 +7666,10 @@
         <column name="processNo" type="String" db-name="processNo"></column>
         <column name="status" type="int" db-name="status"></column>
         <column name="vehicleClass" type="String" db-name="vehicleClass"></column>
+        <finder name="A_P" return-type="VRActionconfig">
+            <finder-column name="actionCode"></finder-column>
+            <finder-column name="processNo"></finder-column>
+        </finder>
     </entity>
 	
 
