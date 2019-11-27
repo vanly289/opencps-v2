@@ -159,7 +159,4 @@ public interface VRActionconfigPersistence extends BasePersistence<VRActionconfi
 	* @return the number of vr actionconfigs
 	*/
 	public int countAll();
-
-	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
 }

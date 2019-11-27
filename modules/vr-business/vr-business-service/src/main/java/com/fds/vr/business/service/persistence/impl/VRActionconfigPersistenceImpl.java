@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -707,11 +706,6 @@ public class VRActionconfigPersistenceImpl extends BasePersistenceImpl<VRActionc
 	}
 
 	@Override
-	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
-	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return VRActionconfigModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -734,12 +728,9 @@ public class VRActionconfigPersistenceImpl extends BasePersistenceImpl<VRActionc
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_VRACTIONCONFIG = "SELECT vrActionconfig FROM VRActionconfig vrActionconfig";
-	private static final String _SQL_SELECT_VRACTIONCONFIG_WHERE_PKS_IN = "SELECT vrActionconfig FROM VRActionconfig vrActionconfig WHERE id_ IN (";
+	private static final String _SQL_SELECT_VRACTIONCONFIG_WHERE_PKS_IN = "SELECT vrActionconfig FROM VRActionconfig vrActionconfig WHERE id IN (";
 	private static final String _SQL_COUNT_VRACTIONCONFIG = "SELECT COUNT(vrActionconfig) FROM VRActionconfig vrActionconfig";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "vrActionconfig.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No VRActionconfig exists with the primary key ";
 	private static final Log _log = LogFactoryUtil.getLog(VRActionconfigPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"id"
-			});
 }
