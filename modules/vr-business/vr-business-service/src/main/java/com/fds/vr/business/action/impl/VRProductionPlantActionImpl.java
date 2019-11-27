@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 

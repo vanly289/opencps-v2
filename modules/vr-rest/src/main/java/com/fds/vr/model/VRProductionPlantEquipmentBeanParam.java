@@ -8,11 +8,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "id", "mtcore", "productplantid", "sequenceno", "equipmentcode", "equipmentname",
-		"equipmenttype", "trademark", "trademarkname", "commercialname", "modelcode", "designsymbolno",
-		"productioncountrycode", "equipmentstatus", "expiredate", "notes", "modifydate", "syncdate", "keyword",
-		"productclassificationcode",
-		"start","end", "order_asc", "order_desc" })
+@XmlType(name = "", propOrder = { "id", "mtcore", "sequenceno", "equipmentcode", "equipmentname", "equipmenttype",
+		"trademark", "trademarkname", "commercialname", "modelcode", "productioncountrycode", "equipmentstatus",
+		"expiredate", "notes", "modifydate", "syncdate", "equipmentserialno", "productionyear", "registrationyear",
+		"markupxcg", "markupxcgnk", "markupsmrm", "markupxch", "markupxcn", "markupxmy", "markupxdd", "testingresult",
+		"description", "inspectionrecordnumber", "inspectionrecorddate", "stamptestingno", "productionplantid",
+		"productionplantcode", "keyword", "start", "end", "order_asc", "order_desc", "productclassificationcode" })
 @XmlRootElement(name = "VRProductionPlantEquipmentBeanParam")
 public class VRProductionPlantEquipmentBeanParam {
 	@QueryParam(value = "keyword")
@@ -31,8 +32,6 @@ public class VRProductionPlantEquipmentBeanParam {
 	protected Long id;
 	@QueryParam(value = "mtcore")
 	protected Long mtCore;
-	@QueryParam(value = "productplantid")
-	protected Long productPlantID;
 	@QueryParam(value = "sequenceno")
 	protected Long sequenceNo;
 	@QueryParam(value = "equipmentcode")
@@ -49,8 +48,6 @@ public class VRProductionPlantEquipmentBeanParam {
 	protected String commercialName;
 	@QueryParam(value = "modelcode")
 	protected String modelCode;
-	@QueryParam(value = "designsymbolno")
-	protected String designSymbolNo;
 	@QueryParam(value = "productioncountrycode")
 	protected String productionCountryCode;
 	@QueryParam(value = "equipmentstatus")
@@ -63,17 +60,42 @@ public class VRProductionPlantEquipmentBeanParam {
 	protected String modifyDate;
 	@QueryParam(value = "syncdate")
 	protected String syncDate;
+	@QueryParam(value = "equipmentserialno")
+	protected String equipmentSerialNo;
+	@QueryParam(value = "productionyear")
+	protected String productionYear;
+	@QueryParam(value = "registrationyear")
+	protected String registrationYear;
+	@QueryParam(value = "markupxcg")
+	protected Long markupXCG;
+	@QueryParam(value = "markupxcgnk")
+	protected Long markupXCGNK;
+	@QueryParam(value = "markupsmrm")
+	protected Long markupSMRM;
+	@QueryParam(value = "markupxch")
+	protected Long markupXCH;
+	@QueryParam(value = "markupxcn")
+	protected Long markupXCN;
+	@QueryParam(value = "markupxmy")
+	protected Long markupXMY;
+	@QueryParam(value = "markupxdd")
+	protected Long markupXDD;
+	@QueryParam(value = "testingresult")
+	protected Integer testingResult;
+	@QueryParam(value = "description")
+	protected String description;
+	@QueryParam(value = "inspectionrecordnumber")
+	protected String inspectionRecordNumber;
+	@QueryParam(value = "inspectionrecorddate")
+	protected String inspectionRecordDate;
+	@QueryParam(value = "stamptestingno")
+	protected String stampTestingNo;
+	@QueryParam(value = "productionplantid")
+	protected Long productionPlantId;
+	@QueryParam(value = "productionplantcode")
+	protected String productionPlantCode;
 	@QueryParam(value = "productclassificationcode")
-	protected String productClassificationCode;
-	
-
-	public String getProductClassificationCode() {
-		return productClassificationCode;
-	}
-
-	public void setProductClassificationCode(String productClassificationCode) {
-		this.productClassificationCode = productClassificationCode;
-	}
+	protected String productclassificationcode;
 
 	public String getKeyword() {
 		return keyword;
@@ -129,14 +151,6 @@ public class VRProductionPlantEquipmentBeanParam {
 
 	public void setMtCore(Long mtCore) {
 		this.mtCore = mtCore;
-	}
-
-	public Long getProductPlantID() {
-		return productPlantID;
-	}
-
-	public void setProductPlantID(Long productPlantID) {
-		this.productPlantID = productPlantID;
 	}
 
 	public Long getSequenceNo() {
@@ -203,14 +217,6 @@ public class VRProductionPlantEquipmentBeanParam {
 		this.modelCode = modelCode;
 	}
 
-	public String getDesignSymbolNo() {
-		return designSymbolNo;
-	}
-
-	public void setDesignSymbolNo(String designSymbolNo) {
-		this.designSymbolNo = designSymbolNo;
-	}
-
 	public String getProductionCountryCode() {
 		return productionCountryCode;
 	}
@@ -257,6 +263,150 @@ public class VRProductionPlantEquipmentBeanParam {
 
 	public void setSyncDate(String syncDate) {
 		this.syncDate = syncDate;
+	}
+
+	public String getEquipmentSerialNo() {
+		return equipmentSerialNo;
+	}
+
+	public void setEquipmentSerialNo(String equipmentSerialNo) {
+		this.equipmentSerialNo = equipmentSerialNo;
+	}
+
+	public String getProductionYear() {
+		return productionYear;
+	}
+
+	public void setProductionYear(String productionYear) {
+		this.productionYear = productionYear;
+	}
+
+	public String getRegistrationYear() {
+		return registrationYear;
+	}
+
+	public void setRegistrationYear(String registrationYear) {
+		this.registrationYear = registrationYear;
+	}
+
+	public Long getMarkupXCG() {
+		return markupXCG;
+	}
+
+	public void setMarkupXCG(Long markupXCG) {
+		this.markupXCG = markupXCG;
+	}
+
+	public Long getMarkupXCGNK() {
+		return markupXCGNK;
+	}
+
+	public void setMarkupXCGNK(Long markupXCGNK) {
+		this.markupXCGNK = markupXCGNK;
+	}
+
+	public Long getMarkupSMRM() {
+		return markupSMRM;
+	}
+
+	public void setMarkupSMRM(Long markupSMRM) {
+		this.markupSMRM = markupSMRM;
+	}
+
+	public Long getMarkupXCH() {
+		return markupXCH;
+	}
+
+	public void setMarkupXCH(Long markupXCH) {
+		this.markupXCH = markupXCH;
+	}
+
+	public Long getMarkupXCN() {
+		return markupXCN;
+	}
+
+	public void setMarkupXCN(Long markupXCN) {
+		this.markupXCN = markupXCN;
+	}
+
+	public Long getMarkupXMY() {
+		return markupXMY;
+	}
+
+	public void setMarkupXMY(Long markupXMY) {
+		this.markupXMY = markupXMY;
+	}
+
+	public Long getMarkupXDD() {
+		return markupXDD;
+	}
+
+	public void setMarkupXDD(Long markupXDD) {
+		this.markupXDD = markupXDD;
+	}
+
+	public Integer getTestingResult() {
+		return testingResult;
+	}
+
+	public void setTestingResult(Integer testingResult) {
+		this.testingResult = testingResult;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getInspectionRecordNumber() {
+		return inspectionRecordNumber;
+	}
+
+	public void setInspectionRecordNumber(String inspectionRecordNumber) {
+		this.inspectionRecordNumber = inspectionRecordNumber;
+	}
+
+	public String getInspectionRecordDate() {
+		return inspectionRecordDate;
+	}
+
+	public void setInspectionRecordDate(String inspectionRecordDate) {
+		this.inspectionRecordDate = inspectionRecordDate;
+	}
+
+	public String getStampTestingNo() {
+		return stampTestingNo;
+	}
+
+	public void setStampTestingNo(String stampTestingNo) {
+		this.stampTestingNo = stampTestingNo;
+	}
+
+	public Long getProductionPlantId() {
+		return productionPlantId;
+	}
+
+	public void setProductionPlantId(Long productionPlantId) {
+		this.productionPlantId = productionPlantId;
+	}
+
+	public String getProductionPlantCode() {
+		return productionPlantCode;
+	}
+
+	public void setProductionPlantCode(String productionPlantCode) {
+		this.productionPlantCode = productionPlantCode;
+	}
+
+	public String getProductclassificationcode() {
+		return productclassificationcode;
+	}
+
+	public void setProductclassificationcode(String productclassificationcode) {
+		this.productclassificationcode = productclassificationcode;
 	}
 
 }

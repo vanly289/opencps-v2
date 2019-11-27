@@ -165,7 +165,7 @@ public class SQLQueryBuilder {
 	}
 
 	public SQLQueryBuilder join(String joinType, String left, String leftcolName, String right, String rightcolName) {
-		String join = joinType + " ON " + left + "." + leftcolName + " = " + right + "." + rightcolName;
+		String join = joinType + " " + right + " ON " + left + "." + leftcolName + " = " + right + "." + rightcolName;
 		this.setJoins(join);
 		return this;
 	}

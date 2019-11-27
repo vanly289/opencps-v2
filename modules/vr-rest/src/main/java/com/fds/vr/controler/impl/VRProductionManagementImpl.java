@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -143,9 +144,10 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 				JSONArray arrayProductionPlantEquipmentMarkup = object.getJSONArray("productionplantequipmentmarkup");
 				if (arrayProductionPlantEquipmentMarkup != null) {
 					for (int i = 0; i < arrayProductionPlantEquipmentMarkup.length(); i++) {
-						Object _tmpEntity = VRRestUtil.json2Object(object,
+						Map<String, Object> map = VRRestUtil.json2Object(object,
 								new Object[] { new VRProductionPlantEquipmentMarkupImpl() });
-						vrProductionPlantEquipmentMarkups.add((VRProductionPlantEquipmentMarkup) _tmpEntity);
+						vrProductionPlantEquipmentMarkups.add((VRProductionPlantEquipmentMarkup) map
+								.get(VRProductionPlantEquipmentMarkupImpl.class.getName()));
 					}
 				}
 			}

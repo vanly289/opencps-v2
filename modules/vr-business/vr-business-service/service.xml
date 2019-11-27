@@ -7651,11 +7651,14 @@
         	<finder-column name="productionPlantCode" />
         </finder>
 	</entity>
-    <entity name="VRProductionPlantEquipmentMarkup" local-service="true" remote-service="false">
-        <column name="id" type="long" primary="true"></column>
-        <column name="productClassificationCode" type="String"></column>
-        <column name="productionPlantEquipmentId" type="long"></column>
-        <column name="status" type="int"></column>
+    <entity name="VRProductionPlantEquipmentMarkup" local-service="true" remote-service="false" table="vr_productionplantequipmentmarkup">
+        <column name="id" type="long" primary="true" db-name="id"></column>
+        <column name="productClassificationCode" type="String" db-name="productClassificationCode"></column>
+        <column name="productionPlantEquipmentId" type="long" db-name="productionPlantEquipmentId"></column>
+        <column name="status" type="int" db-name="status"></column>
+        <finder name="productionPlantEquipmentId" return-type="Collection">
+            <finder-column name="productionPlantEquipmentId"></finder-column>
+        </finder>
     </entity>
     <entity name="VRActionconfig" local-service="true" remote-service="false">
         <column name="id" type="long" primary="true"></column>

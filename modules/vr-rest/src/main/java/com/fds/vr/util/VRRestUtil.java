@@ -14,10 +14,11 @@ import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.opencps.datamgt.utils.DateTimeUtils;
 
 /**
  * @author trungnt
@@ -135,31 +136,35 @@ public class VRRestUtil {
 					String methodName = entry.getKey();
 					if (methodName.startsWith("set")) {
 						String _tmpFieldName = methodName.replace("set", "").toLowerCase();
-						Iterator<String> keys = data.keys();
-						while (keys.hasNext()) {
-							String key = keys.next();
-							_log.info("===> " + key + "|" + _tmpFieldName);
-							if (key.equals(_tmpFieldName)) {
+						_log.info("===> filedname:" + _tmpFieldName);
+						if (data.has(_tmpFieldName)) {
+							Method method = methodMap.get(methodName);
+							Class<?> paramType = method.getParameterTypes()[0];
+							Object value = data.get(_tmpFieldName);
+							if (value != null) {
 
-								Method method = methodMap.get(methodName);
-								Class<?> paramType = method.getParameterTypes()[0];
-								Object value = data.get(key);
-								if (value != null) {
+								if (paramType.getName().equals(Date.class.getName())) {
+
+									Date _tmp = DateTimeUtils.convertStringToDate(String.valueOf(value),
+											DateTimeUtils._VN_DATE_TIME_FORMAT_HOUR);
+
+									value = _tmp;
+								} else {
 									if (!paramType.getName().equals(value.getClass().getName())) {
-										return null;
+										_log.info("--->>>>> Todo convert data? " + _tmpFieldName);
+										value = castData(value, value.getClass(), paramType);
 									}
-									try {
-										method.invoke(object, value);
-									} catch (Exception e) {
-										_log.error(e);
-										return null;
-									}
-									_log.info("---> " + methodName + "|" + key + "|" + paramType.getName() + "|" + value
-											+ "|" + value.getClass().getName());
 								}
 
+								try {
+									method.invoke(object, value);
+								} catch (Exception e) {
+									_log.error(e);
+									return null;
+								}
+								_log.info("---> " + methodName + "|" + _tmpFieldName + "|" + paramType.getName() + "|"
+										+ value + "|" + value.getClass().getName());
 							}
-
 						}
 
 					}
@@ -171,6 +176,34 @@ public class VRRestUtil {
 			return objectMap;
 		}
 
+	}
+
+	public static Object castData(Object object, Class<?> from, Class<?> to) {
+		try {
+			object = to.cast(object);
+		} catch (Exception e) {
+			try {
+				if (to.getName().equals(long.class.getName())) {
+					object = Long.parseLong(String.valueOf(object));
+				} else if (to.getName().equals(int.class.getName())) {
+					object = Integer.parseInt(String.valueOf(object));
+				} else if (to.getName().equals(double.class.getName())) {
+					object = Double.parseDouble(String.valueOf(object));
+				} else if (to.getName().equals(float.class.getName())) {
+					object = Float.parseFloat(String.valueOf(object));
+				} else if (to.getName().equals(boolean.class.getName())) {
+					object = Boolean.parseBoolean(String.valueOf(object));
+				} else if (to.getName().equals(String.class.getName())) {
+					object = (String) object;
+				}
+
+			} catch (Exception p) {
+				_log.info("Can't parse object");
+				return null;
+			}
+
+		}
+		return object;
 	}
 
 	public static Map<String, Method> getMethodMap(Class<?> clazz) {

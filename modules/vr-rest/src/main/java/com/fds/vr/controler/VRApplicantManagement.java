@@ -39,14 +39,14 @@ public interface VRApplicantManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, String data);
 	
-	@POST
+	/*@POST
 	@Path("/applicant/profile/create")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "create VRProductionPlant", tags={ "vrproductionplantapimodel"})
 	public Response createVRApplicantProfile(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRApplicantProfileApiModel model);
+			@Context ServiceContext serviceContext, VRApplicantProfileApiModel model);*/
 	
 	@GET
 	@Path("/applicant/profile/search")

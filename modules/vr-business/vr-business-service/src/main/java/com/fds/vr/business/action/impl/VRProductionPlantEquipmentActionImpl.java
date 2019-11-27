@@ -5,8 +5,11 @@ import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryBuilder;
 import com.fds.vr.business.exception.NoSuchVRProductionPlantEquipmentException;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
+import com.fds.vr.business.model.VRProductionPlantEquipmentMarkup;
 import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEquipmentMarkupModelImpl;
 import com.fds.vr.business.service.VRProductionPlantEquipmentLocalServiceUtil;
+import com.fds.vr.business.service.VRProductionPlantEquipmentMarkupLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -304,7 +307,11 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 		String stampTestingNo = null;
 		Long productionPlantId = null;
 		String productionPlantCode = null;
+		String productclassificationcode = null;
 		if (params != null) {
+			if (params.containsKey("productclassificationcode")) {
+				productclassificationcode = GetterUtil.getString(params.get("productclassificationcode"));
+			}
 			if (params.containsKey("id")) {
 				id = GetterUtil.getLong(params.get("id"));
 			}
@@ -405,8 +412,7 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 				productionPlantCode = GetterUtil.getString(params.get("productionplantcode"));
 			}
 		}
-		String _keywordSearchCondition = 
-				 ActionUtil.buildSQLCondition("equipmentName", keyword, "", StringPool.LIKE, "")
+		String _keywordSearchCondition = ActionUtil.buildSQLCondition("equipmentName", keyword, "", StringPool.LIKE, "")
 				//+ ActionUtil.buildSQLCondition("equipmentType", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("trademark", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("trademarkName", keyword, "OR", StringPool.LIKE, "")
@@ -419,9 +425,9 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 				//+ ActionUtil.buildSQLCondition("productionYear", keyword, "OR", StringPool.LIKE, "")
 				//+ ActionUtil.buildSQLCondition("registrationYear", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("description", keyword, "OR", StringPool.LIKE, "");
-				//+ ActionUtil.buildSQLCondition("inspectionRecordNumber", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("stampTestingNo", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("productionPlantCode", keyword, "OR", StringPool.LIKE, "");
+		//+ ActionUtil.buildSQLCondition("inspectionRecordNumber", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("stampTestingNo", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("productionPlantCode", keyword, "OR", StringPool.LIKE, "");
 		SQLQueryBuilder builder = new SQLQueryBuilder();
 		builder.selectAll().from("vr_productionplantequipment").where("id", id, "AND", StringPool.EQUAL)
 				.where("mtcore", mtCore, "AND", StringPool.EQUAL)
@@ -455,11 +461,58 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 				.where("stamptestingno", stampTestingNo, "AND", StringPool.EQUAL)
 				.where("productionplantid", productionPlantId, "AND", StringPool.EQUAL)
 				.where("productionplantcode", productionPlantCode, "AND", StringPool.EQUAL)
-				.where(_keywordSearchCondition, null, "AND", "", true).build();
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		long total = VRProductionPlantEquipmentLocalServiceUtil.counData(builder.getCountQuery());
+				.where(_keywordSearchCondition, null, "AND", "", true);
+
+		if (Validator.isNotNull(productclassificationcode)) {
+			builder.join("INNER JOIN", "vr_productionplantequipment", "id", "vr_productionplantequipmentmarkup",
+					"productionplantequipmentid")
+					.joinwhere("vr_productionplantequipmentmarkup.productclassificationcode", productclassificationcode,
+							"AND", StringPool.EQUAL)
+					.build();
+
+		} else {
+			builder.build();
+
+		}
+
 		JSONArray data = VRProductionPlantEquipmentLocalServiceUtil.findData(builder.getSelectQuery(), null, null,
 				VRProductionPlantEquipmentImpl.class, "VRProductionPlantEquipment", start, end);
+
+		if (data != null && data.length() > 0) {
+			for (int i = 0; i < data.length(); i++) {
+
+				id = data.getJSONObject(i).getLong("id");
+				if (id > 0) {
+					List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups = null;
+					try {
+						vrProductionPlantEquipmentMarkups = VRProductionPlantEquipmentMarkupLocalServiceUtil
+								.findByproductionPlantEquipmentId(id);
+					} catch (Exception e) {
+						//nothing todo
+					}
+
+					JSONArray _tmpArray = JSONFactoryUtil.createJSONArray();
+
+					for (VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup : vrProductionPlantEquipmentMarkups) {
+						try {
+							JSONObject object = ActionUtil.object2Json(vrProductionPlantEquipmentMarkup,
+									VRProductionPlantEquipmentMarkupModelImpl.class, StringPool.BLANK);
+							_tmpArray.put(object);
+						} catch (Exception e) {
+
+						}
+					}
+
+					data.getJSONObject(i).put("vrproductionplantequipmentmarkup", _tmpArray);
+
+				}
+			}
+		}
+
+		long total = VRProductionPlantEquipmentLocalServiceUtil.counData(builder.getCountQuery());
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
 		result.put("total", total);
 		result.put("data", data);
 		return result;

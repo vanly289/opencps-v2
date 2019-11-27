@@ -205,6 +205,9 @@ public interface VRProductionPlantEquipmentMarkupLocalService
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<VRProductionPlantEquipmentMarkup> findByproductionPlantEquipmentId(
+		long productionPlantEquipmentId);
+
 	/**
 	* Returns a range of all the vr production plant equipment markups.
 	*

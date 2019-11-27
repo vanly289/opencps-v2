@@ -100,6 +100,22 @@ public class DateTimeUtils {
 		return date;
 	}
 	
+	public static Date convertStringToDate(String strDate, String format) {
+		DateFormat df = getDateTimeFormat(format);
+		Date date = null;
+
+		try {
+			if (Validator.isNotNull(strDate)) {
+				date = df.parse(strDate);
+			}
+		}
+		catch (ParseException pe) {
+			_log.error(pe);
+		}
+
+		return date;
+	}
+	
 	public static Date convertDateTimeToString(String strDate) {
 		DateFormat df = getDateTimeFormat(_VN_DATE_TIME_FORMAT_HOUR);
 		Date date = null;

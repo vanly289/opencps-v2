@@ -229,6 +229,12 @@ public class VRProductionPlantEquipmentMarkupLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRProductionPlantEquipmentMarkup> findByproductionPlantEquipmentId(
+		long productionPlantEquipmentId) {
+		return _vrProductionPlantEquipmentMarkupLocalService.findByproductionPlantEquipmentId(productionPlantEquipmentId);
+	}
+
 	/**
 	* Returns a range of all the vr production plant equipment markups.
 	*

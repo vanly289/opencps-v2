@@ -38,7 +38,7 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 		try {
 			object = VRApplicantProfileLocalServiceUtil.createVRApplicantProfile(object);
 
-			JSONObject result = ActionUtil.object2Json(object, VRApplicantProfile.class, StringPool.BLANK);
+			JSONObject result = ActionUtil.object2Json(object, VRApplicantProfileModelImpl.class, StringPool.BLANK);
 
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 

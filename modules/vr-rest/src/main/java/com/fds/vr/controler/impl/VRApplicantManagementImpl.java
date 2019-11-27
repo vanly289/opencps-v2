@@ -39,10 +39,19 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 			Locale locale, User user, ServiceContext serviceContext, String data) {
 		try {
 			JSONObject object = JSONFactoryUtil.createJSONObject(data);
-			Map<String, Object> map = VRRestUtil.json2Object(object, new Object[] { new VRApplicantProfileImpl() });
-			Object result = map.get(VRApplicantProfileImpl.class.getName());
-			_log.info(ActionUtil.object2Json(result, VRApplicantProfileModelImpl.class, ""));
-			return Response.status(200).entity(object.toJSONString()).build();
+			
+			Map<String, Object> map = VRRestUtil.json2Object(object,
+					new Object[] { new VRApplicantProfileImpl() });
+			
+			Object entity = map.get(VRApplicantProfileImpl.class.getName());
+			
+			_log.info(ActionUtil.object2Json(entity, VRApplicantProfileModelImpl.class, ""));
+			
+			VRApplicantProfileActionImpl actionImpl = new VRApplicantProfileActionImpl();
+			
+			JSONObject result = actionImpl.createVRApplicantProfile((VRApplicantProfile) entity);
+			
+			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);
 			return Response.status(500)
@@ -50,28 +59,28 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 		}
 	}
 
-	@Override
+	/*@Override
 	public Response createVRApplicantProfile(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, VRApplicantProfileApiModel model) {
-
+	
 		try {
-
+	
 			VRApplicantProfile object = (VRApplicantProfile) VRRestUtil.mappingModel(model,
 					new VRApplicantProfileImpl());
-
-			VRApplicantProfileAction action = new VRApplicantProfileActionImpl();
-
+	
+			VRApplicantProfileActionImpl action = new VRApplicantProfileActionImpl();
+	
 			JSONObject result = action.createVRApplicantProfile(object);
-
+	
 			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
-
+	
 		} catch (Exception e) {
 			_log.error(e);
-
+	
 			return Response.status(HttpsURLConnection.HTTP_INTERNAL_ERROR).build();
 		}
-
-	}
+	
+	}*/
 
 	@Override
 	public Response findApplicantProfile(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,

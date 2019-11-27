@@ -221,6 +221,12 @@ public class VRProductionPlantEquipmentMarkupLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRProductionPlantEquipmentMarkup> findByproductionPlantEquipmentId(
+		long productionPlantEquipmentId) {
+		return getService()
+				   .findByproductionPlantEquipmentId(productionPlantEquipmentId);
+	}
+
 	/**
 	* Returns a range of all the vr production plant equipment markups.
 	*

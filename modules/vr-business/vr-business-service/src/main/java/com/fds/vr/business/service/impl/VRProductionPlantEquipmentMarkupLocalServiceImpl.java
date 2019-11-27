@@ -21,6 +21,7 @@ import com.fds.vr.business.service.base.VRProductionPlantEquipmentMarkupLocalSer
 import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the vr production plant equipment markup local service.
@@ -59,5 +60,9 @@ public class VRProductionPlantEquipmentMarkupLocalServiceImpl
 			VRProductionPlantEquipmentMarkup object) throws SystemException {
 
 		return vrProductionPlantEquipmentMarkupPersistence.update(object);
+	}
+
+	public List<VRProductionPlantEquipmentMarkup> findByproductionPlantEquipmentId(long productionPlantEquipmentId) {
+		return vrProductionPlantEquipmentMarkupPersistence.findByproductionPlantEquipmentId(productionPlantEquipmentId);
 	}
 }
