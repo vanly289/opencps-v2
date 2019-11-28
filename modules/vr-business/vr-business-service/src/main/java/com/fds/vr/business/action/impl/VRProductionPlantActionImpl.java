@@ -153,8 +153,6 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		}
 	}
 
-	
-
 	public JSONObject createVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object) {
 		// validate
 		if (object == null) {
@@ -538,7 +536,8 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 	}
 
-	public JSONObject updateVRProductionPlantEquiptment(VRProductionPlantEquipment object) {
+	public JSONObject updateVRProductionPlantEquiptment(VRProductionPlantEquipment object,
+			List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups) {
 
 		// validate
 		if (object == null) {
@@ -548,22 +547,26 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
 		}
 
-		VRProductionPlantEquipment _tmp = VRProductionPlantEquipmentLocalServiceUtil
+		/*VRProductionPlantEquipment _tmp = VRProductionPlantEquipmentLocalServiceUtil
 				.fetchVRProductionPlantEquipment(object.getId());
 		if (_tmp == null) {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
-		}
+		}*/
 
 		try {
 
-			_tmp = (VRProductionPlantEquipment) ActionUtil.mergeObject(object, _tmp);
+			//_tmp = (VRProductionPlantEquipment) ActionUtil.mergeObject(object, _tmp);
 
-			_tmp = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(_tmp);
+			//_tmp = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(_tmp);
+			
+			
+			
+			object = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(object);
 
 			// JSONObject result = ActionUtil.object2Json(object,
 			// VRProductionPlantEquipment.class, StringPool.BLANK);
 
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, object);
 
 		} catch (Exception e) {
 			_log.error(e);

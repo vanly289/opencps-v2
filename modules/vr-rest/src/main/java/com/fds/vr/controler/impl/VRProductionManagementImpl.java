@@ -24,6 +24,7 @@ import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantEquipmentMarkupImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantProdEquipmentImpl;
+import com.fds.vr.business.service.VRProductionPlantEquipmentLocalServiceUtil;
 import com.fds.vr.controler.VRProductionManagement;
 import com.fds.vr.model.VRProductTypeApiModel;
 import com.fds.vr.model.VRProductionClassificationApiModel;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -50,6 +52,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
@@ -429,8 +432,26 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 				}
 			}
 
+			JSONObject result = JSONFactoryUtil.createJSONObject();
+
+			long id = object.getLong("id");
+
+			if (id <= 0) {
+				result = ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+
+				return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+			}
+			
+			VRProductionPlantEquipment vrProductionPlantEquipment = VRProductionPlantEquipmentLocalServiceUtil.fetchVRProductionPlantEquipment(id);
+			
+			if(vrProductionPlantEquipment == null) {
+				result = ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+
+				return Response.status(result.getInt("status")).entity(result.getString("content")).build();
+			}
+
 			Map<String, Object> map = VRRestUtil.json2Object(object,
-					new Object[] { new VRProductionPlantEquipmentImpl() });
+					new Object[] { vrProductionPlantEquipment });
 
 			Object entity = map.get(VRProductionPlantEquipmentImpl.class.getName());
 
@@ -438,7 +459,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 
-			JSONObject result = actionImpl.createVRProductionPlantEquiptment((VRProductionPlantEquipment) entity,
+			result = actionImpl.createVRProductionPlantEquiptment((VRProductionPlantEquipment) entity,
 					vrProductionPlantEquipmentMarkups);
 
 			return Response.status(result.getInt("status")).entity(result.getString("content")).build();

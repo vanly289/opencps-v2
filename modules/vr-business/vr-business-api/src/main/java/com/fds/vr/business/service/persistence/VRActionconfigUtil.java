@@ -112,6 +112,71 @@ public class VRActionconfigUtil {
 	}
 
 	/**
+	* Returns the vr actionconfig where actionCode = &#63; and processNo = &#63; or throws a {@link NoSuchVRActionconfigException} if it could not be found.
+	*
+	* @param actionCode the action code
+	* @param processNo the process no
+	* @return the matching vr actionconfig
+	* @throws NoSuchVRActionconfigException if a matching vr actionconfig could not be found
+	*/
+	public static VRActionconfig findByA_P(java.lang.String actionCode,
+		java.lang.String processNo)
+		throws com.fds.vr.business.exception.NoSuchVRActionconfigException {
+		return getPersistence().findByA_P(actionCode, processNo);
+	}
+
+	/**
+	* Returns the vr actionconfig where actionCode = &#63; and processNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param actionCode the action code
+	* @param processNo the process no
+	* @return the matching vr actionconfig, or <code>null</code> if a matching vr actionconfig could not be found
+	*/
+	public static VRActionconfig fetchByA_P(java.lang.String actionCode,
+		java.lang.String processNo) {
+		return getPersistence().fetchByA_P(actionCode, processNo);
+	}
+
+	/**
+	* Returns the vr actionconfig where actionCode = &#63; and processNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param actionCode the action code
+	* @param processNo the process no
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vr actionconfig, or <code>null</code> if a matching vr actionconfig could not be found
+	*/
+	public static VRActionconfig fetchByA_P(java.lang.String actionCode,
+		java.lang.String processNo, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByA_P(actionCode, processNo, retrieveFromCache);
+	}
+
+	/**
+	* Removes the vr actionconfig where actionCode = &#63; and processNo = &#63; from the database.
+	*
+	* @param actionCode the action code
+	* @param processNo the process no
+	* @return the vr actionconfig that was removed
+	*/
+	public static VRActionconfig removeByA_P(java.lang.String actionCode,
+		java.lang.String processNo)
+		throws com.fds.vr.business.exception.NoSuchVRActionconfigException {
+		return getPersistence().removeByA_P(actionCode, processNo);
+	}
+
+	/**
+	* Returns the number of vr actionconfigs where actionCode = &#63; and processNo = &#63;.
+	*
+	* @param actionCode the action code
+	* @param processNo the process no
+	* @return the number of matching vr actionconfigs
+	*/
+	public static int countByA_P(java.lang.String actionCode,
+		java.lang.String processNo) {
+		return getPersistence().countByA_P(actionCode, processNo);
+	}
+
+	/**
 	* Caches the vr actionconfig in the entity cache if it is enabled.
 	*
 	* @param vrActionconfig the vr actionconfig

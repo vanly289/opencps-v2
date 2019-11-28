@@ -90,7 +90,12 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.fds.vr.business.model.VRActionconfig"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRActionconfig"),
+			true);
+	public static final long ACTIONCODE_COLUMN_BITMASK = 1L;
+	public static final long PROCESSNO_COLUMN_BITMASK = 2L;
+	public static final long ID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRActionconfig"));
 
@@ -198,7 +203,17 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 
 	@Override
 	public void setActionCode(String actionCode) {
+		_columnBitmask |= ACTIONCODE_COLUMN_BITMASK;
+
+		if (_originalActionCode == null) {
+			_originalActionCode = _actionCode;
+		}
+
 		_actionCode = actionCode;
+	}
+
+	public String getOriginalActionCode() {
+		return GetterUtil.getString(_originalActionCode);
 	}
 
 	@Override
@@ -213,7 +228,17 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 
 	@Override
 	public void setProcessNo(String processNo) {
+		_columnBitmask |= PROCESSNO_COLUMN_BITMASK;
+
+		if (_originalProcessNo == null) {
+			_originalProcessNo = _processNo;
+		}
+
 		_processNo = processNo;
+	}
+
+	public String getOriginalProcessNo() {
+		return GetterUtil.getString(_originalProcessNo);
 	}
 
 	@Override
@@ -239,6 +264,10 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 	@Override
 	public void setVehicleClass(String vehicleClass) {
 		_vehicleClass = vehicleClass;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -333,6 +362,13 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 
 	@Override
 	public void resetOriginalValues() {
+		VRActionconfigModelImpl vrActionconfigModelImpl = this;
+
+		vrActionconfigModelImpl._originalActionCode = vrActionconfigModelImpl._actionCode;
+
+		vrActionconfigModelImpl._originalProcessNo = vrActionconfigModelImpl._processNo;
+
+		vrActionconfigModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -429,8 +465,11 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		};
 	private long _id;
 	private String _actionCode;
+	private String _originalActionCode;
 	private String _processNo;
+	private String _originalProcessNo;
 	private int _status;
 	private String _vehicleClass;
+	private long _columnBitmask;
 	private VRActionconfig _escapedModel;
 }

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -44,6 +46,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -82,6 +85,302 @@ public class VRActionconfigPersistenceImpl extends BasePersistenceImpl<VRActionc
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(VRActionconfigModelImpl.ENTITY_CACHE_ENABLED,
 			VRActionconfigModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FETCH_BY_A_P = new FinderPath(VRActionconfigModelImpl.ENTITY_CACHE_ENABLED,
+			VRActionconfigModelImpl.FINDER_CACHE_ENABLED,
+			VRActionconfigImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByA_P",
+			new String[] { String.class.getName(), String.class.getName() },
+			VRActionconfigModelImpl.ACTIONCODE_COLUMN_BITMASK |
+			VRActionconfigModelImpl.PROCESSNO_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_A_P = new FinderPath(VRActionconfigModelImpl.ENTITY_CACHE_ENABLED,
+			VRActionconfigModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_P",
+			new String[] { String.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the vr actionconfig where actionCode = &#63; and processNo = &#63; or throws a {@link NoSuchVRActionconfigException} if it could not be found.
+	 *
+	 * @param actionCode the action code
+	 * @param processNo the process no
+	 * @return the matching vr actionconfig
+	 * @throws NoSuchVRActionconfigException if a matching vr actionconfig could not be found
+	 */
+	@Override
+	public VRActionconfig findByA_P(String actionCode, String processNo)
+		throws NoSuchVRActionconfigException {
+		VRActionconfig vrActionconfig = fetchByA_P(actionCode, processNo);
+
+		if (vrActionconfig == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("actionCode=");
+			msg.append(actionCode);
+
+			msg.append(", processNo=");
+			msg.append(processNo);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchVRActionconfigException(msg.toString());
+		}
+
+		return vrActionconfig;
+	}
+
+	/**
+	 * Returns the vr actionconfig where actionCode = &#63; and processNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param actionCode the action code
+	 * @param processNo the process no
+	 * @return the matching vr actionconfig, or <code>null</code> if a matching vr actionconfig could not be found
+	 */
+	@Override
+	public VRActionconfig fetchByA_P(String actionCode, String processNo) {
+		return fetchByA_P(actionCode, processNo, true);
+	}
+
+	/**
+	 * Returns the vr actionconfig where actionCode = &#63; and processNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param actionCode the action code
+	 * @param processNo the process no
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching vr actionconfig, or <code>null</code> if a matching vr actionconfig could not be found
+	 */
+	@Override
+	public VRActionconfig fetchByA_P(String actionCode, String processNo,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { actionCode, processNo };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_A_P,
+					finderArgs, this);
+		}
+
+		if (result instanceof VRActionconfig) {
+			VRActionconfig vrActionconfig = (VRActionconfig)result;
+
+			if (!Objects.equals(actionCode, vrActionconfig.getActionCode()) ||
+					!Objects.equals(processNo, vrActionconfig.getProcessNo())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_VRACTIONCONFIG_WHERE);
+
+			boolean bindActionCode = false;
+
+			if (actionCode == null) {
+				query.append(_FINDER_COLUMN_A_P_ACTIONCODE_1);
+			}
+			else if (actionCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_A_P_ACTIONCODE_3);
+			}
+			else {
+				bindActionCode = true;
+
+				query.append(_FINDER_COLUMN_A_P_ACTIONCODE_2);
+			}
+
+			boolean bindProcessNo = false;
+
+			if (processNo == null) {
+				query.append(_FINDER_COLUMN_A_P_PROCESSNO_1);
+			}
+			else if (processNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_A_P_PROCESSNO_3);
+			}
+			else {
+				bindProcessNo = true;
+
+				query.append(_FINDER_COLUMN_A_P_PROCESSNO_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindActionCode) {
+					qPos.add(actionCode);
+				}
+
+				if (bindProcessNo) {
+					qPos.add(processNo);
+				}
+
+				List<VRActionconfig> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_A_P, finderArgs,
+						list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"VRActionconfigPersistenceImpl.fetchByA_P(String, String, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					VRActionconfig vrActionconfig = list.get(0);
+
+					result = vrActionconfig;
+
+					cacheResult(vrActionconfig);
+
+					if ((vrActionconfig.getActionCode() == null) ||
+							!vrActionconfig.getActionCode().equals(actionCode) ||
+							(vrActionconfig.getProcessNo() == null) ||
+							!vrActionconfig.getProcessNo().equals(processNo)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_A_P,
+							finderArgs, vrActionconfig);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_A_P, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (VRActionconfig)result;
+		}
+	}
+
+	/**
+	 * Removes the vr actionconfig where actionCode = &#63; and processNo = &#63; from the database.
+	 *
+	 * @param actionCode the action code
+	 * @param processNo the process no
+	 * @return the vr actionconfig that was removed
+	 */
+	@Override
+	public VRActionconfig removeByA_P(String actionCode, String processNo)
+		throws NoSuchVRActionconfigException {
+		VRActionconfig vrActionconfig = findByA_P(actionCode, processNo);
+
+		return remove(vrActionconfig);
+	}
+
+	/**
+	 * Returns the number of vr actionconfigs where actionCode = &#63; and processNo = &#63;.
+	 *
+	 * @param actionCode the action code
+	 * @param processNo the process no
+	 * @return the number of matching vr actionconfigs
+	 */
+	@Override
+	public int countByA_P(String actionCode, String processNo) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_A_P;
+
+		Object[] finderArgs = new Object[] { actionCode, processNo };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_VRACTIONCONFIG_WHERE);
+
+			boolean bindActionCode = false;
+
+			if (actionCode == null) {
+				query.append(_FINDER_COLUMN_A_P_ACTIONCODE_1);
+			}
+			else if (actionCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_A_P_ACTIONCODE_3);
+			}
+			else {
+				bindActionCode = true;
+
+				query.append(_FINDER_COLUMN_A_P_ACTIONCODE_2);
+			}
+
+			boolean bindProcessNo = false;
+
+			if (processNo == null) {
+				query.append(_FINDER_COLUMN_A_P_PROCESSNO_1);
+			}
+			else if (processNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_A_P_PROCESSNO_3);
+			}
+			else {
+				bindProcessNo = true;
+
+				query.append(_FINDER_COLUMN_A_P_PROCESSNO_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindActionCode) {
+					qPos.add(actionCode);
+				}
+
+				if (bindProcessNo) {
+					qPos.add(processNo);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_A_P_ACTIONCODE_1 = "vrActionconfig.actionCode IS NULL AND ";
+	private static final String _FINDER_COLUMN_A_P_ACTIONCODE_2 = "vrActionconfig.actionCode = ? AND ";
+	private static final String _FINDER_COLUMN_A_P_ACTIONCODE_3 = "(vrActionconfig.actionCode IS NULL OR vrActionconfig.actionCode = '') AND ";
+	private static final String _FINDER_COLUMN_A_P_PROCESSNO_1 = "vrActionconfig.processNo IS NULL";
+	private static final String _FINDER_COLUMN_A_P_PROCESSNO_2 = "vrActionconfig.processNo = ?";
+	private static final String _FINDER_COLUMN_A_P_PROCESSNO_3 = "(vrActionconfig.processNo IS NULL OR vrActionconfig.processNo = '')";
 
 	public VRActionconfigPersistenceImpl() {
 		setModelClass(VRActionconfig.class);
@@ -97,6 +396,11 @@ public class VRActionconfigPersistenceImpl extends BasePersistenceImpl<VRActionc
 		entityCache.putResult(VRActionconfigModelImpl.ENTITY_CACHE_ENABLED,
 			VRActionconfigImpl.class, vrActionconfig.getPrimaryKey(),
 			vrActionconfig);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_A_P,
+			new Object[] {
+				vrActionconfig.getActionCode(), vrActionconfig.getProcessNo()
+			}, vrActionconfig);
 
 		vrActionconfig.resetOriginalValues();
 	}
@@ -150,6 +454,8 @@ public class VRActionconfigPersistenceImpl extends BasePersistenceImpl<VRActionc
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((VRActionconfigModelImpl)vrActionconfig, true);
 	}
 
 	@Override
@@ -160,6 +466,46 @@ public class VRActionconfigPersistenceImpl extends BasePersistenceImpl<VRActionc
 		for (VRActionconfig vrActionconfig : vrActionconfigs) {
 			entityCache.removeResult(VRActionconfigModelImpl.ENTITY_CACHE_ENABLED,
 				VRActionconfigImpl.class, vrActionconfig.getPrimaryKey());
+
+			clearUniqueFindersCache((VRActionconfigModelImpl)vrActionconfig,
+				true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		VRActionconfigModelImpl vrActionconfigModelImpl) {
+		Object[] args = new Object[] {
+				vrActionconfigModelImpl.getActionCode(),
+				vrActionconfigModelImpl.getProcessNo()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_A_P, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_A_P, args,
+			vrActionconfigModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		VRActionconfigModelImpl vrActionconfigModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					vrActionconfigModelImpl.getActionCode(),
+					vrActionconfigModelImpl.getProcessNo()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_A_P, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_A_P, args);
+		}
+
+		if ((vrActionconfigModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_A_P.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					vrActionconfigModelImpl.getOriginalActionCode(),
+					vrActionconfigModelImpl.getOriginalProcessNo()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_A_P, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_A_P, args);
 		}
 	}
 
@@ -269,6 +615,8 @@ public class VRActionconfigPersistenceImpl extends BasePersistenceImpl<VRActionc
 
 		boolean isNew = vrActionconfig.isNew();
 
+		VRActionconfigModelImpl vrActionconfigModelImpl = (VRActionconfigModelImpl)vrActionconfig;
+
 		Session session = null;
 
 		try {
@@ -292,13 +640,16 @@ public class VRActionconfigPersistenceImpl extends BasePersistenceImpl<VRActionc
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !VRActionconfigModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		entityCache.putResult(VRActionconfigModelImpl.ENTITY_CACHE_ENABLED,
 			VRActionconfigImpl.class, vrActionconfig.getPrimaryKey(),
 			vrActionconfig, false);
+
+		clearUniqueFindersCache(vrActionconfigModelImpl, false);
+		cacheUniqueFindersCache(vrActionconfigModelImpl);
 
 		vrActionconfig.resetOriginalValues();
 
@@ -729,8 +1080,11 @@ public class VRActionconfigPersistenceImpl extends BasePersistenceImpl<VRActionc
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_VRACTIONCONFIG = "SELECT vrActionconfig FROM VRActionconfig vrActionconfig";
 	private static final String _SQL_SELECT_VRACTIONCONFIG_WHERE_PKS_IN = "SELECT vrActionconfig FROM VRActionconfig vrActionconfig WHERE id IN (";
+	private static final String _SQL_SELECT_VRACTIONCONFIG_WHERE = "SELECT vrActionconfig FROM VRActionconfig vrActionconfig WHERE ";
 	private static final String _SQL_COUNT_VRACTIONCONFIG = "SELECT COUNT(vrActionconfig) FROM VRActionconfig vrActionconfig";
+	private static final String _SQL_COUNT_VRACTIONCONFIG_WHERE = "SELECT COUNT(vrActionconfig) FROM VRActionconfig vrActionconfig WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "vrActionconfig.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No VRActionconfig exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No VRActionconfig exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(VRActionconfigPersistenceImpl.class);
 }
