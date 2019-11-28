@@ -1,5 +1,6 @@
 package com.fds.vr.business.action;
 
+import com.fds.vr.business.model.VRProductionClassification;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -12,8 +13,13 @@ import java.util.LinkedHashMap;
  *
  */
 public interface VRProductionClassificationAction {
+
+	public JSONObject createVRProductionClassification(VRProductionClassification object);
+
 	public JSONArray findVRProductionClassification(String productionPlantCode);
 
 	public JSONObject findVRProductionClassification(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params);
+
+	public JSONObject updateVRProductionClassification(VRProductionClassification object);
 }

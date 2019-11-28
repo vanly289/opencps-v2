@@ -7,6 +7,7 @@ import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.VRProductionPlantEquipmentMarkup;
 import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantEquipmentMarkupModelImpl;
+import com.fds.vr.business.model.impl.VRProductionPlantEquipmentModelImpl;
 import com.fds.vr.business.service.VRProductionPlantEquipmentLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantEquipmentMarkupLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -29,6 +30,59 @@ import javax.net.ssl.HttpsURLConnection;
 public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEquipmentAction {
 
 	private static Log _log = LogFactoryUtil.getLog(VRProductionPlantEquipmentActionImpl.class);
+
+	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment object) {
+
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			object = VRProductionPlantEquipmentLocalServiceUtil.createVRProductionPlantEquipment(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantEquipment.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
+
+	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment vrProductionPlantEquipment,
+			List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups) {
+
+		// validate
+		if (vrProductionPlantEquipment == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			vrProductionPlantEquipment = VRProductionPlantEquipmentLocalServiceUtil
+					.createVRProductionPlantEquipment(vrProductionPlantEquipment);
+			JSONArray _tmpVRProductionPlantEquipmentMarkups = JSONFactoryUtil.createJSONArray();
+			for (VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup : vrProductionPlantEquipmentMarkups) {
+				vrProductionPlantEquipmentMarkup.setProductionPlantEquipmentId(vrProductionPlantEquipment.getId());
+				vrProductionPlantEquipmentMarkup = VRProductionPlantEquipmentMarkupLocalServiceUtil
+						.createVRProductionPlantEquipmentMarkup(vrProductionPlantEquipmentMarkup);
+				_tmpVRProductionPlantEquipmentMarkups.put(ActionUtil.object2Json(vrProductionPlantEquipmentMarkup,
+						VRProductionPlantEquipmentMarkupModelImpl.class, StringPool.BLANK));
+			}
+
+			JSONObject result = ActionUtil.object2Json(vrProductionPlantEquipment,
+					VRProductionPlantEquipmentModelImpl.class, StringPool.BLANK);
+
+			result.put("vrproductionplantequipmentmarkup", _tmpVRProductionPlantEquipmentMarkups);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
 
 	public JSONObject deleteVRProductionPlantEquiptment(long id) {
 
@@ -521,6 +575,66 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 		result.put("total", total);
 		result.put("data", data);
 		return result;
+	}
+
+	
+	public JSONObject updateVRProductionPlantEquiptment(VRProductionPlantEquipment object,
+			List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups) {
+
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		if (object.getId() <= 0) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
+		/*VRProductionPlantEquipment _tmp = VRProductionPlantEquipmentLocalServiceUtil
+				.fetchVRProductionPlantEquipment(object.getId());
+		if (_tmp == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}*/
+
+		try {
+
+			//_tmp = (VRProductionPlantEquipment) ActionUtil.mergeObject(object, _tmp);
+
+			//_tmp = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(_tmp);
+
+			List<VRProductionPlantEquipmentMarkup> _tmpVRProductionPlantEquipmentMarkups = VRProductionPlantEquipmentMarkupLocalServiceUtil
+					.findByproductionPlantEquipmentId(object.getId());
+
+			if (_tmpVRProductionPlantEquipmentMarkups != null) {
+				for (VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup : _tmpVRProductionPlantEquipmentMarkups) {
+					VRProductionPlantEquipmentMarkupLocalServiceUtil
+							.deleteVRProductionPlantEquipmentMarkup(vrProductionPlantEquipmentMarkup.getId());
+				}
+			}
+
+			object = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(object);
+
+			JSONArray _tmpArrayVRProductionPlantEquipmentMarkups = JSONFactoryUtil.createJSONArray();
+			for (VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup : vrProductionPlantEquipmentMarkups) {
+				vrProductionPlantEquipmentMarkup.setProductionPlantEquipmentId(object.getId());
+				vrProductionPlantEquipmentMarkup = VRProductionPlantEquipmentMarkupLocalServiceUtil
+						.createVRProductionPlantEquipmentMarkup(vrProductionPlantEquipmentMarkup);
+				_tmpArrayVRProductionPlantEquipmentMarkups.put(ActionUtil.object2Json(vrProductionPlantEquipmentMarkup,
+						VRProductionPlantEquipmentMarkupModelImpl.class, StringPool.BLANK));
+			}
+
+			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantEquipmentModelImpl.class,
+					StringPool.BLANK);
+
+			result.put("vrproductionplantequipmentmarkup", _tmpArrayVRProductionPlantEquipmentMarkups);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
 	}
 
 }

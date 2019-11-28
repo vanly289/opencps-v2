@@ -45,10 +45,10 @@ public interface VRProductionManagement {
 	@Path("/classification/")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "create VRProductionClassification", tags={ "vrproductionclassificationapimodel"})
+	//@ApiOperation(value = "create VRProductionClassification", tags={ "vrproductionclassificationapimodel"})
 	public Response createVRProductionClassification(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRProductionClassificationApiModel model);
+			@Context ServiceContext serviceContext, String data);
 	@POST
 	@Path("/plant/")
 	@Consumes({ MediaType.APPLICATION_JSON })

@@ -19,12 +19,33 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 /**
  * @author trungnt
  *
  */
 public class VRProductionClassificationActionImpl implements VRProductionClassificationAction {
 	private Log _log = LogFactoryUtil.getLog(VRProductionClassificationActionImpl.class);
+
+	public JSONObject createVRProductionClassification(VRProductionClassification object) {
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			object = VRProductionClassificationLocalServiceUtil.createVRProductionClassification(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRProductionClassification.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
 
 	@Override
 	public JSONArray findVRProductionClassification(String productionPlantCode) {
@@ -116,7 +137,7 @@ public class VRProductionClassificationActionImpl implements VRProductionClassif
 				+ ActionUtil.buildSQLCondition("remarks", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("status", keyword, "OR", StringPool.LIKE, "");
 		SQLQueryBuilder builder = new SQLQueryBuilder();
-		
+
 		builder.selectAll().from("vr_productclassification").where("id", id, "AND", StringPool.EQUAL)
 				.where("mtcore", mtCore, "AND", StringPool.EQUAL)
 				.where("applicantprofileid", applicantProfileId, "AND", StringPool.EQUAL)
@@ -140,4 +161,39 @@ public class VRProductionClassificationActionImpl implements VRProductionClassif
 		return result;
 	}
 
+	public JSONObject updateVRProductionClassification(VRProductionClassification object) {
+
+		// validate
+
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+
+		if (object.getId() <= 0) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
+		VRProductionClassification _tmp = VRProductionClassificationLocalServiceUtil
+				.fetchVRProductionClassification(object.getId());
+		if (_tmp == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
+		try {
+			_tmp = (VRProductionClassification) ActionUtil.mergeObject(object, _tmp);
+
+			_tmp = VRProductionClassificationLocalServiceUtil.updateVRProductionClassification(_tmp);
+
+			// JSONObject result = ActionUtil.object2Json(object,
+			// VRProductionClassification.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
 }

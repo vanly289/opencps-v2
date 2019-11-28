@@ -21,12 +21,34 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 /**
  * @author trungnt
  *
  */
 public class VRProductionPlantProdEquipmentActionImpl implements VRProductionPlantProdEquipmentAction {
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantProdEquipmentActionImpl.class.getName());
+
+	public JSONObject createVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object) {
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+
+			object = VRProductionPlantProdEquipmentLocalServiceUtil.createVRProductionPlantProdEquipment(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantProdEquipment.class, StringPool.BLANK);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+
+	}
 
 	@Override
 	public JSONArray findByProductionPlanCode(String productionPlantCodes) {
@@ -52,7 +74,7 @@ public class VRProductionPlantProdEquipmentActionImpl implements VRProductionPla
 		}
 		return result;
 	}
-	
+
 	@Override
 	public JSONObject findVRProductionPlantProdEquipment(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params) {

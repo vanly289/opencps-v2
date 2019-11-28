@@ -14,5 +14,4 @@ public interface VRIssueAction {
 	public JSONObject findVRIssue(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params);
 
-	
 }

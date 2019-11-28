@@ -26,44 +26,44 @@ public class VRIssueActionImpl implements VRIssueAction {
 		int start = ActionUtil.getStart(params);
 		int end = ActionUtil.getEnd(params);
 		String keyword = ActionUtil.getKeyword(params);
-		//Long id = null;
+		Long id = null;
 		Long mtCore = null;
 		Long dossierId = null;
 		String stampIssueNo = null;
-		//String appliedDate = null;
-		//String approvedDate = null;
+		String appliedDate = null;
+		String approvedDate = null;
 		String vehicleClass = null;
 		Long applicantProfileId = null;
-		//String applicantName = null;
-		//String applicantAddress = null;
-		//String applicantRepresentative = null;
-		//String applicantRepresentativeTitle = null;
-		//String applicantEmail = null;
-		//String applicantPhone = null;
-		//String applicantFax = null;
-		//String applicantContactName = null;
-		//String applicantContactEmail = null;
-		//String applicantContactPhone = null;
+		String applicantName = null;
+		String applicantAddress = null;
+		String applicantRepresentative = null;
+		String applicantRepresentativeTitle = null;
+		String applicantEmail = null;
+		String applicantPhone = null;
+		String applicantFax = null;
+		String applicantContactName = null;
+		String applicantContactEmail = null;
+		String applicantContactPhone = null;
 		Long productionPlantId = null;
 		String productionPlantCode = null;
 		String productionPlantName = null;
 		String productionPlantAddress = null;
 		String remarks = null;
 		String methodOfIssue = null;
-		//Long totalInDocument = null;
-		//Long issueCorporationId = null;
+		Long totalInDocument = null;
+		Long issueCorporationId = null;
 		String verifyCorporationId = null;
 		Integer digitalissuestatus = null;
 		String issueType = null;
-		//Integer averageSTBQuantity = null;
-		//Integer maxMonthQuantity = null;
-		//Integer averageSTMQuantity = null;
-		//Integer accumulatedMonthQuantity = null;
-		//Integer totalInUse = null;
-		//Integer totalCancelled = null;
-		//Integer totalLost = null;
-		//Integer totalNotUsed = null;
-		//Integer totalReturned = null;
+		Integer averageSTBQuantity = null;
+		Integer maxMonthQuantity = null;
+		Integer averageSTMQuantity = null;
+		Integer accumulatedMonthQuantity = null;
+		Integer totalInUse = null;
+		Integer totalCancelled = null;
+		Integer totalLost = null;
+		Integer totalNotUsed = null;
+		Integer totalReturned = null;
 		String flow = null;
 		String examinationRequired = null;
 		String examinationPeriod = null;
@@ -86,9 +86,9 @@ public class VRIssueActionImpl implements VRIssueAction {
 		//String modifyDate = null;
 		//String syncDate = null;
 		if (params != null) {
-			/*if (params.containsKey("id")) {
+			if (params.containsKey("id")) {
 				id = GetterUtil.getLong(params.get("id"));
-			}*/
+			}
 			if (params.containsKey("mtcore")) {
 				mtCore = GetterUtil.getLong(params.get("mtcore"));
 			}
@@ -98,19 +98,19 @@ public class VRIssueActionImpl implements VRIssueAction {
 			if (params.containsKey("stampissueno")) {
 				stampIssueNo = GetterUtil.getString(params.get("stampissueno"));
 			}
-			/*if (params.containsKey("applieddate")) {
+			if (params.containsKey("applieddate")) {
 				appliedDate = GetterUtil.getString(params.get("applieddate"));
-			}*/
-			/*if (params.containsKey("approveddate")) {
+			}
+			if (params.containsKey("approveddate")) {
 				approvedDate = GetterUtil.getString(params.get("approveddate"));
-			}*/
+			}
 			if (params.containsKey("vehicleclass")) {
 				vehicleClass = GetterUtil.getString(params.get("vehicleclass"));
 			}
 			if (params.containsKey("applicantprofileid")) {
 				applicantProfileId = GetterUtil.getLong(params.get("applicantprofileid"));
 			}
-			/*if (params.containsKey("applicantname")) {
+			if (params.containsKey("applicantname")) {
 				applicantName = GetterUtil.getString(params.get("applicantname"));
 			}
 			if (params.containsKey("applicantaddress")) {
@@ -139,7 +139,7 @@ public class VRIssueActionImpl implements VRIssueAction {
 			}
 			if (params.containsKey("applicantcontactphone")) {
 				applicantContactPhone = GetterUtil.getString(params.get("applicantcontactphone"));
-			}*/
+			}
 			if (params.containsKey("productionplantid")) {
 				productionPlantId = GetterUtil.getLong(params.get("productionplantid"));
 			}
@@ -158,12 +158,12 @@ public class VRIssueActionImpl implements VRIssueAction {
 			if (params.containsKey("methodofissue")) {
 				methodOfIssue = GetterUtil.getString(params.get("methodofissue"));
 			}
-			/*if (params.containsKey("totalindocument")) {
+			if (params.containsKey("totalindocument")) {
 				totalInDocument = GetterUtil.getLong(params.get("totalindocument"));
 			}
 			if (params.containsKey("issuecorporationid")) {
 				issueCorporationId = GetterUtil.getLong(params.get("issuecorporationid"));
-			}*/
+			}
 			if (params.containsKey("verifycorporationid")) {
 				verifyCorporationId = GetterUtil.getString(params.get("verifycorporationid"));
 			}
@@ -173,7 +173,7 @@ public class VRIssueActionImpl implements VRIssueAction {
 			if (params.containsKey("issuetype")) {
 				issueType = GetterUtil.getString(params.get("issuetype"));
 			}
-			/*if (params.containsKey("averagestbquantity")) {
+			if (params.containsKey("averagestbquantity")) {
 				averageSTBQuantity = GetterUtil.getInteger(params.get("averagestbquantity"));
 			}
 			if (params.containsKey("maxmonthquantity")) {
@@ -199,7 +199,7 @@ public class VRIssueActionImpl implements VRIssueAction {
 			}
 			if (params.containsKey("totalreturned")) {
 				totalReturned = GetterUtil.getInteger(params.get("totalreturned"));
-			}*/
+			}
 			if (params.containsKey("flow")) {
 				flow = GetterUtil.getString(params.get("flow"));
 			}
@@ -264,45 +264,76 @@ public class VRIssueActionImpl implements VRIssueAction {
 				syncDate = GetterUtil.getString(params.get("syncdate"));
 			}*/
 		}
+		String _keywordSearchCondition = ActionUtil.buildSQLCondition("stampIssueNo", keyword, "", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("vehicleClass", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantName", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantAddress", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantRepresentative", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantRepresentativeTitle", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantEmail", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantPhone", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantFax", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantContactName", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantContactEmail", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantContactPhone", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("productionPlantCode", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("productionPlantName", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("productionPlantAddress", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("remarks", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("methodOfIssue", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("verifyCorporationId", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("issueType", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("flow", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("examinationRequired", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("examinationPeriod", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("copresult", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("copreportno", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("postreview", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("postreviewrecordno", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("corporationId", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("inspectorcode", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("inspectorname", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("leadername", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantmaker", keyword, "OR", StringPool.LIKE, "")
+				+ ActionUtil.buildSQLCondition("applicantchecker", keyword, "OR", StringPool.LIKE, "");
 		SQLQueryBuilder builder = new SQLQueryBuilder();
-		builder.selectAll().from("vr_issue")
-				//.where("id",id,"AND",StringPool.EQUAL)
+		builder.selectAll().from("vr_issue").where("id", id, "AND", StringPool.EQUAL)
 				.where("mtcore", mtCore, "AND", StringPool.EQUAL).where("dossierid", dossierId, "AND", StringPool.EQUAL)
 				.where("stampissueno", stampIssueNo, "AND", StringPool.EQUAL)
-				//.where("applieddate",appliedDate,"AND",StringPool.EQUAL)
-				//.where("approveddate",approvedDate,"AND",StringPool.EQUAL)
+				.where("applieddate", appliedDate, "AND", StringPool.EQUAL)
+				.where("approveddate", approvedDate, "AND", StringPool.EQUAL)
 				.where("vehicleclass", vehicleClass, "AND", StringPool.EQUAL)
 				.where("applicantprofileid", applicantProfileId, "AND", StringPool.EQUAL)
-				//.where("applicantname",applicantName,"AND",StringPool.EQUAL)
-				//.where("applicantaddress",applicantAddress,"AND",StringPool.EQUAL)
-				//.where("applicantrepresentative",applicantRepresentative,"AND",StringPool.EQUAL)
-				//.where("applicantrepresentativetitle",applicantRepresentativeTitle,"AND",StringPool.EQUAL)
-				//.where("applicantemail",applicantEmail,"AND",StringPool.EQUAL)
-				//.where("applicantphone",applicantPhone,"AND",StringPool.EQUAL)
-				//.where("applicantfax",applicantFax,"AND",StringPool.EQUAL)
-				//.where("applicantcontactname",applicantContactName,"AND",StringPool.EQUAL)
-				//.where("applicantcontactemail",applicantContactEmail,"AND",StringPool.EQUAL)
-				//.where("applicantcontactphone",applicantContactPhone,"AND",StringPool.EQUAL)
+				.where("applicantname", applicantName, "AND", StringPool.EQUAL)
+				.where("applicantaddress", applicantAddress, "AND", StringPool.EQUAL)
+				.where("applicantrepresentative", applicantRepresentative, "AND", StringPool.EQUAL)
+				.where("applicantrepresentativetitle", applicantRepresentativeTitle, "AND", StringPool.EQUAL)
+				.where("applicantemail", applicantEmail, "AND", StringPool.EQUAL)
+				.where("applicantphone", applicantPhone, "AND", StringPool.EQUAL)
+				.where("applicantfax", applicantFax, "AND", StringPool.EQUAL)
+				.where("applicantcontactname", applicantContactName, "AND", StringPool.EQUAL)
+				.where("applicantcontactemail", applicantContactEmail, "AND", StringPool.EQUAL)
+				.where("applicantcontactphone", applicantContactPhone, "AND", StringPool.EQUAL)
 				.where("productionplantid", productionPlantId, "AND", StringPool.EQUAL)
 				.where("productionplantcode", productionPlantCode, "AND", StringPool.EQUAL)
 				.where("productionplantname", productionPlantName, "AND", StringPool.EQUAL)
 				.where("productionplantaddress", productionPlantAddress, "AND", StringPool.EQUAL)
 				.where("remarks", remarks, "AND", StringPool.EQUAL)
 				.where("methodofissue", methodOfIssue, "AND", StringPool.EQUAL)
-				//.where("totalindocument",totalInDocument,"AND",StringPool.EQUAL)
-				//.where("issuecorporationid",issueCorporationId,"AND",StringPool.EQUAL)
+				.where("totalindocument", totalInDocument, "AND", StringPool.EQUAL)
+				.where("issuecorporationid", issueCorporationId, "AND", StringPool.EQUAL)
 				.where("verifycorporationid", verifyCorporationId, "AND", StringPool.EQUAL)
 				.where("digitalissuestatus", digitalissuestatus, "AND", StringPool.EQUAL)
 				.where("issuetype", issueType, "AND", StringPool.EQUAL)
-				//.where("averagestbquantity",averageSTBQuantity,"AND",StringPool.EQUAL)
-				//.where("maxmonthquantity",maxMonthQuantity,"AND",StringPool.EQUAL)
-				//.where("averagestmquantity",averageSTMQuantity,"AND",StringPool.EQUAL)
-				//.where("accumulatedmonthquantity",accumulatedMonthQuantity,"AND",StringPool.EQUAL)
-				//.where("totalinuse",totalInUse,"AND",StringPool.EQUAL)
-				//.where("totalcancelled",totalCancelled,"AND",StringPool.EQUAL)
-				//.where("totallost",totalLost,"AND",StringPool.EQUAL)
-				//.where("totalnotused",totalNotUsed,"AND",StringPool.EQUAL)
-				//.where("totalreturned",totalReturned,"AND",StringPool.EQUAL)
+				.where("averagestbquantity", averageSTBQuantity, "AND", StringPool.EQUAL)
+				.where("maxmonthquantity", maxMonthQuantity, "AND", StringPool.EQUAL)
+				.where("averagestmquantity", averageSTMQuantity, "AND", StringPool.EQUAL)
+				.where("accumulatedmonthquantity", accumulatedMonthQuantity, "AND", StringPool.EQUAL)
+				.where("totalinuse", totalInUse, "AND", StringPool.EQUAL)
+				.where("totalcancelled", totalCancelled, "AND", StringPool.EQUAL)
+				.where("totallost", totalLost, "AND", StringPool.EQUAL)
+				.where("totalnotused", totalNotUsed, "AND", StringPool.EQUAL)
+				.where("totalreturned", totalReturned, "AND", StringPool.EQUAL)
 				.where("flow", flow, "AND", StringPool.EQUAL)
 				.where("examinationrequired", examinationRequired, "AND", StringPool.EQUAL)
 				.where("examinationperiod", examinationPeriod, "AND", StringPool.EQUAL)
@@ -322,9 +353,9 @@ public class VRIssueActionImpl implements VRIssueAction {
 				.where("inspectorid", inspectorId, "AND", StringPool.EQUAL)
 				.where("issueinspectorid", issueInspectorId, "AND", StringPool.EQUAL)
 				.where("verifyinspectorid", verifyInspectorId, "AND", StringPool.EQUAL)
-				//.where("modifydate",modifyDate,"AND",StringPool.EQUAL)
-				//.where("syncdate",syncDate,"AND",StringPool.EQUAL)
-				.build();
+				//.where("modifydate", modifyDate, "AND", StringPool.EQUAL)
+				//.where("syncdate", syncDate, "AND", StringPool.EQUAL)
+				.where(_keywordSearchCondition, null, "AND", "", true).build();
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		long total = VRIssueLocalServiceUtil.counData(builder.getCountQuery());
 		JSONArray data = VRIssueLocalServiceUtil.findData(builder.getSelectQuery(), null, null, VRIssueImpl.class,

@@ -7,17 +7,11 @@ import com.fds.vr.business.model.VRProductType;
 import com.fds.vr.business.model.VRProductionClassification;
 import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.model.VRProductionPlantEmployee;
-import com.fds.vr.business.model.VRProductionPlantEquipment;
-import com.fds.vr.business.model.VRProductionPlantEquipmentMarkup;
 import com.fds.vr.business.model.VRProductionPlantProdEquipment;
-import com.fds.vr.business.model.impl.VRProductionPlantEquipmentMarkupModelImpl;
-import com.fds.vr.business.model.impl.VRProductionPlantEquipmentModelImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
 import com.fds.vr.business.service.VRProductTypeLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionClassificationLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantEmployeeLocalServiceUtil;
-import com.fds.vr.business.service.VRProductionPlantEquipmentLocalServiceUtil;
-import com.fds.vr.business.service.VRProductionPlantEquipmentMarkupLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantProdEquipmentLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,7 +25,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -42,25 +35,6 @@ import javax.net.ssl.HttpsURLConnection;
 public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 	private static Log _log = LogFactoryUtil.getLog(VRProductionPlantActionImpl.class);
-
-	public JSONObject createVRProductionClassification(VRProductionClassification object) {
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		try {
-			object = VRProductionClassificationLocalServiceUtil.createVRProductionClassification(object);
-
-			JSONObject result = ActionUtil.object2Json(object, VRProductionClassification.class, StringPool.BLANK);
-
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
-
-		} catch (Exception e) {
-			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
-	}
 
 	public JSONObject createVRProductionPlant(VRProductionPlant object) {
 		// validate
@@ -98,79 +72,6 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
 
 		}
-	}
-
-	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment object) {
-
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		try {
-			object = VRProductionPlantEquipmentLocalServiceUtil.createVRProductionPlantEquipment(object);
-
-			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantEquipment.class, StringPool.BLANK);
-
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
-
-		} catch (Exception e) {
-			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
-	}
-
-	public JSONObject createVRProductionPlantEquiptment(VRProductionPlantEquipment vrProductionPlantEquipment,
-			List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups) {
-
-		// validate
-		if (vrProductionPlantEquipment == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		try {
-			vrProductionPlantEquipment = VRProductionPlantEquipmentLocalServiceUtil
-					.createVRProductionPlantEquipment(vrProductionPlantEquipment);
-			JSONArray _tmpVRProductionPlantEquipmentMarkups = JSONFactoryUtil.createJSONArray();
-			for (VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup : vrProductionPlantEquipmentMarkups) {
-				vrProductionPlantEquipmentMarkup.setProductionPlantEquipmentId(vrProductionPlantEquipment.getId());
-				vrProductionPlantEquipmentMarkup = VRProductionPlantEquipmentMarkupLocalServiceUtil
-						.createVRProductionPlantEquipmentMarkup(vrProductionPlantEquipmentMarkup);
-				_tmpVRProductionPlantEquipmentMarkups.put(ActionUtil.object2Json(vrProductionPlantEquipmentMarkup,
-						VRProductionPlantEquipmentMarkupModelImpl.class, StringPool.BLANK));
-			}
-
-			JSONObject result = ActionUtil.object2Json(vrProductionPlantEquipment,
-					VRProductionPlantEquipmentModelImpl.class, StringPool.BLANK);
-
-			result.put("vrproductionplantequipmentmarkup", _tmpVRProductionPlantEquipmentMarkups);
-
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
-
-		} catch (Exception e) {
-			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
-	}
-
-	public JSONObject createVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object) {
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		try {
-
-			object = VRProductionPlantProdEquipmentLocalServiceUtil.createVRProductionPlantProdEquipment(object);
-
-			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantProdEquipment.class, StringPool.BLANK);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
-
-		} catch (Exception e) {
-			_log.error(e);
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
-
 	}
 
 	public JSONObject createVRProductType(VRProductType object) {
@@ -432,42 +333,6 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 		return result;
 	}
 
-	public JSONObject updateVRProductionClassification(VRProductionClassification object) {
-
-		// validate
-
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-
-		if (object.getId() <= 0) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
-		}
-
-		VRProductionClassification _tmp = VRProductionClassificationLocalServiceUtil
-				.fetchVRProductionClassification(object.getId());
-		if (_tmp == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
-		}
-
-		try {
-			_tmp = (VRProductionClassification) ActionUtil.mergeObject(object, _tmp);
-
-			_tmp = VRProductionClassificationLocalServiceUtil.updateVRProductionClassification(_tmp);
-
-			// JSONObject result = ActionUtil.object2Json(object,
-			// VRProductionClassification.class, StringPool.BLANK);
-
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, _tmp);
-
-		} catch (Exception e) {
-			_log.error(e);
-
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
-	}
-
 	public JSONObject updateVRProductionPlant(VRProductionPlant object) {
 
 		// validate
@@ -534,46 +399,6 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 		}
 
-	}
-
-	public JSONObject updateVRProductionPlantEquiptment(VRProductionPlantEquipment object,
-			List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups) {
-
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		if (object.getId() <= 0) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
-		}
-
-		/*VRProductionPlantEquipment _tmp = VRProductionPlantEquipmentLocalServiceUtil
-				.fetchVRProductionPlantEquipment(object.getId());
-		if (_tmp == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
-		}*/
-
-		try {
-
-			//_tmp = (VRProductionPlantEquipment) ActionUtil.mergeObject(object, _tmp);
-
-			//_tmp = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(_tmp);
-			
-			
-			
-			object = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(object);
-
-			// JSONObject result = ActionUtil.object2Json(object,
-			// VRProductionPlantEquipment.class, StringPool.BLANK);
-
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, object);
-
-		} catch (Exception e) {
-			_log.error(e);
-
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
-		}
 	}
 
 	public JSONObject updateVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object) {
