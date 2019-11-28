@@ -3,10 +3,13 @@ package org.opencps.dossiermgt.vr.utils;
 import com.fds.vr.business.model.VRActionconfig;
 import com.fds.vr.business.model.VRTechnicalSpec_LKXCG;
 import com.fds.vr.business.model.VRTechnicalSpec_LKXMY;
+import com.fds.vr.business.model.VRTechnicalSpec_XCG;
 import com.fds.vr.business.model.impl.VRTechnicalSpec_LKXCGImpl;
 import com.fds.vr.business.model.impl.VRTechnicalSpec_LKXMYImpl;
+import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGImpl;
 import com.fds.vr.business.service.VRActionconfigLocalServiceUtil;
 import com.fds.vr.business.service.VRTechnicalSpec_LKXCGLocalServiceUtil;
+import com.fds.vr.business.service.VRTechnicalSpec_XCGLocalServiceUtil;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,7 +52,7 @@ public class VRBussinessUtils {
 				
 				String formData = dossierFile.getFormData();
 				
-				VRTechnicalSpec_LKXCG o = new VRTechnicalSpec_LKXCGImpl();
+				VRTechnicalSpec_XCG o = new VRTechnicalSpec_XCGImpl();
 				boolean save = false;
 				
 				try {
@@ -62,19 +65,24 @@ public class VRBussinessUtils {
 						    String key = keys.next();
 						    _log.info("====keys===" + key);
 						    if (key.indexOf("bb_") > -1) {
-						    	save = true;
 						    	String tmp = StringUtil.replace(key, "bb_", "");
 						    	_log.info("====tmp===" + tmp);
-						    	Field field = VRTechnicalSpec_LKXCGImpl.class.getField(tmp);
-						    	field.set(o, json.get(key));
+						    	try {
+						    		Field field = VRTechnicalSpec_XCGImpl.class.getField(tmp);
+							    	field.set(o, json.get(key));
+							    	save = true;
+						    	} catch(NoSuchFieldException nsfe) {
+						    		
+						    	}
+							    	
 						    }
 						}
 					}
 					
 					if(save) {
-						o.setId(CounterLocalServiceUtil.increment(VRTechnicalSpec_LKXCG.class.getName()));
+						o.setId(CounterLocalServiceUtil.increment(VRTechnicalSpec_XCG.class.getName()));
 						
-						VRTechnicalSpec_LKXCGLocalServiceUtil.addVRTechnicalSpec_LKXCG(o);
+						VRTechnicalSpec_XCGLocalServiceUtil.addVRTechnicalSpec_XCG(o);
 					}
 				} catch(Exception e) {
 					_log.error(e);
