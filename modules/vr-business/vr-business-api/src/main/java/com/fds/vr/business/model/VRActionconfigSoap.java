@@ -37,6 +37,7 @@ public class VRActionconfigSoap implements Serializable {
 		soapModel.setProcessNo(model.getProcessNo());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setVehicleClass(model.getVehicleClass());
+		soapModel.setFileTemplateNo(model.getFileTemplateNo());
 
 		return soapModel;
 	}
@@ -129,9 +130,18 @@ public class VRActionconfigSoap implements Serializable {
 		_vehicleClass = vehicleClass;
 	}
 
+	public String getFileTemplateNo() {
+		return _fileTemplateNo;
+	}
+
+	public void setFileTemplateNo(String fileTemplateNo) {
+		_fileTemplateNo = fileTemplateNo;
+	}
+
 	private long _id;
 	private String _actionCode;
 	private String _processNo;
 	private int _status;
 	private String _vehicleClass;
+	private String _fileTemplateNo;
 }

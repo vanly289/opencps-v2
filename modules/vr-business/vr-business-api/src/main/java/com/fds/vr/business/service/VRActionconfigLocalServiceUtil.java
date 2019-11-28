@@ -87,6 +87,11 @@ public class VRActionconfigLocalServiceUtil {
 		return getService().deleteVRActionconfig(id);
 	}
 
+	public static com.fds.vr.business.model.VRActionconfig fetchByA_P(
+		java.lang.String actionCode, java.lang.String processNo) {
+		return getService().fetchByA_P(actionCode, processNo);
+	}
+
 	public static com.fds.vr.business.model.VRActionconfig fetchVRActionconfig(
 		long id) {
 		return getService().fetchVRActionconfig(id);

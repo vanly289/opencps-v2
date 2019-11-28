@@ -65,7 +65,8 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 			{ "actionCode", Types.VARCHAR },
 			{ "processNo", Types.VARCHAR },
 			{ "status", Types.INTEGER },
-			{ "vehicleClass", Types.VARCHAR }
+			{ "vehicleClass", Types.VARCHAR },
+			{ "fileTemplateNo", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -75,9 +76,10 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		TABLE_COLUMNS_MAP.put("processNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("vehicleClass", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fileTemplateNo", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_actionconfig (id LONG not null primary key,actionCode VARCHAR(75) null,processNo VARCHAR(75) null,status INTEGER,vehicleClass VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_actionconfig (id LONG not null primary key,actionCode VARCHAR(75) null,processNo VARCHAR(75) null,status INTEGER,vehicleClass VARCHAR(75) null,fileTemplateNo VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_actionconfig";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrActionconfig.id ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_actionconfig.id ASC";
@@ -141,6 +143,7 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		attributes.put("processNo", getProcessNo());
 		attributes.put("status", getStatus());
 		attributes.put("vehicleClass", getVehicleClass());
+		attributes.put("fileTemplateNo", getFileTemplateNo());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -178,6 +181,12 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 
 		if (vehicleClass != null) {
 			setVehicleClass(vehicleClass);
+		}
+
+		String fileTemplateNo = (String)attributes.get("fileTemplateNo");
+
+		if (fileTemplateNo != null) {
+			setFileTemplateNo(fileTemplateNo);
 		}
 	}
 
@@ -266,6 +275,21 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		_vehicleClass = vehicleClass;
 	}
 
+	@Override
+	public String getFileTemplateNo() {
+		if (_fileTemplateNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _fileTemplateNo;
+		}
+	}
+
+	@Override
+	public void setFileTemplateNo(String fileTemplateNo) {
+		_fileTemplateNo = fileTemplateNo;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -302,6 +326,7 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		vrActionconfigImpl.setProcessNo(getProcessNo());
 		vrActionconfigImpl.setStatus(getStatus());
 		vrActionconfigImpl.setVehicleClass(getVehicleClass());
+		vrActionconfigImpl.setFileTemplateNo(getFileTemplateNo());
 
 		vrActionconfigImpl.resetOriginalValues();
 
@@ -403,12 +428,20 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 			vrActionconfigCacheModel.vehicleClass = null;
 		}
 
+		vrActionconfigCacheModel.fileTemplateNo = getFileTemplateNo();
+
+		String fileTemplateNo = vrActionconfigCacheModel.fileTemplateNo;
+
+		if ((fileTemplateNo != null) && (fileTemplateNo.length() == 0)) {
+			vrActionconfigCacheModel.fileTemplateNo = null;
+		}
+
 		return vrActionconfigCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -420,6 +453,8 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		sb.append(getStatus());
 		sb.append(", vehicleClass=");
 		sb.append(getVehicleClass());
+		sb.append(", fileTemplateNo=");
+		sb.append(getFileTemplateNo());
 		sb.append("}");
 
 		return sb.toString();
@@ -427,7 +462,7 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRActionconfig");
@@ -453,6 +488,10 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 			"<column><column-name>vehicleClass</column-name><column-value><![CDATA[");
 		sb.append(getVehicleClass());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>fileTemplateNo</column-name><column-value><![CDATA[");
+		sb.append(getFileTemplateNo());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -470,6 +509,7 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 	private String _originalProcessNo;
 	private int _status;
 	private String _vehicleClass;
+	private String _fileTemplateNo;
 	private long _columnBitmask;
 	private VRActionconfig _escapedModel;
 }

@@ -16,6 +16,7 @@ package com.fds.vr.business.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.fds.vr.business.model.VRActionconfig;
 import com.fds.vr.business.service.base.VRActionconfigLocalServiceBaseImpl;
 
 /**
@@ -40,4 +41,8 @@ public class VRActionconfigLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRActionconfigLocalServiceUtil} to access the vr actionconfig local service.
 	 */
+	
+	public VRActionconfig fetchByA_P(String actionCode, String processNo) {
+		return vrActionconfigPersistence.fetchByA_P(actionCode, processNo);
+	}
 }

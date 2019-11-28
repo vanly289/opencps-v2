@@ -84,6 +84,12 @@ public class VRActionconfigLocalServiceWrapper
 	}
 
 	@Override
+	public com.fds.vr.business.model.VRActionconfig fetchByA_P(
+		java.lang.String actionCode, java.lang.String processNo) {
+		return _vrActionconfigLocalService.fetchByA_P(actionCode, processNo);
+	}
+
+	@Override
 	public com.fds.vr.business.model.VRActionconfig fetchVRActionconfig(long id) {
 		return _vrActionconfigLocalService.fetchVRActionconfig(id);
 	}
