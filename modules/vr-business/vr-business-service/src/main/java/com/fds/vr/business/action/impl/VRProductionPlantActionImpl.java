@@ -139,9 +139,9 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 						VRProductionPlantEquipmentMarkupModelImpl.class, StringPool.BLANK));
 			}
 
-			JSONObject result = ActionUtil.object2Json(vrProductionPlantEquipment, VRProductionPlantEquipmentModelImpl.class,
-					StringPool.BLANK);
-			
+			JSONObject result = ActionUtil.object2Json(vrProductionPlantEquipment,
+					VRProductionPlantEquipmentModelImpl.class, StringPool.BLANK);
+
 			result.put("vrproductionplantequipmentmarkup", _tmpVRProductionPlantEquipmentMarkups);
 
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
@@ -152,6 +152,8 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 
 		}
 	}
+
+	
 
 	public JSONObject createVRProductionPlantProdEquipment(VRProductionPlantProdEquipment object) {
 		// validate

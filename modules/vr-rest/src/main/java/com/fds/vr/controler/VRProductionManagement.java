@@ -6,7 +6,6 @@ import com.fds.vr.model.VRProductionClassificationBeanParam;
 import com.fds.vr.model.VRProductionPlantApiModel;
 import com.fds.vr.model.VRProductionPlantBeanParam;
 import com.fds.vr.model.VRProductionPlantEmployeeApiModel;
-import com.fds.vr.model.VRProductionPlantEquipmentApiModel;
 import com.fds.vr.model.VRProductionPlantEquipmentBeanParam;
 import com.fds.vr.model.VRProductionPlantProdEquipmentApiModel;
 import com.fds.vr.model.VRProductionPlantSupplierBeanParam;
@@ -42,18 +41,114 @@ import io.swagger.annotations.ApiOperation;
 @Path("/production/")
 public interface VRProductionManagement {
 
+	@POST
+	@Path("/classification/")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "create VRProductionClassification", tags={ "vrproductionclassificationapimodel"})
+	public Response createVRProductionClassification(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, VRProductionClassificationApiModel model);
+	@POST
+	@Path("/plant/")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "create VRProductionPlant", tags={ "vrproductionplantapimodel"})
+	public Response createVRProductionPlant(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, VRProductionPlantApiModel model);
+	
+	
+	@POST
+	@Path("/employee/")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "create VRProductionPlantEmployee", tags={ "vrproductionplantemployeeapimodel"})
+	public Response createVRProductionPlantEmployee(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model);
+
+	@POST
+	@Path("/equipment/create")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createVRProductionPlantEquiptment(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, String data);
+	
+	@POST
+	@Path("/prodequipment/")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "create VRProductionPlantProdEquiment", tags={ "vrproductionplantprodequipmentapimodel"})
+	public Response createVRProductionPlantProdEquiment(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, VRProductionPlantProdEquipmentApiModel model);
+
+
+	@POST
+	@Path("/type/")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "create VRProductType", tags={ "vrproducttypeapimodel"})
+	public Response createVRProductType(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, VRProductTypeApiModel model);
+
+	@DELETE
+	@Path("/equipment/remove")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteProductionPlantEquipment(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,@QueryParam("id") long id);
+	
+	
 	@GET
 	@Path("/plant/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findProductionPlant(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRProductionPlantBeanParam query);
+
 	@GET
 	@Path("/plantsupplier/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findProductionPlantSupplier(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRProductionPlantSupplierBeanParam query);
+
+	@GET
+	@Path("/classification/{productionplantcode}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findVRProductclassification(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode);
+	
+	@GET
+	@Path("/classification/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findVRProductclassification(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam VRProductionClassificationBeanParam query);
+	
+	@GET
+	@Path("/employee/{productionplantcode}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findVRProductionPlantEmployee(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode);
+	
+	@GET
+	@Path("/equipment/{productionplantcode}/{productclassificationcode}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findVRProductionPlantEquipment(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode,
+			@DefaultValue("") @PathParam("productclassificationcode") String productClassificationCode);
 	
 	
 	@GET
@@ -63,11 +158,11 @@ public interface VRProductionManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext,
 			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode);
-
+	
 	@GET
-	@Path("/equipment/{productionplantcode}/{productclassificationcode}")
+	@Path("/type/{productionplantcode}/{productclassificationcode}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findVRProductionPlantEquipment(@Context HttpServletRequest request, @Context HttpHeaders header,
+	public Response findVRProductType(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext,
 			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode,
@@ -80,49 +175,15 @@ public interface VRProductionManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext,
 			@BeanParam VRProductionPlantEquipmentBeanParam query);
-
-
-	@GET
-	@Path("/type/{productionplantcode}/{productclassificationcode}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response findVRProductType(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext,
-			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode,
-			@DefaultValue("") @PathParam("productclassificationcode") String productClassificationCode);
-
-	@GET
-	@Path("/classification/search")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response findVRProductclassification(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, @BeanParam VRProductionClassificationBeanParam query);
 	
-	
-	@GET
-	@Path("/classification/{productionplantcode}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response findVRProductclassification(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext,
-			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode);
-
-	@GET
-	@Path("/employee/{productionplantcode}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response findVRProductionPlantEmployee(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext,
-			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode);
-
-	@POST
-	@Path("/plant/")
+	@PUT
+	@Path("/classification/")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "create VRProductionPlant", tags={ "vrproductionplantapimodel"})
-	public Response createVRProductionPlant(@Context HttpServletRequest request, @Context HttpHeaders header,
+	@ApiOperation(value = "update VRProductionClassification", tags={ "vrproductionclassificationapimodel"})
+	public Response updateVRProductionClassification(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRProductionPlantApiModel model);
+			@Context ServiceContext serviceContext, VRProductionClassificationApiModel model);
 	
 	@PUT
 	@Path("/plant/")
@@ -133,15 +194,6 @@ public interface VRProductionManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, VRProductionPlantApiModel model);
 	
-	@POST
-	@Path("/employee/")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "create VRProductionPlantEmployee", tags={ "vrproductionplantemployeeapimodel"})
-	public Response createVRProductionPlantEmployee(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model);
-	
 	@PUT
 	@Path("/employee/")
 	@Consumes({ MediaType.APPLICATION_JSON })
@@ -151,15 +203,6 @@ public interface VRProductionManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, VRProductionPlantEmployeeApiModel model);
 	
-	
-	@POST
-	@Path("/equipment/create")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response createVRProductionPlantEquiptment(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, String data);
-	
 	@PUT
 	@Path("/equipment/update")
 	@Consumes({ MediaType.APPLICATION_JSON })
@@ -167,24 +210,7 @@ public interface VRProductionManagement {
 	@ApiOperation(value = "update VRProductionPlantEquiptment", tags={ "vrproductionplantequipmentapimodel"})
 	public Response updateVRProductionPlantEquiptment(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model);
-	
-	@DELETE
-	@Path("/equipment/")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteProductionPlantEquipment(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext,@QueryParam("id") long id);
-	
-	@POST
-	@Path("/prodequipment/")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "create VRProductionPlantProdEquiment", tags={ "vrproductionplantprodequipmentapimodel"})
-	public Response createVRProductionPlantProdEquiment(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRProductionPlantProdEquipmentApiModel model);
+			@Context ServiceContext serviceContext, String data);
 	
 	@PUT
 	@Path("/prodequipment/")
@@ -195,15 +221,6 @@ public interface VRProductionManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, VRProductionPlantProdEquipmentApiModel model);
 	
-	@POST
-	@Path("/type/")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "create VRProductType", tags={ "vrproducttypeapimodel"})
-	public Response createVRProductType(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRProductTypeApiModel model);
-	
 	@PUT
 	@Path("/type/")
 	@Consumes({ MediaType.APPLICATION_JSON })
@@ -212,23 +229,5 @@ public interface VRProductionManagement {
 	public Response updateVRProductType(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, VRProductTypeApiModel model);
-	
-	@POST
-	@Path("/classification/")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "create VRProductionClassification", tags={ "vrproductionclassificationapimodel"})
-	public Response createVRProductionClassification(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRProductionClassificationApiModel model);
-	
-	@PUT
-	@Path("/classification/")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "update VRProductionClassification", tags={ "vrproductionclassificationapimodel"})
-	public Response updateVRProductionClassification(@Context HttpServletRequest request, @Context HttpHeaders header,
-			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, VRProductionClassificationApiModel model);
 	
 }

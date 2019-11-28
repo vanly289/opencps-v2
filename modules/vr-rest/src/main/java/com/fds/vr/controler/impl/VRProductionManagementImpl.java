@@ -31,7 +31,6 @@ import com.fds.vr.model.VRProductionClassificationBeanParam;
 import com.fds.vr.model.VRProductionPlantApiModel;
 import com.fds.vr.model.VRProductionPlantBeanParam;
 import com.fds.vr.model.VRProductionPlantEmployeeApiModel;
-import com.fds.vr.model.VRProductionPlantEquipmentApiModel;
 import com.fds.vr.model.VRProductionPlantEquipmentBeanParam;
 import com.fds.vr.model.VRProductionPlantProdEquipmentApiModel;
 import com.fds.vr.model.VRProductionPlantSupplierBeanParam;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -144,7 +142,8 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 				JSONArray arrayProductionPlantEquipmentMarkup = object.getJSONArray("productionplantequipmentmarkup");
 				if (arrayProductionPlantEquipmentMarkup != null) {
 					for (int i = 0; i < arrayProductionPlantEquipmentMarkup.length(); i++) {
-						Map<String, Object> map = VRRestUtil.json2Object(object,
+						Map<String, Object> map = VRRestUtil.json2Object(
+								arrayProductionPlantEquipmentMarkup.getJSONObject(i),
 								new Object[] { new VRProductionPlantEquipmentMarkupImpl() });
 						vrProductionPlantEquipmentMarkups.add((VRProductionPlantEquipmentMarkup) map
 								.get(VRProductionPlantEquipmentMarkupImpl.class.getName()));
@@ -411,27 +410,44 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 	@Override
 	public Response updateVRProductionPlantEquiptment(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, VRProductionPlantEquipmentApiModel model) {
+			Locale locale, User user, ServiceContext serviceContext, String data) {
 
 		try {
+			JSONObject object = JSONFactoryUtil.createJSONObject(data);
 
-			VRProductionPlantEquipment object = (VRProductionPlantEquipment) VRRestUtil.mappingModel(model,
-					new VRProductionPlantEquipmentImpl());
+			List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups = new ArrayList<VRProductionPlantEquipmentMarkup>();
+
+			if (object.has("productionplantequipmentmarkup")) {
+				JSONArray arrayProductionPlantEquipmentMarkup = object.getJSONArray("productionplantequipmentmarkup");
+				if (arrayProductionPlantEquipmentMarkup != null) {
+					for (int i = 0; i < arrayProductionPlantEquipmentMarkup.length(); i++) {
+						Map<String, Object> map = VRRestUtil.json2Object(object,
+								new Object[] { new VRProductionPlantEquipmentMarkupImpl() });
+						vrProductionPlantEquipmentMarkups.add((VRProductionPlantEquipmentMarkup) map
+								.get(VRProductionPlantEquipmentMarkupImpl.class.getName()));
+					}
+				}
+			}
+
+			Map<String, Object> map = VRRestUtil.json2Object(object,
+					new Object[] { new VRProductionPlantEquipmentImpl() });
+
+			Object entity = map.get(VRProductionPlantEquipmentImpl.class.getName());
+
+			_log.info(ActionUtil.object2Json(entity, VRProductionPlantEquipmentImpl.class, ""));
 
 			VRProductionPlantActionImpl actionImpl = new VRProductionPlantActionImpl();
 
-			JSONObject result = actionImpl.updateVRProductionPlantEquiptment(object);
+			JSONObject result = actionImpl.createVRProductionPlantEquiptment((VRProductionPlantEquipment) entity,
+					vrProductionPlantEquipmentMarkups);
 
 			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
-
 		} catch (Exception e) {
-
 			_log.error(e);
 
 			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!").toJSONString())
 					.build();
 		}
-
 	}
 
 	@Override
@@ -486,19 +502,13 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 
 	@Override
 	public Response deleteProductionPlantEquipment(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, long ids) {
+			Locale locale, User user, ServiceContext serviceContext, long id) {
 
 		try {
 
 			VRProductionPlantEquipmentAction actionImpl = new VRProductionPlantEquipmentActionImpl();
-
-			boolean flag = actionImpl.deleteProductionPlantEquipment(ids);
-
-			if (flag) {
-				return Response.status(200).build();
-			} else {
-				return Response.status(404).build();
-			}
+			JSONObject result = actionImpl.deleteVRProductionPlantEquiptment(id);
+			return Response.status(result.getInt("status")).entity(result.getString("content")).build();
 
 		} catch (Exception e) {
 

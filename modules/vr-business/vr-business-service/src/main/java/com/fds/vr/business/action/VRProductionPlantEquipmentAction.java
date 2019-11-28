@@ -14,7 +14,7 @@ import java.util.LinkedHashMap;
 public interface VRProductionPlantEquipmentAction {
 	public JSONArray findByProductionPlanCode_ProductClassificationCode(String productionPlantCode,String productClassificationCode);
 	
-	public boolean deleteProductionPlantEquipment(long ids);
+	public JSONObject deleteVRProductionPlantEquiptment(long id);
 	
 	public JSONObject findVRProductionPlantEquipment(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params);

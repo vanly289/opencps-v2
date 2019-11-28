@@ -3,7 +3,6 @@ package com.fds.vr.business.action.impl;
 import com.fds.vr.business.action.VRProductionPlantEquipmentAction;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryBuilder;
-import com.fds.vr.business.exception.NoSuchVRProductionPlantEquipmentException;
 import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.model.VRProductionPlantEquipmentMarkup;
 import com.fds.vr.business.model.impl.VRProductionPlantEquipmentImpl;
@@ -25,9 +24,45 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEquipmentAction {
 
 	private static Log _log = LogFactoryUtil.getLog(VRProductionPlantEquipmentActionImpl.class);
+
+	public JSONObject deleteVRProductionPlantEquiptment(long id) {
+
+		VRProductionPlantEquipment vrProductionPlantEquipment = VRProductionPlantEquipmentLocalServiceUtil
+				.fetchVRProductionPlantEquipment(id);
+		if (vrProductionPlantEquipment == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
+		List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups = VRProductionPlantEquipmentMarkupLocalServiceUtil
+				.findByproductionPlantEquipmentId(id);
+
+		if (vrProductionPlantEquipmentMarkups != null) {
+			try {
+				for (VRProductionPlantEquipmentMarkup vrProductionPlantEquipmentMarkup : vrProductionPlantEquipmentMarkups) {
+					VRProductionPlantEquipmentMarkupLocalServiceUtil
+							.deleteVRProductionPlantEquipmentMarkup(vrProductionPlantEquipmentMarkup.getId());
+				}
+			} catch (Exception e) {
+				_log.error(e);
+				return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+			}
+
+		}
+
+		try {
+			VRProductionPlantEquipmentLocalServiceUtil.deleteVRProductionPlantEquipment(id);
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+		}
+
+		return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, StringPool.BLANK);
+	}
 
 	@Override
 	public JSONArray findByProductionPlanCode_ProductClassificationCode(String productionPlantCode,
@@ -140,36 +175,6 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 		}
 
 		return result;
-	}
-
-	@Override
-	public boolean deleteProductionPlantEquipment(long ids) {
-
-		boolean flag = false;
-
-		long id = GetterUtil.getLong(ids);
-
-		VRProductionPlantEquipment vrProductionPlantEquipment = null;
-
-		try {
-
-			vrProductionPlantEquipment = VRProductionPlantEquipmentLocalServiceUtil.getVRProductionPlantEquipment(id);
-
-			VRProductionPlantEquipmentLocalServiceUtil.deleteVRProductionPlantEquipment(vrProductionPlantEquipment);
-
-			flag = true;
-
-		} catch (Exception e) {
-
-			if (e instanceof NoSuchVRProductionPlantEquipmentException) {
-
-				flag = false;
-
-			}
-
-		}
-
-		return flag;
 	}
 
 	private String createMarkUpParam(String productClassificationCodes) {

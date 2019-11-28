@@ -14,14 +14,14 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
+import com.fds.vr.business.exception.NoSuchVRProductionPlantEquipmentMarkupException;
 import com.fds.vr.business.model.VRProductionPlantEquipmentMarkup;
 import com.fds.vr.business.service.base.VRProductionPlantEquipmentMarkupLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import java.util.Date;
 import java.util.List;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr production plant equipment markup local service.
@@ -54,6 +54,10 @@ public class VRProductionPlantEquipmentMarkupLocalServiceImpl
 		object.setId(id);
 
 		return vrProductionPlantEquipmentMarkupPersistence.update(object);
+	}
+	
+	public VRProductionPlantEquipmentMarkup deleteVRProductionPlantEquipmentMarkup(long id) throws NoSuchVRProductionPlantEquipmentMarkupException {
+		return vrProductionPlantEquipmentMarkupPersistence.remove(id);
 	}
 
 	public VRProductionPlantEquipmentMarkup updateVRProductionPlantEquipmentMarkup(

@@ -16,6 +16,7 @@ package com.fds.vr.business.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.fds.vr.business.exception.NoSuchVRProductionPlantEquipmentMarkupException;
 import com.fds.vr.business.model.VRProductionPlantEquipmentMarkup;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -99,10 +100,12 @@ public interface VRProductionPlantEquipmentMarkupLocalService
 	* @param id the primary key of the vr production plant equipment markup
 	* @return the vr production plant equipment markup that was removed
 	* @throws PortalException if a vr production plant equipment markup with the primary key could not be found
+	* @throws NoSuchVRProductionPlantEquipmentMarkupException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public VRProductionPlantEquipmentMarkup deleteVRProductionPlantEquipmentMarkup(
-		long id) throws PortalException;
+		long id)
+		throws PortalException, NoSuchVRProductionPlantEquipmentMarkupException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRProductionPlantEquipmentMarkup fetchVRProductionPlantEquipmentMarkup(

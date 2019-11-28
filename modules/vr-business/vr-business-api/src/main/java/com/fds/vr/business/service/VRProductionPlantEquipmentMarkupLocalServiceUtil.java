@@ -89,9 +89,12 @@ public class VRProductionPlantEquipmentMarkupLocalServiceUtil {
 	* @param id the primary key of the vr production plant equipment markup
 	* @return the vr production plant equipment markup that was removed
 	* @throws PortalException if a vr production plant equipment markup with the primary key could not be found
+	* @throws NoSuchVRProductionPlantEquipmentMarkupException
 	*/
 	public static com.fds.vr.business.model.VRProductionPlantEquipmentMarkup deleteVRProductionPlantEquipmentMarkup(
-		long id) throws com.liferay.portal.kernel.exception.PortalException {
+		long id)
+		throws com.fds.vr.business.exception.NoSuchVRProductionPlantEquipmentMarkupException,
+			com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteVRProductionPlantEquipmentMarkup(id);
 	}
 

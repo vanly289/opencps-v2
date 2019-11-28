@@ -204,11 +204,14 @@ public abstract class VRProductionPlantEquipmentMarkupLocalServiceBaseImpl
 	 * @param id the primary key of the vr production plant equipment markup
 	 * @return the vr production plant equipment markup that was removed
 	 * @throws PortalException if a vr production plant equipment markup with the primary key could not be found
+	 * @throws com.fds.vr.business.exception.NoSuchVRProductionPlantEquipmentMarkupException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public VRProductionPlantEquipmentMarkup deleteVRProductionPlantEquipmentMarkup(
-		long id) throws PortalException {
+		long id)
+		throws PortalException,
+			com.fds.vr.business.exception.NoSuchVRProductionPlantEquipmentMarkupException {
 		return vrProductionPlantEquipmentMarkupPersistence.remove(id);
 	}
 
