@@ -133,6 +133,21 @@ public interface VRActionconfigModel extends BaseModel<VRActionconfig> {
 	 */
 	public void setVehicleClass(String vehicleClass);
 
+	/**
+	 * Returns the file template no of this vr actionconfig.
+	 *
+	 * @return the file template no of this vr actionconfig
+	 */
+	@AutoEscape
+	public String getFileTemplateNo();
+
+	/**
+	 * Sets the file template no of this vr actionconfig.
+	 *
+	 * @param fileTemplateNo the file template no of this vr actionconfig
+	 */
+	public void setFileTemplateNo(String fileTemplateNo);
+
 	@Override
 	public boolean isNew();
 

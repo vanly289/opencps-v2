@@ -671,6 +671,7 @@ public class VRActionconfigPersistenceImpl extends BasePersistenceImpl<VRActionc
 		vrActionconfigImpl.setProcessNo(vrActionconfig.getProcessNo());
 		vrActionconfigImpl.setStatus(vrActionconfig.getStatus());
 		vrActionconfigImpl.setVehicleClass(vrActionconfig.getVehicleClass());
+		vrActionconfigImpl.setFileTemplateNo(vrActionconfig.getFileTemplateNo());
 
 		return vrActionconfigImpl;
 	}

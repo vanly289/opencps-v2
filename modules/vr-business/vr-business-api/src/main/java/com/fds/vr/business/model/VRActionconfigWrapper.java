@@ -62,6 +62,7 @@ public class VRActionconfigWrapper implements VRActionconfig,
 		attributes.put("processNo", getProcessNo());
 		attributes.put("status", getStatus());
 		attributes.put("vehicleClass", getVehicleClass());
+		attributes.put("fileTemplateNo", getFileTemplateNo());
 
 		return attributes;
 	}
@@ -96,6 +97,12 @@ public class VRActionconfigWrapper implements VRActionconfig,
 
 		if (vehicleClass != null) {
 			setVehicleClass(vehicleClass);
+		}
+
+		String fileTemplateNo = (String)attributes.get("fileTemplateNo");
+
+		if (fileTemplateNo != null) {
+			setFileTemplateNo(fileTemplateNo);
 		}
 	}
 
@@ -172,6 +179,16 @@ public class VRActionconfigWrapper implements VRActionconfig,
 	@Override
 	public java.lang.String getActionCode() {
 		return _vrActionconfig.getActionCode();
+	}
+
+	/**
+	* Returns the file template no of this vr actionconfig.
+	*
+	* @return the file template no of this vr actionconfig
+	*/
+	@Override
+	public java.lang.String getFileTemplateNo() {
+		return _vrActionconfig.getFileTemplateNo();
 	}
 
 	/**
@@ -258,6 +275,16 @@ public class VRActionconfigWrapper implements VRActionconfig,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_vrActionconfig.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the file template no of this vr actionconfig.
+	*
+	* @param fileTemplateNo the file template no of this vr actionconfig
+	*/
+	@Override
+	public void setFileTemplateNo(java.lang.String fileTemplateNo) {
+		_vrActionconfig.setFileTemplateNo(fileTemplateNo);
 	}
 
 	/**

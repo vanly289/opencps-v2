@@ -99,6 +99,10 @@ public interface VRActionconfigLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public VRActionconfig fetchByA_P(java.lang.String actionCode,
+		java.lang.String processNo);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRActionconfig fetchVRActionconfig(long id);
 
 	/**
