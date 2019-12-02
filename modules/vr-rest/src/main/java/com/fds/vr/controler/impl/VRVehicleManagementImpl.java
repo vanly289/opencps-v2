@@ -97,12 +97,12 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 
 	@Override
 	public Response importVRVehiclerecord(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, long dossierid, Attachment attachment) {
+			Locale locale, User user, ServiceContext serviceContext, String data, Attachment attachment) {
 		InputStream inputStream = null;
 
 		try {
 			
-			_log.info(">>>>>>>>>>>>>>>>>>>>>>> dossierid: " + dossierid);
+			_log.info(">>>>>>>>>>>>>>>>>>>>>>> data: " + data);
 
 			DataHandler dataHandler = attachment.getDataHandler();
 

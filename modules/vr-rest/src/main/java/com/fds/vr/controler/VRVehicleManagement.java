@@ -63,7 +63,7 @@ public interface VRVehicleManagement {
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response importVRVehiclerecord(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, @FormParam("dossierid") long dossierid, @Multipart("file") Attachment attachment);
+			@Context ServiceContext serviceContext, @Multipart("data") String data, @Multipart("file") Attachment attachment);
 	
 	@POST
 	@Path("/record/create")
