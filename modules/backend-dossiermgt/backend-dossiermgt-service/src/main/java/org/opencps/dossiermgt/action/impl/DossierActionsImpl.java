@@ -1631,10 +1631,8 @@ public class DossierActionsImpl implements DossierActions {
 
 		ProcessStep postStep = ProcessStepLocalServiceUtil.fetchBySC_GID(postStepCode, groupId, serviceProcessId);
 
-		_log.info("==NHU_LOL===" + dossier.getDossierId() + "=" + postStep.getProcessStepId());
 		String dossierBriefNote = DossierContentGenerator.getBriefNote(dossier, postStep.getBriefNote());
 		if (Validator.isNotNull(dossierBriefNote)) {
-			_log.info("==NHU_LOL===" + dossier.getDossierId() + "=" + dossierBriefNote);
 			dossier.setBriefNote(dossierBriefNote);
 		}
 		//Reindex dossier
