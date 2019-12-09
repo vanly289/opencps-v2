@@ -58,6 +58,13 @@ public class VRVehicleTypeCertificateLocalServiceWrapper
 		return _vrVehicleTypeCertificateLocalService.addVRVehicleTypeCertificate(vrVehicleTypeCertificate);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRVehicleTypeCertificate createVRVehicleTypeCertificate(
+		com.fds.vr.business.model.VRVehicleTypeCertificate object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrVehicleTypeCertificateLocalService.createVRVehicleTypeCertificate(object);
+	}
+
 	/**
 	* Creates a new vr vehicle type certificate with the primary key. Does not add the vr vehicle type certificate to the database.
 	*
@@ -311,10 +318,12 @@ public class VRVehicleTypeCertificateLocalServiceWrapper
 	*
 	* @param vrVehicleTypeCertificate the vr vehicle type certificate
 	* @return the vr vehicle type certificate that was updated
+	* @throws SystemException
 	*/
 	@Override
 	public com.fds.vr.business.model.VRVehicleTypeCertificate updateVRVehicleTypeCertificate(
-		com.fds.vr.business.model.VRVehicleTypeCertificate vrVehicleTypeCertificate) {
+		com.fds.vr.business.model.VRVehicleTypeCertificate vrVehicleTypeCertificate)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _vrVehicleTypeCertificateLocalService.updateVRVehicleTypeCertificate(vrVehicleTypeCertificate);
 	}
 

@@ -1,6 +1,7 @@
 package com.fds.vr.business.service.persistence.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.model.VRIssue;
 import com.fds.vr.business.model.impl.VRIssueModelImpl;
 import com.fds.vr.business.service.persistence.VRIssueFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -38,11 +39,11 @@ public class VRIssueFinderImpl extends VRIssueFinderBaseImpl implements VRIssueF
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
 				q.addEntity(modelClassName, modelClazz);
-				List<VRIssueFinder> vrIssueFinders = (List<VRIssueFinder>) QueryUtil.list(q, getDialect(),
+				List<VRIssue> vrIssues = (List<VRIssue>) QueryUtil.list(q, getDialect(),
 						start, end);
-				if (vrIssueFinders != null) {
-					for (VRIssueFinder vrIssueFinder : vrIssueFinders) {
-						JSONObject json = ActionUtil.object2Json(vrIssueFinder, VRIssueModelImpl.class, "");
+				if (vrIssues != null) {
+					for (VRIssue vrIssue : vrIssues) {
+						JSONObject json = ActionUtil.object2Json(vrIssue, VRIssueModelImpl.class, "");
 						results.put(json);
 					}
 				}

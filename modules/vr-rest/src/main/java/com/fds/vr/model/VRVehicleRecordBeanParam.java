@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 		"applicantprofileid", "applicantname", "applicantaddress", "certificateid", "productionnumber",
 		"productiondate", "frameno", "boxno", "engineno", "color", "stampshortno", "serialno", "vehiclerecordstatus",
 		"printingstatus", "attachedfile", "signname", "signtitle", "signplace", "signdate", "modifydate", "syncdate",
-		"certificaterecordno", "keyword", "start", "end", "order_asc", "order_desc" })
+		"certificaterecordno", "keyword", "start", "end", "order_asc", "order_desc", "stampissueno", "vehicleclass" })
 @XmlRootElement(name = "VRVehicleRecordBeanParam")
 public class VRVehicleRecordBeanParam {
 	@QueryParam(value = "keyword")
@@ -81,6 +81,10 @@ public class VRVehicleRecordBeanParam {
 	protected String syncDate;
 	@QueryParam(value = "certificaterecordno")
 	protected String certificaterecordno;
+	@QueryParam(value = "stampissueno")
+	protected String stampissueno;
+	@QueryParam(value = "vehicleclass")
+	protected String vehicleclass;
 
 	public String getKeyword() {
 		return keyword;
@@ -336,6 +340,22 @@ public class VRVehicleRecordBeanParam {
 
 	public void setCertificaterecordno(String certificaterecordno) {
 		this.certificaterecordno = certificaterecordno;
+	}
+
+	public String getStampissueno() {
+		return stampissueno;
+	}
+
+	public void setStampissueno(String stampissueno) {
+		this.stampissueno = stampissueno;
+	}
+
+	public String getVehicleclass() {
+		return vehicleclass;
+	}
+
+	public void setVehicleclass(String vehicleclass) {
+		this.vehicleclass = vehicleclass;
 	}
 
 }

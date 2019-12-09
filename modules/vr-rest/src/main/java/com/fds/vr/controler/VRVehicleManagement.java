@@ -1,5 +1,6 @@
 package com.fds.vr.controler;
 
+import com.fds.vr.model.VRVehicleRecordBeanParam;
 import com.fds.vr.model.VRVehicleTypeCertificateBeanParam;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -56,15 +56,16 @@ public interface VRVehicleManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @DefaultValue(" ") @QueryParam("mtcore") long mtCore,
 			@DefaultValue(" ") @QueryParam("copreportno") String copReportNo);
-	
+
 	@POST
 	@Path("/record/import")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response importVRVehiclerecord(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, @FormParam("dossierid") long dossierid, @Multipart("file") Attachment attachment);
-	
+			@Context ServiceContext serviceContext, @Multipart("data") String data,
+			@Multipart("file") Attachment attachment);
+
 	@POST
 	@Path("/record/create")
 	@Consumes({ MediaType.APPLICATION_JSON })
@@ -72,8 +73,7 @@ public interface VRVehicleManagement {
 	public Response createVRVehicleRecord(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, String data);
-	
-	
+
 	@PUT
 	@Path("/record/update")
 	@Consumes({ MediaType.APPLICATION_JSON })
@@ -81,5 +81,13 @@ public interface VRVehicleManagement {
 	public Response updateVRVehicleRecord(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, String data);
-	
+
+	@GET
+	@Path("/record/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findVRVehicleRecord(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam VRVehicleRecordBeanParam query,
+			String advancesearchParams);
+
 }

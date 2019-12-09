@@ -14,13 +14,6 @@
 
 package com.fds.vr.business.service.impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-
 import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.VRCOPReportRepository;
 import com.fds.vr.business.model.VRDossier;
@@ -44,6 +37,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -3914,5 +3914,30 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 	public long counData(String sql) throws SystemException {
 
 		return vrVehicleTypeCertificateFinder.countData(sql);
+	}
+	
+	
+	public VRVehicleTypeCertificate createVRVehicleTypeCertificate(VRVehicleTypeCertificate object)
+			throws SystemException {
+
+		long id = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+
+		object.setId(id);
+
+		Date now = new Date();
+
+		object.setModifyDate(now);
+
+		return vrVehicleTypeCertificatePersistence.update(object);
+	}
+
+	public VRVehicleTypeCertificate updateVRVehicleTypeCertificate(VRVehicleTypeCertificate object)
+			throws SystemException {
+
+		Date now = new Date();
+
+		object.setModifyDate(now);
+
+		return vrVehicleTypeCertificatePersistence.update(object);
 	}
 }

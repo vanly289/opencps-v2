@@ -439,7 +439,7 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 				JSONArray arrayProductionPlantEquipmentMarkup = object.getJSONArray("productionplantequipmentmarkup");
 				if (arrayProductionPlantEquipmentMarkup != null) {
 					for (int i = 0; i < arrayProductionPlantEquipmentMarkup.length(); i++) {
-						Map<String, Object> map = VRRestUtil.json2Object(object,
+						Map<String, Object> map = VRRestUtil.json2Object(arrayProductionPlantEquipmentMarkup.getJSONObject(i),
 								new Object[] { new VRProductionPlantEquipmentMarkupImpl() });
 						vrProductionPlantEquipmentMarkups.add((VRProductionPlantEquipmentMarkup) map
 								.get(VRProductionPlantEquipmentMarkupImpl.class.getName()));

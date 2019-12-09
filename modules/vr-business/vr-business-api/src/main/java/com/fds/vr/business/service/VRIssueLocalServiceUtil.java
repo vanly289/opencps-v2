@@ -53,6 +53,11 @@ public class VRIssueLocalServiceUtil {
 		return getService().addVRIssue(vrIssue);
 	}
 
+	public static com.fds.vr.business.model.VRIssue createVRIssue(
+		com.fds.vr.business.model.VRIssue vrIssue) {
+		return getService().createVRIssue(vrIssue);
+	}
+
 	/**
 	* Creates a new vr issue with the primary key. Does not add the vr issue to the database.
 	*

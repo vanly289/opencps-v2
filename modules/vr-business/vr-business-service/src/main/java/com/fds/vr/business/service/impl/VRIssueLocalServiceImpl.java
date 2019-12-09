@@ -14,11 +14,6 @@
 
 package com.fds.vr.business.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.exception.NoSuchVRIssueException;
 import com.fds.vr.business.model.VRIssue;
@@ -30,6 +25,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -249,6 +249,18 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 	public long counData(String sql) throws SystemException {
 
 		return vrIssueFinder.countData(sql);
+	}
+	
+	public VRIssue createVRIssue(VRIssue vrIssue) {
+		long id = counterLocalService.increment(VRIssue.class.getName());
+		vrIssue.setPrimaryKey(id);
+		vrIssue.setModifyDate(new Date());
+		return vrIssuePersistence.update(vrIssue);
+	}
+	
+	public VRIssue updateVRIssue(VRIssue vrIssue) {
+		vrIssue.setModifyDate(new Date());
+		return vrIssuePersistence.update(vrIssue);
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRIssueLocalServiceImpl.class);

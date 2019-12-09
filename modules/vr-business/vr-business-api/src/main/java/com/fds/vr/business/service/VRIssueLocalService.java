@@ -73,6 +73,8 @@ public interface VRIssueLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public VRIssue addVRIssue(VRIssue vrIssue);
 
+	public VRIssue createVRIssue(VRIssue vrIssue);
+
 	/**
 	* Creates a new vr issue with the primary key. Does not add the vr issue to the database.
 	*

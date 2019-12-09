@@ -3,17 +3,23 @@ package com.fds.vr.business.action.impl;
 import com.fds.vr.business.action.VRIssueAction;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryBuilder;
+import com.fds.vr.business.model.VRIssue;
 import com.fds.vr.business.model.impl.VRIssueImpl;
+import com.fds.vr.business.model.impl.VRIssueModelImpl;
 import com.fds.vr.business.service.VRIssueLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.LinkedHashMap;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * @author trungnt
@@ -297,7 +303,9 @@ public class VRIssueActionImpl implements VRIssueAction {
 				+ ActionUtil.buildSQLCondition("applicantmaker", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("applicantchecker", keyword, "OR", StringPool.LIKE, "");
 		SQLQueryBuilder builder = new SQLQueryBuilder();
-		builder.selectAll().from("vr_issue").where("id", id, "AND", StringPool.EQUAL)
+		builder.selectAll().from("vr_issue")
+				.join("INNER JOIN", "vr_issue", "applicantprofileid", "vr_applicantprofile", "id")
+				.where("id", id, "AND", StringPool.EQUAL)
 				.where("mtcore", mtCore, "AND", StringPool.EQUAL).where("dossierid", dossierId, "AND", StringPool.EQUAL)
 				.where("stampissueno", stampIssueNo, "AND", StringPool.EQUAL)
 				.where("applieddate", appliedDate, "AND", StringPool.EQUAL)
@@ -365,4 +373,67 @@ public class VRIssueActionImpl implements VRIssueAction {
 		return result;
 	}
 
+	@Override
+	public JSONObject createVRIssue(VRIssue object) {
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		try {
+			object = VRIssueLocalServiceUtil.createVRIssue(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRIssueModelImpl.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
+
+	@Override
+	public JSONObject deleteVRIssue(long id) {
+		VRIssue vrIssue = VRIssueLocalServiceUtil.fetchVRIssue(id);
+		if (vrIssue == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+		try {
+			VRIssueLocalServiceUtil.deleteVRIssue(id);
+		} catch (Exception e) {
+			_log.error(e);
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+		}
+
+		return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, StringPool.BLANK);
+	}
+
+	@Override
+	public JSONObject updateVRIssue(VRIssue object) {
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		if (object.getId() <= 0) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
+		try {
+
+			object = VRIssueLocalServiceUtil.updateVRIssue(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRIssueModelImpl.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
+	}
+
+	private Log _log = LogFactoryUtil.getLog(VRIssueActionImpl.class);
 }

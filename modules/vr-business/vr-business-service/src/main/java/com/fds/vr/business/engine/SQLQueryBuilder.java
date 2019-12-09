@@ -24,7 +24,7 @@ public class SQLQueryBuilder {
 	private String selectQuery;
 	private String countQuery;
 	private String from;
-	private List<String> columnNames = new ArrayList<String>();
+	private List<String> queryFields = new ArrayList<String>();
 	private List<String> columnInstances = new ArrayList<String>();
 	private List<String> conditions = new ArrayList<String>();
 	private List<String> joins = new ArrayList<String>();
@@ -52,102 +52,97 @@ public class SQLQueryBuilder {
 		return this;
 	}
 
-	public SQLQueryBuilder select(String... columns) {
-		if (columns != null && columns.length > 0) {
-			this.setColumnNames(ListUtil.toList(columns));
-			this.setColumnInstances(ListUtil.toList(columns));
-		}
-
-		return this;
-	}
-
-	public SQLQueryBuilder select(String alias, String... columns) {
-		if (columns != null && columns.length > 0) {
-			if (Validator.isNotNull(alias)) {
-
-				List<String> _tmp = new ArrayList<String>();
-				List<String> _tmpAlias = new ArrayList<String>();
-				for (String column : columns) {
-					_tmp.add(column + " AS " + alias);
-					_tmpAlias.add(alias);
-				}
-
-				this.setColumnNames(_tmp);
-				this.setColumnInstances(_tmpAlias);
-
-			} else {
-				this.setColumnNames(ListUtil.toList(columns));
-				this.setColumnInstances(ListUtil.toList(columns));
+	public SQLQueryBuilder select(String... fields) {
+		if (fields != null && fields.length > 0) {
+			this.setQueryFields(ListUtil.toList(fields));
+			for (int i = 0; i < fields.length; i++) {
+				String columnNameInstance = fields[i].trim().replaceAll("\\s+", " ");
+				this.setColumnInstances(columnNameInstance);
 			}
+
 		}
 
 		return this;
 	}
 
-	public SQLQueryBuilder select(Class<?>... clazzs) {
+	public SQLQueryBuilder select(DBField... fields) {
+		if (fields != null && fields.length > 0) {
+
+			for (int i = 0; i < fields.length; i++) {
+				DBField field = fields[i];
+				this.setDataTypes(field.getType());
+				String fieldName = field.getName();
+				this.setQueryFields(fieldName);
+				String columnNameInstance = fieldName.trim().replaceAll("\\s+", " ");
+				this.setColumnInstances(columnNameInstance);
+			}
+
+		}
+
+		return this;
+	}
+
+	public SQLQueryBuilder select(Class<?> clazz, DBField... fields) {
+
+		selectAll(clazz);
+
+		if (fields != null && fields.length > 0) {
+
+			for (int i = 0; i < fields.length; i++) {
+				DBField field = fields[i];
+				this.setDataTypes(field.getType());
+				this.setQueryFields(field.getName());
+				this.setColumnInstances(field.getName());
+			}
+
+		}
+
+		return this;
+	}
+
+	public SQLQueryBuilder selectAll(Class<?>... clazzs) {
 		if (clazzs != null && clazzs.length >= 0) {
+			List<String> _tmp = new ArrayList<String>();
 			for (int i = 0; i < clazzs.length; i++) {
 				HashMap<String, Integer> TABLE_COLUMNS_MAP = null;
+				String TABLE_NAME = StringPool.BLANK;
 				try {
 					Field tableColumnsMapField = clazzs[i].getField("TABLE_COLUMNS_MAP");
 					TABLE_COLUMNS_MAP = (HashMap<String, Integer>) tableColumnsMapField.get(null);
+					Field tableName = clazzs[i].getField("TABLE_NAME");
+					TABLE_NAME = (String) tableName.get(null);
 				} catch (Exception e) {
 					_log.error(e);
 				}
 
 				if (TABLE_COLUMNS_MAP != null) {
-					List<String> _tmp = new ArrayList<String>();
 
 					for (Entry<String, Integer> entry : TABLE_COLUMNS_MAP.entrySet()) {
 						String columnName = entry.getKey();
+						String queryFieldName = columnName;
+						String alias = columnName;
 						int type = entry.getValue();
-						_tmp.add(columnName);
+
+						if (_tmp.contains(columnName)) {
+							int count = 1;
+							while (getColumnInstances().contains(alias)) {
+								alias = columnName + count;
+								count++;
+							}
+
+						} else {
+							_tmp.add(columnName);
+						}
+
 						this.setDataTypes(type);
+						this.setQueryFields(TABLE_NAME + "." + queryFieldName + " AS " + alias);
+						this.setColumnInstances(alias);
 					}
 
-					this.setColumnInstances(_tmp);
-					this.setColumnNames(_tmp);
 				}
 			}
 		}
 		return this;
-	}
-
-	public SQLQueryBuilder select(String alias, Class<?>... clazzs) {
-
-		if (Validator.isNull(alias)) {
-			return select(clazzs);
-		} else {
-			if (clazzs != null && clazzs.length >= 0) {
-				for (int i = 0; i < clazzs.length; i++) {
-					HashMap<String, Integer> TABLE_COLUMNS_MAP = null;
-					try {
-						Field tableColumnsMapField = clazzs[i].getField("TABLE_COLUMNS_MAP");
-						TABLE_COLUMNS_MAP = (HashMap<String, Integer>) tableColumnsMapField.get(null);
-					} catch (Exception e) {
-						_log.error(e);
-					}
-
-					if (TABLE_COLUMNS_MAP != null) {
-						List<String> _tmp = new ArrayList<String>();
-						List<String> _tmpAlias = new ArrayList<String>();
-
-						for (Entry<String, Integer> entry : TABLE_COLUMNS_MAP.entrySet()) {
-							String columnName = entry.getKey();
-							int type = entry.getValue();
-							_tmp.add(columnName + " AS " + alias);
-							this.setDataTypes(type);
-							_tmpAlias.add(alias);
-						}
-
-						this.setColumnNames(_tmp);
-						this.setColumnInstances(_tmpAlias);
-					}
-				}
-			}
-			return this;
-		}
-
 	}
 
 	public SQLQueryBuilder selectAll() {
@@ -265,7 +260,7 @@ public class SQLQueryBuilder {
 	}
 
 	public String getSelect() {
-		return "SELECT " + (columnNames.isEmpty() ? "*" : StringUtil.merge(columnNames));
+		return "SELECT " + (queryFields.isEmpty() ? "*" : StringUtil.merge(queryFields));
 	}
 
 	public String getFrom() {
@@ -276,12 +271,16 @@ public class SQLQueryBuilder {
 		this.from = from;
 	}
 
-	public List<String> getColumnNames() {
-		return columnNames;
+	public List<String> getQueryFields() {
+		return queryFields;
 	}
 
-	public void setColumnNames(List<String> columnNames) {
-		this.columnNames.addAll(columnNames);
+	public void setQueryFields(String queryField) {
+		this.queryFields.add(queryField);
+	}
+
+	public void setQueryFields(List<String> queryFields) {
+		this.queryFields.addAll(queryFields);
 	}
 
 	public List<String> getConditions() {
@@ -328,8 +327,12 @@ public class SQLQueryBuilder {
 		return columnInstances;
 	}
 
+	public void setColumnInstances(String columnInstance) {
+		this.columnInstances.add(columnInstance);
+	}
+
 	public void setColumnInstances(List<String> columnInstances) {
-		this.columnInstances = columnInstances;
+		this.columnInstances.addAll(columnInstances);
 	}
 
 	public List<String> getDataTypes() {
@@ -338,7 +341,7 @@ public class SQLQueryBuilder {
 	}
 
 	public void setDataTypes(List<String> dataTypes) {
-		this.dataTypes = dataTypes;
+		this.dataTypes.addAll(dataTypes);
 	}
 
 	public void setDataTypes(int type) {

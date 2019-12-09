@@ -14,14 +14,9 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import org.opencps.datamgt.utils.DateTimeUtils;
-
+import com.fds.vr.business.model.VROutputSheetDetails;
+import com.fds.vr.business.service.base.VROutputSheetDetailsLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,9 +24,15 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.fds.vr.business.model.VROutputSheetDetails;
-import com.fds.vr.business.service.base.VROutputSheetDetailsLocalServiceBaseImpl;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.opencps.datamgt.utils.DateTimeUtils;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr output sheet details local service.
@@ -308,5 +309,27 @@ public class VROutputSheetDetailsLocalServiceImpl
 		return vrOutputSheetDetailsFinder.countData(sql);
 	}
 	
-	private Log _log = LogFactoryUtil.getLog(VROutputSheetDetailsLocalServiceBaseImpl.class);
+	public VROutputSheetDetails createVROutputSheetDetails(VROutputSheetDetails object) throws SystemException {
+
+		long id = counterLocalService.increment(VROutputSheetDetails.class.getName());
+
+		object.setId(id);
+
+		Date now = new Date();
+
+		object.setModifyDate(now);
+
+		return vrOutputSheetDetailsPersistence.update(object);
+	}
+
+	public VROutputSheetDetails updateVROutputSheetDetails(VROutputSheetDetails object) throws SystemException {
+
+		Date now = new Date();
+
+		object.setModifyDate(now);
+
+		return vrOutputSheetDetailsPersistence.update(object);
+	}
+	
+	private Log _log = LogFactoryUtil.getLog(VROutputSheetDetailsLocalServiceImpl.class);
 }
