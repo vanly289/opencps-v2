@@ -1,6 +1,5 @@
 package com.fds.vr.controler.impl;
 
-import com.fds.vr.business.action.VRApplicantProfileAction;
 import com.fds.vr.business.action.impl.VRApplicantProfileActionImpl;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.model.VRApplicantProfile;
@@ -22,7 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;

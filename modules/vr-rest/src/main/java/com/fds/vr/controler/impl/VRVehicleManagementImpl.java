@@ -4,9 +4,11 @@ import com.fds.vr.business.action.VRVehicleTypeCertificateAction;
 import com.fds.vr.business.action.impl.VRVehicleRecordActionImpl;
 import com.fds.vr.business.action.impl.VRVehicleTypeCertificateActionImpl;
 import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.model.VRVehicleRecord;
 import com.fds.vr.business.model.impl.VRVehicleRecordImpl;
 import com.fds.vr.business.model.impl.VRVehicleRecordModelImpl;
 import com.fds.vr.controler.VRVehicleManagement;
+import com.fds.vr.model.VRVehicleRecordBeanParam;
 import com.fds.vr.model.VRVehicleTypeCertificateBeanParam;
 import com.fds.vr.util.VRRestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -41,10 +43,12 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 			Locale locale, User user, ServiceContext serviceContext, String data) {
 		try {
 			JSONObject object = JSONFactoryUtil.createJSONObject(data);
-			Map<String, Object> map = VRRestUtil.json2Object(object, new Object[] { new VRVehicleRecordImpl()});
-			Object result = map.get(VRVehicleRecordImpl.class.getName());
-			_log.info(ActionUtil.object2Json(result, VRVehicleRecordModelImpl.class, ""));
-			return Response.status(200).entity(object.toJSONString()).build();
+			Map<String, Object> map = VRRestUtil.json2Object(object, new Object[] { new VRVehicleRecordImpl() });
+			Object entity = map.get(VRVehicleRecordImpl.class.getName());
+			_log.info(ActionUtil.object2Json(entity, VRVehicleRecordModelImpl.class, ""));
+			VRVehicleRecordActionImpl actionImpl = new VRVehicleRecordActionImpl();
+			JSONObject result = actionImpl.createVRVehicleRecord((VRVehicleRecord) entity);
+			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);
 			return Response.status(500).entity(VRRestUtil.errorMessage("Can't create VRVehicleRecord").toJSONString())
@@ -101,7 +105,7 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 		InputStream inputStream = null;
 
 		try {
-			
+
 			_log.info(">>>>>>>>>>>>>>>>>>>>>>> data: " + data);
 
 			DataHandler dataHandler = attachment.getDataHandler();
@@ -129,6 +133,26 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 			Locale locale, User user, ServiceContext serviceContext, String data) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Response findVRVehicleRecord(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, VRVehicleRecordBeanParam query, String advancesearchParams) {
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		try {
+			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
+
+			VRVehicleRecordActionImpl actionImpl = new VRVehicleRecordActionImpl();
+
+			result = actionImpl.findVRVehicleRecord(user, serviceContext, params);
+
+			return Response.status(200).entity(result.toJSONString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrvehiclerecord").toJSONString())
+					.build();
+		}
+
 	}
 
 }

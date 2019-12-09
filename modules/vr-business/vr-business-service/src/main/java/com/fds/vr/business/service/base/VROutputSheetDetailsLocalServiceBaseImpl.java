@@ -406,11 +406,12 @@ public abstract class VROutputSheetDetailsLocalServiceBaseImpl
 	 *
 	 * @param vrOutputSheetDetails the vr output sheet details
 	 * @return the vr output sheet details that was updated
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public VROutputSheetDetails updateVROutputSheetDetails(
-		VROutputSheetDetails vrOutputSheetDetails) {
+		VROutputSheetDetails vrOutputSheetDetails) throws SystemException {
 		return vrOutputSheetDetailsPersistence.update(vrOutputSheetDetails);
 	}
 

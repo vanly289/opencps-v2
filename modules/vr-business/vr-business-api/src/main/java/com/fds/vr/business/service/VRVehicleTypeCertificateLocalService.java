@@ -83,6 +83,9 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 	public VRVehicleTypeCertificate addVRVehicleTypeCertificate(
 		VRVehicleTypeCertificate vrVehicleTypeCertificate);
 
+	public VRVehicleTypeCertificate createVRVehicleTypeCertificate(
+		VRVehicleTypeCertificate object) throws SystemException;
+
 	/**
 	* Creates a new vr vehicle type certificate with the primary key. Does not add the vr vehicle type certificate to the database.
 	*
@@ -211,10 +214,12 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 	*
 	* @param vrVehicleTypeCertificate the vr vehicle type certificate
 	* @return the vr vehicle type certificate that was updated
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VRVehicleTypeCertificate updateVRVehicleTypeCertificate(
-		VRVehicleTypeCertificate vrVehicleTypeCertificate);
+		VRVehicleTypeCertificate vrVehicleTypeCertificate)
+		throws SystemException;
 
 	public VRVehicleTypeCertificate updateVehicleTypeCertificate(
 		LinkedHashMap<java.lang.String, java.lang.String> mapValues,

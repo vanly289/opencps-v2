@@ -73,6 +73,9 @@ public interface VROutputSheetDetailsLocalService extends BaseLocalService,
 	public VROutputSheetDetails addVROutputSheetDetails(
 		VROutputSheetDetails vrOutputSheetDetails);
 
+	public VROutputSheetDetails createVROutputSheetDetails(
+		VROutputSheetDetails object) throws SystemException;
+
 	/**
 	* Creates a new vr output sheet details with the primary key. Does not add the vr output sheet details to the database.
 	*
@@ -135,10 +138,11 @@ public interface VROutputSheetDetailsLocalService extends BaseLocalService,
 	*
 	* @param vrOutputSheetDetails the vr output sheet details
 	* @return the vr output sheet details that was updated
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public VROutputSheetDetails updateVROutputSheetDetails(
-		VROutputSheetDetails vrOutputSheetDetails);
+		VROutputSheetDetails vrOutputSheetDetails) throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

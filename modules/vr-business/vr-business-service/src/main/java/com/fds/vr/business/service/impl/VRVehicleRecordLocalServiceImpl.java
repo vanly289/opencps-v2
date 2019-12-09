@@ -14,26 +14,22 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import com.fds.vr.business.model.VRVehicleRecord;
+import com.fds.vr.business.service.base.VRVehicleRecordLocalServiceBaseImpl;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.fds.vr.business.model.VRIssue;
-import com.fds.vr.business.model.VRIssueVehiclecertificate;
-import com.fds.vr.business.model.VRVehicleRecord;
-import com.fds.vr.business.service.base.VRVehicleRecordLocalServiceBaseImpl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr vehicle record local service.
@@ -61,6 +57,11 @@ public class VRVehicleRecordLocalServiceImpl
 	public VRVehicleRecord createVRVehicleRecord(VRVehicleRecord vrVehicleRecord) {
 		long id = counterLocalService.increment(VRVehicleRecord.class.getName());
 		vrVehicleRecord.setPrimaryKey(id);
+		vrVehicleRecord.setModifyDate(new Date());
+		return vrVehicleRecordPersistence.update(vrVehicleRecord);
+	}
+	
+	public VRVehicleRecord updateVRVehicleRecord(VRVehicleRecord vrVehicleRecord) {
 		vrVehicleRecord.setModifyDate(new Date());
 		return vrVehicleRecordPersistence.update(vrVehicleRecord);
 	}

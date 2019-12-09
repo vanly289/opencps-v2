@@ -1,5 +1,6 @@
 package com.fds.vr.business.action;
 
+import com.fds.vr.business.model.VRVehicleRecord;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -11,7 +12,13 @@ import java.io.InputStream;
  *
  */
 public interface VRVehicleRecordAction {
-	public JSONObject importVRVehicleRecord(User user, ServiceContext serviceContext,
-			InputStream inputStream);
+
+	public JSONObject createVRVehicleRecord(VRVehicleRecord object);
+	
+	public JSONObject deleteVRVehicleRecord(long id);
+
+	public JSONObject importVRVehicleRecord(User user, ServiceContext serviceContext, InputStream inputStream);
+	
+	public JSONObject updateVRVehicleRecord(VRVehicleRecord object);
 
 }

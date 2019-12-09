@@ -46,6 +46,13 @@ public class VROutputSheetDetailsLocalServiceWrapper
 		return _vrOutputSheetDetailsLocalService.addVROutputSheetDetails(vrOutputSheetDetails);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VROutputSheetDetails createVROutputSheetDetails(
+		com.fds.vr.business.model.VROutputSheetDetails object)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _vrOutputSheetDetailsLocalService.createVROutputSheetDetails(object);
+	}
+
 	/**
 	* Creates a new vr output sheet details with the primary key. Does not add the vr output sheet details to the database.
 	*
@@ -132,10 +139,12 @@ public class VROutputSheetDetailsLocalServiceWrapper
 	*
 	* @param vrOutputSheetDetails the vr output sheet details
 	* @return the vr output sheet details that was updated
+	* @throws SystemException
 	*/
 	@Override
 	public com.fds.vr.business.model.VROutputSheetDetails updateVROutputSheetDetails(
-		com.fds.vr.business.model.VROutputSheetDetails vrOutputSheetDetails) {
+		com.fds.vr.business.model.VROutputSheetDetails vrOutputSheetDetails)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _vrOutputSheetDetailsLocalService.updateVROutputSheetDetails(vrOutputSheetDetails);
 	}
 

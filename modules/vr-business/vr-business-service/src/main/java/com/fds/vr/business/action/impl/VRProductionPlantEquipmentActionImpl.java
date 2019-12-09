@@ -40,7 +40,8 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 		try {
 			object = VRProductionPlantEquipmentLocalServiceUtil.createVRProductionPlantEquipment(object);
 
-			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantEquipment.class, StringPool.BLANK);
+			JSONObject result = ActionUtil.object2Json(object, VRProductionPlantEquipmentModelImpl.class,
+					StringPool.BLANK);
 
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
 
@@ -577,7 +578,6 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 		return result;
 	}
 
-	
 	public JSONObject updateVRProductionPlantEquiptment(VRProductionPlantEquipment object,
 			List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups) {
 

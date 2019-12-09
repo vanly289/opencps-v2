@@ -44,6 +44,12 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 		return _vrIssueLocalService.addVRIssue(vrIssue);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRIssue createVRIssue(
+		com.fds.vr.business.model.VRIssue vrIssue) {
+		return _vrIssueLocalService.createVRIssue(vrIssue);
+	}
+
 	/**
 	* Creates a new vr issue with the primary key. Does not add the vr issue to the database.
 	*

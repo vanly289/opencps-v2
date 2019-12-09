@@ -406,11 +406,13 @@ public abstract class VRVehicleTypeCertificateLocalServiceBaseImpl
 	 *
 	 * @param vrVehicleTypeCertificate the vr vehicle type certificate
 	 * @return the vr vehicle type certificate that was updated
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public VRVehicleTypeCertificate updateVRVehicleTypeCertificate(
-		VRVehicleTypeCertificate vrVehicleTypeCertificate) {
+		VRVehicleTypeCertificate vrVehicleTypeCertificate)
+		throws SystemException {
 		return vrVehicleTypeCertificatePersistence.update(vrVehicleTypeCertificate);
 	}
 
