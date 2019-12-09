@@ -39,62 +39,69 @@ public class VRBussinessUtils {
 		VRActionconfig actionConfig = VRActionconfigLocalServiceUtil.fetchByA_P(dossierAction.getActionCode(), sp.getProcessNo());
 		
 		if(actionConfig != null) {
-			String vehicleClass = actionConfig.getVehicleClass();
-			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossier.getDossierId(), actionConfig.getFileTemplateNo(), false, null);
+//			String vehicleClass = actionConfig.getVehicleClass();
 			
-			LinkedHashMap<String, String> mapValues = ConvertJONObjectUtils.getKeyValuesMap(dossierFile.getFormData());
+			DossierFile dossierFileBB = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(
+					dossier.getDossierId(), actionConfig.getFileTemplateNoBB(), false, null);
 			
-			for (Map.Entry<String, String> entry : mapValues.entrySet()) {
-			    _log.info(entry.getKey() + "/" + entry.getValue());
-			}
+			DossierFile dossierFileCC = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(
+					dossier.getDossierId(), actionConfig.getFileTemplateNoCC(), false, null);
 			
-//			if(vehicleClass.equalsIgnoreCase("xcg")) {
-//				String formData = dossierFile.getFormData();
-//				
-//				boolean save = false;
-//				
-//				try {
-//					if(formData != null && formData.length() > 0) {
-//						JSONObject json = JSONFactoryUtil.createJSONObject(formData);
-//						
-//						Iterator<String> keys = json.keys();
-//						
-//						while (keys.hasNext()) {
-//							String key = keys.next();
-//							if (key.indexOf("bb_") > -1) {
-//								_log.info("====keys===" + key);
-//								String tmp = StringUtil.replace(key, "bb_", "");
-//								_log.info("====tmp===" + tmp + "=" + json.get(key));
-//
-//							}
-//						}
-//					}
-//				} catch(Exception e) {
-//					_log.error(e);
-//				}
+			VRVehicleUpdateUtils.updateVrBusiness(dossierFileBB.getFormData(), dossierFileCC.getFormData(), actionConfig.getDeliverableCode(), mtCore);
+//			
+//			LinkedHashMap<String, String> mapValues = ConvertJONObjectUtils.getKeyValuesMap(dossierFile.getFormData());
+//			
+//			for (Map.Entry<String, String> entry : mapValues.entrySet()) {
+//			    _log.info(entry.getKey() + "/" + entry.getValue());
 //			}
-
-			if (vehicleClass.equalsIgnoreCase("xcg")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCG(dossierFile.getFormData(), 0l,
-						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
-						dossierFile.getDeliverableCode());
-			} else if (vehicleClass.equalsIgnoreCase("xmy")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XMY(dossierFile.getFormData(), 0l,
-						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
-						dossierFile.getDeliverableCode());
-			} else if (vehicleClass.equalsIgnoreCase("xdd")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XDD(dossierFile.getFormData(), 0l,
-						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
-						dossierFile.getDeliverableCode());
-			} else if (vehicleClass.equalsIgnoreCase("xcn")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCN(dossierFile.getFormData(), 0l,
-						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
-						dossierFile.getDeliverableCode());
-			} else if (vehicleClass.equalsIgnoreCase("xch")) {
-				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCH(dossierFile.getFormData(), 0l,
-						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
-						dossierFile.getDeliverableCode());
-			}
+//			
+////			if(vehicleClass.equalsIgnoreCase("xcg")) {
+////				String formData = dossierFile.getFormData();
+////				
+////				boolean save = false;
+////				
+////				try {
+////					if(formData != null && formData.length() > 0) {
+////						JSONObject json = JSONFactoryUtil.createJSONObject(formData);
+////						
+////						Iterator<String> keys = json.keys();
+////						
+////						while (keys.hasNext()) {
+////							String key = keys.next();
+////							if (key.indexOf("bb_") > -1) {
+////								_log.info("====keys===" + key);
+////								String tmp = StringUtil.replace(key, "bb_", "");
+////								_log.info("====tmp===" + tmp + "=" + json.get(key));
+////
+////							}
+////						}
+////					}
+////				} catch(Exception e) {
+////					_log.error(e);
+////				}
+////			}
+//
+//			if (vehicleClass.equalsIgnoreCase("xcg")) {
+//				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCG(dossierFile.getFormData(), 0l,
+//						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
+//						dossierFile.getDeliverableCode());
+//			} else if (vehicleClass.equalsIgnoreCase("xmy")) {
+//				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XMY(dossierFile.getFormData(), 0l,
+//						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
+//						dossierFile.getDeliverableCode());
+//			} else if (vehicleClass.equalsIgnoreCase("xdd")) {
+//				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XDD(dossierFile.getFormData(), 0l,
+//						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
+//						dossierFile.getDeliverableCode());
+//			} else if (vehicleClass.equalsIgnoreCase("xcn")) {
+//				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCN(dossierFile.getFormData(), 0l,
+//						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
+//						dossierFile.getDeliverableCode());
+//			} else if (vehicleClass.equalsIgnoreCase("xch")) {
+//				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCH(dossierFile.getFormData(), 0l,
+//						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
+//						dossierFile.getDeliverableCode());
+//			}
 		}
 
 		//Process update DossierStatistic
