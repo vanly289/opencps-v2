@@ -1,17 +1,9 @@
 package org.opencps.dossiermgt.vr.utils;
 
+import com.fds.vr.business.action.util.ConvertJONObjectUtils;
 import com.fds.vr.business.model.VRActionconfig;
-import com.fds.vr.business.model.VRTechnicalSpec_LKXCG;
-import com.fds.vr.business.model.VRTechnicalSpec_LKXMY;
-import com.fds.vr.business.model.VRTechnicalSpec_XCG;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_LKXCGImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_LKXMYImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGImpl;
 import com.fds.vr.business.service.VRActionconfigLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_LKXCGLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCGLocalServiceUtil;
-import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.fds.vr.business.service.VRVehicleSpecificationLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -20,8 +12,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.opencps.dossiermgt.action.util.ConstantsUtils;
 import org.opencps.dossiermgt.model.Dossier;
@@ -46,47 +40,60 @@ public class VRBussinessUtils {
 		
 		if(actionConfig != null) {
 			String vehicleClass = actionConfig.getVehicleClass();
+			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossier.getDossierId(), actionConfig.getFileTemplateNo(), false, null);
 			
-			if(vehicleClass.equalsIgnoreCase("xcg")) {
-				DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossier.getDossierId(), actionConfig.getFileTemplateNo(), false, null);
-				
-				String formData = dossierFile.getFormData();
-				
-				VRTechnicalSpec_XCG o = new VRTechnicalSpec_XCGImpl();
-				boolean save = false;
-				
-				try {
-					if(formData != null && formData.length() > 0) {
-						JSONObject json = JSONFactoryUtil.createJSONObject(formData);
-						
-						Iterator<String> keys = json.keys();
-						
-						while(keys.hasNext()) {
-						    String key = keys.next();
-						    _log.info("====keys===" + key);
-						    if (key.indexOf("bb_") > -1) {
-						    	String tmp = StringUtil.replace(key, "bb_", "");
-						    	_log.info("====tmp===" + tmp);
-						    	try {
-						    		Field field = VRTechnicalSpec_XCGImpl.class.getField(tmp);
-							    	field.set(o, json.get(key));
-							    	save = true;
-						    	} catch(NoSuchFieldException nsfe) {
-						    		
-						    	}
-							    	
-						    }
-						}
-					}
-					
-					if(save) {
-						o.setId(CounterLocalServiceUtil.increment(VRTechnicalSpec_XCG.class.getName()));
-						
-						VRTechnicalSpec_XCGLocalServiceUtil.addVRTechnicalSpec_XCG(o);
-					}
-				} catch(Exception e) {
-					_log.error(e);
-				}
+			LinkedHashMap<String, String> mapValues = ConvertJONObjectUtils.getKeyValuesMap(dossierFile.getFormData());
+			
+			for (Map.Entry<String, String> entry : mapValues.entrySet()) {
+			    _log.info(entry.getKey() + "/" + entry.getValue());
+			}
+			
+//			if(vehicleClass.equalsIgnoreCase("xcg")) {
+//				String formData = dossierFile.getFormData();
+//				
+//				boolean save = false;
+//				
+//				try {
+//					if(formData != null && formData.length() > 0) {
+//						JSONObject json = JSONFactoryUtil.createJSONObject(formData);
+//						
+//						Iterator<String> keys = json.keys();
+//						
+//						while (keys.hasNext()) {
+//							String key = keys.next();
+//							if (key.indexOf("bb_") > -1) {
+//								_log.info("====keys===" + key);
+//								String tmp = StringUtil.replace(key, "bb_", "");
+//								_log.info("====tmp===" + tmp + "=" + json.get(key));
+//
+//							}
+//						}
+//					}
+//				} catch(Exception e) {
+//					_log.error(e);
+//				}
+//			}
+
+			if (vehicleClass.equalsIgnoreCase("xcg")) {
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCG(dossierFile.getFormData(), 0l,
+						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
+						dossierFile.getDeliverableCode());
+			} else if (vehicleClass.equalsIgnoreCase("xmy")) {
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XMY(dossierFile.getFormData(), 0l,
+						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
+						dossierFile.getDeliverableCode());
+			} else if (vehicleClass.equalsIgnoreCase("xdd")) {
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XDD(dossierFile.getFormData(), 0l,
+						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
+						dossierFile.getDeliverableCode());
+			} else if (vehicleClass.equalsIgnoreCase("xcn")) {
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCN(dossierFile.getFormData(), 0l,
+						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
+						dossierFile.getDeliverableCode());
+			} else if (vehicleClass.equalsIgnoreCase("xch")) {
+				VRVehicleSpecificationLocalServiceUtil.updateVRTechnicalSpec_XCH(dossierFile.getFormData(), 0l,
+						dossier.getDossierId(), "", dossier.getDossierNo(), new Date(),
+						dossierFile.getDeliverableCode());
 			}
 		}
 

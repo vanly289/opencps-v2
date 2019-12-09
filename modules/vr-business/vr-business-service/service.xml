@@ -7666,7 +7666,9 @@
         <column name="processNo" type="String" db-name="processNo"></column>
         <column name="status" type="int" db-name="status"></column>
         <column name="vehicleClass" type="String" db-name="vehicleClass"></column>
-        <column name="fileTemplateNo" type="String" db-name="fileTemplateNo"></column>
+        <column name="fileTemplateNoBB" type="String" db-name="fileTemplateNoBB"></column>
+        <column name="fileTemplateNoCC" type="String" db-name="fileTemplateNoCC"></column>
+        <column name="deliverableCode" type="String" db-name="deliverableCode"></column>
         <finder name="A_P" return-type="VRActionconfig">
             <finder-column name="actionCode"></finder-column>
             <finder-column name="processNo"></finder-column>

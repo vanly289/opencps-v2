@@ -2167,7 +2167,7 @@ public class VRVehicleSpecificationLocalServiceImpl
 		String specificationValue = StringPool.BLANK;
 			
 		try {
-			JSONObject objChungChi = JSONFactoryUtil.createJSONObject(strChungChi);
+//			JSONObject objChungChi = JSONFactoryUtil.createJSONObject(strChungChi);
 			
 			List <VRTechnicalSpec_XCG> lstTechnicalSpec = VRTechnicalSpec_XCGLocalServiceUtil.findByDeliverableCode(deliverableCode) ;
 			VRTechnicalSpec_XCG technicalspecification = new VRTechnicalSpec_XCGImpl();
@@ -2199,7 +2199,7 @@ public class VRVehicleSpecificationLocalServiceImpl
 				VRTechnicalSpec_XCGLocalServiceUtil.updateVRTechnicalSpec_XCG(technicalspecification);
 
 			}
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			_log.error("**ERROR** CANNOT CREATE/UPDATE updateVRTechnicalSpec  updateVRTechnicalSpec_XCG");
 
 		}
