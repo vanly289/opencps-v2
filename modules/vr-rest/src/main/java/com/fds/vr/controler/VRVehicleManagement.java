@@ -1,6 +1,7 @@
 package com.fds.vr.controler;
 
 import com.fds.vr.model.VRVehicleRecordBeanParam;
+import com.fds.vr.model.VRVehicleSpecificationBeanParam;
 import com.fds.vr.model.VRVehicleTypeCertificateBeanParam;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -89,5 +90,12 @@ public interface VRVehicleManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRVehicleRecordBeanParam query,
 			String advancesearchParams);
-
+	
+	@GET
+	@Path("/specification/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findVRVehicleSpecification(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam VRVehicleSpecificationBeanParam query);
+	
 }

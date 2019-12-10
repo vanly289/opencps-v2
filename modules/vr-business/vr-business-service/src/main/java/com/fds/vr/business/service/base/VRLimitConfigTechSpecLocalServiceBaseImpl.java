@@ -113,6 +113,7 @@ import com.fds.vr.business.service.persistence.VRVehicleEquipmentFinder;
 import com.fds.vr.business.service.persistence.VRVehicleEquipmentPersistence;
 import com.fds.vr.business.service.persistence.VRVehicleRecordFinder;
 import com.fds.vr.business.service.persistence.VRVehicleRecordPersistence;
+import com.fds.vr.business.service.persistence.VRVehicleSpecificationFinder;
 import com.fds.vr.business.service.persistence.VRVehicleSpecificationPersistence;
 import com.fds.vr.business.service.persistence.VRVehicleTypeCertificateFinder;
 import com.fds.vr.business.service.persistence.VRVehicleTypeCertificatePersistence;
@@ -3468,6 +3469,25 @@ public abstract class VRLimitConfigTechSpecLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the vr vehicle specification finder.
+	 *
+	 * @return the vr vehicle specification finder
+	 */
+	public VRVehicleSpecificationFinder getVRVehicleSpecificationFinder() {
+		return vrVehicleSpecificationFinder;
+	}
+
+	/**
+	 * Sets the vr vehicle specification finder.
+	 *
+	 * @param vrVehicleSpecificationFinder the vr vehicle specification finder
+	 */
+	public void setVRVehicleSpecificationFinder(
+		VRVehicleSpecificationFinder vrVehicleSpecificationFinder) {
+		this.vrVehicleSpecificationFinder = vrVehicleSpecificationFinder;
+	}
+
+	/**
 	 * Returns the vr vehicle type certificate local service.
 	 *
 	 * @return the vr vehicle type certificate local service
@@ -4011,6 +4031,8 @@ public abstract class VRLimitConfigTechSpecLocalServiceBaseImpl
 	protected com.fds.vr.business.service.VRVehicleSpecificationLocalService vrVehicleSpecificationLocalService;
 	@BeanReference(type = VRVehicleSpecificationPersistence.class)
 	protected VRVehicleSpecificationPersistence vrVehicleSpecificationPersistence;
+	@BeanReference(type = VRVehicleSpecificationFinder.class)
+	protected VRVehicleSpecificationFinder vrVehicleSpecificationFinder;
 	@BeanReference(type = com.fds.vr.business.service.VRVehicleTypeCertificateLocalService.class)
 	protected com.fds.vr.business.service.VRVehicleTypeCertificateLocalService vrVehicleTypeCertificateLocalService;
 	@BeanReference(type = VRVehicleTypeCertificatePersistence.class)

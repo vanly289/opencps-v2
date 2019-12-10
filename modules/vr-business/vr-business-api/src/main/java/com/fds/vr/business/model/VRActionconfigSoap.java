@@ -37,7 +37,9 @@ public class VRActionconfigSoap implements Serializable {
 		soapModel.setProcessNo(model.getProcessNo());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setVehicleClass(model.getVehicleClass());
-		soapModel.setFileTemplateNo(model.getFileTemplateNo());
+		soapModel.setFileTemplateNoBB(model.getFileTemplateNoBB());
+		soapModel.setFileTemplateNoCC(model.getFileTemplateNoCC());
+		soapModel.setDeliverableCode(model.getDeliverableCode());
 
 		return soapModel;
 	}
@@ -130,12 +132,28 @@ public class VRActionconfigSoap implements Serializable {
 		_vehicleClass = vehicleClass;
 	}
 
-	public String getFileTemplateNo() {
-		return _fileTemplateNo;
+	public String getFileTemplateNoBB() {
+		return _fileTemplateNoBB;
 	}
 
-	public void setFileTemplateNo(String fileTemplateNo) {
-		_fileTemplateNo = fileTemplateNo;
+	public void setFileTemplateNoBB(String fileTemplateNoBB) {
+		_fileTemplateNoBB = fileTemplateNoBB;
+	}
+
+	public String getFileTemplateNoCC() {
+		return _fileTemplateNoCC;
+	}
+
+	public void setFileTemplateNoCC(String fileTemplateNoCC) {
+		_fileTemplateNoCC = fileTemplateNoCC;
+	}
+
+	public String getDeliverableCode() {
+		return _deliverableCode;
+	}
+
+	public void setDeliverableCode(String deliverableCode) {
+		_deliverableCode = deliverableCode;
 	}
 
 	private long _id;
@@ -143,5 +161,7 @@ public class VRActionconfigSoap implements Serializable {
 	private String _processNo;
 	private int _status;
 	private String _vehicleClass;
-	private String _fileTemplateNo;
+	private String _fileTemplateNoBB;
+	private String _fileTemplateNoCC;
+	private String _deliverableCode;
 }

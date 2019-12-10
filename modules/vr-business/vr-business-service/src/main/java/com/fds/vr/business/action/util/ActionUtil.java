@@ -117,13 +117,34 @@ public class ActionUtil {
 	}
 
 	public static JSONObject array2Json(Object[] objects, List<String> columnNames, List<String> dataTypes) {
+
 		JSONObject result = JSONFactoryUtil.createJSONObject();
-		if (objects != null && objects.length > 0 && dataTypes != null && dataTypes.size() == objects.length
-				&& columnNames != null && columnNames.size() == objects.length) {
+
+		if (objects != null && columnNames != null && columnNames.size() == objects.length && dataTypes != null
+				&& dataTypes.size() == columnNames.size()) {
 			for (int o = 0; o < objects.length; o++) {
 				Object object = objects[o];
 				String columnName = columnNames.get(o);
+				if (object == null) {
+					String dataType = dataTypes.get(o);
+					if (dataType.equals(long.class.getName())) {
+						object = -1;
+					} else if (dataType.equals(int.class.getName())) {
+						object = -1;
+					} else if (dataType.equals(double.class.getName())) {
+						object = -1;
+					} else if (dataType.equals(float.class.getName())) {
+						object = -1;
+					} else if (dataType.equals(boolean.class.getName())) {
+						object = false;
+					} else if (dataType.equals(String.class.getName())) {
+						object = "";
+					} else {
+						object = "";
+					}
+				}
 				result.put(columnName.toLowerCase(), object);
+
 			}
 		}
 		return result;

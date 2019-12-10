@@ -66,7 +66,9 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 			{ "processNo", Types.VARCHAR },
 			{ "status", Types.INTEGER },
 			{ "vehicleClass", Types.VARCHAR },
-			{ "fileTemplateNo", Types.VARCHAR }
+			{ "fileTemplateNoBB", Types.VARCHAR },
+			{ "fileTemplateNoCC", Types.VARCHAR },
+			{ "deliverableCode", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -76,10 +78,12 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		TABLE_COLUMNS_MAP.put("processNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("vehicleClass", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("fileTemplateNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fileTemplateNoBB", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fileTemplateNoCC", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("deliverableCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_actionconfig (id LONG not null primary key,actionCode VARCHAR(75) null,processNo VARCHAR(75) null,status INTEGER,vehicleClass VARCHAR(75) null,fileTemplateNo VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_actionconfig (id LONG not null primary key,actionCode VARCHAR(75) null,processNo VARCHAR(75) null,status INTEGER,vehicleClass VARCHAR(75) null,fileTemplateNoBB VARCHAR(75) null,fileTemplateNoCC VARCHAR(75) null,deliverableCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_actionconfig";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrActionconfig.id ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_actionconfig.id ASC";
@@ -143,7 +147,9 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		attributes.put("processNo", getProcessNo());
 		attributes.put("status", getStatus());
 		attributes.put("vehicleClass", getVehicleClass());
-		attributes.put("fileTemplateNo", getFileTemplateNo());
+		attributes.put("fileTemplateNoBB", getFileTemplateNoBB());
+		attributes.put("fileTemplateNoCC", getFileTemplateNoCC());
+		attributes.put("deliverableCode", getDeliverableCode());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -183,10 +189,22 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 			setVehicleClass(vehicleClass);
 		}
 
-		String fileTemplateNo = (String)attributes.get("fileTemplateNo");
+		String fileTemplateNoBB = (String)attributes.get("fileTemplateNoBB");
 
-		if (fileTemplateNo != null) {
-			setFileTemplateNo(fileTemplateNo);
+		if (fileTemplateNoBB != null) {
+			setFileTemplateNoBB(fileTemplateNoBB);
+		}
+
+		String fileTemplateNoCC = (String)attributes.get("fileTemplateNoCC");
+
+		if (fileTemplateNoCC != null) {
+			setFileTemplateNoCC(fileTemplateNoCC);
+		}
+
+		String deliverableCode = (String)attributes.get("deliverableCode");
+
+		if (deliverableCode != null) {
+			setDeliverableCode(deliverableCode);
 		}
 	}
 
@@ -276,18 +294,48 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 	}
 
 	@Override
-	public String getFileTemplateNo() {
-		if (_fileTemplateNo == null) {
+	public String getFileTemplateNoBB() {
+		if (_fileTemplateNoBB == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _fileTemplateNo;
+			return _fileTemplateNoBB;
 		}
 	}
 
 	@Override
-	public void setFileTemplateNo(String fileTemplateNo) {
-		_fileTemplateNo = fileTemplateNo;
+	public void setFileTemplateNoBB(String fileTemplateNoBB) {
+		_fileTemplateNoBB = fileTemplateNoBB;
+	}
+
+	@Override
+	public String getFileTemplateNoCC() {
+		if (_fileTemplateNoCC == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _fileTemplateNoCC;
+		}
+	}
+
+	@Override
+	public void setFileTemplateNoCC(String fileTemplateNoCC) {
+		_fileTemplateNoCC = fileTemplateNoCC;
+	}
+
+	@Override
+	public String getDeliverableCode() {
+		if (_deliverableCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _deliverableCode;
+		}
+	}
+
+	@Override
+	public void setDeliverableCode(String deliverableCode) {
+		_deliverableCode = deliverableCode;
 	}
 
 	public long getColumnBitmask() {
@@ -326,7 +374,9 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		vrActionconfigImpl.setProcessNo(getProcessNo());
 		vrActionconfigImpl.setStatus(getStatus());
 		vrActionconfigImpl.setVehicleClass(getVehicleClass());
-		vrActionconfigImpl.setFileTemplateNo(getFileTemplateNo());
+		vrActionconfigImpl.setFileTemplateNoBB(getFileTemplateNoBB());
+		vrActionconfigImpl.setFileTemplateNoCC(getFileTemplateNoCC());
+		vrActionconfigImpl.setDeliverableCode(getDeliverableCode());
 
 		vrActionconfigImpl.resetOriginalValues();
 
@@ -428,12 +478,28 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 			vrActionconfigCacheModel.vehicleClass = null;
 		}
 
-		vrActionconfigCacheModel.fileTemplateNo = getFileTemplateNo();
+		vrActionconfigCacheModel.fileTemplateNoBB = getFileTemplateNoBB();
 
-		String fileTemplateNo = vrActionconfigCacheModel.fileTemplateNo;
+		String fileTemplateNoBB = vrActionconfigCacheModel.fileTemplateNoBB;
 
-		if ((fileTemplateNo != null) && (fileTemplateNo.length() == 0)) {
-			vrActionconfigCacheModel.fileTemplateNo = null;
+		if ((fileTemplateNoBB != null) && (fileTemplateNoBB.length() == 0)) {
+			vrActionconfigCacheModel.fileTemplateNoBB = null;
+		}
+
+		vrActionconfigCacheModel.fileTemplateNoCC = getFileTemplateNoCC();
+
+		String fileTemplateNoCC = vrActionconfigCacheModel.fileTemplateNoCC;
+
+		if ((fileTemplateNoCC != null) && (fileTemplateNoCC.length() == 0)) {
+			vrActionconfigCacheModel.fileTemplateNoCC = null;
+		}
+
+		vrActionconfigCacheModel.deliverableCode = getDeliverableCode();
+
+		String deliverableCode = vrActionconfigCacheModel.deliverableCode;
+
+		if ((deliverableCode != null) && (deliverableCode.length() == 0)) {
+			vrActionconfigCacheModel.deliverableCode = null;
 		}
 
 		return vrActionconfigCacheModel;
@@ -441,7 +507,7 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -453,8 +519,12 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		sb.append(getStatus());
 		sb.append(", vehicleClass=");
 		sb.append(getVehicleClass());
-		sb.append(", fileTemplateNo=");
-		sb.append(getFileTemplateNo());
+		sb.append(", fileTemplateNoBB=");
+		sb.append(getFileTemplateNoBB());
+		sb.append(", fileTemplateNoCC=");
+		sb.append(getFileTemplateNoCC());
+		sb.append(", deliverableCode=");
+		sb.append(getDeliverableCode());
 		sb.append("}");
 
 		return sb.toString();
@@ -462,7 +532,7 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRActionconfig");
@@ -489,8 +559,16 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 		sb.append(getVehicleClass());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>fileTemplateNo</column-name><column-value><![CDATA[");
-		sb.append(getFileTemplateNo());
+			"<column><column-name>fileTemplateNoBB</column-name><column-value><![CDATA[");
+		sb.append(getFileTemplateNoBB());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>fileTemplateNoCC</column-name><column-value><![CDATA[");
+		sb.append(getFileTemplateNoCC());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>deliverableCode</column-name><column-value><![CDATA[");
+		sb.append(getDeliverableCode());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -509,7 +587,9 @@ public class VRActionconfigModelImpl extends BaseModelImpl<VRActionconfig>
 	private String _originalProcessNo;
 	private int _status;
 	private String _vehicleClass;
-	private String _fileTemplateNo;
+	private String _fileTemplateNoBB;
+	private String _fileTemplateNoCC;
+	private String _deliverableCode;
 	private long _columnBitmask;
 	private VRActionconfig _escapedModel;
 }

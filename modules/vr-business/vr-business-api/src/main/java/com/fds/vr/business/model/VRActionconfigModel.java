@@ -134,19 +134,49 @@ public interface VRActionconfigModel extends BaseModel<VRActionconfig> {
 	public void setVehicleClass(String vehicleClass);
 
 	/**
-	 * Returns the file template no of this vr actionconfig.
+	 * Returns the file template no bb of this vr actionconfig.
 	 *
-	 * @return the file template no of this vr actionconfig
+	 * @return the file template no bb of this vr actionconfig
 	 */
 	@AutoEscape
-	public String getFileTemplateNo();
+	public String getFileTemplateNoBB();
 
 	/**
-	 * Sets the file template no of this vr actionconfig.
+	 * Sets the file template no bb of this vr actionconfig.
 	 *
-	 * @param fileTemplateNo the file template no of this vr actionconfig
+	 * @param fileTemplateNoBB the file template no bb of this vr actionconfig
 	 */
-	public void setFileTemplateNo(String fileTemplateNo);
+	public void setFileTemplateNoBB(String fileTemplateNoBB);
+
+	/**
+	 * Returns the file template no cc of this vr actionconfig.
+	 *
+	 * @return the file template no cc of this vr actionconfig
+	 */
+	@AutoEscape
+	public String getFileTemplateNoCC();
+
+	/**
+	 * Sets the file template no cc of this vr actionconfig.
+	 *
+	 * @param fileTemplateNoCC the file template no cc of this vr actionconfig
+	 */
+	public void setFileTemplateNoCC(String fileTemplateNoCC);
+
+	/**
+	 * Returns the deliverable code of this vr actionconfig.
+	 *
+	 * @return the deliverable code of this vr actionconfig
+	 */
+	@AutoEscape
+	public String getDeliverableCode();
+
+	/**
+	 * Sets the deliverable code of this vr actionconfig.
+	 *
+	 * @param deliverableCode the deliverable code of this vr actionconfig
+	 */
+	public void setDeliverableCode(String deliverableCode);
 
 	@Override
 	public boolean isNew();

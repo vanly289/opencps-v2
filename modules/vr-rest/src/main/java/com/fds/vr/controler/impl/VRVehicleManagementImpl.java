@@ -2,6 +2,7 @@ package com.fds.vr.controler.impl;
 
 import com.fds.vr.business.action.VRVehicleTypeCertificateAction;
 import com.fds.vr.business.action.impl.VRVehicleRecordActionImpl;
+import com.fds.vr.business.action.impl.VRVehicleSpecificationActionImpl;
 import com.fds.vr.business.action.impl.VRVehicleTypeCertificateActionImpl;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.model.VRVehicleRecord;
@@ -9,6 +10,7 @@ import com.fds.vr.business.model.impl.VRVehicleRecordImpl;
 import com.fds.vr.business.model.impl.VRVehicleRecordModelImpl;
 import com.fds.vr.controler.VRVehicleManagement;
 import com.fds.vr.model.VRVehicleRecordBeanParam;
+import com.fds.vr.model.VRVehicleSpecificationBeanParam;
 import com.fds.vr.model.VRVehicleTypeCertificateBeanParam;
 import com.fds.vr.util.VRRestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -150,6 +152,26 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 		} catch (Exception e) {
 			_log.error(e);
 			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrvehiclerecord").toJSONString())
+					.build();
+		}
+
+	}
+
+	@Override
+	public Response findVRVehicleSpecification(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRVehicleSpecificationBeanParam query) {
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		try {
+			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
+
+			VRVehicleSpecificationActionImpl actionImpl = new VRVehicleSpecificationActionImpl();
+
+			result = actionImpl.findVRVehicleSpecification(user, serviceContext, params);
+
+			return Response.status(200).entity(result.toJSONString()).build();
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrvehiclespecification").toJSONString())
 					.build();
 		}
 

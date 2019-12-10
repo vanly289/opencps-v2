@@ -12662,7 +12662,7 @@ public class VRVehicleSpecificationLocalServiceImpl
 		}
 		
 	}
-	/*
+	
 	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
 			String modelClassName, int start, int end) throws SystemException {
 
@@ -12674,6 +12674,6 @@ public class VRVehicleSpecificationLocalServiceImpl
 
 		return vrVehicleSpecificationFinder.countData(sql);
 	}
-	*/
+	
 	private Log _log = LogFactoryUtil.getLog(VRVehicleSpecificationLocalServiceImpl.class);
 }

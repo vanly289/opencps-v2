@@ -38,6 +38,7 @@ public class VRVehicleRecordFinderImpl extends VRVehicleRecordFinderBaseImpl imp
 			q.setCacheable(false);
 
 			if (Validator.isNotNull(modelClassName) && modelClazz != null) {
+				log.info("---------------------------------> case1");
 				q.addEntity(modelClassName, modelClazz);
 				List<VRVehicleRecord> vrVehicleRecords = (List<VRVehicleRecord>) QueryUtil.list(q, getDialect(),
 						start, end);
@@ -50,17 +51,20 @@ public class VRVehicleRecordFinderImpl extends VRVehicleRecordFinderBaseImpl imp
 			} else {
 
 				if (columnNames.size() > 1) {
+					log.info("---------------------------------> case2");
 					Iterator<Object[]> itr = (Iterator<Object[]>) QueryUtil.iterate(q, getDialect(), start, end);
-
+					
 					if (itr.hasNext()) {
 						while (itr.hasNext()) {
 							Object[] objects = itr.next();
+							log.info("---------------------------------> objects length " + objects.length);
 							JSONObject json = ActionUtil.array2Json(objects, columnNames, dataTypes);
 							results.put(json);
 						}
 
 					}
 				} else if (columnNames.size() == 1) {
+					log.info("---------------------------------> case3");
 					Iterator itr = QueryUtil.iterate(q, getDialect(), start, end);
 
 					if (itr.hasNext()) {

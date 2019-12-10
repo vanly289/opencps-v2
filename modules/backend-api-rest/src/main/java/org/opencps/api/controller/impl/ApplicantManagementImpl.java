@@ -137,7 +137,7 @@ public class ApplicantManagementImpl implements ApplicantManagement {
 				throw new UnauthenticationException();
 			}
 			
-			// Tạm thời bỏ authent
+			// Táº¡m thá»�i bá»� authent
 //			if (!auth.hasResource(serviceContext, ServiceInfo.class.getName(), ActionKeys.ADD_ENTRY)) {
 //				throw new UnauthorizationException();
 //			}
@@ -960,6 +960,75 @@ public class ApplicantManagementImpl implements ApplicantManagement {
 			}
 
 		} catch (Exception e) {
+			ErrorMsg error = new ErrorMsg();
+
+			if (e instanceof UnauthenticationException) {
+				error.setMessage("Non-Authoritative Information.");
+				error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+				error.setDescription("Non-Authoritative Information.");
+
+				return Response.status(HttpURLConnection.HTTP_NOT_AUTHORITATIVE).entity(error).build();
+			} else {
+				if (e instanceof UnauthorizationException) {
+					error.setMessage("Unauthorized.");
+					error.setCode(HttpURLConnection.HTTP_NOT_AUTHORITATIVE);
+					error.setDescription("Unauthorized.");
+
+					return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).entity(error).build();
+
+				} else {
+
+					if (e instanceof NoSuchUserException) {
+						error.setMessage("Not Found");
+						error.setCode(HttpURLConnection.HTTP_NOT_FOUND);
+						error.setDescription("Not Found");
+
+						return Response.status(HttpURLConnection.HTTP_NOT_FOUND).entity(error).build();
+
+					} else {
+						error.setMessage("Internal Server Error");
+						error.setCode(HttpURLConnection.HTTP_INTERNAL_ERROR);
+						error.setDescription(e.getMessage());
+
+						return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(error).build();
+					}
+
+				}
+			}
+		}
+	}
+
+	@Override
+	public Response getApplicantDetail(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext) {
+		ApplicantActions actions = new ApplicantActionsImpl();
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		BackendAuth auth = new BackendAuthImpl();
+		Applicant applicant = null;
+		try {
+
+			/*if (!auth.isAuth(serviceContext)) {
+				throw new UnauthenticationException();
+			}*/
+
+			boolean isAllowed = true;
+
+			/*if (auth.hasResource(serviceContext, Applicant.class.getName(), ActionKeys.ADD_ENTRY)) {
+				isAllowed = true;
+			} */
+			
+			if (isAllowed) {
+				applicant = actions.getApplicantByMappingUserId(user.getUserId());
+
+				result = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(applicant));
+
+				return Response.status(200).entity(result.toJSONString()).build();
+			} else {
+				throw new UnauthorizationException();
+			}
+
+		} catch (Exception e) {
+			_log.error(e);
 			ErrorMsg error = new ErrorMsg();
 
 			if (e instanceof UnauthenticationException) {

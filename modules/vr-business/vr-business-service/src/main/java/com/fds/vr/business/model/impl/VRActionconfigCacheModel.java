@@ -64,7 +64,7 @@ public class VRActionconfigCacheModel implements CacheModel<VRActionconfig>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -76,8 +76,12 @@ public class VRActionconfigCacheModel implements CacheModel<VRActionconfig>,
 		sb.append(status);
 		sb.append(", vehicleClass=");
 		sb.append(vehicleClass);
-		sb.append(", fileTemplateNo=");
-		sb.append(fileTemplateNo);
+		sb.append(", fileTemplateNoBB=");
+		sb.append(fileTemplateNoBB);
+		sb.append(", fileTemplateNoCC=");
+		sb.append(fileTemplateNoCC);
+		sb.append(", deliverableCode=");
+		sb.append(deliverableCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -112,11 +116,25 @@ public class VRActionconfigCacheModel implements CacheModel<VRActionconfig>,
 			vrActionconfigImpl.setVehicleClass(vehicleClass);
 		}
 
-		if (fileTemplateNo == null) {
-			vrActionconfigImpl.setFileTemplateNo(StringPool.BLANK);
+		if (fileTemplateNoBB == null) {
+			vrActionconfigImpl.setFileTemplateNoBB(StringPool.BLANK);
 		}
 		else {
-			vrActionconfigImpl.setFileTemplateNo(fileTemplateNo);
+			vrActionconfigImpl.setFileTemplateNoBB(fileTemplateNoBB);
+		}
+
+		if (fileTemplateNoCC == null) {
+			vrActionconfigImpl.setFileTemplateNoCC(StringPool.BLANK);
+		}
+		else {
+			vrActionconfigImpl.setFileTemplateNoCC(fileTemplateNoCC);
+		}
+
+		if (deliverableCode == null) {
+			vrActionconfigImpl.setDeliverableCode(StringPool.BLANK);
+		}
+		else {
+			vrActionconfigImpl.setDeliverableCode(deliverableCode);
 		}
 
 		vrActionconfigImpl.resetOriginalValues();
@@ -132,7 +150,9 @@ public class VRActionconfigCacheModel implements CacheModel<VRActionconfig>,
 
 		status = objectInput.readInt();
 		vehicleClass = objectInput.readUTF();
-		fileTemplateNo = objectInput.readUTF();
+		fileTemplateNoBB = objectInput.readUTF();
+		fileTemplateNoCC = objectInput.readUTF();
+		deliverableCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -163,11 +183,25 @@ public class VRActionconfigCacheModel implements CacheModel<VRActionconfig>,
 			objectOutput.writeUTF(vehicleClass);
 		}
 
-		if (fileTemplateNo == null) {
+		if (fileTemplateNoBB == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(fileTemplateNo);
+			objectOutput.writeUTF(fileTemplateNoBB);
+		}
+
+		if (fileTemplateNoCC == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(fileTemplateNoCC);
+		}
+
+		if (deliverableCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(deliverableCode);
 		}
 	}
 
@@ -176,5 +210,7 @@ public class VRActionconfigCacheModel implements CacheModel<VRActionconfig>,
 	public String processNo;
 	public int status;
 	public String vehicleClass;
-	public String fileTemplateNo;
+	public String fileTemplateNoBB;
+	public String fileTemplateNoCC;
+	public String deliverableCode;
 }

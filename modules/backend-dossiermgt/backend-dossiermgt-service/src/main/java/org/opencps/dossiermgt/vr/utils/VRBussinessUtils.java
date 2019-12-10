@@ -41,7 +41,6 @@ public class VRBussinessUtils {
 		if(actionConfig != null) {
 			String vehicleClass = actionConfig.getVehicleClass();
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossier.getDossierId(), actionConfig.getFileTemplateNo(), false, null);
-			
 			LinkedHashMap<String, String> mapValues = ConvertJONObjectUtils.getKeyValuesMap(dossierFile.getFormData());
 			
 			for (Map.Entry<String, String> entry : mapValues.entrySet()) {

@@ -62,7 +62,9 @@ public class VRActionconfigWrapper implements VRActionconfig,
 		attributes.put("processNo", getProcessNo());
 		attributes.put("status", getStatus());
 		attributes.put("vehicleClass", getVehicleClass());
-		attributes.put("fileTemplateNo", getFileTemplateNo());
+		attributes.put("fileTemplateNoBB", getFileTemplateNoBB());
+		attributes.put("fileTemplateNoCC", getFileTemplateNoCC());
+		attributes.put("deliverableCode", getDeliverableCode());
 
 		return attributes;
 	}
@@ -99,10 +101,22 @@ public class VRActionconfigWrapper implements VRActionconfig,
 			setVehicleClass(vehicleClass);
 		}
 
-		String fileTemplateNo = (String)attributes.get("fileTemplateNo");
+		String fileTemplateNoBB = (String)attributes.get("fileTemplateNoBB");
 
-		if (fileTemplateNo != null) {
-			setFileTemplateNo(fileTemplateNo);
+		if (fileTemplateNoBB != null) {
+			setFileTemplateNoBB(fileTemplateNoBB);
+		}
+
+		String fileTemplateNoCC = (String)attributes.get("fileTemplateNoCC");
+
+		if (fileTemplateNoCC != null) {
+			setFileTemplateNoCC(fileTemplateNoCC);
+		}
+
+		String deliverableCode = (String)attributes.get("deliverableCode");
+
+		if (deliverableCode != null) {
+			setDeliverableCode(deliverableCode);
 		}
 	}
 
@@ -182,13 +196,33 @@ public class VRActionconfigWrapper implements VRActionconfig,
 	}
 
 	/**
-	* Returns the file template no of this vr actionconfig.
+	* Returns the deliverable code of this vr actionconfig.
 	*
-	* @return the file template no of this vr actionconfig
+	* @return the deliverable code of this vr actionconfig
 	*/
 	@Override
-	public java.lang.String getFileTemplateNo() {
-		return _vrActionconfig.getFileTemplateNo();
+	public java.lang.String getDeliverableCode() {
+		return _vrActionconfig.getDeliverableCode();
+	}
+
+	/**
+	* Returns the file template no bb of this vr actionconfig.
+	*
+	* @return the file template no bb of this vr actionconfig
+	*/
+	@Override
+	public java.lang.String getFileTemplateNoBB() {
+		return _vrActionconfig.getFileTemplateNoBB();
+	}
+
+	/**
+	* Returns the file template no cc of this vr actionconfig.
+	*
+	* @return the file template no cc of this vr actionconfig
+	*/
+	@Override
+	public java.lang.String getFileTemplateNoCC() {
+		return _vrActionconfig.getFileTemplateNoCC();
 	}
 
 	/**
@@ -261,6 +295,16 @@ public class VRActionconfigWrapper implements VRActionconfig,
 		_vrActionconfig.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the deliverable code of this vr actionconfig.
+	*
+	* @param deliverableCode the deliverable code of this vr actionconfig
+	*/
+	@Override
+	public void setDeliverableCode(java.lang.String deliverableCode) {
+		_vrActionconfig.setDeliverableCode(deliverableCode);
+	}
+
 	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_vrActionconfig.setExpandoBridgeAttributes(expandoBridge);
@@ -278,13 +322,23 @@ public class VRActionconfigWrapper implements VRActionconfig,
 	}
 
 	/**
-	* Sets the file template no of this vr actionconfig.
+	* Sets the file template no bb of this vr actionconfig.
 	*
-	* @param fileTemplateNo the file template no of this vr actionconfig
+	* @param fileTemplateNoBB the file template no bb of this vr actionconfig
 	*/
 	@Override
-	public void setFileTemplateNo(java.lang.String fileTemplateNo) {
-		_vrActionconfig.setFileTemplateNo(fileTemplateNo);
+	public void setFileTemplateNoBB(java.lang.String fileTemplateNoBB) {
+		_vrActionconfig.setFileTemplateNoBB(fileTemplateNoBB);
+	}
+
+	/**
+	* Sets the file template no cc of this vr actionconfig.
+	*
+	* @param fileTemplateNoCC the file template no cc of this vr actionconfig
+	*/
+	@Override
+	public void setFileTemplateNoCC(java.lang.String fileTemplateNoCC) {
+		_vrActionconfig.setFileTemplateNoCC(fileTemplateNoCC);
 	}
 
 	/**

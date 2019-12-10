@@ -57,6 +57,7 @@ public class SQLQueryBuilder {
 			this.setQueryFields(ListUtil.toList(fields));
 			for (int i = 0; i < fields.length; i++) {
 				String columnNameInstance = fields[i].trim().replaceAll("\\s+", " ");
+				columnNameInstance = columnNameInstance.substring(columnNameInstance.lastIndexOf(" ") + 1);
 				this.setColumnInstances(columnNameInstance);
 			}
 
@@ -74,6 +75,7 @@ public class SQLQueryBuilder {
 				String fieldName = field.getName();
 				this.setQueryFields(fieldName);
 				String columnNameInstance = fieldName.trim().replaceAll("\\s+", " ");
+				columnNameInstance = columnNameInstance.substring(columnNameInstance.lastIndexOf(" ") + 1);
 				this.setColumnInstances(columnNameInstance);
 			}
 
@@ -81,6 +83,13 @@ public class SQLQueryBuilder {
 
 		return this;
 	}
+	
+	/*public static void main(String[] args) {
+		String test = "s ";
+		test = test.trim().replaceAll("\\s+", " ");
+		System.out.println(test);
+		System.out.println(test.substring(test.lastIndexOf(" ") + 1));
+	}*/
 
 	public SQLQueryBuilder select(Class<?> clazz, DBField... fields) {
 
@@ -92,7 +101,9 @@ public class SQLQueryBuilder {
 				DBField field = fields[i];
 				this.setDataTypes(field.getType());
 				this.setQueryFields(field.getName());
-				this.setColumnInstances(field.getName());
+				String columnNameInstance = field.getName().trim().replaceAll("\\s+", " ");
+				columnNameInstance = columnNameInstance.substring(columnNameInstance.lastIndexOf(" ") + 1);
+				this.setColumnInstances(columnNameInstance);
 			}
 
 		}
@@ -189,6 +200,18 @@ public class SQLQueryBuilder {
 		return this;
 	}
 
+	public SQLQueryBuilder where(String column, Object value, String condition, String searchOperator, String alias) {
+
+		String queryCondition = condition(Validator.isNotNull(alias) ? alias + "." + column : column, value, condition,
+				searchOperator);
+
+		if (queryCondition != null) {
+			this.setConditions(queryCondition);
+		}
+
+		return this;
+	}
+
 	public SQLQueryBuilder where(String column, Object value, String condition, String searchOperator,
 			boolean parenthesis, String... alias) {
 
@@ -212,7 +235,10 @@ public class SQLQueryBuilder {
 			if (Validator.isNotNull(searchOperator)) {
 				if (searchOperator.equals(StringPool.LIKE)) {
 					queryCondition += "'%" + value + "%'";
-				} else {
+				}else if(searchOperator.equals("BETWEEN")) {
+					queryCondition += value;
+				}
+				else {
 					if (value instanceof String) {
 						queryCondition += "'" + value + "'";
 					} else {
