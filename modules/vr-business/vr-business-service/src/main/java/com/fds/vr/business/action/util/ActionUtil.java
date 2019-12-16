@@ -508,8 +508,58 @@ public class ActionUtil {
 		return destFile;
 	}
 
-	public static String doExportExcelFile(String sheetName,
-			String fileName, String[] headers, String[][] data)
+	public static File doExportExcelFile(String sheetName, String[] headercodes, String[] headerlabels, JSONArray data)
+			throws IOException {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet(sheetName);
+		int rownum = 0;
+		Cell cell;
+		Row row;
+
+		XSSFCellStyle style = createHeaderStyle(workbook);
+
+		row = sheet.createRow(rownum);
+
+		if (headercodes != null && headercodes.length > 0) {
+			for (int i = 0; i < headercodes.length; i++) {
+				cell = row.createCell(i, CellType.STRING);
+				String code = headercodes[i];
+				String label = code;
+				if (headerlabels != null && headerlabels.length >= i) {
+					label = headerlabels[i];
+				}
+
+				cell.setCellValue(new String(label.getBytes("UTF-8")));
+				cell.setCellStyle(style);
+			}
+			rownum++;
+		}
+
+		if (data != null && data.length() > 0) {
+			for (int i = 0; i < data.length(); i++) {
+				row = sheet.createRow(rownum);
+				JSONObject values = data.getJSONObject(i);
+				for (int h = 0; h < headercodes.length; h++) {
+					cell = row.createCell(h, CellType.STRING);
+					cell.setCellValue(String.valueOf(values.get(headercodes[h])));
+				}
+
+				rownum++;
+			}
+		}
+
+		File file = FileUtil.createTempFile(".xlsx");
+
+		OutputStream os = new FileOutputStream(file);
+
+		workbook.write(os);
+
+		os.close();
+
+		return file;
+	}
+
+	public static String doExportExcelFile(String sheetName, String fileName, String[] headers, String[][] data)
 			throws IOException {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet sheet = workbook.createSheet(sheetName);
@@ -545,14 +595,7 @@ public class ActionUtil {
 
 		File file = FileUtil.createTempFile(".xlsx");
 
-		
-
-		// System.out.print("===============>>>>>>>filePath " + filePath);
-
 		OutputStream os = new FileOutputStream(file);
-
-		// OutputStream outputStream =
-		// resourceResponse.getPortletOutputStream();
 
 		workbook.write(os);
 

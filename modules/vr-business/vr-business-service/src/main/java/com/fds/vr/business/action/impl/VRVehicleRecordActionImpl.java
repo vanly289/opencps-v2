@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -49,6 +50,14 @@ import org.opencps.datamgt.utils.DateTimeUtils;
  */
 public class VRVehicleRecordActionImpl implements VRVehicleRecordAction {
 	private Log _log = LogFactoryUtil.getLog(VRVehicleRecordActionImpl.class);
+
+	@Override
+	public long countVRVehicleRecord(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params) {
+
+		SQLQueryBuilder builder = getBuilder(params);
+
+		return VRVehicleRecordLocalServiceUtil.counData(builder.getCountQuery());
+	}
 
 	public JSONObject createVRVehicleRecord(VRVehicleRecord object) {
 
@@ -87,10 +96,59 @@ public class VRVehicleRecordActionImpl implements VRVehicleRecordAction {
 	}
 
 	@Override
+	public File doExportVRVehicleRecord(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params,
+			String headercodes, String headerlabels) {
+
+		if (Validator.isNull(headercodes)) {
+			return null;
+		}
+
+		try {
+
+			int start = -1;
+
+			int end = -1;
+
+			SQLQueryBuilder builder = getBuilder(params);
+
+			String[] arrHeaderCodes = StringUtil.split(headercodes);
+
+			String[] arrHeadeLabels = StringUtil.split(headerlabels);
+
+			JSONArray data = VRVehicleRecordLocalServiceUtil.findData(builder.getSelectQuery(),
+					builder.getColumnInstances(), builder.getDataTypes(), null, null, start, end);
+
+			return ActionUtil.doExportExcelFile("VRVehicleRecord", arrHeaderCodes, arrHeadeLabels, data);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			return null;
+
+		}
+	}
+
+	@Override
 	public JSONObject findVRVehicleRecord(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params) {
+
 		int start = ActionUtil.getStart(params);
+
 		int end = ActionUtil.getEnd(params);
+
+		SQLQueryBuilder builder = getBuilder(params);
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		long total = VRVehicleRecordLocalServiceUtil.counData(builder.getCountQuery());
+		JSONArray data = VRVehicleRecordLocalServiceUtil.findData(builder.getSelectQuery(),
+				builder.getColumnInstances(), builder.getDataTypes(), null, null, start, end);
+		result.put("total", total);
+		result.put("data", data);
+		return result;
+	}
+
+	private SQLQueryBuilder getBuilder(LinkedHashMap<String, Object> params) {
 		String keyword = ActionUtil.getKeyword(params);
 		Long id = null;
 		//Long mtCore = null;
@@ -301,21 +359,7 @@ public class VRVehicleRecordActionImpl implements VRVehicleRecordAction {
 
 		}
 
-		builder.build();
-		/*for(String columnName: builder.getColumnInstances()) {
-			_log.info("------------------------>>>> columnName " + columnName);
-		}
-		
-		for(String datatype: builder.getDataTypes()) {
-			_log.info("------------------------>>>> datatype " + datatype);
-		}*/
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		long total = VRVehicleRecordLocalServiceUtil.counData(builder.getCountQuery());
-		JSONArray data = VRVehicleRecordLocalServiceUtil.findData(builder.getSelectQuery(),
-				builder.getColumnInstances(), builder.getDataTypes(), null, null, start, end);
-		result.put("total", total);
-		result.put("data", data);
-		return result;
+		return builder.build();
 	}
 
 	@Override
@@ -423,224 +467,6 @@ public class VRVehicleRecordActionImpl implements VRVehicleRecordAction {
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
 
 		}
-	}
-
-	@Override
-	public long countVRVehicleRecord(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params) {
-
-		String keyword = ActionUtil.getKeyword(params);
-		Long id = null;
-		//Long mtCore = null;
-		//Long issueId = null;
-		//Long issueVehicleCertificateId = null;
-		//Long dossierId = null;
-		Long applicantProfileId = null;
-		//String applicantName = null;
-		//String applicantAddress = null;
-		//Long certificateId = null;
-		String productionNumber = null;
-		String productionDate = null;
-		String frameNo = null;
-		String boxNo = null;
-		String engineNo = null;
-		String color = null;
-		String stampShortNo = null;
-		String serialNo = null;
-		Long vehicleRecordStatus = null;
-		Long printingStatus = null;
-		//Long attachedFile = null;
-		//String signName = null;
-		//String signTitle = null;
-		//String signPlace = null;
-		//String signDate = null;
-		//String modifyDate = null;
-		//String syncDate = null;
-		String certificaterecordno = null;
-		Integer postPrintingStatus = null;
-		String qrCode = null;
-		String stampIssueNo = null;
-		String vehicleclass = null;
-		if (params != null) {
-
-			if (params.containsKey("id")) {
-				id = (Long) params.get("id");
-			}
-			/*if (params.containsKey("mtcore")) {
-				mtCore = (Long)params.get("mtcore");
-			}
-			if (params.containsKey("issueid")) {
-				issueId = (Long)params.get("issueid");
-			}
-			if (params.containsKey("issuevehiclecertificateid")) {
-				issueVehicleCertificateId = (Long)params.get("issuevehiclecertificateid");
-			}
-			if (params.containsKey("dossierid")) {
-				dossierId = (Long)params.get("dossierid");
-			}*/
-			if (params.containsKey("applicantprofileid")) {
-				applicantProfileId = (Long) params.get("applicantprofileid");
-			}
-			/*if (params.containsKey("applicantname")) {
-				applicantName = (String)params.get("applicantname");
-			}
-			if (params.containsKey("applicantaddress")) {
-				applicantAddress = (String)params.get("applicantaddress");
-			}
-			if (params.containsKey("certificateid")) {
-				certificateId = (Long)params.get("certificateid");
-			}*/
-			if (params.containsKey("productionnumber")) {
-				productionNumber = (String) params.get("productionnumber");
-			}
-			if (params.containsKey("productiondate")) {
-				productionDate = (String) params.get("productiondate");
-			}
-			if (params.containsKey("frameno")) {
-				frameNo = (String) params.get("frameno");
-			}
-			if (params.containsKey("boxno")) {
-				boxNo = (String) params.get("boxno");
-			}
-			if (params.containsKey("engineno")) {
-				engineNo = (String) params.get("engineno");
-			}
-			if (params.containsKey("color")) {
-				color = (String) params.get("color");
-			}
-			if (params.containsKey("stampshortno")) {
-				stampShortNo = (String) params.get("stampshortno");
-			}
-			if (params.containsKey("serialno")) {
-				serialNo = (String) params.get("serialno");
-			}
-			if (params.containsKey("vehiclerecordstatus")) {
-				vehicleRecordStatus = (Long) params.get("vehiclerecordstatus");
-			}
-			if (params.containsKey("printingstatus")) {
-				printingStatus = (Long) params.get("printingstatus");
-			}
-			/*if (params.containsKey("attachedfile")) {
-				attachedFile = (Long)params.get("attachedfile");
-			}
-			if (params.containsKey("signname")) {
-				signName = (String)params.get("signname");
-			}
-			if (params.containsKey("signtitle")) {
-				signTitle = (String)params.get("signtitle");
-			}
-			if (params.containsKey("signplace")) {
-				signPlace = (String)params.get("signplace");
-			}
-			if (params.containsKey("signdate")) {
-				signDate = (String)params.get("signdate");
-			}
-			if (params.containsKey("modifydate")) {
-				modifyDate = (String)params.get("modifydate");
-			}
-			if (params.containsKey("syncdate")) {
-				syncDate = (String)params.get("syncdate");
-			}*/
-			if (params.containsKey("certificaterecordno")) {
-				certificaterecordno = (String) params.get("certificaterecordno");
-			}
-			if (params.containsKey("postprintingstatus")) {
-				postPrintingStatus = (Integer) params.get("postprintingstatus");
-			}
-			if (params.containsKey("qrcode")) {
-				qrCode = (String) params.get("qrcode");
-			}
-
-			if (params.containsKey("stampissueno")) {
-				stampIssueNo = (String) params.get("stampissueno");
-			}
-
-			if (params.containsKey("vehicleclass")) {
-				vehicleclass = (String) params.get("vehicleclass");
-			}
-		}
-		String _keywordSearchCondition = ActionUtil.buildSQLCondition("applicantName", keyword, "", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("applicantAddress", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("productionNumber", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("frameNo", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("boxNo", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("engineNo", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("color", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("stampShortNo", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("serialNo", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("signName", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("signTitle", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("signPlace", keyword, "OR", StringPool.LIKE, "")
-				+ ActionUtil.buildSQLCondition("certificaterecordno", keyword, "OR", StringPool.LIKE, "");
-		//+ ActionUtil.buildSQLCondition("qrCode", keyword, "OR", StringPool.LIKE, "");
-		SQLQueryBuilder builder = new SQLQueryBuilder();
-		builder.select(VRVehicleRecordModelImpl.class,
-				DBField.ins("vr_issue.vehicleclass AS vehicleclass", Types.VARCHAR),
-				DBField.ins("vr_issue.stampissueno AS stampissueno", Types.VARCHAR)).from("vr_vehiclerecord")
-				.join("INNER JOIN", "vr_vehiclerecord", "issueid", "vr_issue", "id")
-				.where("id", id, "AND", StringPool.EQUAL, "vr_vehiclerecord")
-				//.where("mtcore", mtCore, "AND", StringPool.EQUAL).where("issueid", issueId, "AND", StringPool.EQUAL)
-				//.where("issuevehiclecertificateid", issueVehicleCertificateId, "AND", StringPool.EQUAL)
-				//.where("dossierid", dossierId, "AND", StringPool.EQUAL)
-				.where("applicantprofileid", applicantProfileId, "AND", StringPool.EQUAL, "vr_vehiclerecord")
-				//.where("applicantname", applicantName, "AND", StringPool.EQUAL)
-				//.where("applicantaddress", applicantAddress, "AND", StringPool.EQUAL)
-				//.where("certificateid", certificateId, "AND", StringPool.EQUAL)
-				.where("productionnumber", productionNumber, "AND", StringPool.EQUAL)
-
-				.where("frameno", frameNo, "AND", StringPool.EQUAL).where("boxno", boxNo, "AND", StringPool.EQUAL)
-				.where("engineno", engineNo, "AND", StringPool.EQUAL).where("color", color, "AND", StringPool.EQUAL)
-				.where("stampshortno", stampShortNo, "AND", StringPool.EQUAL)
-				.where("serialno", serialNo, "AND", StringPool.EQUAL)
-				.where("vehiclerecordstatus", vehicleRecordStatus, "AND", StringPool.EQUAL)
-				.where("printingstatus", printingStatus, "AND", StringPool.EQUAL)
-				//.where("attachedfile", attachedFile, "AND", StringPool.EQUAL)
-				//.where("signname", signName, "AND", StringPool.EQUAL)
-				//.where("signtitle", signTitle, "AND", StringPool.EQUAL)
-				//.where("signplace", signPlace, "AND", StringPool.EQUAL)
-				//.where("signdate", signDate, "AND", StringPool.EQUAL)
-				//.where("modifydate", modifyDate, "AND", StringPool.EQUAL)
-				//.where("syncdate", syncDate, "AND", StringPool.EQUAL)
-				.where("certificaterecordno", certificaterecordno, "AND", StringPool.EQUAL)
-				.where("postprintingstatus", postPrintingStatus, "AND", StringPool.EQUAL)
-				.where("qrcode", qrCode, "AND", StringPool.EQUAL).where(_keywordSearchCondition, null, "AND", "", true);
-
-		if (Validator.isNotNull(productionDate)) {
-			Date date = DateTimeUtils.convertStringToDate(productionDate, DateTimeUtils._VN_DATE_FORMAT);
-			if (date != null) {
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(date);
-				calendar.set(Calendar.HOUR_OF_DAY, 0);
-				calendar.set(Calendar.MINUTE, 0);
-				calendar.set(Calendar.SECOND, 0);
-				//2019-11-28 14:05:34
-				String fromDate = DateTimeUtils.convertDateToString(calendar.getTime(),
-						DateTimeUtils._MYSQL_TIME_FORMAT);
-
-				calendar.set(Calendar.HOUR_OF_DAY, 23);
-				calendar.set(Calendar.MINUTE, 59);
-				calendar.set(Calendar.SECOND, 59);
-
-				String toDate = DateTimeUtils.convertDateToString(calendar.getTime(), DateTimeUtils._MYSQL_TIME_FORMAT);
-
-				builder.where("productionDate", "'" + fromDate + "'" + " AND " + "'" + toDate + "'", " AND ",
-						"BETWEEN");
-			}
-		}
-
-		if (Validator.isNotNull(stampIssueNo) || Validator.isNotNull(vehicleclass)) {
-			if (Validator.isNotNull(stampIssueNo)) {
-				builder.joinwhere("vr_issue.stampissueno", stampIssueNo, " AND ", StringPool.LIKE);
-			}
-
-			if (Validator.isNotNull(vehicleclass)) {
-				builder.joinwhere("vr_issue.vehicleclass", vehicleclass, " AND ", StringPool.EQUAL);
-			}
-
-		}
-
-		builder.build();
-
-		return VRVehicleRecordLocalServiceUtil.counData(builder.getCountQuery());
 	}
 
 }

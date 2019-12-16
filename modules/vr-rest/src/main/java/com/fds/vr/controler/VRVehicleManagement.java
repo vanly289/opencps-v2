@@ -10,9 +10,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -90,8 +92,15 @@ public interface VRVehicleManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRVehicleRecordBeanParam query,
 			String advancesearchParams);
-	
-	
+
+	@GET
+	@Path("/record/export")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public Response doExportVRVehicleRecord(@Context HttpServletRequest request, @Context HttpServletResponse response,
+			@Context HttpHeaders header, @Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam VRVehicleRecordBeanParam query, @FormParam("headercodes") String headercodes, @FormParam("headerlabels") String headerlabels);
+
 	@GET
 	@Path("/record/count")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -99,12 +108,12 @@ public interface VRVehicleManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRVehicleRecordBeanParam query,
 			String advancesearchParams);
-	
+
 	@GET
 	@Path("/specification/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findVRVehicleSpecification(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRVehicleSpecificationBeanParam query);
-	
+
 }

@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -28,8 +31,10 @@ import java.util.Map;
 
 import javax.activation.DataHandler;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 
@@ -186,6 +191,41 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 			VRVehicleRecordActionImpl actionImpl = new VRVehicleRecordActionImpl();
 
 			return Response.status(200).entity(actionImpl.countVRVehicleRecord(user, serviceContext, params)).build();
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrvehiclerecord").toJSONString())
+					.build();
+		}
+	}
+
+	@Override
+	public Response doExportVRVehicleRecord(HttpServletRequest request, HttpServletResponse response,
+			HttpHeaders header, Company company, Locale locale, User user, ServiceContext serviceContext,
+			VRVehicleRecordBeanParam query, String headercodes, String headerlabels) {
+		try {
+			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
+
+			VRVehicleRecordActionImpl actionImpl = new VRVehicleRecordActionImpl();
+
+			File file = actionImpl.doExportVRVehicleRecord(user, serviceContext, params, headercodes, headerlabels);
+
+			if (file == null) {
+				return Response.status(500)
+						.entity(VRRestUtil.errorMessage("Can't export vrvehiclerecord").toJSONString()).build();
+			} else {
+				InputStream in = new FileInputStream(file);
+				ServletResponseUtil.sendFile(request, response, file.getName(), in, "application/download");
+				in.close();
+
+				ResponseBuilder responseBuilder = Response.ok((Object) file);
+				//
+				// responseBuilder.header("Content-Disposition", "attachment;
+				// filename=\"" + file.getName() + "\"")
+				// .header("Content-Type", "application/zip");
+				//
+				return responseBuilder.build();
+			}
+
 		} catch (Exception e) {
 			_log.error(e);
 			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrvehiclerecord").toJSONString())

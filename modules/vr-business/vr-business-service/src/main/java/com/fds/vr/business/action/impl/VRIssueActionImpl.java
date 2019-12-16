@@ -15,8 +15,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
 import java.sql.Types;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,19 +34,13 @@ import org.opencps.datamgt.utils.DateTimeUtils;
  */
 public class VRIssueActionImpl implements VRIssueAction {
 
+	private Log _log = LogFactoryUtil.getLog(VRIssueActionImpl.class);
+
 	@Override
-	public JSONObject findVRIssue(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params) {
-		int start = ActionUtil.getStart(params);
-		int end = ActionUtil.getEnd(params);
+	public long countVRIssue(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params) {
 		SQLQueryBuilder builder = getBuilder(params);
 
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		long total = VRIssueLocalServiceUtil.counData(builder.getCountQuery());
-		JSONArray data = VRIssueLocalServiceUtil.findData(builder.getSelectQuery(), builder.getColumnInstances(),
-				builder.getDataTypes(), null, "", start, end);
-		result.put("total", total);
-		result.put("data", data);
-		return result;
+		return VRIssueLocalServiceUtil.counData(builder.getCountQuery());
 	}
 
 	@Override
@@ -84,38 +80,49 @@ public class VRIssueActionImpl implements VRIssueAction {
 	}
 
 	@Override
-	public JSONObject updateVRIssue(VRIssue object) {
-		// validate
-		if (object == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
-		}
-		if (object.getId() <= 0) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+	public File doExportVRIssue(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params,
+			String headercodes, String headerlabels) {
+		if (Validator.isNull(headercodes)) {
+			return null;
 		}
 
 		try {
 
-			object = VRIssueLocalServiceUtil.updateVRIssue(object);
+			int start = -1;
 
-			JSONObject result = ActionUtil.object2Json(object, VRIssueModelImpl.class, StringPool.BLANK);
+			int end = -1;
 
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+			SQLQueryBuilder builder = getBuilder(params);
+
+			String[] arrHeaderCodes = StringUtil.split(headercodes);
+
+			String[] arrHeadeLabels = StringUtil.split(headerlabels);
+
+			JSONArray data = VRIssueLocalServiceUtil.findData(builder.getSelectQuery(), builder.getColumnInstances(),
+					builder.getDataTypes(), null, null, start, end);
+
+			return ActionUtil.doExportExcelFile("VRIssue", arrHeaderCodes, arrHeadeLabels, data);
 
 		} catch (Exception e) {
 			_log.error(e);
 
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
-
+			return null;
 		}
 	}
 
-	private Log _log = LogFactoryUtil.getLog(VRIssueActionImpl.class);
-
 	@Override
-	public long countVRIssue(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params) {
+	public JSONObject findVRIssue(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params) {
+		int start = ActionUtil.getStart(params);
+		int end = ActionUtil.getEnd(params);
 		SQLQueryBuilder builder = getBuilder(params);
-		
-		return VRIssueLocalServiceUtil.counData(builder.getCountQuery());
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		long total = VRIssueLocalServiceUtil.counData(builder.getCountQuery());
+		JSONArray data = VRIssueLocalServiceUtil.findData(builder.getSelectQuery(), builder.getColumnInstances(),
+				builder.getDataTypes(), null, null, start, end);
+		result.put("total", total);
+		result.put("data", data);
+		return result;
 	}
 
 	private SQLQueryBuilder getBuilder(LinkedHashMap<String, Object> params) {
@@ -596,5 +603,31 @@ public class VRIssueActionImpl implements VRIssueAction {
 		}
 
 		return builder.build();
+	}
+
+	@Override
+	public JSONObject updateVRIssue(VRIssue object) {
+		// validate
+		if (object == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_BAD_REQUEST, StringPool.BLANK);
+		}
+		if (object.getId() <= 0) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
+		try {
+
+			object = VRIssueLocalServiceUtil.updateVRIssue(object);
+
+			JSONObject result = ActionUtil.object2Json(object, VRIssueModelImpl.class, StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+
+		}
 	}
 }

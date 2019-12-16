@@ -5,6 +5,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 
 /**
@@ -12,15 +13,18 @@ import java.util.LinkedHashMap;
  *
  */
 public interface VRIssueAction {
-	public JSONObject findVRIssue(User user, ServiceContext serviceContext,
+	public long countVRIssue(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params);
 
 	public JSONObject createVRIssue(VRIssue object);
 	
-	public long countVRIssue(User user, ServiceContext serviceContext,
-			LinkedHashMap<String, Object> params);
-	
 	public JSONObject deleteVRIssue(long id);
+	
+	public File doExportVRIssue(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params,
+			String headercodes, String headerlabels);
+	
+	public JSONObject findVRIssue(User user, ServiceContext serviceContext,
+			LinkedHashMap<String, Object> params);
 	
 	public JSONObject updateVRIssue(VRIssue object);
 }
