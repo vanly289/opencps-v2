@@ -17,6 +17,8 @@ public interface VROutputSheetDetailAction {
 
 	public JSONObject createVROutputSheetDetail(VROutputSheetDetails object);
 	
+	public JSONObject getVROutputSheetDetail(long id);
+	
 	public JSONObject deleteVROutputSheetDetails(long id);
 	
 	public JSONObject updateVROutputSheetDetails(VROutputSheetDetails object);

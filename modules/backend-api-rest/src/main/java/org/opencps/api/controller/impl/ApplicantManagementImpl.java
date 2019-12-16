@@ -1020,8 +1020,10 @@ public class ApplicantManagementImpl implements ApplicantManagement {
 			if (isAllowed) {
 				applicant = actions.getApplicantByMappingUserId(user.getUserId());
 
-				result = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.looseSerialize(applicant));
-
+				String jsonString = JSONFactoryUtil.looseSerialize(applicant);
+				
+				result = JSONFactoryUtil.createJSONObject(jsonString);
+				
 				return Response.status(200).entity(result.toJSONString()).build();
 			} else {
 				throw new UnauthorizationException();

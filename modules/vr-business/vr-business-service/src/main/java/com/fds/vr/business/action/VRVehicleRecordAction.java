@@ -15,10 +15,12 @@ import java.util.LinkedHashMap;
 public interface VRVehicleRecordAction {
 
 	public JSONObject createVRVehicleRecord(VRVehicleRecord object);
+	
+	public long countVRVehicleRecord(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params);
 
 	public JSONObject deleteVRVehicleRecord(long id);
 
-	JSONObject findVRVehicleRecord(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params);
+	public JSONObject findVRVehicleRecord(User user, ServiceContext serviceContext, LinkedHashMap<String, Object> params);
 
 	public JSONObject importVRVehicleRecord(User user, ServiceContext serviceContext, InputStream inputStream);
 

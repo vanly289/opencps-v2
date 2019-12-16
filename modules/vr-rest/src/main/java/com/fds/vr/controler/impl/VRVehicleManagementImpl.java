@@ -171,10 +171,26 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);
-			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrvehiclespecification").toJSONString())
-					.build();
+			return Response.status(500)
+					.entity(VRRestUtil.errorMessage("Can't get vrvehiclespecification").toJSONString()).build();
 		}
 
+	}
+
+	@Override
+	public Response countVRVehicleRecord(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, VRVehicleRecordBeanParam query, String advancesearchParams) {
+		try {
+			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
+
+			VRVehicleRecordActionImpl actionImpl = new VRVehicleRecordActionImpl();
+
+			return Response.status(200).entity(actionImpl.countVRVehicleRecord(user, serviceContext, params)).build();
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrvehiclerecord").toJSONString())
+					.build();
+		}
 	}
 
 }

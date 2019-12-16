@@ -11,6 +11,7 @@ import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.fds.vr.controler.impl.VRApplicantManagementImpl;
 import com.fds.vr.controler.impl.VRCOPManagementImpl;
 import com.fds.vr.controler.impl.VRIssueManagementImpl;
+import com.fds.vr.controler.impl.VROutputSheetDetailManagementImpl;
 import com.fds.vr.controler.impl.VRProductionManagementImpl;
 import com.fds.vr.controler.impl.VRVehicleManagementImpl;
 import com.fds.vr.model.VRCorporationAttendeeResultModel;
@@ -84,6 +85,7 @@ public class VRRestApplication extends Application {
 		singletons.add(new VRCOPManagementImpl());
 		singletons.add(new VRVehicleManagementImpl());
 		singletons.add(new VRIssueManagementImpl());
+		singletons.add(new VROutputSheetDetailManagementImpl());
 		singletons.add(this);
 		return singletons;
 	}

@@ -9,12 +9,16 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Types;
@@ -28,6 +32,13 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.opencps.datamgt.utils.DateTimeUtils;
 
 /**
@@ -497,4 +508,84 @@ public class ActionUtil {
 		return destFile;
 	}
 
+	public static String doExportExcelFile(String sheetName,
+			String fileName, String[] headers, String[][] data)
+			throws IOException {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet(sheetName);
+		int rownum = 0;
+		Cell cell;
+		Row row;
+
+		XSSFCellStyle style = createHeaderStyle(workbook);
+
+		row = sheet.createRow(rownum);
+
+		if (headers != null && headers.length > 0) {
+			for (int i = 0; i < headers.length; i++) {
+				cell = row.createCell(i, CellType.STRING);
+				cell.setCellValue(new String(headers[i].getBytes("UTF-8")));
+				cell.setCellStyle(style);
+			}
+			rownum++;
+		}
+
+		if (data != null && data.length > 0) {
+			for (int i = 0; i < data.length; i++) {
+				row = sheet.createRow(rownum);
+				String[] values = data[i];
+				for (int c = 0; c < values.length; c++) {
+					cell = row.createCell(c, CellType.STRING);
+					cell.setCellValue(values[c]);
+					// cell.setCellStyle(style);
+				}
+				rownum++;
+			}
+		}
+
+		File file = FileUtil.createTempFile(".xlsx");
+
+		
+
+		// System.out.print("===============>>>>>>>filePath " + filePath);
+
+		OutputStream os = new FileOutputStream(file);
+
+		// OutputStream outputStream =
+		// resourceResponse.getPortletOutputStream();
+
+		workbook.write(os);
+
+		os.close();
+
+		return file.getParent();
+	}
+
+	private static XSSFCellStyle createHeaderStyle(XSSFWorkbook workbook) {
+		XSSFFont font = workbook.createFont();
+		font.setBold(true);
+		XSSFCellStyle style = workbook.createCellStyle();
+		style.setFont(font);
+		return style;
+	}
+
+	public static byte[] readFileToByteArray(File file) throws IOException {
+		FileInputStream fis = null;
+		// Creating a byte array using the length of the file
+		// file.length returns long which is cast to int
+		byte[] bArray = new byte[(int) file.length()];
+		try {
+			fis = new FileInputStream(file);
+			fis.read(bArray);
+			fis.close();
+
+		} catch (IOException ioExp) {
+			ioExp.printStackTrace();
+		} finally {
+			if (fis != null) {
+				fis.close();
+			}
+		}
+		return bArray;
+	}
 }

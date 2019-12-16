@@ -145,4 +145,27 @@ public class VRApplicantManagementImpl implements VRApplicantManagement {
 
 	}
 
+	@Override
+	public Response findApplicantProfileByCode(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, String applicantcode) {
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		try {
+
+			VRApplicantProfileActionImpl actionImpl = new VRApplicantProfileActionImpl();
+			
+			result = actionImpl.findVRApplicantProfileByAppicantCode(user, serviceContext, 1, applicantcode);
+
+			if (result != null && result.length() > 0) {
+				return Response.status(200).entity(result.toJSONString()).build();
+			} else {
+				return Response.status(404).entity(VRRestUtil.errorMessage("Not found").toJSONString()).build();
+			}
+
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get vrappicantprofile").toJSONString())
+					.build();
+		}
+	}
+
 }

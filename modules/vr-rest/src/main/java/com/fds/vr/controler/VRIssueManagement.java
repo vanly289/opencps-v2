@@ -24,6 +24,12 @@ import javax.ws.rs.core.Response;
 @Path("/issue/")
 public interface VRIssueManagement {
 	@GET
+	@Path("/count")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response countVRIssue(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam VRIssueBeanParam query);
+	@GET
 	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchVRIssue(@Context HttpServletRequest request, @Context HttpHeaders header,

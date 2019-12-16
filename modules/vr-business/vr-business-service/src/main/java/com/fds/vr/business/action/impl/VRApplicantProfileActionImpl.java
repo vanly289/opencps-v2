@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -289,36 +290,36 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 				+ ActionUtil.buildSQLCondition("applicantNationality", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("applicantRegion", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("applicantCity", keyword, "OR", StringPool.LIKE, "");
-				//+ ActionUtil.buildSQLCondition("markupCorporation", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("corporationId", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupDesigner", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupOverseasManufacturer", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupDomesticsManufacturer", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupImporter", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupComponentXCG", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupComponentXMY", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupComponentXCD", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupComponentXDD", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupComponentXCN", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupComponentXCH", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupXCG", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupXMY", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupXCD", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupXDD", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupXCN", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("markupXCH", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("issueTypeXCG", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("issueTypeXMY", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("issueTypeXCD", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("issueTypeXDD", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("issueTypeXCN", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("issueTypeXCH", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("issueTypeDescription", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("applicantCeremonyDate", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("applicantOperationPeriod", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("applicantBusinessType", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("applicantMetadata", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("applicantStatus", keyword, "OR", StringPool.LIKE, "");
+		//+ ActionUtil.buildSQLCondition("markupCorporation", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("corporationId", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupDesigner", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupOverseasManufacturer", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupDomesticsManufacturer", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupImporter", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupComponentXCG", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupComponentXMY", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupComponentXCD", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupComponentXDD", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupComponentXCN", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupComponentXCH", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupXCG", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupXMY", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupXCD", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupXDD", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupXCN", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("markupXCH", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("issueTypeXCG", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("issueTypeXMY", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("issueTypeXCD", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("issueTypeXDD", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("issueTypeXCN", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("issueTypeXCH", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("issueTypeDescription", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("applicantCeremonyDate", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("applicantOperationPeriod", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("applicantBusinessType", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("applicantMetadata", keyword, "OR", StringPool.LIKE, "")
+		//+ ActionUtil.buildSQLCondition("applicantStatus", keyword, "OR", StringPool.LIKE, "");
 		SQLQueryBuilder builder = new SQLQueryBuilder();
 		builder.selectAll().from("vr_applicantprofile").where("id", id, "AND", StringPool.EQUAL)
 				.where("mtcore", mtCore, "AND", StringPool.EQUAL)
@@ -457,6 +458,24 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 			_log.error(e);
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
 		}
+	}
+
+	@Override
+	public JSONObject findVRApplicantProfileByAppicantCode(User user, ServiceContext serviceContext, long mtCore,
+			String applicantCode) {
+		List<VRApplicantProfile> applicantProfiles = VRApplicantProfileLocalServiceUtil.findByapplicantCode(mtCore,
+				applicantCode);
+
+		if (!applicantProfiles.isEmpty()) {
+			try {
+				return ActionUtil.object2Json(applicantProfiles.get(0), VRApplicantProfileModelImpl.class,
+						StringPool.BLANK);
+			} catch (Exception e) {
+				_log.error(e);
+			}
+		}
+
+		return JSONFactoryUtil.createJSONObject();
 	}
 
 }

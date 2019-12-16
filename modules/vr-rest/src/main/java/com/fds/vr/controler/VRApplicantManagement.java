@@ -15,6 +15,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -61,6 +62,14 @@ public interface VRApplicantManagement {
 	public Response findApplicantProfileDetail(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
 			@BeanParam VRApplicantProfileBeanParam query);
+	
+	
+	@GET
+	@Path("/applicant/profile/{applicantcode}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findApplicantProfileByCode(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user, @Context ServiceContext serviceContext,
+			@PathParam("applicantcode") String applicantcode);
 	
 	@PUT
 	@Path("/applicant/profile/update")

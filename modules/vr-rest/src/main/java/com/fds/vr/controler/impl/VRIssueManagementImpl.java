@@ -25,6 +25,22 @@ import javax.ws.rs.core.Response;
  */
 
 public class VRIssueManagementImpl implements VRIssueManagement{
+	
+	@Override
+	public Response countVRIssue(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, VRIssueBeanParam query) {
+		try {
+			LinkedHashMap<String, Object> params = VRRestUtil.getParamMap(query);
+			
+			VRIssueActionImpl actionImpl = new VRIssueActionImpl();
+			
+			return Response.status(200).entity(actionImpl.countVRIssue(user, serviceContext, params)).build();
+			
+		} catch (Exception e) {
+			_log.error(e);
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't count vrissue").toJSONString()).build();
+		}
+	}
 
 	@Override
 	public Response searchVRIssue(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
@@ -45,5 +61,7 @@ public class VRIssueManagementImpl implements VRIssueManagement{
 	}
 	
 	private Log _log = LogFactoryUtil.getLog(VRIssueManagementImpl.class.getName());
+
+	
 	
 }

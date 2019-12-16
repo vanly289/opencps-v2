@@ -19,7 +19,9 @@ import javax.xml.bind.annotation.XmlType;
 		"examinationlasttime", "copresult", "copreportno", "copreportdate", "postreview", "postreviewrecordno",
 		"postreviewrecorddate", "corporationid", "inspectorcode", "inspectorname", "leadername", "applicantmaker",
 		"applicantchecker", "inspectorid", "issueinspectorid", "verifyinspectorid", "modifydate", "syncdate", "keyword",
-		"start", "end", "order_asc", "order_desc" })
+		"start", "end", "order_asc", "order_desc", "applieddatefrom", "applieddateto", "appliedyear", "stampshortno",
+		"stampserialno", "stampstatus" })
+
 @XmlRootElement(name = "VRIssueBeanParam")
 public class VRIssueBeanParam {
 	@QueryParam(value = "keyword")
@@ -152,6 +154,18 @@ public class VRIssueBeanParam {
 	protected String modifyDate;
 	@QueryParam(value = "syncdate")
 	protected String syncDate;
+	@QueryParam(value = "applieddatefrom")
+	protected String appliedDateFrom;
+	@QueryParam(value = "applieddateto")
+	protected String appliedDateTo;
+	@QueryParam(value = "appliedyear")
+	protected Integer appliedYear;
+	@QueryParam(value = "stampshortno")
+	protected String stampShortNo;
+	@QueryParam(value = "stampSerialNo")
+	protected String stampserialno;
+	@QueryParam(value = "stampStatus")
+	protected Integer stampstatus;
 
 	public String getKeyword() {
 		return keyword;
@@ -663,6 +677,54 @@ public class VRIssueBeanParam {
 
 	public void setSyncDate(String syncDate) {
 		this.syncDate = syncDate;
+	}
+
+	public String getAppliedDateFrom() {
+		return appliedDateFrom;
+	}
+
+	public void setAppliedDateFrom(String appliedDateFrom) {
+		this.appliedDateFrom = appliedDateFrom;
+	}
+
+	public String getAppliedDateTo() {
+		return appliedDateTo;
+	}
+
+	public void setAppliedDateTo(String appliedDateTo) {
+		this.appliedDateTo = appliedDateTo;
+	}
+
+	public Integer getAppliedYear() {
+		return appliedYear;
+	}
+
+	public void setAppliedYear(Integer appliedYear) {
+		this.appliedYear = appliedYear;
+	}
+
+	public String getStampShortNo() {
+		return stampShortNo;
+	}
+
+	public void setStampShortNo(String stampShortNo) {
+		this.stampShortNo = stampShortNo;
+	}
+
+	public String getStampserialno() {
+		return stampserialno;
+	}
+
+	public void setStampserialno(String stampserialno) {
+		this.stampserialno = stampserialno;
+	}
+
+	public Integer getStampstatus() {
+		return stampstatus;
+	}
+
+	public void setStampstatus(Integer stampstatus) {
+		this.stampstatus = stampstatus;
 	}
 
 }

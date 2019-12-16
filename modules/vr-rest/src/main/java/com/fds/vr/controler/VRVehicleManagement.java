@@ -91,6 +91,15 @@ public interface VRVehicleManagement {
 			@Context ServiceContext serviceContext, @BeanParam VRVehicleRecordBeanParam query,
 			String advancesearchParams);
 	
+	
+	@GET
+	@Path("/record/count")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response countVRVehicleRecord(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam VRVehicleRecordBeanParam query,
+			String advancesearchParams);
+	
 	@GET
 	@Path("/specification/search")
 	@Produces(MediaType.APPLICATION_JSON)

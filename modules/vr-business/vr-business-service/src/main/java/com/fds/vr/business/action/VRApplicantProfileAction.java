@@ -13,12 +13,15 @@ import java.util.LinkedHashMap;
  */
 public interface VRApplicantProfileAction {
 	public JSONObject createVRApplicantProfile(VRApplicantProfile object);
-	
+
 	public JSONObject findVRApplicantProfile(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params);
-	
+
 	public JSONObject findVRApplicantProfileDetail(User user, ServiceContext serviceContext,
 			LinkedHashMap<String, Object> params);
-	
+
+	public JSONObject findVRApplicantProfileByAppicantCode(User user, ServiceContext serviceContext, long mtCore,
+			String applicantCode);
+
 	public JSONObject updateVRApplicantProfile(VRApplicantProfile object);
 }

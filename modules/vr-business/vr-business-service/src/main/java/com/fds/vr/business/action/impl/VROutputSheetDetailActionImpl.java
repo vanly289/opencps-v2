@@ -243,5 +243,32 @@ public class VROutputSheetDetailActionImpl implements VROutputSheetDetailAction 
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
 		}
 	}
+
 	private Log _log = LogFactoryUtil.getLog(VROutputSheetDetailActionImpl.class);
+
+	@Override
+	public JSONObject getVROutputSheetDetail(long id) {
+		VROutputSheetDetails outputSheetDetails = VROutputSheetDetailsLocalServiceUtil.fetchVROutputSheetDetails(id);
+
+		if (id <= 0) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
+		if (outputSheetDetails == null) {
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
+		}
+
+		try {
+
+			JSONObject result = ActionUtil.object2Json(outputSheetDetails, VROutputSheetDetailsModelImpl.class,
+					StringPool.BLANK);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_OK, result);
+
+		} catch (Exception e) {
+			_log.error(e);
+
+			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
+		}
+	}
 }

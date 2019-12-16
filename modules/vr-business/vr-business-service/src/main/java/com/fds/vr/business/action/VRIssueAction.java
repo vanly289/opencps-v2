@@ -17,6 +17,9 @@ public interface VRIssueAction {
 
 	public JSONObject createVRIssue(VRIssue object);
 	
+	public long countVRIssue(User user, ServiceContext serviceContext,
+			LinkedHashMap<String, Object> params);
+	
 	public JSONObject deleteVRIssue(long id);
 	
 	public JSONObject updateVRIssue(VRIssue object);
