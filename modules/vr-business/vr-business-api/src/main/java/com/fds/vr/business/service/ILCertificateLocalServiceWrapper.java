@@ -195,6 +195,16 @@ public class ILCertificateLocalServiceWrapper
 			serviceCodes, fromDate, toDate);
 	}
 
+	@Override
+	public int countGiayPhep(java.lang.String keyword) {
+		return _ilCertificateLocalService.countGiayPhep(keyword);
+	}
+
+	@Override
+	public int countLienVan(java.lang.String keyword) {
+		return _ilCertificateLocalService.countLienVan(keyword);
+	}
+
 	/**
 	* Returns the number of il certificates.
 	*

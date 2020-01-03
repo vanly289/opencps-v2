@@ -165,6 +165,10 @@ public interface ILCertificateLocalService extends BaseLocalService,
 	public int countByServiceCode(java.lang.String govAgencyCode,
 		java.lang.String[] serviceCodes, Date fromDate, Date toDate);
 
+	public int countGiayPhep(java.lang.String keyword);
+
+	public int countLienVan(java.lang.String keyword);
+
 	/**
 	* Returns the number of il certificates.
 	*
