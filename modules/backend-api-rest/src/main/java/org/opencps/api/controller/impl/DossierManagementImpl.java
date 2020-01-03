@@ -434,12 +434,14 @@ public class DossierManagementImpl implements DossierManagement {
 						results.getData().addAll(DossierUtils.mappingForGetList(docs));
 					} else {
 						// Process paging
-						if (query.getEnd() == -1) {
-							results.getData().addAll(DossierUtils.mappingForGetList(docs));
-						} else {
-							results.getData().addAll(DossierUtils.mappingForGetList(docs));
-									//DossierUtils.mappingForGetListPaging(docs, query.getStart(), query.getEnd()));
-						}
+//						if (query.getEnd() == -1) {
+//							results.getData().addAll(DossierUtils.mappingForGetList(docs));
+//						} else {
+//							results.getData().addAll(DossierUtils.mappingForGetList(docs));
+//									//DossierUtils.mappingForGetListPaging(docs, query.getStart(), query.getEnd()));
+//						}
+						
+						results.getData().addAll(DossierUtils.mappingForGetList(docs));
 					}
 				}
 			} else {
