@@ -1,0 +1,9 @@
+Bundle-Name: backend-compress-file-api
+Bundle-SymbolicName: vn.gt.dao.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	vn.gt.dao.exception,\
+	vn.gt.dao.model,\
+	vn.gt.dao.service,\
+	vn.gt.dao.service.persistence
+-includeresource: META-INF/service.xml=../backend-compress-file-service/service.xml

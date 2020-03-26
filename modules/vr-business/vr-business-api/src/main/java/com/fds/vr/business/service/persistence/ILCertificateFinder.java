@@ -28,8 +28,12 @@ public interface ILCertificateFinder {
 	public java.util.List<com.fds.vr.business.model.ILCertificate> searchLienVan(
 		java.lang.String keyword, int start, int end);
 
+	public int countLienVan(java.lang.String keyword);
+
 	public java.util.List<com.fds.vr.business.model.ILCertificate> searchGiayPhep(
 		java.lang.String keyword, int start, int end);
+
+	public int countGiayPhep(java.lang.String keyword);
 
 	public java.util.List<com.fds.vr.business.model.ILCertificate> findILCertificateByServiceCode(
 		java.lang.String keywords, java.lang.String serviceCode,

@@ -186,6 +186,14 @@ public class ILCertificateLocalServiceUtil {
 			toDate);
 	}
 
+	public static int countGiayPhep(java.lang.String keyword) {
+		return getService().countGiayPhep(keyword);
+	}
+
+	public static int countLienVan(java.lang.String keyword) {
+		return getService().countLienVan(keyword);
+	}
+
 	/**
 	* Returns the number of il certificates.
 	*
