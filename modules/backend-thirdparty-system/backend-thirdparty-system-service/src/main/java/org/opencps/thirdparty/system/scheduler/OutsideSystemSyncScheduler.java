@@ -75,8 +75,8 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 	
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (!isRunningSync) {
-			isRunningSync = true;
+//		if (!isRunningSync) {
+//			isRunningSync = true;
 			
 			try {
 				_log.info("===THIRD_PARTY_SYNC_BEGIN==="
@@ -107,10 +107,10 @@ public class OutsideSystemSyncScheduler extends BaseSchedulerEntryMessageListene
 				_log.error(e);
 			}
 			
-			isRunningSync = false;
+//			isRunningSync = false;
 	
 			_log.info("===THIRD_PARTY_SYNC_END===" + APIDateTimeUtils.convertDateToString(new Date()));
-		}
+//		}
 	}
 	
 	private boolean doSync(ThirdPartyDossierSync sync) throws PortalException {
