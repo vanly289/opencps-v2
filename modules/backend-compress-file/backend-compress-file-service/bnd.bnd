@@ -1,0 +1,7 @@
+Bundle-Name: backend-compress-file-service
+Bundle-SymbolicName: vn.gt.dao.service
+Bundle-Version: 1.0.0
+ConfigurationPath: /configuration
+Include-Resource: configuration=src/main/resources/configuration
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
