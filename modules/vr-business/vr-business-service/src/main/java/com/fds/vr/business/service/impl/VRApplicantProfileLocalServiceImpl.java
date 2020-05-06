@@ -19,6 +19,7 @@ import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.service.base.VRApplicantProfileLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -224,6 +225,78 @@ public class VRApplicantProfileLocalServiceImpl
 		object.setModifyDate(now);
 
 		return vrApplicantProfilePersistence.update(object);
+	}
+	
+	public VRApplicantProfile adminProcessData(JSONObject objectData, long mtCore, String applicantCode) {
+		VRApplicantProfile object = null;
+
+		object = vrApplicantProfilePersistence.fetchByMT_APP_CODE(mtCore, applicantCode);
+		if(object == null) {
+			long id = counterLocalService.increment(VRApplicantProfile.class.getName());
+	
+			object = vrApplicantProfilePersistence.create(id);
+		}
+		
+		Date now = new Date();
+		object.setModifyDate(now);
+		if (!"".equals(objectData.getString("syncDate"))) {
+			object.setSyncDate(new Date(objectData.getString("syncDate")));
+		}
+		
+		object.setMtCore(objectData.getLong("mtCore"));
+		object.setMappingMA_CTY(objectData.getString("mappingMA_CTY"));
+		object.setMappingTEN_CTY(objectData.getString("mappingTEN_CTY"));
+		object.setMappingDIA_CHI_CTY(objectData.getString("mappingDIA_CHI_CTY"));
+		object.setMappingNote(objectData.getString("mappingNote"));
+		object.setMappingStatus(objectData.getString("mappingStatus"));
+		object.setApplicantCode(applicantCode);
+		object.setApplicantName(objectData.getString("applicantName"));
+		object.setApplicantAddress(objectData.getString("applicantAddress"));
+		object.setApplicantPhone(objectData.getString("applicantPhone"));
+		object.setApplicantEmail(objectData.getString("applicantEmail"));
+		object.setApplicantFax(objectData.getString("applicantFax"));
+		object.setApplicantRepresentative(objectData.getString("applicantRepresentative"));
+		object.setApplicantRepresentativeTitle(objectData.getString("applicantRepresentativeTitle"));
+		object.setApplicantContactName(objectData.getString("applicantContactName"));
+		object.setApplicantContactEmail(objectData.getString("applicantContactEmail"));
+		object.setApplicantContactPhone(objectData.getString("applicantContactPhone"));
+		object.setApplicantNationality(objectData.getString("applicantNationality"));
+		object.setApplicantRegion(objectData.getString("applicantRegion"));
+		object.setApplicantCity(objectData.getString("applicantCity"));
+		object.setMarkupCorporation(objectData.getString("markupCorporation"));
+		object.setCorporationId(objectData.getString("corporationId"));
+		object.setMarkupDesigner(objectData.getString("markupDesigner"));
+		object.setMarkupOverseasManufacturer(objectData.getString("markupOverseasManufacturer"));
+		object.setMarkupDomesticsManufacturer(objectData.getString("markupDomesticsManufacturer"));
+		object.setMarkupImporter(objectData.getString("markupImporter"));
+		object.setMarkupComponentXCG(objectData.getString("markupComponentXCG"));
+		object.setMarkupComponentXMY(objectData.getString("markupComponentXMY"));
+		object.setMarkupComponentXCD(objectData.getString("markupComponentXCD"));
+		object.setMarkupComponentXDD(objectData.getString("markupComponentXDD"));
+		object.setMarkupComponentXCN(objectData.getString("markupComponentXCN"));
+		object.setMarkupComponentXCH(objectData.getString("markupComponentXCH"));
+		object.setMarkupXCG(objectData.getString("markupXCG"));
+		object.setMarkupXMY(objectData.getString("markupXMY"));
+		object.setMarkupXCD(objectData.getString("markupXCD"));
+		object.setMarkupXDD(objectData.getString("markupXDD"));
+		object.setMarkupXCN(objectData.getString("markupXCN"));
+		object.setMarkupXCH(objectData.getString("markupXCH"));
+		object.setIssueTypeXCG(objectData.getString("issueTypeXCG"));
+		object.setIssueTypeXMY(objectData.getString("issueTypeXMY"));
+		object.setIssueTypeXCD(objectData.getString("issueTypeXCD"));
+		object.setIssueTypeXDD(objectData.getString("issueTypeXDD"));
+		object.setIssueTypeXCN(objectData.getString("issueTypeXCN"));
+		object.setIssueTypeXCH(objectData.getString("issueTypeXCH"));
+		object.setIssueTypeDescription(objectData.getString("issueTypeDescription"));
+		object.setApplicantCeremonyDate(objectData.getString("applicantCeremonyDate"));
+		object.setApplicantOperationPeriod(objectData.getString("applicantOperationPeriod"));
+		object.setApplicantBusinessType(objectData.getString("applicantBusinessType"));
+		object.setApplicantMetadata(objectData.getString("applicantMetadata"));
+		object.setApplicantStatus(objectData.getString("applicantStatus"));
+
+		object = vrApplicantProfilePersistence.update(object);
+
+		return object;
 	}
 	
 	private Log _log = LogFactoryUtil.getLog(VRApplicantProfileLocalServiceImpl.class);

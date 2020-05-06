@@ -106,6 +106,7 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 		attributes.put("registrationFormId", getRegistrationFormId());
 		attributes.put("applicantProfileId", getApplicantProfileId());
 		attributes.put("supplierId", getSupplierId());
+		attributes.put("applicantCode", getApplicantCode());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -353,6 +354,12 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 			setSupplierId(supplierId);
 		}
 
+		String applicantCode = (String)attributes.get("applicantCode");
+
+		if (applicantCode != null) {
+			setApplicantCode(applicantCode);
+		}
+
 		Date modifyDate = (Date)attributes.get("modifyDate");
 
 		if (modifyDate != null) {
@@ -419,6 +426,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public java.lang.Object clone() {
 		return new VRProductionPlantWrapper((VRProductionPlant)_vrProductionPlant.clone());
+	}
+
+	/**
+	* Returns the applicant code of this vr production plant.
+	*
+	* @return the applicant code of this vr production plant
+	*/
+	@Override
+	public java.lang.String getApplicantCode() {
+		return _vrProductionPlant.getApplicantCode();
 	}
 
 	/**
@@ -824,6 +841,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public void persist() {
 		_vrProductionPlant.persist();
+	}
+
+	/**
+	* Sets the applicant code of this vr production plant.
+	*
+	* @param applicantCode the applicant code of this vr production plant
+	*/
+	@Override
+	public void setApplicantCode(java.lang.String applicantCode) {
+		_vrProductionPlant.setApplicantCode(applicantCode);
 	}
 
 	/**

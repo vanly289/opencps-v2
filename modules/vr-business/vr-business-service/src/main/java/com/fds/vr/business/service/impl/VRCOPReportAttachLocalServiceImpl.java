@@ -24,6 +24,7 @@ import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPReportAttach;
 import com.fds.vr.business.model.impl.VRCOPReportAttachImpl;
 import com.fds.vr.business.service.base.VRCOPReportAttachLocalServiceBaseImpl;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -134,6 +135,52 @@ public class VRCOPReportAttachLocalServiceImpl
 				result.put(jsonObject);
 			}
 		}
+		return result;
+	}
+
+
+	public int adminProcessData(JSONArray arrayData, long dossierId) {
+
+		int result = 0;
+		
+		try {
+			vrcopReportAttachPersistence.removeBycopDossierId(dossierId);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRCOPReportAttach object = null;
+
+				long id = counterLocalService.increment(VRCOPReportAttach.class.getName());
+
+				object = vrcopReportAttachPersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+
+				object.setCopReportRepositoryID(objectData.getLong("copReportRepositoryID"));
+				object.setCopReportNo(objectData.getString("copReportNo"));
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setDocName(objectData.getString("docName"));
+				object.setDocNo(objectData.getString("docNo"));
+				object.setRemarks(objectData.getString("remarks"));
+				if (!"".equals(objectData.getString("syncDate"))) {
+					object.setSyncDate(new Date(objectData.getString("syncDate")));
+				}
+				
+				object.setDossierId(objectData.getLong("dossierId"));
+				object.setDossierIdCTN(objectData.getString("dossierIdCTN"));
+				object.setDossierNo(objectData.getString("dossierNo"));
+				
+				vrcopReportAttachPersistence.update(object);
+				
+				result = i;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			result = -500;
+		}
+		
 		return result;
 	}
 

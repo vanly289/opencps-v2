@@ -20,11 +20,18 @@ import com.fds.vr.business.service.persistence.VRInspectionStandardPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Set;
+
 /**
  * @author LamTV
  * @generated
  */
 public class VRInspectionStandardFinderBaseImpl extends BasePersistenceImpl<VRInspectionStandard> {
+	@Override
+	public Set<String> getBadColumnNames() {
+		return getVRInspectionStandardPersistence().getBadColumnNames();
+	}
+
 	/**
 	 * Returns the vr inspection standard persistence.
 	 *

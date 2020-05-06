@@ -75,6 +75,9 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 			{ "specificationDataCollectionID", Types.VARCHAR },
 			{ "specificationResult", Types.VARCHAR },
 			{ "deliverableCode", Types.VARCHAR },
+			{ "dossierid", Types.BIGINT },
+			{ "dossierIdCTN", Types.VARCHAR },
+			{ "dossierno", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -94,11 +97,14 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 		TABLE_COLUMNS_MAP.put("specificationDataCollectionID", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("specificationResult", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("deliverableCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierid", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("dossierIdCTN", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierno", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_vehiclespecification (id LONG not null primary key,vehicleCertificateId LONG,specificationCode VARCHAR(75) null,specificationName VARCHAR(75) null,specificationValue VARCHAR(75) null,specificationValueDescription VARCHAR(75) null,sequenceNo LONG,specificationBasicUnit VARCHAR(75) null,specificationStandard VARCHAR(75) null,specificationGroup VARCHAR(75) null,specificationDataCollectionID VARCHAR(75) null,specificationResult VARCHAR(75) null,deliverableCode VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_vehiclespecification (id LONG not null primary key,vehicleCertificateId LONG,specificationCode VARCHAR(75) null,specificationName VARCHAR(75) null,specificationValue VARCHAR(75) null,specificationValueDescription VARCHAR(75) null,sequenceNo LONG,specificationBasicUnit VARCHAR(75) null,specificationStandard VARCHAR(75) null,specificationGroup VARCHAR(75) null,specificationDataCollectionID VARCHAR(75) null,specificationResult VARCHAR(75) null,deliverableCode VARCHAR(75) null,dossierid LONG,dossierIdCTN VARCHAR(75) null,dossierno VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_vehiclespecification";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrVehicleSpecification.vehicleCertificateId DESC, vrVehicleSpecification.sequenceNo ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_vehiclespecification.vehicleCertificateId DESC, vr_vehiclespecification.sequenceNo ASC";
@@ -115,9 +121,10 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRVehicleSpecification"),
 			true);
 	public static final long DELIVERABLECODE_COLUMN_BITMASK = 1L;
-	public static final long SPECIFICATIONCODE_COLUMN_BITMASK = 2L;
-	public static final long VEHICLECERTIFICATEID_COLUMN_BITMASK = 4L;
-	public static final long SEQUENCENO_COLUMN_BITMASK = 8L;
+	public static final long DOSSIERID_COLUMN_BITMASK = 2L;
+	public static final long SPECIFICATIONCODE_COLUMN_BITMASK = 4L;
+	public static final long VEHICLECERTIFICATEID_COLUMN_BITMASK = 8L;
+	public static final long SEQUENCENO_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRVehicleSpecification"));
 
@@ -173,6 +180,9 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 			getSpecificationDataCollectionID());
 		attributes.put("specificationResult", getSpecificationResult());
 		attributes.put("deliverableCode", getDeliverableCode());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -265,6 +275,24 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 
 		if (deliverableCode != null) {
 			setDeliverableCode(deliverableCode);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -497,6 +525,58 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 	}
 
 	@Override
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	@Override
+	public void setDossierId(long dossierId) {
+		_columnBitmask |= DOSSIERID_COLUMN_BITMASK;
+
+		if (!_setOriginalDossierId) {
+			_setOriginalDossierId = true;
+
+			_originalDossierId = _dossierId;
+		}
+
+		_dossierId = dossierId;
+	}
+
+	public long getOriginalDossierId() {
+		return _originalDossierId;
+	}
+
+	@Override
+	public String getDossierIdCTN() {
+		if (_dossierIdCTN == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierIdCTN;
+		}
+	}
+
+	@Override
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	@Override
+	public String getDossierNo() {
+		if (_dossierNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierNo;
+		}
+	}
+
+	@Override
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
+	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -560,6 +640,9 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 		vrVehicleSpecificationImpl.setSpecificationDataCollectionID(getSpecificationDataCollectionID());
 		vrVehicleSpecificationImpl.setSpecificationResult(getSpecificationResult());
 		vrVehicleSpecificationImpl.setDeliverableCode(getDeliverableCode());
+		vrVehicleSpecificationImpl.setDossierId(getDossierId());
+		vrVehicleSpecificationImpl.setDossierIdCTN(getDossierIdCTN());
+		vrVehicleSpecificationImpl.setDossierNo(getDossierNo());
 		vrVehicleSpecificationImpl.setModifyDate(getModifyDate());
 		vrVehicleSpecificationImpl.setSyncDate(getSyncDate());
 
@@ -653,6 +736,10 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 		vrVehicleSpecificationModelImpl._originalSpecificationCode = vrVehicleSpecificationModelImpl._specificationCode;
 
 		vrVehicleSpecificationModelImpl._originalDeliverableCode = vrVehicleSpecificationModelImpl._deliverableCode;
+
+		vrVehicleSpecificationModelImpl._originalDossierId = vrVehicleSpecificationModelImpl._dossierId;
+
+		vrVehicleSpecificationModelImpl._setOriginalDossierId = false;
 
 		vrVehicleSpecificationModelImpl._columnBitmask = 0;
 	}
@@ -752,6 +839,24 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 			vrVehicleSpecificationCacheModel.deliverableCode = null;
 		}
 
+		vrVehicleSpecificationCacheModel.dossierId = getDossierId();
+
+		vrVehicleSpecificationCacheModel.dossierIdCTN = getDossierIdCTN();
+
+		String dossierIdCTN = vrVehicleSpecificationCacheModel.dossierIdCTN;
+
+		if ((dossierIdCTN != null) && (dossierIdCTN.length() == 0)) {
+			vrVehicleSpecificationCacheModel.dossierIdCTN = null;
+		}
+
+		vrVehicleSpecificationCacheModel.dossierNo = getDossierNo();
+
+		String dossierNo = vrVehicleSpecificationCacheModel.dossierNo;
+
+		if ((dossierNo != null) && (dossierNo.length() == 0)) {
+			vrVehicleSpecificationCacheModel.dossierNo = null;
+		}
+
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -775,7 +880,7 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -803,6 +908,12 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 		sb.append(getSpecificationResult());
 		sb.append(", deliverableCode=");
 		sb.append(getDeliverableCode());
+		sb.append(", dossierId=");
+		sb.append(getDossierId());
+		sb.append(", dossierIdCTN=");
+		sb.append(getDossierIdCTN());
+		sb.append(", dossierNo=");
+		sb.append(getDossierNo());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -814,7 +925,7 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRVehicleSpecification");
@@ -873,6 +984,18 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 		sb.append(getDeliverableCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>dossierId</column-name><column-value><![CDATA[");
+		sb.append(getDossierId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierIdCTN</column-name><column-value><![CDATA[");
+		sb.append(getDossierIdCTN());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierNo</column-name><column-value><![CDATA[");
+		sb.append(getDossierNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
@@ -907,6 +1030,11 @@ public class VRVehicleSpecificationModelImpl extends BaseModelImpl<VRVehicleSpec
 	private String _specificationResult;
 	private String _deliverableCode;
 	private String _originalDeliverableCode;
+	private long _dossierId;
+	private long _originalDossierId;
+	private boolean _setOriginalDossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

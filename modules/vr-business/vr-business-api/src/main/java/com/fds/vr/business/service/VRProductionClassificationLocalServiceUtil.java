@@ -187,6 +187,12 @@ public class VRProductionClassificationLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRProductionClassification> adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData,
+		java.lang.String productionPlantCode) {
+		return getService().adminProcessData(arrayData, productionPlantCode);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

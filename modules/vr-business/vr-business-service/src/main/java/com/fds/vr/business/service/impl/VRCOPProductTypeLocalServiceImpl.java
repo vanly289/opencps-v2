@@ -24,6 +24,7 @@ import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPProductType;
 import com.fds.vr.business.model.impl.VRCOPProductTypeImpl;
 import com.fds.vr.business.service.base.VRCOPProductTypeLocalServiceBaseImpl;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -138,6 +139,59 @@ public class VRCOPProductTypeLocalServiceImpl
 				result.put(jsonObject);
 			}
 		}
+		return result;
+	}
+
+
+	public int adminProcessData(JSONArray arrayData, long dossierId) {
+
+		int result = 0;
+		
+		try {
+			vrcopProductTypePersistence.removeBycopDossierId(dossierId);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRCOPProductType object = null;
+
+				long id = counterLocalService.increment(VRCOPProductType.class.getName());
+
+				object = vrcopProductTypePersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+
+				object.setCopReportRepositoryID(objectData.getLong("copReportRepositoryID"));
+				object.setCopReportNo(objectData.getString("copReportNo"));
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setVehicleClass(objectData.getString("vehicleClass"));
+				object.setVehicleTypeCode(objectData.getString("vehicleTypeCode"));
+				object.setVehicleTypeDescription(objectData.getString("vehicleTypeDescription"));
+				if (!"".equals(objectData.getString("syncDate"))) {
+					object.setSyncDate(new Date(objectData.getString("syncDate")));
+				}
+				object.setProductClassificationCode(objectData.getString("productClassificationCode"));
+				object.setProductClassificationDescription(objectData.getString("productClassificationDescription"));
+				object.setTrademarkName(objectData.getString("trademarkName"));
+				object.setCommercialName(objectData.getString("commercialName"));
+				object.setModelCode(objectData.getString("modelCode"));
+				object.setDesignSymbolNo(objectData.getString("designSymbolNo"));
+				object.setRemarks(objectData.getString("remarks"));
+				
+				object.setDossierId(objectData.getLong("dossierId"));
+				object.setDossierIdCTN(objectData.getString("dossierIdCTN"));
+				object.setDossierNo(objectData.getString("dossierNo"));
+				
+				vrcopProductTypePersistence.update(object);
+				
+				result = i;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			result = -500;
+		}
+		
 		return result;
 	}
 

@@ -59,6 +59,14 @@ public class VRVehicleTypeCertificateLocalServiceWrapper
 	}
 
 	@Override
+	public com.fds.vr.business.model.VRVehicleTypeCertificate adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData, long dossierId,
+		long mtCore) {
+		return _vrVehicleTypeCertificateLocalService.adminProcessData(objectData,
+			dossierId, mtCore);
+	}
+
+	@Override
 	public com.fds.vr.business.model.VRVehicleTypeCertificate createVRVehicleTypeCertificate(
 		com.fds.vr.business.model.VRVehicleTypeCertificate object)
 		throws com.liferay.portal.kernel.exception.SystemException {

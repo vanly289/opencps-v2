@@ -160,6 +160,14 @@ public class VRTechnicalSpec_XCNLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRTechnicalSpec_XCN> adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
+		long mtCore, long vehicleTypeCertificateId) {
+		return getService()
+				   .adminProcessData(arrayData, dossierId, mtCore,
+			vehicleTypeCertificateId);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

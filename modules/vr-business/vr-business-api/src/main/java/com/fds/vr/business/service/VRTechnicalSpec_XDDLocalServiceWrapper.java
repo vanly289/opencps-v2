@@ -166,6 +166,14 @@ public class VRTechnicalSpec_XDDLocalServiceWrapper
 		return _vrTechnicalSpec_XDDLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRTechnicalSpec_XDD> adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
+		long mtCore, long vehicleTypeCertificateId) {
+		return _vrTechnicalSpec_XDDLocalService.adminProcessData(arrayData,
+			dossierId, mtCore, vehicleTypeCertificateId);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

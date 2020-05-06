@@ -115,8 +115,9 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 			true);
 	public static final long COPREPORTNO_COLUMN_BITMASK = 1L;
 	public static final long COPREPORTREPOSITORYID_COLUMN_BITMASK = 2L;
-	public static final long MTCORE_COLUMN_BITMASK = 4L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 8L;
+	public static final long DOSSIERID_COLUMN_BITMASK = 4L;
+	public static final long MTCORE_COLUMN_BITMASK = 8L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRCOPProductionPlantEmployee"));
 
@@ -445,7 +446,19 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 
 	@Override
 	public void setDossierId(long dossierId) {
+		_columnBitmask |= DOSSIERID_COLUMN_BITMASK;
+
+		if (!_setOriginalDossierId) {
+			_setOriginalDossierId = true;
+
+			_originalDossierId = _dossierId;
+		}
+
 		_dossierId = dossierId;
+	}
+
+	public long getOriginalDossierId() {
+		return _originalDossierId;
 	}
 
 	@Override
@@ -597,6 +610,10 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 		vrcopProductionPlantEmployeeModelImpl._setOriginalCopReportRepositoryID = false;
 
 		vrcopProductionPlantEmployeeModelImpl._originalCopReportNo = vrcopProductionPlantEmployeeModelImpl._copReportNo;
+
+		vrcopProductionPlantEmployeeModelImpl._originalDossierId = vrcopProductionPlantEmployeeModelImpl._dossierId;
+
+		vrcopProductionPlantEmployeeModelImpl._setOriginalDossierId = false;
 
 		vrcopProductionPlantEmployeeModelImpl._columnBitmask = 0;
 	}
@@ -822,6 +839,8 @@ public class VRCOPProductionPlantEmployeeModelImpl extends BaseModelImpl<VRCOPPr
 	private Date _syncDate;
 	private String _workingPosition;
 	private long _dossierId;
+	private long _originalDossierId;
+	private boolean _setOriginalDossierId;
 	private String _dossierIdCTN;
 	private String _dossierNo;
 	private long _columnBitmask;

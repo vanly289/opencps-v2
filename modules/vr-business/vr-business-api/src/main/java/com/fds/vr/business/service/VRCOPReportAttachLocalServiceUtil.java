@@ -165,6 +165,11 @@ public class VRCOPReportAttachLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static int adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId) {
+		return getService().adminProcessData(arrayData, dossierId);
+	}
+
 	/**
 	* Returns the number of vrcop report attachs.
 	*

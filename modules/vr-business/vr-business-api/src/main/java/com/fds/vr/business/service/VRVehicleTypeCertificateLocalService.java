@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -82,6 +83,9 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public VRVehicleTypeCertificate addVRVehicleTypeCertificate(
 		VRVehicleTypeCertificate vrVehicleTypeCertificate);
+
+	public VRVehicleTypeCertificate adminProcessData(JSONObject objectData,
+		long dossierId, long mtCore);
 
 	public VRVehicleTypeCertificate createVRVehicleTypeCertificate(
 		VRVehicleTypeCertificate object) throws SystemException;

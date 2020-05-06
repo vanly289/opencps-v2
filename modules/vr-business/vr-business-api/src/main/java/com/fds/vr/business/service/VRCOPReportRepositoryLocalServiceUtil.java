@@ -53,6 +53,11 @@ public class VRCOPReportRepositoryLocalServiceUtil {
 		return getService().addVRCOPReportRepository(vrcopReportRepository);
 	}
 
+	public static com.fds.vr.business.model.VRCOPReportRepository adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData, long dossierId) {
+		return getService().adminProcessData(objectData, dossierId);
+	}
+
 	/**
 	* Creates a new vrcop report repository with the primary key. Does not add the vrcop report repository to the database.
 	*

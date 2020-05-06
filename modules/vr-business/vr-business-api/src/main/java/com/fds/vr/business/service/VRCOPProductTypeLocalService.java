@@ -158,6 +158,8 @@ public interface VRCOPProductTypeLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public int adminProcessData(JSONArray arrayData, long dossierId);
+
 	/**
 	* Returns the number of vrcop product types.
 	*

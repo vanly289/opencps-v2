@@ -66,7 +66,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(77);
+		StringBundler sb = new StringBundler(79);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -140,6 +140,8 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		sb.append(applicantProfileId);
 		sb.append(", supplierId=");
 		sb.append(supplierId);
+		sb.append(", applicantCode=");
+		sb.append(applicantCode);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -371,6 +373,13 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		vrProductionPlantImpl.setApplicantProfileId(applicantProfileId);
 		vrProductionPlantImpl.setSupplierId(supplierId);
 
+		if (applicantCode == null) {
+			vrProductionPlantImpl.setApplicantCode(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setApplicantCode(applicantCode);
+		}
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrProductionPlantImpl.setModifyDate(null);
 		}
@@ -433,6 +442,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		applicantProfileId = objectInput.readLong();
 
 		supplierId = objectInput.readLong();
+		applicantCode = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -661,6 +671,14 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		objectOutput.writeLong(applicantProfileId);
 
 		objectOutput.writeLong(supplierId);
+
+		if (applicantCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantCode);
+		}
+
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -701,6 +719,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 	public long registrationFormId;
 	public long applicantProfileId;
 	public long supplierId;
+	public String applicantCode;
 	public long modifyDate;
 	public long syncDate;
 }

@@ -14,6 +14,8 @@
 
 package com.fds.vr.business.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -26,6 +28,7 @@ import com.fds.vr.business.service.base.VRInspectionStandardLocalServiceBaseImpl
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -106,6 +109,71 @@ public class VRInspectionStandardLocalServiceImpl
 	public long counData(String sql) throws SystemException {
 
 		return vrInspectionStandardFinder.countData(sql);
+	}
+	
+	public List<VRInspectionStandard> adminProcessData(JSONArray arrayData, long dossierId, long vehicleTypeCertificateId) {
+		List<VRInspectionStandard> vrInspectionStandards = new ArrayList<VRInspectionStandard>();
+		try {
+			vrInspectionStandardPersistence.removeBydossierId(dossierId);
+			
+			Date now = new Date();
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+
+				VRInspectionStandard object = null;
+				long id = counterLocalService.increment(VRInspectionStandard.class.getName());
+				object = vrInspectionStandardPersistence.create(id);
+				
+				object.setVehicleCertificateId(vehicleTypeCertificateId);
+				object.setDeliverableCode(objectData.getString("deliverableCode"));
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setCirculardate(parseStringToDate(objectData.getString("circulardate")));
+				object.setCircularno(objectData.getString("circularno"));
+				object.setMarkupstatus(objectData.getLong("markupstatus"));
+				object.setModule(objectData.getString("module"));
+				object.setDossierId(objectData.getLong("dossierId"));
+				object.setDossierNo(objectData.getString("dossierNo"));
+				object.setDossierIdCTN(objectData.getString("dossierIdCTN"));
+				object.setModifyDate(now);
+				object.setSyncDate(now);
+				
+				object = vrInspectionStandardPersistence.update(object);
+				
+				vrInspectionStandards.add(object);
+			}
+		}catch (Exception e) {
+			_log.error(e);
+		}
+		return vrInspectionStandards;
+	}
+	
+	private final String PATTERN_DATE = "dd-MM-yyyy HH:mm:ss";
+	private final String PATTERN_DATE_2 = "dd/MM/yyyy HH:mm:ss";
+	private final String PATTERN_DATE_3 = "dd/MM/yyyy";
+	
+	private Date parseStringToDate(String strDate) {
+
+		try {
+			SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE);
+			return df.parse(strDate);
+		} catch (ParseException e) {
+
+			try {
+				SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE_2);
+				return df.parse(strDate);
+			} catch (Exception e2) {
+				try {
+					SimpleDateFormat df = new SimpleDateFormat(PATTERN_DATE_3);
+					return df.parse(strDate);
+				} catch (Exception e3) {
+
+				}
+			}
+
+			// _log.error(e);
+			return null;
+		}
+
 	}
 	
 	private Log _log = LogFactoryUtil.getLog(VRInspectionStandardLocalServiceImpl.class);

@@ -68,6 +68,7 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 			{ "corporationCode", Types.VARCHAR },
 			{ "corporationName", Types.VARCHAR },
 			{ "corporationAddress", Types.VARCHAR },
+			{ "productionPlantCode", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -79,11 +80,12 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 		TABLE_COLUMNS_MAP.put("corporationCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("corporationName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("corporationAddress", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productionplantsupplier (id LONG not null primary key,mtCore LONG,corporationCode VARCHAR(75) null,corporationName VARCHAR(75) null,corporationAddress VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productionplantsupplier (id LONG not null primary key,mtCore LONG,corporationCode VARCHAR(75) null,corporationName VARCHAR(75) null,corporationAddress VARCHAR(75) null,productionPlantCode VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productionplantsupplier";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlantSupplier.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplantsupplier.modifyDate DESC";
@@ -96,7 +98,12 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.fds.vr.business.model.VRProductionPlantSupplier"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRProductionPlantSupplier"),
+			true);
+	public static final long CORPORATIONCODE_COLUMN_BITMASK = 1L;
+	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 2L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRProductionPlantSupplier"));
 
@@ -142,6 +149,7 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 		attributes.put("corporationCode", getCorporationCode());
 		attributes.put("corporationName", getCorporationName());
 		attributes.put("corporationAddress", getCorporationAddress());
+		attributes.put("productionPlantCode", getProductionPlantCode());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -181,6 +189,13 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 
 		if (corporationAddress != null) {
 			setCorporationAddress(corporationAddress);
+		}
+
+		String productionPlantCode = (String)attributes.get(
+				"productionPlantCode");
+
+		if (productionPlantCode != null) {
+			setProductionPlantCode(productionPlantCode);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -228,7 +243,17 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public void setCorporationCode(String corporationCode) {
+		_columnBitmask |= CORPORATIONCODE_COLUMN_BITMASK;
+
+		if (_originalCorporationCode == null) {
+			_originalCorporationCode = _corporationCode;
+		}
+
 		_corporationCode = corporationCode;
+	}
+
+	public String getOriginalCorporationCode() {
+		return GetterUtil.getString(_originalCorporationCode);
 	}
 
 	@Override
@@ -262,12 +287,39 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 	}
 
 	@Override
+	public String getProductionPlantCode() {
+		if (_productionPlantCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantCode;
+		}
+	}
+
+	@Override
+	public void setProductionPlantCode(String productionPlantCode) {
+		_columnBitmask |= PRODUCTIONPLANTCODE_COLUMN_BITMASK;
+
+		if (_originalProductionPlantCode == null) {
+			_originalProductionPlantCode = _productionPlantCode;
+		}
+
+		_productionPlantCode = productionPlantCode;
+	}
+
+	public String getOriginalProductionPlantCode() {
+		return GetterUtil.getString(_originalProductionPlantCode);
+	}
+
+	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
 
 	@Override
 	public void setModifyDate(Date modifyDate) {
+		_columnBitmask = -1L;
+
 		_modifyDate = modifyDate;
 	}
 
@@ -279,6 +331,10 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_syncDate = syncDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -313,6 +369,7 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 		vrProductionPlantSupplierImpl.setCorporationCode(getCorporationCode());
 		vrProductionPlantSupplierImpl.setCorporationName(getCorporationName());
 		vrProductionPlantSupplierImpl.setCorporationAddress(getCorporationAddress());
+		vrProductionPlantSupplierImpl.setProductionPlantCode(getProductionPlantCode());
 		vrProductionPlantSupplierImpl.setModifyDate(getModifyDate());
 		vrProductionPlantSupplierImpl.setSyncDate(getSyncDate());
 
@@ -376,6 +433,13 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public void resetOriginalValues() {
+		VRProductionPlantSupplierModelImpl vrProductionPlantSupplierModelImpl = this;
+
+		vrProductionPlantSupplierModelImpl._originalCorporationCode = vrProductionPlantSupplierModelImpl._corporationCode;
+
+		vrProductionPlantSupplierModelImpl._originalProductionPlantCode = vrProductionPlantSupplierModelImpl._productionPlantCode;
+
+		vrProductionPlantSupplierModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -410,6 +474,15 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 			vrProductionPlantSupplierCacheModel.corporationAddress = null;
 		}
 
+		vrProductionPlantSupplierCacheModel.productionPlantCode = getProductionPlantCode();
+
+		String productionPlantCode = vrProductionPlantSupplierCacheModel.productionPlantCode;
+
+		if ((productionPlantCode != null) &&
+				(productionPlantCode.length() == 0)) {
+			vrProductionPlantSupplierCacheModel.productionPlantCode = null;
+		}
+
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -433,7 +506,7 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -445,6 +518,8 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 		sb.append(getCorporationName());
 		sb.append(", corporationAddress=");
 		sb.append(getCorporationAddress());
+		sb.append(", productionPlantCode=");
+		sb.append(getProductionPlantCode());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -456,7 +531,7 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductionPlantSupplier");
@@ -483,6 +558,10 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 		sb.append(getCorporationAddress());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>productionPlantCode</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
@@ -503,9 +582,13 @@ public class VRProductionPlantSupplierModelImpl extends BaseModelImpl<VRProducti
 	private long _id;
 	private long _mtCore;
 	private String _corporationCode;
+	private String _originalCorporationCode;
 	private String _corporationName;
 	private String _corporationAddress;
+	private String _productionPlantCode;
+	private String _originalProductionPlantCode;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private long _columnBitmask;
 	private VRProductionPlantSupplier _escapedModel;
 }

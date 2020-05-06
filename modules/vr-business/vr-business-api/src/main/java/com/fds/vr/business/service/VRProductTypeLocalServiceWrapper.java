@@ -179,6 +179,14 @@ public class VRProductTypeLocalServiceWrapper
 		return _vrProductTypeLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRProductType> adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData,
+		java.lang.String productionPlantCode) {
+		return _vrProductTypeLocalService.adminProcessData(arrayData,
+			productionPlantCode);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

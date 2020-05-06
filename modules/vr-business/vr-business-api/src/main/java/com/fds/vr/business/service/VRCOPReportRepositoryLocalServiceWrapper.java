@@ -46,6 +46,13 @@ public class VRCOPReportRepositoryLocalServiceWrapper
 		return _vrcopReportRepositoryLocalService.addVRCOPReportRepository(vrcopReportRepository);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRCOPReportRepository adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData, long dossierId) {
+		return _vrcopReportRepositoryLocalService.adminProcessData(objectData,
+			dossierId);
+	}
+
 	/**
 	* Creates a new vrcop report repository with the primary key. Does not add the vrcop report repository to the database.
 	*

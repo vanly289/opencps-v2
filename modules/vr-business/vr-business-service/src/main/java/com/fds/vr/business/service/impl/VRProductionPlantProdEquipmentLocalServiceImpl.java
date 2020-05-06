@@ -18,7 +18,11 @@ import com.fds.vr.business.model.VRProductionPlantProdEquipment;
 import com.fds.vr.business.service.base.VRProductionPlantProdEquipmentLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -140,5 +144,55 @@ public class VRProductionPlantProdEquipmentLocalServiceImpl extends VRProduction
 
 		return vrProductionPlantProdEquipmentPersistence.update(object);
 	}
+	
+	public List<VRProductionPlantProdEquipment> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+
+		List<VRProductionPlantProdEquipment> vrProductionPlantProdEquipments = new ArrayList<VRProductionPlantProdEquipment>();
+		
+		try {
+			vrProductionPlantProdEquipmentPersistence.removeByPPC(productionPlantCode);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRProductionPlantProdEquipment object = null;
+
+				long id = counterLocalService.increment(VRProductionPlantProdEquipment.class.getName());
+
+				object = vrProductionPlantProdEquipmentPersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+				if (!"".equals(objectData.getString("syncDate"))) {
+					object.setSyncDate(new Date(objectData.getString("syncDate")));
+				}
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setEquipmentCode(objectData.getString("equipmentCode"));
+				object.setEquipmentName(objectData.getString("equipmentName"));
+				object.setEquipmentType(objectData.getString("equipmentType"));
+				object.setTrademark(objectData.getString("trademark"));
+				object.setTrademarkName(objectData.getString("trademarkName"));
+				object.setCommercialName(objectData.getString("commercialName"));
+				object.setModelCode(objectData.getString("modelCode"));
+				object.setProductionCountryCode(objectData.getString("productionCountryCode"));
+				object.setEquipmentStatus(objectData.getString("equipmentStatus"));
+				object.setNotes(objectData.getString("notes"));
+				object.setProductionPlantId(objectData.getLong("productionPlantId"));
+				object.setProductionPlantCode(productionPlantCode);
+				object.setQuantity(objectData.getLong("quantity"));
+
+				object = vrProductionPlantProdEquipmentPersistence.update(object);
+				
+				vrProductionPlantProdEquipments.add(object);
+			}
+		} catch (Exception e) {
+			_log.error(e);
+			return null;
+		}
+		
+		return vrProductionPlantProdEquipments;
+	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(VRProductionPlantProdEquipmentLocalServiceImpl.class);
 
 }

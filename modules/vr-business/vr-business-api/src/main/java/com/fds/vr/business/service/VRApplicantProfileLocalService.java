@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -72,6 +73,9 @@ public interface VRApplicantProfileLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public VRApplicantProfile addVRApplicantProfile(
 		VRApplicantProfile vrApplicantProfile);
+
+	public VRApplicantProfile adminProcessData(JSONObject objectData,
+		long mtCore, java.lang.String applicantCode);
 
 	public VRApplicantProfile createVRApplicantProfile(
 		VRApplicantProfile object) throws SystemException;

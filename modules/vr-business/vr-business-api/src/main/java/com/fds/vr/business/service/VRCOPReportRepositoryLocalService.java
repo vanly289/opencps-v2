@@ -74,6 +74,9 @@ public interface VRCOPReportRepositoryLocalService extends BaseLocalService,
 	public VRCOPReportRepository addVRCOPReportRepository(
 		VRCOPReportRepository vrcopReportRepository);
 
+	public VRCOPReportRepository adminProcessData(JSONObject objectData,
+		long dossierId);
+
 	/**
 	* Creates a new vrcop report repository with the primary key. Does not add the vrcop report repository to the database.
 	*

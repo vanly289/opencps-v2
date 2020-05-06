@@ -66,7 +66,7 @@ public class VRVehicleSpecificationCacheModel implements CacheModel<VRVehicleSpe
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -94,6 +94,12 @@ public class VRVehicleSpecificationCacheModel implements CacheModel<VRVehicleSpe
 		sb.append(specificationResult);
 		sb.append(", deliverableCode=");
 		sb.append(deliverableCode);
+		sb.append(", dossierId=");
+		sb.append(dossierId);
+		sb.append(", dossierIdCTN=");
+		sb.append(dossierIdCTN);
+		sb.append(", dossierNo=");
+		sb.append(dossierNo);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -182,6 +188,22 @@ public class VRVehicleSpecificationCacheModel implements CacheModel<VRVehicleSpe
 			vrVehicleSpecificationImpl.setDeliverableCode(deliverableCode);
 		}
 
+		vrVehicleSpecificationImpl.setDossierId(dossierId);
+
+		if (dossierIdCTN == null) {
+			vrVehicleSpecificationImpl.setDossierIdCTN(StringPool.BLANK);
+		}
+		else {
+			vrVehicleSpecificationImpl.setDossierIdCTN(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			vrVehicleSpecificationImpl.setDossierNo(StringPool.BLANK);
+		}
+		else {
+			vrVehicleSpecificationImpl.setDossierNo(dossierNo);
+		}
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrVehicleSpecificationImpl.setModifyDate(null);
 		}
@@ -218,6 +240,10 @@ public class VRVehicleSpecificationCacheModel implements CacheModel<VRVehicleSpe
 		specificationDataCollectionID = objectInput.readUTF();
 		specificationResult = objectInput.readUTF();
 		deliverableCode = objectInput.readUTF();
+
+		dossierId = objectInput.readLong();
+		dossierIdCTN = objectInput.readUTF();
+		dossierNo = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -301,6 +327,22 @@ public class VRVehicleSpecificationCacheModel implements CacheModel<VRVehicleSpe
 			objectOutput.writeUTF(deliverableCode);
 		}
 
+		objectOutput.writeLong(dossierId);
+
+		if (dossierIdCTN == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierNo);
+		}
+
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -318,6 +360,9 @@ public class VRVehicleSpecificationCacheModel implements CacheModel<VRVehicleSpe
 	public String specificationDataCollectionID;
 	public String specificationResult;
 	public String deliverableCode;
+	public long dossierId;
+	public String dossierIdCTN;
+	public String dossierNo;
 	public long modifyDate;
 	public long syncDate;
 }

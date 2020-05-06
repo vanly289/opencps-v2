@@ -20,11 +20,18 @@ import com.fds.vr.business.service.persistence.VRVehicleSpecificationPersistence
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import java.util.Set;
+
 /**
  * @author LamTV
  * @generated
  */
 public class VRVehicleSpecificationFinderBaseImpl extends BasePersistenceImpl<VRVehicleSpecification> {
+	@Override
+	public Set<String> getBadColumnNames() {
+		return getVRVehicleSpecificationPersistence().getBadColumnNames();
+	}
+
 	/**
 	 * Returns the vr vehicle specification persistence.
 	 *

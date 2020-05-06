@@ -608,6 +608,21 @@ public interface VRProductionPlantModel extends BaseModel<VRProductionPlant> {
 	public void setSupplierId(long supplierId);
 
 	/**
+	 * Returns the applicant code of this vr production plant.
+	 *
+	 * @return the applicant code of this vr production plant
+	 */
+	@AutoEscape
+	public String getApplicantCode();
+
+	/**
+	 * Sets the applicant code of this vr production plant.
+	 *
+	 * @param applicantCode the applicant code of this vr production plant
+	 */
+	public void setApplicantCode(String applicantCode);
+
+	/**
 	 * Returns the modify date of this vr production plant.
 	 *
 	 * @return the modify date of this vr production plant

@@ -136,6 +136,21 @@ public interface VRProductionPlantSupplierModel extends BaseModel<VRProductionPl
 	public void setCorporationAddress(String corporationAddress);
 
 	/**
+	 * Returns the production plant code of this vr production plant supplier.
+	 *
+	 * @return the production plant code of this vr production plant supplier
+	 */
+	@AutoEscape
+	public String getProductionPlantCode();
+
+	/**
+	 * Sets the production plant code of this vr production plant supplier.
+	 *
+	 * @param productionPlantCode the production plant code of this vr production plant supplier
+	 */
+	public void setProductionPlantCode(String productionPlantCode);
+
+	/**
 	 * Returns the modify date of this vr production plant supplier.
 	 *
 	 * @return the modify date of this vr production plant supplier

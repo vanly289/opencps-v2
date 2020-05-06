@@ -173,6 +173,13 @@ public class VRCOPProductionPlantEquipmentLocalServiceWrapper
 		return _vrcopProductionPlantEquipmentLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public int adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId) {
+		return _vrcopProductionPlantEquipmentLocalService.adminProcessData(arrayData,
+			dossierId);
+	}
+
 	/**
 	* Returns the number of vrcop production plant equipments.
 	*

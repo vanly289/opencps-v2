@@ -177,6 +177,14 @@ public class VRVehicleEquipmentLocalServiceWrapper
 		return _vrVehicleEquipmentLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRVehicleEquipment> adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
+		long vehicleTypeCertificateId) {
+		return _vrVehicleEquipmentLocalService.adminProcessData(arrayData,
+			dossierId, vehicleTypeCertificateId);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

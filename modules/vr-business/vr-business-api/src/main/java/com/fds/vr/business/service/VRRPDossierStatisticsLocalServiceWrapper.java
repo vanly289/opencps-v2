@@ -89,6 +89,12 @@ public class VRRPDossierStatisticsLocalServiceWrapper
 		return _vrrpDossierStatisticsLocalService.fetchVRRPDossierStatistics(id);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRRPDossierStatistics findBydossierIdCTN(
+		java.lang.String dossierIdCTN) {
+		return _vrrpDossierStatisticsLocalService.findBydossierIdCTN(dossierIdCTN);
+	}
+
 	/**
 	* Returns the vrrp dossier statistics with the primary key.
 	*

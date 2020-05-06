@@ -42,6 +42,9 @@ public class VRInspectionStandardSoap implements Serializable {
 		soapModel.setCirculardate(model.getCirculardate());
 		soapModel.setMarkupstatus(model.getMarkupstatus());
 		soapModel.setModule(model.getModule());
+		soapModel.setDossierId(model.getDossierId());
+		soapModel.setDossierIdCTN(model.getDossierIdCTN());
+		soapModel.setDossierNo(model.getDossierNo());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 
@@ -163,6 +166,30 @@ public class VRInspectionStandardSoap implements Serializable {
 		_module = module;
 	}
 
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	public String getDossierIdCTN() {
+		return _dossierIdCTN;
+	}
+
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	public String getDossierNo() {
+		return _dossierNo;
+	}
+
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -187,6 +214,9 @@ public class VRInspectionStandardSoap implements Serializable {
 	private Date _circulardate;
 	private long _markupstatus;
 	private String _module;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 	private Date _modifyDate;
 	private Date _syncDate;
 }

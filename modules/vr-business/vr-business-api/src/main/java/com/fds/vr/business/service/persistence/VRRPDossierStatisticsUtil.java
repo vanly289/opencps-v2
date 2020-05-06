@@ -1136,6 +1136,65 @@ public class VRRPDossierStatisticsUtil {
 	}
 
 	/**
+	* Returns the vrrp dossier statistics where dossierIdCTN = &#63; or throws a {@link NoSuchVRRPDossierStatisticsException} if it could not be found.
+	*
+	* @param dossierIdCTN the dossier ID ctn
+	* @return the matching vrrp dossier statistics
+	* @throws NoSuchVRRPDossierStatisticsException if a matching vrrp dossier statistics could not be found
+	*/
+	public static VRRPDossierStatistics findByF_dossierIdCTN(
+		java.lang.String dossierIdCTN)
+		throws com.fds.vr.business.exception.NoSuchVRRPDossierStatisticsException {
+		return getPersistence().findByF_dossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Returns the vrrp dossier statistics where dossierIdCTN = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param dossierIdCTN the dossier ID ctn
+	* @return the matching vrrp dossier statistics, or <code>null</code> if a matching vrrp dossier statistics could not be found
+	*/
+	public static VRRPDossierStatistics fetchByF_dossierIdCTN(
+		java.lang.String dossierIdCTN) {
+		return getPersistence().fetchByF_dossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Returns the vrrp dossier statistics where dossierIdCTN = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param dossierIdCTN the dossier ID ctn
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vrrp dossier statistics, or <code>null</code> if a matching vrrp dossier statistics could not be found
+	*/
+	public static VRRPDossierStatistics fetchByF_dossierIdCTN(
+		java.lang.String dossierIdCTN, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByF_dossierIdCTN(dossierIdCTN, retrieveFromCache);
+	}
+
+	/**
+	* Removes the vrrp dossier statistics where dossierIdCTN = &#63; from the database.
+	*
+	* @param dossierIdCTN the dossier ID ctn
+	* @return the vrrp dossier statistics that was removed
+	*/
+	public static VRRPDossierStatistics removeByF_dossierIdCTN(
+		java.lang.String dossierIdCTN)
+		throws com.fds.vr.business.exception.NoSuchVRRPDossierStatisticsException {
+		return getPersistence().removeByF_dossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Returns the number of vrrp dossier statisticses where dossierIdCTN = &#63;.
+	*
+	* @param dossierIdCTN the dossier ID ctn
+	* @return the number of matching vrrp dossier statisticses
+	*/
+	public static int countByF_dossierIdCTN(java.lang.String dossierIdCTN) {
+		return getPersistence().countByF_dossierIdCTN(dossierIdCTN);
+	}
+
+	/**
 	* Caches the vrrp dossier statistics in the entity cache if it is enabled.
 	*
 	* @param vrrpDossierStatistics the vrrp dossier statistics

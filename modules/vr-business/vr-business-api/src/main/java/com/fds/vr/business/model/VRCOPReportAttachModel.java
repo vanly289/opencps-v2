@@ -206,6 +206,50 @@ public interface VRCOPReportAttachModel extends BaseModel<VRCOPReportAttach> {
 	 */
 	public void setSyncDate(Date syncDate);
 
+	/**
+	 * Returns the dossier ID of this vrcop report attach.
+	 *
+	 * @return the dossier ID of this vrcop report attach
+	 */
+	public long getDossierId();
+
+	/**
+	 * Sets the dossier ID of this vrcop report attach.
+	 *
+	 * @param dossierId the dossier ID of this vrcop report attach
+	 */
+	public void setDossierId(long dossierId);
+
+	/**
+	 * Returns the dossier ID ctn of this vrcop report attach.
+	 *
+	 * @return the dossier ID ctn of this vrcop report attach
+	 */
+	@AutoEscape
+	public String getDossierIdCTN();
+
+	/**
+	 * Sets the dossier ID ctn of this vrcop report attach.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn of this vrcop report attach
+	 */
+	public void setDossierIdCTN(String dossierIdCTN);
+
+	/**
+	 * Returns the dossier no of this vrcop report attach.
+	 *
+	 * @return the dossier no of this vrcop report attach
+	 */
+	@AutoEscape
+	public String getDossierNo();
+
+	/**
+	 * Sets the dossier no of this vrcop report attach.
+	 *
+	 * @param dossierNo the dossier no of this vrcop report attach
+	 */
+	public void setDossierNo(String dossierNo);
+
 	@Override
 	public boolean isNew();
 

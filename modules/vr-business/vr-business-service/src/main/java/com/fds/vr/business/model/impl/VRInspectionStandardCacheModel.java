@@ -66,7 +66,7 @@ public class VRInspectionStandardCacheModel implements CacheModel<VRInspectionSt
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -84,6 +84,12 @@ public class VRInspectionStandardCacheModel implements CacheModel<VRInspectionSt
 		sb.append(markupstatus);
 		sb.append(", module=");
 		sb.append(module);
+		sb.append(", dossierId=");
+		sb.append(dossierId);
+		sb.append(", dossierIdCTN=");
+		sb.append(dossierIdCTN);
+		sb.append(", dossierNo=");
+		sb.append(dossierNo);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -132,6 +138,22 @@ public class VRInspectionStandardCacheModel implements CacheModel<VRInspectionSt
 			vrInspectionStandardImpl.setModule(module);
 		}
 
+		vrInspectionStandardImpl.setDossierId(dossierId);
+
+		if (dossierIdCTN == null) {
+			vrInspectionStandardImpl.setDossierIdCTN(StringPool.BLANK);
+		}
+		else {
+			vrInspectionStandardImpl.setDossierIdCTN(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			vrInspectionStandardImpl.setDossierNo(StringPool.BLANK);
+		}
+		else {
+			vrInspectionStandardImpl.setDossierNo(dossierNo);
+		}
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrInspectionStandardImpl.setModifyDate(null);
 		}
@@ -164,6 +186,10 @@ public class VRInspectionStandardCacheModel implements CacheModel<VRInspectionSt
 
 		markupstatus = objectInput.readLong();
 		module = objectInput.readUTF();
+
+		dossierId = objectInput.readLong();
+		dossierIdCTN = objectInput.readUTF();
+		dossierNo = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -202,6 +228,22 @@ public class VRInspectionStandardCacheModel implements CacheModel<VRInspectionSt
 			objectOutput.writeUTF(module);
 		}
 
+		objectOutput.writeLong(dossierId);
+
+		if (dossierIdCTN == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierNo);
+		}
+
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -214,6 +256,9 @@ public class VRInspectionStandardCacheModel implements CacheModel<VRInspectionSt
 	public long circulardate;
 	public long markupstatus;
 	public String module;
+	public long dossierId;
+	public String dossierIdCTN;
+	public String dossierNo;
 	public long modifyDate;
 	public long syncDate;
 }

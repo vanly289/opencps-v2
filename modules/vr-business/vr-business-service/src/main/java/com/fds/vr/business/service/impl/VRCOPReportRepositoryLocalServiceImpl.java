@@ -25,6 +25,8 @@ import com.fds.vr.business.exception.NoSuchVRCOPReportRepositoryException;
 import com.fds.vr.business.model.VRCOPReportRepository;
 import com.fds.vr.business.model.impl.VRCOPReportRepositoryImpl;
 import com.fds.vr.business.service.base.VRCOPReportRepositoryLocalServiceBaseImpl;
+import com.fds.vr.business.service.persistence.VRCOPReportRepositoryPersistence;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -172,6 +174,95 @@ public class VRCOPReportRepositoryLocalServiceImpl
 		return result;
 	}
 
+	public VRCOPReportRepository adminProcessData(JSONObject objectData, long dossierId) {
+		VRCOPReportRepository object = null;
 
+		vrcopReportRepositoryPersistence.removeBycopDossierId(dossierId);
+
+		long id = counterLocalService.increment(VRCOPReportRepository.class.getName());
+
+		object = vrcopReportRepositoryPersistence.create(id);
+
+		object.setModifyDate(new Date());
+
+		object.setMtCore(objectData.getLong("mtCore"));
+		object.setApplicantProfileId(objectData.getLong("applicantProfileId"));
+		object.setApplicantCode(objectData.getString("applicantCode"));
+		object.setApplicantName(objectData.getString("applicantName"));
+		object.setApplicantAddress(objectData.getString("applicantAddress"));
+		object.setOverseasManufacturerCode(objectData.getString("overseasManufacturerCode"));
+		object.setOverseasManufacturerName(objectData.getString("overseasManufacturerName"));
+		object.setOverseasManufacturerAddress(objectData.getString("overseasManufacturerAddress"));
+		object.setProductionPlantId(objectData.getLong("productionPlantId"));
+		object.setProductionPlantCode(objectData.getString("productionPlantCode"));
+		object.setProductionPlantName(objectData.getString("productionPlantName"));
+		object.setProductionPlantAddress(objectData.getString("productionPlantAddress"));
+		object.setCopReportNo(objectData.getString("copReportNo"));
+		object.setCopReportStatus(objectData.getString("copReportStatus"));
+		object.setCopReportType(objectData.getString("copReportType"));
+		object.setCopReportMetadata(objectData.getString("copReportMetadata"));
+		object.setCopReportSignName(objectData.getString("copReportSignName"));
+		object.setCopReportSignTitle(objectData.getString("copReportSignTitle"));
+		object.setCopReportSignPlace(objectData.getString("copReportSignPlace"));
+		if (!"".equals(objectData.getString("copReportDate"))) {
+			object.setCopReportDate(new Date(objectData.getString("copReportDate")));
+		}
+		if (!"".equals(objectData.getString("copReportApprovedDate"))) {
+			object.setCopReportApprovedDate(new Date(objectData.getString("copReportApprovedDate")));
+		}
+		if (!"".equals(objectData.getString("copReportExpiredDate"))) {
+			object.setCopReportExpiredDate(new Date(objectData.getString("copReportExpiredDate")));
+		}
+		object.setCOPFileEntryId(objectData.getLong("COPFileEntryId"));
+		if (!"".equals(objectData.getString("syncDate"))) {
+			object.setSyncDate(new Date(objectData.getString("syncDate")));
+		}
+		object.setImporterManufacturerCode(objectData.getString("importerManufacturerCode"));
+		object.setImporterManufacturerName(objectData.getString("importerManufacturerName"));
+		object.setImporterManufacturerAddress(objectData.getString("importerManufacturerAddress"));
+		object.setMarkupDomesticsManufacturer(objectData.getString("markupDomesticsManufacturer"));
+		object.setMarkupImporter(objectData.getString("markupImporter"));
+		object.setCopClassification(objectData.getString("copClassification"));
+		object.setProductClassificationDescription(objectData.getString("productClassificationDescription"));
+		object.setTotalPointA(objectData.getInt("totalPointA"));
+		object.setTotalPointB(objectData.getInt("totalPointB"));
+		object.setTotalPointC(objectData.getInt("totalPointC"));
+		object.setCopNonConformity(objectData.getString("copNonConformity"));
+		object.setInspectionRecordNo(objectData.getString("inspectionRecordNo"));
+		if (!"".equals(objectData.getString("inspectionRecordDate"))) {
+			object.setInspectionRecordDate(new Date(objectData.getString("inspectionRecordDate")));
+		}
+		object.setCorporationId(objectData.getLong("corporationId"));
+		object.setInspectorId(objectData.getLong("inspectorId"));
+		object.setInspectionSite(objectData.getString("inspectionSite"));
+		if (!"".equals(objectData.getString("inspectionDateFrom"))) {
+			object.setInspectionDateFrom(new Date(objectData.getString("inspectionDateFrom")));
+		}
+		if (!"".equals(objectData.getString("inspectionDateTo"))) {
+			object.setInspectionDateTo(new Date(objectData.getString("inspectionDateTo")));
+		}
+		object.setSubInspector(objectData.getString("subInspector"));
+		object.setDescription(objectData.getString("description"));
+		object.setApplicantRepresentative(objectData.getString("applicantRepresentative"));
+		object.setApplicantRepresentativeTitle(objectData.getString("applicantRepresentativeTitle"));
+		object.setInspectionRecordFileEntryId(objectData.getLong("inspectionRecordFileEntryId"));
+		object.setCopReportRefNo(objectData.getString("copReportRefNo"));
+		if (!"".equals(objectData.getString("copReportRefDate"))) {
+			object.setCopReportRefDate(new Date(objectData.getString("copReportRefDate")));
+		}
+		object.setCopReportPreviousNo(objectData.getString("copReportPreviousNo"));
+		if (!"".equals(objectData.getString("copReportPreviousDate"))) {
+			object.setCopReportPreviousDate(new Date(objectData.getString("copReportPreviousDate")));
+		}
+		object.setExpiredStatus(objectData.getString("expiredStatus"));
+		object.setDossierId(objectData.getLong("dossierId"));
+		object.setDossierIdCTN(objectData.getString("dossierIdCTN"));
+		object.setDossierNo(objectData.getString("dossierNo"));
+
+		vrcopReportRepositoryPersistence.update(object);
+
+		return object;
+	}
+	
 	private Log _log = LogFactoryUtil.getLog(VRCOPReportRepositoryLocalServiceImpl.class);
 }

@@ -19,7 +19,11 @@ import com.fds.vr.business.model.VRProductionPlantEquipment;
 import com.fds.vr.business.service.base.VRProductionPlantEquipmentLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -141,5 +145,75 @@ public class VRProductionPlantEquipmentLocalServiceImpl extends VRProductionPlan
 
 		return vrProductionPlantEquipmentPersistence.update(object);
 	}
+	
+	public List<VRProductionPlantEquipment> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+
+		List<VRProductionPlantEquipment> vrProductionPlantEquipments = new ArrayList<VRProductionPlantEquipment>();
+		
+		try {
+			vrProductionPlantEquipmentPersistence.removeByPPC(productionPlantCode);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRProductionPlantEquipment object = null;
+
+				long id = counterLocalService.increment(VRProductionPlantEquipment.class.getName());
+
+				object = vrProductionPlantEquipmentPersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+				if (!"".equals(objectData.getString("syncDate"))) {
+					object.setSyncDate(new Date(objectData.getString("syncDate")));
+				}
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setEquipmentCode(objectData.getString("equipmentCode"));
+				object.setEquipmentName(objectData.getString("equipmentName"));
+				object.setEquipmentType(objectData.getString("equipmentType"));
+				object.setTrademark(objectData.getString("trademark"));
+				object.setTrademarkName(objectData.getString("trademarkName"));
+				object.setCommercialName(objectData.getString("commercialName"));
+				object.setModelCode(objectData.getString("modelCode"));
+				object.setProductionCountryCode(objectData.getString("productionCountryCode"));
+				object.setEquipmentStatus(objectData.getString("equipmentStatus"));
+				if (!"".equals(objectData.getString("expireDate"))) {
+					object.setExpireDate(new Date(objectData.getString("expireDate")));
+				}
+				object.setNotes(objectData.getString("notes"));
+				object.setEquipmentSerialNo(objectData.getString("equipmentSerialNo"));
+				object.setProductionYear(objectData.getString("productionYear"));
+				object.setRegistrationYear(objectData.getString("registrationYear"));
+				object.setMarkupXCG(objectData.getLong("markupXCG"));
+				object.setMarkupXCGNK(objectData.getLong("markupXCGNK"));
+				object.setMarkupSMRM(objectData.getLong("markupSMRM"));
+				object.setMarkupXCH(objectData.getLong("markupXCH"));
+				object.setMarkupXCN(objectData.getLong("markupXCN"));
+				object.setMarkupXMY(objectData.getLong("markupXMY"));
+				object.setMarkupXDD(objectData.getLong("markupXDD"));
+				object.setTestingResult(objectData.getInt("testingResult"));
+				object.setDescription(objectData.getString("description"));
+				object.setInspectionRecordNumber(objectData.getString("inspectionRecordNumber"));
+				if (!"".equals(objectData.getString("inspectionRecordDate"))) {
+					object.setInspectionRecordDate(new Date(objectData.getString("inspectionRecordDate")));
+				}
+				object.setStampTestingNo(objectData.getString("stampTestingNo"));
+				object.setProductionPlantId(objectData.getLong("productionPlantId"));
+				object.setProductionPlantCode(productionPlantCode);
+
+
+				object = vrProductionPlantEquipmentPersistence.update(object);
+				
+				vrProductionPlantEquipments.add(object);
+			}
+		} catch (Exception e) {
+			_log.error(e);
+			return null;
+		}
+		
+		return vrProductionPlantEquipments;
+	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(VRProductionPlantEquipmentLocalServiceImpl.class);
 
 }

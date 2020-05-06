@@ -64,6 +64,12 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 		return getService().addVRVehicleTypeCertificate(vrVehicleTypeCertificate);
 	}
 
+	public static com.fds.vr.business.model.VRVehicleTypeCertificate adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData, long dossierId,
+		long mtCore) {
+		return getService().adminProcessData(objectData, dossierId, mtCore);
+	}
+
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate createVRVehicleTypeCertificate(
 		com.fds.vr.business.model.VRVehicleTypeCertificate object)
 		throws com.liferay.portal.kernel.exception.SystemException {

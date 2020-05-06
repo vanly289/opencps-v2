@@ -16,8 +16,10 @@ package com.fds.vr.business.service.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.model.VRCOPProdEquipment;
+import com.fds.vr.business.model.VRCOPProductionPlantEmployee;
 import com.fds.vr.business.model.impl.VRCOPProdEquipmentImpl;
 import com.fds.vr.business.service.base.VRCOPProdEquipmentLocalServiceBaseImpl;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -142,5 +144,58 @@ public class VRCOPProdEquipmentLocalServiceImpl
 		return result;
 	}
 
+	public int adminProcessData(JSONArray arrayData, long dossierId) {
+
+		int result = 0;
+		
+		try {
+			vrcopProdEquipmentPersistence.removeBycopDossierId(dossierId);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRCOPProdEquipment object = null;
+
+				long id = counterLocalService.increment(VRCOPProdEquipment.class.getName());
+
+				object = vrcopProdEquipmentPersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+
+				object.setCopReportRepositoryID(objectData.getLong("copReportRepositoryID"));
+				object.setCopReportNo(objectData.getString("copReportNo"));
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setEquipmentCode(objectData.getString("equipmentCode"));
+				object.setEquipmentName(objectData.getString("equipmentName"));
+				object.setEquipmentType(objectData.getString("equipmentType"));
+				object.setTrademark(objectData.getString("trademark"));
+				object.setTrademarkName(objectData.getString("trademarkName"));
+				object.setCommercialName(objectData.getString("commercialName"));
+				object.setModelCode(objectData.getString("modelCode"));
+				object.setProductionCountryCode(objectData.getString("productionCountryCode"));
+				object.setEquipmentStatus(objectData.getString("equipmentStatus"));
+				if (!"".equals(objectData.getString("expireDate"))) {
+					object.setSyncDate(new Date(objectData.getString("expireDate")));
+				}
+				object.setNotes(objectData.getString("notes"));
+				object.setDesignSymbolNo(objectData.getString("designSymbolNo"));
+				object.setQuantity(objectData.getInt("quantity"));
+				
+				object.setDossierId(objectData.getLong("dossierId"));
+				object.setDossierIdCTN(objectData.getString("dossierIdCTN"));
+				object.setDossierNo(objectData.getString("dossierNo"));
+
+				vrcopProdEquipmentPersistence.update(object);
+				
+				result = i;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			result = -500;
+		}
+		
+		return result;
+	}
 	private Log _log = LogFactoryUtil.getLog(VRCOPProdEquipmentLocalServiceImpl.class);
 }

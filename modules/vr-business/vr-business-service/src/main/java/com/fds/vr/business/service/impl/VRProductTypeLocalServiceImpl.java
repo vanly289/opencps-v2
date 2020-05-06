@@ -17,7 +17,12 @@ package com.fds.vr.business.service.impl;
 import com.fds.vr.business.model.VRProductType;
 import com.fds.vr.business.service.base.VRProductTypeLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -114,5 +119,54 @@ public class VRProductTypeLocalServiceImpl
 
 		return vrProductTypePersistence.update(object);
 	}
+	
+	public List<VRProductType> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+
+		List<VRProductType> vrProductTypes = new ArrayList<VRProductType>();
+		
+		try {
+			vrProductTypePersistence.removeByproductionPlantCode(productionPlantCode);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRProductType object = null;
+
+				long id = counterLocalService.increment(VRProductType.class.getName());
+
+				object = vrProductTypePersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+				if (!"".equals(objectData.getString("syncDate"))) {
+					object.setSyncDate(new Date(objectData.getString("syncDate")));
+				}
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setVehicleClass(objectData.getString("vehicleClass"));
+				object.setVehicleTypeCode(objectData.getString("vehicleTypeCode"));
+				object.setVehicleTypeDescription(objectData.getString("vehicleTypeDescription"));
+				object.setTrademark(objectData.getString("trademark"));
+				object.setTrademarkName(objectData.getString("trademarkName"));
+				object.setCommercialName(objectData.getString("commercialName"));
+				object.setModelCode(objectData.getString("modelCode"));
+				object.setProductClassificationCode(objectData.getString("productClassificationCode"));
+				object.setProductClassificationDescription(objectData.getString("productClassificationDescription"));
+				object.setDesignSymbolNo(objectData.getString("designSymbolNo"));
+				object.setProductionPlantId(objectData.getLong("productionPlantId"));
+				object.setProductionPlantCode(productionPlantCode);
+
+				object = vrProductTypePersistence.update(object);
+				
+				vrProductTypes.add(object);
+			}
+		} catch (Exception e) {
+			_log.error(e);
+			return null;
+		}
+		
+		return vrProductTypes;
+	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(VRProductTypeLocalServiceImpl.class);
 	
 }

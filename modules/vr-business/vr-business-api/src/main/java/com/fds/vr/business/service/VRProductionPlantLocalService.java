@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -72,6 +73,10 @@ public interface VRProductionPlantLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public VRProductionPlant addVRProductionPlant(
 		VRProductionPlant vrProductionPlant);
+
+	public VRProductionPlant adminProcessData(JSONObject objectData,
+		long mtCore, long applicantProfileId,
+		java.lang.String productionPlantCode);
 
 	public VRProductionPlant createVRProductionPlant(VRProductionPlant object)
 		throws SystemException;

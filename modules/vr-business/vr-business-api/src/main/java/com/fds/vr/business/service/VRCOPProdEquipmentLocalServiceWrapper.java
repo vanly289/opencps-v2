@@ -173,6 +173,13 @@ public class VRCOPProdEquipmentLocalServiceWrapper
 		return _vrcopProdEquipmentLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public int adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId) {
+		return _vrcopProdEquipmentLocalService.adminProcessData(arrayData,
+			dossierId);
+	}
+
 	/**
 	* Returns the number of vrcop prod equipments.
 	*

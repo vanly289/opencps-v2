@@ -121,6 +121,16 @@ public class VRRPDossierStatisticsLocalServiceImpl extends VRRPDossierStatistics
 		return new ArrayList<VRRPDossierStatistics>();
 
 	}
+	
+	public VRRPDossierStatistics findBydossierIdCTN(String dossierIdCTN){
+		try {
+			return vrrpDossierStatisticsPersistence.findByF_dossierIdCTN(dossierIdCTN);
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return null;
+
+	}
 
 	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
 			String modelClassName, int start, int end) throws SystemException {

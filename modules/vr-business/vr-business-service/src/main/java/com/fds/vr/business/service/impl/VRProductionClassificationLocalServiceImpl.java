@@ -19,7 +19,11 @@ import com.fds.vr.business.model.impl.VRProductionClassificationImpl;
 import com.fds.vr.business.service.base.VRProductionClassificationLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -130,4 +134,49 @@ public class VRProductionClassificationLocalServiceImpl extends VRProductionClas
 
 		return vrProductionClassificationFinder.countData(sql);
 	}
+	
+	public List<VRProductionClassification> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+
+		List<VRProductionClassification> vrProductionClassifications = new ArrayList<VRProductionClassification>();
+		
+		try {
+			vrProductionClassificationPersistence.removeByPPC(productionPlantCode);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRProductionClassification object = null;
+
+				long id = counterLocalService.increment(VRProductionClassification.class.getName());
+
+				object = vrProductionClassificationPersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+				if (!"".equals(objectData.getString("syncDate"))) {
+					object.setSyncDate(new Date(objectData.getString("syncDate")));
+				}
+				object.setSequenceNo(objectData.getInt("sequenceNo"));
+				object.setClassificationMode(objectData.getString("classificationMode"));
+				object.setRemarks(objectData.getString("remarks"));
+				object.setStatus(objectData.getString("status"));
+				object.setProductClassificationCode(objectData.getString("productClassificationCode"));
+				object.setProductClassificationDescription(objectData.getString("productClassificationDescription"));
+				object.setApplicantProfileId(objectData.getLong("applicantProfileId"));
+				object.setProductionPlantId(objectData.getLong("productionPlantId"));
+				object.setProductionPlantCode(productionPlantCode);
+
+				object = vrProductionClassificationPersistence.update(object);
+				
+				vrProductionClassifications.add(object);
+			}
+		} catch (Exception e) {
+			_log.error(e);
+			return null;
+		}
+		
+		return vrProductionClassifications;
+	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(VRProductionClassificationLocalServiceImpl.class);
 }

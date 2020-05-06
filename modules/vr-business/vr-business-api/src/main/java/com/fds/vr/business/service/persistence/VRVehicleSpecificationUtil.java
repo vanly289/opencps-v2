@@ -533,6 +533,169 @@ public class VRVehicleSpecificationUtil {
 	}
 
 	/**
+	* Returns all the vr vehicle specifications where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @return the matching vr vehicle specifications
+	*/
+	public static List<VRVehicleSpecification> findBydossierId(long dossierId) {
+		return getPersistence().findBydossierId(dossierId);
+	}
+
+	/**
+	* Returns a range of all the vr vehicle specifications where dossierId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleSpecificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dossierId the dossier ID
+	* @param start the lower bound of the range of vr vehicle specifications
+	* @param end the upper bound of the range of vr vehicle specifications (not inclusive)
+	* @return the range of matching vr vehicle specifications
+	*/
+	public static List<VRVehicleSpecification> findBydossierId(long dossierId,
+		int start, int end) {
+		return getPersistence().findBydossierId(dossierId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the vr vehicle specifications where dossierId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleSpecificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dossierId the dossier ID
+	* @param start the lower bound of the range of vr vehicle specifications
+	* @param end the upper bound of the range of vr vehicle specifications (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vr vehicle specifications
+	*/
+	public static List<VRVehicleSpecification> findBydossierId(long dossierId,
+		int start, int end,
+		OrderByComparator<VRVehicleSpecification> orderByComparator) {
+		return getPersistence()
+				   .findBydossierId(dossierId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the vr vehicle specifications where dossierId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRVehicleSpecificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dossierId the dossier ID
+	* @param start the lower bound of the range of vr vehicle specifications
+	* @param end the upper bound of the range of vr vehicle specifications (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vr vehicle specifications
+	*/
+	public static List<VRVehicleSpecification> findBydossierId(long dossierId,
+		int start, int end,
+		OrderByComparator<VRVehicleSpecification> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findBydossierId(dossierId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first vr vehicle specification in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr vehicle specification
+	* @throws NoSuchVRVehicleSpecificationException if a matching vr vehicle specification could not be found
+	*/
+	public static VRVehicleSpecification findBydossierId_First(long dossierId,
+		OrderByComparator<VRVehicleSpecification> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRVehicleSpecificationException {
+		return getPersistence()
+				   .findBydossierId_First(dossierId, orderByComparator);
+	}
+
+	/**
+	* Returns the first vr vehicle specification in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr vehicle specification, or <code>null</code> if a matching vr vehicle specification could not be found
+	*/
+	public static VRVehicleSpecification fetchBydossierId_First(
+		long dossierId,
+		OrderByComparator<VRVehicleSpecification> orderByComparator) {
+		return getPersistence()
+				   .fetchBydossierId_First(dossierId, orderByComparator);
+	}
+
+	/**
+	* Returns the last vr vehicle specification in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr vehicle specification
+	* @throws NoSuchVRVehicleSpecificationException if a matching vr vehicle specification could not be found
+	*/
+	public static VRVehicleSpecification findBydossierId_Last(long dossierId,
+		OrderByComparator<VRVehicleSpecification> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRVehicleSpecificationException {
+		return getPersistence()
+				   .findBydossierId_Last(dossierId, orderByComparator);
+	}
+
+	/**
+	* Returns the last vr vehicle specification in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr vehicle specification, or <code>null</code> if a matching vr vehicle specification could not be found
+	*/
+	public static VRVehicleSpecification fetchBydossierId_Last(long dossierId,
+		OrderByComparator<VRVehicleSpecification> orderByComparator) {
+		return getPersistence()
+				   .fetchBydossierId_Last(dossierId, orderByComparator);
+	}
+
+	/**
+	* Returns the vr vehicle specifications before and after the current vr vehicle specification in the ordered set where dossierId = &#63;.
+	*
+	* @param id the primary key of the current vr vehicle specification
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next vr vehicle specification
+	* @throws NoSuchVRVehicleSpecificationException if a vr vehicle specification with the primary key could not be found
+	*/
+	public static VRVehicleSpecification[] findBydossierId_PrevAndNext(
+		long id, long dossierId,
+		OrderByComparator<VRVehicleSpecification> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRVehicleSpecificationException {
+		return getPersistence()
+				   .findBydossierId_PrevAndNext(id, dossierId, orderByComparator);
+	}
+
+	/**
+	* Removes all the vr vehicle specifications where dossierId = &#63; from the database.
+	*
+	* @param dossierId the dossier ID
+	*/
+	public static void removeBydossierId(long dossierId) {
+		getPersistence().removeBydossierId(dossierId);
+	}
+
+	/**
+	* Returns the number of vr vehicle specifications where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @return the number of matching vr vehicle specifications
+	*/
+	public static int countBydossierId(long dossierId) {
+		return getPersistence().countBydossierId(dossierId);
+	}
+
+	/**
 	* Caches the vr vehicle specification in the entity cache if it is enabled.
 	*
 	* @param vrVehicleSpecification the vr vehicle specification
@@ -681,6 +844,10 @@ public class VRVehicleSpecificationUtil {
 	*/
 	public static int countAll() {
 		return getPersistence().countAll();
+	}
+
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
 	}
 
 	public static VRVehicleSpecificationPersistence getPersistence() {

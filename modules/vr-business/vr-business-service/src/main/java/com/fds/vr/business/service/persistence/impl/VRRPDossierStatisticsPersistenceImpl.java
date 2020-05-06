@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -3461,6 +3462,254 @@ public class VRRPDossierStatisticsPersistenceImpl extends BasePersistenceImpl<VR
 	private static final String _FINDER_COLUMN_INSPECTORCODE_INSPECTORCODE_1 = "vrrpDossierStatistics.inspectorcode IS NULL";
 	private static final String _FINDER_COLUMN_INSPECTORCODE_INSPECTORCODE_2 = "vrrpDossierStatistics.inspectorcode = ?";
 	private static final String _FINDER_COLUMN_INSPECTORCODE_INSPECTORCODE_3 = "(vrrpDossierStatistics.inspectorcode IS NULL OR vrrpDossierStatistics.inspectorcode = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_F_DOSSIERIDCTN = new FinderPath(VRRPDossierStatisticsModelImpl.ENTITY_CACHE_ENABLED,
+			VRRPDossierStatisticsModelImpl.FINDER_CACHE_ENABLED,
+			VRRPDossierStatisticsImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByF_dossierIdCTN", new String[] { String.class.getName() },
+			VRRPDossierStatisticsModelImpl.DOSSIERIDCTN_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_F_DOSSIERIDCTN = new FinderPath(VRRPDossierStatisticsModelImpl.ENTITY_CACHE_ENABLED,
+			VRRPDossierStatisticsModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_dossierIdCTN",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns the vrrp dossier statistics where dossierIdCTN = &#63; or throws a {@link NoSuchVRRPDossierStatisticsException} if it could not be found.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn
+	 * @return the matching vrrp dossier statistics
+	 * @throws NoSuchVRRPDossierStatisticsException if a matching vrrp dossier statistics could not be found
+	 */
+	@Override
+	public VRRPDossierStatistics findByF_dossierIdCTN(String dossierIdCTN)
+		throws NoSuchVRRPDossierStatisticsException {
+		VRRPDossierStatistics vrrpDossierStatistics = fetchByF_dossierIdCTN(dossierIdCTN);
+
+		if (vrrpDossierStatistics == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("dossierIdCTN=");
+			msg.append(dossierIdCTN);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchVRRPDossierStatisticsException(msg.toString());
+		}
+
+		return vrrpDossierStatistics;
+	}
+
+	/**
+	 * Returns the vrrp dossier statistics where dossierIdCTN = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn
+	 * @return the matching vrrp dossier statistics, or <code>null</code> if a matching vrrp dossier statistics could not be found
+	 */
+	@Override
+	public VRRPDossierStatistics fetchByF_dossierIdCTN(String dossierIdCTN) {
+		return fetchByF_dossierIdCTN(dossierIdCTN, true);
+	}
+
+	/**
+	 * Returns the vrrp dossier statistics where dossierIdCTN = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching vrrp dossier statistics, or <code>null</code> if a matching vrrp dossier statistics could not be found
+	 */
+	@Override
+	public VRRPDossierStatistics fetchByF_dossierIdCTN(String dossierIdCTN,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { dossierIdCTN };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_F_DOSSIERIDCTN,
+					finderArgs, this);
+		}
+
+		if (result instanceof VRRPDossierStatistics) {
+			VRRPDossierStatistics vrrpDossierStatistics = (VRRPDossierStatistics)result;
+
+			if (!Objects.equals(dossierIdCTN,
+						vrrpDossierStatistics.getDossierIdCTN())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_VRRPDOSSIERSTATISTICS_WHERE);
+
+			boolean bindDossierIdCTN = false;
+
+			if (dossierIdCTN == null) {
+				query.append(_FINDER_COLUMN_F_DOSSIERIDCTN_DOSSIERIDCTN_1);
+			}
+			else if (dossierIdCTN.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_DOSSIERIDCTN_DOSSIERIDCTN_3);
+			}
+			else {
+				bindDossierIdCTN = true;
+
+				query.append(_FINDER_COLUMN_F_DOSSIERIDCTN_DOSSIERIDCTN_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindDossierIdCTN) {
+					qPos.add(dossierIdCTN);
+				}
+
+				List<VRRPDossierStatistics> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_F_DOSSIERIDCTN,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"VRRPDossierStatisticsPersistenceImpl.fetchByF_dossierIdCTN(String, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					VRRPDossierStatistics vrrpDossierStatistics = list.get(0);
+
+					result = vrrpDossierStatistics;
+
+					cacheResult(vrrpDossierStatistics);
+
+					if ((vrrpDossierStatistics.getDossierIdCTN() == null) ||
+							!vrrpDossierStatistics.getDossierIdCTN()
+													  .equals(dossierIdCTN)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_F_DOSSIERIDCTN,
+							finderArgs, vrrpDossierStatistics);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_F_DOSSIERIDCTN,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (VRRPDossierStatistics)result;
+		}
+	}
+
+	/**
+	 * Removes the vrrp dossier statistics where dossierIdCTN = &#63; from the database.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn
+	 * @return the vrrp dossier statistics that was removed
+	 */
+	@Override
+	public VRRPDossierStatistics removeByF_dossierIdCTN(String dossierIdCTN)
+		throws NoSuchVRRPDossierStatisticsException {
+		VRRPDossierStatistics vrrpDossierStatistics = findByF_dossierIdCTN(dossierIdCTN);
+
+		return remove(vrrpDossierStatistics);
+	}
+
+	/**
+	 * Returns the number of vrrp dossier statisticses where dossierIdCTN = &#63;.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn
+	 * @return the number of matching vrrp dossier statisticses
+	 */
+	@Override
+	public int countByF_dossierIdCTN(String dossierIdCTN) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_F_DOSSIERIDCTN;
+
+		Object[] finderArgs = new Object[] { dossierIdCTN };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_VRRPDOSSIERSTATISTICS_WHERE);
+
+			boolean bindDossierIdCTN = false;
+
+			if (dossierIdCTN == null) {
+				query.append(_FINDER_COLUMN_F_DOSSIERIDCTN_DOSSIERIDCTN_1);
+			}
+			else if (dossierIdCTN.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_DOSSIERIDCTN_DOSSIERIDCTN_3);
+			}
+			else {
+				bindDossierIdCTN = true;
+
+				query.append(_FINDER_COLUMN_F_DOSSIERIDCTN_DOSSIERIDCTN_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindDossierIdCTN) {
+					qPos.add(dossierIdCTN);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_F_DOSSIERIDCTN_DOSSIERIDCTN_1 = "vrrpDossierStatistics.dossierIdCTN IS NULL";
+	private static final String _FINDER_COLUMN_F_DOSSIERIDCTN_DOSSIERIDCTN_2 = "vrrpDossierStatistics.dossierIdCTN = ?";
+	private static final String _FINDER_COLUMN_F_DOSSIERIDCTN_DOSSIERIDCTN_3 = "(vrrpDossierStatistics.dossierIdCTN IS NULL OR vrrpDossierStatistics.dossierIdCTN = '')";
 
 	public VRRPDossierStatisticsPersistenceImpl() {
 		setModelClass(VRRPDossierStatistics.class);
@@ -3476,6 +3725,10 @@ public class VRRPDossierStatisticsPersistenceImpl extends BasePersistenceImpl<VR
 		entityCache.putResult(VRRPDossierStatisticsModelImpl.ENTITY_CACHE_ENABLED,
 			VRRPDossierStatisticsImpl.class,
 			vrrpDossierStatistics.getPrimaryKey(), vrrpDossierStatistics);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_F_DOSSIERIDCTN,
+			new Object[] { vrrpDossierStatistics.getDossierIdCTN() },
+			vrrpDossierStatistics);
 
 		vrrpDossierStatistics.resetOriginalValues();
 	}
@@ -3531,6 +3784,9 @@ public class VRRPDossierStatisticsPersistenceImpl extends BasePersistenceImpl<VR
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((VRRPDossierStatisticsModelImpl)vrrpDossierStatistics,
+			true);
 	}
 
 	@Override
@@ -3542,6 +3798,44 @@ public class VRRPDossierStatisticsPersistenceImpl extends BasePersistenceImpl<VR
 			entityCache.removeResult(VRRPDossierStatisticsModelImpl.ENTITY_CACHE_ENABLED,
 				VRRPDossierStatisticsImpl.class,
 				vrrpDossierStatistics.getPrimaryKey());
+
+			clearUniqueFindersCache((VRRPDossierStatisticsModelImpl)vrrpDossierStatistics,
+				true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		VRRPDossierStatisticsModelImpl vrrpDossierStatisticsModelImpl) {
+		Object[] args = new Object[] {
+				vrrpDossierStatisticsModelImpl.getDossierIdCTN()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_F_DOSSIERIDCTN, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_F_DOSSIERIDCTN, args,
+			vrrpDossierStatisticsModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		VRRPDossierStatisticsModelImpl vrrpDossierStatisticsModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					vrrpDossierStatisticsModelImpl.getDossierIdCTN()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_F_DOSSIERIDCTN, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_F_DOSSIERIDCTN, args);
+		}
+
+		if ((vrrpDossierStatisticsModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_F_DOSSIERIDCTN.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					vrrpDossierStatisticsModelImpl.getOriginalDossierIdCTN()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_F_DOSSIERIDCTN, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_F_DOSSIERIDCTN, args);
 		}
 	}
 
@@ -3808,6 +4102,9 @@ public class VRRPDossierStatisticsPersistenceImpl extends BasePersistenceImpl<VR
 		entityCache.putResult(VRRPDossierStatisticsModelImpl.ENTITY_CACHE_ENABLED,
 			VRRPDossierStatisticsImpl.class,
 			vrrpDossierStatistics.getPrimaryKey(), vrrpDossierStatistics, false);
+
+		clearUniqueFindersCache(vrrpDossierStatisticsModelImpl, false);
+		cacheUniqueFindersCache(vrrpDossierStatisticsModelImpl);
 
 		vrrpDossierStatistics.resetOriginalValues();
 

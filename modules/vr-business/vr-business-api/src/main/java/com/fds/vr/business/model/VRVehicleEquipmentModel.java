@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -102,6 +103,50 @@ public interface VRVehicleEquipmentModel extends BaseModel<VRVehicleEquipment> {
 	 * @param certificateRecordId the certificate record ID of this vr vehicle equipment
 	 */
 	public void setCertificateRecordId(long certificateRecordId);
+
+	/**
+	 * Returns the dossier ID of this vr vehicle equipment.
+	 *
+	 * @return the dossier ID of this vr vehicle equipment
+	 */
+	public long getDossierId();
+
+	/**
+	 * Sets the dossier ID of this vr vehicle equipment.
+	 *
+	 * @param dossierId the dossier ID of this vr vehicle equipment
+	 */
+	public void setDossierId(long dossierId);
+
+	/**
+	 * Returns the dossier ID ctn of this vr vehicle equipment.
+	 *
+	 * @return the dossier ID ctn of this vr vehicle equipment
+	 */
+	@AutoEscape
+	public String getDossierIdCTN();
+
+	/**
+	 * Sets the dossier ID ctn of this vr vehicle equipment.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn of this vr vehicle equipment
+	 */
+	public void setDossierIdCTN(String dossierIdCTN);
+
+	/**
+	 * Returns the dossier no of this vr vehicle equipment.
+	 *
+	 * @return the dossier no of this vr vehicle equipment
+	 */
+	@AutoEscape
+	public String getDossierNo();
+
+	/**
+	 * Sets the dossier no of this vr vehicle equipment.
+	 *
+	 * @param dossierNo the dossier no of this vr vehicle equipment
+	 */
+	public void setDossierNo(String dossierNo);
 
 	/**
 	 * Returns the modify date of this vr vehicle equipment.

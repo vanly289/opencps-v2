@@ -53,6 +53,14 @@ public class VRProductionPlantLocalServiceUtil {
 		return getService().addVRProductionPlant(vrProductionPlant);
 	}
 
+	public static com.fds.vr.business.model.VRProductionPlant adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData, long mtCore,
+		long applicantProfileId, java.lang.String productionPlantCode) {
+		return getService()
+				   .adminProcessData(objectData, mtCore, applicantProfileId,
+			productionPlantCode);
+	}
+
 	public static com.fds.vr.business.model.VRProductionPlant createVRProductionPlant(
 		com.fds.vr.business.model.VRProductionPlant object)
 		throws com.liferay.portal.kernel.exception.SystemException {

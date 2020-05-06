@@ -178,6 +178,50 @@ public interface VRInspectionStandardModel extends BaseModel<VRInspectionStandar
 	public void setModule(String module);
 
 	/**
+	 * Returns the dossier ID of this vr inspection standard.
+	 *
+	 * @return the dossier ID of this vr inspection standard
+	 */
+	public long getDossierId();
+
+	/**
+	 * Sets the dossier ID of this vr inspection standard.
+	 *
+	 * @param dossierId the dossier ID of this vr inspection standard
+	 */
+	public void setDossierId(long dossierId);
+
+	/**
+	 * Returns the dossier ID ctn of this vr inspection standard.
+	 *
+	 * @return the dossier ID ctn of this vr inspection standard
+	 */
+	@AutoEscape
+	public String getDossierIdCTN();
+
+	/**
+	 * Sets the dossier ID ctn of this vr inspection standard.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn of this vr inspection standard
+	 */
+	public void setDossierIdCTN(String dossierIdCTN);
+
+	/**
+	 * Returns the dossier no of this vr inspection standard.
+	 *
+	 * @return the dossier no of this vr inspection standard
+	 */
+	@AutoEscape
+	public String getDossierNo();
+
+	/**
+	 * Sets the dossier no of this vr inspection standard.
+	 *
+	 * @param dossierNo the dossier no of this vr inspection standard
+	 */
+	public void setDossierNo(String dossierNo);
+
+	/**
 	 * Returns the modify date of this vr inspection standard.
 	 *
 	 * @return the modify date of this vr inspection standard

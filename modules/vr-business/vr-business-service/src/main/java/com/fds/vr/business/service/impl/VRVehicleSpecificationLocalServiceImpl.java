@@ -12675,5 +12675,52 @@ public class VRVehicleSpecificationLocalServiceImpl
 		return vrVehicleSpecificationFinder.countData(sql);
 	}
 	
+	public List<VRVehicleSpecification> adminProcessData(JSONArray arrayData, long dossierId, long vehicleTypeCertificateId) {
+		List<VRVehicleSpecification> vrVehicleSpecifications = new ArrayList<VRVehicleSpecification>();
+		try {
+			vrVehicleSpecificationPersistence.removeBydossierId(dossierId);
+			
+			Date now = new Date();
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRVehicleSpecification object = null;
+				
+				long id = counterLocalService.increment(VRVehicleSpecification.class.getName());
+				object = vrVehicleSpecificationPersistence.create(id);
+				
+				object.setSyncDate(now);
+
+				// Add other fields
+				//TODO
+				object.setVehicleCertificateId(vehicleTypeCertificateId);
+				object.setDossierId(objectData.getLong("dossierId"));
+				object.setDossierNo(objectData.getString("dossierNo"));
+				object.setDossierIdCTN(objectData.getString("dossierIdCTN"));
+				object.setSpecificationCode(objectData.getString("specificationCode"));
+				object.setSpecificationName(objectData.getString("specificationName"));
+				object.setSpecificationValue(objectData.getString("specificationValue"));
+				object.setSpecificationValueDescription(objectData.getString("specificationValueDescription"));
+				//TODO
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setSpecificationBasicUnit(objectData.getString("specificationBasicUnit"));
+				object.setSpecificationStandard(objectData.getString("specificationStandard"));
+				object.setSpecificationGroup(objectData.getString("specificationGroup"));
+				object.setSpecificationDataCollectionID(objectData.getString("specificationDataCollectionID"));
+				object.setSpecificationResult(objectData.getString("specificationResult"));
+				object.setModifyDate(now);
+				object.setSyncDate(now);
+				
+				object = vrVehicleSpecificationPersistence.update(object);
+				
+				vrVehicleSpecifications.add(object);
+			}
+		}catch (Exception e) {
+			_log.error(e);
+		}
+		return vrVehicleSpecifications;
+	}
+	
 	private Log _log = LogFactoryUtil.getLog(VRVehicleSpecificationLocalServiceImpl.class);
 }

@@ -174,6 +174,9 @@ public interface VRInspectionStandardLocalService extends BaseLocalService,
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	public List<VRInspectionStandard> adminProcessData(JSONArray arrayData,
+		long dossierId, long vehicleTypeCertificateId);
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

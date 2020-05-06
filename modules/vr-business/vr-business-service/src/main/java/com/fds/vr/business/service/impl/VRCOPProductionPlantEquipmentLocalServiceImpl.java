@@ -15,9 +15,11 @@
 package com.fds.vr.business.service.impl;
 
 import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.model.VRCOPProductionPlantEmployee;
 import com.fds.vr.business.model.VRCOPProductionPlantEquipment;
 import com.fds.vr.business.model.impl.VRCOPProductionPlantEquipmentImpl;
 import com.fds.vr.business.service.base.VRCOPProductionPlantEquipmentLocalServiceBaseImpl;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -139,6 +141,92 @@ public class VRCOPProductionPlantEquipmentLocalServiceImpl
 				result.put(jsonObject);
 			}
 		}
+		return result;
+	}
+
+
+	public int adminProcessData(JSONArray arrayData, long dossierId) {
+
+		int result = 0;
+		
+		try {
+			System.out.println("VRCOPProductionPlantEquipmentLocalServiceImpl.adminProcessData()" + dossierId);
+			vrcopProductionPlantEquipmentPersistence.removeBycopDossierId(dossierId);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRCOPProductionPlantEquipment object = null;
+
+				long id = counterLocalService.increment(VRCOPProductionPlantEquipment.class.getName());
+
+				object = vrcopProductionPlantEquipmentPersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+				if (!"".equals(objectData.getString("syncDate"))) {
+					object.setSyncDate(new Date(objectData.getString("syncDate")));
+				}
+
+				object.setCopReportRepositoryID(objectData.getLong("copReportRepositoryID"));
+				object.setCopReportNo(objectData.getString("copReportNo"));
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setEquipmentCode(objectData.getString("equipmentCode"));
+				object.setEquipmentName(objectData.getString("equipmentName"));
+				object.setEquipmentType(objectData.getString("equipmentType"));
+				object.setTrademark(objectData.getString("trademark"));
+				object.setTrademarkName(objectData.getString("trademarkName"));
+				object.setCommercialName(objectData.getString("commercialName"));
+				object.setModelCode(objectData.getString("modelCode"));
+				object.setProductionCountryCode(objectData.getString("productionCountryCode"));
+				object.setEquipmentStatus(objectData.getString("equipmentStatus"));
+				if (!"".equals(objectData.getString("expireDate"))) {
+					object.setSyncDate(new Date(objectData.getString("expireDate")));
+				}
+				object.setNotes(objectData.getString("notes"));
+				object.setEquipmentSerialNo(objectData.getString("equipmentSerialNo"));
+				if (!"".equals(objectData.getString("productionYear"))) {
+					object.setProductionYear(new Date(objectData.getString("productionYear")));
+				}
+				if (!"".equals(objectData.getString("registrationYear"))) {
+					object.setRegistrationYear(new Date(objectData.getString("registrationYear")));
+				}
+				object.setMarkupXCG(objectData.getLong("markupXCG"));
+				object.setMarkupXCGNK(objectData.getLong("markupXCGNK"));
+				object.setMarkupSMRM(objectData.getLong("markupSMRM"));
+				object.setMarkupXCH(objectData.getLong("markupXCH"));
+				object.setMarkupXCN(objectData.getLong("markupXCN"));
+				object.setMarkupXMY(objectData.getLong("markupXMY"));
+				object.setMarkupXDD(objectData.getLong("markupXDD"));
+				object.setTestingResult(objectData.getInt("testingResult"));
+				object.setDescription(objectData.getString("description"));
+				object.setInspectionRecordNumber(objectData.getString("inspectionRecordNumber"));
+
+				if (!"".equals(objectData.getString("inspectionRecordDate"))) {
+					object.setInspectionRecordDate(new Date(objectData.getString("inspectionRecordDate")));
+				}
+
+				if (!"".equals(objectData.getString("expiredDate"))) {
+					object.setExpiredDate(new Date(objectData.getString("expiredDate")));
+				}
+				object.setExpiredStatus(objectData.getInt("expiredStatus"));
+				object.setStampTestingNo(objectData.getString("stampTestingNo"));
+				
+				object.setDossierId(objectData.getLong("dossierId"));
+				object.setDossierIdCTN(objectData.getString("dossierIdCTN"));
+				object.setDossierNo(objectData.getString("dossierNo"));
+				object.setProductionPlantId(objectData.getLong("productionPlantId"));
+				object.setProductionPlantCode(objectData.getString("productionPlantCode"));
+				
+				vrcopProductionPlantEquipmentPersistence.update(object);
+				
+				result = i;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			result = -500;
+		}
+		
 		return result;
 	}
 

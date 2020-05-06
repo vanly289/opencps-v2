@@ -53,6 +53,12 @@ public class VRApplicantProfileLocalServiceUtil {
 		return getService().addVRApplicantProfile(vrApplicantProfile);
 	}
 
+	public static com.fds.vr.business.model.VRApplicantProfile adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData, long mtCore,
+		java.lang.String applicantCode) {
+		return getService().adminProcessData(objectData, mtCore, applicantCode);
+	}
+
 	public static com.fds.vr.business.model.VRApplicantProfile createVRApplicantProfile(
 		com.fds.vr.business.model.VRApplicantProfile object)
 		throws com.liferay.portal.kernel.exception.SystemException {

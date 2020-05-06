@@ -173,6 +173,13 @@ public class VRCOPProductionPlantEmployeeLocalServiceWrapper
 		return _vrcopProductionPlantEmployeeLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public int adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId) {
+		return _vrcopProductionPlantEmployeeLocalService.adminProcessData(arrayData,
+			dossierId);
+	}
+
 	/**
 	* Returns the number of vrcop production plant employees.
 	*

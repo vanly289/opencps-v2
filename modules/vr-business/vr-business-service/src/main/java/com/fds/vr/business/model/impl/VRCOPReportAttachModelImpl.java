@@ -72,7 +72,10 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 			{ "DocNo", Types.VARCHAR },
 			{ "Remarks", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
-			{ "syncDate", Types.TIMESTAMP }
+			{ "syncDate", Types.TIMESTAMP },
+			{ "dossierId", Types.BIGINT },
+			{ "dossierIdCTN", Types.VARCHAR },
+			{ "dossierNo", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -87,9 +90,12 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		TABLE_COLUMNS_MAP.put("Remarks", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("dossierId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("dossierIdCTN", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierNo", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_copreport_attach (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,DocName VARCHAR(75) null,DocNo VARCHAR(75) null,Remarks VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_copreport_attach (id LONG not null primary key,mtCore LONG,copReportRepositoryID LONG,copReportNo VARCHAR(75) null,sequenceNo LONG,DocName VARCHAR(75) null,DocNo VARCHAR(75) null,Remarks VARCHAR(75) null,modifyDate DATE null,syncDate DATE null,dossierId LONG,dossierIdCTN VARCHAR(75) null,dossierNo VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_copreport_attach";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrcopReportAttach.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_copreport_attach.modifyDate DESC";
@@ -107,8 +113,9 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 			true);
 	public static final long COPREPORTNO_COLUMN_BITMASK = 1L;
 	public static final long COPREPORTREPOSITORYID_COLUMN_BITMASK = 2L;
-	public static final long MTCORE_COLUMN_BITMASK = 4L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 8L;
+	public static final long DOSSIERID_COLUMN_BITMASK = 4L;
+	public static final long MTCORE_COLUMN_BITMASK = 8L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRCOPReportAttach"));
 
@@ -159,6 +166,9 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		attributes.put("remarks", getRemarks());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -227,6 +237,24 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 	}
 
@@ -386,6 +414,58 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		_syncDate = syncDate;
 	}
 
+	@Override
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	@Override
+	public void setDossierId(long dossierId) {
+		_columnBitmask |= DOSSIERID_COLUMN_BITMASK;
+
+		if (!_setOriginalDossierId) {
+			_setOriginalDossierId = true;
+
+			_originalDossierId = _dossierId;
+		}
+
+		_dossierId = dossierId;
+	}
+
+	public long getOriginalDossierId() {
+		return _originalDossierId;
+	}
+
+	@Override
+	public String getDossierIdCTN() {
+		if (_dossierIdCTN == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierIdCTN;
+		}
+	}
+
+	@Override
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	@Override
+	public String getDossierNo() {
+		if (_dossierNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierNo;
+		}
+	}
+
+	@Override
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -427,6 +507,9 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		vrcopReportAttachImpl.setRemarks(getRemarks());
 		vrcopReportAttachImpl.setModifyDate(getModifyDate());
 		vrcopReportAttachImpl.setSyncDate(getSyncDate());
+		vrcopReportAttachImpl.setDossierId(getDossierId());
+		vrcopReportAttachImpl.setDossierIdCTN(getDossierIdCTN());
+		vrcopReportAttachImpl.setDossierNo(getDossierNo());
 
 		vrcopReportAttachImpl.resetOriginalValues();
 
@@ -500,6 +583,10 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 
 		vrcopReportAttachModelImpl._originalCopReportNo = vrcopReportAttachModelImpl._copReportNo;
 
+		vrcopReportAttachModelImpl._originalDossierId = vrcopReportAttachModelImpl._dossierId;
+
+		vrcopReportAttachModelImpl._setOriginalDossierId = false;
+
 		vrcopReportAttachModelImpl._columnBitmask = 0;
 	}
 
@@ -565,12 +652,30 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 			vrcopReportAttachCacheModel.syncDate = Long.MIN_VALUE;
 		}
 
+		vrcopReportAttachCacheModel.dossierId = getDossierId();
+
+		vrcopReportAttachCacheModel.dossierIdCTN = getDossierIdCTN();
+
+		String dossierIdCTN = vrcopReportAttachCacheModel.dossierIdCTN;
+
+		if ((dossierIdCTN != null) && (dossierIdCTN.length() == 0)) {
+			vrcopReportAttachCacheModel.dossierIdCTN = null;
+		}
+
+		vrcopReportAttachCacheModel.dossierNo = getDossierNo();
+
+		String dossierNo = vrcopReportAttachCacheModel.dossierNo;
+
+		if ((dossierNo != null) && (dossierNo.length() == 0)) {
+			vrcopReportAttachCacheModel.dossierNo = null;
+		}
+
 		return vrcopReportAttachCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -592,6 +697,12 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
 		sb.append(getSyncDate());
+		sb.append(", dossierId=");
+		sb.append(getDossierId());
+		sb.append(", dossierIdCTN=");
+		sb.append(getDossierIdCTN());
+		sb.append(", dossierNo=");
+		sb.append(getDossierNo());
 		sb.append("}");
 
 		return sb.toString();
@@ -599,7 +710,7 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRCOPReportAttach");
@@ -645,6 +756,18 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 			"<column><column-name>syncDate</column-name><column-value><![CDATA[");
 		sb.append(getSyncDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierId</column-name><column-value><![CDATA[");
+		sb.append(getDossierId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierIdCTN</column-name><column-value><![CDATA[");
+		sb.append(getDossierIdCTN());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierNo</column-name><column-value><![CDATA[");
+		sb.append(getDossierNo());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -670,6 +793,11 @@ public class VRCOPReportAttachModelImpl extends BaseModelImpl<VRCOPReportAttach>
 	private String _remarks;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private long _dossierId;
+	private long _originalDossierId;
+	private boolean _setOriginalDossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 	private long _columnBitmask;
 	private VRCOPReportAttach _escapedModel;
 }

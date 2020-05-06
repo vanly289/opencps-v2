@@ -257,6 +257,50 @@ public interface VRVehicleSpecificationModel extends BaseModel<VRVehicleSpecific
 	public void setDeliverableCode(String deliverableCode);
 
 	/**
+	 * Returns the dossier ID of this vr vehicle specification.
+	 *
+	 * @return the dossier ID of this vr vehicle specification
+	 */
+	public long getDossierId();
+
+	/**
+	 * Sets the dossier ID of this vr vehicle specification.
+	 *
+	 * @param dossierId the dossier ID of this vr vehicle specification
+	 */
+	public void setDossierId(long dossierId);
+
+	/**
+	 * Returns the dossier ID ctn of this vr vehicle specification.
+	 *
+	 * @return the dossier ID ctn of this vr vehicle specification
+	 */
+	@AutoEscape
+	public String getDossierIdCTN();
+
+	/**
+	 * Sets the dossier ID ctn of this vr vehicle specification.
+	 *
+	 * @param dossierIdCTN the dossier ID ctn of this vr vehicle specification
+	 */
+	public void setDossierIdCTN(String dossierIdCTN);
+
+	/**
+	 * Returns the dossier no of this vr vehicle specification.
+	 *
+	 * @return the dossier no of this vr vehicle specification
+	 */
+	@AutoEscape
+	public String getDossierNo();
+
+	/**
+	 * Sets the dossier no of this vr vehicle specification.
+	 *
+	 * @param dossierNo the dossier no of this vr vehicle specification
+	 */
+	public void setDossierNo(String dossierNo);
+
+	/**
 	 * Returns the modify date of this vr vehicle specification.
 	 *
 	 * @return the modify date of this vr vehicle specification

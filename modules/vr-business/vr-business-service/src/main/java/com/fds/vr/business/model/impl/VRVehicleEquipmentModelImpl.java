@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -64,6 +65,9 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 			{ "id", Types.BIGINT },
 			{ "vehicleCertificateId", Types.BIGINT },
 			{ "certificateRecordId", Types.BIGINT },
+			{ "dossierid", Types.BIGINT },
+			{ "dossierIdCTN", Types.VARCHAR },
+			{ "dossierno", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -73,11 +77,14 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 		TABLE_COLUMNS_MAP.put("id", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("vehicleCertificateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("certificateRecordId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("dossierid", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("dossierIdCTN", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierno", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_vehicleequipment (id LONG not null primary key,vehicleCertificateId LONG,certificateRecordId LONG,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_vehicleequipment (id LONG not null primary key,vehicleCertificateId LONG,certificateRecordId LONG,dossierid LONG,dossierIdCTN VARCHAR(75) null,dossierno VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_vehicleequipment";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrVehicleEquipment.id ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_vehicleequipment.id ASC";
@@ -90,7 +97,12 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.fds.vr.business.model.VRVehicleEquipment"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.fds.vr.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRVehicleEquipment"),
+			true);
+	public static final long DOSSIERID_COLUMN_BITMASK = 1L;
+	public static final long VEHICLECERTIFICATEID_COLUMN_BITMASK = 2L;
+	public static final long ID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRVehicleEquipment"));
 
@@ -134,6 +146,9 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 		attributes.put("id", getId());
 		attributes.put("vehicleCertificateId", getVehicleCertificateId());
 		attributes.put("certificateRecordId", getCertificateRecordId());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -161,6 +176,24 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 
 		if (certificateRecordId != null) {
 			setCertificateRecordId(certificateRecordId);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -193,7 +226,19 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 
 	@Override
 	public void setVehicleCertificateId(long vehicleCertificateId) {
+		_columnBitmask |= VEHICLECERTIFICATEID_COLUMN_BITMASK;
+
+		if (!_setOriginalVehicleCertificateId) {
+			_setOriginalVehicleCertificateId = true;
+
+			_originalVehicleCertificateId = _vehicleCertificateId;
+		}
+
 		_vehicleCertificateId = vehicleCertificateId;
+	}
+
+	public long getOriginalVehicleCertificateId() {
+		return _originalVehicleCertificateId;
 	}
 
 	@Override
@@ -204,6 +249,58 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 	@Override
 	public void setCertificateRecordId(long certificateRecordId) {
 		_certificateRecordId = certificateRecordId;
+	}
+
+	@Override
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	@Override
+	public void setDossierId(long dossierId) {
+		_columnBitmask |= DOSSIERID_COLUMN_BITMASK;
+
+		if (!_setOriginalDossierId) {
+			_setOriginalDossierId = true;
+
+			_originalDossierId = _dossierId;
+		}
+
+		_dossierId = dossierId;
+	}
+
+	public long getOriginalDossierId() {
+		return _originalDossierId;
+	}
+
+	@Override
+	public String getDossierIdCTN() {
+		if (_dossierIdCTN == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierIdCTN;
+		}
+	}
+
+	@Override
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	@Override
+	public String getDossierNo() {
+		if (_dossierNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierNo;
+		}
+	}
+
+	@Override
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
 	}
 
 	@Override
@@ -224,6 +321,10 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_syncDate = syncDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -256,6 +357,9 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 		vrVehicleEquipmentImpl.setId(getId());
 		vrVehicleEquipmentImpl.setVehicleCertificateId(getVehicleCertificateId());
 		vrVehicleEquipmentImpl.setCertificateRecordId(getCertificateRecordId());
+		vrVehicleEquipmentImpl.setDossierId(getDossierId());
+		vrVehicleEquipmentImpl.setDossierIdCTN(getDossierIdCTN());
+		vrVehicleEquipmentImpl.setDossierNo(getDossierNo());
 		vrVehicleEquipmentImpl.setModifyDate(getModifyDate());
 		vrVehicleEquipmentImpl.setSyncDate(getSyncDate());
 
@@ -318,6 +422,17 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 
 	@Override
 	public void resetOriginalValues() {
+		VRVehicleEquipmentModelImpl vrVehicleEquipmentModelImpl = this;
+
+		vrVehicleEquipmentModelImpl._originalVehicleCertificateId = vrVehicleEquipmentModelImpl._vehicleCertificateId;
+
+		vrVehicleEquipmentModelImpl._setOriginalVehicleCertificateId = false;
+
+		vrVehicleEquipmentModelImpl._originalDossierId = vrVehicleEquipmentModelImpl._dossierId;
+
+		vrVehicleEquipmentModelImpl._setOriginalDossierId = false;
+
+		vrVehicleEquipmentModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -329,6 +444,24 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 		vrVehicleEquipmentCacheModel.vehicleCertificateId = getVehicleCertificateId();
 
 		vrVehicleEquipmentCacheModel.certificateRecordId = getCertificateRecordId();
+
+		vrVehicleEquipmentCacheModel.dossierId = getDossierId();
+
+		vrVehicleEquipmentCacheModel.dossierIdCTN = getDossierIdCTN();
+
+		String dossierIdCTN = vrVehicleEquipmentCacheModel.dossierIdCTN;
+
+		if ((dossierIdCTN != null) && (dossierIdCTN.length() == 0)) {
+			vrVehicleEquipmentCacheModel.dossierIdCTN = null;
+		}
+
+		vrVehicleEquipmentCacheModel.dossierNo = getDossierNo();
+
+		String dossierNo = vrVehicleEquipmentCacheModel.dossierNo;
+
+		if ((dossierNo != null) && (dossierNo.length() == 0)) {
+			vrVehicleEquipmentCacheModel.dossierNo = null;
+		}
 
 		Date modifyDate = getModifyDate();
 
@@ -353,7 +486,7 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -361,6 +494,12 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 		sb.append(getVehicleCertificateId());
 		sb.append(", certificateRecordId=");
 		sb.append(getCertificateRecordId());
+		sb.append(", dossierId=");
+		sb.append(getDossierId());
+		sb.append(", dossierIdCTN=");
+		sb.append(getDossierIdCTN());
+		sb.append(", dossierNo=");
+		sb.append(getDossierNo());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -372,7 +511,7 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRVehicleEquipment");
@@ -389,6 +528,18 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 		sb.append(
 			"<column><column-name>certificateRecordId</column-name><column-value><![CDATA[");
 		sb.append(getCertificateRecordId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierId</column-name><column-value><![CDATA[");
+		sb.append(getDossierId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierIdCTN</column-name><column-value><![CDATA[");
+		sb.append(getDossierIdCTN());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierNo</column-name><column-value><![CDATA[");
+		sb.append(getDossierNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
@@ -410,8 +561,16 @@ public class VRVehicleEquipmentModelImpl extends BaseModelImpl<VRVehicleEquipmen
 		};
 	private long _id;
 	private long _vehicleCertificateId;
+	private long _originalVehicleCertificateId;
+	private boolean _setOriginalVehicleCertificateId;
 	private long _certificateRecordId;
+	private long _dossierId;
+	private long _originalDossierId;
+	private boolean _setOriginalDossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private long _columnBitmask;
 	private VRVehicleEquipment _escapedModel;
 }

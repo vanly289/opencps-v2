@@ -61,6 +61,9 @@ public class VRVehicleEquipmentWrapper implements VRVehicleEquipment,
 		attributes.put("id", getId());
 		attributes.put("vehicleCertificateId", getVehicleCertificateId());
 		attributes.put("certificateRecordId", getCertificateRecordId());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -85,6 +88,24 @@ public class VRVehicleEquipmentWrapper implements VRVehicleEquipment,
 
 		if (certificateRecordId != null) {
 			setCertificateRecordId(certificateRecordId);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -155,6 +176,26 @@ public class VRVehicleEquipmentWrapper implements VRVehicleEquipment,
 		return new VRVehicleEquipmentWrapper((VRVehicleEquipment)_vrVehicleEquipment.clone());
 	}
 
+	/**
+	* Returns the dossier ID ctn of this vr vehicle equipment.
+	*
+	* @return the dossier ID ctn of this vr vehicle equipment
+	*/
+	@Override
+	public java.lang.String getDossierIdCTN() {
+		return _vrVehicleEquipment.getDossierIdCTN();
+	}
+
+	/**
+	* Returns the dossier no of this vr vehicle equipment.
+	*
+	* @return the dossier no of this vr vehicle equipment
+	*/
+	@Override
+	public java.lang.String getDossierNo() {
+		return _vrVehicleEquipment.getDossierNo();
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _vrVehicleEquipment.toString();
@@ -193,6 +234,16 @@ public class VRVehicleEquipmentWrapper implements VRVehicleEquipment,
 	@Override
 	public long getCertificateRecordId() {
 		return _vrVehicleEquipment.getCertificateRecordId();
+	}
+
+	/**
+	* Returns the dossier ID of this vr vehicle equipment.
+	*
+	* @return the dossier ID of this vr vehicle equipment
+	*/
+	@Override
+	public long getDossierId() {
+		return _vrVehicleEquipment.getDossierId();
 	}
 
 	/**
@@ -243,6 +294,36 @@ public class VRVehicleEquipmentWrapper implements VRVehicleEquipment,
 	@Override
 	public void setCertificateRecordId(long certificateRecordId) {
 		_vrVehicleEquipment.setCertificateRecordId(certificateRecordId);
+	}
+
+	/**
+	* Sets the dossier ID of this vr vehicle equipment.
+	*
+	* @param dossierId the dossier ID of this vr vehicle equipment
+	*/
+	@Override
+	public void setDossierId(long dossierId) {
+		_vrVehicleEquipment.setDossierId(dossierId);
+	}
+
+	/**
+	* Sets the dossier ID ctn of this vr vehicle equipment.
+	*
+	* @param dossierIdCTN the dossier ID ctn of this vr vehicle equipment
+	*/
+	@Override
+	public void setDossierIdCTN(java.lang.String dossierIdCTN) {
+		_vrVehicleEquipment.setDossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Sets the dossier no of this vr vehicle equipment.
+	*
+	* @param dossierNo the dossier no of this vr vehicle equipment
+	*/
+	@Override
+	public void setDossierNo(java.lang.String dossierNo) {
+		_vrVehicleEquipment.setDossierNo(dossierNo);
 	}
 
 	@Override

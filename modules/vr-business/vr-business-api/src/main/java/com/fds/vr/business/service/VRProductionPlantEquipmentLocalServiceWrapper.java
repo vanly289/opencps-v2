@@ -193,6 +193,14 @@ public class VRProductionPlantEquipmentLocalServiceWrapper
 		return _vrProductionPlantEquipmentLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.util.List<com.fds.vr.business.model.VRProductionPlantEquipment> adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData,
+		java.lang.String productionPlantCode) {
+		return _vrProductionPlantEquipmentLocalService.adminProcessData(arrayData,
+			productionPlantCode);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

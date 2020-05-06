@@ -174,6 +174,9 @@ public interface VRProductionPlantEquipmentLocalService extends BaseLocalService
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	public List<VRProductionPlantEquipment> adminProcessData(
+		JSONArray arrayData, java.lang.String productionPlantCode);
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

@@ -160,6 +160,8 @@ public interface VRCOPProductionPlantEmployeeLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public int adminProcessData(JSONArray arrayData, long dossierId);
+
 	/**
 	* Returns the number of vrcop production plant employees.
 	*

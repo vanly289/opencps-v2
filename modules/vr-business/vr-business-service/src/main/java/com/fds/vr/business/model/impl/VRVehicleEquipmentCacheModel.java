@@ -21,6 +21,7 @@ import com.fds.vr.business.model.VRVehicleEquipment;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -65,7 +66,7 @@ public class VRVehicleEquipmentCacheModel implements CacheModel<VRVehicleEquipme
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -73,6 +74,12 @@ public class VRVehicleEquipmentCacheModel implements CacheModel<VRVehicleEquipme
 		sb.append(vehicleCertificateId);
 		sb.append(", certificateRecordId=");
 		sb.append(certificateRecordId);
+		sb.append(", dossierId=");
+		sb.append(dossierId);
+		sb.append(", dossierIdCTN=");
+		sb.append(dossierIdCTN);
+		sb.append(", dossierNo=");
+		sb.append(dossierNo);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -89,6 +96,21 @@ public class VRVehicleEquipmentCacheModel implements CacheModel<VRVehicleEquipme
 		vrVehicleEquipmentImpl.setId(id);
 		vrVehicleEquipmentImpl.setVehicleCertificateId(vehicleCertificateId);
 		vrVehicleEquipmentImpl.setCertificateRecordId(certificateRecordId);
+		vrVehicleEquipmentImpl.setDossierId(dossierId);
+
+		if (dossierIdCTN == null) {
+			vrVehicleEquipmentImpl.setDossierIdCTN(StringPool.BLANK);
+		}
+		else {
+			vrVehicleEquipmentImpl.setDossierIdCTN(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			vrVehicleEquipmentImpl.setDossierNo(StringPool.BLANK);
+		}
+		else {
+			vrVehicleEquipmentImpl.setDossierNo(dossierNo);
+		}
 
 		if (modifyDate == Long.MIN_VALUE) {
 			vrVehicleEquipmentImpl.setModifyDate(null);
@@ -116,6 +138,10 @@ public class VRVehicleEquipmentCacheModel implements CacheModel<VRVehicleEquipme
 		vehicleCertificateId = objectInput.readLong();
 
 		certificateRecordId = objectInput.readLong();
+
+		dossierId = objectInput.readLong();
+		dossierIdCTN = objectInput.readUTF();
+		dossierNo = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -128,6 +154,23 @@ public class VRVehicleEquipmentCacheModel implements CacheModel<VRVehicleEquipme
 		objectOutput.writeLong(vehicleCertificateId);
 
 		objectOutput.writeLong(certificateRecordId);
+
+		objectOutput.writeLong(dossierId);
+
+		if (dossierIdCTN == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierNo);
+		}
+
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -135,6 +178,9 @@ public class VRVehicleEquipmentCacheModel implements CacheModel<VRVehicleEquipme
 	public long id;
 	public long vehicleCertificateId;
 	public long certificateRecordId;
+	public long dossierId;
+	public String dossierIdCTN;
+	public String dossierNo;
 	public long modifyDate;
 	public long syncDate;
 }

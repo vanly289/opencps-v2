@@ -202,11 +202,12 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 	public static final long APPLICANTPROFILEID_COLUMN_BITMASK = 1L;
 	public static final long COPREPORTNO_COLUMN_BITMASK = 2L;
 	public static final long COPREPORTSTATUS_COLUMN_BITMASK = 4L;
-	public static final long MTCORE_COLUMN_BITMASK = 8L;
-	public static final long PRODUCTIONPLANTADDRESS_COLUMN_BITMASK = 16L;
-	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 32L;
-	public static final long PRODUCTIONPLANTNAME_COLUMN_BITMASK = 64L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 128L;
+	public static final long DOSSIERID_COLUMN_BITMASK = 8L;
+	public static final long MTCORE_COLUMN_BITMASK = 16L;
+	public static final long PRODUCTIONPLANTADDRESS_COLUMN_BITMASK = 32L;
+	public static final long PRODUCTIONPLANTCODE_COLUMN_BITMASK = 64L;
+	public static final long PRODUCTIONPLANTNAME_COLUMN_BITMASK = 128L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 256L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRCOPReportRepository"));
 
@@ -1472,7 +1473,19 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 
 	@Override
 	public void setDossierId(long dossierId) {
+		_columnBitmask |= DOSSIERID_COLUMN_BITMASK;
+
+		if (!_setOriginalDossierId) {
+			_setOriginalDossierId = true;
+
+			_originalDossierId = _dossierId;
+		}
+
 		_dossierId = dossierId;
+	}
+
+	public long getOriginalDossierId() {
+		return _originalDossierId;
 	}
 
 	@Override
@@ -1673,6 +1686,10 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 		vrcopReportRepositoryModelImpl._originalCopReportNo = vrcopReportRepositoryModelImpl._copReportNo;
 
 		vrcopReportRepositoryModelImpl._originalCopReportStatus = vrcopReportRepositoryModelImpl._copReportStatus;
+
+		vrcopReportRepositoryModelImpl._originalDossierId = vrcopReportRepositoryModelImpl._dossierId;
+
+		vrcopReportRepositoryModelImpl._setOriginalDossierId = false;
 
 		vrcopReportRepositoryModelImpl._columnBitmask = 0;
 	}
@@ -2525,6 +2542,8 @@ public class VRCOPReportRepositoryModelImpl extends BaseModelImpl<VRCOPReportRep
 	private Date _copReportPreviousDate;
 	private String _expiredStatus;
 	private long _dossierId;
+	private long _originalDossierId;
+	private boolean _setOriginalDossierId;
 	private String _dossierIdCTN;
 	private String _dossierNo;
 	private long _columnBitmask;

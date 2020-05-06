@@ -373,6 +373,9 @@
 		<column name="specificationDataCollectionID" type="String" db-name="specificationDataCollectionID"/>
 		<column name="specificationResult" type="String" db-name="specificationResult"/>
 		<column name="deliverableCode" type="String" db-name="deliverableCode"/>
+		<column name="dossierId" type="long" db-name="dossierid"/>
+		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
+		<column name="dossierNo" type="String" db-name="dossierno"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
@@ -393,7 +396,9 @@
 		<finder return-type="Collection" name="DeliverableCode">
 			<finder-column name="deliverableCode" />
 		</finder>
-		
+		<finder return-type="Collection" name="dossierId">
+			<finder-column name="dossierId" />
+		</finder>
 	</entity>
 
 	<entity name="VRInspectionStandard" local-service="true" table="vr_inspectionstandard"
@@ -409,6 +414,9 @@
 		<column name="circulardate" type="Date" db-name="circulardate"/>
 		<column name="markupstatus" type="long" db-name="markupstatus"/>
 		<column name="module" type="String" db-name="module"/>
+		<column name="dossierId" type="long" db-name="dossierid"/>
+		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
+		<column name="dossierNo" type="String" db-name="dossierno"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
@@ -418,12 +426,18 @@
             <order-column name="sequenceNo" order-by="asc"></order-column>
         </order>
         
+        <finder return-type="Collection" name="dossierId">
+			<finder-column name="dossierId" />
+		</finder>
         <finder return-type="Collection" name="DeliverableCode">
 			<finder-column name="deliverableCode" />
 		</finder>
 		<finder return-type="Collection" name="vehicleCertificateId">
 			<finder-column name="vehicleCertificateId" />
 			<finder-column name="markupstatus" />
+		</finder>
+		<finder return-type="Collection" name="F_vehicleCertificateId">
+			<finder-column name="vehicleCertificateId" />
 		</finder>
 	</entity>
 
@@ -459,8 +473,18 @@
 		<!-- Audit fields -->
 		<column name="vehicleCertificateId" type="long" db-name="vehicleCertificateId"/>
 		<column name="certificateRecordId" type="long" db-name="certificateRecordId"/>
+		<column name="dossierId" type="long" db-name="dossierid"/>
+		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
+		<column name="dossierNo" type="String" db-name="dossierno"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		
+		<finder return-type="Collection" name="F_vehicleCertificateId">
+			<finder-column name="vehicleCertificateId" />
+		</finder>
+		<finder return-type="Collection" name="dossierId">
+			<finder-column name="dossierId" />
+		</finder>
 	</entity>
 
 	<entity name="VRCFGStandard" local-service="true" table="vr_cfg_standard" remote-service="false">
@@ -922,6 +946,7 @@
 		<column name="registrationFormId" type="long" db-name="registrationFormId"/>
 		<column name="applicantProfileId" type="long" db-name="applicantProfileId"/>
 		<column name="supplierId" type="long" db-name="supplierId"/>
+		<column name="applicantCode" type="String" db-name="applicantCode"/>
 		<!-- <column name="latestCOPReportDate" type="Date" db-name="latestCOPReportDate"/>
 		<column name="latestCOPReportResult" type="String" db-name="latestCOPReportResult"/>
 		<column name="nextCOPReportDate" type="Date" db-name="nextCOPReportDate"/> -->
@@ -941,6 +966,10 @@
         <finder return-type="Collection" name="mappingStatus">
 			<finder-column name="mtCore"></finder-column>
 			<finder-column name="mappingStatus"></finder-column>
+		</finder>
+		<finder return-type="Collection" name="applicantCode">
+			<finder-column name="mtCore"></finder-column>
+			<finder-column name="applicantCode"></finder-column>
 		</finder>
 		<finder return-type="Collection" name="productionPlantCode">
 			<finder-column name="mtCore"></finder-column>
@@ -1109,6 +1138,9 @@
             <finder-column name="applicantProfileId"></finder-column>
             <finder-column name="productionPlantCode"></finder-column>
         </finder>
+        <finder return-type="Collection" name="copDossierId">
+			<finder-column name="dossierId"></finder-column>
+		</finder>
 	</entity>
 
 	<entity name="VRCOPProductionPlantEmployee" local-service="true" table="vr_copproductionplantemployee"
@@ -1142,6 +1174,9 @@
         <finder return-type="Collection" name="copReportNo">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="copReportNo"></finder-column>
+		</finder>
+        <finder return-type="Collection" name="copDossierId">
+			<finder-column name="dossierId"></finder-column>
 		</finder>
 	</entity>
 
@@ -1205,6 +1240,9 @@
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="copReportNo"></finder-column>
 		</finder>
+		<finder return-type="Collection" name="copDossierId">
+			<finder-column name="dossierId"></finder-column>
+		</finder>
 	</entity>
 
 	<entity name="VRCOPProdEquipment" local-service="true" table="vr_copproductionplantprodequipment"
@@ -1246,6 +1284,9 @@
         <finder return-type="Collection" name="copReportNo">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="copReportNo"></finder-column>
+		</finder>
+		<finder return-type="Collection" name="copDossierId">
+			<finder-column name="dossierId"></finder-column>
 		</finder>
 	</entity>
 
@@ -1290,6 +1331,9 @@
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="copReportNo"></finder-column>
 		</finder>
+		<finder return-type="Collection" name="copDossierId">
+			<finder-column name="dossierId"></finder-column>
+		</finder>
 	</entity>
 
 
@@ -1308,6 +1352,10 @@
 		<column name="remarks" type="String" db-name="Remarks"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		
+		<column name="dossierId" type="long"/>
+		<column name="dossierIdCTN" type="String"/>
+		<column name="dossierNo" type="String"/>
 		<!-- Filter -->
         <order by="desc">
             <order-column name="modifyDate" order-by="desc"></order-column>
@@ -1319,6 +1367,9 @@
         <finder return-type="Collection" name="copReportNo">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="copReportNo"></finder-column>
+		</finder>
+		<finder return-type="Collection" name="copDossierId">
+			<finder-column name="dossierId"></finder-column>
 		</finder>
 	</entity>
 
@@ -1487,7 +1538,9 @@
 			<finder-column name="productionPlantCode"></finder-column>			
 			<finder-column name="productClassificationCode"></finder-column>
 		</finder>
-		
+		<finder return-type="Collection" name="productionPlantCode">
+			<finder-column name="productionPlantCode"></finder-column>			
+		</finder>
 	</entity>
 
 	
@@ -2343,7 +2396,9 @@
 		<finder return-type="Collection" name="Inspectorcode">
 			<finder-column name="inspectorcode" />
 		</finder>
-		
+		<finder return-type="VRRPDossierStatistics" name="F_dossierIdCTN">
+			<finder-column name="dossierIdCTN" />
+		</finder>
 	</entity>
 	
 	<entity name="VRIssueEquipmentCertificate" local-service="true" table="vr_issue_equipmentcertificate"
@@ -7608,14 +7663,20 @@
 		<column name="corporationCode" type="String" db-name="corporationCode"/>
 		<column name="corporationName" type="String" db-name="corporationName"/>
 		<column name="corporationAddress" type="String" db-name="corporationAddress"/>
+		<column name="productionPlantCode" type="String" db-name="productionPlantCode"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		<!-- Order -->
-
-		<!-- Filter -->
-        <order by="desc">
+		<order by="desc">
             <order-column name="modifyDate" order-by="desc" />
         </order>
+		<!-- Filter -->
+        <finder return-type="Collection" name="corporationCode">
+        	<finder-column name="corporationCode"></finder-column>
+        </finder>
+        <finder return-type="Collection" name="productionPlantCode">
+        	<finder-column name="productionPlantCode"></finder-column>
+        </finder>
 	</entity>
 	
 	<entity local-service="true" name="VRProductionClassification" remote-service="false"
@@ -7673,6 +7734,17 @@
             <finder-column name="actionCode"></finder-column>
             <finder-column name="processNo"></finder-column>
         </finder>
+    </entity>
+    <entity name="VRES" local-service="true" remote-service="false" table="vr_es">
+        <column name="id" type="long" primary="true" db-name="id"></column>
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+        <column name="type" type="String" db-name="type"></column>
+        <column name="data" type="String" db-name="data"></column>
     </entity>
 	
 

@@ -871,6 +871,54 @@ public interface VRRPDossierStatisticsPersistence extends BasePersistence<VRRPDo
 	public int countByInspectorcode(java.lang.String inspectorcode);
 
 	/**
+	* Returns the vrrp dossier statistics where dossierIdCTN = &#63; or throws a {@link NoSuchVRRPDossierStatisticsException} if it could not be found.
+	*
+	* @param dossierIdCTN the dossier ID ctn
+	* @return the matching vrrp dossier statistics
+	* @throws NoSuchVRRPDossierStatisticsException if a matching vrrp dossier statistics could not be found
+	*/
+	public VRRPDossierStatistics findByF_dossierIdCTN(
+		java.lang.String dossierIdCTN)
+		throws NoSuchVRRPDossierStatisticsException;
+
+	/**
+	* Returns the vrrp dossier statistics where dossierIdCTN = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param dossierIdCTN the dossier ID ctn
+	* @return the matching vrrp dossier statistics, or <code>null</code> if a matching vrrp dossier statistics could not be found
+	*/
+	public VRRPDossierStatistics fetchByF_dossierIdCTN(
+		java.lang.String dossierIdCTN);
+
+	/**
+	* Returns the vrrp dossier statistics where dossierIdCTN = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param dossierIdCTN the dossier ID ctn
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vrrp dossier statistics, or <code>null</code> if a matching vrrp dossier statistics could not be found
+	*/
+	public VRRPDossierStatistics fetchByF_dossierIdCTN(
+		java.lang.String dossierIdCTN, boolean retrieveFromCache);
+
+	/**
+	* Removes the vrrp dossier statistics where dossierIdCTN = &#63; from the database.
+	*
+	* @param dossierIdCTN the dossier ID ctn
+	* @return the vrrp dossier statistics that was removed
+	*/
+	public VRRPDossierStatistics removeByF_dossierIdCTN(
+		java.lang.String dossierIdCTN)
+		throws NoSuchVRRPDossierStatisticsException;
+
+	/**
+	* Returns the number of vrrp dossier statisticses where dossierIdCTN = &#63;.
+	*
+	* @param dossierIdCTN the dossier ID ctn
+	* @return the number of matching vrrp dossier statisticses
+	*/
+	public int countByF_dossierIdCTN(java.lang.String dossierIdCTN);
+
+	/**
 	* Caches the vrrp dossier statistics in the entity cache if it is enabled.
 	*
 	* @param vrrpDossierStatistics the vrrp dossier statistics

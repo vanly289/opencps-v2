@@ -1292,6 +1292,608 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 	private static final String _FINDER_COLUMN_MAPPINGSTATUS_MAPPINGSTATUS_1 = "vrProductionPlant.mappingStatus IS NULL";
 	private static final String _FINDER_COLUMN_MAPPINGSTATUS_MAPPINGSTATUS_2 = "vrProductionPlant.mappingStatus = ?";
 	private static final String _FINDER_COLUMN_MAPPINGSTATUS_MAPPINGSTATUS_3 = "(vrProductionPlant.mappingStatus IS NULL OR vrProductionPlant.mappingStatus = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_APPLICANTCODE =
+		new FinderPath(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
+			VRProductionPlantModelImpl.FINDER_CACHE_ENABLED,
+			VRProductionPlantImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByapplicantCode",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICANTCODE =
+		new FinderPath(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
+			VRProductionPlantModelImpl.FINDER_CACHE_ENABLED,
+			VRProductionPlantImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByapplicantCode",
+			new String[] { Long.class.getName(), String.class.getName() },
+			VRProductionPlantModelImpl.MTCORE_COLUMN_BITMASK |
+			VRProductionPlantModelImpl.APPLICANTCODE_COLUMN_BITMASK |
+			VRProductionPlantModelImpl.MODIFYDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_APPLICANTCODE = new FinderPath(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
+			VRProductionPlantModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByapplicantCode",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the vr production plants where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @return the matching vr production plants
+	 */
+	@Override
+	public List<VRProductionPlant> findByapplicantCode(long mtCore,
+		String applicantCode) {
+		return findByapplicantCode(mtCore, applicantCode, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the vr production plants where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @param start the lower bound of the range of vr production plants
+	 * @param end the upper bound of the range of vr production plants (not inclusive)
+	 * @return the range of matching vr production plants
+	 */
+	@Override
+	public List<VRProductionPlant> findByapplicantCode(long mtCore,
+		String applicantCode, int start, int end) {
+		return findByapplicantCode(mtCore, applicantCode, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the vr production plants where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @param start the lower bound of the range of vr production plants
+	 * @param end the upper bound of the range of vr production plants (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching vr production plants
+	 */
+	@Override
+	public List<VRProductionPlant> findByapplicantCode(long mtCore,
+		String applicantCode, int start, int end,
+		OrderByComparator<VRProductionPlant> orderByComparator) {
+		return findByapplicantCode(mtCore, applicantCode, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the vr production plants where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRProductionPlantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @param start the lower bound of the range of vr production plants
+	 * @param end the upper bound of the range of vr production plants (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching vr production plants
+	 */
+	@Override
+	public List<VRProductionPlant> findByapplicantCode(long mtCore,
+		String applicantCode, int start, int end,
+		OrderByComparator<VRProductionPlant> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICANTCODE;
+			finderArgs = new Object[] { mtCore, applicantCode };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_APPLICANTCODE;
+			finderArgs = new Object[] {
+					mtCore, applicantCode,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<VRProductionPlant> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<VRProductionPlant>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (VRProductionPlant vrProductionPlant : list) {
+					if ((mtCore != vrProductionPlant.getMtCore()) ||
+							!Objects.equals(applicantCode,
+								vrProductionPlant.getApplicantCode())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_VRPRODUCTIONPLANT_WHERE);
+
+			query.append(_FINDER_COLUMN_APPLICANTCODE_MTCORE_2);
+
+			boolean bindApplicantCode = false;
+
+			if (applicantCode == null) {
+				query.append(_FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_1);
+			}
+			else if (applicantCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_3);
+			}
+			else {
+				bindApplicantCode = true;
+
+				query.append(_FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(VRProductionPlantModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(mtCore);
+
+				if (bindApplicantCode) {
+					qPos.add(applicantCode);
+				}
+
+				if (!pagination) {
+					list = (List<VRProductionPlant>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<VRProductionPlant>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first vr production plant in the ordered set where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vr production plant
+	 * @throws NoSuchVRProductionPlantException if a matching vr production plant could not be found
+	 */
+	@Override
+	public VRProductionPlant findByapplicantCode_First(long mtCore,
+		String applicantCode,
+		OrderByComparator<VRProductionPlant> orderByComparator)
+		throws NoSuchVRProductionPlantException {
+		VRProductionPlant vrProductionPlant = fetchByapplicantCode_First(mtCore,
+				applicantCode, orderByComparator);
+
+		if (vrProductionPlant != null) {
+			return vrProductionPlant;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("mtCore=");
+		msg.append(mtCore);
+
+		msg.append(", applicantCode=");
+		msg.append(applicantCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRProductionPlantException(msg.toString());
+	}
+
+	/**
+	 * Returns the first vr production plant in the ordered set where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	 */
+	@Override
+	public VRProductionPlant fetchByapplicantCode_First(long mtCore,
+		String applicantCode,
+		OrderByComparator<VRProductionPlant> orderByComparator) {
+		List<VRProductionPlant> list = findByapplicantCode(mtCore,
+				applicantCode, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last vr production plant in the ordered set where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vr production plant
+	 * @throws NoSuchVRProductionPlantException if a matching vr production plant could not be found
+	 */
+	@Override
+	public VRProductionPlant findByapplicantCode_Last(long mtCore,
+		String applicantCode,
+		OrderByComparator<VRProductionPlant> orderByComparator)
+		throws NoSuchVRProductionPlantException {
+		VRProductionPlant vrProductionPlant = fetchByapplicantCode_Last(mtCore,
+				applicantCode, orderByComparator);
+
+		if (vrProductionPlant != null) {
+			return vrProductionPlant;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("mtCore=");
+		msg.append(mtCore);
+
+		msg.append(", applicantCode=");
+		msg.append(applicantCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRProductionPlantException(msg.toString());
+	}
+
+	/**
+	 * Returns the last vr production plant in the ordered set where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	 */
+	@Override
+	public VRProductionPlant fetchByapplicantCode_Last(long mtCore,
+		String applicantCode,
+		OrderByComparator<VRProductionPlant> orderByComparator) {
+		int count = countByapplicantCode(mtCore, applicantCode);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<VRProductionPlant> list = findByapplicantCode(mtCore,
+				applicantCode, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the vr production plants before and after the current vr production plant in the ordered set where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * @param id the primary key of the current vr production plant
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next vr production plant
+	 * @throws NoSuchVRProductionPlantException if a vr production plant with the primary key could not be found
+	 */
+	@Override
+	public VRProductionPlant[] findByapplicantCode_PrevAndNext(long id,
+		long mtCore, String applicantCode,
+		OrderByComparator<VRProductionPlant> orderByComparator)
+		throws NoSuchVRProductionPlantException {
+		VRProductionPlant vrProductionPlant = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			VRProductionPlant[] array = new VRProductionPlantImpl[3];
+
+			array[0] = getByapplicantCode_PrevAndNext(session,
+					vrProductionPlant, mtCore, applicantCode,
+					orderByComparator, true);
+
+			array[1] = vrProductionPlant;
+
+			array[2] = getByapplicantCode_PrevAndNext(session,
+					vrProductionPlant, mtCore, applicantCode,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected VRProductionPlant getByapplicantCode_PrevAndNext(
+		Session session, VRProductionPlant vrProductionPlant, long mtCore,
+		String applicantCode,
+		OrderByComparator<VRProductionPlant> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_VRPRODUCTIONPLANT_WHERE);
+
+		query.append(_FINDER_COLUMN_APPLICANTCODE_MTCORE_2);
+
+		boolean bindApplicantCode = false;
+
+		if (applicantCode == null) {
+			query.append(_FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_1);
+		}
+		else if (applicantCode.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_3);
+		}
+		else {
+			bindApplicantCode = true;
+
+			query.append(_FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(VRProductionPlantModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(mtCore);
+
+		if (bindApplicantCode) {
+			qPos.add(applicantCode);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(vrProductionPlant);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<VRProductionPlant> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the vr production plants where mtCore = &#63; and applicantCode = &#63; from the database.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 */
+	@Override
+	public void removeByapplicantCode(long mtCore, String applicantCode) {
+		for (VRProductionPlant vrProductionPlant : findByapplicantCode(mtCore,
+				applicantCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(vrProductionPlant);
+		}
+	}
+
+	/**
+	 * Returns the number of vr production plants where mtCore = &#63; and applicantCode = &#63;.
+	 *
+	 * @param mtCore the mt core
+	 * @param applicantCode the applicant code
+	 * @return the number of matching vr production plants
+	 */
+	@Override
+	public int countByapplicantCode(long mtCore, String applicantCode) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_APPLICANTCODE;
+
+		Object[] finderArgs = new Object[] { mtCore, applicantCode };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_VRPRODUCTIONPLANT_WHERE);
+
+			query.append(_FINDER_COLUMN_APPLICANTCODE_MTCORE_2);
+
+			boolean bindApplicantCode = false;
+
+			if (applicantCode == null) {
+				query.append(_FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_1);
+			}
+			else if (applicantCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_3);
+			}
+			else {
+				bindApplicantCode = true;
+
+				query.append(_FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(mtCore);
+
+				if (bindApplicantCode) {
+					qPos.add(applicantCode);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_APPLICANTCODE_MTCORE_2 = "vrProductionPlant.mtCore = ? AND ";
+	private static final String _FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_1 = "vrProductionPlant.applicantCode IS NULL";
+	private static final String _FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_2 = "vrProductionPlant.applicantCode = ?";
+	private static final String _FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_3 = "(vrProductionPlant.applicantCode IS NULL OR vrProductionPlant.applicantCode = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PRODUCTIONPLANTCODE =
 		new FinderPath(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
 			VRProductionPlantModelImpl.FINDER_CACHE_ENABLED,
@@ -9479,6 +10081,29 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 			}
 
 			if ((vrProductionPlantModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICANTCODE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						vrProductionPlantModelImpl.getOriginalMtCore(),
+						vrProductionPlantModelImpl.getOriginalApplicantCode()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_APPLICANTCODE,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICANTCODE,
+					args);
+
+				args = new Object[] {
+						vrProductionPlantModelImpl.getMtCore(),
+						vrProductionPlantModelImpl.getApplicantCode()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_APPLICANTCODE,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPLICANTCODE,
+					args);
+			}
+
+			if ((vrProductionPlantModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTIONPLANTCODE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						vrProductionPlantModelImpl.getOriginalMtCore(),
@@ -9815,6 +10440,7 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 		vrProductionPlantImpl.setRegistrationFormId(vrProductionPlant.getRegistrationFormId());
 		vrProductionPlantImpl.setApplicantProfileId(vrProductionPlant.getApplicantProfileId());
 		vrProductionPlantImpl.setSupplierId(vrProductionPlant.getSupplierId());
+		vrProductionPlantImpl.setApplicantCode(vrProductionPlant.getApplicantCode());
 		vrProductionPlantImpl.setModifyDate(vrProductionPlant.getModifyDate());
 		vrProductionPlantImpl.setSyncDate(vrProductionPlant.getSyncDate());
 

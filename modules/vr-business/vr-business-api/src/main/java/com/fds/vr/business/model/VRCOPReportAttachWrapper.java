@@ -68,6 +68,9 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 		attributes.put("remarks", getRemarks());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 
 		return attributes;
 	}
@@ -133,6 +136,24 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 	}
 
@@ -222,6 +243,26 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 	}
 
 	/**
+	* Returns the dossier ID ctn of this vrcop report attach.
+	*
+	* @return the dossier ID ctn of this vrcop report attach
+	*/
+	@Override
+	public java.lang.String getDossierIdCTN() {
+		return _vrcopReportAttach.getDossierIdCTN();
+	}
+
+	/**
+	* Returns the dossier no of this vrcop report attach.
+	*
+	* @return the dossier no of this vrcop report attach
+	*/
+	@Override
+	public java.lang.String getDossierNo() {
+		return _vrcopReportAttach.getDossierNo();
+	}
+
+	/**
 	* Returns the remarks of this vrcop report attach.
 	*
 	* @return the remarks of this vrcop report attach
@@ -269,6 +310,16 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 	@Override
 	public long getCopReportRepositoryID() {
 		return _vrcopReportAttach.getCopReportRepositoryID();
+	}
+
+	/**
+	* Returns the dossier ID of this vrcop report attach.
+	*
+	* @return the dossier ID of this vrcop report attach
+	*/
+	@Override
+	public long getDossierId() {
+		return _vrcopReportAttach.getDossierId();
 	}
 
 	/**
@@ -359,6 +410,36 @@ public class VRCOPReportAttachWrapper implements VRCOPReportAttach,
 	@Override
 	public void setDocNo(java.lang.String docNo) {
 		_vrcopReportAttach.setDocNo(docNo);
+	}
+
+	/**
+	* Sets the dossier ID of this vrcop report attach.
+	*
+	* @param dossierId the dossier ID of this vrcop report attach
+	*/
+	@Override
+	public void setDossierId(long dossierId) {
+		_vrcopReportAttach.setDossierId(dossierId);
+	}
+
+	/**
+	* Sets the dossier ID ctn of this vrcop report attach.
+	*
+	* @param dossierIdCTN the dossier ID ctn of this vrcop report attach
+	*/
+	@Override
+	public void setDossierIdCTN(java.lang.String dossierIdCTN) {
+		_vrcopReportAttach.setDossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Sets the dossier no of this vrcop report attach.
+	*
+	* @param dossierNo the dossier no of this vrcop report attach
+	*/
+	@Override
+	public void setDossierNo(java.lang.String dossierNo) {
+		_vrcopReportAttach.setDossierNo(dossierNo);
 	}
 
 	@Override

@@ -69,6 +69,7 @@ public class VRProductionPlantSoap implements Serializable {
 		soapModel.setRegistrationFormId(model.getRegistrationFormId());
 		soapModel.setApplicantProfileId(model.getApplicantProfileId());
 		soapModel.setSupplierId(model.getSupplierId());
+		soapModel.setApplicantCode(model.getApplicantCode());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 
@@ -425,6 +426,14 @@ public class VRProductionPlantSoap implements Serializable {
 		_supplierId = supplierId;
 	}
 
+	public String getApplicantCode() {
+		return _applicantCode;
+	}
+
+	public void setApplicantCode(String applicantCode) {
+		_applicantCode = applicantCode;
+	}
+
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -477,6 +486,7 @@ public class VRProductionPlantSoap implements Serializable {
 	private long _registrationFormId;
 	private long _applicantProfileId;
 	private long _supplierId;
+	private String _applicantCode;
 	private Date _modifyDate;
 	private Date _syncDate;
 }

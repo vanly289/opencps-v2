@@ -47,6 +47,14 @@ public class VRApplicantProfileLocalServiceWrapper
 	}
 
 	@Override
+	public com.fds.vr.business.model.VRApplicantProfile adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData, long mtCore,
+		java.lang.String applicantCode) {
+		return _vrApplicantProfileLocalService.adminProcessData(objectData,
+			mtCore, applicantCode);
+	}
+
+	@Override
 	public com.fds.vr.business.model.VRApplicantProfile createVRApplicantProfile(
 		com.fds.vr.business.model.VRApplicantProfile object)
 		throws com.liferay.portal.kernel.exception.SystemException {

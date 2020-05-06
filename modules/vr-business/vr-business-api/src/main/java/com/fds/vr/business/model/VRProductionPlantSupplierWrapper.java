@@ -65,6 +65,7 @@ public class VRProductionPlantSupplierWrapper
 		attributes.put("corporationCode", getCorporationCode());
 		attributes.put("corporationName", getCorporationName());
 		attributes.put("corporationAddress", getCorporationAddress());
+		attributes.put("productionPlantCode", getProductionPlantCode());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -101,6 +102,13 @@ public class VRProductionPlantSupplierWrapper
 
 		if (corporationAddress != null) {
 			setCorporationAddress(corporationAddress);
+		}
+
+		String productionPlantCode = (String)attributes.get(
+				"productionPlantCode");
+
+		if (productionPlantCode != null) {
+			setProductionPlantCode(productionPlantCode);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -199,6 +207,16 @@ public class VRProductionPlantSupplierWrapper
 	@Override
 	public java.lang.String getCorporationName() {
 		return _vrProductionPlantSupplier.getCorporationName();
+	}
+
+	/**
+	* Returns the production plant code of this vr production plant supplier.
+	*
+	* @return the production plant code of this vr production plant supplier
+	*/
+	@Override
+	public java.lang.String getProductionPlantCode() {
+		return _vrProductionPlantSupplier.getProductionPlantCode();
 	}
 
 	@Override
@@ -365,6 +383,16 @@ public class VRProductionPlantSupplierWrapper
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_vrProductionPlantSupplier.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the production plant code of this vr production plant supplier.
+	*
+	* @param productionPlantCode the production plant code of this vr production plant supplier
+	*/
+	@Override
+	public void setProductionPlantCode(java.lang.String productionPlantCode) {
+		_vrProductionPlantSupplier.setProductionPlantCode(productionPlantCode);
 	}
 
 	/**

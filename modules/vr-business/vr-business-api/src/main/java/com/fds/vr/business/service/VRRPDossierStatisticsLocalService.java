@@ -104,6 +104,9 @@ public interface VRRPDossierStatisticsLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VRRPDossierStatistics fetchVRRPDossierStatistics(long id);
 
+	public VRRPDossierStatistics findBydossierIdCTN(
+		java.lang.String dossierIdCTN);
+
 	/**
 	* Returns the vrrp dossier statistics with the primary key.
 	*

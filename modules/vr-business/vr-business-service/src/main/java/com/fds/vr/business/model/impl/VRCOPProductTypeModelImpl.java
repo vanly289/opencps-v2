@@ -127,8 +127,9 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 			true);
 	public static final long COPREPORTNO_COLUMN_BITMASK = 1L;
 	public static final long COPREPORTREPOSITORYID_COLUMN_BITMASK = 2L;
-	public static final long MTCORE_COLUMN_BITMASK = 4L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 8L;
+	public static final long DOSSIERID_COLUMN_BITMASK = 4L;
+	public static final long MTCORE_COLUMN_BITMASK = 8L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRCOPProductType"));
 
@@ -594,7 +595,19 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 
 	@Override
 	public void setDossierId(long dossierId) {
+		_columnBitmask |= DOSSIERID_COLUMN_BITMASK;
+
+		if (!_setOriginalDossierId) {
+			_setOriginalDossierId = true;
+
+			_originalDossierId = _dossierId;
+		}
+
 		_dossierId = dossierId;
+	}
+
+	public long getOriginalDossierId() {
+		return _originalDossierId;
 	}
 
 	@Override
@@ -750,6 +763,10 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 		vrcopProductTypeModelImpl._setOriginalCopReportRepositoryID = false;
 
 		vrcopProductTypeModelImpl._originalCopReportNo = vrcopProductTypeModelImpl._copReportNo;
+
+		vrcopProductTypeModelImpl._originalDossierId = vrcopProductTypeModelImpl._dossierId;
+
+		vrcopProductTypeModelImpl._setOriginalDossierId = false;
 
 		vrcopProductTypeModelImpl._columnBitmask = 0;
 	}
@@ -1066,6 +1083,8 @@ public class VRCOPProductTypeModelImpl extends BaseModelImpl<VRCOPProductType>
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _dossierId;
+	private long _originalDossierId;
+	private boolean _setOriginalDossierId;
 	private String _dossierIdCTN;
 	private String _dossierNo;
 	private long _columnBitmask;

@@ -47,6 +47,14 @@ public class VRProductionPlantLocalServiceWrapper
 	}
 
 	@Override
+	public com.fds.vr.business.model.VRProductionPlant adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData, long mtCore,
+		long applicantProfileId, java.lang.String productionPlantCode) {
+		return _vrProductionPlantLocalService.adminProcessData(objectData,
+			mtCore, applicantProfileId, productionPlantCode);
+	}
+
+	@Override
 	public com.fds.vr.business.model.VRProductionPlant createVRProductionPlant(
 		com.fds.vr.business.model.VRProductionPlant object)
 		throws com.liferay.portal.kernel.exception.SystemException {

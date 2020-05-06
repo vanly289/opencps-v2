@@ -14,6 +14,7 @@
 
 package com.fds.vr.business.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import com.fds.vr.business.model.VRProductionPlantSupplier;
 import com.fds.vr.business.service.base.VRProductionPlantSupplierLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -82,6 +84,45 @@ public class VRProductionPlantSupplierLocalServiceImpl
 	public long counData(String sql) throws SystemException {
 
 		return vrProductionPlantSupplierFinder.countData(sql);
+	}
+	
+	public List<VRProductionPlantSupplier> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+
+		List<VRProductionPlantSupplier> vrProductionPlantSuppliers = new ArrayList<VRProductionPlantSupplier>();
+		
+		try {
+			vrProductionPlantSupplierPersistence.removeByproductionPlantCode(productionPlantCode);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRProductionPlantSupplier object = null;
+
+				long id = counterLocalService.increment(VRProductionPlantSupplier.class.getName());
+
+				object = vrProductionPlantSupplierPersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+				if (!"".equals(objectData.getString("syncDate"))) {
+					object.setSyncDate(new Date(objectData.getString("syncDate")));
+				}
+				object.setCorporationCode(objectData.getString("corporationCode"));
+				object.setCorporationName(objectData.getString("corporationName"));
+				object.setCorporationAddress(objectData.getString("corporationAddress"));
+				object.setProductionPlantCode(productionPlantCode);
+				
+				object = vrProductionPlantSupplierPersistence.update(object);
+				
+				vrProductionPlantSuppliers.add(object);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		
+		return vrProductionPlantSuppliers;
 	}
 	
 }

@@ -66,7 +66,7 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -88,6 +88,12 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", dossierId=");
+		sb.append(dossierId);
+		sb.append(", dossierIdCTN=");
+		sb.append(dossierIdCTN);
+		sb.append(", dossierNo=");
+		sb.append(dossierNo);
 		sb.append("}");
 
 		return sb.toString();
@@ -145,6 +151,22 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 			vrcopReportAttachImpl.setSyncDate(new Date(syncDate));
 		}
 
+		vrcopReportAttachImpl.setDossierId(dossierId);
+
+		if (dossierIdCTN == null) {
+			vrcopReportAttachImpl.setDossierIdCTN(StringPool.BLANK);
+		}
+		else {
+			vrcopReportAttachImpl.setDossierIdCTN(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			vrcopReportAttachImpl.setDossierNo(StringPool.BLANK);
+		}
+		else {
+			vrcopReportAttachImpl.setDossierNo(dossierNo);
+		}
+
 		vrcopReportAttachImpl.resetOriginalValues();
 
 		return vrcopReportAttachImpl;
@@ -165,6 +187,10 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 		remarks = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+
+		dossierId = objectInput.readLong();
+		dossierIdCTN = objectInput.readUTF();
+		dossierNo = objectInput.readUTF();
 	}
 
 	@Override
@@ -208,6 +234,22 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		objectOutput.writeLong(dossierId);
+
+		if (dossierIdCTN == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierIdCTN);
+		}
+
+		if (dossierNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(dossierNo);
+		}
 	}
 
 	public long id;
@@ -220,4 +262,7 @@ public class VRCOPReportAttachCacheModel implements CacheModel<VRCOPReportAttach
 	public String remarks;
 	public long modifyDate;
 	public long syncDate;
+	public long dossierId;
+	public String dossierIdCTN;
+	public String dossierNo;
 }

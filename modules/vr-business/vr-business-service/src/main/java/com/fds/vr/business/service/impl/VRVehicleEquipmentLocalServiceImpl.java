@@ -23,10 +23,11 @@ import java.util.List;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.fds.vr.business.model.VRVehicleEquipment;
 import com.fds.vr.business.service.base.VRVehicleEquipmentLocalServiceBaseImpl;
 
 /**
@@ -63,4 +64,39 @@ public class VRVehicleEquipmentLocalServiceImpl
 
 		return vrVehicleEquipmentFinder.countData(sql);
 	}
+	
+	public List<VRVehicleEquipment> adminProcessData(JSONArray arrayData, long dossierId, long vehicleTypeCertificateId) {
+		List<VRVehicleEquipment> vrVehicleEquipments = new ArrayList<VRVehicleEquipment>();
+		try {
+			vrVehicleEquipmentPersistence.removeBydossierId(dossierId);
+			
+			Date now = new Date();
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRVehicleEquipment object = null;
+				
+				long id = counterLocalService.increment(VRVehicleEquipment.class.getName());
+				object = vrVehicleEquipmentPersistence.create(id);
+				
+				object.setSyncDate(now);
+				object.setVehicleCertificateId(vehicleTypeCertificateId);
+				object.setCertificateRecordId(objectData.getLong("certificateRecordId"));
+				object.setDossierId(objectData.getLong("dossierId"));
+				object.setDossierNo(objectData.getString("dossierNo"));
+				object.setDossierIdCTN(objectData.getString("dossierIdCTN"));
+				object.setModifyDate(now);
+				
+				object = vrVehicleEquipmentPersistence.update(object);
+				
+				vrVehicleEquipments.add(object);
+			}
+		}catch (Exception e) {
+			_log.error(e);
+		}
+		return vrVehicleEquipments;
+	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(VRVehicleEquipmentLocalServiceImpl.class);
 }

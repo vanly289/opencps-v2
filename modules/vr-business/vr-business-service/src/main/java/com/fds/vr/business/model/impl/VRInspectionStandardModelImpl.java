@@ -70,6 +70,9 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 			{ "circulardate", Types.TIMESTAMP },
 			{ "markupstatus", Types.BIGINT },
 			{ "module", Types.VARCHAR },
+			{ "dossierid", Types.BIGINT },
+			{ "dossierIdCTN", Types.VARCHAR },
+			{ "dossierno", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -84,11 +87,14 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 		TABLE_COLUMNS_MAP.put("circulardate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("markupstatus", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("module", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierid", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("dossierIdCTN", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dossierno", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_inspectionstandard (id LONG not null primary key,vehicleCertificateId LONG,deliverableCode VARCHAR(75) null,sequenceNo LONG,circularno VARCHAR(75) null,circulardate DATE null,markupstatus LONG,module VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_inspectionstandard (id LONG not null primary key,vehicleCertificateId LONG,deliverableCode VARCHAR(75) null,sequenceNo LONG,circularno VARCHAR(75) null,circulardate DATE null,markupstatus LONG,module VARCHAR(75) null,dossierid LONG,dossierIdCTN VARCHAR(75) null,dossierno VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_inspectionstandard";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrInspectionStandard.vehicleCertificateId DESC, vrInspectionStandard.sequenceNo ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_inspectionstandard.vehicleCertificateId DESC, vr_inspectionstandard.sequenceNo ASC";
@@ -105,9 +111,10 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 				"value.object.column.bitmask.enabled.com.fds.vr.business.model.VRInspectionStandard"),
 			true);
 	public static final long DELIVERABLECODE_COLUMN_BITMASK = 1L;
-	public static final long MARKUPSTATUS_COLUMN_BITMASK = 2L;
-	public static final long VEHICLECERTIFICATEID_COLUMN_BITMASK = 4L;
-	public static final long SEQUENCENO_COLUMN_BITMASK = 8L;
+	public static final long DOSSIERID_COLUMN_BITMASK = 2L;
+	public static final long MARKUPSTATUS_COLUMN_BITMASK = 4L;
+	public static final long VEHICLECERTIFICATEID_COLUMN_BITMASK = 8L;
+	public static final long SEQUENCENO_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRInspectionStandard"));
 
@@ -156,6 +163,9 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 		attributes.put("circulardate", getCirculardate());
 		attributes.put("markupstatus", getMarkupstatus());
 		attributes.put("module", getModule());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -213,6 +223,24 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 
 		if (module != null) {
 			setModule(module);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -360,6 +388,58 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 	}
 
 	@Override
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	@Override
+	public void setDossierId(long dossierId) {
+		_columnBitmask |= DOSSIERID_COLUMN_BITMASK;
+
+		if (!_setOriginalDossierId) {
+			_setOriginalDossierId = true;
+
+			_originalDossierId = _dossierId;
+		}
+
+		_dossierId = dossierId;
+	}
+
+	public long getOriginalDossierId() {
+		return _originalDossierId;
+	}
+
+	@Override
+	public String getDossierIdCTN() {
+		if (_dossierIdCTN == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierIdCTN;
+		}
+	}
+
+	@Override
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	@Override
+	public String getDossierNo() {
+		if (_dossierNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _dossierNo;
+		}
+	}
+
+	@Override
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
+	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -418,6 +498,9 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 		vrInspectionStandardImpl.setCirculardate(getCirculardate());
 		vrInspectionStandardImpl.setMarkupstatus(getMarkupstatus());
 		vrInspectionStandardImpl.setModule(getModule());
+		vrInspectionStandardImpl.setDossierId(getDossierId());
+		vrInspectionStandardImpl.setDossierIdCTN(getDossierIdCTN());
+		vrInspectionStandardImpl.setDossierNo(getDossierNo());
 		vrInspectionStandardImpl.setModifyDate(getModifyDate());
 		vrInspectionStandardImpl.setSyncDate(getSyncDate());
 
@@ -514,6 +597,10 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 
 		vrInspectionStandardModelImpl._setOriginalMarkupstatus = false;
 
+		vrInspectionStandardModelImpl._originalDossierId = vrInspectionStandardModelImpl._dossierId;
+
+		vrInspectionStandardModelImpl._setOriginalDossierId = false;
+
 		vrInspectionStandardModelImpl._columnBitmask = 0;
 	}
 
@@ -562,6 +649,24 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 			vrInspectionStandardCacheModel.module = null;
 		}
 
+		vrInspectionStandardCacheModel.dossierId = getDossierId();
+
+		vrInspectionStandardCacheModel.dossierIdCTN = getDossierIdCTN();
+
+		String dossierIdCTN = vrInspectionStandardCacheModel.dossierIdCTN;
+
+		if ((dossierIdCTN != null) && (dossierIdCTN.length() == 0)) {
+			vrInspectionStandardCacheModel.dossierIdCTN = null;
+		}
+
+		vrInspectionStandardCacheModel.dossierNo = getDossierNo();
+
+		String dossierNo = vrInspectionStandardCacheModel.dossierNo;
+
+		if ((dossierNo != null) && (dossierNo.length() == 0)) {
+			vrInspectionStandardCacheModel.dossierNo = null;
+		}
+
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -585,7 +690,7 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -603,6 +708,12 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 		sb.append(getMarkupstatus());
 		sb.append(", module=");
 		sb.append(getModule());
+		sb.append(", dossierId=");
+		sb.append(getDossierId());
+		sb.append(", dossierIdCTN=");
+		sb.append(getDossierIdCTN());
+		sb.append(", dossierNo=");
+		sb.append(getDossierNo());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -614,7 +725,7 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRInspectionStandard");
@@ -653,6 +764,18 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 		sb.append(getModule());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>dossierId</column-name><column-value><![CDATA[");
+		sb.append(getDossierId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierIdCTN</column-name><column-value><![CDATA[");
+		sb.append(getDossierIdCTN());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dossierNo</column-name><column-value><![CDATA[");
+		sb.append(getDossierNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
@@ -683,6 +806,11 @@ public class VRInspectionStandardModelImpl extends BaseModelImpl<VRInspectionSta
 	private long _originalMarkupstatus;
 	private boolean _setOriginalMarkupstatus;
 	private String _module;
+	private long _dossierId;
+	private long _originalDossierId;
+	private boolean _setOriginalDossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

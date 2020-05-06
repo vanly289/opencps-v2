@@ -18,7 +18,11 @@ import com.fds.vr.business.model.VRProductionPlantEmployee;
 import com.fds.vr.business.service.base.VRProductionPlantEmployeeLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -126,4 +130,47 @@ public class VRProductionPlantEmployeeLocalServiceImpl extends VRProductionPlant
 
 		return vrProductionPlantEmployeePersistence.update(object);
 	}
+	
+	public List<VRProductionPlantEmployee> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+
+		List<VRProductionPlantEmployee> vrProductionPlantEmployees = new ArrayList<VRProductionPlantEmployee>();
+		
+		try {
+			vrProductionPlantEmployeePersistence.removeByPPC(productionPlantCode);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRProductionPlantEmployee object = null;
+
+				long id = counterLocalService.increment(VRProductionPlantEmployee.class.getName());
+
+				object = vrProductionPlantEmployeePersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+				if (!"".equals(objectData.getString("syncDate"))) {
+					object.setSyncDate(new Date(objectData.getString("syncDate")));
+				}
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setEmployeeName(objectData.getString("employeeName"));
+				object.setEmployeeCertificateNo(objectData.getString("employeeCertificateNo"));
+				object.setTrainningAt(objectData.getString("trainningAt"));
+				object.setWorkingPosition(objectData.getString("workingPosition"));
+				object.setProductionPlantCode(productionPlantCode);
+				object.setProductionPlantId(objectData.getLong("productionPlantId"));
+
+				object = vrProductionPlantEmployeePersistence.update(object);
+				
+				vrProductionPlantEmployees.add(object);
+			}
+		} catch (Exception e) {
+			_log.error(e);
+			return null;
+		}
+		
+		return vrProductionPlantEmployees;
+	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(VRProductionPlantEmployeeLocalServiceImpl.class);
 }

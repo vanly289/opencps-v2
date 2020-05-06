@@ -494,6 +494,174 @@ public class VRCOPProductionPlantEquipmentUtil {
 	}
 
 	/**
+	* Returns all the vrcop production plant equipments where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @return the matching vrcop production plant equipments
+	*/
+	public static List<VRCOPProductionPlantEquipment> findBycopDossierId(
+		long dossierId) {
+		return getPersistence().findBycopDossierId(dossierId);
+	}
+
+	/**
+	* Returns a range of all the vrcop production plant equipments where dossierId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRCOPProductionPlantEquipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dossierId the dossier ID
+	* @param start the lower bound of the range of vrcop production plant equipments
+	* @param end the upper bound of the range of vrcop production plant equipments (not inclusive)
+	* @return the range of matching vrcop production plant equipments
+	*/
+	public static List<VRCOPProductionPlantEquipment> findBycopDossierId(
+		long dossierId, int start, int end) {
+		return getPersistence().findBycopDossierId(dossierId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the vrcop production plant equipments where dossierId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRCOPProductionPlantEquipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dossierId the dossier ID
+	* @param start the lower bound of the range of vrcop production plant equipments
+	* @param end the upper bound of the range of vrcop production plant equipments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vrcop production plant equipments
+	*/
+	public static List<VRCOPProductionPlantEquipment> findBycopDossierId(
+		long dossierId, int start, int end,
+		OrderByComparator<VRCOPProductionPlantEquipment> orderByComparator) {
+		return getPersistence()
+				   .findBycopDossierId(dossierId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the vrcop production plant equipments where dossierId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRCOPProductionPlantEquipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dossierId the dossier ID
+	* @param start the lower bound of the range of vrcop production plant equipments
+	* @param end the upper bound of the range of vrcop production plant equipments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vrcop production plant equipments
+	*/
+	public static List<VRCOPProductionPlantEquipment> findBycopDossierId(
+		long dossierId, int start, int end,
+		OrderByComparator<VRCOPProductionPlantEquipment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findBycopDossierId(dossierId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first vrcop production plant equipment in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vrcop production plant equipment
+	* @throws NoSuchVRCOPProductionPlantEquipmentException if a matching vrcop production plant equipment could not be found
+	*/
+	public static VRCOPProductionPlantEquipment findBycopDossierId_First(
+		long dossierId,
+		OrderByComparator<VRCOPProductionPlantEquipment> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRCOPProductionPlantEquipmentException {
+		return getPersistence()
+				   .findBycopDossierId_First(dossierId, orderByComparator);
+	}
+
+	/**
+	* Returns the first vrcop production plant equipment in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vrcop production plant equipment, or <code>null</code> if a matching vrcop production plant equipment could not be found
+	*/
+	public static VRCOPProductionPlantEquipment fetchBycopDossierId_First(
+		long dossierId,
+		OrderByComparator<VRCOPProductionPlantEquipment> orderByComparator) {
+		return getPersistence()
+				   .fetchBycopDossierId_First(dossierId, orderByComparator);
+	}
+
+	/**
+	* Returns the last vrcop production plant equipment in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vrcop production plant equipment
+	* @throws NoSuchVRCOPProductionPlantEquipmentException if a matching vrcop production plant equipment could not be found
+	*/
+	public static VRCOPProductionPlantEquipment findBycopDossierId_Last(
+		long dossierId,
+		OrderByComparator<VRCOPProductionPlantEquipment> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRCOPProductionPlantEquipmentException {
+		return getPersistence()
+				   .findBycopDossierId_Last(dossierId, orderByComparator);
+	}
+
+	/**
+	* Returns the last vrcop production plant equipment in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vrcop production plant equipment, or <code>null</code> if a matching vrcop production plant equipment could not be found
+	*/
+	public static VRCOPProductionPlantEquipment fetchBycopDossierId_Last(
+		long dossierId,
+		OrderByComparator<VRCOPProductionPlantEquipment> orderByComparator) {
+		return getPersistence()
+				   .fetchBycopDossierId_Last(dossierId, orderByComparator);
+	}
+
+	/**
+	* Returns the vrcop production plant equipments before and after the current vrcop production plant equipment in the ordered set where dossierId = &#63;.
+	*
+	* @param id the primary key of the current vrcop production plant equipment
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next vrcop production plant equipment
+	* @throws NoSuchVRCOPProductionPlantEquipmentException if a vrcop production plant equipment with the primary key could not be found
+	*/
+	public static VRCOPProductionPlantEquipment[] findBycopDossierId_PrevAndNext(
+		long id, long dossierId,
+		OrderByComparator<VRCOPProductionPlantEquipment> orderByComparator)
+		throws com.fds.vr.business.exception.NoSuchVRCOPProductionPlantEquipmentException {
+		return getPersistence()
+				   .findBycopDossierId_PrevAndNext(id, dossierId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the vrcop production plant equipments where dossierId = &#63; from the database.
+	*
+	* @param dossierId the dossier ID
+	*/
+	public static void removeBycopDossierId(long dossierId) {
+		getPersistence().removeBycopDossierId(dossierId);
+	}
+
+	/**
+	* Returns the number of vrcop production plant equipments where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @return the number of matching vrcop production plant equipments
+	*/
+	public static int countBycopDossierId(long dossierId) {
+		return getPersistence().countBycopDossierId(dossierId);
+	}
+
+	/**
 	* Caches the vrcop production plant equipment in the entity cache if it is enabled.
 	*
 	* @param vrcopProductionPlantEquipment the vrcop production plant equipment

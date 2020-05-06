@@ -67,6 +67,9 @@ public class VRInspectionStandardWrapper implements VRInspectionStandard,
 		attributes.put("circulardate", getCirculardate());
 		attributes.put("markupstatus", getMarkupstatus());
 		attributes.put("module", getModule());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -121,6 +124,24 @@ public class VRInspectionStandardWrapper implements VRInspectionStandard,
 
 		if (module != null) {
 			setModule(module);
+		}
+
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -212,6 +233,26 @@ public class VRInspectionStandardWrapper implements VRInspectionStandard,
 	}
 
 	/**
+	* Returns the dossier ID ctn of this vr inspection standard.
+	*
+	* @return the dossier ID ctn of this vr inspection standard
+	*/
+	@Override
+	public java.lang.String getDossierIdCTN() {
+		return _vrInspectionStandard.getDossierIdCTN();
+	}
+
+	/**
+	* Returns the dossier no of this vr inspection standard.
+	*
+	* @return the dossier no of this vr inspection standard
+	*/
+	@Override
+	public java.lang.String getDossierNo() {
+		return _vrInspectionStandard.getDossierNo();
+	}
+
+	/**
 	* Returns the module of this vr inspection standard.
 	*
 	* @return the module of this vr inspection standard
@@ -259,6 +300,16 @@ public class VRInspectionStandardWrapper implements VRInspectionStandard,
 	@Override
 	public Date getSyncDate() {
 		return _vrInspectionStandard.getSyncDate();
+	}
+
+	/**
+	* Returns the dossier ID of this vr inspection standard.
+	*
+	* @return the dossier ID of this vr inspection standard
+	*/
+	@Override
+	public long getDossierId() {
+		return _vrInspectionStandard.getDossierId();
 	}
 
 	/**
@@ -349,6 +400,36 @@ public class VRInspectionStandardWrapper implements VRInspectionStandard,
 	@Override
 	public void setDeliverableCode(java.lang.String deliverableCode) {
 		_vrInspectionStandard.setDeliverableCode(deliverableCode);
+	}
+
+	/**
+	* Sets the dossier ID of this vr inspection standard.
+	*
+	* @param dossierId the dossier ID of this vr inspection standard
+	*/
+	@Override
+	public void setDossierId(long dossierId) {
+		_vrInspectionStandard.setDossierId(dossierId);
+	}
+
+	/**
+	* Sets the dossier ID ctn of this vr inspection standard.
+	*
+	* @param dossierIdCTN the dossier ID ctn of this vr inspection standard
+	*/
+	@Override
+	public void setDossierIdCTN(java.lang.String dossierIdCTN) {
+		_vrInspectionStandard.setDossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Sets the dossier no of this vr inspection standard.
+	*
+	* @param dossierNo the dossier no of this vr inspection standard
+	*/
+	@Override
+	public void setDossierNo(java.lang.String dossierNo) {
+		_vrInspectionStandard.setDossierNo(dossierNo);
 	}
 
 	@Override

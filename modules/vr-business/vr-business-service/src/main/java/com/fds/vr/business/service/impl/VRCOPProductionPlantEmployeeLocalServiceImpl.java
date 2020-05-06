@@ -14,26 +14,25 @@
 
 package com.fds.vr.business.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPProductionPlantEmployee;
 import com.fds.vr.business.model.impl.VRCOPProductionPlantEmployeeImpl;
 import com.fds.vr.business.service.base.VRCOPProductionPlantEmployeeLocalServiceBaseImpl;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -138,5 +137,54 @@ public class VRCOPProductionPlantEmployeeLocalServiceImpl
 		return result;
 	}
 
+
+	public int adminProcessData(JSONArray arrayData, long dossierId) {
+
+		int result = 0;
+		
+		try {
+			vrcopProductionPlantEmployeePersistence.removeBycopDossierId(dossierId);
+			
+			for (int i = 0; i < arrayData.length(); i++) {
+				JSONObject objectData = arrayData.getJSONObject(i);
+				
+				VRCOPProductionPlantEmployee object = null;
+
+				long id = counterLocalService.increment(VRCOPProductionPlantEmployee.class.getName());
+
+				object = vrcopProductionPlantEmployeePersistence.create(id);
+
+				object.setModifyDate(new Date());
+				object.setMtCore(objectData.getLong("mtCore"));
+
+				object.setCopReportRepositoryID(objectData.getLong("copReportRepositoryID"));
+				object.setCopReportNo(objectData.getString("copReportNo"));
+				object.setSequenceNo(objectData.getLong("sequenceNo"));
+				object.setEmployeeName(objectData.getString("employeeName"));
+				object.setEmployeeCertificateNo(objectData.getString("employeeCertificateNo"));
+				object.setTrainningAt(objectData.getString("trainningAt"));
+				if (!"".equals(objectData.getString("syncDate"))) {
+					object.setSyncDate(new Date(objectData.getString("syncDate")));
+				}
+				object.setWorkingPosition(objectData.getString("workingPosition"));
+				
+				object.setDossierId(objectData.getLong("dossierId"));
+				object.setDossierIdCTN(objectData.getString("dossierIdCTN"));
+				object.setDossierNo(objectData.getString("dossierNo"));
+
+				vrcopProductionPlantEmployeePersistence.update(object);
+				
+				result = i;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			result = -500;
+		}
+		
+		return result;
+	}
+	
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductionPlantEmployeeLocalServiceImpl.class);
+
 }

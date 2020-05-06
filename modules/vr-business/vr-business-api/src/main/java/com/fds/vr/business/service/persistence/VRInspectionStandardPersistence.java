@@ -42,6 +42,138 @@ public interface VRInspectionStandardPersistence extends BasePersistence<VRInspe
 	 */
 
 	/**
+	* Returns all the vr inspection standards where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @return the matching vr inspection standards
+	*/
+	public java.util.List<VRInspectionStandard> findBydossierId(long dossierId);
+
+	/**
+	* Returns a range of all the vr inspection standards where dossierId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRInspectionStandardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dossierId the dossier ID
+	* @param start the lower bound of the range of vr inspection standards
+	* @param end the upper bound of the range of vr inspection standards (not inclusive)
+	* @return the range of matching vr inspection standards
+	*/
+	public java.util.List<VRInspectionStandard> findBydossierId(
+		long dossierId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the vr inspection standards where dossierId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRInspectionStandardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dossierId the dossier ID
+	* @param start the lower bound of the range of vr inspection standards
+	* @param end the upper bound of the range of vr inspection standards (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vr inspection standards
+	*/
+	public java.util.List<VRInspectionStandard> findBydossierId(
+		long dossierId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the vr inspection standards where dossierId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRInspectionStandardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dossierId the dossier ID
+	* @param start the lower bound of the range of vr inspection standards
+	* @param end the upper bound of the range of vr inspection standards (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vr inspection standards
+	*/
+	public java.util.List<VRInspectionStandard> findBydossierId(
+		long dossierId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first vr inspection standard in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr inspection standard
+	* @throws NoSuchVRInspectionStandardException if a matching vr inspection standard could not be found
+	*/
+	public VRInspectionStandard findBydossierId_First(long dossierId,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator)
+		throws NoSuchVRInspectionStandardException;
+
+	/**
+	* Returns the first vr inspection standard in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr inspection standard, or <code>null</code> if a matching vr inspection standard could not be found
+	*/
+	public VRInspectionStandard fetchBydossierId_First(long dossierId,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator);
+
+	/**
+	* Returns the last vr inspection standard in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr inspection standard
+	* @throws NoSuchVRInspectionStandardException if a matching vr inspection standard could not be found
+	*/
+	public VRInspectionStandard findBydossierId_Last(long dossierId,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator)
+		throws NoSuchVRInspectionStandardException;
+
+	/**
+	* Returns the last vr inspection standard in the ordered set where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr inspection standard, or <code>null</code> if a matching vr inspection standard could not be found
+	*/
+	public VRInspectionStandard fetchBydossierId_Last(long dossierId,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator);
+
+	/**
+	* Returns the vr inspection standards before and after the current vr inspection standard in the ordered set where dossierId = &#63;.
+	*
+	* @param id the primary key of the current vr inspection standard
+	* @param dossierId the dossier ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next vr inspection standard
+	* @throws NoSuchVRInspectionStandardException if a vr inspection standard with the primary key could not be found
+	*/
+	public VRInspectionStandard[] findBydossierId_PrevAndNext(long id,
+		long dossierId,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator)
+		throws NoSuchVRInspectionStandardException;
+
+	/**
+	* Removes all the vr inspection standards where dossierId = &#63; from the database.
+	*
+	* @param dossierId the dossier ID
+	*/
+	public void removeBydossierId(long dossierId);
+
+	/**
+	* Returns the number of vr inspection standards where dossierId = &#63;.
+	*
+	* @param dossierId the dossier ID
+	* @return the number of matching vr inspection standards
+	*/
+	public int countBydossierId(long dossierId);
+
+	/**
 	* Returns all the vr inspection standards where deliverableCode = &#63;.
 	*
 	* @param deliverableCode the deliverable code
@@ -329,6 +461,143 @@ public interface VRInspectionStandardPersistence extends BasePersistence<VRInspe
 		long markupstatus);
 
 	/**
+	* Returns all the vr inspection standards where vehicleCertificateId = &#63;.
+	*
+	* @param vehicleCertificateId the vehicle certificate ID
+	* @return the matching vr inspection standards
+	*/
+	public java.util.List<VRInspectionStandard> findByF_vehicleCertificateId(
+		long vehicleCertificateId);
+
+	/**
+	* Returns a range of all the vr inspection standards where vehicleCertificateId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRInspectionStandardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param vehicleCertificateId the vehicle certificate ID
+	* @param start the lower bound of the range of vr inspection standards
+	* @param end the upper bound of the range of vr inspection standards (not inclusive)
+	* @return the range of matching vr inspection standards
+	*/
+	public java.util.List<VRInspectionStandard> findByF_vehicleCertificateId(
+		long vehicleCertificateId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the vr inspection standards where vehicleCertificateId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRInspectionStandardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param vehicleCertificateId the vehicle certificate ID
+	* @param start the lower bound of the range of vr inspection standards
+	* @param end the upper bound of the range of vr inspection standards (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching vr inspection standards
+	*/
+	public java.util.List<VRInspectionStandard> findByF_vehicleCertificateId(
+		long vehicleCertificateId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the vr inspection standards where vehicleCertificateId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRInspectionStandardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param vehicleCertificateId the vehicle certificate ID
+	* @param start the lower bound of the range of vr inspection standards
+	* @param end the upper bound of the range of vr inspection standards (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching vr inspection standards
+	*/
+	public java.util.List<VRInspectionStandard> findByF_vehicleCertificateId(
+		long vehicleCertificateId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first vr inspection standard in the ordered set where vehicleCertificateId = &#63;.
+	*
+	* @param vehicleCertificateId the vehicle certificate ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr inspection standard
+	* @throws NoSuchVRInspectionStandardException if a matching vr inspection standard could not be found
+	*/
+	public VRInspectionStandard findByF_vehicleCertificateId_First(
+		long vehicleCertificateId,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator)
+		throws NoSuchVRInspectionStandardException;
+
+	/**
+	* Returns the first vr inspection standard in the ordered set where vehicleCertificateId = &#63;.
+	*
+	* @param vehicleCertificateId the vehicle certificate ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching vr inspection standard, or <code>null</code> if a matching vr inspection standard could not be found
+	*/
+	public VRInspectionStandard fetchByF_vehicleCertificateId_First(
+		long vehicleCertificateId,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator);
+
+	/**
+	* Returns the last vr inspection standard in the ordered set where vehicleCertificateId = &#63;.
+	*
+	* @param vehicleCertificateId the vehicle certificate ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr inspection standard
+	* @throws NoSuchVRInspectionStandardException if a matching vr inspection standard could not be found
+	*/
+	public VRInspectionStandard findByF_vehicleCertificateId_Last(
+		long vehicleCertificateId,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator)
+		throws NoSuchVRInspectionStandardException;
+
+	/**
+	* Returns the last vr inspection standard in the ordered set where vehicleCertificateId = &#63;.
+	*
+	* @param vehicleCertificateId the vehicle certificate ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching vr inspection standard, or <code>null</code> if a matching vr inspection standard could not be found
+	*/
+	public VRInspectionStandard fetchByF_vehicleCertificateId_Last(
+		long vehicleCertificateId,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator);
+
+	/**
+	* Returns the vr inspection standards before and after the current vr inspection standard in the ordered set where vehicleCertificateId = &#63;.
+	*
+	* @param id the primary key of the current vr inspection standard
+	* @param vehicleCertificateId the vehicle certificate ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next vr inspection standard
+	* @throws NoSuchVRInspectionStandardException if a vr inspection standard with the primary key could not be found
+	*/
+	public VRInspectionStandard[] findByF_vehicleCertificateId_PrevAndNext(
+		long id, long vehicleCertificateId,
+		com.liferay.portal.kernel.util.OrderByComparator<VRInspectionStandard> orderByComparator)
+		throws NoSuchVRInspectionStandardException;
+
+	/**
+	* Removes all the vr inspection standards where vehicleCertificateId = &#63; from the database.
+	*
+	* @param vehicleCertificateId the vehicle certificate ID
+	*/
+	public void removeByF_vehicleCertificateId(long vehicleCertificateId);
+
+	/**
+	* Returns the number of vr inspection standards where vehicleCertificateId = &#63;.
+	*
+	* @param vehicleCertificateId the vehicle certificate ID
+	* @return the number of matching vr inspection standards
+	*/
+	public int countByF_vehicleCertificateId(long vehicleCertificateId);
+
+	/**
 	* Caches the vr inspection standard in the entity cache if it is enabled.
 	*
 	* @param vrInspectionStandard the vr inspection standard
@@ -449,4 +718,7 @@ public interface VRInspectionStandardPersistence extends BasePersistence<VRInspe
 	* @return the number of vr inspection standards
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

@@ -66,7 +66,7 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -78,6 +78,8 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 		sb.append(corporationName);
 		sb.append(", corporationAddress=");
 		sb.append(corporationAddress);
+		sb.append(", productionPlantCode=");
+		sb.append(productionPlantCode);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -115,6 +117,13 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 			vrProductionPlantSupplierImpl.setCorporationAddress(corporationAddress);
 		}
 
+		if (productionPlantCode == null) {
+			vrProductionPlantSupplierImpl.setProductionPlantCode(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantSupplierImpl.setProductionPlantCode(productionPlantCode);
+		}
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrProductionPlantSupplierImpl.setModifyDate(null);
 		}
@@ -142,6 +151,7 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 		corporationCode = objectInput.readUTF();
 		corporationName = objectInput.readUTF();
 		corporationAddress = objectInput.readUTF();
+		productionPlantCode = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -174,6 +184,13 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 			objectOutput.writeUTF(corporationAddress);
 		}
 
+		if (productionPlantCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantCode);
+		}
+
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -183,6 +200,7 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 	public String corporationCode;
 	public String corporationName;
 	public String corporationAddress;
+	public String productionPlantCode;
 	public long modifyDate;
 	public long syncDate;
 }

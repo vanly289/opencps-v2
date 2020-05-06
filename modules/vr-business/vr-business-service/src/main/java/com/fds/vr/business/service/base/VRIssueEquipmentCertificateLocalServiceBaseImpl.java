@@ -49,6 +49,7 @@ import com.fds.vr.business.service.persistence.VRCorporationViewFinder;
 import com.fds.vr.business.service.persistence.VRCorporationViewPersistence;
 import com.fds.vr.business.service.persistence.VRDossierFilePersistence;
 import com.fds.vr.business.service.persistence.VRDossierPersistence;
+import com.fds.vr.business.service.persistence.VRESPersistence;
 import com.fds.vr.business.service.persistence.VRInputSheetFinder;
 import com.fds.vr.business.service.persistence.VRInputSheetPersistence;
 import com.fds.vr.business.service.persistence.VRInputStampbookDetailsFinder;
@@ -1364,6 +1365,43 @@ public abstract class VRIssueEquipmentCertificateLocalServiceBaseImpl
 	public void setVRDossierFilePersistence(
 		VRDossierFilePersistence vrDossierFilePersistence) {
 		this.vrDossierFilePersistence = vrDossierFilePersistence;
+	}
+
+	/**
+	 * Returns the vres local service.
+	 *
+	 * @return the vres local service
+	 */
+	public com.fds.vr.business.service.VRESLocalService getVRESLocalService() {
+		return vresLocalService;
+	}
+
+	/**
+	 * Sets the vres local service.
+	 *
+	 * @param vresLocalService the vres local service
+	 */
+	public void setVRESLocalService(
+		com.fds.vr.business.service.VRESLocalService vresLocalService) {
+		this.vresLocalService = vresLocalService;
+	}
+
+	/**
+	 * Returns the vres persistence.
+	 *
+	 * @return the vres persistence
+	 */
+	public VRESPersistence getVRESPersistence() {
+		return vresPersistence;
+	}
+
+	/**
+	 * Sets the vres persistence.
+	 *
+	 * @param vresPersistence the vres persistence
+	 */
+	public void setVRESPersistence(VRESPersistence vresPersistence) {
+		this.vresPersistence = vresPersistence;
 	}
 
 	/**
@@ -3810,6 +3848,10 @@ public abstract class VRIssueEquipmentCertificateLocalServiceBaseImpl
 	protected com.fds.vr.business.service.VRDossierFileLocalService vrDossierFileLocalService;
 	@BeanReference(type = VRDossierFilePersistence.class)
 	protected VRDossierFilePersistence vrDossierFilePersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRESLocalService.class)
+	protected com.fds.vr.business.service.VRESLocalService vresLocalService;
+	@BeanReference(type = VRESPersistence.class)
+	protected VRESPersistence vresPersistence;
 	@BeanReference(type = com.fds.vr.business.service.VRInputSheetLocalService.class)
 	protected com.fds.vr.business.service.VRInputSheetLocalService vrInputSheetLocalService;
 	@BeanReference(type = VRInputSheetPersistence.class)

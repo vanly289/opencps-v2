@@ -47,6 +47,9 @@ public class VRVehicleSpecificationSoap implements Serializable {
 		soapModel.setSpecificationDataCollectionID(model.getSpecificationDataCollectionID());
 		soapModel.setSpecificationResult(model.getSpecificationResult());
 		soapModel.setDeliverableCode(model.getDeliverableCode());
+		soapModel.setDossierId(model.getDossierId());
+		soapModel.setDossierIdCTN(model.getDossierIdCTN());
+		soapModel.setDossierNo(model.getDossierNo());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 
@@ -210,6 +213,30 @@ public class VRVehicleSpecificationSoap implements Serializable {
 		_deliverableCode = deliverableCode;
 	}
 
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	public String getDossierIdCTN() {
+		return _dossierIdCTN;
+	}
+
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	public String getDossierNo() {
+		return _dossierNo;
+	}
+
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -239,6 +266,9 @@ public class VRVehicleSpecificationSoap implements Serializable {
 	private String _specificationDataCollectionID;
 	private String _specificationResult;
 	private String _deliverableCode;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 	private Date _modifyDate;
 	private Date _syncDate;
 }

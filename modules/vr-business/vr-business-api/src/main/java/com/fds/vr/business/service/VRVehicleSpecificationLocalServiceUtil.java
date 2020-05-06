@@ -185,6 +185,14 @@ public class VRVehicleSpecificationLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List<com.fds.vr.business.model.VRVehicleSpecification> adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
+		long vehicleTypeCertificateId) {
+		return getService()
+				   .adminProcessData(arrayData, dossierId,
+			vehicleTypeCertificateId);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

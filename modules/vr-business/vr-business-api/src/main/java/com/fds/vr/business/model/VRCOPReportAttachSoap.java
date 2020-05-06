@@ -43,6 +43,9 @@ public class VRCOPReportAttachSoap implements Serializable {
 		soapModel.setRemarks(model.getRemarks());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
+		soapModel.setDossierId(model.getDossierId());
+		soapModel.setDossierIdCTN(model.getDossierIdCTN());
+		soapModel.setDossierNo(model.getDossierNo());
 
 		return soapModel;
 	}
@@ -178,6 +181,30 @@ public class VRCOPReportAttachSoap implements Serializable {
 		_syncDate = syncDate;
 	}
 
+	public long getDossierId() {
+		return _dossierId;
+	}
+
+	public void setDossierId(long dossierId) {
+		_dossierId = dossierId;
+	}
+
+	public String getDossierIdCTN() {
+		return _dossierIdCTN;
+	}
+
+	public void setDossierIdCTN(String dossierIdCTN) {
+		_dossierIdCTN = dossierIdCTN;
+	}
+
+	public String getDossierNo() {
+		return _dossierNo;
+	}
+
+	public void setDossierNo(String dossierNo) {
+		_dossierNo = dossierNo;
+	}
+
 	private long _id;
 	private long _mtCore;
 	private long _copReportRepositoryID;
@@ -188,4 +215,7 @@ public class VRCOPReportAttachSoap implements Serializable {
 	private String _remarks;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private long _dossierId;
+	private String _dossierIdCTN;
+	private String _dossierNo;
 }

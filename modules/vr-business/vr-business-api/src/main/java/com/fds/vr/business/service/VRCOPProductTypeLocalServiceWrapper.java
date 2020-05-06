@@ -173,6 +173,13 @@ public class VRCOPProductTypeLocalServiceWrapper
 		return _vrcopProductTypeLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public int adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId) {
+		return _vrcopProductTypeLocalService.adminProcessData(arrayData,
+			dossierId);
+	}
+
 	/**
 	* Returns the number of vrcop product types.
 	*

@@ -158,6 +158,8 @@ public interface VRCOPReportAttachLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public int adminProcessData(JSONArray arrayData, long dossierId);
+
 	/**
 	* Returns the number of vrcop report attachs.
 	*

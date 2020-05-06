@@ -74,6 +74,9 @@ public class VRVehicleSpecificationWrapper implements VRVehicleSpecification,
 			getSpecificationDataCollectionID());
 		attributes.put("specificationResult", getSpecificationResult());
 		attributes.put("deliverableCode", getDeliverableCode());
+		attributes.put("dossierId", getDossierId());
+		attributes.put("dossierIdCTN", getDossierIdCTN());
+		attributes.put("dossierNo", getDossierNo());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -165,6 +168,24 @@ public class VRVehicleSpecificationWrapper implements VRVehicleSpecification,
 			setDeliverableCode(deliverableCode);
 		}
 
+		Long dossierId = (Long)attributes.get("dossierId");
+
+		if (dossierId != null) {
+			setDossierId(dossierId);
+		}
+
+		String dossierIdCTN = (String)attributes.get("dossierIdCTN");
+
+		if (dossierIdCTN != null) {
+			setDossierIdCTN(dossierIdCTN);
+		}
+
+		String dossierNo = (String)attributes.get("dossierNo");
+
+		if (dossierNo != null) {
+			setDossierNo(dossierNo);
+		}
+
 		Date modifyDate = (Date)attributes.get("modifyDate");
 
 		if (modifyDate != null) {
@@ -241,6 +262,26 @@ public class VRVehicleSpecificationWrapper implements VRVehicleSpecification,
 	@Override
 	public java.lang.String getDeliverableCode() {
 		return _vrVehicleSpecification.getDeliverableCode();
+	}
+
+	/**
+	* Returns the dossier ID ctn of this vr vehicle specification.
+	*
+	* @return the dossier ID ctn of this vr vehicle specification
+	*/
+	@Override
+	public java.lang.String getDossierIdCTN() {
+		return _vrVehicleSpecification.getDossierIdCTN();
+	}
+
+	/**
+	* Returns the dossier no of this vr vehicle specification.
+	*
+	* @return the dossier no of this vr vehicle specification
+	*/
+	@Override
+	public java.lang.String getDossierNo() {
+		return _vrVehicleSpecification.getDossierNo();
 	}
 
 	/**
@@ -364,6 +405,16 @@ public class VRVehicleSpecificationWrapper implements VRVehicleSpecification,
 	}
 
 	/**
+	* Returns the dossier ID of this vr vehicle specification.
+	*
+	* @return the dossier ID of this vr vehicle specification
+	*/
+	@Override
+	public long getDossierId() {
+		return _vrVehicleSpecification.getDossierId();
+	}
+
+	/**
 	* Returns the ID of this vr vehicle specification.
 	*
 	* @return the ID of this vr vehicle specification
@@ -421,6 +472,36 @@ public class VRVehicleSpecificationWrapper implements VRVehicleSpecification,
 	@Override
 	public void setDeliverableCode(java.lang.String deliverableCode) {
 		_vrVehicleSpecification.setDeliverableCode(deliverableCode);
+	}
+
+	/**
+	* Sets the dossier ID of this vr vehicle specification.
+	*
+	* @param dossierId the dossier ID of this vr vehicle specification
+	*/
+	@Override
+	public void setDossierId(long dossierId) {
+		_vrVehicleSpecification.setDossierId(dossierId);
+	}
+
+	/**
+	* Sets the dossier ID ctn of this vr vehicle specification.
+	*
+	* @param dossierIdCTN the dossier ID ctn of this vr vehicle specification
+	*/
+	@Override
+	public void setDossierIdCTN(java.lang.String dossierIdCTN) {
+		_vrVehicleSpecification.setDossierIdCTN(dossierIdCTN);
+	}
+
+	/**
+	* Sets the dossier no of this vr vehicle specification.
+	*
+	* @param dossierNo the dossier no of this vr vehicle specification
+	*/
+	@Override
+	public void setDossierNo(java.lang.String dossierNo) {
+		_vrVehicleSpecification.setDossierNo(dossierNo);
 	}
 
 	@Override

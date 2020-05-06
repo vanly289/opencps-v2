@@ -1249,6 +1249,517 @@ public class VRCOPReportAttachPersistenceImpl extends BasePersistenceImpl<VRCOPR
 	private static final String _FINDER_COLUMN_COPREPORTNO_COPREPORTNO_1 = "vrcopReportAttach.copReportNo IS NULL";
 	private static final String _FINDER_COLUMN_COPREPORTNO_COPREPORTNO_2 = "vrcopReportAttach.copReportNo = ?";
 	private static final String _FINDER_COLUMN_COPREPORTNO_COPREPORTNO_3 = "(vrcopReportAttach.copReportNo IS NULL OR vrcopReportAttach.copReportNo = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COPDOSSIERID =
+		new FinderPath(VRCOPReportAttachModelImpl.ENTITY_CACHE_ENABLED,
+			VRCOPReportAttachModelImpl.FINDER_CACHE_ENABLED,
+			VRCOPReportAttachImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBycopDossierId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COPDOSSIERID =
+		new FinderPath(VRCOPReportAttachModelImpl.ENTITY_CACHE_ENABLED,
+			VRCOPReportAttachModelImpl.FINDER_CACHE_ENABLED,
+			VRCOPReportAttachImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBycopDossierId",
+			new String[] { Long.class.getName() },
+			VRCOPReportAttachModelImpl.DOSSIERID_COLUMN_BITMASK |
+			VRCOPReportAttachModelImpl.MODIFYDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COPDOSSIERID = new FinderPath(VRCOPReportAttachModelImpl.ENTITY_CACHE_ENABLED,
+			VRCOPReportAttachModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBycopDossierId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the vrcop report attachs where dossierId = &#63;.
+	 *
+	 * @param dossierId the dossier ID
+	 * @return the matching vrcop report attachs
+	 */
+	@Override
+	public List<VRCOPReportAttach> findBycopDossierId(long dossierId) {
+		return findBycopDossierId(dossierId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the vrcop report attachs where dossierId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRCOPReportAttachModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dossierId the dossier ID
+	 * @param start the lower bound of the range of vrcop report attachs
+	 * @param end the upper bound of the range of vrcop report attachs (not inclusive)
+	 * @return the range of matching vrcop report attachs
+	 */
+	@Override
+	public List<VRCOPReportAttach> findBycopDossierId(long dossierId,
+		int start, int end) {
+		return findBycopDossierId(dossierId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the vrcop report attachs where dossierId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRCOPReportAttachModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dossierId the dossier ID
+	 * @param start the lower bound of the range of vrcop report attachs
+	 * @param end the upper bound of the range of vrcop report attachs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching vrcop report attachs
+	 */
+	@Override
+	public List<VRCOPReportAttach> findBycopDossierId(long dossierId,
+		int start, int end,
+		OrderByComparator<VRCOPReportAttach> orderByComparator) {
+		return findBycopDossierId(dossierId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the vrcop report attachs where dossierId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link VRCOPReportAttachModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dossierId the dossier ID
+	 * @param start the lower bound of the range of vrcop report attachs
+	 * @param end the upper bound of the range of vrcop report attachs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching vrcop report attachs
+	 */
+	@Override
+	public List<VRCOPReportAttach> findBycopDossierId(long dossierId,
+		int start, int end,
+		OrderByComparator<VRCOPReportAttach> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COPDOSSIERID;
+			finderArgs = new Object[] { dossierId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COPDOSSIERID;
+			finderArgs = new Object[] { dossierId, start, end, orderByComparator };
+		}
+
+		List<VRCOPReportAttach> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<VRCOPReportAttach>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (VRCOPReportAttach vrcopReportAttach : list) {
+					if ((dossierId != vrcopReportAttach.getDossierId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_VRCOPREPORTATTACH_WHERE);
+
+			query.append(_FINDER_COLUMN_COPDOSSIERID_DOSSIERID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(VRCOPReportAttachModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(dossierId);
+
+				if (!pagination) {
+					list = (List<VRCOPReportAttach>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<VRCOPReportAttach>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first vrcop report attach in the ordered set where dossierId = &#63;.
+	 *
+	 * @param dossierId the dossier ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vrcop report attach
+	 * @throws NoSuchVRCOPReportAttachException if a matching vrcop report attach could not be found
+	 */
+	@Override
+	public VRCOPReportAttach findBycopDossierId_First(long dossierId,
+		OrderByComparator<VRCOPReportAttach> orderByComparator)
+		throws NoSuchVRCOPReportAttachException {
+		VRCOPReportAttach vrcopReportAttach = fetchBycopDossierId_First(dossierId,
+				orderByComparator);
+
+		if (vrcopReportAttach != null) {
+			return vrcopReportAttach;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("dossierId=");
+		msg.append(dossierId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRCOPReportAttachException(msg.toString());
+	}
+
+	/**
+	 * Returns the first vrcop report attach in the ordered set where dossierId = &#63;.
+	 *
+	 * @param dossierId the dossier ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching vrcop report attach, or <code>null</code> if a matching vrcop report attach could not be found
+	 */
+	@Override
+	public VRCOPReportAttach fetchBycopDossierId_First(long dossierId,
+		OrderByComparator<VRCOPReportAttach> orderByComparator) {
+		List<VRCOPReportAttach> list = findBycopDossierId(dossierId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last vrcop report attach in the ordered set where dossierId = &#63;.
+	 *
+	 * @param dossierId the dossier ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vrcop report attach
+	 * @throws NoSuchVRCOPReportAttachException if a matching vrcop report attach could not be found
+	 */
+	@Override
+	public VRCOPReportAttach findBycopDossierId_Last(long dossierId,
+		OrderByComparator<VRCOPReportAttach> orderByComparator)
+		throws NoSuchVRCOPReportAttachException {
+		VRCOPReportAttach vrcopReportAttach = fetchBycopDossierId_Last(dossierId,
+				orderByComparator);
+
+		if (vrcopReportAttach != null) {
+			return vrcopReportAttach;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("dossierId=");
+		msg.append(dossierId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVRCOPReportAttachException(msg.toString());
+	}
+
+	/**
+	 * Returns the last vrcop report attach in the ordered set where dossierId = &#63;.
+	 *
+	 * @param dossierId the dossier ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching vrcop report attach, or <code>null</code> if a matching vrcop report attach could not be found
+	 */
+	@Override
+	public VRCOPReportAttach fetchBycopDossierId_Last(long dossierId,
+		OrderByComparator<VRCOPReportAttach> orderByComparator) {
+		int count = countBycopDossierId(dossierId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<VRCOPReportAttach> list = findBycopDossierId(dossierId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the vrcop report attachs before and after the current vrcop report attach in the ordered set where dossierId = &#63;.
+	 *
+	 * @param id the primary key of the current vrcop report attach
+	 * @param dossierId the dossier ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next vrcop report attach
+	 * @throws NoSuchVRCOPReportAttachException if a vrcop report attach with the primary key could not be found
+	 */
+	@Override
+	public VRCOPReportAttach[] findBycopDossierId_PrevAndNext(long id,
+		long dossierId, OrderByComparator<VRCOPReportAttach> orderByComparator)
+		throws NoSuchVRCOPReportAttachException {
+		VRCOPReportAttach vrcopReportAttach = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			VRCOPReportAttach[] array = new VRCOPReportAttachImpl[3];
+
+			array[0] = getBycopDossierId_PrevAndNext(session,
+					vrcopReportAttach, dossierId, orderByComparator, true);
+
+			array[1] = vrcopReportAttach;
+
+			array[2] = getBycopDossierId_PrevAndNext(session,
+					vrcopReportAttach, dossierId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected VRCOPReportAttach getBycopDossierId_PrevAndNext(Session session,
+		VRCOPReportAttach vrcopReportAttach, long dossierId,
+		OrderByComparator<VRCOPReportAttach> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_VRCOPREPORTATTACH_WHERE);
+
+		query.append(_FINDER_COLUMN_COPDOSSIERID_DOSSIERID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(VRCOPReportAttachModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(dossierId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(vrcopReportAttach);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<VRCOPReportAttach> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the vrcop report attachs where dossierId = &#63; from the database.
+	 *
+	 * @param dossierId the dossier ID
+	 */
+	@Override
+	public void removeBycopDossierId(long dossierId) {
+		for (VRCOPReportAttach vrcopReportAttach : findBycopDossierId(
+				dossierId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(vrcopReportAttach);
+		}
+	}
+
+	/**
+	 * Returns the number of vrcop report attachs where dossierId = &#63;.
+	 *
+	 * @param dossierId the dossier ID
+	 * @return the number of matching vrcop report attachs
+	 */
+	@Override
+	public int countBycopDossierId(long dossierId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COPDOSSIERID;
+
+		Object[] finderArgs = new Object[] { dossierId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_VRCOPREPORTATTACH_WHERE);
+
+			query.append(_FINDER_COLUMN_COPDOSSIERID_DOSSIERID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(dossierId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COPDOSSIERID_DOSSIERID_2 = "vrcopReportAttach.dossierId = ?";
 
 	public VRCOPReportAttachPersistenceImpl() {
 		setModelClass(VRCOPReportAttach.class);
@@ -1511,6 +2022,23 @@ public class VRCOPReportAttachPersistenceImpl extends BasePersistenceImpl<VRCOPR
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COPREPORTNO,
 					args);
 			}
+
+			if ((vrcopReportAttachModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COPDOSSIERID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						vrcopReportAttachModelImpl.getOriginalDossierId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COPDOSSIERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COPDOSSIERID,
+					args);
+
+				args = new Object[] { vrcopReportAttachModelImpl.getDossierId() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COPDOSSIERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COPDOSSIERID,
+					args);
+			}
 		}
 
 		entityCache.putResult(VRCOPReportAttachModelImpl.ENTITY_CACHE_ENABLED,
@@ -1543,6 +2071,9 @@ public class VRCOPReportAttachPersistenceImpl extends BasePersistenceImpl<VRCOPR
 		vrcopReportAttachImpl.setRemarks(vrcopReportAttach.getRemarks());
 		vrcopReportAttachImpl.setModifyDate(vrcopReportAttach.getModifyDate());
 		vrcopReportAttachImpl.setSyncDate(vrcopReportAttach.getSyncDate());
+		vrcopReportAttachImpl.setDossierId(vrcopReportAttach.getDossierId());
+		vrcopReportAttachImpl.setDossierIdCTN(vrcopReportAttach.getDossierIdCTN());
+		vrcopReportAttachImpl.setDossierNo(vrcopReportAttach.getDossierNo());
 
 		return vrcopReportAttachImpl;
 	}

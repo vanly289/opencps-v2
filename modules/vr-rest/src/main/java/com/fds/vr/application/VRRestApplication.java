@@ -13,6 +13,7 @@ import com.fds.vr.controler.impl.VRCOPManagementImpl;
 import com.fds.vr.controler.impl.VRIssueManagementImpl;
 import com.fds.vr.controler.impl.VROutputSheetDetailManagementImpl;
 import com.fds.vr.controler.impl.VRProductionManagementImpl;
+import com.fds.vr.controler.impl.VRRPDossierStatisticsManagementImpl;
 import com.fds.vr.controler.impl.VRVehicleManagementImpl;
 import com.fds.vr.model.VRCorporationAttendeeResultModel;
 import com.fds.vr.model.VRVehicleTypeCertificateResultModel;
@@ -86,6 +87,7 @@ public class VRRestApplication extends Application {
 		singletons.add(new VRVehicleManagementImpl());
 		singletons.add(new VRIssueManagementImpl());
 		singletons.add(new VROutputSheetDetailManagementImpl());
+		singletons.add(new VRRPDossierStatisticsManagementImpl());
 		singletons.add(this);
 		return singletons;
 	}

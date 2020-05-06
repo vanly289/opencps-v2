@@ -33,6 +33,7 @@ import com.fds.vr.business.service.base.VRVehicleTypeCertificateLocalServiceBase
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -3939,5 +3940,154 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 		object.setModifyDate(now);
 
 		return vrVehicleTypeCertificatePersistence.update(object);
+	}
+	
+	public VRVehicleTypeCertificate adminProcessData(JSONObject objectData, long dossierId, long mtCore) {
+		VRVehicleTypeCertificate object = null;
+		
+		vrVehicleTypeCertificatePersistence.removeByDossierId(dossierId, mtCore);
+		
+		long id = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
+		
+		object = vrVehicleTypeCertificatePersistence.create(id);
+		
+		Date now = new Date();
+		object.setSyncDate(now);
+		// Add other fields
+		object.setMtCore(1);
+		object.setDossierType(objectData.getString("dossierType"));
+		object.setDossierNo(objectData.getString("dossierNo"));
+		object.setConvertassembleId(0);
+		/*
+		 * if (registration != null) {
+		 * object.setApplicantIdNo(registration.getApplicantIdNo());
+		 * object.setApplicantIdDate(registration.getApplicantIdDate());
+		 * object.setApplicantName(registration.getApplicantName()); }
+		 */
+
+		object.setApplicantAddress(objectData.getString("applicantAddress"));
+		object.setApplicantRepresentative(objectData.getString("applicantRepresentative"));
+		object.setApplicantRepresentativeTitle(objectData.getString("applicantRepresentativeTitle"));
+		object.setApplicantEmail(objectData.getString("applicantEmail"));
+		object.setApplicantPhone(objectData.getString("applicantPhone"));
+		object.setApplicantFax(objectData.getString("applicantFax"));
+		object.setApplicantContactName(objectData.getString("applicantContactName"));
+		object.setApplicantContactEmail(objectData.getString("applicantContactEmail"));
+		object.setApplicantcontactPhone(objectData.getString("applicantcontactPhone"));
+		object.setManufacturerForeignCode(objectData.getString("manufacturerForeignCode"));
+
+		object.setManufacturerName(objectData.getString("manufacturerName"));
+		object.setManufacturerAddress(objectData.getString("manufacturerAddress"));
+		object.setManufacturerRepresentative(objectData.getString("manufacturerRepresentative"));
+		object.setManufacturerRepresentativeTitle(objectData.getString("manufacturerRepresentativeTitle"));
+		object.setManufacturerEmail(objectData.getString("manufacturerEmail"));
+		object.setManufacturerPhone(objectData.getString("manufacturerPhone"));
+		object.setManufacturerFax(objectData.getString("manufacturerFax"));
+		object.setProductionPlantCode(objectData.getString("productionPlantCode"));
+		object.setProductionPlantName(objectData.getString("productionPlantName"));
+		object.setProductionPlantAddress(objectData.getString("productionPlantAddress"));
+		object.setProductionPlantRepresentative(objectData.getString("productionPlantRepresentative"));
+		object.setProductionPlantRepresentativeTitle(objectData.getString("productionPlantRepresentativeTitle"));
+		object.setCopReportNo(objectData.getString("copReportNo"));
+		object.setCopReportDate(now);
+		object.setCopReportExpireDate(now);
+
+		//object.setDesignerCode(registration.getApplicantIdNo().toString());
+		object.setDesignerName(objectData.getString("designerName"));
+		object.setDesignerAddress(objectData.getString("designerAddress"));
+		object.setDesignerRepresentative(objectData.getString("designerRepresentative"));
+		object.setDesignerRepresentativeTitle(objectData.getString("designerRepresentativeTitle"));
+
+		object.setDesignerEmail(objectData.getString("designerEmail"));
+		object.setDesignerPhone(objectData.getString("designerPhone"));
+		object.setDesignerFax(objectData.getString("designerFax"));
+		object.setVerificationCertificateNo(objectData.getString("verificationCertificateNo"));
+		object.setVerificationCertificateDate(parseStringToDate(objectData.getString("verificationCertificateDate")));
+		object.setVerificationRefNo(objectData.getString("verificationRefNo"));
+		object.setVerificationRefDate(now);
+		object.setTypeApprovalCertificateNo(objectData.getString("typeApprovalCertificateNo"));
+		object.setTypeApprovalCertificateDate(now);
+		object.setDesignModelCode(objectData.getString("designModelCode"));
+		object.setDesignModelDescription(objectData.getString("designModelDescription"));
+		object.setDesignSymbol(objectData.getString("designSymbol"));
+
+		object.setRegisteredNumber(objectData.getString("registeredNumber"));
+		object.setInspectorReceiveDate(now);
+		object.setInspectorSubmitDate(now);
+		object.setInspectorendorSementDate(now);
+		object.setInspectorDeadline(now);
+		object.setInspectorFinishDate(now);
+		object.setInspectorCancelDate(now);
+		object.setInspectorOrganization(objectData.getString("inspectorOrganization"));
+		object.setInspectorDivision(objectData.getString("inspectorDivision"));
+		object.setInspectorSignName(objectData.getString("inspectorSignName"));
+		object.setInspectorSignTitle(objectData.getString("inspectorSignTitle"));
+		object.setInspectorSignPlace(objectData.getString("inspectorSignPlace"));
+		object.setCertificateType(objectData.getString("certificateType"));
+		object.setReferenceCertificateNo(objectData.getString("referenceCertificateNo"));
+		object.setReferenceCertificateDate(now);
+		object.setCertificateRecordNo(objectData.getString("certificateRecordNo"));
+		object.setCertificateSignName(objectData.getString("certificateSignName"));
+		object.setCertificateSignTitle(objectData.getString("certificateSignTitle"));
+		object.setCertificateSignPlace(objectData.getString("certificateSignPlace"));
+		object.setCertificateRecordDate(parseStringToDate(objectData.getString("certificateRecordDate")));
+		object.setCertificateRecordExpireDate(now);
+		object.setExpiredStatus("1");
+		object.setCertificateRecordStatus("3");
+		object.setDigitalIssueStatus("1");
+		object.setVehicleClass(objectData.getString("vehicleClass"));
+		object.setCertifiedVehicleType(objectData.getString("certifiedVehicleType"));
+		object.setCertifiedVehicleTypeDescription(objectData.getString("certifiedVehicleTypeDescription"));
+		object.setCertifiedTrademark(objectData.getString("certifiedTrademark"));
+		object.setCertifiedTrademarkName(objectData.getString("certifiedTrademarkName"));
+		object.setCertifiedCommercialName(objectData.getString("certifiedCommercialName"));
+		object.setCertifiedModelCode(objectData.getString("certifiedModelCode"));
+		object.setCertifiedAssemblyType(objectData.getString("certifiedAssemblyType"));
+		object.setCertifiedAssemblyTypeDescription(objectData.getString("certifiedAssemblyTypeDescription"));
+		object.setCertifiedVINNo(objectData.getString("certifiedVINNo"));
+		object.setCertifiedVINPosition(objectData.getString("certifiedVINPosition"));
+		object.setCertifiedFrameNo(objectData.getString("certifiedFrameNo"));
+		object.setCertifiedFrameAttachPlace(objectData.getString("certifiedFrameAttachPlace"));
+		object.setCertifiedFramePosition(objectData.getString("certifiedFramePosition"));
+		object.setCertifiedEngineNo(objectData.getString("certifiedEngineNo"));
+		object.setCertifiedEngineAttachPlace(objectData.getString("certifiedEngineAttachPlace"));
+		object.setCertifiedEnginePosition(objectData.getString("certifiedEnginePosition"));
+		object.setSafetyTestReportNo(objectData.getString("safetyTestReportNo"));
+		object.setSafetyTestReportDate(now);
+		object.setEmissionTestReportNo(objectData.getString("emissionTestReportNo"));
+		object.setEmissionTestReportDate(now);
+		object.setCommonSafetyStandard(objectData.getString("commonSafetyStandard"));
+		object.setEmissionStandard(objectData.getString("emissionStandard"));
+		object.setOtherTestReportNo(objectData.getString("otherTestReportNo"));
+		object.setOtherTestReportDate(now);
+		object.setSampleFrameNo(objectData.getString("sampleFrameNo"));
+		object.setSampleVINNo(objectData.getString("sampleVINNo"));;
+		object.setSampleEngineNo(objectData.getString("sampleEngineNo"));
+		object.setSampleVehicleType(objectData.getString("sampleVehicleType"));
+		object.setSampleVehicleTypeDescription(objectData.getString("sampleVehicleTypeDescription"));
+		object.setSampleTrademark(objectData.getString("sampleTrademark"));
+		object.setSampleTrademarkName(objectData.getString("sampleTrademarkName"));
+		object.setSampleCommercialName(objectData.getString("sampleCommercialName"));
+		object.setSampleModelCode(objectData.getString("sampleModelCode"));
+		object.setCustomsDeclarationNo(objectData.getString("customsDeclarationNo"));
+		object.setCustomsDeclarationDate(now);
+		object.setProductionCountry(objectData.getString("productionCountry"));
+		object.setImporterQuantity(objectData.getLong("importerQuantity"));
+		object.setInspectionRecordNo(objectData.getString("inspectionRecordNo"));
+		object.setInspectionDate(now);
+		object.setInspectionSite(objectData.getString("inspectionSite"));
+		object.setInspectionDistrictCode(objectData.getString("inspectionDistrictCode"));
+		object.setInspectionDistrictName(objectData.getString("inspectionDistrictName"));
+		object.setInspectionProvinceCode(objectData.getString("inspectionProvinceCode"));
+		object.setInspectionProvinceName(objectData.getString("inspectionProvinceName"));
+		object.setCorporationId(objectData.getString("corporationId"));
+		object.setInspectorId(objectData.getLong("inspectorId"));
+		object.setRemarks(objectData.getString("remarks"));
+		object.setInspectionNote(objectData.getString("inspectionNote"));
+		object.setCertificateNote(objectData.getString("certificateNote"));
+		object.setModule(objectData.getString("module"));
+		object.setModifyDate(now);
+		
+		return object;
 	}
 }
