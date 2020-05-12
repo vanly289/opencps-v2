@@ -134,6 +134,7 @@ public class VRTechnicalSpec_XMYLocalServiceImpl extends VRTechnicalSpec_XMYLoca
 				long id = counterLocalService.increment(VRTechnicalSpec_XMY.class.getName());
 				object = vrTechnicalSpec_XMYPersistence.create(id);
 
+				object.setVehicleTypeCertificateId(vehicleTypeCertificateId);
 				object.setModifyDate(now);
 				object.setSyncDate(now);
 				object.setMtCore(objectData.getLong("mtCore"));

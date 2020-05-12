@@ -3833,6 +3833,7 @@ public class VRTechnicalSpec_XDDPersistenceImpl extends BasePersistenceImpl<VRTe
 		vrTechnicalSpec_XDDImpl.setReferenceUid(vrTechnicalSpec_XDD.getReferenceUid());
 		vrTechnicalSpec_XDDImpl.setDossierIdCTN(vrTechnicalSpec_XDD.getDossierIdCTN());
 		vrTechnicalSpec_XDDImpl.setDeliverableCode(vrTechnicalSpec_XDD.getDeliverableCode());
+		vrTechnicalSpec_XDDImpl.setVehicleTypeCertificateId(vrTechnicalSpec_XDD.getVehicleTypeCertificateId());
 		vrTechnicalSpec_XDDImpl.setXDD01001(vrTechnicalSpec_XDD.getXDD01001());
 		vrTechnicalSpec_XDDImpl.setXDD01002(vrTechnicalSpec_XDD.getXDD01002());
 		vrTechnicalSpec_XDDImpl.setXDD01003(vrTechnicalSpec_XDD.getXDD01003());

@@ -3845,6 +3845,7 @@ public class VRTechnicalSpec_LKXMYPersistenceImpl extends BasePersistenceImpl<VR
 		vrTechnicalSpec_LKXMYImpl.setReferenceUid(vrTechnicalSpec_LKXMY.getReferenceUid());
 		vrTechnicalSpec_LKXMYImpl.setDossierIdCTN(vrTechnicalSpec_LKXMY.getDossierIdCTN());
 		vrTechnicalSpec_LKXMYImpl.setDeliverableCode(vrTechnicalSpec_LKXMY.getDeliverableCode());
+		vrTechnicalSpec_LKXMYImpl.setVehicleTypeCertificateId(vrTechnicalSpec_LKXMY.getVehicleTypeCertificateId());
 		vrTechnicalSpec_LKXMYImpl.setXMY01001(vrTechnicalSpec_LKXMY.getXMY01001());
 		vrTechnicalSpec_LKXMYImpl.setXMY01002(vrTechnicalSpec_LKXMY.getXMY01002());
 		vrTechnicalSpec_LKXMYImpl.setXMY01003(vrTechnicalSpec_LKXMY.getXMY01003());

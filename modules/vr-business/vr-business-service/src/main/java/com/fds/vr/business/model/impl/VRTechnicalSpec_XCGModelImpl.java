@@ -71,6 +71,7 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 			{ "referenceUid", Types.VARCHAR },
 			{ "dossierIdCTN", Types.VARCHAR },
 			{ "deliverableCode", Types.VARCHAR },
+			{ "vehicleTypeCertificateId", Types.BIGINT },
 			{ "XCG01070", Types.VARCHAR },
 			{ "XCG01072", Types.VARCHAR },
 			{ "XCG01083", Types.VARCHAR },
@@ -111,6 +112,7 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 		TABLE_COLUMNS_MAP.put("referenceUid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("dossierIdCTN", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("deliverableCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("vehicleTypeCertificateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("XCG01070", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("XCG01072", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("XCG01083", Types.VARCHAR);
@@ -141,7 +143,7 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_technicalspec_xcg (id LONG not null primary key,mtCore LONG,convertassembleId LONG,dossierId LONG,dossierNo VARCHAR(75) null,referenceUid VARCHAR(75) null,dossierIdCTN VARCHAR(75) null,deliverableCode VARCHAR(75) null,XCG01070 VARCHAR(75) null,XCG01072 VARCHAR(75) null,XCG01083 VARCHAR(75) null,XCG01084 VARCHAR(75) null,XCG01085 VARCHAR(75) null,XCG01086 VARCHAR(75) null,XCG01087 VARCHAR(75) null,XCG01088 VARCHAR(75) null,XCG01090 VARCHAR(75) null,XCG01091 VARCHAR(75) null,XCG01092 VARCHAR(75) null,XCG01123 VARCHAR(75) null,XCG01124 VARCHAR(75) null,XCG01125 VARCHAR(75) null,XCG01156 VARCHAR(75) null,XCG01157 VARCHAR(75) null,XCG01163 VARCHAR(75) null,XCG01169 VARCHAR(75) null,XCG01170 VARCHAR(75) null,XCG01171 VARCHAR(75) null,XCG01172 VARCHAR(75) null,XCG01173 VARCHAR(75) null,XCG01182 VARCHAR(75) null,XCG01183 VARCHAR(75) null,XCG01192 VARCHAR(75) null,loai_dong_co VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_technicalspec_xcg (id LONG not null primary key,mtCore LONG,convertassembleId LONG,dossierId LONG,dossierNo VARCHAR(75) null,referenceUid VARCHAR(75) null,dossierIdCTN VARCHAR(75) null,deliverableCode VARCHAR(75) null,vehicleTypeCertificateId LONG,XCG01070 VARCHAR(75) null,XCG01072 VARCHAR(75) null,XCG01083 VARCHAR(75) null,XCG01084 VARCHAR(75) null,XCG01085 VARCHAR(75) null,XCG01086 VARCHAR(75) null,XCG01087 VARCHAR(75) null,XCG01088 VARCHAR(75) null,XCG01090 VARCHAR(75) null,XCG01091 VARCHAR(75) null,XCG01092 VARCHAR(75) null,XCG01123 VARCHAR(75) null,XCG01124 VARCHAR(75) null,XCG01125 VARCHAR(75) null,XCG01156 VARCHAR(75) null,XCG01157 VARCHAR(75) null,XCG01163 VARCHAR(75) null,XCG01169 VARCHAR(75) null,XCG01170 VARCHAR(75) null,XCG01171 VARCHAR(75) null,XCG01172 VARCHAR(75) null,XCG01173 VARCHAR(75) null,XCG01182 VARCHAR(75) null,XCG01183 VARCHAR(75) null,XCG01192 VARCHAR(75) null,loai_dong_co VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_technicalspec_xcg";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrTechnicalSpec_XCG.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_technicalspec_xcg.modifyDate DESC";
@@ -213,6 +215,7 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 		attributes.put("referenceUid", getReferenceUid());
 		attributes.put("dossierIdCTN", getDossierIdCTN());
 		attributes.put("deliverableCode", getDeliverableCode());
+		attributes.put("vehicleTypeCertificateId", getVehicleTypeCertificateId());
 		attributes.put("XCG01070", getXCG01070());
 		attributes.put("XCG01072", getXCG01072());
 		attributes.put("XCG01083", getXCG01083());
@@ -296,6 +299,13 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 
 		if (deliverableCode != null) {
 			setDeliverableCode(deliverableCode);
+		}
+
+		Long vehicleTypeCertificateId = (Long)attributes.get(
+				"vehicleTypeCertificateId");
+
+		if (vehicleTypeCertificateId != null) {
+			setVehicleTypeCertificateId(vehicleTypeCertificateId);
 		}
 
 		String XCG01070 = (String)attributes.get("XCG01070");
@@ -641,6 +651,16 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 
 	public String getOriginalDeliverableCode() {
 		return GetterUtil.getString(_originalDeliverableCode);
+	}
+
+	@Override
+	public long getVehicleTypeCertificateId() {
+		return _vehicleTypeCertificateId;
+	}
+
+	@Override
+	public void setVehicleTypeCertificateId(long vehicleTypeCertificateId) {
+		_vehicleTypeCertificateId = vehicleTypeCertificateId;
 	}
 
 	@Override
@@ -1094,6 +1114,7 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 		vrTechnicalSpec_XCGImpl.setReferenceUid(getReferenceUid());
 		vrTechnicalSpec_XCGImpl.setDossierIdCTN(getDossierIdCTN());
 		vrTechnicalSpec_XCGImpl.setDeliverableCode(getDeliverableCode());
+		vrTechnicalSpec_XCGImpl.setVehicleTypeCertificateId(getVehicleTypeCertificateId());
 		vrTechnicalSpec_XCGImpl.setXCG01070(getXCG01070());
 		vrTechnicalSpec_XCGImpl.setXCG01072(getXCG01072());
 		vrTechnicalSpec_XCGImpl.setXCG01083(getXCG01083());
@@ -1251,6 +1272,8 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 		if ((deliverableCode != null) && (deliverableCode.length() == 0)) {
 			vrTechnicalSpec_XCGCacheModel.deliverableCode = null;
 		}
+
+		vrTechnicalSpec_XCGCacheModel.vehicleTypeCertificateId = getVehicleTypeCertificateId();
 
 		vrTechnicalSpec_XCGCacheModel.XCG01070 = getXCG01070();
 
@@ -1483,7 +1506,7 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(75);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1501,6 +1524,8 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 		sb.append(getDossierIdCTN());
 		sb.append(", deliverableCode=");
 		sb.append(getDeliverableCode());
+		sb.append(", vehicleTypeCertificateId=");
+		sb.append(getVehicleTypeCertificateId());
 		sb.append(", XCG01070=");
 		sb.append(getXCG01070());
 		sb.append(", XCG01072=");
@@ -1564,7 +1589,7 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(112);
+		StringBundler sb = new StringBundler(115);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRTechnicalSpec_XCG");
@@ -1601,6 +1626,10 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 		sb.append(
 			"<column><column-name>deliverableCode</column-name><column-value><![CDATA[");
 		sb.append(getDeliverableCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>vehicleTypeCertificateId</column-name><column-value><![CDATA[");
+		sb.append(getVehicleTypeCertificateId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>XCG01070</column-name><column-value><![CDATA[");
@@ -1742,6 +1771,7 @@ public class VRTechnicalSpec_XCGModelImpl extends BaseModelImpl<VRTechnicalSpec_
 	private String _originalDossierIdCTN;
 	private String _deliverableCode;
 	private String _originalDeliverableCode;
+	private long _vehicleTypeCertificateId;
 	private String _XCG01070;
 	private String _XCG01072;
 	private String _XCG01083;

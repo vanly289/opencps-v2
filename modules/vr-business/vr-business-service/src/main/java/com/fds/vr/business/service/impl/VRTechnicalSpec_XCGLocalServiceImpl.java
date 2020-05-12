@@ -143,7 +143,7 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 				long id = counterLocalService.increment(VRTechnicalSpec_XCG.class.getName());
 				object = vrTechnicalSpec_XCGPersistence.create(id);
 
-				//object.setVehicleTypeCertificateId(objectData.getString("VehicleTypeCertificateId"));
+				object.setVehicleTypeCertificateId(vehicleTypeCertificateId);
 				object.setModifyDate(now);
 				object.setSyncDate(now);
 				object.setMtCore(objectData.getLong("mtCore"));

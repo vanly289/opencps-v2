@@ -3958,13 +3958,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 		object.setDossierType(objectData.getString("dossierType"));
 		object.setDossierNo(objectData.getString("dossierNo"));
 		object.setConvertassembleId(0);
-		/*
-		 * if (registration != null) {
-		 * object.setApplicantIdNo(registration.getApplicantIdNo());
-		 * object.setApplicantIdDate(registration.getApplicantIdDate());
-		 * object.setApplicantName(registration.getApplicantName()); }
-		 */
-
+		
+		object.setApplicantName(objectData.getString("applicantName"));
+		object.setDossierId(objectData.getLong("dossierId"));
+		object.setDossierNo(objectData.getString("dossierNo"));
+		//object.setDossierIdCTN(objectData.getString("dossierIdCTN"));
 		object.setApplicantAddress(objectData.getString("applicantAddress"));
 		object.setApplicantRepresentative(objectData.getString("applicantRepresentative"));
 		object.setApplicantRepresentativeTitle(objectData.getString("applicantRepresentativeTitle"));
@@ -4087,6 +4085,8 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 		object.setCertificateNote(objectData.getString("certificateNote"));
 		object.setModule(objectData.getString("module"));
 		object.setModifyDate(now);
+		
+		object = vrVehicleTypeCertificatePersistence.update(object);
 		
 		return object;
 	}

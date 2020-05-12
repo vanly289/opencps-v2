@@ -2517,6 +2517,7 @@
 		<column name="referenceUid" type="String" db-name="referenceUid"/>
 		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
 		<column name="deliverableCode" type="String" db-name="deliverableCode"/>
+		<column name="vehicleTypeCertificateId" type="long" db-name="vehicleTypeCertificateId"/>
 		
 		<column name="XCG01001" type="String" db-name="XCG01001"/>
 		<column name="XCG01002" type="String" db-name="XCG01002"/>
@@ -2726,6 +2727,7 @@
 		<column name="referenceUid" type="String" db-name="referenceUid"/>
 		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
 		<column name="deliverableCode" type="String" db-name="deliverableCode"/>
+		<column name="vehicleTypeCertificateId" type="long" db-name="vehicleTypeCertificateId"/>
 		
 		<column name="XMY01001" type="String" db-name="XMY01001"/>
 		<column name="XMY01002" type="String" db-name="XMY01002"/>
@@ -3120,6 +3122,7 @@
 		<column name="referenceUid" type="String" db-name="referenceUid"/>
 		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
 		<column name="deliverableCode" type="String" db-name="deliverableCode"/>
+		<column name="vehicleTypeCertificateId" type="long" db-name="vehicleTypeCertificateId"/>
 		
 		<column name="XCG01070" type="String" db-name="XCG01070"/>
 		<column name="XCG01072" type="String" db-name="XCG01072"/>
@@ -5379,6 +5382,7 @@
 		<column name="referenceUid" type="String" db-name="referenceUid"/>
 		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
 		<column name="deliverableCode" type="String" db-name="deliverableCode"/>
+		<column name="vehicleTypeCertificateId" type="long" db-name="vehicleTypeCertificateId"/>
 		
 		<column name="XCH01001" type="String" db-name="XCH01001"/>
 		<column name="XCH01002" type="String" db-name="XCH01002"/>
@@ -5914,6 +5918,7 @@
 		<column name="referenceUid" type="String" db-name="referenceUid"/>
 		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
 		<column name="deliverableCode" type="String" db-name="deliverableCode"/>
+		<column name="vehicleTypeCertificateId" type="long" db-name="vehicleTypeCertificateId"/>
 		
 		<column name="loai_dong_co" type="String" db-name="loai_dong_co"/>
 		<column name="XCN01001" type="String" db-name="XCN01001"/>
@@ -6511,6 +6516,7 @@
 		<column name="referenceUid" type="String" db-name="referenceUid"/>
 		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
 		<column name="deliverableCode" type="String" db-name="deliverableCode"/>
+		<column name="vehicleTypeCertificateId" type="long" db-name="vehicleTypeCertificateId"/>
 		
 		<column name="XDD01001" type="String" db-name="XDD01001"/>
 		<column name="XDD01002" type="String" db-name="XDD01002"/>
@@ -6730,6 +6736,7 @@
 		<column name="referenceUid" type="String" db-name="referenceUid"/>
 		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
 		<column name="deliverableCode" type="String" db-name="deliverableCode"/>
+		<column name="vehicleTypeCertificateId" type="long" db-name="vehicleTypeCertificateId"/>
 		
 		<column name="loai_dong_co" type="String" db-name="loai_dong_co"/>
 		<column name="XMY01001" type="String" db-name="XMY01001"/>

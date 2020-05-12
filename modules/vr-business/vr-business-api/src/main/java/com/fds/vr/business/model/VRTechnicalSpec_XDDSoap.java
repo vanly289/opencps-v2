@@ -41,6 +41,7 @@ public class VRTechnicalSpec_XDDSoap implements Serializable {
 		soapModel.setReferenceUid(model.getReferenceUid());
 		soapModel.setDossierIdCTN(model.getDossierIdCTN());
 		soapModel.setDeliverableCode(model.getDeliverableCode());
+		soapModel.setVehicleTypeCertificateId(model.getVehicleTypeCertificateId());
 		soapModel.setXDD01001(model.getXDD01001());
 		soapModel.setXDD01002(model.getXDD01002());
 		soapModel.setXDD01003(model.getXDD01003());
@@ -333,6 +334,14 @@ public class VRTechnicalSpec_XDDSoap implements Serializable {
 
 	public void setDeliverableCode(String deliverableCode) {
 		_deliverableCode = deliverableCode;
+	}
+
+	public long getVehicleTypeCertificateId() {
+		return _vehicleTypeCertificateId;
+	}
+
+	public void setVehicleTypeCertificateId(long vehicleTypeCertificateId) {
+		_vehicleTypeCertificateId = vehicleTypeCertificateId;
 	}
 
 	public String getXDD01001() {
@@ -1743,6 +1752,7 @@ public class VRTechnicalSpec_XDDSoap implements Serializable {
 	private String _referenceUid;
 	private String _dossierIdCTN;
 	private String _deliverableCode;
+	private long _vehicleTypeCertificateId;
 	private String _XDD01001;
 	private String _XDD01002;
 	private String _XDD01003;

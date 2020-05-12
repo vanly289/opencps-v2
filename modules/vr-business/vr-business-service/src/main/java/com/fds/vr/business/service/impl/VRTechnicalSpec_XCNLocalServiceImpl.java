@@ -137,7 +137,7 @@ public class VRTechnicalSpec_XCNLocalServiceImpl extends VRTechnicalSpec_XCNLoca
 				long id = counterLocalService.increment(VRTechnicalSpec_XCN.class.getName());
 				object = vrTechnicalSpec_XCNPersistence.create(id);
 
-				// object.setVehicleTypeCertificateId(vehicleTypeCertificateId);
+				object.setVehicleTypeCertificateId(vehicleTypeCertificateId);
 				object.setModifyDate(now);
 				object.setSyncDate(now);
 				object.setMtCore(objectData.getLong("mtCore"));

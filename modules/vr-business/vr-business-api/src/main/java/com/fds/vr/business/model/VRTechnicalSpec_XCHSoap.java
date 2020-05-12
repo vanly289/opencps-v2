@@ -41,6 +41,7 @@ public class VRTechnicalSpec_XCHSoap implements Serializable {
 		soapModel.setReferenceUid(model.getReferenceUid());
 		soapModel.setDossierIdCTN(model.getDossierIdCTN());
 		soapModel.setDeliverableCode(model.getDeliverableCode());
+		soapModel.setVehicleTypeCertificateId(model.getVehicleTypeCertificateId());
 		soapModel.setXCH01001(model.getXCH01001());
 		soapModel.setXCH01002(model.getXCH01002());
 		soapModel.setXCH01003(model.getXCH01003());
@@ -396,6 +397,14 @@ public class VRTechnicalSpec_XCHSoap implements Serializable {
 
 	public void setDeliverableCode(String deliverableCode) {
 		_deliverableCode = deliverableCode;
+	}
+
+	public long getVehicleTypeCertificateId() {
+		return _vehicleTypeCertificateId;
+	}
+
+	public void setVehicleTypeCertificateId(long vehicleTypeCertificateId) {
+		_vehicleTypeCertificateId = vehicleTypeCertificateId;
 	}
 
 	public String getXCH01001() {
@@ -2310,6 +2319,7 @@ public class VRTechnicalSpec_XCHSoap implements Serializable {
 	private String _referenceUid;
 	private String _dossierIdCTN;
 	private String _deliverableCode;
+	private long _vehicleTypeCertificateId;
 	private String _XCH01001;
 	private String _XCH01002;
 	private String _XCH01003;

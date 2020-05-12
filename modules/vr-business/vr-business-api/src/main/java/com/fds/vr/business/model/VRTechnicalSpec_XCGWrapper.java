@@ -66,6 +66,7 @@ public class VRTechnicalSpec_XCGWrapper implements VRTechnicalSpec_XCG,
 		attributes.put("referenceUid", getReferenceUid());
 		attributes.put("dossierIdCTN", getDossierIdCTN());
 		attributes.put("deliverableCode", getDeliverableCode());
+		attributes.put("vehicleTypeCertificateId", getVehicleTypeCertificateId());
 		attributes.put("XCG01070", getXCG01070());
 		attributes.put("XCG01072", getXCG01072());
 		attributes.put("XCG01083", getXCG01083());
@@ -146,6 +147,13 @@ public class VRTechnicalSpec_XCGWrapper implements VRTechnicalSpec_XCG,
 
 		if (deliverableCode != null) {
 			setDeliverableCode(deliverableCode);
+		}
+
+		Long vehicleTypeCertificateId = (Long)attributes.get(
+				"vehicleTypeCertificateId");
+
+		if (vehicleTypeCertificateId != null) {
+			setVehicleTypeCertificateId(vehicleTypeCertificateId);
 		}
 
 		String XCG01070 = (String)attributes.get("XCG01070");
@@ -752,6 +760,16 @@ public class VRTechnicalSpec_XCGWrapper implements VRTechnicalSpec_XCG,
 		return _vrTechnicalSpec_XCG.getPrimaryKey();
 	}
 
+	/**
+	* Returns the vehicle type certificate ID of this vr technical spec_xcg.
+	*
+	* @return the vehicle type certificate ID of this vr technical spec_xcg
+	*/
+	@Override
+	public long getVehicleTypeCertificateId() {
+		return _vrTechnicalSpec_XCG.getVehicleTypeCertificateId();
+	}
+
 	@Override
 	public void persist() {
 		_vrTechnicalSpec_XCG.persist();
@@ -906,6 +924,16 @@ public class VRTechnicalSpec_XCGWrapper implements VRTechnicalSpec_XCG,
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_vrTechnicalSpec_XCG.setSyncDate(syncDate);
+	}
+
+	/**
+	* Sets the vehicle type certificate ID of this vr technical spec_xcg.
+	*
+	* @param vehicleTypeCertificateId the vehicle type certificate ID of this vr technical spec_xcg
+	*/
+	@Override
+	public void setVehicleTypeCertificateId(long vehicleTypeCertificateId) {
+		_vrTechnicalSpec_XCG.setVehicleTypeCertificateId(vehicleTypeCertificateId);
 	}
 
 	/**

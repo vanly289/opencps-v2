@@ -179,6 +179,20 @@ public interface VRTechnicalSpec_XCNModel extends BaseModel<VRTechnicalSpec_XCN>
 	public void setDeliverableCode(String deliverableCode);
 
 	/**
+	 * Returns the vehicle type certificate ID of this vr technical spec_xcn.
+	 *
+	 * @return the vehicle type certificate ID of this vr technical spec_xcn
+	 */
+	public long getVehicleTypeCertificateId();
+
+	/**
+	 * Sets the vehicle type certificate ID of this vr technical spec_xcn.
+	 *
+	 * @param vehicleTypeCertificateId the vehicle type certificate ID of this vr technical spec_xcn
+	 */
+	public void setVehicleTypeCertificateId(long vehicleTypeCertificateId);
+
+	/**
 	 * Returns the loai_dong_co of this vr technical spec_xcn.
 	 *
 	 * @return the loai_dong_co of this vr technical spec_xcn

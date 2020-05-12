@@ -133,7 +133,7 @@ public class VRTechnicalSpec_LKXMYLocalServiceImpl extends VRTechnicalSpec_LKXMY
 				long id = counterLocalService.increment(VRTechnicalSpec_LKXMY.class.getName());
 				object = vrTechnicalSpec_LKXMYPersistence.create(id);
 
-				// object.setVehicleTypeCertificateId(objectData.getString("VehicleTypeCertificateId"));
+				object.setVehicleTypeCertificateId(vehicleTypeCertificateId);
 				object.setModifyDate(now);
 				object.setSyncDate(now);
 				object.setMtCore(objectData.getLong("mtCore"));

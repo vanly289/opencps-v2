@@ -179,6 +179,20 @@ public interface VRTechnicalSpec_XCHModel extends BaseModel<VRTechnicalSpec_XCH>
 	public void setDeliverableCode(String deliverableCode);
 
 	/**
+	 * Returns the vehicle type certificate ID of this vr technical spec_xch.
+	 *
+	 * @return the vehicle type certificate ID of this vr technical spec_xch
+	 */
+	public long getVehicleTypeCertificateId();
+
+	/**
+	 * Sets the vehicle type certificate ID of this vr technical spec_xch.
+	 *
+	 * @param vehicleTypeCertificateId the vehicle type certificate ID of this vr technical spec_xch
+	 */
+	public void setVehicleTypeCertificateId(long vehicleTypeCertificateId);
+
+	/**
 	 * Returns the xch01001 of this vr technical spec_xch.
 	 *
 	 * @return the xch01001 of this vr technical spec_xch

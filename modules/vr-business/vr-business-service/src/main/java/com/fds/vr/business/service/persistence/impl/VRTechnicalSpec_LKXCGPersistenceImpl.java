@@ -3845,6 +3845,7 @@ public class VRTechnicalSpec_LKXCGPersistenceImpl extends BasePersistenceImpl<VR
 		vrTechnicalSpec_LKXCGImpl.setReferenceUid(vrTechnicalSpec_LKXCG.getReferenceUid());
 		vrTechnicalSpec_LKXCGImpl.setDossierIdCTN(vrTechnicalSpec_LKXCG.getDossierIdCTN());
 		vrTechnicalSpec_LKXCGImpl.setDeliverableCode(vrTechnicalSpec_LKXCG.getDeliverableCode());
+		vrTechnicalSpec_LKXCGImpl.setVehicleTypeCertificateId(vrTechnicalSpec_LKXCG.getVehicleTypeCertificateId());
 		vrTechnicalSpec_LKXCGImpl.setXCG01001(vrTechnicalSpec_LKXCG.getXCG01001());
 		vrTechnicalSpec_LKXCGImpl.setXCG01002(vrTechnicalSpec_LKXCG.getXCG01002());
 		vrTechnicalSpec_LKXCGImpl.setXCG01003(vrTechnicalSpec_LKXCG.getXCG01003());

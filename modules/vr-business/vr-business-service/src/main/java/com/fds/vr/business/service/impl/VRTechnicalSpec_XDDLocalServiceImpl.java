@@ -135,7 +135,7 @@ public class VRTechnicalSpec_XDDLocalServiceImpl extends VRTechnicalSpec_XDDLoca
 				long id = counterLocalService.increment(VRTechnicalSpec_XDD.class.getName());
 				object = vrTechnicalSpec_XDDPersistence.create(id);
 
-				//object.setVehicleTypeCertificateId(vehicleTypeCertificateId);
+				object.setVehicleTypeCertificateId(vehicleTypeCertificateId);
 				object.setModifyDate(now);
 				object.setSyncDate(now);
 				object.setMtCore(objectData.getLong("mtCore"));
