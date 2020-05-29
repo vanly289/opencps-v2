@@ -430,7 +430,6 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			// Add fileConfirmId
 			if (object.getLong("confirmFileEntryId") != 0) {
 				// Download confirmFile form SERVER
-
 				try {
 
 					String fileRef = object.getString("referenceUid");
@@ -520,7 +519,6 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 				// Add conformFile to CLIENT
 			} else {
 				try {
-
 					String fileRef = object.getString("referenceUid");
 
 					// Get file from SERVER
@@ -674,9 +672,9 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 							// Sync FormData
 							_log.info("Sync FormData START ERROR:****** ");
 							String dossierTemplateNo = dossierFile.getDossierTemplateNo();
-
+							//Edit by Dungnv: dossierTemplateNo -> dossierFile.getFileTemplateNo()
 							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(desGroupId,
-									dossierTemplateNo);
+									dossierFile.getFileTemplateNo());
 							if (part != null) {
 								String formData = dossierFile.getFormData();
 								//_log.info("formData: " + formData);
@@ -728,9 +726,9 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 							// Sync FormData
 							_log.info("Sync FormData START ERROR:****** ");
 							String dossierTemplateNo = dossierFile.getDossierTemplateNo();
-
+							//Edit by Dungnv: dossierTemplateNo -> dossierFile.getFileTemplateNo()
 							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(desGroupId,
-									dossierTemplateNo);
+									dossierFile.getFileTemplateNo());
 							if (part != null) {
 								String formData = dossierFile.getFormData();
 								//_log.info("formData: " + formData);
@@ -876,7 +874,6 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			String formData, DossierPart part, long dossierActionId, ServiceContext serviceContext) {
 		try {
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(dossierId, fileRef);
-
 			if (Validator.isNull(dossierFile)) {
 				// create dossierFile
 				dossierFile = DossierFileLocalServiceUtil.addDossierFile(desGroupId, dossierId,

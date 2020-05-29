@@ -41,7 +41,7 @@ public class DossierActionListenner extends BaseModelListener<DossierAction> {
 	@Override
 	public void onAfterCreate(DossierAction model) throws ModelListenerException {
 
-		_log.info("START Dossier Action");
+		_log.info("START Dossier Action model: " + model);
 		Indexer<DossierLog> indexer = IndexerRegistryUtil
 				.nullSafeGetIndexer(DossierLog.class);
 		if (true) {

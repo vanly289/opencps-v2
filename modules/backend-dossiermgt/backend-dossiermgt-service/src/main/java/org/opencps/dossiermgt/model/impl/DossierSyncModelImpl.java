@@ -82,7 +82,10 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 			{ "method", Types.INTEGER },
 			{ "classPK", Types.BIGINT },
 			{ "fileReferenceUid", Types.VARCHAR },
-			{ "serverNo", Types.VARCHAR }
+			{ "serverNo", Types.VARCHAR },
+			{ "payload", Types.VARCHAR },
+			{ "retry", Types.INTEGER },
+			{ "state_", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -102,9 +105,12 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileReferenceUid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("serverNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("payload", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("retry", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("state_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table opencps_dossiersync (uuid_ VARCHAR(75) null,dossierSyncId LONG not null primary key,companyId LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dossierId LONG,dossierReferenceUid VARCHAR(75) null,createDossier BOOLEAN,method INTEGER,classPK LONG,fileReferenceUid VARCHAR(75) null,serverNo VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table opencps_dossiersync (uuid_ VARCHAR(75) null,dossierSyncId LONG not null primary key,companyId LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dossierId LONG,dossierReferenceUid VARCHAR(75) null,createDossier BOOLEAN,method INTEGER,classPK LONG,fileReferenceUid VARCHAR(75) null,serverNo VARCHAR(75) null,payload VARCHAR(1000) null,retry INTEGER,state_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table opencps_dossiersync";
 	public static final String ORDER_BY_JPQL = " ORDER BY dossierSync.dossierId DESC, dossierSync.method DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY opencps_dossiersync.dossierId DESC, opencps_dossiersync.method DESC";
@@ -128,7 +134,8 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 	public static final long GROUPID_COLUMN_BITMASK = 32L;
 	public static final long METHOD_COLUMN_BITMASK = 64L;
 	public static final long SERVERNO_COLUMN_BITMASK = 128L;
-	public static final long UUID_COLUMN_BITMASK = 256L;
+	public static final long STATE_COLUMN_BITMASK = 256L;
+	public static final long UUID_COLUMN_BITMASK = 512L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(org.opencps.backend.dossiermgt.service.util.ServiceProps.get(
 				"lock.expiration.time.org.opencps.dossiermgt.model.DossierSync"));
 
@@ -184,6 +191,9 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 		attributes.put("classPK", getClassPK());
 		attributes.put("fileReferenceUid", getFileReferenceUid());
 		attributes.put("serverNo", getServerNo());
+		attributes.put("payload", getPayload());
+		attributes.put("retry", getRetry());
+		attributes.put("state", getState());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -282,6 +292,24 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 
 		if (serverNo != null) {
 			setServerNo(serverNo);
+		}
+
+		String payload = (String)attributes.get("payload");
+
+		if (payload != null) {
+			setPayload(payload);
+		}
+
+		Integer retry = (Integer)attributes.get("retry");
+
+		if (retry != null) {
+			setRetry(retry);
+		}
+
+		Integer state = (Integer)attributes.get("state");
+
+		if (state != null) {
+			setState(state);
 		}
 	}
 
@@ -586,6 +614,53 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 	}
 
 	@Override
+	public String getPayload() {
+		if (_payload == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _payload;
+		}
+	}
+
+	@Override
+	public void setPayload(String payload) {
+		_payload = payload;
+	}
+
+	@Override
+	public int getRetry() {
+		return _retry;
+	}
+
+	@Override
+	public void setRetry(int retry) {
+		_retry = retry;
+	}
+
+	@Override
+	public int getState() {
+		return _state;
+	}
+
+	@Override
+	public void setState(int state) {
+		_columnBitmask |= STATE_COLUMN_BITMASK;
+
+		if (!_setOriginalState) {
+			_setOriginalState = true;
+
+			_originalState = _state;
+		}
+
+		_state = state;
+	}
+
+	public int getOriginalState() {
+		return _originalState;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				DossierSync.class.getName()));
@@ -637,6 +712,9 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 		dossierSyncImpl.setClassPK(getClassPK());
 		dossierSyncImpl.setFileReferenceUid(getFileReferenceUid());
 		dossierSyncImpl.setServerNo(getServerNo());
+		dossierSyncImpl.setPayload(getPayload());
+		dossierSyncImpl.setRetry(getRetry());
+		dossierSyncImpl.setState(getState());
 
 		dossierSyncImpl.resetOriginalValues();
 
@@ -753,6 +831,10 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 
 		dossierSyncModelImpl._originalServerNo = dossierSyncModelImpl._serverNo;
 
+		dossierSyncModelImpl._originalState = dossierSyncModelImpl._state;
+
+		dossierSyncModelImpl._setOriginalState = false;
+
 		dossierSyncModelImpl._columnBitmask = 0;
 	}
 
@@ -835,12 +917,24 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 			dossierSyncCacheModel.serverNo = null;
 		}
 
+		dossierSyncCacheModel.payload = getPayload();
+
+		String payload = dossierSyncCacheModel.payload;
+
+		if ((payload != null) && (payload.length() == 0)) {
+			dossierSyncCacheModel.payload = null;
+		}
+
+		dossierSyncCacheModel.retry = getRetry();
+
+		dossierSyncCacheModel.state = getState();
+
 		return dossierSyncCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -872,6 +966,12 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 		sb.append(getFileReferenceUid());
 		sb.append(", serverNo=");
 		sb.append(getServerNo());
+		sb.append(", payload=");
+		sb.append(getPayload());
+		sb.append(", retry=");
+		sb.append(getRetry());
+		sb.append(", state=");
+		sb.append(getState());
 		sb.append("}");
 
 		return sb.toString();
@@ -879,7 +979,7 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("org.opencps.dossiermgt.model.DossierSync");
@@ -945,6 +1045,18 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 			"<column><column-name>serverNo</column-name><column-value><![CDATA[");
 		sb.append(getServerNo());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>payload</column-name><column-value><![CDATA[");
+		sb.append(getPayload());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>retry</column-name><column-value><![CDATA[");
+		sb.append(getRetry());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>state</column-name><column-value><![CDATA[");
+		sb.append(getState());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -985,6 +1097,11 @@ public class DossierSyncModelImpl extends BaseModelImpl<DossierSync>
 	private String _originalFileReferenceUid;
 	private String _serverNo;
 	private String _originalServerNo;
+	private String _payload;
+	private int _retry;
+	private int _state;
+	private int _originalState;
+	private boolean _setOriginalState;
 	private long _columnBitmask;
 	private DossierSync _escapedModel;
 }

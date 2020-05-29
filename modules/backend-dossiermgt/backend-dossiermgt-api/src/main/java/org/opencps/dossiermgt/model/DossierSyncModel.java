@@ -318,6 +318,49 @@ public interface DossierSyncModel extends BaseModel<DossierSync>, GroupedModel,
 	 */
 	public void setServerNo(String serverNo);
 
+	/**
+	 * Returns the payload of this dossier sync.
+	 *
+	 * @return the payload of this dossier sync
+	 */
+	@AutoEscape
+	public String getPayload();
+
+	/**
+	 * Sets the payload of this dossier sync.
+	 *
+	 * @param payload the payload of this dossier sync
+	 */
+	public void setPayload(String payload);
+
+	/**
+	 * Returns the retry of this dossier sync.
+	 *
+	 * @return the retry of this dossier sync
+	 */
+	public int getRetry();
+
+	/**
+	 * Sets the retry of this dossier sync.
+	 *
+	 * @param retry the retry of this dossier sync
+	 */
+	public void setRetry(int retry);
+
+	/**
+	 * Returns the state of this dossier sync.
+	 *
+	 * @return the state of this dossier sync
+	 */
+	public int getState();
+
+	/**
+	 * Sets the state of this dossier sync.
+	 *
+	 * @param state the state of this dossier sync
+	 */
+	public void setState(int state);
+
 	@Override
 	public boolean isNew();
 

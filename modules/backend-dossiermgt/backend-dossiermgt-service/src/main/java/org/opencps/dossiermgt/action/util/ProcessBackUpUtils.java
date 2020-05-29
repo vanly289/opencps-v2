@@ -153,7 +153,6 @@ public class ProcessBackUpUtils {
 						_log.info("START SYNC DOSSIER FILE");
 						DossierSyncLocalServiceUtil.updateDossierSync(groupId, userId, dossierId, referenceUid, false,
 								1, dossierFile.getDossierFileId(), dossierFile.getReferenceUid(), serverNo);
-
 					}
 				}
 			}

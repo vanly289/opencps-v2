@@ -5,9 +5,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.opencps.dossiermgt.action.PaymentFileActions;
+import org.opencps.dossiermgt.action.util.ConstantsUtils;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.constants.PaymentFileTerm;
 import org.opencps.dossiermgt.model.Dossier;
+import org.opencps.dossiermgt.model.DossierSync;
 import org.opencps.dossiermgt.model.PaymentFile;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
@@ -15,6 +17,7 @@ import org.opencps.dossiermgt.service.PaymentFileLocalServiceUtil;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -234,15 +237,48 @@ public class PaymentFileActionsImpl implements PaymentFileActions {
 				serviceContext);
 
 		if (!isSync) {
-		// Add PaymentFileSync
-		Dossier dossier = DossierLocalServiceUtil.getDossier(paymentFile.getDossierId());
-		// TODO review serverNo on this
-		DossierSyncLocalServiceUtil.updateDossierSync(groupId, serviceContext.getUserId(), paymentFile.getDossierId(),
-				dossier.getReferenceUid(), false, 3, paymentFile.getPrimaryKey(), paymentFile.getReferenceUid(),
-				StringPool.BLANK);
+			// Add PaymentFileSync
+			Dossier dossier = DossierLocalServiceUtil.getDossier(paymentFile.getDossierId());
+			// TODO review serverNo on this
+			//Comment by Dungnv
+	//		DossierSyncLocalServiceUtil.updateDossierSync(groupId, serviceContext.getUserId(), paymentFile.getDossierId(),
+	//				dossier.getReferenceUid(), false, 3, paymentFile.getPrimaryKey(), paymentFile.getReferenceUid(),
+	//				StringPool.BLANK);
+			//Add by Dungnv
+			DossierSync dossierSync = null;
+			List<DossierSync> dossierSyncs = DossierSyncLocalServiceUtil.fetchByGroupDossierId(groupId, paymentFile.getDossierId(), -1, -1);
+			if(Validator.isNotNull(dossierSyncs) && !dossierSyncs.isEmpty()) {
+				for(DossierSync sync : dossierSyncs) {
+					dossierSync = sync;
+				}
+			}
+			if(Validator.isNotNull(dossierSync)) {
+				JSONObject jPaymentStatus = JSONFactoryUtil.createJSONObject();
+				JSONArray array = JSONFactoryUtil.createJSONArray();
+				jPaymentStatus.put("groupId", groupId);
+				jPaymentStatus.put("userId", serviceContext.getUserId());
+				jPaymentStatus.put("dossierId", paymentFile.getDossierId());
+				jPaymentStatus.put("dossierReferenceUid", dossier.getReferenceUid());
+				jPaymentStatus.put("createDossier", false);
+				jPaymentStatus.put("method", 3);
+				jPaymentStatus.put("classPK", paymentFile.getPrimaryKey());
+				jPaymentStatus.put("fileReferenceUid", paymentFile.getReferenceUid());
+				jPaymentStatus.put("serverNo", StringPool.BLANK);
+				array.put(jPaymentStatus);
+				if(array.length() > 0) {
+					JSONObject payload = JSONFactoryUtil.createJSONObject();
+					payload.put(ConstantsUtils.PAYLOAD_SYNC_PAYMENTSTATUS, array);
+					dossierSync.setState(2);
+					dossierSync.setPayload(payload.toJSONString());
+					DossierSyncLocalServiceUtil.updateDossierSync(dossierSync);
+					return paymentFile;
+				}
+			}
+			return null;
 		}
-
 		return paymentFile;
+
+		
 	}
 
 	// 8,9

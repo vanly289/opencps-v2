@@ -66,7 +66,7 @@ public class DossierSyncCacheModel implements CacheModel<DossierSync>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -98,6 +98,12 @@ public class DossierSyncCacheModel implements CacheModel<DossierSync>,
 		sb.append(fileReferenceUid);
 		sb.append(", serverNo=");
 		sb.append(serverNo);
+		sb.append(", payload=");
+		sb.append(payload);
+		sb.append(", retry=");
+		sb.append(retry);
+		sb.append(", state=");
+		sb.append(state);
 		sb.append("}");
 
 		return sb.toString();
@@ -167,6 +173,16 @@ public class DossierSyncCacheModel implements CacheModel<DossierSync>,
 			dossierSyncImpl.setServerNo(serverNo);
 		}
 
+		if (payload == null) {
+			dossierSyncImpl.setPayload(StringPool.BLANK);
+		}
+		else {
+			dossierSyncImpl.setPayload(payload);
+		}
+
+		dossierSyncImpl.setRetry(retry);
+		dossierSyncImpl.setState(state);
+
 		dossierSyncImpl.resetOriginalValues();
 
 		return dossierSyncImpl;
@@ -197,6 +213,11 @@ public class DossierSyncCacheModel implements CacheModel<DossierSync>,
 		classPK = objectInput.readLong();
 		fileReferenceUid = objectInput.readUTF();
 		serverNo = objectInput.readUTF();
+		payload = objectInput.readUTF();
+
+		retry = objectInput.readInt();
+
+		state = objectInput.readInt();
 	}
 
 	@Override
@@ -255,6 +276,17 @@ public class DossierSyncCacheModel implements CacheModel<DossierSync>,
 		else {
 			objectOutput.writeUTF(serverNo);
 		}
+
+		if (payload == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(payload);
+		}
+
+		objectOutput.writeInt(retry);
+
+		objectOutput.writeInt(state);
 	}
 
 	public String uuid;
@@ -272,4 +304,7 @@ public class DossierSyncCacheModel implements CacheModel<DossierSync>,
 	public long classPK;
 	public String fileReferenceUid;
 	public String serverNo;
+	public String payload;
+	public int retry;
+	public int state;
 }

@@ -186,6 +186,13 @@ public class DossierSyncLocalServiceWrapper implements DossierSyncLocalService,
 		return _dossierSyncLocalService.fetchByServerNo(serverNo, start, end);
 	}
 
+	@Override
+	public java.util.List<org.opencps.dossiermgt.model.DossierSync> fetchByServerNo(
+		java.lang.String serverNo, int state, int start, int end) {
+		return _dossierSyncLocalService.fetchByServerNo(serverNo, state, start,
+			end);
+	}
+
 	/**
 	* Returns a range of all the dossier syncs.
 	*
@@ -384,6 +391,18 @@ public class DossierSyncLocalServiceWrapper implements DossierSyncLocalService,
 		return _dossierSyncLocalService.updateDossierSync(groupId, userId,
 			dossierId, dossierReferenceUid, createDossier, method, classPK,
 			fileReferenceUid, serverNo);
+	}
+
+	@Override
+	public org.opencps.dossiermgt.model.DossierSync updateDossierSync(
+		long groupId, long userId, long dossierId,
+		java.lang.String dossierReferenceUid, boolean createDossier,
+		int method, long classPK, java.lang.String fileReferenceUid,
+		java.lang.String serverNo, java.lang.String payload, int retry,
+		int state) throws com.liferay.portal.kernel.json.JSONException {
+		return _dossierSyncLocalService.updateDossierSync(groupId, userId,
+			dossierId, dossierReferenceUid, createDossier, method, classPK,
+			fileReferenceUid, serverNo, payload, retry, state);
 	}
 
 	/**

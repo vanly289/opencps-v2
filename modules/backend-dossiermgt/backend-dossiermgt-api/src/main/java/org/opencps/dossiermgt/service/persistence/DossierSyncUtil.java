@@ -1261,6 +1261,186 @@ public class DossierSyncUtil {
 	}
 
 	/**
+	* Returns all the dossier syncs where serverNo = &#63; and state = &#63;.
+	*
+	* @param serverNo the server no
+	* @param state the state
+	* @return the matching dossier syncs
+	*/
+	public static List<DossierSync> findBySRV_NO_STATE(
+		java.lang.String serverNo, int state) {
+		return getPersistence().findBySRV_NO_STATE(serverNo, state);
+	}
+
+	/**
+	* Returns a range of all the dossier syncs where serverNo = &#63; and state = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DossierSyncModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param serverNo the server no
+	* @param state the state
+	* @param start the lower bound of the range of dossier syncs
+	* @param end the upper bound of the range of dossier syncs (not inclusive)
+	* @return the range of matching dossier syncs
+	*/
+	public static List<DossierSync> findBySRV_NO_STATE(
+		java.lang.String serverNo, int state, int start, int end) {
+		return getPersistence().findBySRV_NO_STATE(serverNo, state, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the dossier syncs where serverNo = &#63; and state = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DossierSyncModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param serverNo the server no
+	* @param state the state
+	* @param start the lower bound of the range of dossier syncs
+	* @param end the upper bound of the range of dossier syncs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching dossier syncs
+	*/
+	public static List<DossierSync> findBySRV_NO_STATE(
+		java.lang.String serverNo, int state, int start, int end,
+		OrderByComparator<DossierSync> orderByComparator) {
+		return getPersistence()
+				   .findBySRV_NO_STATE(serverNo, state, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the dossier syncs where serverNo = &#63; and state = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DossierSyncModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param serverNo the server no
+	* @param state the state
+	* @param start the lower bound of the range of dossier syncs
+	* @param end the upper bound of the range of dossier syncs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching dossier syncs
+	*/
+	public static List<DossierSync> findBySRV_NO_STATE(
+		java.lang.String serverNo, int state, int start, int end,
+		OrderByComparator<DossierSync> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findBySRV_NO_STATE(serverNo, state, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first dossier sync in the ordered set where serverNo = &#63; and state = &#63;.
+	*
+	* @param serverNo the server no
+	* @param state the state
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching dossier sync
+	* @throws NoSuchDossierSyncException if a matching dossier sync could not be found
+	*/
+	public static DossierSync findBySRV_NO_STATE_First(
+		java.lang.String serverNo, int state,
+		OrderByComparator<DossierSync> orderByComparator)
+		throws org.opencps.dossiermgt.exception.NoSuchDossierSyncException {
+		return getPersistence()
+				   .findBySRV_NO_STATE_First(serverNo, state, orderByComparator);
+	}
+
+	/**
+	* Returns the first dossier sync in the ordered set where serverNo = &#63; and state = &#63;.
+	*
+	* @param serverNo the server no
+	* @param state the state
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching dossier sync, or <code>null</code> if a matching dossier sync could not be found
+	*/
+	public static DossierSync fetchBySRV_NO_STATE_First(
+		java.lang.String serverNo, int state,
+		OrderByComparator<DossierSync> orderByComparator) {
+		return getPersistence()
+				   .fetchBySRV_NO_STATE_First(serverNo, state, orderByComparator);
+	}
+
+	/**
+	* Returns the last dossier sync in the ordered set where serverNo = &#63; and state = &#63;.
+	*
+	* @param serverNo the server no
+	* @param state the state
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching dossier sync
+	* @throws NoSuchDossierSyncException if a matching dossier sync could not be found
+	*/
+	public static DossierSync findBySRV_NO_STATE_Last(
+		java.lang.String serverNo, int state,
+		OrderByComparator<DossierSync> orderByComparator)
+		throws org.opencps.dossiermgt.exception.NoSuchDossierSyncException {
+		return getPersistence()
+				   .findBySRV_NO_STATE_Last(serverNo, state, orderByComparator);
+	}
+
+	/**
+	* Returns the last dossier sync in the ordered set where serverNo = &#63; and state = &#63;.
+	*
+	* @param serverNo the server no
+	* @param state the state
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching dossier sync, or <code>null</code> if a matching dossier sync could not be found
+	*/
+	public static DossierSync fetchBySRV_NO_STATE_Last(
+		java.lang.String serverNo, int state,
+		OrderByComparator<DossierSync> orderByComparator) {
+		return getPersistence()
+				   .fetchBySRV_NO_STATE_Last(serverNo, state, orderByComparator);
+	}
+
+	/**
+	* Returns the dossier syncs before and after the current dossier sync in the ordered set where serverNo = &#63; and state = &#63;.
+	*
+	* @param dossierSyncId the primary key of the current dossier sync
+	* @param serverNo the server no
+	* @param state the state
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next dossier sync
+	* @throws NoSuchDossierSyncException if a dossier sync with the primary key could not be found
+	*/
+	public static DossierSync[] findBySRV_NO_STATE_PrevAndNext(
+		long dossierSyncId, java.lang.String serverNo, int state,
+		OrderByComparator<DossierSync> orderByComparator)
+		throws org.opencps.dossiermgt.exception.NoSuchDossierSyncException {
+		return getPersistence()
+				   .findBySRV_NO_STATE_PrevAndNext(dossierSyncId, serverNo,
+			state, orderByComparator);
+	}
+
+	/**
+	* Removes all the dossier syncs where serverNo = &#63; and state = &#63; from the database.
+	*
+	* @param serverNo the server no
+	* @param state the state
+	*/
+	public static void removeBySRV_NO_STATE(java.lang.String serverNo, int state) {
+		getPersistence().removeBySRV_NO_STATE(serverNo, state);
+	}
+
+	/**
+	* Returns the number of dossier syncs where serverNo = &#63; and state = &#63;.
+	*
+	* @param serverNo the server no
+	* @param state the state
+	* @return the number of matching dossier syncs
+	*/
+	public static int countBySRV_NO_STATE(java.lang.String serverNo, int state) {
+		return getPersistence().countBySRV_NO_STATE(serverNo, state);
+	}
+
+	/**
 	* Returns all the dossier syncs where dossierId = &#63;.
 	*
 	* @param dossierId the dossier ID

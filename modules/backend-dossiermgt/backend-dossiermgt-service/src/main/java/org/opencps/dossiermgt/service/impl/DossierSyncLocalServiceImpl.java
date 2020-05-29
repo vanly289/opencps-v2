@@ -17,9 +17,17 @@ package org.opencps.dossiermgt.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.opencps.dossiermgt.action.util.ConstantsUtils;
 import org.opencps.dossiermgt.model.DossierSync;
 import org.opencps.dossiermgt.service.base.DossierSyncLocalServiceBaseImpl;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
 
 import aQute.bnd.annotation.ProviderType;
@@ -51,6 +59,8 @@ public class DossierSyncLocalServiceImpl extends DossierSyncLocalServiceBaseImpl
 	 * org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil} to access the
 	 * dossier sync local service.
 	 */
+	
+	private static final Log _log = LogFactoryUtil.getLog(DossierSyncLocalServiceImpl.class);
 
 	public DossierSync updateDossierSync(long groupId, long userId, long dossierId, String dossierReferenceUid,
 			boolean createDossier, int method, long classPK, String fileReferenceUid, String serverNo) {
@@ -86,6 +96,52 @@ public class DossierSyncLocalServiceImpl extends DossierSyncLocalServiceBaseImpl
 
 		return dossierSync;
 	}
+	
+	//add by Dungnv - Sync theo co che 1 record
+	public DossierSync updateDossierSync(long groupId, long userId, long dossierId, String dossierReferenceUid,
+			boolean createDossier, int method, long classPK, String fileReferenceUid, String serverNo, String payload, int retry, int state) throws JSONException {
+
+		DossierSync dossierSync = null;
+		
+		User user = userLocalService.fetchUser(userId);
+
+		List<DossierSync> dossierSyncs = dossierSyncPersistence.findByG_ID_DID(groupId, dossierId);
+		if(Validator.isNotNull(dossierSyncs) && !dossierSyncs.isEmpty()) {
+			for(DossierSync sync : dossierSyncs) {
+				dossierSync = sync;
+				break;
+			}
+		}
+		_log.info("Dungnv: --------------> dossierSync: " + dossierSync + " - payload: " + payload);
+		Date now = new Date();
+		if (Validator.isNull(dossierSync)) {
+			long dossierSyncId = counterLocalService.increment(DossierSync.class.getName());
+			dossierSync = dossierSyncPersistence.create(dossierSyncId);
+		}
+		
+		dossierSync.setCreateDate(now);
+		dossierSync.setModifiedDate(now);
+
+		dossierSync.setGroupId(groupId);
+		dossierSync.setUserId(userId);
+		dossierSync.setUserName(user.getFullName());
+		dossierSync.setCompanyId(user.getCompanyId());
+
+		dossierSync.setDossierId(dossierId);
+		dossierSync.setDossierReferenceUid(dossierReferenceUid);
+		dossierSync.setCreateDossier(createDossier);
+		dossierSync.setMethod(method);
+		dossierSync.setClassPK(classPK);
+		dossierSync.setFileReferenceUid(fileReferenceUid);
+		dossierSync.setServerNo(serverNo);
+		dossierSync.setPayload(payload);
+		dossierSync.setRetry(retry);
+		dossierSync.setState(state);
+
+		dossierSync = dossierSyncPersistence.update(dossierSync);
+
+		return dossierSync;
+	}
 
 	public DossierSync updateCreateDossierStatus(long dossierSyncId, boolean status) {
 
@@ -111,6 +167,10 @@ public class DossierSyncLocalServiceImpl extends DossierSyncLocalServiceBaseImpl
 
 	public List<DossierSync> fetchByServerNo(String serverNo, int start, int end) {
 		return dossierSyncPersistence.findBySRV_NO(serverNo, start, end);
+	}
+	
+	public List<DossierSync> fetchByServerNo(String serverNo, int state, int start, int end) {
+		return dossierSyncPersistence.findBySRV_NO_STATE(serverNo, state, start, end);
 	}
 
 	public List<DossierSync> fetchByGroupId(long groupId, int start, int end) {

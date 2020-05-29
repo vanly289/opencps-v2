@@ -132,9 +132,9 @@ public class VRCorporationAttendeeUtils {
 			
 			objVRCorporationAttendee.setServiceName(objDossier.getServiceName());
 			objVRCorporationAttendee.setSubject(dossierActionModel.getActionName());
-			objVRCorporationAttendee.setLocation("Phòng Chất lượng xe cơ giới (VAQ)");
+			objVRCorporationAttendee.setLocation("PhÃ²ng Cháº¥t lÆ°á»£ng xe cÆ¡ giá»›i (VAQ)");
 			objVRCorporationAttendee.setState("9");
-			objVRCorporationAttendee.setStateName("Đã kết thúc");
+			objVRCorporationAttendee.setStateName("Ä�Ã£ káº¿t thÃºc");
 			objVRCorporationAttendee.setStateColor("#FFBD33");
 			objVRCorporationAttendee.setPriority("0");
 			objVRCorporationAttendee.setOverdue(dossierActionModel.getActionOverdue()+"");			

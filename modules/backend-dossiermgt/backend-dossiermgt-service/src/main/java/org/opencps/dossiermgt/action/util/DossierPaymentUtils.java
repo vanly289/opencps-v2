@@ -245,6 +245,8 @@ public class DossierPaymentUtils {
 //	}
 
 	// call processPaymentFile create paymentFile
+	//Deprecated by Dungnv
+	@Deprecated
 	public static void processPaymentFile(ProcessAction processAction, String pattern, long groupId, long dossierId, long userId,
 			ServiceContext serviceContext, String serverNo) throws JSONException {
 
@@ -421,6 +423,194 @@ public class DossierPaymentUtils {
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	//Add by Dungnv - Ham nay su dung neu muon chi sinh ra 1 queue trong dossiersync
+	public static JSONObject processPaymentFileNew(ProcessAction processAction, String pattern, long groupId, long dossierId, long userId,
+			ServiceContext serviceContext, String serverNo) throws JSONException {
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		// get total payment amount
+		JSONObject paymentData = JSONFactoryUtil.createJSONObject(pattern);
+		JSONObject paymentJSON = null;
+		String paymentFee = StringPool.BLANK;
+		if (Validator.isNotNull(paymentData)) {
+			if (paymentData.has(PaymentFileTerm.PAYMENT_FEE)) {
+				paymentFee = paymentData.getString(PaymentFileTerm.PAYMENT_FEE);
+			}
+
+			if (paymentData.has("paymentPart")) {
+				JSONArray dataArr = JSONFactoryUtil.createJSONArray(paymentData.getString("paymentPart"));
+				paymentJSON = JSONFactoryUtil.createJSONObject();
+				if (dataArr != null && dataArr.length() > 0) {
+					for (int i = 0; i < dataArr.length(); i++) {
+						JSONObject data = dataArr.getJSONObject(i);
+						if (Validator.isNotNull(data) && data.has("paymentType")) {
+							String returnPayment = data.getString("returnPayment");
+							String formula = data.getString("formula");
+							if (Validator.isNotNull(returnPayment) && Validator.isNotNull(formula)) {
+								Pattern patternName = Pattern.compile(PATTERN_DEFAULT);
+								String subPattern = splitPattern(formula);
+								Matcher matcherName = patternName.matcher(subPattern);
+								String valueReturn = "";
+								if (matcherName.find()) {
+									valueReturn = getDossierPaymentElement(returnPayment, subPattern, matcherName,
+											dossierId, serviceContext);
+								} else {
+									valueReturn = data.getString("formula");
+								}
+								paymentJSON.put(data.getString("paymentType"), valueReturn);
+							}
+						}
+					}
+				}
+			}
+			if (paymentJSON != null) {
+				String paymentTypeTotal = paymentData.getString("paymentType");
+				String returnPaymentTotal = paymentData.getString("returnPayment");
+				String formulaTotal = paymentData.getString("formula");
+				if (Validator.isNotNull(returnPaymentTotal) && Validator.isNotNull(formulaTotal)) {
+					Pattern patternName = Pattern.compile(PATTERN_DEFAULT);
+					String subPatternTotal = splitPattern(formulaTotal);
+					Matcher matcherName = patternName.matcher(subPatternTotal);
+					String valueReturnTotal = "";
+					if (matcherName.find()) {
+						valueReturnTotal = getDossierPaymentTotal(returnPaymentTotal, subPatternTotal, matcherName,
+								paymentJSON);
+					} else {
+						valueReturnTotal = paymentData.getString("formula");
+					}
+					paymentJSON.put(paymentTypeTotal, valueReturnTotal);
+				}
+			}
+		}
+
+		_log.info("mapJSON: "+paymentJSON);
+		// get PaymentFee
+//		List<String> messages = getMessagePayment(pattern);
+		// get total payment amount
+		//JSONObject patternObj = JSONFactoryUtil.createJSONObject(pattern);
+
+		// TODO paymentNote
+		String paymentNote = StringPool.BLANK;
+//		String paymentFee = StringPool.BLANK;
+
+		// create paymentFile
+		PaymentFileActions actions = new PaymentFileActionsImpl();
+
+		// get dossier
+		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+
+		String strPaymentFee = processAction.getPaymentFee();
+		JSONObject paymentFeeJSON = JSONFactoryUtil.createJSONObject(strPaymentFee);
+		PaymentConfig paymentConfig = null;
+		if (paymentFeeJSON != null && paymentFeeJSON.has("invoiceTemplateNo")
+				&& Validator.isNotNull(paymentFeeJSON.getString("invoiceTemplateNo"))) {
+			paymentConfig = PaymentConfigLocalServiceUtil.getByInvoiceTemplateNo(groupId,
+					paymentFeeJSON.getString("invoiceTemplateNo"));
+		} else {
+			paymentConfig = PaymentConfigLocalServiceUtil.getPaymentConfigByGovAgencyCode(groupId,
+					dossier.getGovAgencyCode());
+		}
+		
+//		String paymentFee = StringPool.BLANK;
+//		long advanceAmount = 0;
+//		
+//		if (patternObj.has(PaymentFileTerm.PAYMENT_FEE)) {
+//			paymentFee = patternObj.getString(PaymentFileTerm.PAYMENT_FEE);
+//		}
+//		if (patternObj.has(PaymentFileTerm.ADVANCE_AMOUNT)) {
+//			advanceAmount = patternObj.getLong(PaymentFileTerm.ADVANCE_AMOUNT);
+//		}
+
+		try {
+
+			int paymentStatus = DossierPaymentUtils.convertPaymentStatus(processAction.getRequestPayment());
+			PaymentFile paymentFile = actions.createPaymentFile(userId, groupId, dossierId, null, paymentFee,
+					paymentJSON.getLong("paymentAmount"), paymentNote, StringPool.BLANK, StringPool.BLANK,
+					paymentStatus, StringPool.BLANK, paymentJSON.toJSONString(), serviceContext);
+			
+			long counterPaymentFile = CounterLocalServiceUtil.increment(PaymentFile.class.getName()+"paymentFileNo");
+			
+			Calendar cal = Calendar.getInstance();
+			
+			cal.setTime(new Date());
+			
+			int prefix = cal.get(Calendar.YEAR);
+			
+			String invoiceNo = Integer.toString(prefix) + String.format("%010d", counterPaymentFile);
+			
+			paymentFile.setInvoiceNo(invoiceNo);
+			if (paymentConfig != null) {
+				paymentFile.setInvoiceTemplateNo(paymentConfig.getInvoiceTemplateNo());
+				paymentFile.setGovAgencyTaxNo(paymentConfig.getGovAgencyTaxNo());
+				paymentFile.setGovAgencyCode(paymentConfig.getGovAgencyCode());
+				paymentFile.setGovAgencyName(paymentConfig.getGovAgencyName());
+				paymentFile.setBankInfo(paymentConfig.getBankInfo());
+			}
+			PaymentFileLocalServiceUtil.updatePaymentFile(paymentFile);
+			
+			// generator epaymentProfile
+			JSONObject epaymentConfigJSON = JSONFactoryUtil.createJSONObject(paymentConfig.getEpaymentConfig());
+
+			JSONObject epaymentProfileJSON = JSONFactoryUtil.createJSONObject();
+
+			if (epaymentConfigJSON.has("paymentKeypayDomain")) {
+
+				try {
+					String generatorPayURL = PaymentUrlGenerator.generatorPayURL(groupId,
+							paymentFile.getPaymentFileId(), pattern, dossierId);
+
+					epaymentProfileJSON.put("keypayUrl", generatorPayURL);
+
+					// fill good_code to keypayGoodCode
+					String pattern1 = "good_code=";
+					String pattern2 = "&";
+
+					String regexString = Pattern.quote(pattern1) + "(.*?)" + Pattern.quote(pattern2);
+
+					Pattern p = Pattern.compile(regexString);
+					Matcher m = p.matcher(generatorPayURL);
+
+					if (m.find()) {
+						String goodCode = m.group(1);
+
+						epaymentProfileJSON.put("keypayGoodCode", goodCode);
+					} else {
+						epaymentProfileJSON.put("keypayGoodCode", StringPool.BLANK);
+					}
+
+					epaymentProfileJSON.put("keypayMerchantCode", epaymentConfigJSON.get("paymentMerchantCode"));
+
+					actions.updateEProfile(dossierId, paymentFile.getReferenceUid(), epaymentProfileJSON.toJSONString(),
+							serviceContext);
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			} else {
+				actions.updateEProfile(dossierId, paymentFile.getReferenceUid(), epaymentProfileJSON.toJSONString(),
+						serviceContext);
+			}
+
+			// Create paymentfile sync
+			if (Validator.isNotNull(serverNo)) {
+				result.put("groupId", groupId);
+				result.put("userId", userId);
+				result.put("dossierId", dossierId);
+				result.put("dossierReferenceUid", dossier.getReferenceUid());
+				result.put("createDossier", false);
+				result.put("method", 2);
+				result.put("classPK", paymentFile.getPrimaryKey());
+				result.put("fileReferenceUid", paymentFile.getReferenceUid());
+				result.put("serverNo", serverNo);
+			}
+
+		} catch (PortalException e) {
+			_log.error(e);
+		}
+		return result;
 	}
 
 	private static final String PATTERN_DEFAULT = "\\[(.*?)\\]";

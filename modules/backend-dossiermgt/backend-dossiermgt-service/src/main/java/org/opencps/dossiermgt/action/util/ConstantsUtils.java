@@ -11,4 +11,10 @@ public class ConstantsUtils {
 	public static final String DOSSIER_SUB_SATUS_DC_CODE = "DOSSIER_SUB_STATUS";
 	public static final String RT_EXPIRED = "expired";
 	public static final String RT_EXPIRING = "expiring";
+	public static final String PAYLOAD_SYNC_FILES = "dossierFiles";
+	public static final String PAYLOAD_SYNC_PAYMENTFILE = "paymentFiles";
+	public static final String PAYLOAD_SYNC_PAYMENTSTATUS = "paymentStatus";
+	public static final int SYNC_FAIL = 4;
+	public static final int SYNC_PENDING = 2;
+	public static final int SYNC_SUCCESS = 3;
 }

@@ -1186,6 +1186,9 @@
 		<column name="classPK" type="long" />
 		<column name="fileReferenceUid" type="String" />
 		<column name="serverNo" type="String" />
+		<column name="payload" type="String" />
+		<column name="retry" type="int" />
+		<column name="state" type="int" />
 
 		<order>
 			<order-column name="dossierId" order-by="desc" />
@@ -1215,6 +1218,11 @@
 
 		<finder return-type="Collection" name="SRV_NO">
 			<finder-column name="serverNo" />
+		</finder>
+		
+		<finder return-type="Collection" name="SRV_NO_STATE">
+			<finder-column name="serverNo" />
+			<finder-column name="state" />
 		</finder>
 		
 		<finder return-type="Collection" name="DossierId">

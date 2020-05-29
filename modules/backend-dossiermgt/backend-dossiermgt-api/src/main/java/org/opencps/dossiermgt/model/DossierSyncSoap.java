@@ -48,6 +48,9 @@ public class DossierSyncSoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setFileReferenceUid(model.getFileReferenceUid());
 		soapModel.setServerNo(model.getServerNo());
+		soapModel.setPayload(model.getPayload());
+		soapModel.setRetry(model.getRetry());
+		soapModel.setState(model.getState());
 
 		return soapModel;
 	}
@@ -224,6 +227,30 @@ public class DossierSyncSoap implements Serializable {
 		_serverNo = serverNo;
 	}
 
+	public String getPayload() {
+		return _payload;
+	}
+
+	public void setPayload(String payload) {
+		_payload = payload;
+	}
+
+	public int getRetry() {
+		return _retry;
+	}
+
+	public void setRetry(int retry) {
+		_retry = retry;
+	}
+
+	public int getState() {
+		return _state;
+	}
+
+	public void setState(int state) {
+		_state = state;
+	}
+
 	private String _uuid;
 	private long _dossierSyncId;
 	private long _companyId;
@@ -239,4 +266,7 @@ public class DossierSyncSoap implements Serializable {
 	private long _classPK;
 	private String _fileReferenceUid;
 	private String _serverNo;
+	private String _payload;
+	private int _retry;
+	private int _state;
 }

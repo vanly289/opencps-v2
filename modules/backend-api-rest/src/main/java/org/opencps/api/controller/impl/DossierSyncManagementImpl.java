@@ -55,6 +55,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -163,14 +164,17 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 
 				_log.info("DOSSIER_ACTION_ID===" + dossierActionId);
 
-				callDossierSync(groupId, dossierSync.getMethod(),
+				boolean hasResult = callDossierSync(groupId, dossierSync.getMethod(),
 						Validator.isNotNull(action) ? action.getSyncActionCode() : StringPool.BLANK,
 						Validator.isNotNull(action) ? action.getActionUser() : StringPool.BLANK,
 						Validator.isNotNull(action) ? action.getActionNote() : StringPool.BLANK, 0l,
 						dossier.getReferenceUid(), actionPenddingId, id, dossierSync.getDossierId(),
 						dossierSync.getClassPK(), dossierSync.getCreateDossier(), serviceContext);
-
-				result = DossierSyncUtils.mappingToSending(dossierSync);
+				if(hasResult) {
+					result = DossierSyncUtils.mappingToSending(dossierSync);
+				} else {
+					throw new RuntimeException("SyncFailed");
+				}
 
 			} else {
 				throw new NotFoundException("NotFoundDossierSync");
@@ -209,7 +213,261 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 
 	}
 
-	private void callDossierSync(long groupId, int method, String actionCode, String actionUser, String actionNote,
+//	private void callDossierSync(long groupId, int method, String actionCode, String actionUser, String actionNote,
+//			long assignUserId, String refId, long clientDossierActionId, long dossierSyncId, long dossierId,
+//			long classPK, boolean isCreateDossier, ServiceContext serviceContext) throws PortalException {
+//
+//		InvokeREST rest = new InvokeREST();
+//
+//		HashMap<String, String> properties = new HashMap<String, String>();
+//
+//		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
+//
+//		if (isCreateDossier) {
+//			// Call initDossier to SERVER
+//
+//			String httpMethod = HttpMethods.POST;
+//
+//			String endPoint = "dossiers";
+//
+//			Map<String, Object> params = getParamsPostDossier(dossierSyncId);
+//
+//			JSONObject resPostDossier = rest.callPostAPI(groupId, httpMethod, "application/json",
+//					RESTFulConfiguration.SERVER_PATH_BASE, endPoint, RESTFulConfiguration.SERVER_USER,
+//					RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
+//
+//			// reset creaetDossier flag
+//			if (resPostDossier.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+//				DossierSyncLocalServiceUtil.shiftCreateDossierStatus(dossierSyncId);
+//			}
+//
+//		}
+//
+//		// Sync paymentFile
+//		if (method == 2) {
+//
+//			DossierSync sync = DossierSyncLocalServiceUtil.getDossierSync(dossierSyncId);
+//
+//			String endPointSynAction = "dossiers/" + sync.getDossierReferenceUid() + "/payments";
+//
+//			PaymentFile paymentFileClient = PaymentFileLocalServiceUtil.fectPaymentFile(sync.getDossierId(),
+//					sync.getFileReferenceUid());
+//
+//			Map<String, Object> params = new LinkedHashMap<>();
+//			params.put("referenceUid", paymentFileClient.getReferenceUid());
+//			params.put("govAgencyCode", paymentFileClient.getGovAgencyCode());
+//			params.put("govAgencyName", paymentFileClient.getGovAgencyName());
+//			params.put("paymentFee", paymentFileClient.getPaymentFee());
+//			params.put("paymentAmount", paymentFileClient.getPaymentAmount());
+//			params.put("paymentNote", paymentFileClient.getPaymentNote());
+//			params.put("epaymentProfile", paymentFileClient.getEpaymentProfile());
+//			params.put("invoiceTemplateNo", paymentFileClient.getInvoiceTemplateNo());
+//			params.put("bankInfo", paymentFileClient.getBankInfo());
+//			params.put("paymentStatus", paymentFileClient.getPaymentStatus());
+//			params.put("confirmFileEntryId", paymentFileClient.getConfirmFileEntryId());
+//			// TODO update payload
+//			params.put("invoicePayload", paymentFileClient.getInvoicePayload());
+//			params.put("paymentFormData", paymentFileClient.getPaymentFormData());
+//			params.put("govAgencyTaxNo", paymentFileClient.getGovAgencyTaxNo());
+//			_log.info("params: "+JSONFactoryUtil.looseSerialize(params));
+//
+//			JSONObject resSynFile = rest.callPostAPI(groupId, HttpMethods.POST, "application/json",
+//					RESTFulConfiguration.SERVER_PATH_BASE, endPointSynAction, RESTFulConfiguration.SERVER_USER,
+//					RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
+//
+//			if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+//				// remove DossierSync
+//				DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+//
+//				// Reset isNew
+//
+//				paymentFileClient.setIsNew(false);
+//				PaymentFileLocalServiceUtil.updatePaymentFile(paymentFileClient);
+//				// DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+//			}
+//		}
+//
+//		// SyncDossierFile
+//		if (method == 1) {
+//				
+//				// Need check some case:
+//				// 1. Add new file
+//				// 2. Remove new file
+//				// 3. Update file
+//				
+//			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFile(classPK);
+//			
+//			if (dossierFile.getRemoved()) {
+//				
+//				//remove file in server
+//				//long serverGroupId = 55217l;
+//				long serverGroupId = ConstantsUtils.GROUP_CTN;
+//				
+//				DossierFile dossierServerFile = DossierFileLocalServiceUtil.getByRefAndGroupId(serverGroupId,
+//						dossierFile.getReferenceUid());
+//
+//				dossierServerFile.setRemoved(true);
+//				
+//				//update dossierFile
+//				DossierFileLocalServiceUtil.updateDossierFile(dossierServerFile);
+//				
+//				//remove dossierSync
+//				DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+//
+//			} else {
+//				// TODO add case update file
+//				String endPointSyncDossierFile = "dossiers/" + refId + "/files";
+//
+//				properties.put("referenceUid", dossierFile.getReferenceUid());
+//				properties.put("dossierTemplateNo", dossierFile.getDossierTemplateNo());
+//				properties.put("dossierPartNo", dossierFile.getDossierPartNo());
+//				properties.put("fileTemplateNo", dossierFile.getFileTemplateNo());
+//				properties.put("displayName", dossierFile.getDisplayName());
+//				properties.put("isSync", StringPool.FALSE);
+//				properties.put("formData", dossierFile.getFormData());
+//
+//				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
+//
+////						properties.put("fileType", fileEntry.getExtension());
+//				//LamTV_ Get fileType
+//				_log.info("LamTV_fileTypeSync: "+fileEntry.getMimeType());
+//				properties.put("fileType", fileEntry.getMimeType());
+//
+//				File file = getFile(dossierFile.getFileEntryId());
+//
+//				// TODO review extention file
+//				JSONObject resSynFile = rest.callPostFileAPI(groupId, HttpMethods.POST, "application/json",
+//						RESTFulConfiguration.SERVER_PATH_BASE, endPointSyncDossierFile, RESTFulConfiguration.SERVER_USER,
+//						RESTFulConfiguration.SERVER_PASS, properties, file, serviceContext);
+//
+//				if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+//					// remove DossierSync
+//					DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+//
+//				} else {
+//					_log.info(resSynFile.get(RESTFulConfiguration.MESSAGE));
+//				}
+//
+//			}
+//			
+//
+//			// Reset isNew
+//			dossierFile.setIsNew(false);
+//
+//			DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+//
+//		}
+//
+//		// SyncAction
+//		if (method == 0) {
+//			String endPointSynAction = "dossiers/" + refId + "/actions";
+//
+//			String endPointSynDossierNo = "dossiers/" + refId + "/dossierno";
+//
+//			Map<String, Object> params = new LinkedHashMap<>();
+//
+//			params.put("actionCode", actionCode);
+//			params.put("actionUser", actionUser);
+//			params.put("actionNote", actionNote);
+//			params.put("assignUserId", assignUserId);
+//			params.put("isSynAction", 1);
+//
+//			JSONObject resSynsActions = rest.callPostAPI(groupId, HttpMethods.POST, "application/json",
+//					RESTFulConfiguration.SERVER_PATH_BASE, endPointSynAction, RESTFulConfiguration.SERVER_USER,
+//					RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
+//
+//			if (resSynsActions.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+//				// remove DossierSync
+//				DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+//
+//			}
+//
+//			if (dossier != null && Validator.isNotNull(dossier.getDossierNo())) {
+//				Map<String, Object> updateDossierNoParams = new LinkedHashMap<>();
+//
+//				properties.put("dossierno", dossier.getDossierNo());
+//
+//				// endPointSynDossierNo = endPointSynDossierNo +
+//				// HttpUtil.encodeURL(dossier.getDossierNo());
+//
+//				JSONObject resSynsDossierNo = rest.callPostAPI(groupId, HttpMethods.PUT, "application/json",
+//						RESTFulConfiguration.SERVER_PATH_BASE, endPointSynDossierNo, RESTFulConfiguration.SERVER_USER,
+//						RESTFulConfiguration.SERVER_PASS, properties, updateDossierNoParams, serviceContext);
+//
+//				if (resSynsDossierNo.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+//					// TODO ?
+//
+//				}
+//			}
+//		}
+//
+//		// Sync paymentStatus
+//		if (method == 3) {
+//
+//			_log.info("SYN_METHOD_3");
+//
+//			DossierSync sync = DossierSyncLocalServiceUtil.getDossierSync(dossierSyncId);
+//
+//			PaymentFile paymentFileClient = PaymentFileLocalServiceUtil.fectPaymentFile(sync.getDossierId(),
+//					sync.getFileReferenceUid());
+//
+//			try {
+//				File file = File.createTempFile(String.valueOf(System.currentTimeMillis()), StringPool.PERIOD + "tmp");
+//
+//				if (paymentFileClient.getInvoiceFileEntryId() != 0) {
+//					// get invoice file
+//					file = getFile(paymentFileClient.getInvoiceFileEntryId());
+//				}
+//
+//				SimpleDateFormat format = new SimpleDateFormat("DD-MM-YYYY HH:MM:SS");
+//				Map<String, Object> params = new LinkedHashMap<>();
+//
+//				params.put("approveDatetime", Validator.isNotNull(paymentFileClient.getApproveDatetime())
+//						? format.format(paymentFileClient.getApproveDatetime()) : format.format(new Date()));
+//				params.put("accountUserName", paymentFileClient.getAccountUserName());
+//				params.put("govAgencyTaxNo", paymentFileClient.getGovAgencyTaxNo());
+//				params.put("invoiceTemplateNo", paymentFileClient.getInvoiceTemplateNo());
+//				params.put("invoiceIssueNo", paymentFileClient.getInvoiceIssueNo());
+//				params.put("invoiceNo", paymentFileClient.getInvoiceNo());
+//				params.put("isSync", StringPool.FALSE);
+//
+//				String endPointSynAction = "dossiers/" + sync.getDossierReferenceUid() + "/payments/" + paymentFileClient.getReferenceUid()
+//						+ "/approval/noattachment";
+//
+//				JSONObject resSynFile = rest.callPostAPI(groupId, HttpMethod.PUT, "application/json",
+//						RESTFulConfiguration.SERVER_PATH_BASE, endPointSynAction, RESTFulConfiguration.SERVER_USER,
+//						RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
+//
+//				if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+//					// remove DossierSync
+//
+//					DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+//
+//					// Reset isNew
+//
+//					paymentFileClient.setIsNew(false);
+//					PaymentFileLocalServiceUtil.updatePaymentFile(paymentFileClient);
+//					// DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+//
+//				} else {
+//					_log.info("Not Approve_" + resSynFile.getString(RESTFulConfiguration.MESSAGE));
+//				}
+//			} catch (Exception e) {
+//				_log.error(e);
+//			}
+//
+//		}
+//
+//		// remove pending in DossierAction
+//		int countDossierSync = DossierSyncLocalServiceUtil.countByDossierId(dossierId);
+//
+//		if (countDossierSync == 0 && clientDossierActionId > 0) {
+//			DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+//		}
+//
+//	}
+	
+	private boolean callDossierSync(long groupId, int method, String actionCode, String actionUser, String actionNote,
 			long assignUserId, String refId, long clientDossierActionId, long dossierSyncId, long dossierId,
 			long classPK, boolean isCreateDossier, ServiceContext serviceContext) throws PortalException {
 
@@ -218,249 +476,295 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 		HashMap<String, String> properties = new HashMap<String, String>();
 
 		Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
-
-		if (isCreateDossier) {
-			// Call initDossier to SERVER
-
-			String httpMethod = HttpMethods.POST;
-
-			String endPoint = "dossiers";
-
-			Map<String, Object> params = getParamsPostDossier(dossierSyncId);
-
-			JSONObject resPostDossier = rest.callPostAPI(groupId, httpMethod, "application/json",
-					RESTFulConfiguration.SERVER_PATH_BASE, endPoint, RESTFulConfiguration.SERVER_USER,
-					RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
-
-			// reset creaetDossier flag
-			if (resPostDossier.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
-				DossierSyncLocalServiceUtil.shiftCreateDossierStatus(dossierSyncId);
-			}
-
-		}
-
-		// Sync paymentFile
-		if (method == 2) {
-
-			DossierSync sync = DossierSyncLocalServiceUtil.getDossierSync(dossierSyncId);
-
-			String endPointSynAction = "dossiers/" + sync.getDossierReferenceUid() + "/payments";
-
-			PaymentFile paymentFileClient = PaymentFileLocalServiceUtil.fectPaymentFile(sync.getDossierId(),
-					sync.getFileReferenceUid());
-
-			Map<String, Object> params = new LinkedHashMap<>();
-			params.put("referenceUid", paymentFileClient.getReferenceUid());
-			params.put("govAgencyCode", paymentFileClient.getGovAgencyCode());
-			params.put("govAgencyName", paymentFileClient.getGovAgencyName());
-			params.put("paymentFee", paymentFileClient.getPaymentFee());
-			params.put("paymentAmount", paymentFileClient.getPaymentAmount());
-			params.put("paymentNote", paymentFileClient.getPaymentNote());
-			params.put("epaymentProfile", paymentFileClient.getEpaymentProfile());
-			params.put("invoiceTemplateNo", paymentFileClient.getInvoiceTemplateNo());
-			params.put("bankInfo", paymentFileClient.getBankInfo());
-			params.put("paymentStatus", paymentFileClient.getPaymentStatus());
-			params.put("confirmFileEntryId", paymentFileClient.getConfirmFileEntryId());
-			// TODO update payload
-			params.put("invoicePayload", paymentFileClient.getInvoicePayload());
-			params.put("paymentFormData", paymentFileClient.getPaymentFormData());
-			params.put("govAgencyTaxNo", paymentFileClient.getGovAgencyTaxNo());
-			_log.info("params: "+JSONFactoryUtil.looseSerialize(params));
-
-			JSONObject resSynFile = rest.callPostAPI(groupId, HttpMethods.POST, "application/json",
-					RESTFulConfiguration.SERVER_PATH_BASE, endPointSynAction, RESTFulConfiguration.SERVER_USER,
-					RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
-
-			if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
-				// remove DossierSync
-				DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
-
-				// Reset isNew
-
-				paymentFileClient.setIsNew(false);
-				PaymentFileLocalServiceUtil.updatePaymentFile(paymentFileClient);
-				// DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
-			}
-		}
-
-		// SyncDossierFile
-		if (method == 1) {
-				
-				// Need check some case:
-				// 1. Add new file
-				// 2. Remove new file
-				// 3. Update file
-				
-			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFile(classPK);
-			
-			if (dossierFile.getRemoved()) {
-				
-				//remove file in server
-				//long serverGroupId = 55217l;
-				long serverGroupId = ConstantsUtils.GROUP_CTN;
-				
-				DossierFile dossierServerFile = DossierFileLocalServiceUtil.getByRefAndGroupId(serverGroupId,
-						dossierFile.getReferenceUid());
-
-				dossierServerFile.setRemoved(true);
-				
-				//update dossierFile
-				DossierFileLocalServiceUtil.updateDossierFile(dossierServerFile);
-				
-				//remove dossierSync
-				DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
-
-			} else {
-				// TODO add case update file
-				String endPointSyncDossierFile = "dossiers/" + refId + "/files";
-
-				properties.put("referenceUid", dossierFile.getReferenceUid());
-				properties.put("dossierTemplateNo", dossierFile.getDossierTemplateNo());
-				properties.put("dossierPartNo", dossierFile.getDossierPartNo());
-				properties.put("fileTemplateNo", dossierFile.getFileTemplateNo());
-				properties.put("displayName", dossierFile.getDisplayName());
-				properties.put("isSync", StringPool.FALSE);
-				properties.put("formData", dossierFile.getFormData());
-
-				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
-
-//						properties.put("fileType", fileEntry.getExtension());
-				//LamTV_ Get fileType
-				_log.info("LamTV_fileTypeSync: "+fileEntry.getMimeType());
-				properties.put("fileType", fileEntry.getMimeType());
-
-				File file = getFile(dossierFile.getFileEntryId());
-
-				// TODO review extention file
-				JSONObject resSynFile = rest.callPostFileAPI(groupId, HttpMethods.POST, "application/json",
-						RESTFulConfiguration.SERVER_PATH_BASE, endPointSyncDossierFile, RESTFulConfiguration.SERVER_USER,
-						RESTFulConfiguration.SERVER_PASS, properties, file, serviceContext);
-
-				if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
-					// remove DossierSync
-					DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
-
-				} else {
-					_log.info(resSynFile.get(RESTFulConfiguration.MESSAGE));
-				}
-
-			}
-			
-
-			// Reset isNew
-			dossierFile.setIsNew(false);
-
-			DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
-
-		}
-
-		// SyncAction
-		if (method == 0) {
-			String endPointSynAction = "dossiers/" + refId + "/actions";
-
-			String endPointSynDossierNo = "dossiers/" + refId + "/dossierno";
-
-			Map<String, Object> params = new LinkedHashMap<>();
-
-			params.put("actionCode", actionCode);
-			params.put("actionUser", actionUser);
-			params.put("actionNote", actionNote);
-			params.put("assignUserId", assignUserId);
-			params.put("isSynAction", 1);
-
-			JSONObject resSynsActions = rest.callPostAPI(groupId, HttpMethods.POST, "application/json",
-					RESTFulConfiguration.SERVER_PATH_BASE, endPointSynAction, RESTFulConfiguration.SERVER_USER,
-					RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
-
-			if (resSynsActions.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
-				// remove DossierSync
-				DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
-
-			}
-
-			if (dossier != null && Validator.isNotNull(dossier.getDossierNo())) {
-				Map<String, Object> updateDossierNoParams = new LinkedHashMap<>();
-
-				properties.put("dossierno", dossier.getDossierNo());
-
-				// endPointSynDossierNo = endPointSynDossierNo +
-				// HttpUtil.encodeURL(dossier.getDossierNo());
-
-				JSONObject resSynsDossierNo = rest.callPostAPI(groupId, HttpMethods.PUT, "application/json",
-						RESTFulConfiguration.SERVER_PATH_BASE, endPointSynDossierNo, RESTFulConfiguration.SERVER_USER,
-						RESTFulConfiguration.SERVER_PASS, properties, updateDossierNoParams, serviceContext);
-
-				if (resSynsDossierNo.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
-					// TODO ?
-
-				}
-			}
-		}
-
-		// Sync paymentStatus
-		if (method == 3) {
-
-			_log.info("SYN_METHOD_3");
-
-			DossierSync sync = DossierSyncLocalServiceUtil.getDossierSync(dossierSyncId);
-
-			PaymentFile paymentFileClient = PaymentFileLocalServiceUtil.fectPaymentFile(sync.getDossierId(),
-					sync.getFileReferenceUid());
-
-			try {
-				File file = File.createTempFile(String.valueOf(System.currentTimeMillis()), StringPool.PERIOD + "tmp");
-
-				if (paymentFileClient.getInvoiceFileEntryId() != 0) {
-					// get invoice file
-					file = getFile(paymentFileClient.getInvoiceFileEntryId());
-				}
-
-				SimpleDateFormat format = new SimpleDateFormat("DD-MM-YYYY HH:MM:SS");
-				Map<String, Object> params = new LinkedHashMap<>();
-
-				params.put("approveDatetime", Validator.isNotNull(paymentFileClient.getApproveDatetime())
-						? format.format(paymentFileClient.getApproveDatetime()) : format.format(new Date()));
-				params.put("accountUserName", paymentFileClient.getAccountUserName());
-				params.put("govAgencyTaxNo", paymentFileClient.getGovAgencyTaxNo());
-				params.put("invoiceTemplateNo", paymentFileClient.getInvoiceTemplateNo());
-				params.put("invoiceIssueNo", paymentFileClient.getInvoiceIssueNo());
-				params.put("invoiceNo", paymentFileClient.getInvoiceNo());
-				params.put("isSync", StringPool.FALSE);
-
-				String endPointSynAction = "dossiers/" + sync.getDossierReferenceUid() + "/payments/" + paymentFileClient.getReferenceUid()
-						+ "/approval/noattachment";
-
-				JSONObject resSynFile = rest.callPostAPI(groupId, HttpMethod.PUT, "application/json",
-						RESTFulConfiguration.SERVER_PATH_BASE, endPointSynAction, RESTFulConfiguration.SERVER_USER,
+		
+		boolean hasResult = true;
+		DossierSync sync = DossierSyncLocalServiceUtil.getDossierSync(dossierSyncId);
+		int retry = sync.getRetry();
+		_log.debug("Dungnv: -----------> retry: " + retry);
+		//Retry sync duoi 5 lan
+		if(retry <= 5) {
+			if (isCreateDossier) {
+				// Call initDossier to SERVER
+	
+				String httpMethod = HttpMethods.POST;
+	
+				String endPoint = "dossiers";
+	
+				Map<String, Object> params = getParamsPostDossier(dossierSyncId);
+	
+				JSONObject resPostDossier = rest.callPostAPI(groupId, httpMethod, "application/json",
+						RESTFulConfiguration.SERVER_PATH_BASE, endPoint, RESTFulConfiguration.SERVER_USER,
 						RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
-
-				if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
-					// remove DossierSync
-
-					DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
-
-					// Reset isNew
-
-					paymentFileClient.setIsNew(false);
-					PaymentFileLocalServiceUtil.updatePaymentFile(paymentFileClient);
-					// DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
-
-				} else {
-					_log.info("Not Approve_" + resSynFile.getString(RESTFulConfiguration.MESSAGE));
+	
+				// reset creaetDossier flag
+				if (resPostDossier.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+					DossierSyncLocalServiceUtil.shiftCreateDossierStatus(dossierSyncId);
 				}
-			} catch (Exception e) {
-				_log.error(e);
 			}
-
+			
+			if (method == 0) {
+				String payload = sync.getPayload();
+				_log.debug("Dungnv: -----------> payload: " + payload);
+				JSONObject jPayload = JSONFactoryUtil.createJSONObject(payload);
+				// Sync paymentFile
+				if (jPayload.has(ConstantsUtils.PAYLOAD_SYNC_PAYMENTFILE)) {
+					JSONObject paymentfile = JSONFactoryUtil.createJSONObject(jPayload.getString(ConstantsUtils.PAYLOAD_SYNC_PAYMENTFILE));
+					try {
+						String endPointSynAction = "dossiers/" + paymentfile.getString("dossierReferenceUid") + "/payments";
+			
+						PaymentFile paymentFileClient = PaymentFileLocalServiceUtil.fectPaymentFile(paymentfile.getLong("dossierId"),
+								paymentfile.getString("fileReferenceUid"));
+			
+						Map<String, Object> params = new LinkedHashMap<>();
+						params.put("referenceUid", paymentFileClient.getReferenceUid());
+						params.put("govAgencyCode", paymentFileClient.getGovAgencyCode());
+						params.put("govAgencyName", paymentFileClient.getGovAgencyName());
+						params.put("paymentFee", paymentFileClient.getPaymentFee());
+						params.put("paymentAmount", paymentFileClient.getPaymentAmount());
+						params.put("paymentNote", paymentFileClient.getPaymentNote());
+						params.put("epaymentProfile", paymentFileClient.getEpaymentProfile());
+						params.put("invoiceTemplateNo", paymentFileClient.getInvoiceTemplateNo());
+						params.put("bankInfo", paymentFileClient.getBankInfo());
+						params.put("paymentStatus", paymentFileClient.getPaymentStatus());
+						params.put("confirmFileEntryId", paymentFileClient.getConfirmFileEntryId());
+						// TODO update payload
+						params.put("invoicePayload", paymentFileClient.getInvoicePayload());
+						params.put("paymentFormData", paymentFileClient.getPaymentFormData());
+						params.put("govAgencyTaxNo", paymentFileClient.getGovAgencyTaxNo());
+						_log.info("params: "+JSONFactoryUtil.looseSerialize(params));
+			
+						JSONObject resSynFile = rest.callPostAPI(groupId, HttpMethods.POST, "application/json",
+								RESTFulConfiguration.SERVER_PATH_BASE, endPointSynAction, RESTFulConfiguration.SERVER_USER,
+								RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
+			
+						if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+							// remove DossierSync
+							//DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+	
+							// Reset isNew
+							paymentFileClient.setIsNew(false);
+							PaymentFileLocalServiceUtil.updatePaymentFile(paymentFileClient);
+							// DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+						} else {
+							_log.info(resSynFile.get(RESTFulConfiguration.MESSAGE));
+							hasResult = false;
+						}
+					}catch (Exception e) {
+						_log.error(e);
+						hasResult = false;
+					}
+				}
+				
+				if(hasResult) { 
+					// SyncDossierFile
+					if (jPayload.has(ConstantsUtils.PAYLOAD_SYNC_FILES)) {
+						try {
+							String dossierFiles = jPayload.getString(ConstantsUtils.PAYLOAD_SYNC_FILES);
+							JSONArray arrayDossierFile = JSONFactoryUtil.createJSONArray(dossierFiles);
+							for(int i = 0; i < arrayDossierFile.length(); i++) {
+								JSONObject object = arrayDossierFile.getJSONObject(i);
+								// Need check some case:
+								// 1. Add new file
+								// 2. Remove new file
+								// 3. Update file
+								
+								DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFile(object.getLong("classPK"));
+								
+								if (dossierFile.getRemoved()) {
+									
+									//remove file in server
+									//long serverGroupId = 55217l;
+									long serverGroupId = ConstantsUtils.GROUP_CTN;
+									
+									DossierFile dossierServerFile = DossierFileLocalServiceUtil.getByRefAndGroupId(serverGroupId,
+											dossierFile.getReferenceUid());
+		
+									dossierServerFile.setRemoved(true);
+									
+									//update dossierFile
+									DossierFileLocalServiceUtil.updateDossierFile(dossierServerFile);
+									
+									//remove dossierSync
+									//DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+								} else {
+									// TODO add case update file
+									String endPointSyncDossierFile = "dossiers/" + refId + "/files";
+		
+									properties.put("referenceUid", dossierFile.getReferenceUid());
+									properties.put("dossierTemplateNo", dossierFile.getDossierTemplateNo());
+									properties.put("dossierPartNo", dossierFile.getDossierPartNo());
+									properties.put("fileTemplateNo", dossierFile.getFileTemplateNo());
+									properties.put("displayName", dossierFile.getDisplayName());
+									properties.put("isSync", StringPool.FALSE);
+									properties.put("formData", dossierFile.getFormData());
+		
+									FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
+		
+		//									properties.put("fileType", fileEntry.getExtension());
+									//LamTV_ Get fileType
+									_log.info("LamTV_fileTypeSync: "+fileEntry.getMimeType());
+									properties.put("fileType", fileEntry.getMimeType());
+		
+									File file = getFile(dossierFile.getFileEntryId());
+		
+									// TODO review extention file
+									JSONObject resSynFile = rest.callPostFileAPI(groupId, HttpMethods.POST, "application/json",
+											RESTFulConfiguration.SERVER_PATH_BASE, endPointSyncDossierFile, RESTFulConfiguration.SERVER_USER,
+											RESTFulConfiguration.SERVER_PASS, properties, file, serviceContext);
+		
+									if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+										// remove DossierSync
+										//DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+									} else {
+										_log.info(resSynFile.get(RESTFulConfiguration.MESSAGE));
+										hasResult = false;
+									}
+		
+								}
+								
+								// Reset isNew
+								dossierFile.setIsNew(false);
+								DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+							}
+						}catch (Exception e) {
+							_log.error(e);
+							hasResult = false;
+						}
+					}
+				}
+				
+				// Sync paymentStatus
+				if(hasResult) {
+					if (jPayload.has(ConstantsUtils.PAYLOAD_SYNC_PAYMENTSTATUS)) {
+						try {
+							_log.info("SYN_METHOD_3");
+							JSONArray arrayPaymentStatus = JSONFactoryUtil.createJSONArray(jPayload.getString(ConstantsUtils.PAYLOAD_SYNC_PAYMENTSTATUS));
+							for(int i = 0; i < arrayPaymentStatus.length(); i++) {
+								JSONObject paymentStatus = arrayPaymentStatus.getJSONObject(0);
+								
+								PaymentFile paymentFileClient = PaymentFileLocalServiceUtil.fectPaymentFile(paymentStatus.getLong("dossierId"),
+										paymentStatus.getString("fileReferenceUid"));
+								
+								File file = File.createTempFile(String.valueOf(System.currentTimeMillis()), StringPool.PERIOD + "tmp");
+				
+								if (paymentFileClient.getInvoiceFileEntryId() != 0) {
+									// get invoice file
+									file = getFile(paymentFileClient.getInvoiceFileEntryId());
+								}
+				
+								SimpleDateFormat format = new SimpleDateFormat("DD-MM-YYYY HH:MM:SS");
+								Map<String, Object> params = new LinkedHashMap<>();
+				
+								params.put("approveDatetime", Validator.isNotNull(paymentFileClient.getApproveDatetime())
+										? format.format(paymentFileClient.getApproveDatetime()) : format.format(new Date()));
+								params.put("accountUserName", paymentFileClient.getAccountUserName());
+								params.put("govAgencyTaxNo", paymentFileClient.getGovAgencyTaxNo());
+								params.put("invoiceTemplateNo", paymentFileClient.getInvoiceTemplateNo());
+								params.put("invoiceIssueNo", paymentFileClient.getInvoiceIssueNo());
+								params.put("invoiceNo", paymentFileClient.getInvoiceNo());
+								params.put("isSync", StringPool.FALSE);
+				
+								String endPointSynAction = "dossiers/" + paymentStatus.getString("dossierReferenceUid") + "/payments/" + paymentFileClient.getReferenceUid()
+										+ "/approval/noattachment";
+				
+								JSONObject resSynFile = rest.callPostAPI(groupId, HttpMethod.PUT, "application/json",
+										RESTFulConfiguration.SERVER_PATH_BASE, endPointSynAction, RESTFulConfiguration.SERVER_USER,
+										RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
+				
+								if (resSynFile.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+									// remove DossierSync
+									//DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+				
+									// Reset isNew
+									paymentFileClient.setIsNew(false);
+									PaymentFileLocalServiceUtil.updatePaymentFile(paymentFileClient);
+									// DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+								} else {
+									_log.info("Not Approve_" + resSynFile.getString(RESTFulConfiguration.MESSAGE));
+									hasResult = false;
+								}
+							}
+						}catch (Exception e) {
+							_log.error(e);
+							hasResult = false;
+						}
+					}
+				}
+				
+				// SyncAction
+				if(hasResult) {
+					try {
+						String endPointSynAction = "dossiers/" + refId + "/actions";
+		
+						String endPointSynDossierNo = "dossiers/" + refId + "/dossierno";
+		
+						Map<String, Object> params = new LinkedHashMap<>();
+		
+						params.put("actionCode", actionCode);
+						params.put("actionUser", actionUser);
+						params.put("actionNote", actionNote);
+						params.put("assignUserId", assignUserId);
+						params.put("isSynAction", 1);
+		
+						JSONObject resSynsActions = rest.callPostAPI(groupId, HttpMethods.POST, "application/json",
+								RESTFulConfiguration.SERVER_PATH_BASE, endPointSynAction, RESTFulConfiguration.SERVER_USER,
+								RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
+		
+						if (resSynsActions.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+							// remove DossierSync
+							//DossierSyncLocalServiceUtil.deleteDossierSync(dossierSyncId);
+						}else {
+							_log.info(resSynsActions.get(RESTFulConfiguration.MESSAGE));
+							hasResult = false;
+						}
+						
+						if(hasResult) {
+							if (dossier != null && Validator.isNotNull(dossier.getDossierNo())) {
+								Map<String, Object> updateDossierNoParams = new LinkedHashMap<>();
+			
+								properties.put("dossierno", dossier.getDossierNo());
+			
+								// endPointSynDossierNo = endPointSynDossierNo +
+								// HttpUtil.encodeURL(dossier.getDossierNo());
+			
+								JSONObject resSynsDossierNo = rest.callPostAPI(groupId, HttpMethods.PUT, "application/json",
+										RESTFulConfiguration.SERVER_PATH_BASE, endPointSynDossierNo, RESTFulConfiguration.SERVER_USER,
+										RESTFulConfiguration.SERVER_PASS, properties, updateDossierNoParams, serviceContext);
+			
+								if (resSynsDossierNo.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
+									// TODO ?
+								}else {
+									_log.info(resSynsDossierNo.get(RESTFulConfiguration.MESSAGE));
+									hasResult = false;
+								}
+							}
+						}
+					}catch (Exception e) {
+						_log.error(e);
+						hasResult = false;
+					}
+				}
+				if(hasResult) {
+					sync.setState(ConstantsUtils.SYNC_SUCCESS);
+				} else {
+					sync.setState(ConstantsUtils.SYNC_PENDING); //Sync khong thanh cong thi tiep tuc sync
+					sync.setRetry(++retry);
+				}
+			}
+			if(hasResult) {
+				// remove pending in DossierAction
+				int countDossierSync = DossierSyncLocalServiceUtil.countByDossierId(dossierId);
+		
+				if (countDossierSync == 0 && clientDossierActionId > 0) {
+					DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
+				}
+			}
+		} else {
+				hasResult = false;
+				sync.setState(ConstantsUtils.SYNC_FAIL);
 		}
-
-		// remove pending in DossierAction
-		int countDossierSync = DossierSyncLocalServiceUtil.countByDossierId(dossierId);
-
-		if (countDossierSync == 0 && clientDossierActionId > 0) {
-			DossierActionLocalServiceUtil.updatePending(clientDossierActionId, false);
-		}
-
+		DossierSyncLocalServiceUtil.updateDossierSync(sync);
+		return hasResult;
 	}
 	
 	private void syncDossierFile(long dossierFileId) throws PortalException {

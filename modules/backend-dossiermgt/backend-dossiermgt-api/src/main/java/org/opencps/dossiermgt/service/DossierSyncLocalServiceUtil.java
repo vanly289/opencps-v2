@@ -175,6 +175,11 @@ public class DossierSyncLocalServiceUtil {
 		return getService().fetchByServerNo(serverNo, start, end);
 	}
 
+	public static java.util.List<org.opencps.dossiermgt.model.DossierSync> fetchByServerNo(
+		java.lang.String serverNo, int state, int start, int end) {
+		return getService().fetchByServerNo(serverNo, state, start, end);
+	}
+
 	/**
 	* Returns a range of all the dossier syncs.
 	*
@@ -354,6 +359,18 @@ public class DossierSyncLocalServiceUtil {
 				   .updateDossierSync(groupId, userId, dossierId,
 			dossierReferenceUid, createDossier, method, classPK,
 			fileReferenceUid, serverNo);
+	}
+
+	public static org.opencps.dossiermgt.model.DossierSync updateDossierSync(
+		long groupId, long userId, long dossierId,
+		java.lang.String dossierReferenceUid, boolean createDossier,
+		int method, long classPK, java.lang.String fileReferenceUid,
+		java.lang.String serverNo, java.lang.String payload, int retry,
+		int state) throws com.liferay.portal.kernel.json.JSONException {
+		return getService()
+				   .updateDossierSync(groupId, userId, dossierId,
+			dossierReferenceUid, createDossier, method, classPK,
+			fileReferenceUid, serverNo, payload, retry, state);
 	}
 
 	/**

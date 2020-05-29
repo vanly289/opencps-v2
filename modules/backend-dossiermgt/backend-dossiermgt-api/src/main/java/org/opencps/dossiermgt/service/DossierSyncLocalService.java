@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -161,6 +162,10 @@ public interface DossierSyncLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DossierSync> fetchByServerNo(java.lang.String serverNo,
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DossierSync> fetchByServerNo(java.lang.String serverNo,
+		int state, int start, int end);
 
 	/**
 	* Returns a range of all the dossier syncs.
@@ -303,6 +308,13 @@ public interface DossierSyncLocalService extends BaseLocalService,
 		long dossierId, java.lang.String dossierReferenceUid,
 		boolean createDossier, int method, long classPK,
 		java.lang.String fileReferenceUid, java.lang.String serverNo);
+
+	public DossierSync updateDossierSync(long groupId, long userId,
+		long dossierId, java.lang.String dossierReferenceUid,
+		boolean createDossier, int method, long classPK,
+		java.lang.String fileReferenceUid, java.lang.String serverNo,
+		java.lang.String payload, int retry, int state)
+		throws JSONException;
 
 	/**
 	* Updates the dossier sync in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

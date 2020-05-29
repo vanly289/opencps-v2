@@ -6,6 +6,7 @@ import java.util.List;
 import org.opencps.auth.utils.APIDateTimeUtils;
 import org.opencps.communication.model.ServerConfig;
 import org.opencps.communication.service.ServerConfigLocalServiceUtil;
+import org.opencps.dossiermgt.action.util.ConstantsUtils;
 import org.opencps.dossiermgt.model.DossierSync;
 import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
 import org.osgi.service.component.annotations.Activate;
@@ -67,7 +68,8 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 //					RESTFulConfiguration.CLIENT_PATH_BASE, dossierSyncEndpoint, RESTFulConfiguration.CLIENT_USER,
 //					RESTFulConfiguration.CLIENT_PASS, properties, serviceContext);
 				if (Validator.isNotNull(config.getServerNo())) {
-					List<DossierSync> dossierSyncList = DossierSyncLocalServiceUtil.fetchByServerNo(config.getServerNo(), QueryUtil.ALL_POS,
+					//Add param state  = 2
+					List<DossierSync> dossierSyncList = DossierSyncLocalServiceUtil.fetchByServerNo(config.getServerNo(), ConstantsUtils.SYNC_PENDING, QueryUtil.ALL_POS,
 							QueryUtil.ALL_POS);
 					try {
 						for (DossierSync dossierSync : dossierSyncList) {

@@ -497,7 +497,7 @@ public class PaymentFileManagementImpl implements PaymentFileManagement {
 			dossier = DossierLocalServiceUtil.getByRef(groupId, id);
 			
 		}
-		
+				
 		if (Validator.isNotNull(dossier))
 			dossierId = dossier.getDossierId();
 
@@ -520,14 +520,12 @@ public class PaymentFileManagementImpl implements PaymentFileManagement {
 				
 				PaymentFileLocalServiceUtil.updatePaymentFile(paymentFile);
 			}
-			
-			
-			
+						
 			PaymentFileModel result = PaymentFileUtils.mappingToPaymentFileModel(paymentFile);
-
 			return Response.status(200).entity(result).build();
 
 		} catch (Exception e) {
+			_log.error(e);
 			return processException(e);
 		}
 	}

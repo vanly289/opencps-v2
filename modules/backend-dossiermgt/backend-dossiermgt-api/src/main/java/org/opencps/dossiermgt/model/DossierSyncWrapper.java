@@ -75,6 +75,9 @@ public class DossierSyncWrapper implements DossierSync,
 		attributes.put("classPK", getClassPK());
 		attributes.put("fileReferenceUid", getFileReferenceUid());
 		attributes.put("serverNo", getServerNo());
+		attributes.put("payload", getPayload());
+		attributes.put("retry", getRetry());
+		attributes.put("state", getState());
 
 		return attributes;
 	}
@@ -171,6 +174,24 @@ public class DossierSyncWrapper implements DossierSync,
 		if (serverNo != null) {
 			setServerNo(serverNo);
 		}
+
+		String payload = (String)attributes.get("payload");
+
+		if (payload != null) {
+			setPayload(payload);
+		}
+
+		Integer retry = (Integer)attributes.get("retry");
+
+		if (retry != null) {
+			setRetry(retry);
+		}
+
+		Integer state = (Integer)attributes.get("state");
+
+		if (state != null) {
+			setState(state);
+		}
 	}
 
 	@Override
@@ -243,6 +264,26 @@ public class DossierSyncWrapper implements DossierSync,
 		return _dossierSync.getMethod();
 	}
 
+	/**
+	* Returns the retry of this dossier sync.
+	*
+	* @return the retry of this dossier sync
+	*/
+	@Override
+	public int getRetry() {
+		return _dossierSync.getRetry();
+	}
+
+	/**
+	* Returns the state of this dossier sync.
+	*
+	* @return the state of this dossier sync
+	*/
+	@Override
+	public int getState() {
+		return _dossierSync.getState();
+	}
+
 	@Override
 	public int hashCode() {
 		return _dossierSync.hashCode();
@@ -276,6 +317,16 @@ public class DossierSyncWrapper implements DossierSync,
 	@Override
 	public java.lang.String getFileReferenceUid() {
 		return _dossierSync.getFileReferenceUid();
+	}
+
+	/**
+	* Returns the payload of this dossier sync.
+	*
+	* @return the payload of this dossier sync
+	*/
+	@Override
+	public java.lang.String getPayload() {
+		return _dossierSync.getPayload();
 	}
 
 	/**
@@ -560,6 +611,16 @@ public class DossierSyncWrapper implements DossierSync,
 	}
 
 	/**
+	* Sets the payload of this dossier sync.
+	*
+	* @param payload the payload of this dossier sync
+	*/
+	@Override
+	public void setPayload(java.lang.String payload) {
+		_dossierSync.setPayload(payload);
+	}
+
+	/**
 	* Sets the primary key of this dossier sync.
 	*
 	* @param primaryKey the primary key of this dossier sync
@@ -575,6 +636,16 @@ public class DossierSyncWrapper implements DossierSync,
 	}
 
 	/**
+	* Sets the retry of this dossier sync.
+	*
+	* @param retry the retry of this dossier sync
+	*/
+	@Override
+	public void setRetry(int retry) {
+		_dossierSync.setRetry(retry);
+	}
+
+	/**
 	* Sets the server no of this dossier sync.
 	*
 	* @param serverNo the server no of this dossier sync
@@ -582,6 +653,16 @@ public class DossierSyncWrapper implements DossierSync,
 	@Override
 	public void setServerNo(java.lang.String serverNo) {
 		_dossierSync.setServerNo(serverNo);
+	}
+
+	/**
+	* Sets the state of this dossier sync.
+	*
+	* @param state the state of this dossier sync
+	*/
+	@Override
+	public void setState(int state) {
+		_dossierSync.setState(state);
 	}
 
 	/**
