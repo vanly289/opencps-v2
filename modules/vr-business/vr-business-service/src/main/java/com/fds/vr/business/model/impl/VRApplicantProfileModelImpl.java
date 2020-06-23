@@ -76,19 +76,29 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 			{ "applicantPhone", Types.VARCHAR },
 			{ "applicantEmail", Types.VARCHAR },
 			{ "applicantFax", Types.VARCHAR },
+			{ "applicantWebsite", Types.VARCHAR },
+			{ "applicantRepresentativePhone", Types.VARCHAR },
 			{ "applicantRepresentative", Types.VARCHAR },
 			{ "applicantRepresentativeTitle", Types.VARCHAR },
 			{ "applicantContactName", Types.VARCHAR },
 			{ "applicantContactEmail", Types.VARCHAR },
 			{ "applicantContactPhone", Types.VARCHAR },
 			{ "applicantNationality", Types.VARCHAR },
+			{ "applicantNationalityCode", Types.VARCHAR },
 			{ "applicantRegion", Types.VARCHAR },
+			{ "applicantRegionCode", Types.VARCHAR },
 			{ "applicantCity", Types.VARCHAR },
+			{ "applicantCityCode", Types.VARCHAR },
+			{ "applicantDistrictCode", Types.VARCHAR },
+			{ "applicantDistrictName", Types.VARCHAR },
+			{ "applicantWardCode", Types.VARCHAR },
+			{ "applicantWardName", Types.VARCHAR },
 			{ "markupCorporation", Types.VARCHAR },
 			{ "corporationId", Types.VARCHAR },
 			{ "markupDesigner", Types.VARCHAR },
 			{ "markupOverseasManufacturer", Types.VARCHAR },
 			{ "markupDomesticsManufacturer", Types.VARCHAR },
+			{ "markupMaintainer", Types.VARCHAR },
 			{ "markupImporter", Types.VARCHAR },
 			{ "markupComponentXCG", Types.VARCHAR },
 			{ "markupComponentXMY", Types.VARCHAR },
@@ -112,6 +122,12 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 			{ "applicantCeremonyDate", Types.VARCHAR },
 			{ "applicantOperationPeriod", Types.VARCHAR },
 			{ "applicantBusinessType", Types.VARCHAR },
+			{ "applicantIdentityType", Types.VARCHAR },
+			{ "applicantIdentityDescription", Types.VARCHAR },
+			{ "applicantIdentityFileName", Types.VARCHAR },
+			{ "applicantIdentityFileEntryId", Types.BIGINT },
+			{ "applicantXcgFileName", Types.VARCHAR },
+			{ "applicantXcgFileEntryId", Types.BIGINT },
 			{ "applicantMetadata", Types.VARCHAR },
 			{ "applicantStatus", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
@@ -133,19 +149,29 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		TABLE_COLUMNS_MAP.put("applicantPhone", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantEmail", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantFax", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantWebsite", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantRepresentativePhone", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantRepresentative", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantRepresentativeTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantContactName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantContactEmail", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantContactPhone", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantNationality", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantNationalityCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantRegion", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantRegionCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantCity", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantCityCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantDistrictCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantDistrictName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantWardCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantWardName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("markupCorporation", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("corporationId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("markupDesigner", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("markupOverseasManufacturer", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("markupDomesticsManufacturer", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("markupMaintainer", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("markupImporter", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("markupComponentXCG", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("markupComponentXMY", Types.VARCHAR);
@@ -169,13 +195,19 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		TABLE_COLUMNS_MAP.put("applicantCeremonyDate", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantOperationPeriod", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantBusinessType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantIdentityType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantIdentityDescription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantIdentityFileName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantIdentityFileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("applicantXcgFileName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("applicantXcgFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("applicantMetadata", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_applicantprofile (id LONG not null primary key,mtCore LONG,mappingMA_CTY VARCHAR(75) null,mappingTEN_CTY VARCHAR(75) null,mappingDIA_CHI_CTY VARCHAR(75) null,mappingNote VARCHAR(75) null,mappingStatus VARCHAR(75) null,applicantCode VARCHAR(75) null,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,applicantPhone VARCHAR(75) null,applicantEmail VARCHAR(75) null,applicantFax VARCHAR(75) null,applicantRepresentative VARCHAR(75) null,applicantRepresentativeTitle VARCHAR(75) null,applicantContactName VARCHAR(75) null,applicantContactEmail VARCHAR(75) null,applicantContactPhone VARCHAR(75) null,applicantNationality VARCHAR(75) null,applicantRegion VARCHAR(75) null,applicantCity VARCHAR(75) null,markupCorporation VARCHAR(75) null,corporationId VARCHAR(75) null,markupDesigner VARCHAR(75) null,markupOverseasManufacturer VARCHAR(75) null,markupDomesticsManufacturer VARCHAR(75) null,markupImporter VARCHAR(75) null,markupComponentXCG VARCHAR(75) null,markupComponentXMY VARCHAR(75) null,markupComponentXCD VARCHAR(75) null,markupComponentXDD VARCHAR(75) null,markupComponentXCN VARCHAR(75) null,markupComponentXCH VARCHAR(75) null,markupXCG VARCHAR(75) null,markupXMY VARCHAR(75) null,markupXCD VARCHAR(75) null,markupXDD VARCHAR(75) null,markupXCN VARCHAR(75) null,markupXCH VARCHAR(75) null,issueTypeXCG VARCHAR(75) null,issueTypeXMY VARCHAR(75) null,issueTypeXCD VARCHAR(75) null,issueTypeXDD VARCHAR(75) null,issueTypeXCN VARCHAR(75) null,issueTypeXCH VARCHAR(75) null,issueTypeDescription VARCHAR(75) null,applicantCeremonyDate VARCHAR(75) null,applicantOperationPeriod VARCHAR(75) null,applicantBusinessType VARCHAR(75) null,applicantMetadata VARCHAR(75) null,applicantStatus VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_applicantprofile (id LONG not null primary key,mtCore LONG,mappingMA_CTY VARCHAR(75) null,mappingTEN_CTY VARCHAR(75) null,mappingDIA_CHI_CTY VARCHAR(75) null,mappingNote VARCHAR(75) null,mappingStatus VARCHAR(75) null,applicantCode VARCHAR(75) null,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,applicantPhone VARCHAR(75) null,applicantEmail VARCHAR(75) null,applicantFax VARCHAR(75) null,applicantWebsite VARCHAR(75) null,applicantRepresentativePhone VARCHAR(75) null,applicantRepresentative VARCHAR(75) null,applicantRepresentativeTitle VARCHAR(75) null,applicantContactName VARCHAR(75) null,applicantContactEmail VARCHAR(75) null,applicantContactPhone VARCHAR(75) null,applicantNationality VARCHAR(75) null,applicantNationalityCode VARCHAR(75) null,applicantRegion VARCHAR(75) null,applicantRegionCode VARCHAR(75) null,applicantCity VARCHAR(75) null,applicantCityCode VARCHAR(75) null,applicantDistrictCode VARCHAR(75) null,applicantDistrictName VARCHAR(75) null,applicantWardCode VARCHAR(75) null,applicantWardName VARCHAR(75) null,markupCorporation VARCHAR(75) null,corporationId VARCHAR(75) null,markupDesigner VARCHAR(75) null,markupOverseasManufacturer VARCHAR(75) null,markupDomesticsManufacturer VARCHAR(75) null,markupMaintainer VARCHAR(75) null,markupImporter VARCHAR(75) null,markupComponentXCG VARCHAR(75) null,markupComponentXMY VARCHAR(75) null,markupComponentXCD VARCHAR(75) null,markupComponentXDD VARCHAR(75) null,markupComponentXCN VARCHAR(75) null,markupComponentXCH VARCHAR(75) null,markupXCG VARCHAR(75) null,markupXMY VARCHAR(75) null,markupXCD VARCHAR(75) null,markupXDD VARCHAR(75) null,markupXCN VARCHAR(75) null,markupXCH VARCHAR(75) null,issueTypeXCG VARCHAR(75) null,issueTypeXMY VARCHAR(75) null,issueTypeXCD VARCHAR(75) null,issueTypeXDD VARCHAR(75) null,issueTypeXCN VARCHAR(75) null,issueTypeXCH VARCHAR(75) null,issueTypeDescription VARCHAR(75) null,applicantCeremonyDate VARCHAR(75) null,applicantOperationPeriod VARCHAR(75) null,applicantBusinessType VARCHAR(75) null,applicantIdentityType VARCHAR(75) null,applicantIdentityDescription VARCHAR(75) null,applicantIdentityFileName VARCHAR(75) null,applicantIdentityFileEntryId LONG,applicantXcgFileName VARCHAR(75) null,applicantXcgFileEntryId LONG,applicantMetadata VARCHAR(75) null,applicantStatus VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_applicantprofile";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrApplicantProfile.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_applicantprofile.modifyDate DESC";
@@ -253,6 +285,9 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		attributes.put("applicantPhone", getApplicantPhone());
 		attributes.put("applicantEmail", getApplicantEmail());
 		attributes.put("applicantFax", getApplicantFax());
+		attributes.put("applicantWebsite", getApplicantWebsite());
+		attributes.put("applicantRepresentativePhone",
+			getApplicantRepresentativePhone());
 		attributes.put("applicantRepresentative", getApplicantRepresentative());
 		attributes.put("applicantRepresentativeTitle",
 			getApplicantRepresentativeTitle());
@@ -260,8 +295,15 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		attributes.put("applicantContactEmail", getApplicantContactEmail());
 		attributes.put("applicantContactPhone", getApplicantContactPhone());
 		attributes.put("applicantNationality", getApplicantNationality());
+		attributes.put("applicantNationalityCode", getApplicantNationalityCode());
 		attributes.put("applicantRegion", getApplicantRegion());
+		attributes.put("applicantRegionCode", getApplicantRegionCode());
 		attributes.put("applicantCity", getApplicantCity());
+		attributes.put("applicantCityCode", getApplicantCityCode());
+		attributes.put("applicantDistrictCode", getApplicantDistrictCode());
+		attributes.put("applicantDistrictName", getApplicantDistrictName());
+		attributes.put("applicantWardCode", getApplicantWardCode());
+		attributes.put("applicantWardName", getApplicantWardName());
 		attributes.put("markupCorporation", getMarkupCorporation());
 		attributes.put("corporationId", getCorporationId());
 		attributes.put("markupDesigner", getMarkupDesigner());
@@ -269,6 +311,7 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 			getMarkupOverseasManufacturer());
 		attributes.put("markupDomesticsManufacturer",
 			getMarkupDomesticsManufacturer());
+		attributes.put("markupMaintainer", getMarkupMaintainer());
 		attributes.put("markupImporter", getMarkupImporter());
 		attributes.put("markupComponentXCG", getMarkupComponentXCG());
 		attributes.put("markupComponentXMY", getMarkupComponentXMY());
@@ -292,6 +335,15 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		attributes.put("applicantCeremonyDate", getApplicantCeremonyDate());
 		attributes.put("applicantOperationPeriod", getApplicantOperationPeriod());
 		attributes.put("applicantBusinessType", getApplicantBusinessType());
+		attributes.put("applicantIdentityType", getApplicantIdentityType());
+		attributes.put("applicantIdentityDescription",
+			getApplicantIdentityDescription());
+		attributes.put("applicantIdentityFileName",
+			getApplicantIdentityFileName());
+		attributes.put("applicantIdentityFileEntryId",
+			getApplicantIdentityFileEntryId());
+		attributes.put("applicantXcgFileName", getApplicantXcgFileName());
+		attributes.put("applicantXcgFileEntryId", getApplicantXcgFileEntryId());
 		attributes.put("applicantMetadata", getApplicantMetadata());
 		attributes.put("applicantStatus", getApplicantStatus());
 		attributes.put("modifyDate", getModifyDate());
@@ -383,6 +435,19 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 			setApplicantFax(applicantFax);
 		}
 
+		String applicantWebsite = (String)attributes.get("applicantWebsite");
+
+		if (applicantWebsite != null) {
+			setApplicantWebsite(applicantWebsite);
+		}
+
+		String applicantRepresentativePhone = (String)attributes.get(
+				"applicantRepresentativePhone");
+
+		if (applicantRepresentativePhone != null) {
+			setApplicantRepresentativePhone(applicantRepresentativePhone);
+		}
+
 		String applicantRepresentative = (String)attributes.get(
 				"applicantRepresentative");
 
@@ -425,16 +490,62 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 			setApplicantNationality(applicantNationality);
 		}
 
+		String applicantNationalityCode = (String)attributes.get(
+				"applicantNationalityCode");
+
+		if (applicantNationalityCode != null) {
+			setApplicantNationalityCode(applicantNationalityCode);
+		}
+
 		String applicantRegion = (String)attributes.get("applicantRegion");
 
 		if (applicantRegion != null) {
 			setApplicantRegion(applicantRegion);
 		}
 
+		String applicantRegionCode = (String)attributes.get(
+				"applicantRegionCode");
+
+		if (applicantRegionCode != null) {
+			setApplicantRegionCode(applicantRegionCode);
+		}
+
 		String applicantCity = (String)attributes.get("applicantCity");
 
 		if (applicantCity != null) {
 			setApplicantCity(applicantCity);
+		}
+
+		String applicantCityCode = (String)attributes.get("applicantCityCode");
+
+		if (applicantCityCode != null) {
+			setApplicantCityCode(applicantCityCode);
+		}
+
+		String applicantDistrictCode = (String)attributes.get(
+				"applicantDistrictCode");
+
+		if (applicantDistrictCode != null) {
+			setApplicantDistrictCode(applicantDistrictCode);
+		}
+
+		String applicantDistrictName = (String)attributes.get(
+				"applicantDistrictName");
+
+		if (applicantDistrictName != null) {
+			setApplicantDistrictName(applicantDistrictName);
+		}
+
+		String applicantWardCode = (String)attributes.get("applicantWardCode");
+
+		if (applicantWardCode != null) {
+			setApplicantWardCode(applicantWardCode);
+		}
+
+		String applicantWardName = (String)attributes.get("applicantWardName");
+
+		if (applicantWardName != null) {
+			setApplicantWardName(applicantWardName);
 		}
 
 		String markupCorporation = (String)attributes.get("markupCorporation");
@@ -467,6 +578,12 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 
 		if (markupDomesticsManufacturer != null) {
 			setMarkupDomesticsManufacturer(markupDomesticsManufacturer);
+		}
+
+		String markupMaintainer = (String)attributes.get("markupMaintainer");
+
+		if (markupMaintainer != null) {
+			setMarkupMaintainer(markupMaintainer);
 		}
 
 		String markupImporter = (String)attributes.get("markupImporter");
@@ -609,6 +726,48 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 
 		if (applicantBusinessType != null) {
 			setApplicantBusinessType(applicantBusinessType);
+		}
+
+		String applicantIdentityType = (String)attributes.get(
+				"applicantIdentityType");
+
+		if (applicantIdentityType != null) {
+			setApplicantIdentityType(applicantIdentityType);
+		}
+
+		String applicantIdentityDescription = (String)attributes.get(
+				"applicantIdentityDescription");
+
+		if (applicantIdentityDescription != null) {
+			setApplicantIdentityDescription(applicantIdentityDescription);
+		}
+
+		String applicantIdentityFileName = (String)attributes.get(
+				"applicantIdentityFileName");
+
+		if (applicantIdentityFileName != null) {
+			setApplicantIdentityFileName(applicantIdentityFileName);
+		}
+
+		Long applicantIdentityFileEntryId = (Long)attributes.get(
+				"applicantIdentityFileEntryId");
+
+		if (applicantIdentityFileEntryId != null) {
+			setApplicantIdentityFileEntryId(applicantIdentityFileEntryId);
+		}
+
+		String applicantXcgFileName = (String)attributes.get(
+				"applicantXcgFileName");
+
+		if (applicantXcgFileName != null) {
+			setApplicantXcgFileName(applicantXcgFileName);
+		}
+
+		Long applicantXcgFileEntryId = (Long)attributes.get(
+				"applicantXcgFileEntryId");
+
+		if (applicantXcgFileEntryId != null) {
+			setApplicantXcgFileEntryId(applicantXcgFileEntryId);
 		}
 
 		String applicantMetadata = (String)attributes.get("applicantMetadata");
@@ -874,6 +1033,37 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 	}
 
 	@Override
+	public String getApplicantWebsite() {
+		if (_applicantWebsite == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantWebsite;
+		}
+	}
+
+	@Override
+	public void setApplicantWebsite(String applicantWebsite) {
+		_applicantWebsite = applicantWebsite;
+	}
+
+	@Override
+	public String getApplicantRepresentativePhone() {
+		if (_applicantRepresentativePhone == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantRepresentativePhone;
+		}
+	}
+
+	@Override
+	public void setApplicantRepresentativePhone(
+		String applicantRepresentativePhone) {
+		_applicantRepresentativePhone = applicantRepresentativePhone;
+	}
+
+	@Override
 	public String getApplicantRepresentative() {
 		if (_applicantRepresentative == null) {
 			return StringPool.BLANK;
@@ -965,6 +1155,21 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 	}
 
 	@Override
+	public String getApplicantNationalityCode() {
+		if (_applicantNationalityCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantNationalityCode;
+		}
+	}
+
+	@Override
+	public void setApplicantNationalityCode(String applicantNationalityCode) {
+		_applicantNationalityCode = applicantNationalityCode;
+	}
+
+	@Override
 	public String getApplicantRegion() {
 		if (_applicantRegion == null) {
 			return StringPool.BLANK;
@@ -990,6 +1195,21 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 	}
 
 	@Override
+	public String getApplicantRegionCode() {
+		if (_applicantRegionCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantRegionCode;
+		}
+	}
+
+	@Override
+	public void setApplicantRegionCode(String applicantRegionCode) {
+		_applicantRegionCode = applicantRegionCode;
+	}
+
+	@Override
 	public String getApplicantCity() {
 		if (_applicantCity == null) {
 			return StringPool.BLANK;
@@ -1012,6 +1232,81 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 
 	public String getOriginalApplicantCity() {
 		return GetterUtil.getString(_originalApplicantCity);
+	}
+
+	@Override
+	public String getApplicantCityCode() {
+		if (_applicantCityCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantCityCode;
+		}
+	}
+
+	@Override
+	public void setApplicantCityCode(String applicantCityCode) {
+		_applicantCityCode = applicantCityCode;
+	}
+
+	@Override
+	public String getApplicantDistrictCode() {
+		if (_applicantDistrictCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantDistrictCode;
+		}
+	}
+
+	@Override
+	public void setApplicantDistrictCode(String applicantDistrictCode) {
+		_applicantDistrictCode = applicantDistrictCode;
+	}
+
+	@Override
+	public String getApplicantDistrictName() {
+		if (_applicantDistrictName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantDistrictName;
+		}
+	}
+
+	@Override
+	public void setApplicantDistrictName(String applicantDistrictName) {
+		_applicantDistrictName = applicantDistrictName;
+	}
+
+	@Override
+	public String getApplicantWardCode() {
+		if (_applicantWardCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantWardCode;
+		}
+	}
+
+	@Override
+	public void setApplicantWardCode(String applicantWardCode) {
+		_applicantWardCode = applicantWardCode;
+	}
+
+	@Override
+	public String getApplicantWardName() {
+		if (_applicantWardName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantWardName;
+		}
+	}
+
+	@Override
+	public void setApplicantWardName(String applicantWardName) {
+		_applicantWardName = applicantWardName;
 	}
 
 	@Override
@@ -1088,6 +1383,21 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 	public void setMarkupDomesticsManufacturer(
 		String markupDomesticsManufacturer) {
 		_markupDomesticsManufacturer = markupDomesticsManufacturer;
+	}
+
+	@Override
+	public String getMarkupMaintainer() {
+		if (_markupMaintainer == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _markupMaintainer;
+		}
+	}
+
+	@Override
+	public void setMarkupMaintainer(String markupMaintainer) {
+		_markupMaintainer = markupMaintainer;
 	}
 
 	@Override
@@ -1436,6 +1746,88 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 	}
 
 	@Override
+	public String getApplicantIdentityType() {
+		if (_applicantIdentityType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantIdentityType;
+		}
+	}
+
+	@Override
+	public void setApplicantIdentityType(String applicantIdentityType) {
+		_applicantIdentityType = applicantIdentityType;
+	}
+
+	@Override
+	public String getApplicantIdentityDescription() {
+		if (_applicantIdentityDescription == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantIdentityDescription;
+		}
+	}
+
+	@Override
+	public void setApplicantIdentityDescription(
+		String applicantIdentityDescription) {
+		_applicantIdentityDescription = applicantIdentityDescription;
+	}
+
+	@Override
+	public String getApplicantIdentityFileName() {
+		if (_applicantIdentityFileName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantIdentityFileName;
+		}
+	}
+
+	@Override
+	public void setApplicantIdentityFileName(String applicantIdentityFileName) {
+		_applicantIdentityFileName = applicantIdentityFileName;
+	}
+
+	@Override
+	public long getApplicantIdentityFileEntryId() {
+		return _applicantIdentityFileEntryId;
+	}
+
+	@Override
+	public void setApplicantIdentityFileEntryId(
+		long applicantIdentityFileEntryId) {
+		_applicantIdentityFileEntryId = applicantIdentityFileEntryId;
+	}
+
+	@Override
+	public String getApplicantXcgFileName() {
+		if (_applicantXcgFileName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantXcgFileName;
+		}
+	}
+
+	@Override
+	public void setApplicantXcgFileName(String applicantXcgFileName) {
+		_applicantXcgFileName = applicantXcgFileName;
+	}
+
+	@Override
+	public long getApplicantXcgFileEntryId() {
+		return _applicantXcgFileEntryId;
+	}
+
+	@Override
+	public void setApplicantXcgFileEntryId(long applicantXcgFileEntryId) {
+		_applicantXcgFileEntryId = applicantXcgFileEntryId;
+	}
+
+	@Override
 	public String getApplicantMetadata() {
 		if (_applicantMetadata == null) {
 			return StringPool.BLANK;
@@ -1541,19 +1933,29 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		vrApplicantProfileImpl.setApplicantPhone(getApplicantPhone());
 		vrApplicantProfileImpl.setApplicantEmail(getApplicantEmail());
 		vrApplicantProfileImpl.setApplicantFax(getApplicantFax());
+		vrApplicantProfileImpl.setApplicantWebsite(getApplicantWebsite());
+		vrApplicantProfileImpl.setApplicantRepresentativePhone(getApplicantRepresentativePhone());
 		vrApplicantProfileImpl.setApplicantRepresentative(getApplicantRepresentative());
 		vrApplicantProfileImpl.setApplicantRepresentativeTitle(getApplicantRepresentativeTitle());
 		vrApplicantProfileImpl.setApplicantContactName(getApplicantContactName());
 		vrApplicantProfileImpl.setApplicantContactEmail(getApplicantContactEmail());
 		vrApplicantProfileImpl.setApplicantContactPhone(getApplicantContactPhone());
 		vrApplicantProfileImpl.setApplicantNationality(getApplicantNationality());
+		vrApplicantProfileImpl.setApplicantNationalityCode(getApplicantNationalityCode());
 		vrApplicantProfileImpl.setApplicantRegion(getApplicantRegion());
+		vrApplicantProfileImpl.setApplicantRegionCode(getApplicantRegionCode());
 		vrApplicantProfileImpl.setApplicantCity(getApplicantCity());
+		vrApplicantProfileImpl.setApplicantCityCode(getApplicantCityCode());
+		vrApplicantProfileImpl.setApplicantDistrictCode(getApplicantDistrictCode());
+		vrApplicantProfileImpl.setApplicantDistrictName(getApplicantDistrictName());
+		vrApplicantProfileImpl.setApplicantWardCode(getApplicantWardCode());
+		vrApplicantProfileImpl.setApplicantWardName(getApplicantWardName());
 		vrApplicantProfileImpl.setMarkupCorporation(getMarkupCorporation());
 		vrApplicantProfileImpl.setCorporationId(getCorporationId());
 		vrApplicantProfileImpl.setMarkupDesigner(getMarkupDesigner());
 		vrApplicantProfileImpl.setMarkupOverseasManufacturer(getMarkupOverseasManufacturer());
 		vrApplicantProfileImpl.setMarkupDomesticsManufacturer(getMarkupDomesticsManufacturer());
+		vrApplicantProfileImpl.setMarkupMaintainer(getMarkupMaintainer());
 		vrApplicantProfileImpl.setMarkupImporter(getMarkupImporter());
 		vrApplicantProfileImpl.setMarkupComponentXCG(getMarkupComponentXCG());
 		vrApplicantProfileImpl.setMarkupComponentXMY(getMarkupComponentXMY());
@@ -1577,6 +1979,12 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		vrApplicantProfileImpl.setApplicantCeremonyDate(getApplicantCeremonyDate());
 		vrApplicantProfileImpl.setApplicantOperationPeriod(getApplicantOperationPeriod());
 		vrApplicantProfileImpl.setApplicantBusinessType(getApplicantBusinessType());
+		vrApplicantProfileImpl.setApplicantIdentityType(getApplicantIdentityType());
+		vrApplicantProfileImpl.setApplicantIdentityDescription(getApplicantIdentityDescription());
+		vrApplicantProfileImpl.setApplicantIdentityFileName(getApplicantIdentityFileName());
+		vrApplicantProfileImpl.setApplicantIdentityFileEntryId(getApplicantIdentityFileEntryId());
+		vrApplicantProfileImpl.setApplicantXcgFileName(getApplicantXcgFileName());
+		vrApplicantProfileImpl.setApplicantXcgFileEntryId(getApplicantXcgFileEntryId());
 		vrApplicantProfileImpl.setApplicantMetadata(getApplicantMetadata());
 		vrApplicantProfileImpl.setApplicantStatus(getApplicantStatus());
 		vrApplicantProfileImpl.setModifyDate(getModifyDate());
@@ -1761,6 +2169,23 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 			vrApplicantProfileCacheModel.applicantFax = null;
 		}
 
+		vrApplicantProfileCacheModel.applicantWebsite = getApplicantWebsite();
+
+		String applicantWebsite = vrApplicantProfileCacheModel.applicantWebsite;
+
+		if ((applicantWebsite != null) && (applicantWebsite.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantWebsite = null;
+		}
+
+		vrApplicantProfileCacheModel.applicantRepresentativePhone = getApplicantRepresentativePhone();
+
+		String applicantRepresentativePhone = vrApplicantProfileCacheModel.applicantRepresentativePhone;
+
+		if ((applicantRepresentativePhone != null) &&
+				(applicantRepresentativePhone.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantRepresentativePhone = null;
+		}
+
 		vrApplicantProfileCacheModel.applicantRepresentative = getApplicantRepresentative();
 
 		String applicantRepresentative = vrApplicantProfileCacheModel.applicantRepresentative;
@@ -1815,6 +2240,15 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 			vrApplicantProfileCacheModel.applicantNationality = null;
 		}
 
+		vrApplicantProfileCacheModel.applicantNationalityCode = getApplicantNationalityCode();
+
+		String applicantNationalityCode = vrApplicantProfileCacheModel.applicantNationalityCode;
+
+		if ((applicantNationalityCode != null) &&
+				(applicantNationalityCode.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantNationalityCode = null;
+		}
+
 		vrApplicantProfileCacheModel.applicantRegion = getApplicantRegion();
 
 		String applicantRegion = vrApplicantProfileCacheModel.applicantRegion;
@@ -1823,12 +2257,63 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 			vrApplicantProfileCacheModel.applicantRegion = null;
 		}
 
+		vrApplicantProfileCacheModel.applicantRegionCode = getApplicantRegionCode();
+
+		String applicantRegionCode = vrApplicantProfileCacheModel.applicantRegionCode;
+
+		if ((applicantRegionCode != null) &&
+				(applicantRegionCode.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantRegionCode = null;
+		}
+
 		vrApplicantProfileCacheModel.applicantCity = getApplicantCity();
 
 		String applicantCity = vrApplicantProfileCacheModel.applicantCity;
 
 		if ((applicantCity != null) && (applicantCity.length() == 0)) {
 			vrApplicantProfileCacheModel.applicantCity = null;
+		}
+
+		vrApplicantProfileCacheModel.applicantCityCode = getApplicantCityCode();
+
+		String applicantCityCode = vrApplicantProfileCacheModel.applicantCityCode;
+
+		if ((applicantCityCode != null) && (applicantCityCode.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantCityCode = null;
+		}
+
+		vrApplicantProfileCacheModel.applicantDistrictCode = getApplicantDistrictCode();
+
+		String applicantDistrictCode = vrApplicantProfileCacheModel.applicantDistrictCode;
+
+		if ((applicantDistrictCode != null) &&
+				(applicantDistrictCode.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantDistrictCode = null;
+		}
+
+		vrApplicantProfileCacheModel.applicantDistrictName = getApplicantDistrictName();
+
+		String applicantDistrictName = vrApplicantProfileCacheModel.applicantDistrictName;
+
+		if ((applicantDistrictName != null) &&
+				(applicantDistrictName.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantDistrictName = null;
+		}
+
+		vrApplicantProfileCacheModel.applicantWardCode = getApplicantWardCode();
+
+		String applicantWardCode = vrApplicantProfileCacheModel.applicantWardCode;
+
+		if ((applicantWardCode != null) && (applicantWardCode.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantWardCode = null;
+		}
+
+		vrApplicantProfileCacheModel.applicantWardName = getApplicantWardName();
+
+		String applicantWardName = vrApplicantProfileCacheModel.applicantWardName;
+
+		if ((applicantWardName != null) && (applicantWardName.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantWardName = null;
 		}
 
 		vrApplicantProfileCacheModel.markupCorporation = getMarkupCorporation();
@@ -1871,6 +2356,14 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		if ((markupDomesticsManufacturer != null) &&
 				(markupDomesticsManufacturer.length() == 0)) {
 			vrApplicantProfileCacheModel.markupDomesticsManufacturer = null;
+		}
+
+		vrApplicantProfileCacheModel.markupMaintainer = getMarkupMaintainer();
+
+		String markupMaintainer = vrApplicantProfileCacheModel.markupMaintainer;
+
+		if ((markupMaintainer != null) && (markupMaintainer.length() == 0)) {
+			vrApplicantProfileCacheModel.markupMaintainer = null;
 		}
 
 		vrApplicantProfileCacheModel.markupImporter = getMarkupImporter();
@@ -2061,6 +2554,46 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 			vrApplicantProfileCacheModel.applicantBusinessType = null;
 		}
 
+		vrApplicantProfileCacheModel.applicantIdentityType = getApplicantIdentityType();
+
+		String applicantIdentityType = vrApplicantProfileCacheModel.applicantIdentityType;
+
+		if ((applicantIdentityType != null) &&
+				(applicantIdentityType.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantIdentityType = null;
+		}
+
+		vrApplicantProfileCacheModel.applicantIdentityDescription = getApplicantIdentityDescription();
+
+		String applicantIdentityDescription = vrApplicantProfileCacheModel.applicantIdentityDescription;
+
+		if ((applicantIdentityDescription != null) &&
+				(applicantIdentityDescription.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantIdentityDescription = null;
+		}
+
+		vrApplicantProfileCacheModel.applicantIdentityFileName = getApplicantIdentityFileName();
+
+		String applicantIdentityFileName = vrApplicantProfileCacheModel.applicantIdentityFileName;
+
+		if ((applicantIdentityFileName != null) &&
+				(applicantIdentityFileName.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantIdentityFileName = null;
+		}
+
+		vrApplicantProfileCacheModel.applicantIdentityFileEntryId = getApplicantIdentityFileEntryId();
+
+		vrApplicantProfileCacheModel.applicantXcgFileName = getApplicantXcgFileName();
+
+		String applicantXcgFileName = vrApplicantProfileCacheModel.applicantXcgFileName;
+
+		if ((applicantXcgFileName != null) &&
+				(applicantXcgFileName.length() == 0)) {
+			vrApplicantProfileCacheModel.applicantXcgFileName = null;
+		}
+
+		vrApplicantProfileCacheModel.applicantXcgFileEntryId = getApplicantXcgFileEntryId();
+
 		vrApplicantProfileCacheModel.applicantMetadata = getApplicantMetadata();
 
 		String applicantMetadata = vrApplicantProfileCacheModel.applicantMetadata;
@@ -2100,7 +2633,7 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(107);
+		StringBundler sb = new StringBundler(139);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -2128,6 +2661,10 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		sb.append(getApplicantEmail());
 		sb.append(", applicantFax=");
 		sb.append(getApplicantFax());
+		sb.append(", applicantWebsite=");
+		sb.append(getApplicantWebsite());
+		sb.append(", applicantRepresentativePhone=");
+		sb.append(getApplicantRepresentativePhone());
 		sb.append(", applicantRepresentative=");
 		sb.append(getApplicantRepresentative());
 		sb.append(", applicantRepresentativeTitle=");
@@ -2140,10 +2677,24 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		sb.append(getApplicantContactPhone());
 		sb.append(", applicantNationality=");
 		sb.append(getApplicantNationality());
+		sb.append(", applicantNationalityCode=");
+		sb.append(getApplicantNationalityCode());
 		sb.append(", applicantRegion=");
 		sb.append(getApplicantRegion());
+		sb.append(", applicantRegionCode=");
+		sb.append(getApplicantRegionCode());
 		sb.append(", applicantCity=");
 		sb.append(getApplicantCity());
+		sb.append(", applicantCityCode=");
+		sb.append(getApplicantCityCode());
+		sb.append(", applicantDistrictCode=");
+		sb.append(getApplicantDistrictCode());
+		sb.append(", applicantDistrictName=");
+		sb.append(getApplicantDistrictName());
+		sb.append(", applicantWardCode=");
+		sb.append(getApplicantWardCode());
+		sb.append(", applicantWardName=");
+		sb.append(getApplicantWardName());
 		sb.append(", markupCorporation=");
 		sb.append(getMarkupCorporation());
 		sb.append(", corporationId=");
@@ -2154,6 +2705,8 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		sb.append(getMarkupOverseasManufacturer());
 		sb.append(", markupDomesticsManufacturer=");
 		sb.append(getMarkupDomesticsManufacturer());
+		sb.append(", markupMaintainer=");
+		sb.append(getMarkupMaintainer());
 		sb.append(", markupImporter=");
 		sb.append(getMarkupImporter());
 		sb.append(", markupComponentXCG=");
@@ -2200,6 +2753,18 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		sb.append(getApplicantOperationPeriod());
 		sb.append(", applicantBusinessType=");
 		sb.append(getApplicantBusinessType());
+		sb.append(", applicantIdentityType=");
+		sb.append(getApplicantIdentityType());
+		sb.append(", applicantIdentityDescription=");
+		sb.append(getApplicantIdentityDescription());
+		sb.append(", applicantIdentityFileName=");
+		sb.append(getApplicantIdentityFileName());
+		sb.append(", applicantIdentityFileEntryId=");
+		sb.append(getApplicantIdentityFileEntryId());
+		sb.append(", applicantXcgFileName=");
+		sb.append(getApplicantXcgFileName());
+		sb.append(", applicantXcgFileEntryId=");
+		sb.append(getApplicantXcgFileEntryId());
 		sb.append(", applicantMetadata=");
 		sb.append(getApplicantMetadata());
 		sb.append(", applicantStatus=");
@@ -2215,7 +2780,7 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(163);
+		StringBundler sb = new StringBundler(211);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRApplicantProfile");
@@ -2274,6 +2839,14 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		sb.append(getApplicantFax());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>applicantWebsite</column-name><column-value><![CDATA[");
+		sb.append(getApplicantWebsite());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantRepresentativePhone</column-name><column-value><![CDATA[");
+		sb.append(getApplicantRepresentativePhone());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>applicantRepresentative</column-name><column-value><![CDATA[");
 		sb.append(getApplicantRepresentative());
 		sb.append("]]></column-value></column>");
@@ -2298,12 +2871,40 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		sb.append(getApplicantNationality());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>applicantNationalityCode</column-name><column-value><![CDATA[");
+		sb.append(getApplicantNationalityCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>applicantRegion</column-name><column-value><![CDATA[");
 		sb.append(getApplicantRegion());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>applicantRegionCode</column-name><column-value><![CDATA[");
+		sb.append(getApplicantRegionCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>applicantCity</column-name><column-value><![CDATA[");
 		sb.append(getApplicantCity());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantCityCode</column-name><column-value><![CDATA[");
+		sb.append(getApplicantCityCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantDistrictCode</column-name><column-value><![CDATA[");
+		sb.append(getApplicantDistrictCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantDistrictName</column-name><column-value><![CDATA[");
+		sb.append(getApplicantDistrictName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantWardCode</column-name><column-value><![CDATA[");
+		sb.append(getApplicantWardCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantWardName</column-name><column-value><![CDATA[");
+		sb.append(getApplicantWardName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>markupCorporation</column-name><column-value><![CDATA[");
@@ -2324,6 +2925,10 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		sb.append(
 			"<column><column-name>markupDomesticsManufacturer</column-name><column-value><![CDATA[");
 		sb.append(getMarkupDomesticsManufacturer());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>markupMaintainer</column-name><column-value><![CDATA[");
+		sb.append(getMarkupMaintainer());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>markupImporter</column-name><column-value><![CDATA[");
@@ -2418,6 +3023,30 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 		sb.append(getApplicantBusinessType());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>applicantIdentityType</column-name><column-value><![CDATA[");
+		sb.append(getApplicantIdentityType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantIdentityDescription</column-name><column-value><![CDATA[");
+		sb.append(getApplicantIdentityDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantIdentityFileName</column-name><column-value><![CDATA[");
+		sb.append(getApplicantIdentityFileName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantIdentityFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getApplicantIdentityFileEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantXcgFileName</column-name><column-value><![CDATA[");
+		sb.append(getApplicantXcgFileName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantXcgFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getApplicantXcgFileEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>applicantMetadata</column-name><column-value><![CDATA[");
 		sb.append(getApplicantMetadata());
 		sb.append("]]></column-value></column>");
@@ -2462,21 +3091,31 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 	private String _applicantPhone;
 	private String _applicantEmail;
 	private String _applicantFax;
+	private String _applicantWebsite;
+	private String _applicantRepresentativePhone;
 	private String _applicantRepresentative;
 	private String _applicantRepresentativeTitle;
 	private String _applicantContactName;
 	private String _applicantContactEmail;
 	private String _applicantContactPhone;
 	private String _applicantNationality;
+	private String _applicantNationalityCode;
 	private String _applicantRegion;
 	private String _originalApplicantRegion;
+	private String _applicantRegionCode;
 	private String _applicantCity;
 	private String _originalApplicantCity;
+	private String _applicantCityCode;
+	private String _applicantDistrictCode;
+	private String _applicantDistrictName;
+	private String _applicantWardCode;
+	private String _applicantWardName;
 	private String _markupCorporation;
 	private String _corporationId;
 	private String _markupDesigner;
 	private String _markupOverseasManufacturer;
 	private String _markupDomesticsManufacturer;
+	private String _markupMaintainer;
 	private String _markupImporter;
 	private String _markupComponentXCG;
 	private String _markupComponentXMY;
@@ -2500,6 +3139,12 @@ public class VRApplicantProfileModelImpl extends BaseModelImpl<VRApplicantProfil
 	private String _applicantCeremonyDate;
 	private String _applicantOperationPeriod;
 	private String _applicantBusinessType;
+	private String _applicantIdentityType;
+	private String _applicantIdentityDescription;
+	private String _applicantIdentityFileName;
+	private long _applicantIdentityFileEntryId;
+	private String _applicantXcgFileName;
+	private long _applicantXcgFileEntryId;
 	private String _applicantMetadata;
 	private String _applicantStatus;
 	private String _originalApplicantStatus;

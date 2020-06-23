@@ -127,6 +127,14 @@ public interface VRProductionManagement {
 			@DefaultValue("") @PathParam("productionplantcode") String productionPlantCode);
 	
 	@GET
+	@Path("/plant/{productionplantcode}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getVRProductionPlant(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext,
+			@DefaultValue("") @PathParam("productionplantcode") String productionplantcode);
+	
+	@GET
 	@Path("/classification/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findVRProductclassification(@Context HttpServletRequest request, @Context HttpHeaders header,

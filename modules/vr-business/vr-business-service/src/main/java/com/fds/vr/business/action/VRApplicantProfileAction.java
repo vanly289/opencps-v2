@@ -24,4 +24,6 @@ public interface VRApplicantProfileAction {
 			String applicantCode);
 
 	public JSONObject updateVRApplicantProfile(VRApplicantProfile object);
+	
+	public VRApplicantProfile adminProcessData(JSONObject objectData, long mtCore, String applicantCode);
 }

@@ -14,6 +14,7 @@
 
 package com.fds.vr.business.service.impl;
 
+import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.exception.NoSuchVRApplicantProfileException;
 import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.service.base.VRApplicantProfileLocalServiceBaseImpl;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -239,8 +241,8 @@ public class VRApplicantProfileLocalServiceImpl
 		
 		Date now = new Date();
 		object.setModifyDate(now);
-		if (!"".equals(objectData.getString("syncDate"))) {
-			object.setSyncDate(new Date(objectData.getString("syncDate")));
+		if (objectData.getString("syncDate") != null && !StringPool.BLANK.equals(objectData.getString("syncDate"))) {
+			object.setSyncDate(ConvertFormatDate.parseStringToDate(objectData.getString("syncDate"), ConvertFormatDate._ddMMyyy_HHmm));
 		}
 		
 		object.setMtCore(objectData.getLong("mtCore"));
@@ -255,6 +257,8 @@ public class VRApplicantProfileLocalServiceImpl
 		object.setApplicantPhone(objectData.getString("applicantPhone"));
 		object.setApplicantEmail(objectData.getString("applicantEmail"));
 		object.setApplicantFax(objectData.getString("applicantFax"));
+		object.setApplicantWebsite(objectData.getString("applicantWebsite"));
+		object.setApplicantRepresentativePhone(objectData.getString("applicantRepresentativePhone"));
 		object.setApplicantRepresentative(objectData.getString("applicantRepresentative"));
 		object.setApplicantRepresentativeTitle(objectData.getString("applicantRepresentativeTitle"));
 		object.setApplicantContactName(objectData.getString("applicantContactName"));
@@ -263,11 +267,19 @@ public class VRApplicantProfileLocalServiceImpl
 		object.setApplicantNationality(objectData.getString("applicantNationality"));
 		object.setApplicantRegion(objectData.getString("applicantRegion"));
 		object.setApplicantCity(objectData.getString("applicantCity"));
+		object.setApplicantCityCode(objectData.getString("applicantCityCode"));
+		object.setApplicantDistrictCode(objectData.getString("applicantDistrictCode"));
+		object.setApplicantDistrictName(objectData.getString("applicantDistrictName"));
+		object.setApplicantWardCode(objectData.getString("applicantWardCode"));
+		object.setApplicantWardName(objectData.getString("applicantWardName"));
+		object.setApplicantRegionCode(objectData.getString("applicantRegionCode"));
+		object.setApplicantNationalityCode(objectData.getString("applicantNationalityCode"));
 		object.setMarkupCorporation(objectData.getString("markupCorporation"));
 		object.setCorporationId(objectData.getString("corporationId"));
 		object.setMarkupDesigner(objectData.getString("markupDesigner"));
 		object.setMarkupOverseasManufacturer(objectData.getString("markupOverseasManufacturer"));
 		object.setMarkupDomesticsManufacturer(objectData.getString("markupDomesticsManufacturer"));
+		object.setMarkupMaintainer(objectData.getString("markupMaintainer"));
 		object.setMarkupImporter(objectData.getString("markupImporter"));
 		object.setMarkupComponentXCG(objectData.getString("markupComponentXCG"));
 		object.setMarkupComponentXMY(objectData.getString("markupComponentXMY"));
@@ -291,6 +303,12 @@ public class VRApplicantProfileLocalServiceImpl
 		object.setApplicantCeremonyDate(objectData.getString("applicantCeremonyDate"));
 		object.setApplicantOperationPeriod(objectData.getString("applicantOperationPeriod"));
 		object.setApplicantBusinessType(objectData.getString("applicantBusinessType"));
+		object.setApplicantIdentityType(objectData.getString("applicantIdentityType"));
+		object.setApplicantIdentityDescription(objectData.getString("applicantIdentityDescription"));
+		object.setApplicantIdentityFileName(objectData.getString("applicantIdentityFileName"));
+		object.setApplicantIdentityFileEntryId(objectData.getLong("applicantIdentityFileEntryId"));
+		object.setApplicantXcgFileName(objectData.getString("applicantXcgFileName"));
+		object.setApplicantXcgFileEntryId(objectData.getLong("applicantXcgFileEntryId"));
 		object.setApplicantMetadata(objectData.getString("applicantMetadata"));
 		object.setApplicantStatus(objectData.getString("applicantStatus"));
 

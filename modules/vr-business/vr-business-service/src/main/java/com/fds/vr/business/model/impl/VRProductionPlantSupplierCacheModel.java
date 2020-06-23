@@ -66,7 +66,7 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -84,6 +84,18 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", productionPlantId=");
+		sb.append(productionPlantId);
+		sb.append(", applicantProfileId=");
+		sb.append(applicantProfileId);
+		sb.append(", applicantCode=");
+		sb.append(applicantCode);
+		sb.append(", supplierId=");
+		sb.append(supplierId);
+		sb.append(", supplierName=");
+		sb.append(supplierName);
+		sb.append(", supplierAddress=");
+		sb.append(supplierAddress);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,6 +150,32 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 			vrProductionPlantSupplierImpl.setSyncDate(new Date(syncDate));
 		}
 
+		vrProductionPlantSupplierImpl.setProductionPlantId(productionPlantId);
+		vrProductionPlantSupplierImpl.setApplicantProfileId(applicantProfileId);
+
+		if (applicantCode == null) {
+			vrProductionPlantSupplierImpl.setApplicantCode(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantSupplierImpl.setApplicantCode(applicantCode);
+		}
+
+		vrProductionPlantSupplierImpl.setSupplierId(supplierId);
+
+		if (supplierName == null) {
+			vrProductionPlantSupplierImpl.setSupplierName(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantSupplierImpl.setSupplierName(supplierName);
+		}
+
+		if (supplierAddress == null) {
+			vrProductionPlantSupplierImpl.setSupplierAddress(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantSupplierImpl.setSupplierAddress(supplierAddress);
+		}
+
 		vrProductionPlantSupplierImpl.resetOriginalValues();
 
 		return vrProductionPlantSupplierImpl;
@@ -154,6 +192,15 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 		productionPlantCode = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+
+		productionPlantId = objectInput.readLong();
+
+		applicantProfileId = objectInput.readLong();
+		applicantCode = objectInput.readUTF();
+
+		supplierId = objectInput.readLong();
+		supplierName = objectInput.readUTF();
+		supplierAddress = objectInput.readUTF();
 	}
 
 	@Override
@@ -193,6 +240,33 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		objectOutput.writeLong(productionPlantId);
+
+		objectOutput.writeLong(applicantProfileId);
+
+		if (applicantCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantCode);
+		}
+
+		objectOutput.writeLong(supplierId);
+
+		if (supplierName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(supplierName);
+		}
+
+		if (supplierAddress == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(supplierAddress);
+		}
 	}
 
 	public long id;
@@ -203,4 +277,10 @@ public class VRProductionPlantSupplierCacheModel implements CacheModel<VRProduct
 	public String productionPlantCode;
 	public long modifyDate;
 	public long syncDate;
+	public long productionPlantId;
+	public long applicantProfileId;
+	public String applicantCode;
+	public long supplierId;
+	public String supplierName;
+	public String supplierAddress;
 }

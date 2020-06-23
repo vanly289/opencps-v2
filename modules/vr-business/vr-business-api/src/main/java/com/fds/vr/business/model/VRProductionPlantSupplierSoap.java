@@ -42,6 +42,12 @@ public class VRProductionPlantSupplierSoap implements Serializable {
 		soapModel.setProductionPlantCode(model.getProductionPlantCode());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
+		soapModel.setProductionPlantId(model.getProductionPlantId());
+		soapModel.setApplicantProfileId(model.getApplicantProfileId());
+		soapModel.setApplicantCode(model.getApplicantCode());
+		soapModel.setSupplierId(model.getSupplierId());
+		soapModel.setSupplierName(model.getSupplierName());
+		soapModel.setSupplierAddress(model.getSupplierAddress());
 
 		return soapModel;
 	}
@@ -161,6 +167,54 @@ public class VRProductionPlantSupplierSoap implements Serializable {
 		_syncDate = syncDate;
 	}
 
+	public long getProductionPlantId() {
+		return _productionPlantId;
+	}
+
+	public void setProductionPlantId(long productionPlantId) {
+		_productionPlantId = productionPlantId;
+	}
+
+	public long getApplicantProfileId() {
+		return _applicantProfileId;
+	}
+
+	public void setApplicantProfileId(long applicantProfileId) {
+		_applicantProfileId = applicantProfileId;
+	}
+
+	public String getApplicantCode() {
+		return _applicantCode;
+	}
+
+	public void setApplicantCode(String applicantCode) {
+		_applicantCode = applicantCode;
+	}
+
+	public long getSupplierId() {
+		return _supplierId;
+	}
+
+	public void setSupplierId(long supplierId) {
+		_supplierId = supplierId;
+	}
+
+	public String getSupplierName() {
+		return _supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		_supplierName = supplierName;
+	}
+
+	public String getSupplierAddress() {
+		return _supplierAddress;
+	}
+
+	public void setSupplierAddress(String supplierAddress) {
+		_supplierAddress = supplierAddress;
+	}
+
 	private long _id;
 	private long _mtCore;
 	private String _corporationCode;
@@ -169,4 +223,10 @@ public class VRProductionPlantSupplierSoap implements Serializable {
 	private String _productionPlantCode;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private long _productionPlantId;
+	private long _applicantProfileId;
+	private String _applicantCode;
+	private long _supplierId;
+	private String _supplierName;
+	private String _supplierAddress;
 }

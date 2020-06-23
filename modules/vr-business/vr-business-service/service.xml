@@ -727,19 +727,29 @@
 		<column name="applicantPhone" type="String" db-name="applicantPhone"/>
 		<column name="applicantEmail" type="String" db-name="applicantEmail"/>
 		<column name="applicantFax" type="String" db-name="applicantFax"/>
+		<column name="applicantWebsite" type="String" db-name="applicantWebsite"/>
+		<column name="applicantRepresentativePhone" type="String" db-name="applicantRepresentativePhone"/>
 		<column name="applicantRepresentative" type="String" db-name="applicantRepresentative"/>
 		<column name="applicantRepresentativeTitle" type="String" db-name="applicantRepresentativeTitle"/>
 		<column name="applicantContactName" type="String" db-name="applicantContactName"/>
 		<column name="applicantContactEmail" type="String" db-name="applicantContactEmail"/>
 		<column name="applicantContactPhone" type="String" db-name="applicantContactPhone"/>
 		<column name="applicantNationality" type="String" db-name="applicantNationality"/>
+		<column name="applicantNationalityCode" type="String" db-name="applicantNationalityCode"/>
 		<column name="applicantRegion" type="String" db-name="applicantRegion"/>
+		<column name="applicantRegionCode" type="String" db-name="applicantRegionCode"/>
 		<column name="applicantCity" type="String" db-name="applicantCity"/>
+		<column name="applicantCityCode" type="String" db-name="applicantCityCode"/>
+		<column name="applicantDistrictCode" type="String" db-name="applicantDistrictCode"/>
+		<column name="applicantDistrictName" type="String" db-name="applicantDistrictName"/>
+		<column name="applicantWardCode" type="String" db-name="applicantWardCode"/>
+		<column name="applicantWardName" type="String" db-name="applicantWardName"/>
 		<column name="markupCorporation" type="String" db-name="markupCorporation"/>
 		<column name="corporationId" type="String" db-name="corporationId"/>
 		<column name="markupDesigner" type="String" db-name="markupDesigner"/>
 		<column name="markupOverseasManufacturer" type="String" db-name="markupOverseasManufacturer"/>
 		<column name="markupDomesticsManufacturer" type="String" db-name="markupDomesticsManufacturer"/>
+		<column name="markupMaintainer" type="String" db-name="markupMaintainer"/>
 		<column name="markupImporter" type="String" db-name="markupImporter"/>
 		<column name="markupComponentXCG" type="String" db-name="markupComponentXCG"/>
 		<column name="markupComponentXMY" type="String" db-name="markupComponentXMY"/>
@@ -759,11 +769,16 @@
 		<column name="issueTypeXDD" type="String" db-name="issueTypeXDD"/>
 		<column name="issueTypeXCN" type="String" db-name="issueTypeXCN"/>
 		<column name="issueTypeXCH" type="String" db-name="issueTypeXCH"/>
-		
 		<column name="issueTypeDescription" type="String" db-name="issueTypeDescription"/>
 		<column name="applicantCeremonyDate" type="String" db-name="applicantCeremonyDate"/>
 		<column name="applicantOperationPeriod" type="String" db-name="applicantOperationPeriod"/>
 		<column name="applicantBusinessType" type="String" db-name="applicantBusinessType"/>
+		<column name="applicantIdentityType" type="String" db-name="applicantIdentityType"/>
+		<column name="applicantIdentityDescription" type="String" db-name="applicantIdentityDescription"/>
+		<column name="applicantIdentityFileName" type="String" db-name="applicantIdentityFileName"/>
+		<column name="applicantIdentityFileEntryId" type="long" db-name="applicantIdentityFileEntryId"/>
+		<column name="applicantXcgFileName" type="String" db-name="applicantXcgFileName"/>
+		<column name="applicantXcgFileEntryId" type="long" db-name="applicantXcgFileEntryId"/>
 		<column name="applicantMetadata" type="String" db-name="applicantMetadata"/>
 		<column name="applicantStatus" type="String" db-name="applicantStatus"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
@@ -922,15 +937,21 @@
 		<column name="productionPlantCode" type="String" db-name="productionPlantCode"/>
 		<column name="productionPlantName" type="String" db-name="productionPlantName"/>
 		<column name="productionPlantAddress" type="String" db-name="productionPlantAddress"/>
+		<column name="productionPlantRegion" type="String" db-name="productionPlantRegion"/>
+		<column name="productionPlantRegionCode" type="String" db-name="productionPlantRegionCode"/>
 		<column name="productionPlantStateCode" type="String" db-name="productionPlantStateCode"/>
 		<column name="productionPlantStateName" type="String" db-name="productionPlantStateName"/>
 		<column name="productionPlantProvinceCode" type="String" db-name="productionPlantProvinceCode"/>
 		<column name="productionPlantProvinceName" type="String" db-name="productionPlantProvinceName"/>
 		<column name="productionPlantDistrictCode" type="String" db-name="productionPlantDistrictCode"/>
 		<column name="productionPlantDistrictName" type="String" db-name="productionPlantDistrictName"/>
+		<column name="productionPlantWardCode" type="String" db-name="productionPlantWardCode"/>
+		<column name="productionPlantWardName" type="String" db-name="productionPlantWardName"/>
 		<column name="productionPlantEmail" type="String" db-name="productionPlantEmail"/>
 		<column name="productionPlantPhone" type="String" db-name="productionPlantPhone"/>
 		<column name="productionPlantFax" type="String" db-name="productionPlantFax"/>
+		<column name="productionPlantWebsite" type="String" db-name="productionPlantWebsite"/>
+		<column name="productionPlantRepresentativePhone" type="String" db-name="productionPlantRepresentativePhone"/>
 		<column name="productionPlantRepresentative" type="String" db-name="productionPlantRepresentative"/>
 		<column name="productionPlantRepresentativeTitle" type="String" db-name="productionPlantRepresentativeTitle"/>
 		<column name="productionPlantContactName" type="String" db-name="productionPlantContactName"/>
@@ -938,15 +959,28 @@
 		<column name="productionPlantContactPhone" type="String" db-name="productionPlantContactPhone"/>
 		<column name="productionPlantType" type="String" db-name="productionPlantType"/>
 		<column name="productionPlantStatus" type="String" db-name="productionPlantStatus"/>
-		
+		<column name="productionManufacture" type="String" db-name="productionManufacture"/>
+		<column name="productionMaintainer" type="String" db-name="productionMaintainer"/>
+		<column name="productionPlantIdentityNo" type="String" db-name="productionPlantIdentityNo"/>
+		<column name="productionPlantIdentityType" type="String" db-name="productionPlantIdentityType"/>
+		<column name="productionPlantIdentityDescription" type="String" db-name="productionPlantIdentityDescription"/>
+		<column name="productionPlantIdentityFileEntryId" type="long" db-name="productionPlantIdentityFileEntryId"/>		
 		<column name="productionPlantEmployeesNote" type="String" db-name="productionPlantEmployeesNote"/>
 		<column name="productionPlantEquipmentsNote" type="String" db-name="productionPlantEquipmentsNote"/>
 		<column name="productionPlantProdEquipmentsNote" type="String" db-name="productionPlantProdEquipmentsNote"/>
+		<column name="productionIdentityFileName" type="String" db-name="productionIdentityFileName"/>
+		<column name="productionIdentityFileEntryId" type="long" db-name="productionIdentityFileEntryId"/>
+		<column name="applicantCode" type="String" db-name="applicantCode"/>
+		<column name="supplierName" type="String" db-name="supplierName"/>
+		<column name="supplierAddress" type="String" db-name="supplierAddress"/>
+		<column name="corporationCode" type="String" db-name="corporationCode"/>
+		<column name="corporationName" type="String" db-name="corporationName"/>
+		<column name="corporationAddress" type="String" db-name="corporationAddress"/>
+		<column name="productionPlantMetadata" type="String" db-name="productionPlantMetadata"/>
 		<column name="registrationId" type="long" db-name="registrationId"/>
 		<column name="registrationFormId" type="long" db-name="registrationFormId"/>
 		<column name="applicantProfileId" type="long" db-name="applicantProfileId"/>
 		<column name="supplierId" type="long" db-name="supplierId"/>
-		<column name="applicantCode" type="String" db-name="applicantCode"/>
 		<!-- <column name="latestCOPReportDate" type="Date" db-name="latestCOPReportDate"/>
 		<column name="latestCOPReportResult" type="String" db-name="latestCOPReportResult"/>
 		<column name="nextCOPReportDate" type="Date" db-name="nextCOPReportDate"/> -->
@@ -971,10 +1005,13 @@
 			<finder-column name="mtCore"></finder-column>
 			<finder-column name="applicantCode"></finder-column>
 		</finder>
+		<finder return-type="VRProductionPlant" name="F_ProductionPlantCode">
+			<finder-column name="productionPlantCode"></finder-column>
+		</finder>
 		<finder return-type="Collection" name="productionPlantCode">
 			<finder-column name="mtCore"></finder-column>
 			<finder-column name="applicantProfileId"></finder-column>
-			<finder-column name="productionPlantCode"></finder-column>			
+			<finder-column name="productionPlantCode"></finder-column>
 		</finder>
 		<finder return-type="Collection" name="mappingMA_XUONG_LR">
 			<finder-column name="mtCore"></finder-column>
@@ -7673,6 +7710,13 @@
 		<column name="productionPlantCode" type="String" db-name="productionPlantCode"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		<column name="productionPlantId" type="long" db-name="productionPlantId"/>
+		<column name="applicantProfileId" type="long" db-name="applicantProfileId"/>
+		<column name="applicantCode" type="String" db-name="applicantCode"/>
+		<column name="supplierId" type="long" db-name="supplierId"/>
+		<column name="supplierName" type="String" db-name="supplierName"/>
+		<column name="supplierAddress" type="String" db-name="supplierAddress"/>
+
 		<!-- Order -->
 		<order by="desc">
             <order-column name="modifyDate" order-by="desc" />
@@ -7683,6 +7727,87 @@
         </finder>
         <finder return-type="Collection" name="productionPlantCode">
         	<finder-column name="productionPlantCode"></finder-column>
+        </finder>
+	</entity>
+	
+	<entity local-service="true" name="VRHistoryProfile" remote-service="false"
+		table="vr_history_profile" uuid="false">
+
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true" db-name="id"/>
+		
+		<!-- Audit fields -->
+		<column name="applicantCode" type="String" db-name="applicantCode"/>
+		<column name="productionPlantCode" type="String" db-name="productionPlantCode"/>
+		<column name="contentType" type="String" db-name="contentType"/>
+		<column name="contentFileTemplate" type="String" db-name="contentFileTemplate"/>
+		<column name="contentFileEntryId" type="long" db-name="contentFileEntryId"/>
+		<column name="contentjsonFileEntryId" type="long" db-name="contentjsonFileEntryId"/>
+		<column name="dossierId" type="long" db-name="dossierId"/>
+		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
+		<column name="dossierNo" type="String" db-name="dossierNo"/>
+		<column name="modifyUserId" type="long" db-name="modifyUserId"/>
+		<column name="createdDate" type="Date" db-name="createdDate"/>
+		<column name="modifyDate" type="Date" db-name="modifyDate"/>
+		<column name="syncDate" type="Date" db-name="syncDate"/>
+
+		<!-- Order -->
+		<order by="desc">
+            <order-column name="modifyDate" order-by="desc" />
+        </order>
+		<!-- Filter -->
+		<finder return-type="Collection" name="F_ApplicantCode">
+        	<finder-column name="applicantCode" />
+        </finder>
+        <finder return-type="Collection" name="F_ProductionPlantCode">
+        	<finder-column name="productionPlantCode" />
+        </finder>
+        <finder return-type="Collection" name="F_DossierId">
+        	<finder-column name="dossierId" />
+        </finder>
+        <finder return-type="Collection" name="F_ContentType">
+        	<finder-column name="contentType" />
+        </finder>
+	</entity>
+	
+	<entity local-service="true" name="VRTrackchanges" remote-service="false"
+		table="vr_trackchanges" uuid="false">
+
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true" db-name="id"/>
+		
+		<!-- Audit fields -->
+		<column name="applicantCode" type="String" db-name="applicantCode"/>
+		<column name="productionPlantCode" type="String" db-name="productionPlantCode"/>
+		<column name="contentType" type="String" db-name="contentType"/>
+		<column name="contentFileTemplate" type="String" db-name="contentFileTemplate"/>
+		<column name="previousContentFileEntryId" type="long" db-name="previousContentFileEntryId"/>
+		<column name="currentContentFileEntryId" type="long" db-name="currentContentFileEntryId"/>
+		<column name="nextContentFileEntryId" type="long" db-name="nextContentFileEntryId"/>
+		<column name="dossierId" type="long" db-name="dossierId"/>
+		<column name="dossierIdCTN" type="String" db-name="dossierIdCTN"/>
+		<column name="dossierNo" type="String" db-name="dossierNo"/>
+		<column name="modifyUserId" type="long" db-name="modifyUserId"/>
+		<column name="createdDate" type="Date" db-name="createdDate"/>
+		<column name="modifyDate" type="Date" db-name="modifyDate"/>
+		<column name="syncDate" type="Date" db-name="syncDate"/>
+
+		<!-- Order -->
+		<order by="desc">
+            <order-column name="modifyDate" order-by="desc" />
+        </order>
+		<!-- Filter -->
+		<finder return-type="VRTrackchanges" name="F_ApplicantCode">
+        	<finder-column name="applicantCode" />
+        </finder>
+        <finder return-type="VRTrackchanges" name="F_ProductionPlantCode">
+        	<finder-column name="productionPlantCode" />
+        </finder>
+        <finder return-type="VRTrackchanges" name="F_DossierId">
+        	<finder-column name="dossierId" />
+        </finder>
+        <finder return-type="Collection" name="F_ContentType">
+        	<finder-column name="contentType" />
         </finder>
 	</entity>
 	

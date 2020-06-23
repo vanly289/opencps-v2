@@ -256,6 +256,37 @@ public interface VRApplicantProfileModel extends BaseModel<VRApplicantProfile> {
 	public void setApplicantFax(String applicantFax);
 
 	/**
+	 * Returns the applicant website of this vr applicant profile.
+	 *
+	 * @return the applicant website of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantWebsite();
+
+	/**
+	 * Sets the applicant website of this vr applicant profile.
+	 *
+	 * @param applicantWebsite the applicant website of this vr applicant profile
+	 */
+	public void setApplicantWebsite(String applicantWebsite);
+
+	/**
+	 * Returns the applicant representative phone of this vr applicant profile.
+	 *
+	 * @return the applicant representative phone of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantRepresentativePhone();
+
+	/**
+	 * Sets the applicant representative phone of this vr applicant profile.
+	 *
+	 * @param applicantRepresentativePhone the applicant representative phone of this vr applicant profile
+	 */
+	public void setApplicantRepresentativePhone(
+		String applicantRepresentativePhone);
+
+	/**
 	 * Returns the applicant representative of this vr applicant profile.
 	 *
 	 * @return the applicant representative of this vr applicant profile
@@ -347,6 +378,21 @@ public interface VRApplicantProfileModel extends BaseModel<VRApplicantProfile> {
 	public void setApplicantNationality(String applicantNationality);
 
 	/**
+	 * Returns the applicant nationality code of this vr applicant profile.
+	 *
+	 * @return the applicant nationality code of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantNationalityCode();
+
+	/**
+	 * Sets the applicant nationality code of this vr applicant profile.
+	 *
+	 * @param applicantNationalityCode the applicant nationality code of this vr applicant profile
+	 */
+	public void setApplicantNationalityCode(String applicantNationalityCode);
+
+	/**
 	 * Returns the applicant region of this vr applicant profile.
 	 *
 	 * @return the applicant region of this vr applicant profile
@@ -362,6 +408,21 @@ public interface VRApplicantProfileModel extends BaseModel<VRApplicantProfile> {
 	public void setApplicantRegion(String applicantRegion);
 
 	/**
+	 * Returns the applicant region code of this vr applicant profile.
+	 *
+	 * @return the applicant region code of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantRegionCode();
+
+	/**
+	 * Sets the applicant region code of this vr applicant profile.
+	 *
+	 * @param applicantRegionCode the applicant region code of this vr applicant profile
+	 */
+	public void setApplicantRegionCode(String applicantRegionCode);
+
+	/**
 	 * Returns the applicant city of this vr applicant profile.
 	 *
 	 * @return the applicant city of this vr applicant profile
@@ -375,6 +436,81 @@ public interface VRApplicantProfileModel extends BaseModel<VRApplicantProfile> {
 	 * @param applicantCity the applicant city of this vr applicant profile
 	 */
 	public void setApplicantCity(String applicantCity);
+
+	/**
+	 * Returns the applicant city code of this vr applicant profile.
+	 *
+	 * @return the applicant city code of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantCityCode();
+
+	/**
+	 * Sets the applicant city code of this vr applicant profile.
+	 *
+	 * @param applicantCityCode the applicant city code of this vr applicant profile
+	 */
+	public void setApplicantCityCode(String applicantCityCode);
+
+	/**
+	 * Returns the applicant district code of this vr applicant profile.
+	 *
+	 * @return the applicant district code of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantDistrictCode();
+
+	/**
+	 * Sets the applicant district code of this vr applicant profile.
+	 *
+	 * @param applicantDistrictCode the applicant district code of this vr applicant profile
+	 */
+	public void setApplicantDistrictCode(String applicantDistrictCode);
+
+	/**
+	 * Returns the applicant district name of this vr applicant profile.
+	 *
+	 * @return the applicant district name of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantDistrictName();
+
+	/**
+	 * Sets the applicant district name of this vr applicant profile.
+	 *
+	 * @param applicantDistrictName the applicant district name of this vr applicant profile
+	 */
+	public void setApplicantDistrictName(String applicantDistrictName);
+
+	/**
+	 * Returns the applicant ward code of this vr applicant profile.
+	 *
+	 * @return the applicant ward code of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantWardCode();
+
+	/**
+	 * Sets the applicant ward code of this vr applicant profile.
+	 *
+	 * @param applicantWardCode the applicant ward code of this vr applicant profile
+	 */
+	public void setApplicantWardCode(String applicantWardCode);
+
+	/**
+	 * Returns the applicant ward name of this vr applicant profile.
+	 *
+	 * @return the applicant ward name of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantWardName();
+
+	/**
+	 * Sets the applicant ward name of this vr applicant profile.
+	 *
+	 * @param applicantWardName the applicant ward name of this vr applicant profile
+	 */
+	public void setApplicantWardName(String applicantWardName);
 
 	/**
 	 * Returns the markup corporation of this vr applicant profile.
@@ -451,6 +587,21 @@ public interface VRApplicantProfileModel extends BaseModel<VRApplicantProfile> {
 	 */
 	public void setMarkupDomesticsManufacturer(
 		String markupDomesticsManufacturer);
+
+	/**
+	 * Returns the markup maintainer of this vr applicant profile.
+	 *
+	 * @return the markup maintainer of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getMarkupMaintainer();
+
+	/**
+	 * Sets the markup maintainer of this vr applicant profile.
+	 *
+	 * @param markupMaintainer the markup maintainer of this vr applicant profile
+	 */
+	public void setMarkupMaintainer(String markupMaintainer);
 
 	/**
 	 * Returns the markup importer of this vr applicant profile.
@@ -796,6 +947,96 @@ public interface VRApplicantProfileModel extends BaseModel<VRApplicantProfile> {
 	 * @param applicantBusinessType the applicant business type of this vr applicant profile
 	 */
 	public void setApplicantBusinessType(String applicantBusinessType);
+
+	/**
+	 * Returns the applicant identity type of this vr applicant profile.
+	 *
+	 * @return the applicant identity type of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantIdentityType();
+
+	/**
+	 * Sets the applicant identity type of this vr applicant profile.
+	 *
+	 * @param applicantIdentityType the applicant identity type of this vr applicant profile
+	 */
+	public void setApplicantIdentityType(String applicantIdentityType);
+
+	/**
+	 * Returns the applicant identity description of this vr applicant profile.
+	 *
+	 * @return the applicant identity description of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantIdentityDescription();
+
+	/**
+	 * Sets the applicant identity description of this vr applicant profile.
+	 *
+	 * @param applicantIdentityDescription the applicant identity description of this vr applicant profile
+	 */
+	public void setApplicantIdentityDescription(
+		String applicantIdentityDescription);
+
+	/**
+	 * Returns the applicant identity file name of this vr applicant profile.
+	 *
+	 * @return the applicant identity file name of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantIdentityFileName();
+
+	/**
+	 * Sets the applicant identity file name of this vr applicant profile.
+	 *
+	 * @param applicantIdentityFileName the applicant identity file name of this vr applicant profile
+	 */
+	public void setApplicantIdentityFileName(String applicantIdentityFileName);
+
+	/**
+	 * Returns the applicant identity file entry ID of this vr applicant profile.
+	 *
+	 * @return the applicant identity file entry ID of this vr applicant profile
+	 */
+	public long getApplicantIdentityFileEntryId();
+
+	/**
+	 * Sets the applicant identity file entry ID of this vr applicant profile.
+	 *
+	 * @param applicantIdentityFileEntryId the applicant identity file entry ID of this vr applicant profile
+	 */
+	public void setApplicantIdentityFileEntryId(
+		long applicantIdentityFileEntryId);
+
+	/**
+	 * Returns the applicant xcg file name of this vr applicant profile.
+	 *
+	 * @return the applicant xcg file name of this vr applicant profile
+	 */
+	@AutoEscape
+	public String getApplicantXcgFileName();
+
+	/**
+	 * Sets the applicant xcg file name of this vr applicant profile.
+	 *
+	 * @param applicantXcgFileName the applicant xcg file name of this vr applicant profile
+	 */
+	public void setApplicantXcgFileName(String applicantXcgFileName);
+
+	/**
+	 * Returns the applicant xcg file entry ID of this vr applicant profile.
+	 *
+	 * @return the applicant xcg file entry ID of this vr applicant profile
+	 */
+	public long getApplicantXcgFileEntryId();
+
+	/**
+	 * Sets the applicant xcg file entry ID of this vr applicant profile.
+	 *
+	 * @param applicantXcgFileEntryId the applicant xcg file entry ID of this vr applicant profile
+	 */
+	public void setApplicantXcgFileEntryId(long applicantXcgFileEntryId);
 
 	/**
 	 * Returns the applicant metadata of this vr applicant profile.

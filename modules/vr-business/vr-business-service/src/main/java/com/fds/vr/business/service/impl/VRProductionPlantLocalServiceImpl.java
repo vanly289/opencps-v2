@@ -16,6 +16,7 @@ package com.fds.vr.business.service.impl;
 
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRProductionPlant;
+import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
 import com.fds.vr.business.service.base.VRProductionPlantLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -127,6 +128,10 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 		return vrProductionPlantPersistence.findByproductionPlantCode(mtCore, applicantProfileId, productionPlantCode);
 	}
 
+	public VRProductionPlant findByproductionPlantCode(String productionPlantCode) {
+		return vrProductionPlantPersistence.fetchByF_ProductionPlantCode(productionPlantCode);
+	}
+
 	public List<VRProductionPlant> findBymappingMA_XUONG_LR(long mtCore, String mappingMA_CTY,
 			String mappingMA_XUONG_LR) {
 		return vrProductionPlantPersistence.findBymappingMA_XUONG_LR(mtCore, mappingMA_CTY, mappingMA_XUONG_LR);
@@ -215,36 +220,31 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 	public VRProductionPlant adminProcessData(JSONObject objectData, long mtCore, long applicantProfileId,
 			String productionPlantCode) {
 		VRProductionPlant object = null;
+		if(productionPlantCode != null && !productionPlantCode.isEmpty()) {
+			object = vrProductionPlantPersistence.fetchByF_ProductionPlantCode(productionPlantCode);
+		}
 		try {
-			List<VRProductionPlant> vrProductionPlants = new ArrayList<VRProductionPlant>();
-			try {
-				vrProductionPlants = vrProductionPlantPersistence.findByproductionPlantCode(mtCore, applicantProfileId,
-						productionPlantCode);
-			} catch (Exception e) {
-			}
-			if (vrProductionPlants != null && !vrProductionPlants.isEmpty()) {
-				object = vrProductionPlants.get(0);
-			}
 			if (object == null) {
 				long id = counterLocalService.increment(VRProductionPlant.class.getName());
 
 				object = vrProductionPlantPersistence.create(id);
-				
+
 				long count = 1;
-				vrProductionPlants = new ArrayList<VRProductionPlant>();
-				try {
+				List<VRProductionPlant> vrProductionPlants = null;
+				if (applicantProfileId > 0) {
 					vrProductionPlants = vrProductionPlantPersistence.findByapplicantProfileId(applicantProfileId);
-				} catch (Exception e) {
+					if (vrProductionPlants != null && !vrProductionPlants.isEmpty()) {
+						count = vrProductionPlants.size() + 1;
+					}
+					productionPlantCode = applicantProfileId + StringPool.UNDERLINE + count;
 				}
-				if (vrProductionPlants != null && !vrProductionPlants.isEmpty()) {
-					count = vrProductionPlants.size() + 1;
-				}
-				productionPlantCode = applicantProfileId + StringPool.UNDERLINE + count;
 			}
 
 			Date now = new Date();
 			object.setModifyDate(now);
-			object.setSyncDate(now);
+			if (objectData.getString("syncDate") != null && !StringPool.BLANK.equals(objectData.getString("syncDate"))) {
+				object.setSyncDate(ConvertFormatDate.parseStringToDate(objectData.getString("syncDate"), ConvertFormatDate._ddMMyyy_HHmm));
+			}
 
 			object.setApplicantCode(objectData.getString("applicantCode"));
 			object.setMtCore(objectData.getLong("mtCore"));
@@ -260,6 +260,9 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 			object.setProductionPlantCode(productionPlantCode);
 			object.setProductionPlantName(objectData.getString("productionPlantName"));
 			object.setProductionPlantAddress(objectData.getString("productionPlantAddress"));
+			object.setProductionPlantRegion(objectData.getString("productionPlantRegion"));
+			object.setProductionPlantWardCode(objectData.getString("productionPlantWardCode"));
+			object.setProductionPlantWardName(objectData.getString("productionPlantWardName"));
 			object.setProductionPlantStateCode(objectData.getString("productionPlantStateCode"));
 			object.setProductionPlantStateName(objectData.getString("productionPlantStateName"));
 			object.setProductionPlantProvinceCode(objectData.getString("productionPlantProvinceCode"));
@@ -269,6 +272,8 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 			object.setProductionPlantEmail(objectData.getString("productionPlantEmail"));
 			object.setProductionPlantPhone(objectData.getString("productionPlantPhone"));
 			object.setProductionPlantFax(objectData.getString("productionPlantFax"));
+			object.setProductionPlantWebsite(objectData.getString("productionPlantWebsite"));
+			object.setProductionPlantRepresentativePhone(objectData.getString("productionPlantRepresentativePhone"));
 			object.setProductionPlantRepresentative(objectData.getString("productionPlantRepresentative"));
 			object.setProductionPlantRepresentativeTitle(objectData.getString("productionPlantRepresentativeTitle"));
 			object.setProductionPlantContactName(objectData.getString("productionPlantContactName"));
@@ -282,6 +287,20 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 			object.setRegistrationId(objectData.getLong("registrationId"));
 			object.setApplicantProfileId(applicantProfileId);
 			object.setSupplierId(objectData.getLong("supplierId"));
+			object.setProductionManufacture(objectData.getString("productionManufacture"));
+			object.setProductionPlantIdentityNo(objectData.getString("productionPlantIdentityNo"));
+			object.setProductionPlantIdentityType(objectData.getString("productionPlantIdentityType"));
+			object.setProductionPlantIdentityDescription(objectData.getString("productionPlantIdentityDescription"));
+			object.setProductionPlantIdentityFileEntryId(objectData.getLong("productionPlantIdentityFileEntryId"));
+			object.setProductionIdentityFileName(objectData.getString("productionIdentityFileName"));
+			object.setProductionIdentityFileEntryId(objectData.getLong("productionIdentityFileEntryId"));
+			object.setApplicantCode(objectData.getString("applicantCode"));
+			object.setSupplierName(objectData.getString("supplierName"));
+			object.setSupplierAddress(objectData.getString("supplierAddress"));
+			object.setCorporationCode(objectData.getString("corporationCode"));
+			object.setCorporationName(objectData.getString("corporationName"));
+			object.setCorporationAddress(objectData.getString("corporationAddress"));
+			object.setProductionPlantMetadata(objectData.getString("productionPlantMetadata"));
 
 			object = vrProductionPlantPersistence.update(object);
 

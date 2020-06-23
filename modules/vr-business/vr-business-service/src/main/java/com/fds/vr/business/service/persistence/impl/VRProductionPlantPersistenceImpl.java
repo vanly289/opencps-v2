@@ -1894,6 +1894,260 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 	private static final String _FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_1 = "vrProductionPlant.applicantCode IS NULL";
 	private static final String _FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_2 = "vrProductionPlant.applicantCode = ?";
 	private static final String _FINDER_COLUMN_APPLICANTCODE_APPLICANTCODE_3 = "(vrProductionPlant.applicantCode IS NULL OR vrProductionPlant.applicantCode = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_F_PRODUCTIONPLANTCODE = new FinderPath(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
+			VRProductionPlantModelImpl.FINDER_CACHE_ENABLED,
+			VRProductionPlantImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByF_ProductionPlantCode",
+			new String[] { String.class.getName() },
+			VRProductionPlantModelImpl.PRODUCTIONPLANTCODE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_F_PRODUCTIONPLANTCODE = new FinderPath(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
+			VRProductionPlantModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByF_ProductionPlantCode",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns the vr production plant where productionPlantCode = &#63; or throws a {@link NoSuchVRProductionPlantException} if it could not be found.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @return the matching vr production plant
+	 * @throws NoSuchVRProductionPlantException if a matching vr production plant could not be found
+	 */
+	@Override
+	public VRProductionPlant findByF_ProductionPlantCode(
+		String productionPlantCode) throws NoSuchVRProductionPlantException {
+		VRProductionPlant vrProductionPlant = fetchByF_ProductionPlantCode(productionPlantCode);
+
+		if (vrProductionPlant == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("productionPlantCode=");
+			msg.append(productionPlantCode);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchVRProductionPlantException(msg.toString());
+		}
+
+		return vrProductionPlant;
+	}
+
+	/**
+	 * Returns the vr production plant where productionPlantCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @return the matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	 */
+	@Override
+	public VRProductionPlant fetchByF_ProductionPlantCode(
+		String productionPlantCode) {
+		return fetchByF_ProductionPlantCode(productionPlantCode, true);
+	}
+
+	/**
+	 * Returns the vr production plant where productionPlantCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	 */
+	@Override
+	public VRProductionPlant fetchByF_ProductionPlantCode(
+		String productionPlantCode, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { productionPlantCode };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_F_PRODUCTIONPLANTCODE,
+					finderArgs, this);
+		}
+
+		if (result instanceof VRProductionPlant) {
+			VRProductionPlant vrProductionPlant = (VRProductionPlant)result;
+
+			if (!Objects.equals(productionPlantCode,
+						vrProductionPlant.getProductionPlantCode())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_VRPRODUCTIONPLANT_WHERE);
+
+			boolean bindProductionPlantCode = false;
+
+			if (productionPlantCode == null) {
+				query.append(_FINDER_COLUMN_F_PRODUCTIONPLANTCODE_PRODUCTIONPLANTCODE_1);
+			}
+			else if (productionPlantCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_PRODUCTIONPLANTCODE_PRODUCTIONPLANTCODE_3);
+			}
+			else {
+				bindProductionPlantCode = true;
+
+				query.append(_FINDER_COLUMN_F_PRODUCTIONPLANTCODE_PRODUCTIONPLANTCODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindProductionPlantCode) {
+					qPos.add(productionPlantCode);
+				}
+
+				List<VRProductionPlant> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_F_PRODUCTIONPLANTCODE,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"VRProductionPlantPersistenceImpl.fetchByF_ProductionPlantCode(String, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					VRProductionPlant vrProductionPlant = list.get(0);
+
+					result = vrProductionPlant;
+
+					cacheResult(vrProductionPlant);
+
+					if ((vrProductionPlant.getProductionPlantCode() == null) ||
+							!vrProductionPlant.getProductionPlantCode()
+												  .equals(productionPlantCode)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_F_PRODUCTIONPLANTCODE,
+							finderArgs, vrProductionPlant);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_F_PRODUCTIONPLANTCODE,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (VRProductionPlant)result;
+		}
+	}
+
+	/**
+	 * Removes the vr production plant where productionPlantCode = &#63; from the database.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @return the vr production plant that was removed
+	 */
+	@Override
+	public VRProductionPlant removeByF_ProductionPlantCode(
+		String productionPlantCode) throws NoSuchVRProductionPlantException {
+		VRProductionPlant vrProductionPlant = findByF_ProductionPlantCode(productionPlantCode);
+
+		return remove(vrProductionPlant);
+	}
+
+	/**
+	 * Returns the number of vr production plants where productionPlantCode = &#63;.
+	 *
+	 * @param productionPlantCode the production plant code
+	 * @return the number of matching vr production plants
+	 */
+	@Override
+	public int countByF_ProductionPlantCode(String productionPlantCode) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_F_PRODUCTIONPLANTCODE;
+
+		Object[] finderArgs = new Object[] { productionPlantCode };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_VRPRODUCTIONPLANT_WHERE);
+
+			boolean bindProductionPlantCode = false;
+
+			if (productionPlantCode == null) {
+				query.append(_FINDER_COLUMN_F_PRODUCTIONPLANTCODE_PRODUCTIONPLANTCODE_1);
+			}
+			else if (productionPlantCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_PRODUCTIONPLANTCODE_PRODUCTIONPLANTCODE_3);
+			}
+			else {
+				bindProductionPlantCode = true;
+
+				query.append(_FINDER_COLUMN_F_PRODUCTIONPLANTCODE_PRODUCTIONPLANTCODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindProductionPlantCode) {
+					qPos.add(productionPlantCode);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_F_PRODUCTIONPLANTCODE_PRODUCTIONPLANTCODE_1 =
+		"vrProductionPlant.productionPlantCode IS NULL";
+	private static final String _FINDER_COLUMN_F_PRODUCTIONPLANTCODE_PRODUCTIONPLANTCODE_2 =
+		"vrProductionPlant.productionPlantCode = ?";
+	private static final String _FINDER_COLUMN_F_PRODUCTIONPLANTCODE_PRODUCTIONPLANTCODE_3 =
+		"(vrProductionPlant.productionPlantCode IS NULL OR vrProductionPlant.productionPlantCode = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PRODUCTIONPLANTCODE =
 		new FinderPath(VRProductionPlantModelImpl.ENTITY_CACHE_ENABLED,
 			VRProductionPlantModelImpl.FINDER_CACHE_ENABLED,
@@ -9775,6 +10029,10 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 			VRProductionPlantImpl.class, vrProductionPlant.getPrimaryKey(),
 			vrProductionPlant);
 
+		finderCache.putResult(FINDER_PATH_FETCH_BY_F_PRODUCTIONPLANTCODE,
+			new Object[] { vrProductionPlant.getProductionPlantCode() },
+			vrProductionPlant);
+
 		finderCache.putResult(FINDER_PATH_FETCH_BY_F_MT_APP_FORM_ID,
 			new Object[] {
 				vrProductionPlant.getMtCore(),
@@ -9857,6 +10115,15 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 	protected void cacheUniqueFindersCache(
 		VRProductionPlantModelImpl vrProductionPlantModelImpl) {
 		Object[] args = new Object[] {
+				vrProductionPlantModelImpl.getProductionPlantCode()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_F_PRODUCTIONPLANTCODE, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_F_PRODUCTIONPLANTCODE, args,
+			vrProductionPlantModelImpl, false);
+
+		args = new Object[] {
 				vrProductionPlantModelImpl.getMtCore(),
 				vrProductionPlantModelImpl.getApplicantProfileId(),
 				vrProductionPlantModelImpl.getRegistrationFormId()
@@ -9871,6 +10138,29 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 	protected void clearUniqueFindersCache(
 		VRProductionPlantModelImpl vrProductionPlantModelImpl,
 		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					vrProductionPlantModelImpl.getProductionPlantCode()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_F_PRODUCTIONPLANTCODE,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_F_PRODUCTIONPLANTCODE,
+				args);
+		}
+
+		if ((vrProductionPlantModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_F_PRODUCTIONPLANTCODE.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					vrProductionPlantModelImpl.getOriginalProductionPlantCode()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_F_PRODUCTIONPLANTCODE,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_F_PRODUCTIONPLANTCODE,
+				args);
+		}
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					vrProductionPlantModelImpl.getMtCore(),
@@ -10417,15 +10707,21 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 		vrProductionPlantImpl.setProductionPlantCode(vrProductionPlant.getProductionPlantCode());
 		vrProductionPlantImpl.setProductionPlantName(vrProductionPlant.getProductionPlantName());
 		vrProductionPlantImpl.setProductionPlantAddress(vrProductionPlant.getProductionPlantAddress());
+		vrProductionPlantImpl.setProductionPlantRegion(vrProductionPlant.getProductionPlantRegion());
+		vrProductionPlantImpl.setProductionPlantRegionCode(vrProductionPlant.getProductionPlantRegionCode());
 		vrProductionPlantImpl.setProductionPlantStateCode(vrProductionPlant.getProductionPlantStateCode());
 		vrProductionPlantImpl.setProductionPlantStateName(vrProductionPlant.getProductionPlantStateName());
 		vrProductionPlantImpl.setProductionPlantProvinceCode(vrProductionPlant.getProductionPlantProvinceCode());
 		vrProductionPlantImpl.setProductionPlantProvinceName(vrProductionPlant.getProductionPlantProvinceName());
 		vrProductionPlantImpl.setProductionPlantDistrictCode(vrProductionPlant.getProductionPlantDistrictCode());
 		vrProductionPlantImpl.setProductionPlantDistrictName(vrProductionPlant.getProductionPlantDistrictName());
+		vrProductionPlantImpl.setProductionPlantWardCode(vrProductionPlant.getProductionPlantWardCode());
+		vrProductionPlantImpl.setProductionPlantWardName(vrProductionPlant.getProductionPlantWardName());
 		vrProductionPlantImpl.setProductionPlantEmail(vrProductionPlant.getProductionPlantEmail());
 		vrProductionPlantImpl.setProductionPlantPhone(vrProductionPlant.getProductionPlantPhone());
 		vrProductionPlantImpl.setProductionPlantFax(vrProductionPlant.getProductionPlantFax());
+		vrProductionPlantImpl.setProductionPlantWebsite(vrProductionPlant.getProductionPlantWebsite());
+		vrProductionPlantImpl.setProductionPlantRepresentativePhone(vrProductionPlant.getProductionPlantRepresentativePhone());
 		vrProductionPlantImpl.setProductionPlantRepresentative(vrProductionPlant.getProductionPlantRepresentative());
 		vrProductionPlantImpl.setProductionPlantRepresentativeTitle(vrProductionPlant.getProductionPlantRepresentativeTitle());
 		vrProductionPlantImpl.setProductionPlantContactName(vrProductionPlant.getProductionPlantContactName());
@@ -10433,14 +10729,28 @@ public class VRProductionPlantPersistenceImpl extends BasePersistenceImpl<VRProd
 		vrProductionPlantImpl.setProductionPlantContactPhone(vrProductionPlant.getProductionPlantContactPhone());
 		vrProductionPlantImpl.setProductionPlantType(vrProductionPlant.getProductionPlantType());
 		vrProductionPlantImpl.setProductionPlantStatus(vrProductionPlant.getProductionPlantStatus());
+		vrProductionPlantImpl.setProductionManufacture(vrProductionPlant.getProductionManufacture());
+		vrProductionPlantImpl.setProductionMaintainer(vrProductionPlant.getProductionMaintainer());
+		vrProductionPlantImpl.setProductionPlantIdentityNo(vrProductionPlant.getProductionPlantIdentityNo());
+		vrProductionPlantImpl.setProductionPlantIdentityType(vrProductionPlant.getProductionPlantIdentityType());
+		vrProductionPlantImpl.setProductionPlantIdentityDescription(vrProductionPlant.getProductionPlantIdentityDescription());
+		vrProductionPlantImpl.setProductionPlantIdentityFileEntryId(vrProductionPlant.getProductionPlantIdentityFileEntryId());
 		vrProductionPlantImpl.setProductionPlantEmployeesNote(vrProductionPlant.getProductionPlantEmployeesNote());
 		vrProductionPlantImpl.setProductionPlantEquipmentsNote(vrProductionPlant.getProductionPlantEquipmentsNote());
 		vrProductionPlantImpl.setProductionPlantProdEquipmentsNote(vrProductionPlant.getProductionPlantProdEquipmentsNote());
+		vrProductionPlantImpl.setProductionIdentityFileName(vrProductionPlant.getProductionIdentityFileName());
+		vrProductionPlantImpl.setProductionIdentityFileEntryId(vrProductionPlant.getProductionIdentityFileEntryId());
+		vrProductionPlantImpl.setApplicantCode(vrProductionPlant.getApplicantCode());
+		vrProductionPlantImpl.setSupplierName(vrProductionPlant.getSupplierName());
+		vrProductionPlantImpl.setSupplierAddress(vrProductionPlant.getSupplierAddress());
+		vrProductionPlantImpl.setCorporationCode(vrProductionPlant.getCorporationCode());
+		vrProductionPlantImpl.setCorporationName(vrProductionPlant.getCorporationName());
+		vrProductionPlantImpl.setCorporationAddress(vrProductionPlant.getCorporationAddress());
+		vrProductionPlantImpl.setProductionPlantMetadata(vrProductionPlant.getProductionPlantMetadata());
 		vrProductionPlantImpl.setRegistrationId(vrProductionPlant.getRegistrationId());
 		vrProductionPlantImpl.setRegistrationFormId(vrProductionPlant.getRegistrationFormId());
 		vrProductionPlantImpl.setApplicantProfileId(vrProductionPlant.getApplicantProfileId());
 		vrProductionPlantImpl.setSupplierId(vrProductionPlant.getSupplierId());
-		vrProductionPlantImpl.setApplicantCode(vrProductionPlant.getApplicantCode());
 		vrProductionPlantImpl.setModifyDate(vrProductionPlant.getModifyDate());
 		vrProductionPlantImpl.setSyncDate(vrProductionPlant.getSyncDate());
 

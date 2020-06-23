@@ -10,6 +10,7 @@ dependencies {
 	compileOnly project(":modules:backend-datamgt:backend-datamgt-service")
 	compileOnly project(":modules:vr-filterconfig:vr-filterconfig-service")
 	compileOnly project(":modules:vr-filterconfig:vr-filterconfig-api")
+	compileOnly project(":modules:backend-auth")
 	
 	compile group: 'org.apache.poi', name: 'poi', version: '4.1.1'
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.1'

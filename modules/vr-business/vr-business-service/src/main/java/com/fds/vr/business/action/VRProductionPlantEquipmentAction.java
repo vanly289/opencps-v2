@@ -28,4 +28,6 @@ public interface VRProductionPlantEquipmentAction {
 	public JSONObject updateVRProductionPlantEquiptment(VRProductionPlantEquipment object,
 			List<VRProductionPlantEquipmentMarkup> vrProductionPlantEquipmentMarkups);
 
+	public List<VRProductionPlantEquipment> adminProcessData(JSONArray arrayData, String productionPlantCode);
+
 }

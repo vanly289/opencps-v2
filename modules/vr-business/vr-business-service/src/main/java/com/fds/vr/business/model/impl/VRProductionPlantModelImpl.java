@@ -76,15 +76,21 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			{ "productionPlantCode", Types.VARCHAR },
 			{ "productionPlantName", Types.VARCHAR },
 			{ "productionPlantAddress", Types.VARCHAR },
+			{ "productionPlantRegion", Types.VARCHAR },
+			{ "productionPlantRegionCode", Types.VARCHAR },
 			{ "productionPlantStateCode", Types.VARCHAR },
 			{ "productionPlantStateName", Types.VARCHAR },
 			{ "productionPlantProvinceCode", Types.VARCHAR },
 			{ "productionPlantProvinceName", Types.VARCHAR },
 			{ "productionPlantDistrictCode", Types.VARCHAR },
 			{ "productionPlantDistrictName", Types.VARCHAR },
+			{ "productionPlantWardCode", Types.VARCHAR },
+			{ "productionPlantWardName", Types.VARCHAR },
 			{ "productionPlantEmail", Types.VARCHAR },
 			{ "productionPlantPhone", Types.VARCHAR },
 			{ "productionPlantFax", Types.VARCHAR },
+			{ "productionPlantWebsite", Types.VARCHAR },
+			{ "productionPlantRepresentativePhone", Types.VARCHAR },
 			{ "productionPlantRepresentative", Types.VARCHAR },
 			{ "productionPlantRepresentativeTitle", Types.VARCHAR },
 			{ "productionPlantContactName", Types.VARCHAR },
@@ -92,14 +98,28 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			{ "productionPlantContactPhone", Types.VARCHAR },
 			{ "productionPlantType", Types.VARCHAR },
 			{ "productionPlantStatus", Types.VARCHAR },
+			{ "productionManufacture", Types.VARCHAR },
+			{ "productionMaintainer", Types.VARCHAR },
+			{ "productionPlantIdentityNo", Types.VARCHAR },
+			{ "productionPlantIdentityType", Types.VARCHAR },
+			{ "productionPlantIdentityDescription", Types.VARCHAR },
+			{ "productionPlantIdentityFileEntryId", Types.BIGINT },
 			{ "productionPlantEmployeesNote", Types.VARCHAR },
 			{ "productionPlantEquipmentsNote", Types.VARCHAR },
 			{ "productionPlantProdEquipmentsNote", Types.VARCHAR },
+			{ "productionIdentityFileName", Types.VARCHAR },
+			{ "productionIdentityFileEntryId", Types.BIGINT },
+			{ "applicantCode", Types.VARCHAR },
+			{ "supplierName", Types.VARCHAR },
+			{ "supplierAddress", Types.VARCHAR },
+			{ "corporationCode", Types.VARCHAR },
+			{ "corporationName", Types.VARCHAR },
+			{ "corporationAddress", Types.VARCHAR },
+			{ "productionPlantMetadata", Types.VARCHAR },
 			{ "registrationId", Types.BIGINT },
 			{ "registrationFormId", Types.BIGINT },
 			{ "applicantProfileId", Types.BIGINT },
 			{ "supplierId", Types.BIGINT },
-			{ "applicantCode", Types.VARCHAR },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -119,15 +139,22 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		TABLE_COLUMNS_MAP.put("productionPlantCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantAddress", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantRegion", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantRegionCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantStateCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantStateName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantProvinceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantProvinceName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantDistrictCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantDistrictName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantWardCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantWardName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantEmail", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantPhone", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantFax", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantWebsite", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantRepresentativePhone",
+			Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantRepresentative", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantRepresentativeTitle",
 			Types.VARCHAR);
@@ -136,19 +163,34 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		TABLE_COLUMNS_MAP.put("productionPlantContactPhone", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantStatus", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionManufacture", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionMaintainer", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantIdentityNo", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantIdentityType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantIdentityDescription",
+			Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantIdentityFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("productionPlantEmployeesNote", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantEquipmentsNote", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantProdEquipmentsNote", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionIdentityFileName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionIdentityFileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("applicantCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("supplierName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("supplierAddress", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("corporationCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("corporationName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("corporationAddress", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("productionPlantMetadata", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("registrationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("registrationFormId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("applicantProfileId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("supplierId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("applicantCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_productionplant (id LONG not null primary key,mtCore LONG,mappingMA_CTY VARCHAR(75) null,mappingTEN_CTY VARCHAR(75) null,mappingDIA_CHI_CTY VARCHAR(75) null,mappingMA_XUONG_LR VARCHAR(75) null,mappingTEN_XUONG_LR VARCHAR(75) null,mappingDIA_CHI_XUONG_LR VARCHAR(75) null,mappingNote VARCHAR(75) null,mappingStatus VARCHAR(75) null,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,productionPlantStateCode VARCHAR(75) null,productionPlantStateName VARCHAR(75) null,productionPlantProvinceCode VARCHAR(75) null,productionPlantProvinceName VARCHAR(75) null,productionPlantDistrictCode VARCHAR(75) null,productionPlantDistrictName VARCHAR(75) null,productionPlantEmail VARCHAR(75) null,productionPlantPhone VARCHAR(75) null,productionPlantFax VARCHAR(75) null,productionPlantRepresentative VARCHAR(75) null,productionPlantRepresentativeTitle VARCHAR(75) null,productionPlantContactName VARCHAR(75) null,productionPlantContactEmail VARCHAR(75) null,productionPlantContactPhone VARCHAR(75) null,productionPlantType VARCHAR(75) null,productionPlantStatus VARCHAR(75) null,productionPlantEmployeesNote VARCHAR(75) null,productionPlantEquipmentsNote VARCHAR(75) null,productionPlantProdEquipmentsNote VARCHAR(75) null,registrationId LONG,registrationFormId LONG,applicantProfileId LONG,supplierId LONG,applicantCode VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_productionplant (id LONG not null primary key,mtCore LONG,mappingMA_CTY VARCHAR(75) null,mappingTEN_CTY VARCHAR(75) null,mappingDIA_CHI_CTY VARCHAR(75) null,mappingMA_XUONG_LR VARCHAR(75) null,mappingTEN_XUONG_LR VARCHAR(75) null,mappingDIA_CHI_XUONG_LR VARCHAR(75) null,mappingNote VARCHAR(75) null,mappingStatus VARCHAR(75) null,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,productionPlantRegion VARCHAR(75) null,productionPlantRegionCode VARCHAR(75) null,productionPlantStateCode VARCHAR(75) null,productionPlantStateName VARCHAR(75) null,productionPlantProvinceCode VARCHAR(75) null,productionPlantProvinceName VARCHAR(75) null,productionPlantDistrictCode VARCHAR(75) null,productionPlantDistrictName VARCHAR(75) null,productionPlantWardCode VARCHAR(75) null,productionPlantWardName VARCHAR(75) null,productionPlantEmail VARCHAR(75) null,productionPlantPhone VARCHAR(75) null,productionPlantFax VARCHAR(75) null,productionPlantWebsite VARCHAR(75) null,productionPlantRepresentativePhone VARCHAR(75) null,productionPlantRepresentative VARCHAR(75) null,productionPlantRepresentativeTitle VARCHAR(75) null,productionPlantContactName VARCHAR(75) null,productionPlantContactEmail VARCHAR(75) null,productionPlantContactPhone VARCHAR(75) null,productionPlantType VARCHAR(75) null,productionPlantStatus VARCHAR(75) null,productionManufacture VARCHAR(75) null,productionMaintainer VARCHAR(75) null,productionPlantIdentityNo VARCHAR(75) null,productionPlantIdentityType VARCHAR(75) null,productionPlantIdentityDescription VARCHAR(75) null,productionPlantIdentityFileEntryId LONG,productionPlantEmployeesNote VARCHAR(75) null,productionPlantEquipmentsNote VARCHAR(75) null,productionPlantProdEquipmentsNote VARCHAR(75) null,productionIdentityFileName VARCHAR(75) null,productionIdentityFileEntryId LONG,applicantCode VARCHAR(75) null,supplierName VARCHAR(75) null,supplierAddress VARCHAR(75) null,corporationCode VARCHAR(75) null,corporationName VARCHAR(75) null,corporationAddress VARCHAR(75) null,productionPlantMetadata VARCHAR(75) null,registrationId LONG,registrationFormId LONG,applicantProfileId LONG,supplierId LONG,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_productionplant";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrProductionPlant.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_productionplant.modifyDate DESC";
@@ -232,6 +274,9 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		attributes.put("productionPlantCode", getProductionPlantCode());
 		attributes.put("productionPlantName", getProductionPlantName());
 		attributes.put("productionPlantAddress", getProductionPlantAddress());
+		attributes.put("productionPlantRegion", getProductionPlantRegion());
+		attributes.put("productionPlantRegionCode",
+			getProductionPlantRegionCode());
 		attributes.put("productionPlantStateCode", getProductionPlantStateCode());
 		attributes.put("productionPlantStateName", getProductionPlantStateName());
 		attributes.put("productionPlantProvinceCode",
@@ -242,9 +287,14 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			getProductionPlantDistrictCode());
 		attributes.put("productionPlantDistrictName",
 			getProductionPlantDistrictName());
+		attributes.put("productionPlantWardCode", getProductionPlantWardCode());
+		attributes.put("productionPlantWardName", getProductionPlantWardName());
 		attributes.put("productionPlantEmail", getProductionPlantEmail());
 		attributes.put("productionPlantPhone", getProductionPlantPhone());
 		attributes.put("productionPlantFax", getProductionPlantFax());
+		attributes.put("productionPlantWebsite", getProductionPlantWebsite());
+		attributes.put("productionPlantRepresentativePhone",
+			getProductionPlantRepresentativePhone());
 		attributes.put("productionPlantRepresentative",
 			getProductionPlantRepresentative());
 		attributes.put("productionPlantRepresentativeTitle",
@@ -257,17 +307,37 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			getProductionPlantContactPhone());
 		attributes.put("productionPlantType", getProductionPlantType());
 		attributes.put("productionPlantStatus", getProductionPlantStatus());
+		attributes.put("productionManufacture", getProductionManufacture());
+		attributes.put("productionMaintainer", getProductionMaintainer());
+		attributes.put("productionPlantIdentityNo",
+			getProductionPlantIdentityNo());
+		attributes.put("productionPlantIdentityType",
+			getProductionPlantIdentityType());
+		attributes.put("productionPlantIdentityDescription",
+			getProductionPlantIdentityDescription());
+		attributes.put("productionPlantIdentityFileEntryId",
+			getProductionPlantIdentityFileEntryId());
 		attributes.put("productionPlantEmployeesNote",
 			getProductionPlantEmployeesNote());
 		attributes.put("productionPlantEquipmentsNote",
 			getProductionPlantEquipmentsNote());
 		attributes.put("productionPlantProdEquipmentsNote",
 			getProductionPlantProdEquipmentsNote());
+		attributes.put("productionIdentityFileName",
+			getProductionIdentityFileName());
+		attributes.put("productionIdentityFileEntryId",
+			getProductionIdentityFileEntryId());
+		attributes.put("applicantCode", getApplicantCode());
+		attributes.put("supplierName", getSupplierName());
+		attributes.put("supplierAddress", getSupplierAddress());
+		attributes.put("corporationCode", getCorporationCode());
+		attributes.put("corporationName", getCorporationName());
+		attributes.put("corporationAddress", getCorporationAddress());
+		attributes.put("productionPlantMetadata", getProductionPlantMetadata());
 		attributes.put("registrationId", getRegistrationId());
 		attributes.put("registrationFormId", getRegistrationFormId());
 		attributes.put("applicantProfileId", getApplicantProfileId());
 		attributes.put("supplierId", getSupplierId());
-		attributes.put("applicantCode", getApplicantCode());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -362,6 +432,20 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			setProductionPlantAddress(productionPlantAddress);
 		}
 
+		String productionPlantRegion = (String)attributes.get(
+				"productionPlantRegion");
+
+		if (productionPlantRegion != null) {
+			setProductionPlantRegion(productionPlantRegion);
+		}
+
+		String productionPlantRegionCode = (String)attributes.get(
+				"productionPlantRegionCode");
+
+		if (productionPlantRegionCode != null) {
+			setProductionPlantRegionCode(productionPlantRegionCode);
+		}
+
 		String productionPlantStateCode = (String)attributes.get(
 				"productionPlantStateCode");
 
@@ -404,6 +488,20 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			setProductionPlantDistrictName(productionPlantDistrictName);
 		}
 
+		String productionPlantWardCode = (String)attributes.get(
+				"productionPlantWardCode");
+
+		if (productionPlantWardCode != null) {
+			setProductionPlantWardCode(productionPlantWardCode);
+		}
+
+		String productionPlantWardName = (String)attributes.get(
+				"productionPlantWardName");
+
+		if (productionPlantWardName != null) {
+			setProductionPlantWardName(productionPlantWardName);
+		}
+
 		String productionPlantEmail = (String)attributes.get(
 				"productionPlantEmail");
 
@@ -422,6 +520,20 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 		if (productionPlantFax != null) {
 			setProductionPlantFax(productionPlantFax);
+		}
+
+		String productionPlantWebsite = (String)attributes.get(
+				"productionPlantWebsite");
+
+		if (productionPlantWebsite != null) {
+			setProductionPlantWebsite(productionPlantWebsite);
+		}
+
+		String productionPlantRepresentativePhone = (String)attributes.get(
+				"productionPlantRepresentativePhone");
+
+		if (productionPlantRepresentativePhone != null) {
+			setProductionPlantRepresentativePhone(productionPlantRepresentativePhone);
 		}
 
 		String productionPlantRepresentative = (String)attributes.get(
@@ -473,6 +585,48 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			setProductionPlantStatus(productionPlantStatus);
 		}
 
+		String productionManufacture = (String)attributes.get(
+				"productionManufacture");
+
+		if (productionManufacture != null) {
+			setProductionManufacture(productionManufacture);
+		}
+
+		String productionMaintainer = (String)attributes.get(
+				"productionMaintainer");
+
+		if (productionMaintainer != null) {
+			setProductionMaintainer(productionMaintainer);
+		}
+
+		String productionPlantIdentityNo = (String)attributes.get(
+				"productionPlantIdentityNo");
+
+		if (productionPlantIdentityNo != null) {
+			setProductionPlantIdentityNo(productionPlantIdentityNo);
+		}
+
+		String productionPlantIdentityType = (String)attributes.get(
+				"productionPlantIdentityType");
+
+		if (productionPlantIdentityType != null) {
+			setProductionPlantIdentityType(productionPlantIdentityType);
+		}
+
+		String productionPlantIdentityDescription = (String)attributes.get(
+				"productionPlantIdentityDescription");
+
+		if (productionPlantIdentityDescription != null) {
+			setProductionPlantIdentityDescription(productionPlantIdentityDescription);
+		}
+
+		Long productionPlantIdentityFileEntryId = (Long)attributes.get(
+				"productionPlantIdentityFileEntryId");
+
+		if (productionPlantIdentityFileEntryId != null) {
+			setProductionPlantIdentityFileEntryId(productionPlantIdentityFileEntryId);
+		}
+
 		String productionPlantEmployeesNote = (String)attributes.get(
 				"productionPlantEmployeesNote");
 
@@ -492,6 +646,63 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 		if (productionPlantProdEquipmentsNote != null) {
 			setProductionPlantProdEquipmentsNote(productionPlantProdEquipmentsNote);
+		}
+
+		String productionIdentityFileName = (String)attributes.get(
+				"productionIdentityFileName");
+
+		if (productionIdentityFileName != null) {
+			setProductionIdentityFileName(productionIdentityFileName);
+		}
+
+		Long productionIdentityFileEntryId = (Long)attributes.get(
+				"productionIdentityFileEntryId");
+
+		if (productionIdentityFileEntryId != null) {
+			setProductionIdentityFileEntryId(productionIdentityFileEntryId);
+		}
+
+		String applicantCode = (String)attributes.get("applicantCode");
+
+		if (applicantCode != null) {
+			setApplicantCode(applicantCode);
+		}
+
+		String supplierName = (String)attributes.get("supplierName");
+
+		if (supplierName != null) {
+			setSupplierName(supplierName);
+		}
+
+		String supplierAddress = (String)attributes.get("supplierAddress");
+
+		if (supplierAddress != null) {
+			setSupplierAddress(supplierAddress);
+		}
+
+		String corporationCode = (String)attributes.get("corporationCode");
+
+		if (corporationCode != null) {
+			setCorporationCode(corporationCode);
+		}
+
+		String corporationName = (String)attributes.get("corporationName");
+
+		if (corporationName != null) {
+			setCorporationName(corporationName);
+		}
+
+		String corporationAddress = (String)attributes.get("corporationAddress");
+
+		if (corporationAddress != null) {
+			setCorporationAddress(corporationAddress);
+		}
+
+		String productionPlantMetadata = (String)attributes.get(
+				"productionPlantMetadata");
+
+		if (productionPlantMetadata != null) {
+			setProductionPlantMetadata(productionPlantMetadata);
 		}
 
 		Long registrationId = (Long)attributes.get("registrationId");
@@ -516,12 +727,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 		if (supplierId != null) {
 			setSupplierId(supplierId);
-		}
-
-		String applicantCode = (String)attributes.get("applicantCode");
-
-		if (applicantCode != null) {
-			setApplicantCode(applicantCode);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -795,6 +1000,36 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	}
 
 	@Override
+	public String getProductionPlantRegion() {
+		if (_productionPlantRegion == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantRegion;
+		}
+	}
+
+	@Override
+	public void setProductionPlantRegion(String productionPlantRegion) {
+		_productionPlantRegion = productionPlantRegion;
+	}
+
+	@Override
+	public String getProductionPlantRegionCode() {
+		if (_productionPlantRegionCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantRegionCode;
+		}
+	}
+
+	@Override
+	public void setProductionPlantRegionCode(String productionPlantRegionCode) {
+		_productionPlantRegionCode = productionPlantRegionCode;
+	}
+
+	@Override
 	public String getProductionPlantStateCode() {
 		if (_productionPlantStateCode == null) {
 			return StringPool.BLANK;
@@ -889,6 +1124,36 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	}
 
 	@Override
+	public String getProductionPlantWardCode() {
+		if (_productionPlantWardCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantWardCode;
+		}
+	}
+
+	@Override
+	public void setProductionPlantWardCode(String productionPlantWardCode) {
+		_productionPlantWardCode = productionPlantWardCode;
+	}
+
+	@Override
+	public String getProductionPlantWardName() {
+		if (_productionPlantWardName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantWardName;
+		}
+	}
+
+	@Override
+	public void setProductionPlantWardName(String productionPlantWardName) {
+		_productionPlantWardName = productionPlantWardName;
+	}
+
+	@Override
 	public String getProductionPlantEmail() {
 		if (_productionPlantEmail == null) {
 			return StringPool.BLANK;
@@ -931,6 +1196,37 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	@Override
 	public void setProductionPlantFax(String productionPlantFax) {
 		_productionPlantFax = productionPlantFax;
+	}
+
+	@Override
+	public String getProductionPlantWebsite() {
+		if (_productionPlantWebsite == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantWebsite;
+		}
+	}
+
+	@Override
+	public void setProductionPlantWebsite(String productionPlantWebsite) {
+		_productionPlantWebsite = productionPlantWebsite;
+	}
+
+	@Override
+	public String getProductionPlantRepresentativePhone() {
+		if (_productionPlantRepresentativePhone == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantRepresentativePhone;
+		}
+	}
+
+	@Override
+	public void setProductionPlantRepresentativePhone(
+		String productionPlantRepresentativePhone) {
+		_productionPlantRepresentativePhone = productionPlantRepresentativePhone;
 	}
 
 	@Override
@@ -1073,6 +1369,94 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	}
 
 	@Override
+	public String getProductionManufacture() {
+		if (_productionManufacture == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionManufacture;
+		}
+	}
+
+	@Override
+	public void setProductionManufacture(String productionManufacture) {
+		_productionManufacture = productionManufacture;
+	}
+
+	@Override
+	public String getProductionMaintainer() {
+		if (_productionMaintainer == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionMaintainer;
+		}
+	}
+
+	@Override
+	public void setProductionMaintainer(String productionMaintainer) {
+		_productionMaintainer = productionMaintainer;
+	}
+
+	@Override
+	public String getProductionPlantIdentityNo() {
+		if (_productionPlantIdentityNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantIdentityNo;
+		}
+	}
+
+	@Override
+	public void setProductionPlantIdentityNo(String productionPlantIdentityNo) {
+		_productionPlantIdentityNo = productionPlantIdentityNo;
+	}
+
+	@Override
+	public String getProductionPlantIdentityType() {
+		if (_productionPlantIdentityType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantIdentityType;
+		}
+	}
+
+	@Override
+	public void setProductionPlantIdentityType(
+		String productionPlantIdentityType) {
+		_productionPlantIdentityType = productionPlantIdentityType;
+	}
+
+	@Override
+	public String getProductionPlantIdentityDescription() {
+		if (_productionPlantIdentityDescription == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantIdentityDescription;
+		}
+	}
+
+	@Override
+	public void setProductionPlantIdentityDescription(
+		String productionPlantIdentityDescription) {
+		_productionPlantIdentityDescription = productionPlantIdentityDescription;
+	}
+
+	@Override
+	public long getProductionPlantIdentityFileEntryId() {
+		return _productionPlantIdentityFileEntryId;
+	}
+
+	@Override
+	public void setProductionPlantIdentityFileEntryId(
+		long productionPlantIdentityFileEntryId) {
+		_productionPlantIdentityFileEntryId = productionPlantIdentityFileEntryId;
+	}
+
+	@Override
 	public String getProductionPlantEmployeesNote() {
 		if (_productionPlantEmployeesNote == null) {
 			return StringPool.BLANK;
@@ -1118,6 +1502,147 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	public void setProductionPlantProdEquipmentsNote(
 		String productionPlantProdEquipmentsNote) {
 		_productionPlantProdEquipmentsNote = productionPlantProdEquipmentsNote;
+	}
+
+	@Override
+	public String getProductionIdentityFileName() {
+		if (_productionIdentityFileName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionIdentityFileName;
+		}
+	}
+
+	@Override
+	public void setProductionIdentityFileName(String productionIdentityFileName) {
+		_productionIdentityFileName = productionIdentityFileName;
+	}
+
+	@Override
+	public long getProductionIdentityFileEntryId() {
+		return _productionIdentityFileEntryId;
+	}
+
+	@Override
+	public void setProductionIdentityFileEntryId(
+		long productionIdentityFileEntryId) {
+		_productionIdentityFileEntryId = productionIdentityFileEntryId;
+	}
+
+	@Override
+	public String getApplicantCode() {
+		if (_applicantCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _applicantCode;
+		}
+	}
+
+	@Override
+	public void setApplicantCode(String applicantCode) {
+		_columnBitmask |= APPLICANTCODE_COLUMN_BITMASK;
+
+		if (_originalApplicantCode == null) {
+			_originalApplicantCode = _applicantCode;
+		}
+
+		_applicantCode = applicantCode;
+	}
+
+	public String getOriginalApplicantCode() {
+		return GetterUtil.getString(_originalApplicantCode);
+	}
+
+	@Override
+	public String getSupplierName() {
+		if (_supplierName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _supplierName;
+		}
+	}
+
+	@Override
+	public void setSupplierName(String supplierName) {
+		_supplierName = supplierName;
+	}
+
+	@Override
+	public String getSupplierAddress() {
+		if (_supplierAddress == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _supplierAddress;
+		}
+	}
+
+	@Override
+	public void setSupplierAddress(String supplierAddress) {
+		_supplierAddress = supplierAddress;
+	}
+
+	@Override
+	public String getCorporationCode() {
+		if (_corporationCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _corporationCode;
+		}
+	}
+
+	@Override
+	public void setCorporationCode(String corporationCode) {
+		_corporationCode = corporationCode;
+	}
+
+	@Override
+	public String getCorporationName() {
+		if (_corporationName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _corporationName;
+		}
+	}
+
+	@Override
+	public void setCorporationName(String corporationName) {
+		_corporationName = corporationName;
+	}
+
+	@Override
+	public String getCorporationAddress() {
+		if (_corporationAddress == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _corporationAddress;
+		}
+	}
+
+	@Override
+	public void setCorporationAddress(String corporationAddress) {
+		_corporationAddress = corporationAddress;
+	}
+
+	@Override
+	public String getProductionPlantMetadata() {
+		if (_productionPlantMetadata == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _productionPlantMetadata;
+		}
+	}
+
+	@Override
+	public void setProductionPlantMetadata(String productionPlantMetadata) {
+		_productionPlantMetadata = productionPlantMetadata;
 	}
 
 	@Override
@@ -1197,31 +1722,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	}
 
 	@Override
-	public String getApplicantCode() {
-		if (_applicantCode == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _applicantCode;
-		}
-	}
-
-	@Override
-	public void setApplicantCode(String applicantCode) {
-		_columnBitmask |= APPLICANTCODE_COLUMN_BITMASK;
-
-		if (_originalApplicantCode == null) {
-			_originalApplicantCode = _applicantCode;
-		}
-
-		_applicantCode = applicantCode;
-	}
-
-	public String getOriginalApplicantCode() {
-		return GetterUtil.getString(_originalApplicantCode);
-	}
-
-	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -1287,15 +1787,21 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		vrProductionPlantImpl.setProductionPlantCode(getProductionPlantCode());
 		vrProductionPlantImpl.setProductionPlantName(getProductionPlantName());
 		vrProductionPlantImpl.setProductionPlantAddress(getProductionPlantAddress());
+		vrProductionPlantImpl.setProductionPlantRegion(getProductionPlantRegion());
+		vrProductionPlantImpl.setProductionPlantRegionCode(getProductionPlantRegionCode());
 		vrProductionPlantImpl.setProductionPlantStateCode(getProductionPlantStateCode());
 		vrProductionPlantImpl.setProductionPlantStateName(getProductionPlantStateName());
 		vrProductionPlantImpl.setProductionPlantProvinceCode(getProductionPlantProvinceCode());
 		vrProductionPlantImpl.setProductionPlantProvinceName(getProductionPlantProvinceName());
 		vrProductionPlantImpl.setProductionPlantDistrictCode(getProductionPlantDistrictCode());
 		vrProductionPlantImpl.setProductionPlantDistrictName(getProductionPlantDistrictName());
+		vrProductionPlantImpl.setProductionPlantWardCode(getProductionPlantWardCode());
+		vrProductionPlantImpl.setProductionPlantWardName(getProductionPlantWardName());
 		vrProductionPlantImpl.setProductionPlantEmail(getProductionPlantEmail());
 		vrProductionPlantImpl.setProductionPlantPhone(getProductionPlantPhone());
 		vrProductionPlantImpl.setProductionPlantFax(getProductionPlantFax());
+		vrProductionPlantImpl.setProductionPlantWebsite(getProductionPlantWebsite());
+		vrProductionPlantImpl.setProductionPlantRepresentativePhone(getProductionPlantRepresentativePhone());
 		vrProductionPlantImpl.setProductionPlantRepresentative(getProductionPlantRepresentative());
 		vrProductionPlantImpl.setProductionPlantRepresentativeTitle(getProductionPlantRepresentativeTitle());
 		vrProductionPlantImpl.setProductionPlantContactName(getProductionPlantContactName());
@@ -1303,14 +1809,28 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		vrProductionPlantImpl.setProductionPlantContactPhone(getProductionPlantContactPhone());
 		vrProductionPlantImpl.setProductionPlantType(getProductionPlantType());
 		vrProductionPlantImpl.setProductionPlantStatus(getProductionPlantStatus());
+		vrProductionPlantImpl.setProductionManufacture(getProductionManufacture());
+		vrProductionPlantImpl.setProductionMaintainer(getProductionMaintainer());
+		vrProductionPlantImpl.setProductionPlantIdentityNo(getProductionPlantIdentityNo());
+		vrProductionPlantImpl.setProductionPlantIdentityType(getProductionPlantIdentityType());
+		vrProductionPlantImpl.setProductionPlantIdentityDescription(getProductionPlantIdentityDescription());
+		vrProductionPlantImpl.setProductionPlantIdentityFileEntryId(getProductionPlantIdentityFileEntryId());
 		vrProductionPlantImpl.setProductionPlantEmployeesNote(getProductionPlantEmployeesNote());
 		vrProductionPlantImpl.setProductionPlantEquipmentsNote(getProductionPlantEquipmentsNote());
 		vrProductionPlantImpl.setProductionPlantProdEquipmentsNote(getProductionPlantProdEquipmentsNote());
+		vrProductionPlantImpl.setProductionIdentityFileName(getProductionIdentityFileName());
+		vrProductionPlantImpl.setProductionIdentityFileEntryId(getProductionIdentityFileEntryId());
+		vrProductionPlantImpl.setApplicantCode(getApplicantCode());
+		vrProductionPlantImpl.setSupplierName(getSupplierName());
+		vrProductionPlantImpl.setSupplierAddress(getSupplierAddress());
+		vrProductionPlantImpl.setCorporationCode(getCorporationCode());
+		vrProductionPlantImpl.setCorporationName(getCorporationName());
+		vrProductionPlantImpl.setCorporationAddress(getCorporationAddress());
+		vrProductionPlantImpl.setProductionPlantMetadata(getProductionPlantMetadata());
 		vrProductionPlantImpl.setRegistrationId(getRegistrationId());
 		vrProductionPlantImpl.setRegistrationFormId(getRegistrationFormId());
 		vrProductionPlantImpl.setApplicantProfileId(getApplicantProfileId());
 		vrProductionPlantImpl.setSupplierId(getSupplierId());
-		vrProductionPlantImpl.setApplicantCode(getApplicantCode());
 		vrProductionPlantImpl.setModifyDate(getModifyDate());
 		vrProductionPlantImpl.setSyncDate(getSyncDate());
 
@@ -1398,6 +1918,8 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 		vrProductionPlantModelImpl._originalProductionPlantStatus = vrProductionPlantModelImpl._productionPlantStatus;
 
+		vrProductionPlantModelImpl._originalApplicantCode = vrProductionPlantModelImpl._applicantCode;
+
 		vrProductionPlantModelImpl._originalRegistrationId = vrProductionPlantModelImpl._registrationId;
 
 		vrProductionPlantModelImpl._setOriginalRegistrationId = false;
@@ -1409,8 +1931,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		vrProductionPlantModelImpl._originalApplicantProfileId = vrProductionPlantModelImpl._applicantProfileId;
 
 		vrProductionPlantModelImpl._setOriginalApplicantProfileId = false;
-
-		vrProductionPlantModelImpl._originalApplicantCode = vrProductionPlantModelImpl._applicantCode;
 
 		vrProductionPlantModelImpl._columnBitmask = 0;
 	}
@@ -1516,6 +2036,24 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			vrProductionPlantCacheModel.productionPlantAddress = null;
 		}
 
+		vrProductionPlantCacheModel.productionPlantRegion = getProductionPlantRegion();
+
+		String productionPlantRegion = vrProductionPlantCacheModel.productionPlantRegion;
+
+		if ((productionPlantRegion != null) &&
+				(productionPlantRegion.length() == 0)) {
+			vrProductionPlantCacheModel.productionPlantRegion = null;
+		}
+
+		vrProductionPlantCacheModel.productionPlantRegionCode = getProductionPlantRegionCode();
+
+		String productionPlantRegionCode = vrProductionPlantCacheModel.productionPlantRegionCode;
+
+		if ((productionPlantRegionCode != null) &&
+				(productionPlantRegionCode.length() == 0)) {
+			vrProductionPlantCacheModel.productionPlantRegionCode = null;
+		}
+
 		vrProductionPlantCacheModel.productionPlantStateCode = getProductionPlantStateCode();
 
 		String productionPlantStateCode = vrProductionPlantCacheModel.productionPlantStateCode;
@@ -1570,6 +2108,24 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			vrProductionPlantCacheModel.productionPlantDistrictName = null;
 		}
 
+		vrProductionPlantCacheModel.productionPlantWardCode = getProductionPlantWardCode();
+
+		String productionPlantWardCode = vrProductionPlantCacheModel.productionPlantWardCode;
+
+		if ((productionPlantWardCode != null) &&
+				(productionPlantWardCode.length() == 0)) {
+			vrProductionPlantCacheModel.productionPlantWardCode = null;
+		}
+
+		vrProductionPlantCacheModel.productionPlantWardName = getProductionPlantWardName();
+
+		String productionPlantWardName = vrProductionPlantCacheModel.productionPlantWardName;
+
+		if ((productionPlantWardName != null) &&
+				(productionPlantWardName.length() == 0)) {
+			vrProductionPlantCacheModel.productionPlantWardName = null;
+		}
+
 		vrProductionPlantCacheModel.productionPlantEmail = getProductionPlantEmail();
 
 		String productionPlantEmail = vrProductionPlantCacheModel.productionPlantEmail;
@@ -1594,6 +2150,24 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 		if ((productionPlantFax != null) && (productionPlantFax.length() == 0)) {
 			vrProductionPlantCacheModel.productionPlantFax = null;
+		}
+
+		vrProductionPlantCacheModel.productionPlantWebsite = getProductionPlantWebsite();
+
+		String productionPlantWebsite = vrProductionPlantCacheModel.productionPlantWebsite;
+
+		if ((productionPlantWebsite != null) &&
+				(productionPlantWebsite.length() == 0)) {
+			vrProductionPlantCacheModel.productionPlantWebsite = null;
+		}
+
+		vrProductionPlantCacheModel.productionPlantRepresentativePhone = getProductionPlantRepresentativePhone();
+
+		String productionPlantRepresentativePhone = vrProductionPlantCacheModel.productionPlantRepresentativePhone;
+
+		if ((productionPlantRepresentativePhone != null) &&
+				(productionPlantRepresentativePhone.length() == 0)) {
+			vrProductionPlantCacheModel.productionPlantRepresentativePhone = null;
 		}
 
 		vrProductionPlantCacheModel.productionPlantRepresentative = getProductionPlantRepresentative();
@@ -1659,6 +2233,53 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			vrProductionPlantCacheModel.productionPlantStatus = null;
 		}
 
+		vrProductionPlantCacheModel.productionManufacture = getProductionManufacture();
+
+		String productionManufacture = vrProductionPlantCacheModel.productionManufacture;
+
+		if ((productionManufacture != null) &&
+				(productionManufacture.length() == 0)) {
+			vrProductionPlantCacheModel.productionManufacture = null;
+		}
+
+		vrProductionPlantCacheModel.productionMaintainer = getProductionMaintainer();
+
+		String productionMaintainer = vrProductionPlantCacheModel.productionMaintainer;
+
+		if ((productionMaintainer != null) &&
+				(productionMaintainer.length() == 0)) {
+			vrProductionPlantCacheModel.productionMaintainer = null;
+		}
+
+		vrProductionPlantCacheModel.productionPlantIdentityNo = getProductionPlantIdentityNo();
+
+		String productionPlantIdentityNo = vrProductionPlantCacheModel.productionPlantIdentityNo;
+
+		if ((productionPlantIdentityNo != null) &&
+				(productionPlantIdentityNo.length() == 0)) {
+			vrProductionPlantCacheModel.productionPlantIdentityNo = null;
+		}
+
+		vrProductionPlantCacheModel.productionPlantIdentityType = getProductionPlantIdentityType();
+
+		String productionPlantIdentityType = vrProductionPlantCacheModel.productionPlantIdentityType;
+
+		if ((productionPlantIdentityType != null) &&
+				(productionPlantIdentityType.length() == 0)) {
+			vrProductionPlantCacheModel.productionPlantIdentityType = null;
+		}
+
+		vrProductionPlantCacheModel.productionPlantIdentityDescription = getProductionPlantIdentityDescription();
+
+		String productionPlantIdentityDescription = vrProductionPlantCacheModel.productionPlantIdentityDescription;
+
+		if ((productionPlantIdentityDescription != null) &&
+				(productionPlantIdentityDescription.length() == 0)) {
+			vrProductionPlantCacheModel.productionPlantIdentityDescription = null;
+		}
+
+		vrProductionPlantCacheModel.productionPlantIdentityFileEntryId = getProductionPlantIdentityFileEntryId();
+
 		vrProductionPlantCacheModel.productionPlantEmployeesNote = getProductionPlantEmployeesNote();
 
 		String productionPlantEmployeesNote = vrProductionPlantCacheModel.productionPlantEmployeesNote;
@@ -1686,13 +2307,16 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 			vrProductionPlantCacheModel.productionPlantProdEquipmentsNote = null;
 		}
 
-		vrProductionPlantCacheModel.registrationId = getRegistrationId();
+		vrProductionPlantCacheModel.productionIdentityFileName = getProductionIdentityFileName();
 
-		vrProductionPlantCacheModel.registrationFormId = getRegistrationFormId();
+		String productionIdentityFileName = vrProductionPlantCacheModel.productionIdentityFileName;
 
-		vrProductionPlantCacheModel.applicantProfileId = getApplicantProfileId();
+		if ((productionIdentityFileName != null) &&
+				(productionIdentityFileName.length() == 0)) {
+			vrProductionPlantCacheModel.productionIdentityFileName = null;
+		}
 
-		vrProductionPlantCacheModel.supplierId = getSupplierId();
+		vrProductionPlantCacheModel.productionIdentityFileEntryId = getProductionIdentityFileEntryId();
 
 		vrProductionPlantCacheModel.applicantCode = getApplicantCode();
 
@@ -1701,6 +2325,63 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		if ((applicantCode != null) && (applicantCode.length() == 0)) {
 			vrProductionPlantCacheModel.applicantCode = null;
 		}
+
+		vrProductionPlantCacheModel.supplierName = getSupplierName();
+
+		String supplierName = vrProductionPlantCacheModel.supplierName;
+
+		if ((supplierName != null) && (supplierName.length() == 0)) {
+			vrProductionPlantCacheModel.supplierName = null;
+		}
+
+		vrProductionPlantCacheModel.supplierAddress = getSupplierAddress();
+
+		String supplierAddress = vrProductionPlantCacheModel.supplierAddress;
+
+		if ((supplierAddress != null) && (supplierAddress.length() == 0)) {
+			vrProductionPlantCacheModel.supplierAddress = null;
+		}
+
+		vrProductionPlantCacheModel.corporationCode = getCorporationCode();
+
+		String corporationCode = vrProductionPlantCacheModel.corporationCode;
+
+		if ((corporationCode != null) && (corporationCode.length() == 0)) {
+			vrProductionPlantCacheModel.corporationCode = null;
+		}
+
+		vrProductionPlantCacheModel.corporationName = getCorporationName();
+
+		String corporationName = vrProductionPlantCacheModel.corporationName;
+
+		if ((corporationName != null) && (corporationName.length() == 0)) {
+			vrProductionPlantCacheModel.corporationName = null;
+		}
+
+		vrProductionPlantCacheModel.corporationAddress = getCorporationAddress();
+
+		String corporationAddress = vrProductionPlantCacheModel.corporationAddress;
+
+		if ((corporationAddress != null) && (corporationAddress.length() == 0)) {
+			vrProductionPlantCacheModel.corporationAddress = null;
+		}
+
+		vrProductionPlantCacheModel.productionPlantMetadata = getProductionPlantMetadata();
+
+		String productionPlantMetadata = vrProductionPlantCacheModel.productionPlantMetadata;
+
+		if ((productionPlantMetadata != null) &&
+				(productionPlantMetadata.length() == 0)) {
+			vrProductionPlantCacheModel.productionPlantMetadata = null;
+		}
+
+		vrProductionPlantCacheModel.registrationId = getRegistrationId();
+
+		vrProductionPlantCacheModel.registrationFormId = getRegistrationFormId();
+
+		vrProductionPlantCacheModel.applicantProfileId = getApplicantProfileId();
+
+		vrProductionPlantCacheModel.supplierId = getSupplierId();
 
 		Date modifyDate = getModifyDate();
 
@@ -1725,7 +2406,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(119);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1753,6 +2434,10 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getProductionPlantName());
 		sb.append(", productionPlantAddress=");
 		sb.append(getProductionPlantAddress());
+		sb.append(", productionPlantRegion=");
+		sb.append(getProductionPlantRegion());
+		sb.append(", productionPlantRegionCode=");
+		sb.append(getProductionPlantRegionCode());
 		sb.append(", productionPlantStateCode=");
 		sb.append(getProductionPlantStateCode());
 		sb.append(", productionPlantStateName=");
@@ -1765,12 +2450,20 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getProductionPlantDistrictCode());
 		sb.append(", productionPlantDistrictName=");
 		sb.append(getProductionPlantDistrictName());
+		sb.append(", productionPlantWardCode=");
+		sb.append(getProductionPlantWardCode());
+		sb.append(", productionPlantWardName=");
+		sb.append(getProductionPlantWardName());
 		sb.append(", productionPlantEmail=");
 		sb.append(getProductionPlantEmail());
 		sb.append(", productionPlantPhone=");
 		sb.append(getProductionPlantPhone());
 		sb.append(", productionPlantFax=");
 		sb.append(getProductionPlantFax());
+		sb.append(", productionPlantWebsite=");
+		sb.append(getProductionPlantWebsite());
+		sb.append(", productionPlantRepresentativePhone=");
+		sb.append(getProductionPlantRepresentativePhone());
 		sb.append(", productionPlantRepresentative=");
 		sb.append(getProductionPlantRepresentative());
 		sb.append(", productionPlantRepresentativeTitle=");
@@ -1785,12 +2478,42 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getProductionPlantType());
 		sb.append(", productionPlantStatus=");
 		sb.append(getProductionPlantStatus());
+		sb.append(", productionManufacture=");
+		sb.append(getProductionManufacture());
+		sb.append(", productionMaintainer=");
+		sb.append(getProductionMaintainer());
+		sb.append(", productionPlantIdentityNo=");
+		sb.append(getProductionPlantIdentityNo());
+		sb.append(", productionPlantIdentityType=");
+		sb.append(getProductionPlantIdentityType());
+		sb.append(", productionPlantIdentityDescription=");
+		sb.append(getProductionPlantIdentityDescription());
+		sb.append(", productionPlantIdentityFileEntryId=");
+		sb.append(getProductionPlantIdentityFileEntryId());
 		sb.append(", productionPlantEmployeesNote=");
 		sb.append(getProductionPlantEmployeesNote());
 		sb.append(", productionPlantEquipmentsNote=");
 		sb.append(getProductionPlantEquipmentsNote());
 		sb.append(", productionPlantProdEquipmentsNote=");
 		sb.append(getProductionPlantProdEquipmentsNote());
+		sb.append(", productionIdentityFileName=");
+		sb.append(getProductionIdentityFileName());
+		sb.append(", productionIdentityFileEntryId=");
+		sb.append(getProductionIdentityFileEntryId());
+		sb.append(", applicantCode=");
+		sb.append(getApplicantCode());
+		sb.append(", supplierName=");
+		sb.append(getSupplierName());
+		sb.append(", supplierAddress=");
+		sb.append(getSupplierAddress());
+		sb.append(", corporationCode=");
+		sb.append(getCorporationCode());
+		sb.append(", corporationName=");
+		sb.append(getCorporationName());
+		sb.append(", corporationAddress=");
+		sb.append(getCorporationAddress());
+		sb.append(", productionPlantMetadata=");
+		sb.append(getProductionPlantMetadata());
 		sb.append(", registrationId=");
 		sb.append(getRegistrationId());
 		sb.append(", registrationFormId=");
@@ -1799,8 +2522,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getApplicantProfileId());
 		sb.append(", supplierId=");
 		sb.append(getSupplierId());
-		sb.append(", applicantCode=");
-		sb.append(getApplicantCode());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -1812,7 +2533,7 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(121);
+		StringBundler sb = new StringBundler(181);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRProductionPlant");
@@ -1871,6 +2592,14 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getProductionPlantAddress());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>productionPlantRegion</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantRegion());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantRegionCode</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantRegionCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>productionPlantStateCode</column-name><column-value><![CDATA[");
 		sb.append(getProductionPlantStateCode());
 		sb.append("]]></column-value></column>");
@@ -1895,6 +2624,14 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getProductionPlantDistrictName());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>productionPlantWardCode</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantWardCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantWardName</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantWardName());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>productionPlantEmail</column-name><column-value><![CDATA[");
 		sb.append(getProductionPlantEmail());
 		sb.append("]]></column-value></column>");
@@ -1905,6 +2642,14 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(
 			"<column><column-name>productionPlantFax</column-name><column-value><![CDATA[");
 		sb.append(getProductionPlantFax());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantWebsite</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantWebsite());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantRepresentativePhone</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantRepresentativePhone());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>productionPlantRepresentative</column-name><column-value><![CDATA[");
@@ -1935,6 +2680,30 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(getProductionPlantStatus());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>productionManufacture</column-name><column-value><![CDATA[");
+		sb.append(getProductionManufacture());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionMaintainer</column-name><column-value><![CDATA[");
+		sb.append(getProductionMaintainer());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantIdentityNo</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantIdentityNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantIdentityType</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantIdentityType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantIdentityDescription</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantIdentityDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantIdentityFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantIdentityFileEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>productionPlantEmployeesNote</column-name><column-value><![CDATA[");
 		sb.append(getProductionPlantEmployeesNote());
 		sb.append("]]></column-value></column>");
@@ -1945,6 +2714,42 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(
 			"<column><column-name>productionPlantProdEquipmentsNote</column-name><column-value><![CDATA[");
 		sb.append(getProductionPlantProdEquipmentsNote());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionIdentityFileName</column-name><column-value><![CDATA[");
+		sb.append(getProductionIdentityFileName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionIdentityFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getProductionIdentityFileEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>applicantCode</column-name><column-value><![CDATA[");
+		sb.append(getApplicantCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>supplierName</column-name><column-value><![CDATA[");
+		sb.append(getSupplierName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>supplierAddress</column-name><column-value><![CDATA[");
+		sb.append(getSupplierAddress());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>corporationCode</column-name><column-value><![CDATA[");
+		sb.append(getCorporationCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>corporationName</column-name><column-value><![CDATA[");
+		sb.append(getCorporationName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>corporationAddress</column-name><column-value><![CDATA[");
+		sb.append(getCorporationAddress());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>productionPlantMetadata</column-name><column-value><![CDATA[");
+		sb.append(getProductionPlantMetadata());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>registrationId</column-name><column-value><![CDATA[");
@@ -1961,10 +2766,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 		sb.append(
 			"<column><column-name>supplierId</column-name><column-value><![CDATA[");
 		sb.append(getSupplierId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>applicantCode</column-name><column-value><![CDATA[");
-		sb.append(getApplicantCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
@@ -2005,15 +2806,21 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	private String _originalProductionPlantName;
 	private String _productionPlantAddress;
 	private String _originalProductionPlantAddress;
+	private String _productionPlantRegion;
+	private String _productionPlantRegionCode;
 	private String _productionPlantStateCode;
 	private String _productionPlantStateName;
 	private String _productionPlantProvinceCode;
 	private String _productionPlantProvinceName;
 	private String _productionPlantDistrictCode;
 	private String _productionPlantDistrictName;
+	private String _productionPlantWardCode;
+	private String _productionPlantWardName;
 	private String _productionPlantEmail;
 	private String _productionPlantPhone;
 	private String _productionPlantFax;
+	private String _productionPlantWebsite;
+	private String _productionPlantRepresentativePhone;
 	private String _productionPlantRepresentative;
 	private String _originalProductionPlantRepresentative;
 	private String _productionPlantRepresentativeTitle;
@@ -2024,9 +2831,25 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	private String _originalProductionPlantType;
 	private String _productionPlantStatus;
 	private String _originalProductionPlantStatus;
+	private String _productionManufacture;
+	private String _productionMaintainer;
+	private String _productionPlantIdentityNo;
+	private String _productionPlantIdentityType;
+	private String _productionPlantIdentityDescription;
+	private long _productionPlantIdentityFileEntryId;
 	private String _productionPlantEmployeesNote;
 	private String _productionPlantEquipmentsNote;
 	private String _productionPlantProdEquipmentsNote;
+	private String _productionIdentityFileName;
+	private long _productionIdentityFileEntryId;
+	private String _applicantCode;
+	private String _originalApplicantCode;
+	private String _supplierName;
+	private String _supplierAddress;
+	private String _corporationCode;
+	private String _corporationName;
+	private String _corporationAddress;
+	private String _productionPlantMetadata;
 	private long _registrationId;
 	private long _originalRegistrationId;
 	private boolean _setOriginalRegistrationId;
@@ -2037,8 +2860,6 @@ public class VRProductionPlantModelImpl extends BaseModelImpl<VRProductionPlant>
 	private long _originalApplicantProfileId;
 	private boolean _setOriginalApplicantProfileId;
 	private long _supplierId;
-	private String _applicantCode;
-	private String _originalApplicantCode;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

@@ -46,19 +46,29 @@ public class VRApplicantProfileSoap implements Serializable {
 		soapModel.setApplicantPhone(model.getApplicantPhone());
 		soapModel.setApplicantEmail(model.getApplicantEmail());
 		soapModel.setApplicantFax(model.getApplicantFax());
+		soapModel.setApplicantWebsite(model.getApplicantWebsite());
+		soapModel.setApplicantRepresentativePhone(model.getApplicantRepresentativePhone());
 		soapModel.setApplicantRepresentative(model.getApplicantRepresentative());
 		soapModel.setApplicantRepresentativeTitle(model.getApplicantRepresentativeTitle());
 		soapModel.setApplicantContactName(model.getApplicantContactName());
 		soapModel.setApplicantContactEmail(model.getApplicantContactEmail());
 		soapModel.setApplicantContactPhone(model.getApplicantContactPhone());
 		soapModel.setApplicantNationality(model.getApplicantNationality());
+		soapModel.setApplicantNationalityCode(model.getApplicantNationalityCode());
 		soapModel.setApplicantRegion(model.getApplicantRegion());
+		soapModel.setApplicantRegionCode(model.getApplicantRegionCode());
 		soapModel.setApplicantCity(model.getApplicantCity());
+		soapModel.setApplicantCityCode(model.getApplicantCityCode());
+		soapModel.setApplicantDistrictCode(model.getApplicantDistrictCode());
+		soapModel.setApplicantDistrictName(model.getApplicantDistrictName());
+		soapModel.setApplicantWardCode(model.getApplicantWardCode());
+		soapModel.setApplicantWardName(model.getApplicantWardName());
 		soapModel.setMarkupCorporation(model.getMarkupCorporation());
 		soapModel.setCorporationId(model.getCorporationId());
 		soapModel.setMarkupDesigner(model.getMarkupDesigner());
 		soapModel.setMarkupOverseasManufacturer(model.getMarkupOverseasManufacturer());
 		soapModel.setMarkupDomesticsManufacturer(model.getMarkupDomesticsManufacturer());
+		soapModel.setMarkupMaintainer(model.getMarkupMaintainer());
 		soapModel.setMarkupImporter(model.getMarkupImporter());
 		soapModel.setMarkupComponentXCG(model.getMarkupComponentXCG());
 		soapModel.setMarkupComponentXMY(model.getMarkupComponentXMY());
@@ -82,6 +92,12 @@ public class VRApplicantProfileSoap implements Serializable {
 		soapModel.setApplicantCeremonyDate(model.getApplicantCeremonyDate());
 		soapModel.setApplicantOperationPeriod(model.getApplicantOperationPeriod());
 		soapModel.setApplicantBusinessType(model.getApplicantBusinessType());
+		soapModel.setApplicantIdentityType(model.getApplicantIdentityType());
+		soapModel.setApplicantIdentityDescription(model.getApplicantIdentityDescription());
+		soapModel.setApplicantIdentityFileName(model.getApplicantIdentityFileName());
+		soapModel.setApplicantIdentityFileEntryId(model.getApplicantIdentityFileEntryId());
+		soapModel.setApplicantXcgFileName(model.getApplicantXcgFileName());
+		soapModel.setApplicantXcgFileEntryId(model.getApplicantXcgFileEntryId());
 		soapModel.setApplicantMetadata(model.getApplicantMetadata());
 		soapModel.setApplicantStatus(model.getApplicantStatus());
 		soapModel.setModifyDate(model.getModifyDate());
@@ -245,6 +261,23 @@ public class VRApplicantProfileSoap implements Serializable {
 		_applicantFax = applicantFax;
 	}
 
+	public String getApplicantWebsite() {
+		return _applicantWebsite;
+	}
+
+	public void setApplicantWebsite(String applicantWebsite) {
+		_applicantWebsite = applicantWebsite;
+	}
+
+	public String getApplicantRepresentativePhone() {
+		return _applicantRepresentativePhone;
+	}
+
+	public void setApplicantRepresentativePhone(
+		String applicantRepresentativePhone) {
+		_applicantRepresentativePhone = applicantRepresentativePhone;
+	}
+
 	public String getApplicantRepresentative() {
 		return _applicantRepresentative;
 	}
@@ -294,6 +327,14 @@ public class VRApplicantProfileSoap implements Serializable {
 		_applicantNationality = applicantNationality;
 	}
 
+	public String getApplicantNationalityCode() {
+		return _applicantNationalityCode;
+	}
+
+	public void setApplicantNationalityCode(String applicantNationalityCode) {
+		_applicantNationalityCode = applicantNationalityCode;
+	}
+
 	public String getApplicantRegion() {
 		return _applicantRegion;
 	}
@@ -302,12 +343,60 @@ public class VRApplicantProfileSoap implements Serializable {
 		_applicantRegion = applicantRegion;
 	}
 
+	public String getApplicantRegionCode() {
+		return _applicantRegionCode;
+	}
+
+	public void setApplicantRegionCode(String applicantRegionCode) {
+		_applicantRegionCode = applicantRegionCode;
+	}
+
 	public String getApplicantCity() {
 		return _applicantCity;
 	}
 
 	public void setApplicantCity(String applicantCity) {
 		_applicantCity = applicantCity;
+	}
+
+	public String getApplicantCityCode() {
+		return _applicantCityCode;
+	}
+
+	public void setApplicantCityCode(String applicantCityCode) {
+		_applicantCityCode = applicantCityCode;
+	}
+
+	public String getApplicantDistrictCode() {
+		return _applicantDistrictCode;
+	}
+
+	public void setApplicantDistrictCode(String applicantDistrictCode) {
+		_applicantDistrictCode = applicantDistrictCode;
+	}
+
+	public String getApplicantDistrictName() {
+		return _applicantDistrictName;
+	}
+
+	public void setApplicantDistrictName(String applicantDistrictName) {
+		_applicantDistrictName = applicantDistrictName;
+	}
+
+	public String getApplicantWardCode() {
+		return _applicantWardCode;
+	}
+
+	public void setApplicantWardCode(String applicantWardCode) {
+		_applicantWardCode = applicantWardCode;
+	}
+
+	public String getApplicantWardName() {
+		return _applicantWardName;
+	}
+
+	public void setApplicantWardName(String applicantWardName) {
+		_applicantWardName = applicantWardName;
 	}
 
 	public String getMarkupCorporation() {
@@ -349,6 +438,14 @@ public class VRApplicantProfileSoap implements Serializable {
 	public void setMarkupDomesticsManufacturer(
 		String markupDomesticsManufacturer) {
 		_markupDomesticsManufacturer = markupDomesticsManufacturer;
+	}
+
+	public String getMarkupMaintainer() {
+		return _markupMaintainer;
+	}
+
+	public void setMarkupMaintainer(String markupMaintainer) {
+		_markupMaintainer = markupMaintainer;
 	}
 
 	public String getMarkupImporter() {
@@ -535,6 +632,56 @@ public class VRApplicantProfileSoap implements Serializable {
 		_applicantBusinessType = applicantBusinessType;
 	}
 
+	public String getApplicantIdentityType() {
+		return _applicantIdentityType;
+	}
+
+	public void setApplicantIdentityType(String applicantIdentityType) {
+		_applicantIdentityType = applicantIdentityType;
+	}
+
+	public String getApplicantIdentityDescription() {
+		return _applicantIdentityDescription;
+	}
+
+	public void setApplicantIdentityDescription(
+		String applicantIdentityDescription) {
+		_applicantIdentityDescription = applicantIdentityDescription;
+	}
+
+	public String getApplicantIdentityFileName() {
+		return _applicantIdentityFileName;
+	}
+
+	public void setApplicantIdentityFileName(String applicantIdentityFileName) {
+		_applicantIdentityFileName = applicantIdentityFileName;
+	}
+
+	public long getApplicantIdentityFileEntryId() {
+		return _applicantIdentityFileEntryId;
+	}
+
+	public void setApplicantIdentityFileEntryId(
+		long applicantIdentityFileEntryId) {
+		_applicantIdentityFileEntryId = applicantIdentityFileEntryId;
+	}
+
+	public String getApplicantXcgFileName() {
+		return _applicantXcgFileName;
+	}
+
+	public void setApplicantXcgFileName(String applicantXcgFileName) {
+		_applicantXcgFileName = applicantXcgFileName;
+	}
+
+	public long getApplicantXcgFileEntryId() {
+		return _applicantXcgFileEntryId;
+	}
+
+	public void setApplicantXcgFileEntryId(long applicantXcgFileEntryId) {
+		_applicantXcgFileEntryId = applicantXcgFileEntryId;
+	}
+
 	public String getApplicantMetadata() {
 		return _applicantMetadata;
 	}
@@ -580,19 +727,29 @@ public class VRApplicantProfileSoap implements Serializable {
 	private String _applicantPhone;
 	private String _applicantEmail;
 	private String _applicantFax;
+	private String _applicantWebsite;
+	private String _applicantRepresentativePhone;
 	private String _applicantRepresentative;
 	private String _applicantRepresentativeTitle;
 	private String _applicantContactName;
 	private String _applicantContactEmail;
 	private String _applicantContactPhone;
 	private String _applicantNationality;
+	private String _applicantNationalityCode;
 	private String _applicantRegion;
+	private String _applicantRegionCode;
 	private String _applicantCity;
+	private String _applicantCityCode;
+	private String _applicantDistrictCode;
+	private String _applicantDistrictName;
+	private String _applicantWardCode;
+	private String _applicantWardName;
 	private String _markupCorporation;
 	private String _corporationId;
 	private String _markupDesigner;
 	private String _markupOverseasManufacturer;
 	private String _markupDomesticsManufacturer;
+	private String _markupMaintainer;
 	private String _markupImporter;
 	private String _markupComponentXCG;
 	private String _markupComponentXMY;
@@ -616,6 +773,12 @@ public class VRApplicantProfileSoap implements Serializable {
 	private String _applicantCeremonyDate;
 	private String _applicantOperationPeriod;
 	private String _applicantBusinessType;
+	private String _applicantIdentityType;
+	private String _applicantIdentityDescription;
+	private String _applicantIdentityFileName;
+	private long _applicantIdentityFileEntryId;
+	private String _applicantXcgFileName;
+	private long _applicantXcgFileEntryId;
 	private String _applicantMetadata;
 	private String _applicantStatus;
 	private Date _modifyDate;

@@ -66,7 +66,7 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(107);
+		StringBundler sb = new StringBundler(139);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -94,6 +94,10 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 		sb.append(applicantEmail);
 		sb.append(", applicantFax=");
 		sb.append(applicantFax);
+		sb.append(", applicantWebsite=");
+		sb.append(applicantWebsite);
+		sb.append(", applicantRepresentativePhone=");
+		sb.append(applicantRepresentativePhone);
 		sb.append(", applicantRepresentative=");
 		sb.append(applicantRepresentative);
 		sb.append(", applicantRepresentativeTitle=");
@@ -106,10 +110,24 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 		sb.append(applicantContactPhone);
 		sb.append(", applicantNationality=");
 		sb.append(applicantNationality);
+		sb.append(", applicantNationalityCode=");
+		sb.append(applicantNationalityCode);
 		sb.append(", applicantRegion=");
 		sb.append(applicantRegion);
+		sb.append(", applicantRegionCode=");
+		sb.append(applicantRegionCode);
 		sb.append(", applicantCity=");
 		sb.append(applicantCity);
+		sb.append(", applicantCityCode=");
+		sb.append(applicantCityCode);
+		sb.append(", applicantDistrictCode=");
+		sb.append(applicantDistrictCode);
+		sb.append(", applicantDistrictName=");
+		sb.append(applicantDistrictName);
+		sb.append(", applicantWardCode=");
+		sb.append(applicantWardCode);
+		sb.append(", applicantWardName=");
+		sb.append(applicantWardName);
 		sb.append(", markupCorporation=");
 		sb.append(markupCorporation);
 		sb.append(", corporationId=");
@@ -120,6 +138,8 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 		sb.append(markupOverseasManufacturer);
 		sb.append(", markupDomesticsManufacturer=");
 		sb.append(markupDomesticsManufacturer);
+		sb.append(", markupMaintainer=");
+		sb.append(markupMaintainer);
 		sb.append(", markupImporter=");
 		sb.append(markupImporter);
 		sb.append(", markupComponentXCG=");
@@ -166,6 +186,18 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 		sb.append(applicantOperationPeriod);
 		sb.append(", applicantBusinessType=");
 		sb.append(applicantBusinessType);
+		sb.append(", applicantIdentityType=");
+		sb.append(applicantIdentityType);
+		sb.append(", applicantIdentityDescription=");
+		sb.append(applicantIdentityDescription);
+		sb.append(", applicantIdentityFileName=");
+		sb.append(applicantIdentityFileName);
+		sb.append(", applicantIdentityFileEntryId=");
+		sb.append(applicantIdentityFileEntryId);
+		sb.append(", applicantXcgFileName=");
+		sb.append(applicantXcgFileName);
+		sb.append(", applicantXcgFileEntryId=");
+		sb.append(applicantXcgFileEntryId);
 		sb.append(", applicantMetadata=");
 		sb.append(applicantMetadata);
 		sb.append(", applicantStatus=");
@@ -263,6 +295,20 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 			vrApplicantProfileImpl.setApplicantFax(applicantFax);
 		}
 
+		if (applicantWebsite == null) {
+			vrApplicantProfileImpl.setApplicantWebsite(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantWebsite(applicantWebsite);
+		}
+
+		if (applicantRepresentativePhone == null) {
+			vrApplicantProfileImpl.setApplicantRepresentativePhone(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantRepresentativePhone(applicantRepresentativePhone);
+		}
+
 		if (applicantRepresentative == null) {
 			vrApplicantProfileImpl.setApplicantRepresentative(StringPool.BLANK);
 		}
@@ -305,6 +351,13 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 			vrApplicantProfileImpl.setApplicantNationality(applicantNationality);
 		}
 
+		if (applicantNationalityCode == null) {
+			vrApplicantProfileImpl.setApplicantNationalityCode(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantNationalityCode(applicantNationalityCode);
+		}
+
 		if (applicantRegion == null) {
 			vrApplicantProfileImpl.setApplicantRegion(StringPool.BLANK);
 		}
@@ -312,11 +365,53 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 			vrApplicantProfileImpl.setApplicantRegion(applicantRegion);
 		}
 
+		if (applicantRegionCode == null) {
+			vrApplicantProfileImpl.setApplicantRegionCode(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantRegionCode(applicantRegionCode);
+		}
+
 		if (applicantCity == null) {
 			vrApplicantProfileImpl.setApplicantCity(StringPool.BLANK);
 		}
 		else {
 			vrApplicantProfileImpl.setApplicantCity(applicantCity);
+		}
+
+		if (applicantCityCode == null) {
+			vrApplicantProfileImpl.setApplicantCityCode(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantCityCode(applicantCityCode);
+		}
+
+		if (applicantDistrictCode == null) {
+			vrApplicantProfileImpl.setApplicantDistrictCode(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantDistrictCode(applicantDistrictCode);
+		}
+
+		if (applicantDistrictName == null) {
+			vrApplicantProfileImpl.setApplicantDistrictName(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantDistrictName(applicantDistrictName);
+		}
+
+		if (applicantWardCode == null) {
+			vrApplicantProfileImpl.setApplicantWardCode(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantWardCode(applicantWardCode);
+		}
+
+		if (applicantWardName == null) {
+			vrApplicantProfileImpl.setApplicantWardName(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantWardName(applicantWardName);
 		}
 
 		if (markupCorporation == null) {
@@ -352,6 +447,13 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 		}
 		else {
 			vrApplicantProfileImpl.setMarkupDomesticsManufacturer(markupDomesticsManufacturer);
+		}
+
+		if (markupMaintainer == null) {
+			vrApplicantProfileImpl.setMarkupMaintainer(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setMarkupMaintainer(markupMaintainer);
 		}
 
 		if (markupImporter == null) {
@@ -515,6 +617,38 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 			vrApplicantProfileImpl.setApplicantBusinessType(applicantBusinessType);
 		}
 
+		if (applicantIdentityType == null) {
+			vrApplicantProfileImpl.setApplicantIdentityType(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantIdentityType(applicantIdentityType);
+		}
+
+		if (applicantIdentityDescription == null) {
+			vrApplicantProfileImpl.setApplicantIdentityDescription(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantIdentityDescription(applicantIdentityDescription);
+		}
+
+		if (applicantIdentityFileName == null) {
+			vrApplicantProfileImpl.setApplicantIdentityFileName(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantIdentityFileName(applicantIdentityFileName);
+		}
+
+		vrApplicantProfileImpl.setApplicantIdentityFileEntryId(applicantIdentityFileEntryId);
+
+		if (applicantXcgFileName == null) {
+			vrApplicantProfileImpl.setApplicantXcgFileName(StringPool.BLANK);
+		}
+		else {
+			vrApplicantProfileImpl.setApplicantXcgFileName(applicantXcgFileName);
+		}
+
+		vrApplicantProfileImpl.setApplicantXcgFileEntryId(applicantXcgFileEntryId);
+
 		if (applicantMetadata == null) {
 			vrApplicantProfileImpl.setApplicantMetadata(StringPool.BLANK);
 		}
@@ -564,19 +698,29 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 		applicantPhone = objectInput.readUTF();
 		applicantEmail = objectInput.readUTF();
 		applicantFax = objectInput.readUTF();
+		applicantWebsite = objectInput.readUTF();
+		applicantRepresentativePhone = objectInput.readUTF();
 		applicantRepresentative = objectInput.readUTF();
 		applicantRepresentativeTitle = objectInput.readUTF();
 		applicantContactName = objectInput.readUTF();
 		applicantContactEmail = objectInput.readUTF();
 		applicantContactPhone = objectInput.readUTF();
 		applicantNationality = objectInput.readUTF();
+		applicantNationalityCode = objectInput.readUTF();
 		applicantRegion = objectInput.readUTF();
+		applicantRegionCode = objectInput.readUTF();
 		applicantCity = objectInput.readUTF();
+		applicantCityCode = objectInput.readUTF();
+		applicantDistrictCode = objectInput.readUTF();
+		applicantDistrictName = objectInput.readUTF();
+		applicantWardCode = objectInput.readUTF();
+		applicantWardName = objectInput.readUTF();
 		markupCorporation = objectInput.readUTF();
 		corporationId = objectInput.readUTF();
 		markupDesigner = objectInput.readUTF();
 		markupOverseasManufacturer = objectInput.readUTF();
 		markupDomesticsManufacturer = objectInput.readUTF();
+		markupMaintainer = objectInput.readUTF();
 		markupImporter = objectInput.readUTF();
 		markupComponentXCG = objectInput.readUTF();
 		markupComponentXMY = objectInput.readUTF();
@@ -600,6 +744,14 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 		applicantCeremonyDate = objectInput.readUTF();
 		applicantOperationPeriod = objectInput.readUTF();
 		applicantBusinessType = objectInput.readUTF();
+		applicantIdentityType = objectInput.readUTF();
+		applicantIdentityDescription = objectInput.readUTF();
+		applicantIdentityFileName = objectInput.readUTF();
+
+		applicantIdentityFileEntryId = objectInput.readLong();
+		applicantXcgFileName = objectInput.readUTF();
+
+		applicantXcgFileEntryId = objectInput.readLong();
 		applicantMetadata = objectInput.readUTF();
 		applicantStatus = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
@@ -690,6 +842,20 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 			objectOutput.writeUTF(applicantFax);
 		}
 
+		if (applicantWebsite == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantWebsite);
+		}
+
+		if (applicantRepresentativePhone == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantRepresentativePhone);
+		}
+
 		if (applicantRepresentative == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -732,6 +898,13 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 			objectOutput.writeUTF(applicantNationality);
 		}
 
+		if (applicantNationalityCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantNationalityCode);
+		}
+
 		if (applicantRegion == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -739,11 +912,53 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 			objectOutput.writeUTF(applicantRegion);
 		}
 
+		if (applicantRegionCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantRegionCode);
+		}
+
 		if (applicantCity == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(applicantCity);
+		}
+
+		if (applicantCityCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantCityCode);
+		}
+
+		if (applicantDistrictCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantDistrictCode);
+		}
+
+		if (applicantDistrictName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantDistrictName);
+		}
+
+		if (applicantWardCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantWardCode);
+		}
+
+		if (applicantWardName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantWardName);
 		}
 
 		if (markupCorporation == null) {
@@ -779,6 +994,13 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 		}
 		else {
 			objectOutput.writeUTF(markupDomesticsManufacturer);
+		}
+
+		if (markupMaintainer == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(markupMaintainer);
 		}
 
 		if (markupImporter == null) {
@@ -942,6 +1164,38 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 			objectOutput.writeUTF(applicantBusinessType);
 		}
 
+		if (applicantIdentityType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantIdentityType);
+		}
+
+		if (applicantIdentityDescription == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantIdentityDescription);
+		}
+
+		if (applicantIdentityFileName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantIdentityFileName);
+		}
+
+		objectOutput.writeLong(applicantIdentityFileEntryId);
+
+		if (applicantXcgFileName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(applicantXcgFileName);
+		}
+
+		objectOutput.writeLong(applicantXcgFileEntryId);
+
 		if (applicantMetadata == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -973,19 +1227,29 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 	public String applicantPhone;
 	public String applicantEmail;
 	public String applicantFax;
+	public String applicantWebsite;
+	public String applicantRepresentativePhone;
 	public String applicantRepresentative;
 	public String applicantRepresentativeTitle;
 	public String applicantContactName;
 	public String applicantContactEmail;
 	public String applicantContactPhone;
 	public String applicantNationality;
+	public String applicantNationalityCode;
 	public String applicantRegion;
+	public String applicantRegionCode;
 	public String applicantCity;
+	public String applicantCityCode;
+	public String applicantDistrictCode;
+	public String applicantDistrictName;
+	public String applicantWardCode;
+	public String applicantWardName;
 	public String markupCorporation;
 	public String corporationId;
 	public String markupDesigner;
 	public String markupOverseasManufacturer;
 	public String markupDomesticsManufacturer;
+	public String markupMaintainer;
 	public String markupImporter;
 	public String markupComponentXCG;
 	public String markupComponentXMY;
@@ -1009,6 +1273,12 @@ public class VRApplicantProfileCacheModel implements CacheModel<VRApplicantProfi
 	public String applicantCeremonyDate;
 	public String applicantOperationPeriod;
 	public String applicantBusinessType;
+	public String applicantIdentityType;
+	public String applicantIdentityDescription;
+	public String applicantIdentityFileName;
+	public long applicantIdentityFileEntryId;
+	public String applicantXcgFileName;
+	public long applicantXcgFileEntryId;
 	public String applicantMetadata;
 	public String applicantStatus;
 	public long modifyDate;

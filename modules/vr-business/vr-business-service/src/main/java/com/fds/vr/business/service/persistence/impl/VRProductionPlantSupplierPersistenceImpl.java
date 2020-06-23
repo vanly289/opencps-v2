@@ -1535,6 +1535,12 @@ public class VRProductionPlantSupplierPersistenceImpl
 		vrProductionPlantSupplierImpl.setProductionPlantCode(vrProductionPlantSupplier.getProductionPlantCode());
 		vrProductionPlantSupplierImpl.setModifyDate(vrProductionPlantSupplier.getModifyDate());
 		vrProductionPlantSupplierImpl.setSyncDate(vrProductionPlantSupplier.getSyncDate());
+		vrProductionPlantSupplierImpl.setProductionPlantId(vrProductionPlantSupplier.getProductionPlantId());
+		vrProductionPlantSupplierImpl.setApplicantProfileId(vrProductionPlantSupplier.getApplicantProfileId());
+		vrProductionPlantSupplierImpl.setApplicantCode(vrProductionPlantSupplier.getApplicantCode());
+		vrProductionPlantSupplierImpl.setSupplierId(vrProductionPlantSupplier.getSupplierId());
+		vrProductionPlantSupplierImpl.setSupplierName(vrProductionPlantSupplier.getSupplierName());
+		vrProductionPlantSupplierImpl.setSupplierAddress(vrProductionPlantSupplier.getSupplierAddress());
 
 		return vrProductionPlantSupplierImpl;
 	}

@@ -50,6 +50,8 @@ import com.fds.vr.business.service.persistence.VRCorporationViewPersistence;
 import com.fds.vr.business.service.persistence.VRDossierFilePersistence;
 import com.fds.vr.business.service.persistence.VRDossierPersistence;
 import com.fds.vr.business.service.persistence.VRESPersistence;
+import com.fds.vr.business.service.persistence.VRHistoryProfileFinder;
+import com.fds.vr.business.service.persistence.VRHistoryProfilePersistence;
 import com.fds.vr.business.service.persistence.VRInputSheetFinder;
 import com.fds.vr.business.service.persistence.VRInputSheetPersistence;
 import com.fds.vr.business.service.persistence.VRInputStampbookDetailsFinder;
@@ -110,6 +112,7 @@ import com.fds.vr.business.service.persistence.VRTechnicalSpec_XMYPart2Persisten
 import com.fds.vr.business.service.persistence.VRTechnicalSpec_XMYPart3Persistence;
 import com.fds.vr.business.service.persistence.VRTechnicalSpec_XMYPersistence;
 import com.fds.vr.business.service.persistence.VRTemplateNoPersistence;
+import com.fds.vr.business.service.persistence.VRTrackchangesPersistence;
 import com.fds.vr.business.service.persistence.VRVehicleEquipmentFinder;
 import com.fds.vr.business.service.persistence.VRVehicleEquipmentPersistence;
 import com.fds.vr.business.service.persistence.VRVehicleRecordFinder;
@@ -1514,6 +1517,63 @@ public abstract class VRDossierFileLocalServiceBaseImpl
 	 */
 	public void setVRESPersistence(VRESPersistence vresPersistence) {
 		this.vresPersistence = vresPersistence;
+	}
+
+	/**
+	 * Returns the vr history profile local service.
+	 *
+	 * @return the vr history profile local service
+	 */
+	public com.fds.vr.business.service.VRHistoryProfileLocalService getVRHistoryProfileLocalService() {
+		return vrHistoryProfileLocalService;
+	}
+
+	/**
+	 * Sets the vr history profile local service.
+	 *
+	 * @param vrHistoryProfileLocalService the vr history profile local service
+	 */
+	public void setVRHistoryProfileLocalService(
+		com.fds.vr.business.service.VRHistoryProfileLocalService vrHistoryProfileLocalService) {
+		this.vrHistoryProfileLocalService = vrHistoryProfileLocalService;
+	}
+
+	/**
+	 * Returns the vr history profile persistence.
+	 *
+	 * @return the vr history profile persistence
+	 */
+	public VRHistoryProfilePersistence getVRHistoryProfilePersistence() {
+		return vrHistoryProfilePersistence;
+	}
+
+	/**
+	 * Sets the vr history profile persistence.
+	 *
+	 * @param vrHistoryProfilePersistence the vr history profile persistence
+	 */
+	public void setVRHistoryProfilePersistence(
+		VRHistoryProfilePersistence vrHistoryProfilePersistence) {
+		this.vrHistoryProfilePersistence = vrHistoryProfilePersistence;
+	}
+
+	/**
+	 * Returns the vr history profile finder.
+	 *
+	 * @return the vr history profile finder
+	 */
+	public VRHistoryProfileFinder getVRHistoryProfileFinder() {
+		return vrHistoryProfileFinder;
+	}
+
+	/**
+	 * Sets the vr history profile finder.
+	 *
+	 * @param vrHistoryProfileFinder the vr history profile finder
+	 */
+	public void setVRHistoryProfileFinder(
+		VRHistoryProfileFinder vrHistoryProfileFinder) {
+		this.vrHistoryProfileFinder = vrHistoryProfileFinder;
 	}
 
 	/**
@@ -3468,6 +3528,44 @@ public abstract class VRDossierFileLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the vr trackchanges local service.
+	 *
+	 * @return the vr trackchanges local service
+	 */
+	public com.fds.vr.business.service.VRTrackchangesLocalService getVRTrackchangesLocalService() {
+		return vrTrackchangesLocalService;
+	}
+
+	/**
+	 * Sets the vr trackchanges local service.
+	 *
+	 * @param vrTrackchangesLocalService the vr trackchanges local service
+	 */
+	public void setVRTrackchangesLocalService(
+		com.fds.vr.business.service.VRTrackchangesLocalService vrTrackchangesLocalService) {
+		this.vrTrackchangesLocalService = vrTrackchangesLocalService;
+	}
+
+	/**
+	 * Returns the vr trackchanges persistence.
+	 *
+	 * @return the vr trackchanges persistence
+	 */
+	public VRTrackchangesPersistence getVRTrackchangesPersistence() {
+		return vrTrackchangesPersistence;
+	}
+
+	/**
+	 * Sets the vr trackchanges persistence.
+	 *
+	 * @param vrTrackchangesPersistence the vr trackchanges persistence
+	 */
+	public void setVRTrackchangesPersistence(
+		VRTrackchangesPersistence vrTrackchangesPersistence) {
+		this.vrTrackchangesPersistence = vrTrackchangesPersistence;
+	}
+
+	/**
 	 * Returns the vr vehicle equipment local service.
 	 *
 	 * @return the vr vehicle equipment local service
@@ -3964,6 +4062,12 @@ public abstract class VRDossierFileLocalServiceBaseImpl
 	protected com.fds.vr.business.service.VRESLocalService vresLocalService;
 	@BeanReference(type = VRESPersistence.class)
 	protected VRESPersistence vresPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRHistoryProfileLocalService.class)
+	protected com.fds.vr.business.service.VRHistoryProfileLocalService vrHistoryProfileLocalService;
+	@BeanReference(type = VRHistoryProfilePersistence.class)
+	protected VRHistoryProfilePersistence vrHistoryProfilePersistence;
+	@BeanReference(type = VRHistoryProfileFinder.class)
+	protected VRHistoryProfileFinder vrHistoryProfileFinder;
 	@BeanReference(type = com.fds.vr.business.service.VRInputSheetLocalService.class)
 	protected com.fds.vr.business.service.VRInputSheetLocalService vrInputSheetLocalService;
 	@BeanReference(type = VRInputSheetPersistence.class)
@@ -4170,6 +4274,10 @@ public abstract class VRDossierFileLocalServiceBaseImpl
 	protected com.fds.vr.business.service.VRTemplateNoLocalService vrTemplateNoLocalService;
 	@BeanReference(type = VRTemplateNoPersistence.class)
 	protected VRTemplateNoPersistence vrTemplateNoPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRTrackchangesLocalService.class)
+	protected com.fds.vr.business.service.VRTrackchangesLocalService vrTrackchangesLocalService;
+	@BeanReference(type = VRTrackchangesPersistence.class)
+	protected VRTrackchangesPersistence vrTrackchangesPersistence;
 	@BeanReference(type = com.fds.vr.business.service.VRVehicleEquipmentLocalService.class)
 	protected com.fds.vr.business.service.VRVehicleEquipmentLocalService vrVehicleEquipmentLocalService;
 	@BeanReference(type = VRVehicleEquipmentPersistence.class)

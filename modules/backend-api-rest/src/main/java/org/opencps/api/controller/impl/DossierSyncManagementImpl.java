@@ -480,7 +480,6 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 		boolean hasResult = true;
 		DossierSync sync = DossierSyncLocalServiceUtil.getDossierSync(dossierSyncId);
 		int retry = sync.getRetry();
-		_log.debug("Dungnv: -----------> retry: " + retry);
 		//Retry sync duoi 5 lan
 		if(retry <= 5) {
 			if (isCreateDossier) {

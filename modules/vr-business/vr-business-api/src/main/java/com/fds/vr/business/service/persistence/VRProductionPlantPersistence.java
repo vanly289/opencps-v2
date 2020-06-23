@@ -504,6 +504,55 @@ public interface VRProductionPlantPersistence extends BasePersistence<VRProducti
 	public int countByapplicantCode(long mtCore, java.lang.String applicantCode);
 
 	/**
+	* Returns the vr production plant where productionPlantCode = &#63; or throws a {@link NoSuchVRProductionPlantException} if it could not be found.
+	*
+	* @param productionPlantCode the production plant code
+	* @return the matching vr production plant
+	* @throws NoSuchVRProductionPlantException if a matching vr production plant could not be found
+	*/
+	public VRProductionPlant findByF_ProductionPlantCode(
+		java.lang.String productionPlantCode)
+		throws NoSuchVRProductionPlantException;
+
+	/**
+	* Returns the vr production plant where productionPlantCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param productionPlantCode the production plant code
+	* @return the matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	*/
+	public VRProductionPlant fetchByF_ProductionPlantCode(
+		java.lang.String productionPlantCode);
+
+	/**
+	* Returns the vr production plant where productionPlantCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param productionPlantCode the production plant code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vr production plant, or <code>null</code> if a matching vr production plant could not be found
+	*/
+	public VRProductionPlant fetchByF_ProductionPlantCode(
+		java.lang.String productionPlantCode, boolean retrieveFromCache);
+
+	/**
+	* Removes the vr production plant where productionPlantCode = &#63; from the database.
+	*
+	* @param productionPlantCode the production plant code
+	* @return the vr production plant that was removed
+	*/
+	public VRProductionPlant removeByF_ProductionPlantCode(
+		java.lang.String productionPlantCode)
+		throws NoSuchVRProductionPlantException;
+
+	/**
+	* Returns the number of vr production plants where productionPlantCode = &#63;.
+	*
+	* @param productionPlantCode the production plant code
+	* @return the number of matching vr production plants
+	*/
+	public int countByF_ProductionPlantCode(
+		java.lang.String productionPlantCode);
+
+	/**
 	* Returns all the vr production plants where mtCore = &#63; and applicantProfileId = &#63; and productionPlantCode = &#63;.
 	*
 	* @param mtCore the mt core

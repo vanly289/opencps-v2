@@ -7,6 +7,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @author trungnt
@@ -22,4 +23,6 @@ public interface VRProductionClassificationAction {
 			LinkedHashMap<String, Object> params);
 
 	public JSONObject updateVRProductionClassification(VRProductionClassification object);
+
+	public List<VRProductionClassification> adminProcessData(JSONArray arrayData, String productionPlantCode);
 }

@@ -66,7 +66,7 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(119);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -94,6 +94,10 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		sb.append(productionPlantName);
 		sb.append(", productionPlantAddress=");
 		sb.append(productionPlantAddress);
+		sb.append(", productionPlantRegion=");
+		sb.append(productionPlantRegion);
+		sb.append(", productionPlantRegionCode=");
+		sb.append(productionPlantRegionCode);
 		sb.append(", productionPlantStateCode=");
 		sb.append(productionPlantStateCode);
 		sb.append(", productionPlantStateName=");
@@ -106,12 +110,20 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		sb.append(productionPlantDistrictCode);
 		sb.append(", productionPlantDistrictName=");
 		sb.append(productionPlantDistrictName);
+		sb.append(", productionPlantWardCode=");
+		sb.append(productionPlantWardCode);
+		sb.append(", productionPlantWardName=");
+		sb.append(productionPlantWardName);
 		sb.append(", productionPlantEmail=");
 		sb.append(productionPlantEmail);
 		sb.append(", productionPlantPhone=");
 		sb.append(productionPlantPhone);
 		sb.append(", productionPlantFax=");
 		sb.append(productionPlantFax);
+		sb.append(", productionPlantWebsite=");
+		sb.append(productionPlantWebsite);
+		sb.append(", productionPlantRepresentativePhone=");
+		sb.append(productionPlantRepresentativePhone);
 		sb.append(", productionPlantRepresentative=");
 		sb.append(productionPlantRepresentative);
 		sb.append(", productionPlantRepresentativeTitle=");
@@ -126,12 +138,42 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		sb.append(productionPlantType);
 		sb.append(", productionPlantStatus=");
 		sb.append(productionPlantStatus);
+		sb.append(", productionManufacture=");
+		sb.append(productionManufacture);
+		sb.append(", productionMaintainer=");
+		sb.append(productionMaintainer);
+		sb.append(", productionPlantIdentityNo=");
+		sb.append(productionPlantIdentityNo);
+		sb.append(", productionPlantIdentityType=");
+		sb.append(productionPlantIdentityType);
+		sb.append(", productionPlantIdentityDescription=");
+		sb.append(productionPlantIdentityDescription);
+		sb.append(", productionPlantIdentityFileEntryId=");
+		sb.append(productionPlantIdentityFileEntryId);
 		sb.append(", productionPlantEmployeesNote=");
 		sb.append(productionPlantEmployeesNote);
 		sb.append(", productionPlantEquipmentsNote=");
 		sb.append(productionPlantEquipmentsNote);
 		sb.append(", productionPlantProdEquipmentsNote=");
 		sb.append(productionPlantProdEquipmentsNote);
+		sb.append(", productionIdentityFileName=");
+		sb.append(productionIdentityFileName);
+		sb.append(", productionIdentityFileEntryId=");
+		sb.append(productionIdentityFileEntryId);
+		sb.append(", applicantCode=");
+		sb.append(applicantCode);
+		sb.append(", supplierName=");
+		sb.append(supplierName);
+		sb.append(", supplierAddress=");
+		sb.append(supplierAddress);
+		sb.append(", corporationCode=");
+		sb.append(corporationCode);
+		sb.append(", corporationName=");
+		sb.append(corporationName);
+		sb.append(", corporationAddress=");
+		sb.append(corporationAddress);
+		sb.append(", productionPlantMetadata=");
+		sb.append(productionPlantMetadata);
 		sb.append(", registrationId=");
 		sb.append(registrationId);
 		sb.append(", registrationFormId=");
@@ -140,8 +182,6 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		sb.append(applicantProfileId);
 		sb.append(", supplierId=");
 		sb.append(supplierId);
-		sb.append(", applicantCode=");
-		sb.append(applicantCode);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -235,6 +275,20 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			vrProductionPlantImpl.setProductionPlantAddress(productionPlantAddress);
 		}
 
+		if (productionPlantRegion == null) {
+			vrProductionPlantImpl.setProductionPlantRegion(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionPlantRegion(productionPlantRegion);
+		}
+
+		if (productionPlantRegionCode == null) {
+			vrProductionPlantImpl.setProductionPlantRegionCode(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionPlantRegionCode(productionPlantRegionCode);
+		}
+
 		if (productionPlantStateCode == null) {
 			vrProductionPlantImpl.setProductionPlantStateCode(StringPool.BLANK);
 		}
@@ -277,6 +331,20 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			vrProductionPlantImpl.setProductionPlantDistrictName(productionPlantDistrictName);
 		}
 
+		if (productionPlantWardCode == null) {
+			vrProductionPlantImpl.setProductionPlantWardCode(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionPlantWardCode(productionPlantWardCode);
+		}
+
+		if (productionPlantWardName == null) {
+			vrProductionPlantImpl.setProductionPlantWardName(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionPlantWardName(productionPlantWardName);
+		}
+
 		if (productionPlantEmail == null) {
 			vrProductionPlantImpl.setProductionPlantEmail(StringPool.BLANK);
 		}
@@ -296,6 +364,20 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		}
 		else {
 			vrProductionPlantImpl.setProductionPlantFax(productionPlantFax);
+		}
+
+		if (productionPlantWebsite == null) {
+			vrProductionPlantImpl.setProductionPlantWebsite(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionPlantWebsite(productionPlantWebsite);
+		}
+
+		if (productionPlantRepresentativePhone == null) {
+			vrProductionPlantImpl.setProductionPlantRepresentativePhone(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionPlantRepresentativePhone(productionPlantRepresentativePhone);
 		}
 
 		if (productionPlantRepresentative == null) {
@@ -347,6 +429,43 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			vrProductionPlantImpl.setProductionPlantStatus(productionPlantStatus);
 		}
 
+		if (productionManufacture == null) {
+			vrProductionPlantImpl.setProductionManufacture(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionManufacture(productionManufacture);
+		}
+
+		if (productionMaintainer == null) {
+			vrProductionPlantImpl.setProductionMaintainer(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionMaintainer(productionMaintainer);
+		}
+
+		if (productionPlantIdentityNo == null) {
+			vrProductionPlantImpl.setProductionPlantIdentityNo(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionPlantIdentityNo(productionPlantIdentityNo);
+		}
+
+		if (productionPlantIdentityType == null) {
+			vrProductionPlantImpl.setProductionPlantIdentityType(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionPlantIdentityType(productionPlantIdentityType);
+		}
+
+		if (productionPlantIdentityDescription == null) {
+			vrProductionPlantImpl.setProductionPlantIdentityDescription(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionPlantIdentityDescription(productionPlantIdentityDescription);
+		}
+
+		vrProductionPlantImpl.setProductionPlantIdentityFileEntryId(productionPlantIdentityFileEntryId);
+
 		if (productionPlantEmployeesNote == null) {
 			vrProductionPlantImpl.setProductionPlantEmployeesNote(StringPool.BLANK);
 		}
@@ -368,10 +487,14 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			vrProductionPlantImpl.setProductionPlantProdEquipmentsNote(productionPlantProdEquipmentsNote);
 		}
 
-		vrProductionPlantImpl.setRegistrationId(registrationId);
-		vrProductionPlantImpl.setRegistrationFormId(registrationFormId);
-		vrProductionPlantImpl.setApplicantProfileId(applicantProfileId);
-		vrProductionPlantImpl.setSupplierId(supplierId);
+		if (productionIdentityFileName == null) {
+			vrProductionPlantImpl.setProductionIdentityFileName(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionIdentityFileName(productionIdentityFileName);
+		}
+
+		vrProductionPlantImpl.setProductionIdentityFileEntryId(productionIdentityFileEntryId);
 
 		if (applicantCode == null) {
 			vrProductionPlantImpl.setApplicantCode(StringPool.BLANK);
@@ -379,6 +502,53 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		else {
 			vrProductionPlantImpl.setApplicantCode(applicantCode);
 		}
+
+		if (supplierName == null) {
+			vrProductionPlantImpl.setSupplierName(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setSupplierName(supplierName);
+		}
+
+		if (supplierAddress == null) {
+			vrProductionPlantImpl.setSupplierAddress(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setSupplierAddress(supplierAddress);
+		}
+
+		if (corporationCode == null) {
+			vrProductionPlantImpl.setCorporationCode(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setCorporationCode(corporationCode);
+		}
+
+		if (corporationName == null) {
+			vrProductionPlantImpl.setCorporationName(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setCorporationName(corporationName);
+		}
+
+		if (corporationAddress == null) {
+			vrProductionPlantImpl.setCorporationAddress(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setCorporationAddress(corporationAddress);
+		}
+
+		if (productionPlantMetadata == null) {
+			vrProductionPlantImpl.setProductionPlantMetadata(StringPool.BLANK);
+		}
+		else {
+			vrProductionPlantImpl.setProductionPlantMetadata(productionPlantMetadata);
+		}
+
+		vrProductionPlantImpl.setRegistrationId(registrationId);
+		vrProductionPlantImpl.setRegistrationFormId(registrationFormId);
+		vrProductionPlantImpl.setApplicantProfileId(applicantProfileId);
+		vrProductionPlantImpl.setSupplierId(supplierId);
 
 		if (modifyDate == Long.MIN_VALUE) {
 			vrProductionPlantImpl.setModifyDate(null);
@@ -415,15 +585,21 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		productionPlantCode = objectInput.readUTF();
 		productionPlantName = objectInput.readUTF();
 		productionPlantAddress = objectInput.readUTF();
+		productionPlantRegion = objectInput.readUTF();
+		productionPlantRegionCode = objectInput.readUTF();
 		productionPlantStateCode = objectInput.readUTF();
 		productionPlantStateName = objectInput.readUTF();
 		productionPlantProvinceCode = objectInput.readUTF();
 		productionPlantProvinceName = objectInput.readUTF();
 		productionPlantDistrictCode = objectInput.readUTF();
 		productionPlantDistrictName = objectInput.readUTF();
+		productionPlantWardCode = objectInput.readUTF();
+		productionPlantWardName = objectInput.readUTF();
 		productionPlantEmail = objectInput.readUTF();
 		productionPlantPhone = objectInput.readUTF();
 		productionPlantFax = objectInput.readUTF();
+		productionPlantWebsite = objectInput.readUTF();
+		productionPlantRepresentativePhone = objectInput.readUTF();
 		productionPlantRepresentative = objectInput.readUTF();
 		productionPlantRepresentativeTitle = objectInput.readUTF();
 		productionPlantContactName = objectInput.readUTF();
@@ -431,9 +607,26 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		productionPlantContactPhone = objectInput.readUTF();
 		productionPlantType = objectInput.readUTF();
 		productionPlantStatus = objectInput.readUTF();
+		productionManufacture = objectInput.readUTF();
+		productionMaintainer = objectInput.readUTF();
+		productionPlantIdentityNo = objectInput.readUTF();
+		productionPlantIdentityType = objectInput.readUTF();
+		productionPlantIdentityDescription = objectInput.readUTF();
+
+		productionPlantIdentityFileEntryId = objectInput.readLong();
 		productionPlantEmployeesNote = objectInput.readUTF();
 		productionPlantEquipmentsNote = objectInput.readUTF();
 		productionPlantProdEquipmentsNote = objectInput.readUTF();
+		productionIdentityFileName = objectInput.readUTF();
+
+		productionIdentityFileEntryId = objectInput.readLong();
+		applicantCode = objectInput.readUTF();
+		supplierName = objectInput.readUTF();
+		supplierAddress = objectInput.readUTF();
+		corporationCode = objectInput.readUTF();
+		corporationName = objectInput.readUTF();
+		corporationAddress = objectInput.readUTF();
+		productionPlantMetadata = objectInput.readUTF();
 
 		registrationId = objectInput.readLong();
 
@@ -442,7 +635,6 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		applicantProfileId = objectInput.readLong();
 
 		supplierId = objectInput.readLong();
-		applicantCode = objectInput.readUTF();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -531,6 +723,20 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			objectOutput.writeUTF(productionPlantAddress);
 		}
 
+		if (productionPlantRegion == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantRegion);
+		}
+
+		if (productionPlantRegionCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantRegionCode);
+		}
+
 		if (productionPlantStateCode == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -573,6 +779,20 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			objectOutput.writeUTF(productionPlantDistrictName);
 		}
 
+		if (productionPlantWardCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantWardCode);
+		}
+
+		if (productionPlantWardName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantWardName);
+		}
+
 		if (productionPlantEmail == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -592,6 +812,20 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 		}
 		else {
 			objectOutput.writeUTF(productionPlantFax);
+		}
+
+		if (productionPlantWebsite == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantWebsite);
+		}
+
+		if (productionPlantRepresentativePhone == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantRepresentativePhone);
 		}
 
 		if (productionPlantRepresentative == null) {
@@ -643,6 +877,43 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			objectOutput.writeUTF(productionPlantStatus);
 		}
 
+		if (productionManufacture == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionManufacture);
+		}
+
+		if (productionMaintainer == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionMaintainer);
+		}
+
+		if (productionPlantIdentityNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantIdentityNo);
+		}
+
+		if (productionPlantIdentityType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantIdentityType);
+		}
+
+		if (productionPlantIdentityDescription == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantIdentityDescription);
+		}
+
+		objectOutput.writeLong(productionPlantIdentityFileEntryId);
+
 		if (productionPlantEmployeesNote == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -664,13 +935,14 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			objectOutput.writeUTF(productionPlantProdEquipmentsNote);
 		}
 
-		objectOutput.writeLong(registrationId);
+		if (productionIdentityFileName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionIdentityFileName);
+		}
 
-		objectOutput.writeLong(registrationFormId);
-
-		objectOutput.writeLong(applicantProfileId);
-
-		objectOutput.writeLong(supplierId);
+		objectOutput.writeLong(productionIdentityFileEntryId);
 
 		if (applicantCode == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -679,6 +951,55 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 			objectOutput.writeUTF(applicantCode);
 		}
 
+		if (supplierName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(supplierName);
+		}
+
+		if (supplierAddress == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(supplierAddress);
+		}
+
+		if (corporationCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(corporationCode);
+		}
+
+		if (corporationName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(corporationName);
+		}
+
+		if (corporationAddress == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(corporationAddress);
+		}
+
+		if (productionPlantMetadata == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(productionPlantMetadata);
+		}
+
+		objectOutput.writeLong(registrationId);
+
+		objectOutput.writeLong(registrationFormId);
+
+		objectOutput.writeLong(applicantProfileId);
+
+		objectOutput.writeLong(supplierId);
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -696,15 +1017,21 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 	public String productionPlantCode;
 	public String productionPlantName;
 	public String productionPlantAddress;
+	public String productionPlantRegion;
+	public String productionPlantRegionCode;
 	public String productionPlantStateCode;
 	public String productionPlantStateName;
 	public String productionPlantProvinceCode;
 	public String productionPlantProvinceName;
 	public String productionPlantDistrictCode;
 	public String productionPlantDistrictName;
+	public String productionPlantWardCode;
+	public String productionPlantWardName;
 	public String productionPlantEmail;
 	public String productionPlantPhone;
 	public String productionPlantFax;
+	public String productionPlantWebsite;
+	public String productionPlantRepresentativePhone;
 	public String productionPlantRepresentative;
 	public String productionPlantRepresentativeTitle;
 	public String productionPlantContactName;
@@ -712,14 +1039,28 @@ public class VRProductionPlantCacheModel implements CacheModel<VRProductionPlant
 	public String productionPlantContactPhone;
 	public String productionPlantType;
 	public String productionPlantStatus;
+	public String productionManufacture;
+	public String productionMaintainer;
+	public String productionPlantIdentityNo;
+	public String productionPlantIdentityType;
+	public String productionPlantIdentityDescription;
+	public long productionPlantIdentityFileEntryId;
 	public String productionPlantEmployeesNote;
 	public String productionPlantEquipmentsNote;
 	public String productionPlantProdEquipmentsNote;
+	public String productionIdentityFileName;
+	public long productionIdentityFileEntryId;
+	public String applicantCode;
+	public String supplierName;
+	public String supplierAddress;
+	public String corporationCode;
+	public String corporationName;
+	public String corporationAddress;
+	public String productionPlantMetadata;
 	public long registrationId;
 	public long registrationFormId;
 	public long applicantProfileId;
 	public long supplierId;
-	public String applicantCode;
 	public long modifyDate;
 	public long syncDate;
 }

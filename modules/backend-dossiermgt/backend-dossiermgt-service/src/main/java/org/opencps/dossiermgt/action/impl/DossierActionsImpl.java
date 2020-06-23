@@ -1,5 +1,9 @@
 package org.opencps.dossiermgt.action.impl;
 
+import com.fds.vr.business.action.VRHistoryProfileAction;
+import com.fds.vr.business.action.VRTrackchangesAction;
+import com.fds.vr.business.action.impl.VRHistoryProfileActionImpl;
+import com.fds.vr.business.action.impl.VRTrackchangesActionImpl;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
@@ -803,8 +807,9 @@ public class DossierActionsImpl implements DossierActions {
 							data.put(ProcessActionTerm.AUTO_EVENT, autoEvent);
 							data.put(ProcessActionTerm.PRE_CONDITION, preCondition);
 							data.put("pending", pending);
-							//
-							results.put(data);
+							
+							//Comment by Dungnv
+							//results.put(data);
 							//
 							List<ProcessPlugin> pluginList = ProcessPluginLocalServiceUtil.getBySC_SPID_ARUN(serviceProcessId,
 									postStepCode, true);
@@ -821,6 +826,16 @@ public class DossierActionsImpl implements DossierActions {
 									}
 								}
 							}
+							//add by Dungnv
+							LinkedHashMap<String, Object> paramDetailNextActions = new LinkedHashMap<String, Object>();
+							paramDetailNextActions.put(Field.GROUP_ID, String.valueOf(groupId));
+							paramDetailNextActions.put(DossierTerm.DOSSIER_ID, String.valueOf(dossierId));
+							paramDetailNextActions.put(ProcessActionTerm.PROCESS_ACTION_ID, processActionId);
+							paramDetailNextActions.put(DossierActionTerm.ACTION_CODE, actionCode);
+
+							JSONObject createFiles = getDetailNextActions(userId, companyId, groupId, paramDetailNextActions, sorts, start, end, serviceContext);
+							data.put("createFiles", createFiles.getJSONArray("createFiles"));
+							results.put(data);
 						}
 					}
 					//
@@ -2341,7 +2356,7 @@ public class DossierActionsImpl implements DossierActions {
 
 		_log.info("@@@@@ START_DOAUTORUN: "
 				+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
-
+		
 		try {
 			// Dossier dossier = DossierLocalServiceUtil.getDossier(dossierId);
 
@@ -2352,12 +2367,12 @@ public class DossierActionsImpl implements DossierActions {
 					+ (System.currentTimeMillis() - now));
 
 			DossierPart dossierPart = DossierPartLocalServiceUtil.getByFileTemplateNo(groupId, fileTemplateNo);
-
+			
 			_log.info("- DOSSIER_PART	: "
 					+ (System.currentTimeMillis() - now));
 
 			String formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, context);
-
+			
 			_log.info("- FORM_DATA		: "
 					+ (System.currentTimeMillis() - now));
 
@@ -2376,6 +2391,26 @@ public class DossierActionsImpl implements DossierActions {
 
 			DossierFileActions actions = new DossierFileActionsImpl();
 			actions.updateDossierFileFormData(groupId, dossierId, dossierActionId, dossierFile.getReferenceUid(), formData, context);
+			
+			//Add by Dungnv - Add trackchanges and history
+			try {
+				String partNo = StringPool.BLANK;
+				partNo = dossierFile.getDossierPartNo();
+				if ("KQ1, KQ2, KQ4, TP1".contains(partNo)) {
+					VRTrackchangesAction trackchangesAction = new VRTrackchangesActionImpl();
+					VRHistoryProfileAction profileAction = new VRHistoryProfileActionImpl();
+					JSONObject jsonTrackchanges = trackchangesAction.findByDossierId(dossierFile.getDossierId(), context);
+					if (jsonTrackchanges!= null && jsonTrackchanges.length() > 0) {
+						trackchangesAction.updateVRTrackchanges(jsonTrackchanges.getLong("id"), null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, context);
+					} else {
+						trackchangesAction.updateVRTrackchanges(0L, null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, context);
+					}
+					profileAction.updateVRHistoryProfile(0L, null, null, dossierFile.getDossierId(), null, null, null, partNo, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, context);
+				}
+			}catch (Exception e) {
+				_log.error(e);
+			}
+			
 			//DossierFileLocalServiceUtil.updateFormDataPlugin(groupId, dossierId,
 			//		dossierFile.getReferenceUid(), formData, context);
 			_log.info("- UPDATE DSR_ACT		: "
@@ -3582,7 +3617,6 @@ public class DossierActionsImpl implements DossierActions {
 		} catch (Exception e) {
 			_log.error(e);
 		}
-
 		return result;
 	}
 

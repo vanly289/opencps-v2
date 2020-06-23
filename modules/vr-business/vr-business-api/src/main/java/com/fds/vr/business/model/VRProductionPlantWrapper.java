@@ -71,6 +71,9 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 		attributes.put("productionPlantCode", getProductionPlantCode());
 		attributes.put("productionPlantName", getProductionPlantName());
 		attributes.put("productionPlantAddress", getProductionPlantAddress());
+		attributes.put("productionPlantRegion", getProductionPlantRegion());
+		attributes.put("productionPlantRegionCode",
+			getProductionPlantRegionCode());
 		attributes.put("productionPlantStateCode", getProductionPlantStateCode());
 		attributes.put("productionPlantStateName", getProductionPlantStateName());
 		attributes.put("productionPlantProvinceCode",
@@ -81,9 +84,14 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 			getProductionPlantDistrictCode());
 		attributes.put("productionPlantDistrictName",
 			getProductionPlantDistrictName());
+		attributes.put("productionPlantWardCode", getProductionPlantWardCode());
+		attributes.put("productionPlantWardName", getProductionPlantWardName());
 		attributes.put("productionPlantEmail", getProductionPlantEmail());
 		attributes.put("productionPlantPhone", getProductionPlantPhone());
 		attributes.put("productionPlantFax", getProductionPlantFax());
+		attributes.put("productionPlantWebsite", getProductionPlantWebsite());
+		attributes.put("productionPlantRepresentativePhone",
+			getProductionPlantRepresentativePhone());
 		attributes.put("productionPlantRepresentative",
 			getProductionPlantRepresentative());
 		attributes.put("productionPlantRepresentativeTitle",
@@ -96,17 +104,37 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 			getProductionPlantContactPhone());
 		attributes.put("productionPlantType", getProductionPlantType());
 		attributes.put("productionPlantStatus", getProductionPlantStatus());
+		attributes.put("productionManufacture", getProductionManufacture());
+		attributes.put("productionMaintainer", getProductionMaintainer());
+		attributes.put("productionPlantIdentityNo",
+			getProductionPlantIdentityNo());
+		attributes.put("productionPlantIdentityType",
+			getProductionPlantIdentityType());
+		attributes.put("productionPlantIdentityDescription",
+			getProductionPlantIdentityDescription());
+		attributes.put("productionPlantIdentityFileEntryId",
+			getProductionPlantIdentityFileEntryId());
 		attributes.put("productionPlantEmployeesNote",
 			getProductionPlantEmployeesNote());
 		attributes.put("productionPlantEquipmentsNote",
 			getProductionPlantEquipmentsNote());
 		attributes.put("productionPlantProdEquipmentsNote",
 			getProductionPlantProdEquipmentsNote());
+		attributes.put("productionIdentityFileName",
+			getProductionIdentityFileName());
+		attributes.put("productionIdentityFileEntryId",
+			getProductionIdentityFileEntryId());
+		attributes.put("applicantCode", getApplicantCode());
+		attributes.put("supplierName", getSupplierName());
+		attributes.put("supplierAddress", getSupplierAddress());
+		attributes.put("corporationCode", getCorporationCode());
+		attributes.put("corporationName", getCorporationName());
+		attributes.put("corporationAddress", getCorporationAddress());
+		attributes.put("productionPlantMetadata", getProductionPlantMetadata());
 		attributes.put("registrationId", getRegistrationId());
 		attributes.put("registrationFormId", getRegistrationFormId());
 		attributes.put("applicantProfileId", getApplicantProfileId());
 		attributes.put("supplierId", getSupplierId());
-		attributes.put("applicantCode", getApplicantCode());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -198,6 +226,20 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 			setProductionPlantAddress(productionPlantAddress);
 		}
 
+		String productionPlantRegion = (String)attributes.get(
+				"productionPlantRegion");
+
+		if (productionPlantRegion != null) {
+			setProductionPlantRegion(productionPlantRegion);
+		}
+
+		String productionPlantRegionCode = (String)attributes.get(
+				"productionPlantRegionCode");
+
+		if (productionPlantRegionCode != null) {
+			setProductionPlantRegionCode(productionPlantRegionCode);
+		}
+
 		String productionPlantStateCode = (String)attributes.get(
 				"productionPlantStateCode");
 
@@ -240,6 +282,20 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 			setProductionPlantDistrictName(productionPlantDistrictName);
 		}
 
+		String productionPlantWardCode = (String)attributes.get(
+				"productionPlantWardCode");
+
+		if (productionPlantWardCode != null) {
+			setProductionPlantWardCode(productionPlantWardCode);
+		}
+
+		String productionPlantWardName = (String)attributes.get(
+				"productionPlantWardName");
+
+		if (productionPlantWardName != null) {
+			setProductionPlantWardName(productionPlantWardName);
+		}
+
 		String productionPlantEmail = (String)attributes.get(
 				"productionPlantEmail");
 
@@ -258,6 +314,20 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 
 		if (productionPlantFax != null) {
 			setProductionPlantFax(productionPlantFax);
+		}
+
+		String productionPlantWebsite = (String)attributes.get(
+				"productionPlantWebsite");
+
+		if (productionPlantWebsite != null) {
+			setProductionPlantWebsite(productionPlantWebsite);
+		}
+
+		String productionPlantRepresentativePhone = (String)attributes.get(
+				"productionPlantRepresentativePhone");
+
+		if (productionPlantRepresentativePhone != null) {
+			setProductionPlantRepresentativePhone(productionPlantRepresentativePhone);
 		}
 
 		String productionPlantRepresentative = (String)attributes.get(
@@ -309,6 +379,48 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 			setProductionPlantStatus(productionPlantStatus);
 		}
 
+		String productionManufacture = (String)attributes.get(
+				"productionManufacture");
+
+		if (productionManufacture != null) {
+			setProductionManufacture(productionManufacture);
+		}
+
+		String productionMaintainer = (String)attributes.get(
+				"productionMaintainer");
+
+		if (productionMaintainer != null) {
+			setProductionMaintainer(productionMaintainer);
+		}
+
+		String productionPlantIdentityNo = (String)attributes.get(
+				"productionPlantIdentityNo");
+
+		if (productionPlantIdentityNo != null) {
+			setProductionPlantIdentityNo(productionPlantIdentityNo);
+		}
+
+		String productionPlantIdentityType = (String)attributes.get(
+				"productionPlantIdentityType");
+
+		if (productionPlantIdentityType != null) {
+			setProductionPlantIdentityType(productionPlantIdentityType);
+		}
+
+		String productionPlantIdentityDescription = (String)attributes.get(
+				"productionPlantIdentityDescription");
+
+		if (productionPlantIdentityDescription != null) {
+			setProductionPlantIdentityDescription(productionPlantIdentityDescription);
+		}
+
+		Long productionPlantIdentityFileEntryId = (Long)attributes.get(
+				"productionPlantIdentityFileEntryId");
+
+		if (productionPlantIdentityFileEntryId != null) {
+			setProductionPlantIdentityFileEntryId(productionPlantIdentityFileEntryId);
+		}
+
 		String productionPlantEmployeesNote = (String)attributes.get(
 				"productionPlantEmployeesNote");
 
@@ -328,6 +440,63 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 
 		if (productionPlantProdEquipmentsNote != null) {
 			setProductionPlantProdEquipmentsNote(productionPlantProdEquipmentsNote);
+		}
+
+		String productionIdentityFileName = (String)attributes.get(
+				"productionIdentityFileName");
+
+		if (productionIdentityFileName != null) {
+			setProductionIdentityFileName(productionIdentityFileName);
+		}
+
+		Long productionIdentityFileEntryId = (Long)attributes.get(
+				"productionIdentityFileEntryId");
+
+		if (productionIdentityFileEntryId != null) {
+			setProductionIdentityFileEntryId(productionIdentityFileEntryId);
+		}
+
+		String applicantCode = (String)attributes.get("applicantCode");
+
+		if (applicantCode != null) {
+			setApplicantCode(applicantCode);
+		}
+
+		String supplierName = (String)attributes.get("supplierName");
+
+		if (supplierName != null) {
+			setSupplierName(supplierName);
+		}
+
+		String supplierAddress = (String)attributes.get("supplierAddress");
+
+		if (supplierAddress != null) {
+			setSupplierAddress(supplierAddress);
+		}
+
+		String corporationCode = (String)attributes.get("corporationCode");
+
+		if (corporationCode != null) {
+			setCorporationCode(corporationCode);
+		}
+
+		String corporationName = (String)attributes.get("corporationName");
+
+		if (corporationName != null) {
+			setCorporationName(corporationName);
+		}
+
+		String corporationAddress = (String)attributes.get("corporationAddress");
+
+		if (corporationAddress != null) {
+			setCorporationAddress(corporationAddress);
+		}
+
+		String productionPlantMetadata = (String)attributes.get(
+				"productionPlantMetadata");
+
+		if (productionPlantMetadata != null) {
+			setProductionPlantMetadata(productionPlantMetadata);
 		}
 
 		Long registrationId = (Long)attributes.get("registrationId");
@@ -352,12 +521,6 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 
 		if (supplierId != null) {
 			setSupplierId(supplierId);
-		}
-
-		String applicantCode = (String)attributes.get("applicantCode");
-
-		if (applicantCode != null) {
-			setApplicantCode(applicantCode);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -439,6 +602,36 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
+	* Returns the corporation address of this vr production plant.
+	*
+	* @return the corporation address of this vr production plant
+	*/
+	@Override
+	public java.lang.String getCorporationAddress() {
+		return _vrProductionPlant.getCorporationAddress();
+	}
+
+	/**
+	* Returns the corporation code of this vr production plant.
+	*
+	* @return the corporation code of this vr production plant
+	*/
+	@Override
+	public java.lang.String getCorporationCode() {
+		return _vrProductionPlant.getCorporationCode();
+	}
+
+	/**
+	* Returns the corporation name of this vr production plant.
+	*
+	* @return the corporation name of this vr production plant
+	*/
+	@Override
+	public java.lang.String getCorporationName() {
+		return _vrProductionPlant.getCorporationName();
+	}
+
+	/**
 	* Returns the mapping dia_chi_cty of this vr production plant.
 	*
 	* @return the mapping dia_chi_cty of this vr production plant
@@ -516,6 +709,36 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public java.lang.String getMappingTEN_XUONG_LR() {
 		return _vrProductionPlant.getMappingTEN_XUONG_LR();
+	}
+
+	/**
+	* Returns the production identity file name of this vr production plant.
+	*
+	* @return the production identity file name of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionIdentityFileName() {
+		return _vrProductionPlant.getProductionIdentityFileName();
+	}
+
+	/**
+	* Returns the production maintainer of this vr production plant.
+	*
+	* @return the production maintainer of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionMaintainer() {
+		return _vrProductionPlant.getProductionMaintainer();
+	}
+
+	/**
+	* Returns the production manufacture of this vr production plant.
+	*
+	* @return the production manufacture of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionManufacture() {
+		return _vrProductionPlant.getProductionManufacture();
 	}
 
 	/**
@@ -629,6 +852,46 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
+	* Returns the production plant identity description of this vr production plant.
+	*
+	* @return the production plant identity description of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionPlantIdentityDescription() {
+		return _vrProductionPlant.getProductionPlantIdentityDescription();
+	}
+
+	/**
+	* Returns the production plant identity no of this vr production plant.
+	*
+	* @return the production plant identity no of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionPlantIdentityNo() {
+		return _vrProductionPlant.getProductionPlantIdentityNo();
+	}
+
+	/**
+	* Returns the production plant identity type of this vr production plant.
+	*
+	* @return the production plant identity type of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionPlantIdentityType() {
+		return _vrProductionPlant.getProductionPlantIdentityType();
+	}
+
+	/**
+	* Returns the production plant metadata of this vr production plant.
+	*
+	* @return the production plant metadata of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionPlantMetadata() {
+		return _vrProductionPlant.getProductionPlantMetadata();
+	}
+
+	/**
 	* Returns the production plant name of this vr production plant.
 	*
 	* @return the production plant name of this vr production plant
@@ -679,6 +942,26 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
+	* Returns the production plant region of this vr production plant.
+	*
+	* @return the production plant region of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionPlantRegion() {
+		return _vrProductionPlant.getProductionPlantRegion();
+	}
+
+	/**
+	* Returns the production plant region code of this vr production plant.
+	*
+	* @return the production plant region code of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionPlantRegionCode() {
+		return _vrProductionPlant.getProductionPlantRegionCode();
+	}
+
+	/**
 	* Returns the production plant representative of this vr production plant.
 	*
 	* @return the production plant representative of this vr production plant
@@ -686,6 +969,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public java.lang.String getProductionPlantRepresentative() {
 		return _vrProductionPlant.getProductionPlantRepresentative();
+	}
+
+	/**
+	* Returns the production plant representative phone of this vr production plant.
+	*
+	* @return the production plant representative phone of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionPlantRepresentativePhone() {
+		return _vrProductionPlant.getProductionPlantRepresentativePhone();
 	}
 
 	/**
@@ -736,6 +1029,56 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public java.lang.String getProductionPlantType() {
 		return _vrProductionPlant.getProductionPlantType();
+	}
+
+	/**
+	* Returns the production plant ward code of this vr production plant.
+	*
+	* @return the production plant ward code of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionPlantWardCode() {
+		return _vrProductionPlant.getProductionPlantWardCode();
+	}
+
+	/**
+	* Returns the production plant ward name of this vr production plant.
+	*
+	* @return the production plant ward name of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionPlantWardName() {
+		return _vrProductionPlant.getProductionPlantWardName();
+	}
+
+	/**
+	* Returns the production plant website of this vr production plant.
+	*
+	* @return the production plant website of this vr production plant
+	*/
+	@Override
+	public java.lang.String getProductionPlantWebsite() {
+		return _vrProductionPlant.getProductionPlantWebsite();
+	}
+
+	/**
+	* Returns the supplier address of this vr production plant.
+	*
+	* @return the supplier address of this vr production plant
+	*/
+	@Override
+	public java.lang.String getSupplierAddress() {
+		return _vrProductionPlant.getSupplierAddress();
+	}
+
+	/**
+	* Returns the supplier name of this vr production plant.
+	*
+	* @return the supplier name of this vr production plant
+	*/
+	@Override
+	public java.lang.String getSupplierName() {
+		return _vrProductionPlant.getSupplierName();
 	}
 
 	@Override
@@ -809,6 +1152,26 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
+	* Returns the production identity file entry ID of this vr production plant.
+	*
+	* @return the production identity file entry ID of this vr production plant
+	*/
+	@Override
+	public long getProductionIdentityFileEntryId() {
+		return _vrProductionPlant.getProductionIdentityFileEntryId();
+	}
+
+	/**
+	* Returns the production plant identity file entry ID of this vr production plant.
+	*
+	* @return the production plant identity file entry ID of this vr production plant
+	*/
+	@Override
+	public long getProductionPlantIdentityFileEntryId() {
+		return _vrProductionPlant.getProductionPlantIdentityFileEntryId();
+	}
+
+	/**
 	* Returns the registration form ID of this vr production plant.
 	*
 	* @return the registration form ID of this vr production plant
@@ -866,6 +1229,36 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_vrProductionPlant.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the corporation address of this vr production plant.
+	*
+	* @param corporationAddress the corporation address of this vr production plant
+	*/
+	@Override
+	public void setCorporationAddress(java.lang.String corporationAddress) {
+		_vrProductionPlant.setCorporationAddress(corporationAddress);
+	}
+
+	/**
+	* Sets the corporation code of this vr production plant.
+	*
+	* @param corporationCode the corporation code of this vr production plant
+	*/
+	@Override
+	public void setCorporationCode(java.lang.String corporationCode) {
+		_vrProductionPlant.setCorporationCode(corporationCode);
+	}
+
+	/**
+	* Sets the corporation name of this vr production plant.
+	*
+	* @param corporationName the corporation name of this vr production plant
+	*/
+	@Override
+	public void setCorporationName(java.lang.String corporationName) {
+		_vrProductionPlant.setCorporationName(corporationName);
 	}
 
 	@Override
@@ -1016,6 +1409,48 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
+	* Sets the production identity file entry ID of this vr production plant.
+	*
+	* @param productionIdentityFileEntryId the production identity file entry ID of this vr production plant
+	*/
+	@Override
+	public void setProductionIdentityFileEntryId(
+		long productionIdentityFileEntryId) {
+		_vrProductionPlant.setProductionIdentityFileEntryId(productionIdentityFileEntryId);
+	}
+
+	/**
+	* Sets the production identity file name of this vr production plant.
+	*
+	* @param productionIdentityFileName the production identity file name of this vr production plant
+	*/
+	@Override
+	public void setProductionIdentityFileName(
+		java.lang.String productionIdentityFileName) {
+		_vrProductionPlant.setProductionIdentityFileName(productionIdentityFileName);
+	}
+
+	/**
+	* Sets the production maintainer of this vr production plant.
+	*
+	* @param productionMaintainer the production maintainer of this vr production plant
+	*/
+	@Override
+	public void setProductionMaintainer(java.lang.String productionMaintainer) {
+		_vrProductionPlant.setProductionMaintainer(productionMaintainer);
+	}
+
+	/**
+	* Sets the production manufacture of this vr production plant.
+	*
+	* @param productionManufacture the production manufacture of this vr production plant
+	*/
+	@Override
+	public void setProductionManufacture(java.lang.String productionManufacture) {
+		_vrProductionPlant.setProductionManufacture(productionManufacture);
+	}
+
+	/**
 	* Sets the production plant address of this vr production plant.
 	*
 	* @param productionPlantAddress the production plant address of this vr production plant
@@ -1134,6 +1569,61 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
+	* Sets the production plant identity description of this vr production plant.
+	*
+	* @param productionPlantIdentityDescription the production plant identity description of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantIdentityDescription(
+		java.lang.String productionPlantIdentityDescription) {
+		_vrProductionPlant.setProductionPlantIdentityDescription(productionPlantIdentityDescription);
+	}
+
+	/**
+	* Sets the production plant identity file entry ID of this vr production plant.
+	*
+	* @param productionPlantIdentityFileEntryId the production plant identity file entry ID of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantIdentityFileEntryId(
+		long productionPlantIdentityFileEntryId) {
+		_vrProductionPlant.setProductionPlantIdentityFileEntryId(productionPlantIdentityFileEntryId);
+	}
+
+	/**
+	* Sets the production plant identity no of this vr production plant.
+	*
+	* @param productionPlantIdentityNo the production plant identity no of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantIdentityNo(
+		java.lang.String productionPlantIdentityNo) {
+		_vrProductionPlant.setProductionPlantIdentityNo(productionPlantIdentityNo);
+	}
+
+	/**
+	* Sets the production plant identity type of this vr production plant.
+	*
+	* @param productionPlantIdentityType the production plant identity type of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantIdentityType(
+		java.lang.String productionPlantIdentityType) {
+		_vrProductionPlant.setProductionPlantIdentityType(productionPlantIdentityType);
+	}
+
+	/**
+	* Sets the production plant metadata of this vr production plant.
+	*
+	* @param productionPlantMetadata the production plant metadata of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantMetadata(
+		java.lang.String productionPlantMetadata) {
+		_vrProductionPlant.setProductionPlantMetadata(productionPlantMetadata);
+	}
+
+	/**
 	* Sets the production plant name of this vr production plant.
 	*
 	* @param productionPlantName the production plant name of this vr production plant
@@ -1187,6 +1677,27 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
+	* Sets the production plant region of this vr production plant.
+	*
+	* @param productionPlantRegion the production plant region of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantRegion(java.lang.String productionPlantRegion) {
+		_vrProductionPlant.setProductionPlantRegion(productionPlantRegion);
+	}
+
+	/**
+	* Sets the production plant region code of this vr production plant.
+	*
+	* @param productionPlantRegionCode the production plant region code of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantRegionCode(
+		java.lang.String productionPlantRegionCode) {
+		_vrProductionPlant.setProductionPlantRegionCode(productionPlantRegionCode);
+	}
+
+	/**
 	* Sets the production plant representative of this vr production plant.
 	*
 	* @param productionPlantRepresentative the production plant representative of this vr production plant
@@ -1195,6 +1706,17 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	public void setProductionPlantRepresentative(
 		java.lang.String productionPlantRepresentative) {
 		_vrProductionPlant.setProductionPlantRepresentative(productionPlantRepresentative);
+	}
+
+	/**
+	* Sets the production plant representative phone of this vr production plant.
+	*
+	* @param productionPlantRepresentativePhone the production plant representative phone of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantRepresentativePhone(
+		java.lang.String productionPlantRepresentativePhone) {
+		_vrProductionPlant.setProductionPlantRepresentativePhone(productionPlantRepresentativePhone);
 	}
 
 	/**
@@ -1251,6 +1773,39 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
+	* Sets the production plant ward code of this vr production plant.
+	*
+	* @param productionPlantWardCode the production plant ward code of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantWardCode(
+		java.lang.String productionPlantWardCode) {
+		_vrProductionPlant.setProductionPlantWardCode(productionPlantWardCode);
+	}
+
+	/**
+	* Sets the production plant ward name of this vr production plant.
+	*
+	* @param productionPlantWardName the production plant ward name of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantWardName(
+		java.lang.String productionPlantWardName) {
+		_vrProductionPlant.setProductionPlantWardName(productionPlantWardName);
+	}
+
+	/**
+	* Sets the production plant website of this vr production plant.
+	*
+	* @param productionPlantWebsite the production plant website of this vr production plant
+	*/
+	@Override
+	public void setProductionPlantWebsite(
+		java.lang.String productionPlantWebsite) {
+		_vrProductionPlant.setProductionPlantWebsite(productionPlantWebsite);
+	}
+
+	/**
 	* Sets the registration form ID of this vr production plant.
 	*
 	* @param registrationFormId the registration form ID of this vr production plant
@@ -1271,6 +1826,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	}
 
 	/**
+	* Sets the supplier address of this vr production plant.
+	*
+	* @param supplierAddress the supplier address of this vr production plant
+	*/
+	@Override
+	public void setSupplierAddress(java.lang.String supplierAddress) {
+		_vrProductionPlant.setSupplierAddress(supplierAddress);
+	}
+
+	/**
 	* Sets the supplier ID of this vr production plant.
 	*
 	* @param supplierId the supplier ID of this vr production plant
@@ -1278,6 +1843,16 @@ public class VRProductionPlantWrapper implements VRProductionPlant,
 	@Override
 	public void setSupplierId(long supplierId) {
 		_vrProductionPlant.setSupplierId(supplierId);
+	}
+
+	/**
+	* Sets the supplier name of this vr production plant.
+	*
+	* @param supplierName the supplier name of this vr production plant
+	*/
+	@Override
+	public void setSupplierName(java.lang.String supplierName) {
+		_vrProductionPlant.setSupplierName(supplierName);
 	}
 
 	/**

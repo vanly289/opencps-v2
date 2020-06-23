@@ -73,14 +73,14 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 
 			DossierPart dossierPart = DossierPartLocalServiceUtil.fetchByTemplatePartNo(model.getGroupId(),
 					model.getDossierTemplateNo(), model.getDossierPartNo());
-			_log.info("deliverableType: "+dossierPart.getDeliverableType());
+			_log.info("deliverableType: " + dossierPart.getDeliverableType());
 
 			String deliverableType = dossierPart.getDeliverableType();
 
 			String deliverableCode = model.getDeliverableCode();
 
 			if (Validator.isNotNull(deliverableCode)) {
-				//Dossier dossier = DossierLocalServiceUtil.getDossier(model.getDossierId());
+				// Dossier dossier = DossierLocalServiceUtil.getDossier(model.getDossierId());
 
 				// Exist Deliverable checking
 
@@ -129,14 +129,14 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 				if (Validator.isNull(dlv)) {
 					// add deliverable
 
-/*					dlv = DeliverableLocalServiceUtil.addDeliverable(model.getGroupId(), deliverableType,
-							deliverableCode, dossier.getGovAgencyCode(), dossier.getApplicantIdNo(),
-							dossier.getApplicantName(), subject, issueDate, expireDate, revalidate, deliverableState,
-							serviceContext);
-
-					DeliverableLocalServiceUtil.updateFormData(model.getGroupId(), dlv.getDeliverableId(), formData,
-							serviceContext);
-*/
+					/*
+					 * dlv = DeliverableLocalServiceUtil.addDeliverable(model.getGroupId(),
+					 * deliverableType, deliverableCode, dossier.getGovAgencyCode(),
+					 * dossier.getApplicantIdNo(), dossier.getApplicantName(), subject, issueDate,
+					 * expireDate, revalidate, deliverableState, serviceContext);
+					 * DeliverableLocalServiceUtil.updateFormData(model.getGroupId(),
+					 * dlv.getDeliverableId(), formData, serviceContext);
+					 */
 				}
 
 			}
@@ -321,7 +321,7 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 			if (key.contentEquals("_dossierIdCTN")) {
 
 				Document dossierDoc = DossierLocalServiceUtil.getDossierById(dossierId, dossier.getCompanyId());
-				
+
 				_log.info("DossierIsNull_" + dossierId);
 
 				String dossierCTN = StringPool.BLANK;
@@ -400,11 +400,12 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 	@Override
 	public void onAfterUpdate(DossierFile model) throws ModelListenerException {
 		_log.info("Update DossierFile_________-");
-		
-		//_log.info("Expando______" + model.getExpandoBridge().getAttribute("isDel"));
 
-		//ExpandoValueLocalServiceUtil.addValue(classNameId, tableId, columnId, classPK, data);
-		
+		// _log.info("Expando______" + model.getExpandoBridge().getAttribute("isDel"));
+
+		// ExpandoValueLocalServiceUtil.addValue(classNameId, tableId, columnId,
+		// classPK, data);
+
 		ServiceContext serviceContext = new ServiceContext();
 		serviceContext.setCompanyId(model.getCompanyId());
 		serviceContext.setUserId(model.getUserId());

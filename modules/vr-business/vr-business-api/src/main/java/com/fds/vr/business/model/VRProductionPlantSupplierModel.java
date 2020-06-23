@@ -178,6 +178,93 @@ public interface VRProductionPlantSupplierModel extends BaseModel<VRProductionPl
 	 */
 	public void setSyncDate(Date syncDate);
 
+	/**
+	 * Returns the production plant ID of this vr production plant supplier.
+	 *
+	 * @return the production plant ID of this vr production plant supplier
+	 */
+	public long getProductionPlantId();
+
+	/**
+	 * Sets the production plant ID of this vr production plant supplier.
+	 *
+	 * @param productionPlantId the production plant ID of this vr production plant supplier
+	 */
+	public void setProductionPlantId(long productionPlantId);
+
+	/**
+	 * Returns the applicant profile ID of this vr production plant supplier.
+	 *
+	 * @return the applicant profile ID of this vr production plant supplier
+	 */
+	public long getApplicantProfileId();
+
+	/**
+	 * Sets the applicant profile ID of this vr production plant supplier.
+	 *
+	 * @param applicantProfileId the applicant profile ID of this vr production plant supplier
+	 */
+	public void setApplicantProfileId(long applicantProfileId);
+
+	/**
+	 * Returns the applicant code of this vr production plant supplier.
+	 *
+	 * @return the applicant code of this vr production plant supplier
+	 */
+	@AutoEscape
+	public String getApplicantCode();
+
+	/**
+	 * Sets the applicant code of this vr production plant supplier.
+	 *
+	 * @param applicantCode the applicant code of this vr production plant supplier
+	 */
+	public void setApplicantCode(String applicantCode);
+
+	/**
+	 * Returns the supplier ID of this vr production plant supplier.
+	 *
+	 * @return the supplier ID of this vr production plant supplier
+	 */
+	public long getSupplierId();
+
+	/**
+	 * Sets the supplier ID of this vr production plant supplier.
+	 *
+	 * @param supplierId the supplier ID of this vr production plant supplier
+	 */
+	public void setSupplierId(long supplierId);
+
+	/**
+	 * Returns the supplier name of this vr production plant supplier.
+	 *
+	 * @return the supplier name of this vr production plant supplier
+	 */
+	@AutoEscape
+	public String getSupplierName();
+
+	/**
+	 * Sets the supplier name of this vr production plant supplier.
+	 *
+	 * @param supplierName the supplier name of this vr production plant supplier
+	 */
+	public void setSupplierName(String supplierName);
+
+	/**
+	 * Returns the supplier address of this vr production plant supplier.
+	 *
+	 * @return the supplier address of this vr production plant supplier
+	 */
+	@AutoEscape
+	public String getSupplierAddress();
+
+	/**
+	 * Sets the supplier address of this vr production plant supplier.
+	 *
+	 * @param supplierAddress the supplier address of this vr production plant supplier
+	 */
+	public void setSupplierAddress(String supplierAddress);
+
 	@Override
 	public boolean isNew();
 

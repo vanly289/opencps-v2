@@ -5,6 +5,7 @@ import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantModelImpl;
 import com.fds.vr.business.service.persistence.VRProductionPlantFinder;
+import com.fds.vr.service.util.BusinessUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -45,7 +46,7 @@ public class VRProductionPlantFinderImpl extends VRProductionPlantFinderBaseImpl
 				
 				if (vrProductionPlants != null) {
 					for (VRProductionPlant vrProductionPlant : vrProductionPlants) {
-						JSONObject json = ActionUtil.object2Json(vrProductionPlant, VRProductionPlantModelImpl.class,
+						JSONObject json = BusinessUtil.object2Json_originColumnName(vrProductionPlant, VRProductionPlantModelImpl.class,
 								"");
 						results.put(json);
 					}
@@ -58,7 +59,7 @@ public class VRProductionPlantFinderImpl extends VRProductionPlantFinderBaseImpl
 					if (itr.hasNext()) {
 						while (itr.hasNext()) {
 							Object[] objects = itr.next();
-							JSONObject json = ActionUtil.array2Json(objects, columnNames, dataTypes);
+							JSONObject json = ActionUtil.array2Json_originColumnName(objects, columnNames, dataTypes);
 							results.put(json);
 						}
 

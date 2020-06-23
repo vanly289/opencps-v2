@@ -612,4 +612,24 @@ public class VRProductionManagementImpl implements VRProductionManagement {
 		}
 	}
 
+	@Override
+	public Response getVRProductionPlant(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, String productionplantcode) {
+		try {
+
+			VRProductionPlantAction actionImpl = new VRProductionPlantActionImpl();
+
+			JSONObject result = actionImpl.getVRProductionPlant(productionplantcode, serviceContext);
+
+			return Response.status(200).entity(result.toString()).build();
+
+		} catch (Exception e) {
+
+			_log.error(e);
+
+			return Response.status(500).entity(VRRestUtil.errorMessage("server internal error!").toJSONString())
+					.build();
+		}
+	}
+
 }

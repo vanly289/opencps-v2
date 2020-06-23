@@ -90,7 +90,33 @@ public class DossierActionUtils {
 				model.setAutoEvent(jsonObject.getString(ProcessActionTerm.AUTO_EVENT));
 				model.setPreCondition(jsonObject.getString(ProcessActionTerm.PRE_CONDITION));
 				model.setEnable(1);
-
+				//add by Dungnv
+				JSONArray createFiles = jsonObject.getJSONArray("createFiles");
+				List<DossierActionNextActioncreateFiles> outputCreeateFiles = null;
+				if (createFiles != null && createFiles.length() > 0) {
+					outputCreeateFiles = new ArrayList<DossierActionNextActioncreateFiles>();
+					for (int f = 0; f < createFiles.length(); f++) {
+						JSONObject createFile = createFiles.getJSONObject(f);
+						DossierActionNextActioncreateFiles dossierActionNextActioncreateFile = new DossierActionNextActioncreateFiles();
+						dossierActionNextActioncreateFile.setDossierPartId(createFile.getLong("dossierPartId"));
+						dossierActionNextActioncreateFile.setEform(createFile.getBoolean("eform"));
+						dossierActionNextActioncreateFile.setFormData(createFile.getString("formData"));
+						dossierActionNextActioncreateFile.setFormScript(createFile.getString("formScript"));
+						dossierActionNextActioncreateFile.setMultiple(createFile.getBoolean("multiple"));
+						dossierActionNextActioncreateFile.setPartName(createFile.getString("partName"));
+						dossierActionNextActioncreateFile.setPartNo(createFile.getString("partNo"));
+						dossierActionNextActioncreateFile.setPartTip(createFile.getString("partTip"));
+						dossierActionNextActioncreateFile.setTemplateFileNo(createFile.getString("templateFileNo"));
+						dossierActionNextActioncreateFile.setReferenceUid(createFile.getString("referenceUid"));
+						dossierActionNextActioncreateFile.setCounter(createFile.getInt("counter"));
+						dossierActionNextActioncreateFile.setReturned(createFile.getBoolean("returned"));
+						dossierActionNextActioncreateFile.setDossierFileId(createFile.getLong("dossierFileId"));
+						dossierActionNextActioncreateFile.setRequired(createFile.getBoolean("required"));
+						
+						outputCreeateFiles.add(dossierActionNextActioncreateFile);
+					}
+					model.getCreateFiles().addAll(outputCreeateFiles);
+				}
 				outputs.add(model);
 			}
 		}

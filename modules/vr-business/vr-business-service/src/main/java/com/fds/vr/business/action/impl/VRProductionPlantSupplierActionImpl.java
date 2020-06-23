@@ -3,6 +3,7 @@ package com.fds.vr.business.action.impl;
 import com.fds.vr.business.action.VRProductionPlantSupplierAction;
 import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.engine.SQLQueryBuilder;
+import com.fds.vr.business.model.VRProductionPlantSupplier;
 import com.fds.vr.business.model.impl.VRProductionPlantSupplierImpl;
 import com.fds.vr.business.service.VRProductionPlantSupplierLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @author trungnt
@@ -76,6 +78,11 @@ public class VRProductionPlantSupplierActionImpl implements VRProductionPlantSup
 		result.put("total", total);
 		result.put("data", data);
 		return result;
+	}
+
+	@Override
+	public List<VRProductionPlantSupplier> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+		return VRProductionPlantSupplierLocalServiceUtil.adminProcessData(arrayData, productionPlantCode);
 	}
 
 }

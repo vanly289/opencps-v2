@@ -194,4 +194,9 @@ public class VRProductionPlantProdEquipmentActionImpl implements VRProductionPla
 		return result;
 	}
 
+	@Override
+	public List<VRProductionPlantProdEquipment> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+		return VRProductionPlantProdEquipmentLocalServiceUtil.adminProcessData(arrayData, productionPlantCode);
+	}
+
 }

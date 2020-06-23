@@ -113,6 +113,11 @@ public class VRProductionPlantLocalServiceUtil {
 			registrationFormId);
 	}
 
+	public static com.fds.vr.business.model.VRProductionPlant findByproductionPlantCode(
+		java.lang.String productionPlantCode) {
+		return getService().findByproductionPlantCode(productionPlantCode);
+	}
+
 	/**
 	* Returns the vr production plant with the primary key.
 	*

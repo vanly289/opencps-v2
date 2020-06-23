@@ -49,6 +49,10 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
+import com.fds.vr.business.action.VRHistoryProfileAction;
+import com.fds.vr.business.action.VRTrackchangesAction;
+import com.fds.vr.business.action.impl.VRHistoryProfileActionImpl;
+import com.fds.vr.business.action.impl.VRTrackchangesActionImpl;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -221,6 +225,25 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 							for (DossierFile dossierFile : dossierFileList) {
 								dossierFile.setIsNew(false);
 								DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+								//Add by Dungnv - Add trackchanges and history
+								serviceContext.setScopeGroupId(dossierFile.getGroupId());
+								try {
+									String partNo = StringPool.BLANK;
+									partNo = dossierFile.getDossierPartNo();
+									if ("KQ1, KQ2, KQ4, TP1".contains(partNo)) {
+										VRTrackchangesAction trackchangesAction = new VRTrackchangesActionImpl();
+										VRHistoryProfileAction profileAction = new VRHistoryProfileActionImpl();
+										JSONObject jsonTrackchanges = trackchangesAction.findByDossierId(dossierFile.getDossierId(), serviceContext);
+										if (jsonTrackchanges!= null && jsonTrackchanges.length() > 0) {
+											trackchangesAction.updateVRTrackchanges(jsonTrackchanges.getLong("id"), null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
+										} else {
+											trackchangesAction.updateVRTrackchanges(0L, null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
+										}
+										profileAction.updateVRHistoryProfile(0L, null, null, dossierFile.getDossierId(), null, null, null, partNo, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
+									}
+								}catch (Exception e) {
+									_log.error(e);
+								}
 							}
 							_log.info("START pull dossier File1: ");
 							pullDossierFiles(userId, desDossier.getGroupId(), desDossier.getDossierId(),
@@ -313,6 +336,25 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 							for (DossierFile dossierFile : dossierFileList) {
 								dossierFile.setIsNew(false);
 								DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+								//Add by Dungnv - Add trackchanges and history
+								serviceContext.setScopeGroupId(dossierFile.getGroupId());
+								try {
+									String partNo = StringPool.BLANK;
+									partNo = dossierFile.getDossierPartNo();
+									if ("KQ1, KQ2, KQ4, TP1".contains(partNo)) {
+										VRTrackchangesAction trackchangesAction = new VRTrackchangesActionImpl();
+										VRHistoryProfileAction profileAction = new VRHistoryProfileActionImpl();
+										JSONObject jsonTrackchanges = trackchangesAction.findByDossierId(dossierFile.getDossierId(), serviceContext);
+										if (jsonTrackchanges!= null && jsonTrackchanges.length() > 0) {
+											trackchangesAction.updateVRTrackchanges(jsonTrackchanges.getLong("id"), null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
+										} else {
+											trackchangesAction.updateVRTrackchanges(0L, null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
+										}
+										profileAction.updateVRHistoryProfile(0L, null, null, dossierFile.getDossierId(), null, null, null, partNo, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
+									}
+								}catch (Exception e) {
+									_log.error(e);
+								}
 							}
 							_log.info("START pull dossier File1: ");
 							pullDossierFiles(userId, desDossier.getGroupId(), desDossier.getDossierId(), dossierFileList,
@@ -772,6 +814,25 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 					_log.error(e1);
 
 				}
+			}
+			//Add by Dungnv - Add trackchanges and history
+			serviceContext.setScopeGroupId(dossierFile.getGroupId());
+			try {
+				String partNo = StringPool.BLANK;
+				partNo = dossierFile.getDossierPartNo();
+				if ("KQ1, KQ2, KQ4, TP1".contains(partNo)) {
+					VRTrackchangesAction trackchangesAction = new VRTrackchangesActionImpl();
+					VRHistoryProfileAction profileAction = new VRHistoryProfileActionImpl();
+					JSONObject jsonTrackchanges = trackchangesAction.findByDossierId(dossierFile.getDossierId(), serviceContext);
+					if (jsonTrackchanges!= null && jsonTrackchanges.length() > 0) {
+						trackchangesAction.updateVRTrackchanges(jsonTrackchanges.getLong("id"), null, null, desDossierId, null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
+					} else {
+						trackchangesAction.updateVRTrackchanges(0L, null, null, desDossierId, null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
+					}
+					profileAction.updateVRHistoryProfile(0L, null, null, desDossierId, null, null, null, partNo, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
+				}
+			}catch (Exception e) {
+				_log.error(e);
 			}
 		}
 

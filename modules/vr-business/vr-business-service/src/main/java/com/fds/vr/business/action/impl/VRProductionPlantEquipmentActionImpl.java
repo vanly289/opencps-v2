@@ -338,32 +338,32 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 		Long mtCore = null;
 		Long sequenceNo = null;
 		String equipmentCode = null;
-		//String equipmentName = null;
+		// String equipmentName = null;
 		String equipmentType = null;
-		//String trademark = null;
-		//String trademarkName = null;
-		//String commercialName = null;
+		// String trademark = null;
+		// String trademarkName = null;
+		// String commercialName = null;
 		String modelCode = null;
 		String productionCountryCode = null;
 		String equipmentStatus = null;
-		//String expireDate = null;
-		//String notes = null;
-		//String modifyDate = null;
-		//String syncDate = null;
+		// String expireDate = null;
+		// String notes = null;
+		// String modifyDate = null;
+		// String syncDate = null;
 		String equipmentSerialNo = null;
-		//String productionYear = null;
-		//String registrationYear = null;
-		//Long markupXCG = null;
-		//Long markupXCGNK = null;
-		//Long markupSMRM = null;
-		//Long markupXCH = null;
-		//Long markupXCN = null;
-		//Long markupXMY = null;
-		//Long markupXDD = null;
-		//Integer testingResult = null;
-		//String description = null;
+		// String productionYear = null;
+		// String registrationYear = null;
+		// Long markupXCG = null;
+		// Long markupXCGNK = null;
+		// Long markupSMRM = null;
+		// Long markupXCH = null;
+		// Long markupXCN = null;
+		// Long markupXMY = null;
+		// Long markupXDD = null;
+		// Integer testingResult = null;
+		// String description = null;
 		String inspectionRecordNumber = null;
-		//String inspectionRecordDate = null;
+		// String inspectionRecordDate = null;
 		String stampTestingNo = null;
 		Long productionPlantId = null;
 		String productionPlantCode = null;
@@ -384,21 +384,21 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 			if (params.containsKey("equipmentcode")) {
 				equipmentCode = GetterUtil.getString(params.get("equipmentcode"));
 			}
-			/*if (params.containsKey("equipmentname")) {
-				equipmentName = GetterUtil.getString(params.get("equipmentname"));
-			}*/
+			/*
+			 * if (params.containsKey("equipmentname")) { equipmentName =
+			 * GetterUtil.getString(params.get("equipmentname")); }
+			 */
 			if (params.containsKey("equipmenttype")) {
 				equipmentType = GetterUtil.getString(params.get("equipmenttype"));
 			}
-			/*if (params.containsKey("trademark")) {
-				trademark = GetterUtil.getString(params.get("trademark"));
-			}
-			if (params.containsKey("trademarkname")) {
-				trademarkName = GetterUtil.getString(params.get("trademarkname"));
-			}
-			if (params.containsKey("commercialname")) {
-				commercialName = GetterUtil.getString(params.get("commercialname"));
-			}*/
+			/*
+			 * if (params.containsKey("trademark")) { trademark =
+			 * GetterUtil.getString(params.get("trademark")); } if
+			 * (params.containsKey("trademarkname")) { trademarkName =
+			 * GetterUtil.getString(params.get("trademarkname")); } if
+			 * (params.containsKey("commercialname")) { commercialName =
+			 * GetterUtil.getString(params.get("commercialname")); }
+			 */
 			if (params.containsKey("modelcode")) {
 				modelCode = GetterUtil.getString(params.get("modelcode"));
 			}
@@ -408,60 +408,50 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 			if (params.containsKey("equipmentstatus")) {
 				equipmentStatus = GetterUtil.getString(params.get("equipmentstatus"));
 			}
-			/*if (params.containsKey("expiredate")) {
-				expireDate = GetterUtil.getString(params.get("expiredate"));
-			}
-			if (params.containsKey("notes")) {
-				notes = GetterUtil.getString(params.get("notes"));
-			}
-			if (params.containsKey("modifydate")) {
-				modifyDate = GetterUtil.getString(params.get("modifydate"));
-			}
-			if (params.containsKey("syncdate")) {
-				syncDate = GetterUtil.getString(params.get("syncdate"));
-			}*/
+			/*
+			 * if (params.containsKey("expiredate")) { expireDate =
+			 * GetterUtil.getString(params.get("expiredate")); } if
+			 * (params.containsKey("notes")) { notes =
+			 * GetterUtil.getString(params.get("notes")); } if
+			 * (params.containsKey("modifydate")) { modifyDate =
+			 * GetterUtil.getString(params.get("modifydate")); } if
+			 * (params.containsKey("syncdate")) { syncDate =
+			 * GetterUtil.getString(params.get("syncdate")); }
+			 */
 			if (params.containsKey("equipmentserialno")) {
 				equipmentSerialNo = GetterUtil.getString(params.get("equipmentserialno"));
 			}
-			/*if (params.containsKey("productionyear")) {
-				productionYear = GetterUtil.getString(params.get("productionyear"));
-			}
-			if (params.containsKey("registrationyear")) {
-				registrationYear = GetterUtil.getString(params.get("registrationyear"));
-			}
-			if (params.containsKey("markupxcg")) {
-				markupXCG = GetterUtil.getLong(params.get("markupxcg"));
-			}
-			if (params.containsKey("markupxcgnk")) {
-				markupXCGNK = GetterUtil.getLong(params.get("markupxcgnk"));
-			}
-			if (params.containsKey("markupsmrm")) {
-				markupSMRM = GetterUtil.getLong(params.get("markupsmrm"));
-			}
-			if (params.containsKey("markupxch")) {
-				markupXCH = GetterUtil.getLong(params.get("markupxch"));
-			}
-			if (params.containsKey("markupxcn")) {
-				markupXCN = GetterUtil.getLong(params.get("markupxcn"));
-			}
-			if (params.containsKey("markupxmy")) {
-				markupXMY = GetterUtil.getLong(params.get("markupxmy"));
-			}
-			if (params.containsKey("markupxdd")) {
-				markupXDD = GetterUtil.getLong(params.get("markupxdd"));
-			}
-			if (params.containsKey("testingresult")) {
-				testingResult = GetterUtil.getInteger(params.get("testingresult"));
-			}
-			if (params.containsKey("description")) {
-				description = GetterUtil.getString(params.get("description"));
-			}*/
+			/*
+			 * if (params.containsKey("productionyear")) { productionYear =
+			 * GetterUtil.getString(params.get("productionyear")); } if
+			 * (params.containsKey("registrationyear")) { registrationYear =
+			 * GetterUtil.getString(params.get("registrationyear")); } if
+			 * (params.containsKey("markupxcg")) { markupXCG =
+			 * GetterUtil.getLong(params.get("markupxcg")); } if
+			 * (params.containsKey("markupxcgnk")) { markupXCGNK =
+			 * GetterUtil.getLong(params.get("markupxcgnk")); } if
+			 * (params.containsKey("markupsmrm")) { markupSMRM =
+			 * GetterUtil.getLong(params.get("markupsmrm")); } if
+			 * (params.containsKey("markupxch")) { markupXCH =
+			 * GetterUtil.getLong(params.get("markupxch")); } if
+			 * (params.containsKey("markupxcn")) { markupXCN =
+			 * GetterUtil.getLong(params.get("markupxcn")); } if
+			 * (params.containsKey("markupxmy")) { markupXMY =
+			 * GetterUtil.getLong(params.get("markupxmy")); } if
+			 * (params.containsKey("markupxdd")) { markupXDD =
+			 * GetterUtil.getLong(params.get("markupxdd")); } if
+			 * (params.containsKey("testingresult")) { testingResult =
+			 * GetterUtil.getInteger(params.get("testingresult")); } if
+			 * (params.containsKey("description")) { description =
+			 * GetterUtil.getString(params.get("description")); }
+			 */
 			if (params.containsKey("inspectionrecordnumber")) {
 				inspectionRecordNumber = GetterUtil.getString(params.get("inspectionrecordnumber"));
 			}
-			/*if (params.containsKey("inspectionrecorddate")) {
-				inspectionRecordDate = GetterUtil.getString(params.get("inspectionrecorddate"));
-			}*/
+			/*
+			 * if (params.containsKey("inspectionrecorddate")) { inspectionRecordDate =
+			 * GetterUtil.getString(params.get("inspectionrecorddate")); }
+			 */
 			if (params.containsKey("stamptestingno")) {
 				stampTestingNo = GetterUtil.getString(params.get("stamptestingno"));
 			}
@@ -473,51 +463,62 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 			}
 		}
 		String _keywordSearchCondition = ActionUtil.buildSQLCondition("equipmentName", keyword, "", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("equipmentType", keyword, "OR", StringPool.LIKE, "")
+				// + ActionUtil.buildSQLCondition("equipmentType", keyword, "OR",
+				// StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("trademark", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("trademarkName", keyword, "OR", StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("commercialName", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("modelCode", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("productionCountryCode", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("equipmentStatus", keyword, "OR", StringPool.LIKE, "")
+				// + ActionUtil.buildSQLCondition("modelCode", keyword, "OR", StringPool.LIKE,
+				// "")
+				// + ActionUtil.buildSQLCondition("productionCountryCode", keyword, "OR",
+				// StringPool.LIKE, "")
+				// + ActionUtil.buildSQLCondition("equipmentStatus", keyword, "OR",
+				// StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("notes", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("equipmentSerialNo", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("productionYear", keyword, "OR", StringPool.LIKE, "")
-				//+ ActionUtil.buildSQLCondition("registrationYear", keyword, "OR", StringPool.LIKE, "")
+				// + ActionUtil.buildSQLCondition("equipmentSerialNo", keyword, "OR",
+				// StringPool.LIKE, "")
+				// + ActionUtil.buildSQLCondition("productionYear", keyword, "OR",
+				// StringPool.LIKE, "")
+				// + ActionUtil.buildSQLCondition("registrationYear", keyword, "OR",
+				// StringPool.LIKE, "")
 				+ ActionUtil.buildSQLCondition("description", keyword, "OR", StringPool.LIKE, "");
-		//+ ActionUtil.buildSQLCondition("inspectionRecordNumber", keyword, "OR", StringPool.LIKE, "")
-		//+ ActionUtil.buildSQLCondition("stampTestingNo", keyword, "OR", StringPool.LIKE, "")
-		//+ ActionUtil.buildSQLCondition("productionPlantCode", keyword, "OR", StringPool.LIKE, "");
+		// + ActionUtil.buildSQLCondition("inspectionRecordNumber", keyword, "OR",
+		// StringPool.LIKE, "")
+		// + ActionUtil.buildSQLCondition("stampTestingNo", keyword, "OR",
+		// StringPool.LIKE, "")
+		// + ActionUtil.buildSQLCondition("productionPlantCode", keyword, "OR",
+		// StringPool.LIKE, "");
 		SQLQueryBuilder builder = new SQLQueryBuilder();
 		builder.selectAll().from("vr_productionplantequipment").where("id", id, "AND", StringPool.EQUAL)
 				.where("mtcore", mtCore, "AND", StringPool.EQUAL)
 				.where("sequenceno", sequenceNo, "AND", StringPool.EQUAL)
 				.where("equipmentcode", equipmentCode, "AND", StringPool.EQUAL)
-				//.where("equipmentname", equipmentName, "AND", StringPool.EQUAL)
+				// .where("equipmentname", equipmentName, "AND", StringPool.EQUAL)
 				.where("equipmenttype", equipmentType, "AND", StringPool.EQUAL)
-				//.where("trademark", trademark, "AND", StringPool.EQUAL)
-				//.where("trademarkname", trademarkName, "AND", StringPool.EQUAL)
-				//.where("commercialname", commercialName, "AND", StringPool.EQUAL)
+				// .where("trademark", trademark, "AND", StringPool.EQUAL)
+				// .where("trademarkname", trademarkName, "AND", StringPool.EQUAL)
+				// .where("commercialname", commercialName, "AND", StringPool.EQUAL)
 				.where("modelcode", modelCode, "AND", StringPool.EQUAL)
 				.where("productioncountrycode", productionCountryCode, "AND", StringPool.EQUAL)
 				.where("equipmentstatus", equipmentStatus, "AND", StringPool.EQUAL)
-				//.where("expiredate", expireDate, "AND", StringPool.EQUAL).where("notes", notes, "AND", StringPool.EQUAL)
-				//.where("modifydate", modifyDate, "AND", StringPool.EQUAL)
-				//.where("syncdate", syncDate, "AND", StringPool.EQUAL)
+				// .where("expiredate", expireDate, "AND", StringPool.EQUAL).where("notes",
+				// notes, "AND", StringPool.EQUAL)
+				// .where("modifydate", modifyDate, "AND", StringPool.EQUAL)
+				// .where("syncdate", syncDate, "AND", StringPool.EQUAL)
 				.where("equipmentserialno", equipmentSerialNo, "AND", StringPool.EQUAL)
-				//.where("productionyear", productionYear, "AND", StringPool.EQUAL)
-				//.where("registrationyear", registrationYear, "AND", StringPool.EQUAL)
-				//.where("markupxcg", markupXCG, "AND", StringPool.EQUAL)
-				//.where("markupxcgnk", markupXCGNK, "AND", StringPool.EQUAL)
-				//.where("markupsmrm", markupSMRM, "AND", StringPool.EQUAL)
-				//.where("markupxch", markupXCH, "AND", StringPool.EQUAL)
-				//.where("markupxcn", markupXCN, "AND", StringPool.EQUAL)
-				//.where("markupxmy", markupXMY, "AND", StringPool.EQUAL)
-				//.where("markupxdd", markupXDD, "AND", StringPool.EQUAL)
-				//.where("testingresult", testingResult, "AND", StringPool.EQUAL)
-				//.where("description", description, "AND", StringPool.EQUAL)
+				// .where("productionyear", productionYear, "AND", StringPool.EQUAL)
+				// .where("registrationyear", registrationYear, "AND", StringPool.EQUAL)
+				// .where("markupxcg", markupXCG, "AND", StringPool.EQUAL)
+				// .where("markupxcgnk", markupXCGNK, "AND", StringPool.EQUAL)
+				// .where("markupsmrm", markupSMRM, "AND", StringPool.EQUAL)
+				// .where("markupxch", markupXCH, "AND", StringPool.EQUAL)
+				// .where("markupxcn", markupXCN, "AND", StringPool.EQUAL)
+				// .where("markupxmy", markupXMY, "AND", StringPool.EQUAL)
+				// .where("markupxdd", markupXDD, "AND", StringPool.EQUAL)
+				// .where("testingresult", testingResult, "AND", StringPool.EQUAL)
+				// .where("description", description, "AND", StringPool.EQUAL)
 				.where("inspectionrecordnumber", inspectionRecordNumber, "AND", StringPool.EQUAL)
-				//.where("inspectionrecorddate", inspectionRecordDate, "AND", StringPool.EQUAL)
+				// .where("inspectionrecorddate", inspectionRecordDate, "AND", StringPool.EQUAL)
 				.where("stamptestingno", stampTestingNo, "AND", StringPool.EQUAL)
 				.where("productionplantid", productionPlantId, "AND", StringPool.EQUAL)
 				.where("productionplantcode", productionPlantCode, "AND", StringPool.EQUAL)
@@ -548,7 +549,7 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 						vrProductionPlantEquipmentMarkups = VRProductionPlantEquipmentMarkupLocalServiceUtil
 								.findByproductionPlantEquipmentId(id);
 					} catch (Exception e) {
-						//nothing todo
+						// nothing todo
 					}
 
 					JSONArray _tmpArray = JSONFactoryUtil.createJSONArray();
@@ -589,17 +590,19 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
 		}
 
-		/*VRProductionPlantEquipment _tmp = VRProductionPlantEquipmentLocalServiceUtil
-				.fetchVRProductionPlantEquipment(object.getId());
-		if (_tmp == null) {
-			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND, StringPool.BLANK);
-		}*/
+		/*
+		 * VRProductionPlantEquipment _tmp = VRProductionPlantEquipmentLocalServiceUtil
+		 * .fetchVRProductionPlantEquipment(object.getId()); if (_tmp == null) { return
+		 * ActionUtil.createResponseContent(HttpsURLConnection.HTTP_NOT_FOUND,
+		 * StringPool.BLANK); }
+		 */
 
 		try {
 
-			//_tmp = (VRProductionPlantEquipment) ActionUtil.mergeObject(object, _tmp);
+			// _tmp = (VRProductionPlantEquipment) ActionUtil.mergeObject(object, _tmp);
 
-			//_tmp = VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(_tmp);
+			// _tmp =
+			// VRProductionPlantEquipmentLocalServiceUtil.updateVRProductionPlantEquipment(_tmp);
 
 			List<VRProductionPlantEquipmentMarkup> _tmpVRProductionPlantEquipmentMarkups = VRProductionPlantEquipmentMarkupLocalServiceUtil
 					.findByproductionPlantEquipmentId(object.getId());
@@ -635,6 +638,11 @@ public class VRProductionPlantEquipmentActionImpl implements VRProductionPlantEq
 			return ActionUtil.createResponseContent(HttpsURLConnection.HTTP_INTERNAL_ERROR, StringPool.BLANK);
 
 		}
+	}
+
+	@Override
+	public List<VRProductionPlantEquipment> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+		return VRProductionPlantEquipmentLocalServiceUtil.adminProcessData(arrayData, productionPlantCode);
 	}
 
 }

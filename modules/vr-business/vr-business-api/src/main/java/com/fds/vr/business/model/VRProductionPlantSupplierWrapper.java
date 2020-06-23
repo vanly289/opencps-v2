@@ -68,6 +68,12 @@ public class VRProductionPlantSupplierWrapper
 		attributes.put("productionPlantCode", getProductionPlantCode());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("productionPlantId", getProductionPlantId());
+		attributes.put("applicantProfileId", getApplicantProfileId());
+		attributes.put("applicantCode", getApplicantCode());
+		attributes.put("supplierId", getSupplierId());
+		attributes.put("supplierName", getSupplierName());
+		attributes.put("supplierAddress", getSupplierAddress());
 
 		return attributes;
 	}
@@ -121,6 +127,42 @@ public class VRProductionPlantSupplierWrapper
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		Long productionPlantId = (Long)attributes.get("productionPlantId");
+
+		if (productionPlantId != null) {
+			setProductionPlantId(productionPlantId);
+		}
+
+		Long applicantProfileId = (Long)attributes.get("applicantProfileId");
+
+		if (applicantProfileId != null) {
+			setApplicantProfileId(applicantProfileId);
+		}
+
+		String applicantCode = (String)attributes.get("applicantCode");
+
+		if (applicantCode != null) {
+			setApplicantCode(applicantCode);
+		}
+
+		Long supplierId = (Long)attributes.get("supplierId");
+
+		if (supplierId != null) {
+			setSupplierId(supplierId);
+		}
+
+		String supplierName = (String)attributes.get("supplierName");
+
+		if (supplierName != null) {
+			setSupplierName(supplierName);
+		}
+
+		String supplierAddress = (String)attributes.get("supplierAddress");
+
+		if (supplierAddress != null) {
+			setSupplierAddress(supplierAddress);
 		}
 	}
 
@@ -180,6 +222,16 @@ public class VRProductionPlantSupplierWrapper
 	}
 
 	/**
+	* Returns the applicant code of this vr production plant supplier.
+	*
+	* @return the applicant code of this vr production plant supplier
+	*/
+	@Override
+	public java.lang.String getApplicantCode() {
+		return _vrProductionPlantSupplier.getApplicantCode();
+	}
+
+	/**
 	* Returns the corporation address of this vr production plant supplier.
 	*
 	* @return the corporation address of this vr production plant supplier
@@ -219,6 +271,26 @@ public class VRProductionPlantSupplierWrapper
 		return _vrProductionPlantSupplier.getProductionPlantCode();
 	}
 
+	/**
+	* Returns the supplier address of this vr production plant supplier.
+	*
+	* @return the supplier address of this vr production plant supplier
+	*/
+	@Override
+	public java.lang.String getSupplierAddress() {
+		return _vrProductionPlantSupplier.getSupplierAddress();
+	}
+
+	/**
+	* Returns the supplier name of this vr production plant supplier.
+	*
+	* @return the supplier name of this vr production plant supplier
+	*/
+	@Override
+	public java.lang.String getSupplierName() {
+		return _vrProductionPlantSupplier.getSupplierName();
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _vrProductionPlantSupplier.toString();
@@ -247,6 +319,16 @@ public class VRProductionPlantSupplierWrapper
 	@Override
 	public Date getSyncDate() {
 		return _vrProductionPlantSupplier.getSyncDate();
+	}
+
+	/**
+	* Returns the applicant profile ID of this vr production plant supplier.
+	*
+	* @return the applicant profile ID of this vr production plant supplier
+	*/
+	@Override
+	public long getApplicantProfileId() {
+		return _vrProductionPlantSupplier.getApplicantProfileId();
 	}
 
 	/**
@@ -279,9 +361,49 @@ public class VRProductionPlantSupplierWrapper
 		return _vrProductionPlantSupplier.getPrimaryKey();
 	}
 
+	/**
+	* Returns the production plant ID of this vr production plant supplier.
+	*
+	* @return the production plant ID of this vr production plant supplier
+	*/
+	@Override
+	public long getProductionPlantId() {
+		return _vrProductionPlantSupplier.getProductionPlantId();
+	}
+
+	/**
+	* Returns the supplier ID of this vr production plant supplier.
+	*
+	* @return the supplier ID of this vr production plant supplier
+	*/
+	@Override
+	public long getSupplierId() {
+		return _vrProductionPlantSupplier.getSupplierId();
+	}
+
 	@Override
 	public void persist() {
 		_vrProductionPlantSupplier.persist();
+	}
+
+	/**
+	* Sets the applicant code of this vr production plant supplier.
+	*
+	* @param applicantCode the applicant code of this vr production plant supplier
+	*/
+	@Override
+	public void setApplicantCode(java.lang.String applicantCode) {
+		_vrProductionPlantSupplier.setApplicantCode(applicantCode);
+	}
+
+	/**
+	* Sets the applicant profile ID of this vr production plant supplier.
+	*
+	* @param applicantProfileId the applicant profile ID of this vr production plant supplier
+	*/
+	@Override
+	public void setApplicantProfileId(long applicantProfileId) {
+		_vrProductionPlantSupplier.setApplicantProfileId(applicantProfileId);
 	}
 
 	@Override
@@ -393,6 +515,46 @@ public class VRProductionPlantSupplierWrapper
 	@Override
 	public void setProductionPlantCode(java.lang.String productionPlantCode) {
 		_vrProductionPlantSupplier.setProductionPlantCode(productionPlantCode);
+	}
+
+	/**
+	* Sets the production plant ID of this vr production plant supplier.
+	*
+	* @param productionPlantId the production plant ID of this vr production plant supplier
+	*/
+	@Override
+	public void setProductionPlantId(long productionPlantId) {
+		_vrProductionPlantSupplier.setProductionPlantId(productionPlantId);
+	}
+
+	/**
+	* Sets the supplier address of this vr production plant supplier.
+	*
+	* @param supplierAddress the supplier address of this vr production plant supplier
+	*/
+	@Override
+	public void setSupplierAddress(java.lang.String supplierAddress) {
+		_vrProductionPlantSupplier.setSupplierAddress(supplierAddress);
+	}
+
+	/**
+	* Sets the supplier ID of this vr production plant supplier.
+	*
+	* @param supplierId the supplier ID of this vr production plant supplier
+	*/
+	@Override
+	public void setSupplierId(long supplierId) {
+		_vrProductionPlantSupplier.setSupplierId(supplierId);
+	}
+
+	/**
+	* Sets the supplier name of this vr production plant supplier.
+	*
+	* @param supplierName the supplier name of this vr production plant supplier
+	*/
+	@Override
+	public void setSupplierName(java.lang.String supplierName) {
+		_vrProductionPlantSupplier.setSupplierName(supplierName);
 	}
 
 	/**

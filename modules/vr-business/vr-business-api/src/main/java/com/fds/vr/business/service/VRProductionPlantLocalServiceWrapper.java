@@ -111,6 +111,12 @@ public class VRProductionPlantLocalServiceWrapper
 			applicantProfileId, registrationFormId);
 	}
 
+	@Override
+	public com.fds.vr.business.model.VRProductionPlant findByproductionPlantCode(
+		java.lang.String productionPlantCode) {
+		return _vrProductionPlantLocalService.findByproductionPlantCode(productionPlantCode);
+	}
+
 	/**
 	* Returns the vr production plant with the primary key.
 	*

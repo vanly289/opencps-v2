@@ -5,6 +5,7 @@ import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.impl.VRApplicantProfileImpl;
 import com.fds.vr.business.model.impl.VRApplicantProfileModelImpl;
 import com.fds.vr.business.service.persistence.VRApplicantProfileFinder;
+import com.fds.vr.service.util.BusinessUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -408,7 +409,7 @@ public class VRApplicantProfileFinderImpl extends VRApplicantProfileFinderBaseIm
 						start, end);
 				if (applicantProfiles != null) {
 					for (VRApplicantProfile applicantProfile : applicantProfiles) {
-						JSONObject json = ActionUtil.object2Json(applicantProfile, VRApplicantProfileModelImpl.class,
+						JSONObject json = BusinessUtil.object2Json_originColumnName(applicantProfile, VRApplicantProfileModelImpl.class,
 								"");
 						results.put(json);
 					}
@@ -460,7 +461,7 @@ public class VRApplicantProfileFinderImpl extends VRApplicantProfileFinderBaseIm
 					if (itr.hasNext()) {
 						while (itr.hasNext()) {
 							Object[] objects = itr.next();
-							JSONObject json = ActionUtil.array2Json(objects, columnNames, dataTypes);
+							JSONObject json = ActionUtil.array2Json_originColumnName(objects, columnNames, dataTypes);
 							results.put(json);
 						}
 

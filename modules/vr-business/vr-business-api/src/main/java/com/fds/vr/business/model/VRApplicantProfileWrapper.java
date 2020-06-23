@@ -71,6 +71,9 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 		attributes.put("applicantPhone", getApplicantPhone());
 		attributes.put("applicantEmail", getApplicantEmail());
 		attributes.put("applicantFax", getApplicantFax());
+		attributes.put("applicantWebsite", getApplicantWebsite());
+		attributes.put("applicantRepresentativePhone",
+			getApplicantRepresentativePhone());
 		attributes.put("applicantRepresentative", getApplicantRepresentative());
 		attributes.put("applicantRepresentativeTitle",
 			getApplicantRepresentativeTitle());
@@ -78,8 +81,15 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 		attributes.put("applicantContactEmail", getApplicantContactEmail());
 		attributes.put("applicantContactPhone", getApplicantContactPhone());
 		attributes.put("applicantNationality", getApplicantNationality());
+		attributes.put("applicantNationalityCode", getApplicantNationalityCode());
 		attributes.put("applicantRegion", getApplicantRegion());
+		attributes.put("applicantRegionCode", getApplicantRegionCode());
 		attributes.put("applicantCity", getApplicantCity());
+		attributes.put("applicantCityCode", getApplicantCityCode());
+		attributes.put("applicantDistrictCode", getApplicantDistrictCode());
+		attributes.put("applicantDistrictName", getApplicantDistrictName());
+		attributes.put("applicantWardCode", getApplicantWardCode());
+		attributes.put("applicantWardName", getApplicantWardName());
 		attributes.put("markupCorporation", getMarkupCorporation());
 		attributes.put("corporationId", getCorporationId());
 		attributes.put("markupDesigner", getMarkupDesigner());
@@ -87,6 +97,7 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 			getMarkupOverseasManufacturer());
 		attributes.put("markupDomesticsManufacturer",
 			getMarkupDomesticsManufacturer());
+		attributes.put("markupMaintainer", getMarkupMaintainer());
 		attributes.put("markupImporter", getMarkupImporter());
 		attributes.put("markupComponentXCG", getMarkupComponentXCG());
 		attributes.put("markupComponentXMY", getMarkupComponentXMY());
@@ -110,6 +121,15 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 		attributes.put("applicantCeremonyDate", getApplicantCeremonyDate());
 		attributes.put("applicantOperationPeriod", getApplicantOperationPeriod());
 		attributes.put("applicantBusinessType", getApplicantBusinessType());
+		attributes.put("applicantIdentityType", getApplicantIdentityType());
+		attributes.put("applicantIdentityDescription",
+			getApplicantIdentityDescription());
+		attributes.put("applicantIdentityFileName",
+			getApplicantIdentityFileName());
+		attributes.put("applicantIdentityFileEntryId",
+			getApplicantIdentityFileEntryId());
+		attributes.put("applicantXcgFileName", getApplicantXcgFileName());
+		attributes.put("applicantXcgFileEntryId", getApplicantXcgFileEntryId());
 		attributes.put("applicantMetadata", getApplicantMetadata());
 		attributes.put("applicantStatus", getApplicantStatus());
 		attributes.put("modifyDate", getModifyDate());
@@ -198,6 +218,19 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 			setApplicantFax(applicantFax);
 		}
 
+		String applicantWebsite = (String)attributes.get("applicantWebsite");
+
+		if (applicantWebsite != null) {
+			setApplicantWebsite(applicantWebsite);
+		}
+
+		String applicantRepresentativePhone = (String)attributes.get(
+				"applicantRepresentativePhone");
+
+		if (applicantRepresentativePhone != null) {
+			setApplicantRepresentativePhone(applicantRepresentativePhone);
+		}
+
 		String applicantRepresentative = (String)attributes.get(
 				"applicantRepresentative");
 
@@ -240,16 +273,62 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 			setApplicantNationality(applicantNationality);
 		}
 
+		String applicantNationalityCode = (String)attributes.get(
+				"applicantNationalityCode");
+
+		if (applicantNationalityCode != null) {
+			setApplicantNationalityCode(applicantNationalityCode);
+		}
+
 		String applicantRegion = (String)attributes.get("applicantRegion");
 
 		if (applicantRegion != null) {
 			setApplicantRegion(applicantRegion);
 		}
 
+		String applicantRegionCode = (String)attributes.get(
+				"applicantRegionCode");
+
+		if (applicantRegionCode != null) {
+			setApplicantRegionCode(applicantRegionCode);
+		}
+
 		String applicantCity = (String)attributes.get("applicantCity");
 
 		if (applicantCity != null) {
 			setApplicantCity(applicantCity);
+		}
+
+		String applicantCityCode = (String)attributes.get("applicantCityCode");
+
+		if (applicantCityCode != null) {
+			setApplicantCityCode(applicantCityCode);
+		}
+
+		String applicantDistrictCode = (String)attributes.get(
+				"applicantDistrictCode");
+
+		if (applicantDistrictCode != null) {
+			setApplicantDistrictCode(applicantDistrictCode);
+		}
+
+		String applicantDistrictName = (String)attributes.get(
+				"applicantDistrictName");
+
+		if (applicantDistrictName != null) {
+			setApplicantDistrictName(applicantDistrictName);
+		}
+
+		String applicantWardCode = (String)attributes.get("applicantWardCode");
+
+		if (applicantWardCode != null) {
+			setApplicantWardCode(applicantWardCode);
+		}
+
+		String applicantWardName = (String)attributes.get("applicantWardName");
+
+		if (applicantWardName != null) {
+			setApplicantWardName(applicantWardName);
 		}
 
 		String markupCorporation = (String)attributes.get("markupCorporation");
@@ -282,6 +361,12 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 
 		if (markupDomesticsManufacturer != null) {
 			setMarkupDomesticsManufacturer(markupDomesticsManufacturer);
+		}
+
+		String markupMaintainer = (String)attributes.get("markupMaintainer");
+
+		if (markupMaintainer != null) {
+			setMarkupMaintainer(markupMaintainer);
 		}
 
 		String markupImporter = (String)attributes.get("markupImporter");
@@ -426,6 +511,48 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 			setApplicantBusinessType(applicantBusinessType);
 		}
 
+		String applicantIdentityType = (String)attributes.get(
+				"applicantIdentityType");
+
+		if (applicantIdentityType != null) {
+			setApplicantIdentityType(applicantIdentityType);
+		}
+
+		String applicantIdentityDescription = (String)attributes.get(
+				"applicantIdentityDescription");
+
+		if (applicantIdentityDescription != null) {
+			setApplicantIdentityDescription(applicantIdentityDescription);
+		}
+
+		String applicantIdentityFileName = (String)attributes.get(
+				"applicantIdentityFileName");
+
+		if (applicantIdentityFileName != null) {
+			setApplicantIdentityFileName(applicantIdentityFileName);
+		}
+
+		Long applicantIdentityFileEntryId = (Long)attributes.get(
+				"applicantIdentityFileEntryId");
+
+		if (applicantIdentityFileEntryId != null) {
+			setApplicantIdentityFileEntryId(applicantIdentityFileEntryId);
+		}
+
+		String applicantXcgFileName = (String)attributes.get(
+				"applicantXcgFileName");
+
+		if (applicantXcgFileName != null) {
+			setApplicantXcgFileName(applicantXcgFileName);
+		}
+
+		Long applicantXcgFileEntryId = (Long)attributes.get(
+				"applicantXcgFileEntryId");
+
+		if (applicantXcgFileEntryId != null) {
+			setApplicantXcgFileEntryId(applicantXcgFileEntryId);
+		}
+
 		String applicantMetadata = (String)attributes.get("applicantMetadata");
 
 		if (applicantMetadata != null) {
@@ -547,6 +674,16 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	}
 
 	/**
+	* Returns the applicant city code of this vr applicant profile.
+	*
+	* @return the applicant city code of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantCityCode() {
+		return _vrApplicantProfile.getApplicantCityCode();
+	}
+
+	/**
 	* Returns the applicant code of this vr applicant profile.
 	*
 	* @return the applicant code of this vr applicant profile
@@ -587,6 +724,26 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	}
 
 	/**
+	* Returns the applicant district code of this vr applicant profile.
+	*
+	* @return the applicant district code of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantDistrictCode() {
+		return _vrApplicantProfile.getApplicantDistrictCode();
+	}
+
+	/**
+	* Returns the applicant district name of this vr applicant profile.
+	*
+	* @return the applicant district name of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantDistrictName() {
+		return _vrApplicantProfile.getApplicantDistrictName();
+	}
+
+	/**
 	* Returns the applicant email of this vr applicant profile.
 	*
 	* @return the applicant email of this vr applicant profile
@@ -604,6 +761,36 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	@Override
 	public java.lang.String getApplicantFax() {
 		return _vrApplicantProfile.getApplicantFax();
+	}
+
+	/**
+	* Returns the applicant identity description of this vr applicant profile.
+	*
+	* @return the applicant identity description of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantIdentityDescription() {
+		return _vrApplicantProfile.getApplicantIdentityDescription();
+	}
+
+	/**
+	* Returns the applicant identity file name of this vr applicant profile.
+	*
+	* @return the applicant identity file name of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantIdentityFileName() {
+		return _vrApplicantProfile.getApplicantIdentityFileName();
+	}
+
+	/**
+	* Returns the applicant identity type of this vr applicant profile.
+	*
+	* @return the applicant identity type of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantIdentityType() {
+		return _vrApplicantProfile.getApplicantIdentityType();
 	}
 
 	/**
@@ -637,6 +824,16 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	}
 
 	/**
+	* Returns the applicant nationality code of this vr applicant profile.
+	*
+	* @return the applicant nationality code of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantNationalityCode() {
+		return _vrApplicantProfile.getApplicantNationalityCode();
+	}
+
+	/**
 	* Returns the applicant operation period of this vr applicant profile.
 	*
 	* @return the applicant operation period of this vr applicant profile
@@ -667,6 +864,16 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	}
 
 	/**
+	* Returns the applicant region code of this vr applicant profile.
+	*
+	* @return the applicant region code of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantRegionCode() {
+		return _vrApplicantProfile.getApplicantRegionCode();
+	}
+
+	/**
 	* Returns the applicant representative of this vr applicant profile.
 	*
 	* @return the applicant representative of this vr applicant profile
@@ -674,6 +881,16 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	@Override
 	public java.lang.String getApplicantRepresentative() {
 		return _vrApplicantProfile.getApplicantRepresentative();
+	}
+
+	/**
+	* Returns the applicant representative phone of this vr applicant profile.
+	*
+	* @return the applicant representative phone of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantRepresentativePhone() {
+		return _vrApplicantProfile.getApplicantRepresentativePhone();
 	}
 
 	/**
@@ -694,6 +911,46 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	@Override
 	public java.lang.String getApplicantStatus() {
 		return _vrApplicantProfile.getApplicantStatus();
+	}
+
+	/**
+	* Returns the applicant ward code of this vr applicant profile.
+	*
+	* @return the applicant ward code of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantWardCode() {
+		return _vrApplicantProfile.getApplicantWardCode();
+	}
+
+	/**
+	* Returns the applicant ward name of this vr applicant profile.
+	*
+	* @return the applicant ward name of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantWardName() {
+		return _vrApplicantProfile.getApplicantWardName();
+	}
+
+	/**
+	* Returns the applicant website of this vr applicant profile.
+	*
+	* @return the applicant website of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantWebsite() {
+		return _vrApplicantProfile.getApplicantWebsite();
+	}
+
+	/**
+	* Returns the applicant xcg file name of this vr applicant profile.
+	*
+	* @return the applicant xcg file name of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getApplicantXcgFileName() {
+		return _vrApplicantProfile.getApplicantXcgFileName();
 	}
 
 	/**
@@ -927,6 +1184,16 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	}
 
 	/**
+	* Returns the markup maintainer of this vr applicant profile.
+	*
+	* @return the markup maintainer of this vr applicant profile
+	*/
+	@Override
+	public java.lang.String getMarkupMaintainer() {
+		return _vrApplicantProfile.getMarkupMaintainer();
+	}
+
+	/**
 	* Returns the markup overseas manufacturer of this vr applicant profile.
 	*
 	* @return the markup overseas manufacturer of this vr applicant profile
@@ -1027,6 +1294,26 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	}
 
 	/**
+	* Returns the applicant identity file entry ID of this vr applicant profile.
+	*
+	* @return the applicant identity file entry ID of this vr applicant profile
+	*/
+	@Override
+	public long getApplicantIdentityFileEntryId() {
+		return _vrApplicantProfile.getApplicantIdentityFileEntryId();
+	}
+
+	/**
+	* Returns the applicant xcg file entry ID of this vr applicant profile.
+	*
+	* @return the applicant xcg file entry ID of this vr applicant profile
+	*/
+	@Override
+	public long getApplicantXcgFileEntryId() {
+		return _vrApplicantProfile.getApplicantXcgFileEntryId();
+	}
+
+	/**
 	* Returns the ID of this vr applicant profile.
 	*
 	* @return the ID of this vr applicant profile
@@ -1102,6 +1389,16 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	}
 
 	/**
+	* Sets the applicant city code of this vr applicant profile.
+	*
+	* @param applicantCityCode the applicant city code of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantCityCode(java.lang.String applicantCityCode) {
+		_vrApplicantProfile.setApplicantCityCode(applicantCityCode);
+	}
+
+	/**
 	* Sets the applicant code of this vr applicant profile.
 	*
 	* @param applicantCode the applicant code of this vr applicant profile
@@ -1142,6 +1439,26 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	}
 
 	/**
+	* Sets the applicant district code of this vr applicant profile.
+	*
+	* @param applicantDistrictCode the applicant district code of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantDistrictCode(java.lang.String applicantDistrictCode) {
+		_vrApplicantProfile.setApplicantDistrictCode(applicantDistrictCode);
+	}
+
+	/**
+	* Sets the applicant district name of this vr applicant profile.
+	*
+	* @param applicantDistrictName the applicant district name of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantDistrictName(java.lang.String applicantDistrictName) {
+		_vrApplicantProfile.setApplicantDistrictName(applicantDistrictName);
+	}
+
+	/**
 	* Sets the applicant email of this vr applicant profile.
 	*
 	* @param applicantEmail the applicant email of this vr applicant profile
@@ -1159,6 +1476,49 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	@Override
 	public void setApplicantFax(java.lang.String applicantFax) {
 		_vrApplicantProfile.setApplicantFax(applicantFax);
+	}
+
+	/**
+	* Sets the applicant identity description of this vr applicant profile.
+	*
+	* @param applicantIdentityDescription the applicant identity description of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantIdentityDescription(
+		java.lang.String applicantIdentityDescription) {
+		_vrApplicantProfile.setApplicantIdentityDescription(applicantIdentityDescription);
+	}
+
+	/**
+	* Sets the applicant identity file entry ID of this vr applicant profile.
+	*
+	* @param applicantIdentityFileEntryId the applicant identity file entry ID of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantIdentityFileEntryId(
+		long applicantIdentityFileEntryId) {
+		_vrApplicantProfile.setApplicantIdentityFileEntryId(applicantIdentityFileEntryId);
+	}
+
+	/**
+	* Sets the applicant identity file name of this vr applicant profile.
+	*
+	* @param applicantIdentityFileName the applicant identity file name of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantIdentityFileName(
+		java.lang.String applicantIdentityFileName) {
+		_vrApplicantProfile.setApplicantIdentityFileName(applicantIdentityFileName);
+	}
+
+	/**
+	* Sets the applicant identity type of this vr applicant profile.
+	*
+	* @param applicantIdentityType the applicant identity type of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantIdentityType(java.lang.String applicantIdentityType) {
+		_vrApplicantProfile.setApplicantIdentityType(applicantIdentityType);
 	}
 
 	/**
@@ -1189,6 +1549,17 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	@Override
 	public void setApplicantNationality(java.lang.String applicantNationality) {
 		_vrApplicantProfile.setApplicantNationality(applicantNationality);
+	}
+
+	/**
+	* Sets the applicant nationality code of this vr applicant profile.
+	*
+	* @param applicantNationalityCode the applicant nationality code of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantNationalityCode(
+		java.lang.String applicantNationalityCode) {
+		_vrApplicantProfile.setApplicantNationalityCode(applicantNationalityCode);
 	}
 
 	/**
@@ -1223,6 +1594,16 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	}
 
 	/**
+	* Sets the applicant region code of this vr applicant profile.
+	*
+	* @param applicantRegionCode the applicant region code of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantRegionCode(java.lang.String applicantRegionCode) {
+		_vrApplicantProfile.setApplicantRegionCode(applicantRegionCode);
+	}
+
+	/**
 	* Sets the applicant representative of this vr applicant profile.
 	*
 	* @param applicantRepresentative the applicant representative of this vr applicant profile
@@ -1231,6 +1612,17 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	public void setApplicantRepresentative(
 		java.lang.String applicantRepresentative) {
 		_vrApplicantProfile.setApplicantRepresentative(applicantRepresentative);
+	}
+
+	/**
+	* Sets the applicant representative phone of this vr applicant profile.
+	*
+	* @param applicantRepresentativePhone the applicant representative phone of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantRepresentativePhone(
+		java.lang.String applicantRepresentativePhone) {
+		_vrApplicantProfile.setApplicantRepresentativePhone(applicantRepresentativePhone);
 	}
 
 	/**
@@ -1252,6 +1644,56 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	@Override
 	public void setApplicantStatus(java.lang.String applicantStatus) {
 		_vrApplicantProfile.setApplicantStatus(applicantStatus);
+	}
+
+	/**
+	* Sets the applicant ward code of this vr applicant profile.
+	*
+	* @param applicantWardCode the applicant ward code of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantWardCode(java.lang.String applicantWardCode) {
+		_vrApplicantProfile.setApplicantWardCode(applicantWardCode);
+	}
+
+	/**
+	* Sets the applicant ward name of this vr applicant profile.
+	*
+	* @param applicantWardName the applicant ward name of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantWardName(java.lang.String applicantWardName) {
+		_vrApplicantProfile.setApplicantWardName(applicantWardName);
+	}
+
+	/**
+	* Sets the applicant website of this vr applicant profile.
+	*
+	* @param applicantWebsite the applicant website of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantWebsite(java.lang.String applicantWebsite) {
+		_vrApplicantProfile.setApplicantWebsite(applicantWebsite);
+	}
+
+	/**
+	* Sets the applicant xcg file entry ID of this vr applicant profile.
+	*
+	* @param applicantXcgFileEntryId the applicant xcg file entry ID of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantXcgFileEntryId(long applicantXcgFileEntryId) {
+		_vrApplicantProfile.setApplicantXcgFileEntryId(applicantXcgFileEntryId);
+	}
+
+	/**
+	* Sets the applicant xcg file name of this vr applicant profile.
+	*
+	* @param applicantXcgFileName the applicant xcg file name of this vr applicant profile
+	*/
+	@Override
+	public void setApplicantXcgFileName(java.lang.String applicantXcgFileName) {
+		_vrApplicantProfile.setApplicantXcgFileName(applicantXcgFileName);
 	}
 
 	@Override
@@ -1514,6 +1956,16 @@ public class VRApplicantProfileWrapper implements VRApplicantProfile,
 	@Override
 	public void setMarkupImporter(java.lang.String markupImporter) {
 		_vrApplicantProfile.setMarkupImporter(markupImporter);
+	}
+
+	/**
+	* Sets the markup maintainer of this vr applicant profile.
+	*
+	* @param markupMaintainer the markup maintainer of this vr applicant profile
+	*/
+	@Override
+	public void setMarkupMaintainer(java.lang.String markupMaintainer) {
+		_vrApplicantProfile.setMarkupMaintainer(markupMaintainer);
 	}
 
 	/**

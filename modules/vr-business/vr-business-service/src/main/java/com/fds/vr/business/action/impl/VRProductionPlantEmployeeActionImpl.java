@@ -17,8 +17,9 @@ import java.util.List;
  * @author trungnt
  *
  */
-public class VRProductionPlantEmployeeActionImpl implements VRProductionPlantEmployeeAction{
+public class VRProductionPlantEmployeeActionImpl implements VRProductionPlantEmployeeAction {
 	private Log _log = LogFactoryUtil.getLog(VRProductionPlantEmployeeActionImpl.class);
+
 	@Override
 	public JSONArray findVRProductionPlantEmployee(String productionPlantCode) {
 		JSONArray result = JSONFactoryUtil.createJSONArray();
@@ -28,11 +29,17 @@ public class VRProductionPlantEmployeeActionImpl implements VRProductionPlantEmp
 
 			for (VRProductionPlantEmployee vrProductionPlantEmployee : vrProductionPlantEmployees) {
 
-				result.put(ActionUtil.object2Json(vrProductionPlantEmployee, VRProductionPlantEmployeeImpl.class, StringPool.BLANK));
+				result.put(ActionUtil.object2Json(vrProductionPlantEmployee, VRProductionPlantEmployeeImpl.class,
+						StringPool.BLANK));
 			}
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return result;
+	}
+
+	@Override
+	public List<VRProductionPlantEmployee> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+		return VRProductionPlantEmployeeLocalServiceUtil.adminProcessData(arrayData, productionPlantCode);
 	}
 }

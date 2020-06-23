@@ -20,6 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.model.VRProductionPlantSupplier;
 import com.fds.vr.business.service.base.VRProductionPlantSupplierLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -90,6 +91,7 @@ public class VRProductionPlantSupplierLocalServiceImpl
 
 		List<VRProductionPlantSupplier> vrProductionPlantSuppliers = new ArrayList<VRProductionPlantSupplier>();
 		
+		VRProductionPlant vrProductionPlant = vrProductionPlantLocalService.findByproductionPlantCode(productionPlantCode);
 		try {
 			vrProductionPlantSupplierPersistence.removeByproductionPlantCode(productionPlantCode);
 			
@@ -111,6 +113,12 @@ public class VRProductionPlantSupplierLocalServiceImpl
 				object.setCorporationName(objectData.getString("corporationName"));
 				object.setCorporationAddress(objectData.getString("corporationAddress"));
 				object.setProductionPlantCode(productionPlantCode);
+				object.setProductionPlantId(vrProductionPlant.getPrimaryKey());
+				object.setApplicantProfileId(vrProductionPlant.getApplicantProfileId());
+				object.setApplicantCode(vrProductionPlant.getApplicantCode());
+				object.setSupplierId(objectData.getLong("supplierId"));
+				object.setSupplierName(objectData.getString("supplierName"));
+				object.setSupplierAddress(objectData.getString("supplierAddress"));
 				
 				object = vrProductionPlantSupplierPersistence.update(object);
 				

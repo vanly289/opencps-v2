@@ -8,6 +8,9 @@
 
 package org.opencps.api.dossieraction.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -51,7 +54,8 @@ import javax.xml.bind.annotation.XmlType;
 "postStepCode",
 "autoEvent",
 "preCondition",
-"enable"
+"enable",
+"createFiles"
 })
 public class DossierNextActionModel {
 
@@ -63,6 +67,14 @@ public class DossierNextActionModel {
 	protected String autoEvent;
 	protected String preCondition;
 	protected Integer enable;
+	//add by Dungnv
+	protected List<DossierActionNextActioncreateFiles> createFiles;
+	public List<DossierActionNextActioncreateFiles> getCreateFiles() {
+        if (createFiles == null) {
+            createFiles = new ArrayList<DossierActionNextActioncreateFiles>();
+        }
+        return this.createFiles;
+    }
 
 /**
 * Gets the value of the processActionId property.

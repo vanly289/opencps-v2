@@ -38,4 +38,9 @@ public class VRProductionTypeActionImpl implements VRProductionTypeAction {
 		return result;
 	}
 
+	@Override
+	public List<VRProductType> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+		return VRProductTypeLocalServiceUtil.adminProcessData(arrayData, productionPlantCode);
+	}
+
 }

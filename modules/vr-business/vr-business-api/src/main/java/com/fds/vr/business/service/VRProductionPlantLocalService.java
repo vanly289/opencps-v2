@@ -116,6 +116,9 @@ public interface VRProductionPlantLocalService extends BaseLocalService,
 	public VRProductionPlant findByF_MT_APP_FORM_ID(long mtCore,
 		long applicantProfileId, long registrationFormId);
 
+	public VRProductionPlant findByproductionPlantCode(
+		java.lang.String productionPlantCode);
+
 	/**
 	* Returns the vr production plant with the primary key.
 	*

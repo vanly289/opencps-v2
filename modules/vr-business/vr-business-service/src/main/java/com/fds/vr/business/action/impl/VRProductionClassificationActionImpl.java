@@ -196,4 +196,9 @@ public class VRProductionClassificationActionImpl implements VRProductionClassif
 
 		}
 	}
+
+	@Override
+	public List<VRProductionClassification> adminProcessData(JSONArray arrayData, String productionPlantCode) {
+		return VRProductionClassificationLocalServiceUtil.adminProcessData(arrayData, productionPlantCode);
+	}
 }

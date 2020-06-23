@@ -256,6 +256,36 @@ public interface VRProductionPlantModel extends BaseModel<VRProductionPlant> {
 	public void setProductionPlantAddress(String productionPlantAddress);
 
 	/**
+	 * Returns the production plant region of this vr production plant.
+	 *
+	 * @return the production plant region of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionPlantRegion();
+
+	/**
+	 * Sets the production plant region of this vr production plant.
+	 *
+	 * @param productionPlantRegion the production plant region of this vr production plant
+	 */
+	public void setProductionPlantRegion(String productionPlantRegion);
+
+	/**
+	 * Returns the production plant region code of this vr production plant.
+	 *
+	 * @return the production plant region code of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionPlantRegionCode();
+
+	/**
+	 * Sets the production plant region code of this vr production plant.
+	 *
+	 * @param productionPlantRegionCode the production plant region code of this vr production plant
+	 */
+	public void setProductionPlantRegionCode(String productionPlantRegionCode);
+
+	/**
 	 * Returns the production plant state code of this vr production plant.
 	 *
 	 * @return the production plant state code of this vr production plant
@@ -350,6 +380,36 @@ public interface VRProductionPlantModel extends BaseModel<VRProductionPlant> {
 		String productionPlantDistrictName);
 
 	/**
+	 * Returns the production plant ward code of this vr production plant.
+	 *
+	 * @return the production plant ward code of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionPlantWardCode();
+
+	/**
+	 * Sets the production plant ward code of this vr production plant.
+	 *
+	 * @param productionPlantWardCode the production plant ward code of this vr production plant
+	 */
+	public void setProductionPlantWardCode(String productionPlantWardCode);
+
+	/**
+	 * Returns the production plant ward name of this vr production plant.
+	 *
+	 * @return the production plant ward name of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionPlantWardName();
+
+	/**
+	 * Sets the production plant ward name of this vr production plant.
+	 *
+	 * @param productionPlantWardName the production plant ward name of this vr production plant
+	 */
+	public void setProductionPlantWardName(String productionPlantWardName);
+
+	/**
 	 * Returns the production plant email of this vr production plant.
 	 *
 	 * @return the production plant email of this vr production plant
@@ -393,6 +453,37 @@ public interface VRProductionPlantModel extends BaseModel<VRProductionPlant> {
 	 * @param productionPlantFax the production plant fax of this vr production plant
 	 */
 	public void setProductionPlantFax(String productionPlantFax);
+
+	/**
+	 * Returns the production plant website of this vr production plant.
+	 *
+	 * @return the production plant website of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionPlantWebsite();
+
+	/**
+	 * Sets the production plant website of this vr production plant.
+	 *
+	 * @param productionPlantWebsite the production plant website of this vr production plant
+	 */
+	public void setProductionPlantWebsite(String productionPlantWebsite);
+
+	/**
+	 * Returns the production plant representative phone of this vr production plant.
+	 *
+	 * @return the production plant representative phone of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionPlantRepresentativePhone();
+
+	/**
+	 * Sets the production plant representative phone of this vr production plant.
+	 *
+	 * @param productionPlantRepresentativePhone the production plant representative phone of this vr production plant
+	 */
+	public void setProductionPlantRepresentativePhone(
+		String productionPlantRepresentativePhone);
 
 	/**
 	 * Returns the production plant representative of this vr production plant.
@@ -504,6 +595,98 @@ public interface VRProductionPlantModel extends BaseModel<VRProductionPlant> {
 	public void setProductionPlantStatus(String productionPlantStatus);
 
 	/**
+	 * Returns the production manufacture of this vr production plant.
+	 *
+	 * @return the production manufacture of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionManufacture();
+
+	/**
+	 * Sets the production manufacture of this vr production plant.
+	 *
+	 * @param productionManufacture the production manufacture of this vr production plant
+	 */
+	public void setProductionManufacture(String productionManufacture);
+
+	/**
+	 * Returns the production maintainer of this vr production plant.
+	 *
+	 * @return the production maintainer of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionMaintainer();
+
+	/**
+	 * Sets the production maintainer of this vr production plant.
+	 *
+	 * @param productionMaintainer the production maintainer of this vr production plant
+	 */
+	public void setProductionMaintainer(String productionMaintainer);
+
+	/**
+	 * Returns the production plant identity no of this vr production plant.
+	 *
+	 * @return the production plant identity no of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionPlantIdentityNo();
+
+	/**
+	 * Sets the production plant identity no of this vr production plant.
+	 *
+	 * @param productionPlantIdentityNo the production plant identity no of this vr production plant
+	 */
+	public void setProductionPlantIdentityNo(String productionPlantIdentityNo);
+
+	/**
+	 * Returns the production plant identity type of this vr production plant.
+	 *
+	 * @return the production plant identity type of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionPlantIdentityType();
+
+	/**
+	 * Sets the production plant identity type of this vr production plant.
+	 *
+	 * @param productionPlantIdentityType the production plant identity type of this vr production plant
+	 */
+	public void setProductionPlantIdentityType(
+		String productionPlantIdentityType);
+
+	/**
+	 * Returns the production plant identity description of this vr production plant.
+	 *
+	 * @return the production plant identity description of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionPlantIdentityDescription();
+
+	/**
+	 * Sets the production plant identity description of this vr production plant.
+	 *
+	 * @param productionPlantIdentityDescription the production plant identity description of this vr production plant
+	 */
+	public void setProductionPlantIdentityDescription(
+		String productionPlantIdentityDescription);
+
+	/**
+	 * Returns the production plant identity file entry ID of this vr production plant.
+	 *
+	 * @return the production plant identity file entry ID of this vr production plant
+	 */
+	public long getProductionPlantIdentityFileEntryId();
+
+	/**
+	 * Sets the production plant identity file entry ID of this vr production plant.
+	 *
+	 * @param productionPlantIdentityFileEntryId the production plant identity file entry ID of this vr production plant
+	 */
+	public void setProductionPlantIdentityFileEntryId(
+		long productionPlantIdentityFileEntryId);
+
+	/**
 	 * Returns the production plant employees note of this vr production plant.
 	 *
 	 * @return the production plant employees note of this vr production plant
@@ -550,6 +733,141 @@ public interface VRProductionPlantModel extends BaseModel<VRProductionPlant> {
 	 */
 	public void setProductionPlantProdEquipmentsNote(
 		String productionPlantProdEquipmentsNote);
+
+	/**
+	 * Returns the production identity file name of this vr production plant.
+	 *
+	 * @return the production identity file name of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionIdentityFileName();
+
+	/**
+	 * Sets the production identity file name of this vr production plant.
+	 *
+	 * @param productionIdentityFileName the production identity file name of this vr production plant
+	 */
+	public void setProductionIdentityFileName(String productionIdentityFileName);
+
+	/**
+	 * Returns the production identity file entry ID of this vr production plant.
+	 *
+	 * @return the production identity file entry ID of this vr production plant
+	 */
+	public long getProductionIdentityFileEntryId();
+
+	/**
+	 * Sets the production identity file entry ID of this vr production plant.
+	 *
+	 * @param productionIdentityFileEntryId the production identity file entry ID of this vr production plant
+	 */
+	public void setProductionIdentityFileEntryId(
+		long productionIdentityFileEntryId);
+
+	/**
+	 * Returns the applicant code of this vr production plant.
+	 *
+	 * @return the applicant code of this vr production plant
+	 */
+	@AutoEscape
+	public String getApplicantCode();
+
+	/**
+	 * Sets the applicant code of this vr production plant.
+	 *
+	 * @param applicantCode the applicant code of this vr production plant
+	 */
+	public void setApplicantCode(String applicantCode);
+
+	/**
+	 * Returns the supplier name of this vr production plant.
+	 *
+	 * @return the supplier name of this vr production plant
+	 */
+	@AutoEscape
+	public String getSupplierName();
+
+	/**
+	 * Sets the supplier name of this vr production plant.
+	 *
+	 * @param supplierName the supplier name of this vr production plant
+	 */
+	public void setSupplierName(String supplierName);
+
+	/**
+	 * Returns the supplier address of this vr production plant.
+	 *
+	 * @return the supplier address of this vr production plant
+	 */
+	@AutoEscape
+	public String getSupplierAddress();
+
+	/**
+	 * Sets the supplier address of this vr production plant.
+	 *
+	 * @param supplierAddress the supplier address of this vr production plant
+	 */
+	public void setSupplierAddress(String supplierAddress);
+
+	/**
+	 * Returns the corporation code of this vr production plant.
+	 *
+	 * @return the corporation code of this vr production plant
+	 */
+	@AutoEscape
+	public String getCorporationCode();
+
+	/**
+	 * Sets the corporation code of this vr production plant.
+	 *
+	 * @param corporationCode the corporation code of this vr production plant
+	 */
+	public void setCorporationCode(String corporationCode);
+
+	/**
+	 * Returns the corporation name of this vr production plant.
+	 *
+	 * @return the corporation name of this vr production plant
+	 */
+	@AutoEscape
+	public String getCorporationName();
+
+	/**
+	 * Sets the corporation name of this vr production plant.
+	 *
+	 * @param corporationName the corporation name of this vr production plant
+	 */
+	public void setCorporationName(String corporationName);
+
+	/**
+	 * Returns the corporation address of this vr production plant.
+	 *
+	 * @return the corporation address of this vr production plant
+	 */
+	@AutoEscape
+	public String getCorporationAddress();
+
+	/**
+	 * Sets the corporation address of this vr production plant.
+	 *
+	 * @param corporationAddress the corporation address of this vr production plant
+	 */
+	public void setCorporationAddress(String corporationAddress);
+
+	/**
+	 * Returns the production plant metadata of this vr production plant.
+	 *
+	 * @return the production plant metadata of this vr production plant
+	 */
+	@AutoEscape
+	public String getProductionPlantMetadata();
+
+	/**
+	 * Sets the production plant metadata of this vr production plant.
+	 *
+	 * @param productionPlantMetadata the production plant metadata of this vr production plant
+	 */
+	public void setProductionPlantMetadata(String productionPlantMetadata);
 
 	/**
 	 * Returns the registration ID of this vr production plant.
@@ -606,21 +924,6 @@ public interface VRProductionPlantModel extends BaseModel<VRProductionPlant> {
 	 * @param supplierId the supplier ID of this vr production plant
 	 */
 	public void setSupplierId(long supplierId);
-
-	/**
-	 * Returns the applicant code of this vr production plant.
-	 *
-	 * @return the applicant code of this vr production plant
-	 */
-	@AutoEscape
-	public String getApplicantCode();
-
-	/**
-	 * Sets the applicant code of this vr production plant.
-	 *
-	 * @param applicantCode the applicant code of this vr production plant
-	 */
-	public void setApplicantCode(String applicantCode);
 
 	/**
 	 * Returns the modify date of this vr production plant.
