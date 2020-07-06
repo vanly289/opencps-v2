@@ -96,7 +96,7 @@ import org.opencps.dossiermgt.service.ProcessStepRoleLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessRoleLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
-import org.opencps.dossiermgt.vr.utils.VRBussinessUtils;
+import org.opencps.dossiermgt.vr.utils.VRBusinessUtils;
 import org.opencps.usermgt.service.util.OCPSUserUtils;
 
 import backend.auth.api.exception.NotFoundException;
@@ -2026,7 +2026,7 @@ public class DossierActionsImpl_bak {
 
 		//Process write CSDL
 		if (dossierAction != null) {
-			VRBussinessUtils.processVRBussiness(groupId, dossier, dossierAction, 1, payload.toString());
+			VRBusinessUtils.processVRBussiness(groupId, dossier, dossierAction, 1, payload.toString());
 		}
 
 		_log.info("END DO ACTION ==========");

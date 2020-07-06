@@ -17,7 +17,7 @@ import java.util.Date;
 public interface VRHistoryProfileAction {
 	public VRHistoryProfile updateVRHistoryProfile(long id, String applicantCode, String productionPlantCode,
 			long dossierId, String dossierIdCTN, String dossierNo, String contentType, String contentFileTemplate,
-			JSONObject formData, Date syncDate, ServiceContext serviceContext) throws IOException;
+			long jsonFileEntryId, long pdfFileEntryId, Date syncDate, ServiceContext serviceContext) throws IOException;
 
 	public JSONObject findVRHistoryProfileApplicantCode(String applicantCode, int start, int end,
 			ServiceContext serviceContext);

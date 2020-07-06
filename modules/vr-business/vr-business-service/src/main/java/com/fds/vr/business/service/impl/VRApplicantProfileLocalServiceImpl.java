@@ -15,6 +15,7 @@
 package com.fds.vr.business.service.impl;
 
 import com.fds.vr.business.action.util.ConvertFormatDate;
+import com.fds.vr.business.constant.VRKeys;
 import com.fds.vr.business.exception.NoSuchVRApplicantProfileException;
 import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.service.base.VRApplicantProfileLocalServiceBaseImpl;
@@ -237,6 +238,12 @@ public class VRApplicantProfileLocalServiceImpl
 			long id = counterLocalService.increment(VRApplicantProfile.class.getName());
 	
 			object = vrApplicantProfilePersistence.create(id);
+		} else {
+			String applicantStatus = object.getApplicantStatus();
+			if(applicantStatus.equals(VRKeys.CHO_DUYET) || applicantStatus.equals(VRKeys.DA_DUYET)) {
+				_log.info("Error: Khong duoc sua thong tin neu doanh nghiep dang cho duyet hoac da duyet");
+				return null;
+			}
 		}
 		
 		Date now = new Date();

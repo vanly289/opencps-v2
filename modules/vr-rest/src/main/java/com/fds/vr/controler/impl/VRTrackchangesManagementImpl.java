@@ -6,6 +6,7 @@ package com.fds.vr.controler.impl;
 import com.fds.vr.business.action.VRTrackchangesAction;
 import com.fds.vr.business.action.impl.VRTrackchangesActionImpl;
 import com.fds.vr.controler.VRTrackchangesManagement;
+import com.fds.vr.model.VRTrackchangesBeanParam;
 import com.fds.vr.util.VRRestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -51,9 +52,11 @@ public class VRTrackchangesManagementImpl implements VRTrackchangesManagement {
 
 	@Override
 	public Response findVRTrackchangesDossier(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, long dossierId) {
+			Locale locale, User user, ServiceContext serviceContext, VRTrackchangesBeanParam vrTrackchangesBeanParam) {
 		VRTrackchangesAction action = new VRTrackchangesActionImpl();
-		JSONObject result = action.findByDossierId(dossierId, serviceContext);
+		JSONObject result = action.findByDossierIdOrDossierIdCTN(vrTrackchangesBeanParam.getDossierIdCTN(),
+				vrTrackchangesBeanParam.getDossierId(), vrTrackchangesBeanParam.getContentFileTemplate(),
+				serviceContext);
 
 		if (result != null && result.length() > 0) {
 			return Response.status(200).entity(result.toJSONString()).build();

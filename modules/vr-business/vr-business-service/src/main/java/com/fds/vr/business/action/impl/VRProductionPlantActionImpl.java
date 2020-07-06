@@ -2,12 +2,15 @@ package com.fds.vr.business.action.impl;
 
 import com.fds.vr.business.action.VRProductionPlantAction;
 import com.fds.vr.business.action.util.ActionUtil;
+import com.fds.vr.business.constant.VRKeys;
 import com.fds.vr.business.engine.SQLQueryBuilder;
+import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.VRProductType;
 import com.fds.vr.business.model.VRProductionPlant;
 import com.fds.vr.business.model.VRProductionPlantEmployee;
 import com.fds.vr.business.model.VRProductionPlantProdEquipment;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
+import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
 import com.fds.vr.business.service.VRProductTypeLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantEmployeeLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
@@ -23,6 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -487,6 +491,17 @@ public class VRProductionPlantActionImpl implements VRProductionPlantAction {
 	@Override
 	public List<VRProductionPlant> adminProcessData(JSONArray arrayData) {
 		List<VRProductionPlant> vrProductionPlants = new ArrayList<VRProductionPlant>();
+		if(arrayData.length() > 0) {
+			VRApplicantProfile vrApplicantProfile = VRApplicantProfileLocalServiceUtil.fetchVRApplicantProfile(arrayData.getJSONObject(0).getLong("applicantProfileId"));
+			if (Validator.isNotNull(vrApplicantProfile)) {
+				String applicantStatus = vrApplicantProfile.getApplicantStatus();
+				if(applicantStatus.equals(VRKeys.CHO_DUYET) || applicantStatus.equals(VRKeys.DA_DUYET)) {
+					_log.info("Error: Khong duoc sua thong tin neu doanh nghiep dang cho duyet hoac da duyet");
+					return null;
+				}
+			}
+		}
+
 		for(int i = 0; i < arrayData.length(); i++) {
 			JSONObject object = arrayData.getJSONObject(i);
 			

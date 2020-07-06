@@ -1,6 +1,8 @@
 package org.opencps.api.controller.impl;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -35,6 +37,9 @@ import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessPluginLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 
+import com.fds.vr.service.util.FileUploadUtils;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,6 +50,7 @@ import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -467,7 +473,16 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 			if (original) {
 
 				if (Validator.isNotNull(dossierFile)) {
-					formData = dossierFile.getFormData();
+					//Add by Dungnv
+			    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+					if (formDataFile != null) {
+						formData = FileUploadUtils.fileToString(formDataFile);
+					}
+					if(formData.isEmpty()) {
+						formData = dossierFile.getFormData();
+					}
+					//Comment by Dungnv
+					//formData = dossierFile.getFormData();
 				}
 
 			} else {

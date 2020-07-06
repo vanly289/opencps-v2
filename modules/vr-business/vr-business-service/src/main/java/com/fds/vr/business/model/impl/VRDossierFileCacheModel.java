@@ -66,7 +66,7 @@ public class VRDossierFileCacheModel implements CacheModel<VRDossierFile>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -100,6 +100,8 @@ public class VRDossierFileCacheModel implements CacheModel<VRDossierFile>,
 		sb.append(displayName);
 		sb.append(", formData=");
 		sb.append(formData);
+		sb.append(", formDataDossierFile=");
+		sb.append(formDataDossierFile);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
 		sb.append(", original=");
@@ -210,6 +212,7 @@ public class VRDossierFileCacheModel implements CacheModel<VRDossierFile>,
 			vrDossierFileImpl.setFormData(formData);
 		}
 
+		vrDossierFileImpl.setFormDataDossierFile(formDataDossierFile);
 		vrDossierFileImpl.setFileEntryId(fileEntryId);
 		vrDossierFileImpl.setOriginal(original);
 		vrDossierFileImpl.setEForm(eForm);
@@ -281,6 +284,8 @@ public class VRDossierFileCacheModel implements CacheModel<VRDossierFile>,
 		fileTemplateNo = objectInput.readUTF();
 		displayName = objectInput.readUTF();
 		formData = objectInput.readUTF();
+
+		formDataDossierFile = objectInput.readLong();
 
 		fileEntryId = objectInput.readLong();
 
@@ -374,6 +379,8 @@ public class VRDossierFileCacheModel implements CacheModel<VRDossierFile>,
 			objectOutput.writeUTF(formData);
 		}
 
+		objectOutput.writeLong(formDataDossierFile);
+
 		objectOutput.writeLong(fileEntryId);
 
 		objectOutput.writeBoolean(original);
@@ -438,6 +445,7 @@ public class VRDossierFileCacheModel implements CacheModel<VRDossierFile>,
 	public String fileTemplateNo;
 	public String displayName;
 	public String formData;
+	public long formDataDossierFile;
 	public long fileEntryId;
 	public boolean original;
 	public boolean eForm;

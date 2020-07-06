@@ -37,6 +37,8 @@ dependencies {
 	compileOnly project(":modules:vr-filterconfig:vr-filterconfig-service")
 	compileOnly project(":modules:vr-filterconfig:vr-filterconfig-api")
 	compileOnly project(":modules:backend-auth")
+	compileOnly project(":modules:vr-business:vr-business-api")
+	compileOnly project(":modules:vr-business:vr-business-service")
 	
 	testCompile group: "junit", name: "junit", version: "4.12"
 }	

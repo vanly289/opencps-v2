@@ -24,7 +24,7 @@ import org.opencps.datamgt.utils.DateTimeUtils;
  *
  */
 public class BusinessUtil {
-	
+
 	private static final Log _log = LogFactoryUtil.getLog(BusinessUtil.class);
 
 	public static JSONObject object2Json_originColumnName(Object object, Class<?> clazz, String tableAlias)
@@ -67,7 +67,7 @@ public class BusinessUtil {
 		}
 
 		return result;
-	}	
+	}
 
 	// Don't convert type date
 	public static JSONObject object2Json_originValue(Object object, Class<?> clazz, String tableAlias)

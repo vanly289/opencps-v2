@@ -85,6 +85,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 			{ "fileTemplateNo", Types.VARCHAR },
 			{ "displayName", Types.VARCHAR },
 			{ "formData", Types.VARCHAR },
+			{ "formDataDossierFile", Types.BIGINT },
 			{ "fileEntryId", Types.BIGINT },
 			{ "original", Types.BOOLEAN },
 			{ "eForm", Types.BOOLEAN },
@@ -117,6 +118,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		TABLE_COLUMNS_MAP.put("fileTemplateNo", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("formData", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("formDataDossierFile", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("original", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("eForm", Types.BOOLEAN);
@@ -131,7 +133,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		TABLE_COLUMNS_MAP.put("dossierActionId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table opencps_dossierfile (uuid_ VARCHAR(75) null,dossierFileId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dossierId LONG,referenceUid VARCHAR(75) null,dossierTemplateNo VARCHAR(75) null,dossierPartNo VARCHAR(75) null,dossierPartType INTEGER,fileTemplateNo VARCHAR(75) null,displayName VARCHAR(75) null,formData VARCHAR(75) null,fileEntryId LONG,original BOOLEAN,eForm BOOLEAN,isNew BOOLEAN,removed BOOLEAN,signCheck INTEGER,signInfo VARCHAR(75) null,formScript VARCHAR(75) null,formReport VARCHAR(75) null,formSchema VARCHAR(75) null,deliverableCode VARCHAR(75) null,dossierActionId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table opencps_dossierfile (uuid_ VARCHAR(75) null,dossierFileId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dossierId LONG,referenceUid VARCHAR(75) null,dossierTemplateNo VARCHAR(75) null,dossierPartNo VARCHAR(75) null,dossierPartType INTEGER,fileTemplateNo VARCHAR(75) null,displayName VARCHAR(75) null,formData VARCHAR(75) null,formDataDossierFile LONG,fileEntryId LONG,original BOOLEAN,eForm BOOLEAN,isNew BOOLEAN,removed BOOLEAN,signCheck INTEGER,signInfo VARCHAR(75) null,formScript VARCHAR(75) null,formReport VARCHAR(75) null,formSchema VARCHAR(75) null,deliverableCode VARCHAR(75) null,dossierActionId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table opencps_dossierfile";
 	public static final String ORDER_BY_JPQL = " ORDER BY dossierFile.modifiedDate DESC, dossierFile.dossierPartNo ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY opencps_dossierfile.modifiedDate DESC, opencps_dossierfile.dossierPartNo ASC";
@@ -217,6 +219,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		attributes.put("fileTemplateNo", getFileTemplateNo());
 		attributes.put("displayName", getDisplayName());
 		attributes.put("formData", getFormData());
+		attributes.put("formDataDossierFile", getFormDataDossierFile());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("original", getOriginal());
 		attributes.put("eForm", getEForm());
@@ -332,6 +335,12 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 
 		if (formData != null) {
 			setFormData(formData);
+		}
+
+		Long formDataDossierFile = (Long)attributes.get("formDataDossierFile");
+
+		if (formDataDossierFile != null) {
+			setFormDataDossierFile(formDataDossierFile);
 		}
 
 		Long fileEntryId = (Long)attributes.get("fileEntryId");
@@ -718,6 +727,16 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 	}
 
 	@Override
+	public long getFormDataDossierFile() {
+		return _formDataDossierFile;
+	}
+
+	@Override
+	public void setFormDataDossierFile(long formDataDossierFile) {
+		_formDataDossierFile = formDataDossierFile;
+	}
+
+	@Override
 	public long getFileEntryId() {
 		return _fileEntryId;
 	}
@@ -993,6 +1012,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		dossierFileImpl.setFileTemplateNo(getFileTemplateNo());
 		dossierFileImpl.setDisplayName(getDisplayName());
 		dossierFileImpl.setFormData(getFormData());
+		dossierFileImpl.setFormDataDossierFile(getFormDataDossierFile());
 		dossierFileImpl.setFileEntryId(getFileEntryId());
 		dossierFileImpl.setOriginal(getOriginal());
 		dossierFileImpl.setEForm(getEForm());
@@ -1219,6 +1239,8 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 			dossierFileCacheModel.formData = null;
 		}
 
+		dossierFileCacheModel.formDataDossierFile = getFormDataDossierFile();
+
 		dossierFileCacheModel.fileEntryId = getFileEntryId();
 
 		dossierFileCacheModel.original = getOriginal();
@@ -1278,7 +1300,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1312,6 +1334,8 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		sb.append(getDisplayName());
 		sb.append(", formData=");
 		sb.append(getFormData());
+		sb.append(", formDataDossierFile=");
+		sb.append(getFormDataDossierFile());
 		sb.append(", fileEntryId=");
 		sb.append(getFileEntryId());
 		sb.append(", original=");
@@ -1343,7 +1367,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("org.opencps.dossiermgt.model.DossierFile");
@@ -1412,6 +1436,10 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 		sb.append(
 			"<column><column-name>formData</column-name><column-value><![CDATA[");
 		sb.append(getFormData());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>formDataDossierFile</column-name><column-value><![CDATA[");
+		sb.append(getFormDataDossierFile());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
@@ -1500,6 +1528,7 @@ public class DossierFileModelImpl extends BaseModelImpl<DossierFile>
 	private String _originalFileTemplateNo;
 	private String _displayName;
 	private String _formData;
+	private long _formDataDossierFile;
 	private long _fileEntryId;
 	private long _originalFileEntryId;
 	private boolean _setOriginalFileEntryId;

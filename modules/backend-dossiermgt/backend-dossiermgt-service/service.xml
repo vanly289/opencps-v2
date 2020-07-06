@@ -462,6 +462,7 @@
 		<column name="fileTemplateNo" type="String" />
 		<column name="displayName" type="String" />
 		<column name="formData" type="String" />
+		<column name="formDataDossierFile" type="long" />
 		<column name="fileEntryId" type="long" />
 		<column name="original" type="boolean" />
 		<column name="eForm" type="boolean" />

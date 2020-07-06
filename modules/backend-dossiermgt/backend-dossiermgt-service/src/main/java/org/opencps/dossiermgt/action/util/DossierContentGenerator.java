@@ -1,5 +1,6 @@
 package org.opencps.dossiermgt.action.util;
 
+import java.io.File;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -135,8 +137,17 @@ public class DossierContentGenerator {
 						briefNotePattern = StringPool.BLANK;//briefNotePattern.replace(tmpKey, StringPool.BLANK);
 						//TODO: Trong truong hop khong tim thay dossierFile thi k update vao briefNote
 					} else {
-						
-						String formData = dossierFile.getFormData();
+						//Add by Dungnv
+						String formData = StringPool.BLANK;
+			    		File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+						if (formDataFile != null) {
+							formData = FileUploadUtils.fileToString(formDataFile);
+						}
+						if(formData.isEmpty()) {
+							formData = dossierFile.getFormData();
+						}
+						//Comment by Dungnv
+						//String formData = dossierFile.getFormData();
 //						_log.info("===getBriefNote===" + dossierFile.getDossierFileId() + "=" + formData);
 						if (Validator.isNull(formData)) {
 							briefNotePattern = briefNotePattern.replace(tmpKey, StringPool.BLANK);

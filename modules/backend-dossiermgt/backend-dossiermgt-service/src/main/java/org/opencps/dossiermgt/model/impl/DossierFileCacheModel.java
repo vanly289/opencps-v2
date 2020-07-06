@@ -66,7 +66,7 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -100,6 +100,8 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 		sb.append(displayName);
 		sb.append(", formData=");
 		sb.append(formData);
+		sb.append(", formDataDossierFile=");
+		sb.append(formDataDossierFile);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
 		sb.append(", original=");
@@ -212,6 +214,7 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 			dossierFileImpl.setFormData(formData);
 		}
 
+		dossierFileImpl.setFormDataDossierFile(formDataDossierFile);
 		dossierFileImpl.setFileEntryId(fileEntryId);
 		dossierFileImpl.setOriginal(original);
 		dossierFileImpl.setEForm(eForm);
@@ -285,6 +288,8 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 		fileTemplateNo = objectInput.readUTF();
 		displayName = objectInput.readUTF();
 		formData = objectInput.readUTF();
+
+		formDataDossierFile = objectInput.readLong();
 
 		fileEntryId = objectInput.readLong();
 
@@ -380,6 +385,8 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 			objectOutput.writeUTF(formData);
 		}
 
+		objectOutput.writeLong(formDataDossierFile);
+
 		objectOutput.writeLong(fileEntryId);
 
 		objectOutput.writeBoolean(original);
@@ -446,6 +453,7 @@ public class DossierFileCacheModel implements CacheModel<DossierFile>,
 	public String fileTemplateNo;
 	public String displayName;
 	public String formData;
+	public long formDataDossierFile;
 	public long fileEntryId;
 	public boolean original;
 	public boolean eForm;

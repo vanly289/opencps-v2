@@ -4,9 +4,14 @@ import com.fds.vr.business.action.VRHistoryProfileAction;
 import com.fds.vr.business.action.VRTrackchangesAction;
 import com.fds.vr.business.action.impl.VRHistoryProfileActionImpl;
 import com.fds.vr.business.action.impl.VRTrackchangesActionImpl;
+import com.fds.vr.business.model.VRTrackchanges;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
+import com.fds.vr.business.service.VRTrackchangesLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -17,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -33,6 +39,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -99,7 +108,7 @@ import org.opencps.dossiermgt.service.ProcessStepRoleLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessRoleLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
-import org.opencps.dossiermgt.vr.utils.VRBussinessUtils;
+import org.opencps.dossiermgt.vr.utils.VRBusinessUtils;
 import org.opencps.usermgt.model.Applicant;
 import org.opencps.usermgt.service.ApplicantLocalServiceUtil;
 import org.opencps.usermgt.service.util.OCPSUserUtils;
@@ -2048,6 +2057,16 @@ public class DossierActionsImpl implements DossierActions {
 					}
 				}
 			}
+			//Add by Dungnv - hot fix - co the phai sua lai lan nua
+			if (dossierAction != null){ 
+				List<DossierFile> lsDossierFile = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
+				if (lsDossierFile != null && lsDossierFile.size() > 0) {
+					for (DossierFile dosserFile : lsDossierFile) {
+						dosserFile.setDossierActionId(dossierAction.getDossierActionId());
+						DossierFileLocalServiceUtil.updateDossierFile(dosserFile);
+					}
+				}
+			}
 
 			String preCondition = proAction.getPreCondition();
 			String autoEvent = proAction.getAutoEvent();
@@ -2340,7 +2359,16 @@ public class DossierActionsImpl implements DossierActions {
 
 		//Process write CSDL
 		if (dossierAction != null) {
-			VRBussinessUtils.processVRBussiness(groupId, dossier, dossierAction, 1, payload.toString());
+			VRBusinessUtils.processVRBussiness(groupId, dossier, dossierAction, 1, payload.toString());
+			
+			//Add by Dungnv - Add trackchanges and history
+			context.setScopeGroupId(groupId);
+			List<DossierFile> dossierFiles = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
+			for(DossierFile dossierFile : dossierFiles) {
+				VRBusinessUtils.updateVRTrackchangesAndVRHistoryProfileForDossier(dossierFile.getFormDataDossierFile(), dossierFile.getDossierPartNo(), 
+						dossierFile.getDossierTemplateNo(), dossierId, dossierFile.getCompanyId(), 
+						dossierFile.getFileEntryId(), context);
+			}
 		}
 
 		_log.info("END DO ACTION ==========");
@@ -2391,25 +2419,6 @@ public class DossierActionsImpl implements DossierActions {
 
 			DossierFileActions actions = new DossierFileActionsImpl();
 			actions.updateDossierFileFormData(groupId, dossierId, dossierActionId, dossierFile.getReferenceUid(), formData, context);
-			
-			//Add by Dungnv - Add trackchanges and history
-			try {
-				String partNo = StringPool.BLANK;
-				partNo = dossierFile.getDossierPartNo();
-				if ("KQ1, KQ2, KQ4, TP1".contains(partNo)) {
-					VRTrackchangesAction trackchangesAction = new VRTrackchangesActionImpl();
-					VRHistoryProfileAction profileAction = new VRHistoryProfileActionImpl();
-					JSONObject jsonTrackchanges = trackchangesAction.findByDossierId(dossierFile.getDossierId(), context);
-					if (jsonTrackchanges!= null && jsonTrackchanges.length() > 0) {
-						trackchangesAction.updateVRTrackchanges(jsonTrackchanges.getLong("id"), null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, context);
-					} else {
-						trackchangesAction.updateVRTrackchanges(0L, null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, context);
-					}
-					profileAction.updateVRHistoryProfile(0L, null, null, dossierFile.getDossierId(), null, null, null, partNo, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, context);
-				}
-			}catch (Exception e) {
-				_log.error(e);
-			}
 			
 			//DossierFileLocalServiceUtil.updateFormDataPlugin(groupId, dossierId,
 			//		dossierFile.getReferenceUid(), formData, context);
@@ -3529,7 +3538,16 @@ public class DossierActionsImpl implements DossierActions {
 									df: for (DossierFile dossierFile : dossierFilesResult) {
 										if (dossierFile.getDossierPartNo().equals(dossierPart.getPartNo())) {
 											eForm = dossierFile.getEForm();
-											formData = dossierFile.getFormData();
+											//Add by Dungnv
+									    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+											if (formDataFile != null) {
+												formData = FileUploadUtils.fileToString(formDataFile);
+											}
+											if(formData.isEmpty()) {
+												formData = dossierFile.getFormData();
+											}
+									        //Comment by Dungnv
+											//formData = dossierFile.getFormData();
 											formScript = dossierFile.getFormScript();
 											docFileReferenceUid = dossierFile.getReferenceUid();
 											fileEntryId = dossierFile.getFileEntryId();

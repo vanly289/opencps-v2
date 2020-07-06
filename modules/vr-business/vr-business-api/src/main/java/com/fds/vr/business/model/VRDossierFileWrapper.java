@@ -76,6 +76,7 @@ public class VRDossierFileWrapper implements VRDossierFile,
 		attributes.put("fileTemplateNo", getFileTemplateNo());
 		attributes.put("displayName", getDisplayName());
 		attributes.put("formData", getFormData());
+		attributes.put("formDataDossierFile", getFormDataDossierFile());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("original", getOriginal());
 		attributes.put("eForm", getEForm());
@@ -187,6 +188,12 @@ public class VRDossierFileWrapper implements VRDossierFile,
 
 		if (formData != null) {
 			setFormData(formData);
+		}
+
+		Long formDataDossierFile = (Long)attributes.get("formDataDossierFile");
+
+		if (formDataDossierFile != null) {
+			setFormDataDossierFile(formDataDossierFile);
 		}
 
 		Long fileEntryId = (Long)attributes.get("fileEntryId");
@@ -622,6 +629,16 @@ public class VRDossierFileWrapper implements VRDossierFile,
 	}
 
 	/**
+	* Returns the form data dossier file of this vr dossier file.
+	*
+	* @return the form data dossier file of this vr dossier file
+	*/
+	@Override
+	public long getFormDataDossierFile() {
+		return _vrDossierFile.getFormDataDossierFile();
+	}
+
+	/**
 	* Returns the group ID of this vr dossier file.
 	*
 	* @return the group ID of this vr dossier file
@@ -805,6 +822,16 @@ public class VRDossierFileWrapper implements VRDossierFile,
 	@Override
 	public void setFormData(java.lang.String formData) {
 		_vrDossierFile.setFormData(formData);
+	}
+
+	/**
+	* Sets the form data dossier file of this vr dossier file.
+	*
+	* @param formDataDossierFile the form data dossier file of this vr dossier file
+	*/
+	@Override
+	public void setFormDataDossierFile(long formDataDossierFile) {
+		_vrDossierFile.setFormDataDossierFile(formDataDossierFile);
 	}
 
 	/**

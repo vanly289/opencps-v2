@@ -43,16 +43,14 @@ import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
+import org.opencps.dossiermgt.vr.utils.VRBusinessUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
-import com.fds.vr.business.action.VRHistoryProfileAction;
-import com.fds.vr.business.action.VRTrackchangesAction;
-import com.fds.vr.business.action.impl.VRHistoryProfileActionImpl;
-import com.fds.vr.business.action.impl.VRTrackchangesActionImpl;
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -224,26 +222,15 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 						if (dossierFileList != null && dossierFileList.size() > 0) {
 							for (DossierFile dossierFile : dossierFileList) {
 								dossierFile.setIsNew(false);
-								DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+								dossierFile = DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+								
 								//Add by Dungnv - Add trackchanges and history
-								serviceContext.setScopeGroupId(dossierFile.getGroupId());
-								try {
-									String partNo = StringPool.BLANK;
-									partNo = dossierFile.getDossierPartNo();
-									if ("KQ1, KQ2, KQ4, TP1".contains(partNo)) {
-										VRTrackchangesAction trackchangesAction = new VRTrackchangesActionImpl();
-										VRHistoryProfileAction profileAction = new VRHistoryProfileActionImpl();
-										JSONObject jsonTrackchanges = trackchangesAction.findByDossierId(dossierFile.getDossierId(), serviceContext);
-										if (jsonTrackchanges!= null && jsonTrackchanges.length() > 0) {
-											trackchangesAction.updateVRTrackchanges(jsonTrackchanges.getLong("id"), null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
-										} else {
-											trackchangesAction.updateVRTrackchanges(0L, null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
-										}
-										profileAction.updateVRHistoryProfile(0L, null, null, dossierFile.getDossierId(), null, null, null, partNo, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
-									}
-								}catch (Exception e) {
-									_log.error(e);
-								}
+								serviceContext.setScopeGroupId(dossier.getGroupId());
+								String partNo = dossierFile.getDossierPartNo();
+								
+//								VRBusinessUtils.updateVRTrackchangesAndVRHistoryProfileForDossier(dossierFile.getFormDataDossierFile(), partNo, 
+//										dossierFile.getDossierTemplateNo(), dossierId, dossier.getCompanyId(), 
+//										dossierFile.getFileEntryId(), serviceContext);
 							}
 							_log.info("START pull dossier File1: ");
 							pullDossierFiles(userId, desDossier.getGroupId(), desDossier.getDossierId(),
@@ -335,26 +322,15 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 						if (dossierFileList != null && dossierFileList.size() > 0) {
 							for (DossierFile dossierFile : dossierFileList) {
 								dossierFile.setIsNew(false);
-								DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+								dossierFile = DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+								
 								//Add by Dungnv - Add trackchanges and history
-								serviceContext.setScopeGroupId(dossierFile.getGroupId());
-								try {
-									String partNo = StringPool.BLANK;
-									partNo = dossierFile.getDossierPartNo();
-									if ("KQ1, KQ2, KQ4, TP1".contains(partNo)) {
-										VRTrackchangesAction trackchangesAction = new VRTrackchangesActionImpl();
-										VRHistoryProfileAction profileAction = new VRHistoryProfileActionImpl();
-										JSONObject jsonTrackchanges = trackchangesAction.findByDossierId(dossierFile.getDossierId(), serviceContext);
-										if (jsonTrackchanges!= null && jsonTrackchanges.length() > 0) {
-											trackchangesAction.updateVRTrackchanges(jsonTrackchanges.getLong("id"), null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
-										} else {
-											trackchangesAction.updateVRTrackchanges(0L, null, null, dossierFile.getDossierId(), null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
-										}
-										profileAction.updateVRHistoryProfile(0L, null, null, dossierFile.getDossierId(), null, null, null, partNo, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
-									}
-								}catch (Exception e) {
-									_log.error(e);
-								}
+								serviceContext.setScopeGroupId(dossier.getGroupId());
+								String partNo = dossierFile.getDossierPartNo();
+								
+//								VRBusinessUtils.updateVRTrackchangesAndVRHistoryProfileForDossier(dossierFile.getFormDataDossierFile(), partNo, 
+//										dossierFile.getDossierTemplateNo(), dossierId, dossier.getCompanyId(), 
+//										dossierFile.getFileEntryId(), serviceContext);
 							}
 							_log.info("START pull dossier File1: ");
 							pullDossierFiles(userId, desDossier.getGroupId(), desDossier.getDossierId(), dossierFileList,
@@ -718,10 +694,15 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(desGroupId,
 									dossierFile.getFileTemplateNo());
 							if (part != null) {
-								String formData = dossierFile.getFormData();
-								//_log.info("formData: " + formData);
-								pullFormData(desGroupId, fileRef, dossierTemplateNo, desDossierId, formData, part,
+								//Add by Dungnv
+						        long formDataFileEntryId = dossierFile.getFormDataDossierFile();
+						        pullFormData(desGroupId, fileRef, dossierTemplateNo, desDossierId, formDataFileEntryId, part,
 										dossierActionId, serviceContext);
+						        //Comment by Dungnv
+								//String formData = dossierFile.getFormData();
+								//_log.info("formData: " + formData);
+								//pullFormData(desGroupId, fileRef, dossierTemplateNo, desDossierId, formData, part,
+								//		dossierActionId, serviceContext);
 							}
 						}
 					} else {
@@ -760,10 +741,24 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 									Base64.getEncoder().encodeToString((RESTFulConfiguration.CLIENT_USER
 											+ StringPool.COLON + RESTFulConfiguration.CLIENT_PASS).getBytes()));
 
-							pullDossierFile(requestURL, "UTF-8", desGroupId, desDossierId, clientAuthString, tempFile,
+							//Add by Dungnv
+					        String formData = StringPool.BLANK;
+					    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+							if (formDataFile != null) {
+								formData = FileUploadUtils.fileToString(formDataFile);
+							}
+							if (formData.isEmpty()) {
+								formData = dossierFile.getFormData();
+							}
+					        pullDossierFile(requestURL, "UTF-8", desGroupId, desDossierId, clientAuthString, tempFile,
 									dossierFile.getDossierTemplateNo(), dossierFile.getDossierPartNo(),
 									dossierFile.getFileTemplateNo(), dossierFile.getDisplayName(),
-									dossierFile.getFormData(), dossierRef, fileRef, serviceContext);
+									formData, dossierRef, fileRef, dossierFile.getFormDataDossierFile(), serviceContext);
+					        //Comment by Dungnv
+							//pullDossierFile(requestURL, "UTF-8", desGroupId, desDossierId, clientAuthString, tempFile,
+							//		dossierFile.getDossierTemplateNo(), dossierFile.getDossierPartNo(),
+							//		dossierFile.getFileTemplateNo(), dossierFile.getDisplayName(),
+							//		dossierFile.getFormData(), dossierRef, fileRef, serviceContext);
 						} else {
 							// Sync FormData
 							_log.info("Sync FormData START ERROR:****** ");
@@ -772,10 +767,15 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 							DossierPart part = DossierPartLocalServiceUtil.getByFileTemplateNo(desGroupId,
 									dossierFile.getFileTemplateNo());
 							if (part != null) {
-								String formData = dossierFile.getFormData();
-								//_log.info("formData: " + formData);
-								pullFormData(desGroupId, fileRef, dossierTemplateNo, desDossierId, formData, part,
+								//Add by Dungnv
+						        long formDataFileEntryId = dossierFile.getFormDataDossierFile();
+						        pullFormData(desGroupId, fileRef, dossierTemplateNo, desDossierId, formDataFileEntryId, part,
 										dossierActionId, serviceContext);
+						        //Comment by Dungnv
+								//String formData = dossierFile.getFormData();
+								//_log.info("formData: " + formData);
+								//pullFormData(desGroupId, fileRef, dossierTemplateNo, desDossierId, formData, part,
+								//		dossierActionId, serviceContext);
 							}
 
 							// TODO: Write file upload sync
@@ -815,25 +815,14 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 				}
 			}
+			
 			//Add by Dungnv - Add trackchanges and history
-			serviceContext.setScopeGroupId(dossierFile.getGroupId());
-			try {
-				String partNo = StringPool.BLANK;
-				partNo = dossierFile.getDossierPartNo();
-				if ("KQ1, KQ2, KQ4, TP1".contains(partNo)) {
-					VRTrackchangesAction trackchangesAction = new VRTrackchangesActionImpl();
-					VRHistoryProfileAction profileAction = new VRHistoryProfileActionImpl();
-					JSONObject jsonTrackchanges = trackchangesAction.findByDossierId(dossierFile.getDossierId(), serviceContext);
-					if (jsonTrackchanges!= null && jsonTrackchanges.length() > 0) {
-						trackchangesAction.updateVRTrackchanges(jsonTrackchanges.getLong("id"), null, null, desDossierId, null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
-					} else {
-						trackchangesAction.updateVRTrackchanges(0L, null, null, desDossierId, null, null, null, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
-					}
-					profileAction.updateVRHistoryProfile(0L, null, null, desDossierId, null, null, null, partNo, JSONFactoryUtil.createJSONObject(dossierFile.getFormData()), null, serviceContext);
-				}
-			}catch (Exception e) {
-				_log.error(e);
-			}
+			serviceContext.setScopeGroupId(desGroupId);
+			String partNo = dossierFile.getDossierPartNo();
+			
+//			VRBusinessUtils.updateVRTrackchangesAndVRHistoryProfileForDossier(dossierFile.getFormDataDossierFile(), partNo, 
+//					dossierFile.getDossierTemplateNo(), desDossierId, dossier.getCompanyId(), 
+//					dossierFile.getFileEntryId(), serviceContext);
 		}
 
 	}
@@ -892,7 +881,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 
 	private void pullDossierFile(String requestURL, String charset, long desGroupId, long dossierId,
 			String authStringEnc, File file, String dossierTemplateNo, String dossierPartNo, String fileTemplateNo,
-			String displayName, String formData, String dossierRef, String fileRef, ServiceContext serviceContext) {
+			String displayName, String formData, String dossierRef, String fileRef, long formDataDossierFile, ServiceContext serviceContext) {
 
 		_log.info("START update FORMDATA*****");
 		try {
@@ -908,6 +897,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			multipart.addFormField("fileType", StringPool.BLANK);
 			multipart.addFormField("isSync", StringPool.BLANK);
 			multipart.addFormField("formData", formData);
+			multipart.addFormField("formDataDossierFile", String.valueOf(formDataDossierFile));
 
 			_log.info("START update FORMDATA*****referenceUid"+fileRef);
 			_log.info("START update FORMDATA*****dossierTemplateNo"+dossierTemplateNo);
@@ -915,7 +905,8 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 			_log.info("START update FORMDATA*****fileTemplateNo"+fileTemplateNo);
 			_log.info("START update FORMDATA*****displayName"+displayName);
 			_log.info("START update FORMDATA*****formData"+formData);
-
+			_log.info("START update FORMDATA*****formDataDossierFile"+formDataDossierFile);
+			
 			multipart.finish();
 			resetDossier(desGroupId, dossierRef, false, serviceContext);
 
@@ -931,8 +922,31 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 //		//
 //	}
 
+//	Comment by Dungnv
+//	private void pullFormData(long desGroupId, String fileRef, String dossierTemplateNo, long dossierId,
+//			String formData, DossierPart part, long dossierActionId, ServiceContext serviceContext) {
+//		try {
+//			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(dossierId, fileRef);
+//			if (Validator.isNull(dossierFile)) {
+//				// create dossierFile
+//				dossierFile = DossierFileLocalServiceUtil.addDossierFile(desGroupId, dossierId,
+//						PortalUUIDUtil.generate(), dossierTemplateNo, part.getPartNo(), part.getFileTemplateNo(),
+//						part.getPartName(), StringPool.BLANK, 0, null, StringPool.BLANK, StringPool.FALSE,
+//						dossierActionId, serviceContext);
+//			}
+//
+//			dossierFile.setFormData(formData);
+//
+//			DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
+//
+//		} catch (Exception e) {
+//			_log.error(e);
+//		}
+//	}
+
+	//Add by Dungnv
 	private void pullFormData(long desGroupId, String fileRef, String dossierTemplateNo, long dossierId,
-			String formData, DossierPart part, long dossierActionId, ServiceContext serviceContext) {
+			long formDataDossierFile, DossierPart part, long dossierActionId, ServiceContext serviceContext) {
 		try {
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(dossierId, fileRef);
 			if (Validator.isNull(dossierFile)) {
@@ -943,7 +957,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 						dossierActionId, serviceContext);
 			}
 
-			dossierFile.setFormData(formData);
+			dossierFile.setFormDataDossierFile(formDataDossierFile);
 
 			DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
 
@@ -952,6 +966,7 @@ public class DossierPullScheduler extends BaseSchedulerEntryMessageListener {
 		}
 	}
 
+	
 //	private void updateFormData(long desGroupId, List<String> response, long dossierId, String formData,
 //			ServiceContext serviceContext) throws PortalException {
 //

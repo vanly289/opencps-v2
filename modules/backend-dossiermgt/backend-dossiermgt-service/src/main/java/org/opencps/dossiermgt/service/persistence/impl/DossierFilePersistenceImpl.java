@@ -10898,6 +10898,7 @@ public class DossierFilePersistenceImpl extends BasePersistenceImpl<DossierFile>
 		dossierFileImpl.setFileTemplateNo(dossierFile.getFileTemplateNo());
 		dossierFileImpl.setDisplayName(dossierFile.getDisplayName());
 		dossierFileImpl.setFormData(dossierFile.getFormData());
+		dossierFileImpl.setFormDataDossierFile(dossierFile.getFormDataDossierFile());
 		dossierFileImpl.setFileEntryId(dossierFile.getFileEntryId());
 		dossierFileImpl.setOriginal(dossierFile.isOriginal());
 		dossierFileImpl.setEForm(dossierFile.isEForm());

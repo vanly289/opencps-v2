@@ -1,5 +1,6 @@
 package org.opencps.dossiermgt.action.util;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +21,7 @@ import org.opencps.usermgt.action.impl.ApplicantActionsImpl;
 import org.opencps.usermgt.model.Employee;
 import org.opencps.usermgt.service.EmployeeLocalServiceUtil;
 
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -284,9 +286,22 @@ public class AutoFillFormData {
 					try {
 						DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 								paper, false, new DossierFileComparator(false, "createDate", Date.class));
-						
-						if (Validator.isNotNull(dossierFile) && Validator.isNotNull(dossierFile.getFormData()) && dossierFile.getFormData().trim().length() != 0) {
-							JSONObject jsonOtherData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
+						//Add by Dungnv
+				    	String formData = StringPool.BLANK;
+				    	if (dossierFile != null) {
+				    		File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+							if (formDataFile != null) {
+								formData = FileUploadUtils.fileToString(formDataFile);
+							}
+							if(formData.isEmpty()) {
+								formData = dossierFile.getFormData();
+							}
+				    	}
+				    	if (Validator.isNotNull(dossierFile) && Validator.isNotNull(formData) && formData.trim().length() != 0) {
+							JSONObject jsonOtherData = JSONFactoryUtil.createJSONObject(formData);
+				    	//Comment by Dungnnv
+						//if (Validator.isNotNull(dossierFile) && Validator.isNotNull(dossierFile.getFormData()) && dossierFile.getFormData().trim().length() != 0) {
+						//	JSONObject jsonOtherData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
 							Map<String, Object> jsonOtherMap = jsonToMap(jsonOtherData);
 							String myCHK = StringPool.BLANK;
 							try {

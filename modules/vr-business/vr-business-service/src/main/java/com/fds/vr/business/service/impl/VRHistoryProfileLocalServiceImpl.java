@@ -18,15 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.fds.vr.business.model.VRHistoryProfile;
 import com.fds.vr.business.service.base.VRHistoryProfileLocalServiceBaseImpl;
-import com.fds.vr.business.service.persistence.VRHistoryProfileFinder;
-import com.fds.vr.service.util.FileUploadUtils;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -59,10 +54,9 @@ public class VRHistoryProfileLocalServiceImpl extends VRHistoryProfileLocalServi
 	 */
 	public VRHistoryProfile updateVRHistoryProfile(long id, String applicantCode, String productionPlantCode,
 			long dossierId, String dossierIdCTN, String dossierNo, String contentType, String contentFileTemplate,
-			InputStream inputStream, String sourceFileName, long fileSize, String fileType, Date syncDate,
-			ServiceContext serviceContext) {
+			long jsonFileEntryId, long pdfFileEntryId, Date syncDate, ServiceContext serviceContext) {
 		long userId = serviceContext.getUserId();
-		long groupId = serviceContext.getScopeGroupId();
+		//long groupId = serviceContext.getScopeGroupId();
 
 		VRHistoryProfile vrHistoryProfile = vrHistoryProfilePersistence.fetchByPrimaryKey(id);
 
@@ -74,26 +68,19 @@ public class VRHistoryProfileLocalServiceImpl extends VRHistoryProfileLocalServi
 		}
 		vrHistoryProfile.setApplicantCode(applicantCode);
 		vrHistoryProfile.setProductionPlantCode(productionPlantCode);
-		vrHistoryProfile.setDossierId(dossierId);
+		if(dossierId > 0) {
+			vrHistoryProfile.setDossierId(dossierId);
+		}
 		vrHistoryProfile.setDossierIdCTN(dossierIdCTN);
 		vrHistoryProfile.setDossierNo(dossierNo);
 		vrHistoryProfile.setContentType(contentType);
-		vrHistoryProfile.setSyncDate(syncDate);
+		if (syncDate == null) {
+			vrHistoryProfile.setSyncDate(now);
+		}
 		vrHistoryProfile.setModifyUserId(userId);
 		vrHistoryProfile.setContentFileTemplate(contentFileTemplate);
-		long fileEntryId = 0;
-
-		try {
-			FileEntry fileEntry = FileUploadUtils.uploadFormDataFile(userId, groupId, inputStream, sourceFileName,
-					fileType, serviceContext);
-
-			if (fileEntry != null) {
-				fileEntryId = fileEntry.getFileEntryId();
-			}
-		} catch (Exception e) {
-			throw new SystemException(e);
-		}
-		vrHistoryProfile.setContentjsonFileEntryId(fileEntryId);
+		vrHistoryProfile.setContentjsonFileEntryId(jsonFileEntryId);
+		vrHistoryProfile.setContentFileEntryId(pdfFileEntryId);
 
 		vrHistoryProfile = vrHistoryProfilePersistence.update(vrHistoryProfile);
 		return vrHistoryProfile;
@@ -112,6 +99,10 @@ public class VRHistoryProfileLocalServiceImpl extends VRHistoryProfileLocalServi
 				.create("vr_history_profile", "createDate", "desc");
 
 		return vrHistoryProfilePersistence.findByF_DossierId(dossierId, start, end, orderByComparator);
+	}
+	
+	public List<VRHistoryProfile> findByDossierIdCTN(String dossierIdCTN, int start, int end) {
+		return vrHistoryProfilePersistence.findByF_dossierIdCTN(dossierIdCTN, start, end);
 	}
 
 	public List<VRHistoryProfile> findVRHitoryProfiles(String applicantCode, String productionPlantCode, long dossierId,

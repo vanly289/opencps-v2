@@ -16,13 +16,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Date;
 
 /**
@@ -30,26 +27,16 @@ import java.util.Date;
  *
  */
 public class VRTrackchangesActionImpl implements VRTrackchangesAction {
-	
+
 	private static final Log _log = LogFactoryUtil.getLog(VRTrackchangesActionImpl.class);
 
 	@Override
 	public VRTrackchanges updateVRTrackchanges(long id, String applicantCode, String productionPlantCode,
-			long dossierId, String dossierIdCTN, String dossierNo, String contentType, JSONObject formData,
-			Date syncDate, ServiceContext serviceContext) throws IOException {
-		File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), StringPool.PERIOD + "txt");
-		OutputStream outStream = new FileOutputStream(tempFile);
-		byte[] by = formData.toJSONString().getBytes();
-		for (int i = 0; i < by.length; i++) {
-			byte b = by[i];
-			outStream.write(b);
-		}
-		outStream.close();
-		InputStream inputStream = new FileInputStream(tempFile);
+			long dossierId, String dossierIdCTN, String dossierNo, String contentType, String contentFileTemplate,
+			long fileEntryId, Date syncDate, ServiceContext serviceContext) throws IOException {
 
 		return VRTrackchangesLocalServiceUtil.updateVRTrackchanges(id, applicantCode, productionPlantCode, dossierId,
-				dossierIdCTN, dossierNo, contentType, inputStream, tempFile.getName(), tempFile.length(), null,
-				syncDate, serviceContext);
+				dossierIdCTN, dossierNo, contentType, contentFileTemplate, fileEntryId, syncDate, serviceContext);
 	}
 
 	@Override
@@ -65,15 +52,23 @@ public class VRTrackchangesActionImpl implements VRTrackchangesAction {
 	}
 
 	@Override
-	public JSONObject findByDossierId(long dossierId, ServiceContext serviceContext) {
-		VRTrackchanges vrTrackchanges = VRTrackchangesLocalServiceUtil.findByDossierId(dossierId);
+	public JSONObject findByDossierIdOrDossierIdCTN(String dossierIdCTN, long dossierId, String contentFileTemplate,
+			ServiceContext serviceContext) {
+		VRTrackchanges vrTrackchanges = null;
+		if (dossierId > 0) {
+			vrTrackchanges = VRTrackchangesLocalServiceUtil.findByDossierId_ContentFileTemplate(dossierId, contentFileTemplate);
+		}
+		if (vrTrackchanges == null && Validator.isNotNull(dossierIdCTN)) {
+			vrTrackchanges = VRTrackchangesLocalServiceUtil.findByDossierIdCTN_ContentFileTemplate(dossierIdCTN, contentFileTemplate);
+		}
 		return getResult(vrTrackchanges);
 	}
 
 	private JSONObject getResult(VRTrackchanges vrTrackchanges) {
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		try {
-			result = BusinessUtil.object2Json_originColumnName(vrTrackchanges, VRTrackchangesModelImpl.class, StringPool.BLANK);
+			result = BusinessUtil.object2Json_originColumnName(vrTrackchanges, VRTrackchangesModelImpl.class,
+					StringPool.BLANK);
 			if (result != null && result.length() > 0) {
 				File previousFile = FileUploadUtils.getFile(result.getLong("previousContentFileEntryId"));
 				if (previousFile != null) {
@@ -96,4 +91,5 @@ public class VRTrackchangesActionImpl implements VRTrackchangesAction {
 		}
 		return result;
 	}
+
 }

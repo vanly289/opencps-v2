@@ -189,8 +189,20 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		_log.info("****Start autofill file at:" + new Date());
 
 		if (Validator.isNotNull(dossierPart.getSampleData())) {
-			object.setFormData(
-					AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, serviceContext));
+			String formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, serviceContext);
+			//Comment by Dungnv
+			//object.setFormData(formData);
+			if(!formData.isEmpty()) {
+				long fileEntryIdFormData = 0;
+				try {
+					FileEntry fileEntry = com.fds.vr.service.util.FileUploadUtils.uploadFileJSON(JSONFactoryUtil.createJSONObject(formData), serviceContext);
+
+					fileEntryIdFormData = fileEntry.getFileEntryId();
+				} catch (Exception e) {
+					_log.error(e);
+				}
+				object.setFormDataDossierFile(fileEntryIdFormData);
+			}
 		}
 		_log.info("****End autofill file at:" + new Date());
 
@@ -311,7 +323,18 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 		object.setFileTemplateNo(sourceDossierFile.getFileTemplateNo());
 		object.setDossierPartType(dossierPart.getPartType());
 		object.setDisplayName(sourceDossierFile.getDisplayName());
-		object.setFormData(sourceDossierFile.getFormData());
+		//Add by Dungnv
+		long fileEntryIdFormData = 0;
+		try {
+			FileEntry fileEntry = com.fds.vr.service.util.FileUploadUtils.uploadFileJSON(JSONFactoryUtil.createJSONObject(sourceDossierFile.getFormData()), serviceContext);
+
+			fileEntryIdFormData = fileEntry.getFileEntryId();
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		object.setFormDataDossierFile(fileEntryIdFormData);
+		//Comment by Dungnv
+		//object.setFormData(sourceDossierFile.getFormData());
 		object.setOriginal(false);
 		object.setIsNew(true);
 		object.setFormScript(sourceDossierFile.getFormScript());
@@ -466,7 +489,18 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				dossierFileAction.setOriginal(true);
 				dossierFileAction.setDossierActionId(dossierActionId);
 				dossierFileAction.setFormReport(jrxmlTemplate);
-				dossierFileAction.setFormData(formData);
+				//Add by Dungnv
+				long fileEntryIdFormData = 0;
+				try {
+					FileEntry fileEntry = com.fds.vr.service.util.FileUploadUtils.uploadFileJSON(JSONFactoryUtil.createJSONObject(formData), serviceContext);
+
+					fileEntryIdFormData = fileEntry.getFileEntryId();
+				} catch (Exception e) {
+					_log.error(e);
+				}
+				dossierFileAction.setFormDataDossierFile(fileEntryIdFormData);
+				//Comment by Dungnv
+				//dossierFileAction.setFormData(formData);
 				dossierFileAction.setDossierId(dossierId);
 				//Generate referenceUid
 				String referenceUidAction = PortalUUIDUtil.generate();
@@ -485,7 +519,20 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				dossierFileAction = dossierFilePersistence.update(dossierFileAction);
 			} else {
 				dossierFile.setFormReport(jrxmlTemplate);
-				dossierFile.setFormData(formData);
+				//Add by Dungnv
+				if(!formData.isEmpty()) {
+					long fileEntryIdFormData = 0;
+					try {
+						FileEntry fileEntry = com.fds.vr.service.util.FileUploadUtils.uploadFileJSON(JSONFactoryUtil.createJSONObject(formData), serviceContext);
+
+						fileEntryIdFormData = fileEntry.getFileEntryId();
+					} catch (Exception e) {
+						_log.error(e);
+					}
+					dossierFile.setFormDataDossierFile(fileEntryIdFormData);
+				}
+				//Comment by Dungnv
+				//dossierFile.setFormData(formData);
 				dossierFile.setIsNew(true);
 	
 				dossierFile = dossierFilePersistence.update(dossierFile);
@@ -574,14 +621,38 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 			newDossierFile.setReferenceUid(PortalUUIDUtil.generate());
 			newDossierFile.setIsNew(true);
 			dossierFile.setFormReport(jrxmlTemplate);
-			dossierFile.setFormData(formData);
+			if(!formData.isEmpty()) {
+				long fileEntryIdFormData = 0;
+				try {
+					FileEntry fileEntry = com.fds.vr.service.util.FileUploadUtils.uploadFileJSON(JSONFactoryUtil.createJSONObject(formData), serviceContext);
+
+					fileEntryIdFormData = fileEntry.getFileEntryId();
+				} catch (Exception e) {
+					_log.error(e);
+				}
+				dossierFile.setFormDataDossierFile(fileEntryIdFormData);
+			}
+			//Comment by Dungnv
+			//dossierFile.setFormData(formData);
 			newDossierFile.setOriginal(true);
 
 			_log.info("SEND TO CREATED NEW DOSSIER FILE 111: "+(System.currentTimeMillis() - now));
 			return dossierFilePersistence.update(newDossierFile);
 		} else {
 			dossierFile.setFormReport(jrxmlTemplate);
-			dossierFile.setFormData(formData);
+			if(!formData.isEmpty()) {
+				long fileEntryIdFormData = 0;
+				try {
+					FileEntry fileEntry = com.fds.vr.service.util.FileUploadUtils.uploadFileJSON(JSONFactoryUtil.createJSONObject(formData), serviceContext);
+
+					fileEntryIdFormData = fileEntry.getFileEntryId();
+				} catch (Exception e) {
+					_log.error(e);
+				}
+				dossierFile.setFormDataDossierFile(fileEntryIdFormData);
+			}
+			//Comment by Dungnv
+			//dossierFile.setFormData(formData);
 			dossierFile.setIsNew(true);
 
 			_log.info("SEND TO CREATED UPDATE DOSSIER FILE 2222: "+(System.currentTimeMillis() - now));

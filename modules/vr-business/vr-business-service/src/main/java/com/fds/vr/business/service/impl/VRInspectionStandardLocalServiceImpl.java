@@ -127,9 +127,9 @@ public class VRInspectionStandardLocalServiceImpl
 				object.setVehicleCertificateId(vehicleTypeCertificateId);
 				object.setDeliverableCode(objectData.getString("deliverableCode"));
 				object.setSequenceNo(objectData.getLong("sequenceNo"));
-				object.setCirculardate(parseStringToDate(objectData.getString("circulardate")));
-				object.setCircularno(objectData.getString("circularno"));
-				object.setMarkupstatus(objectData.getLong("markupstatus"));
+				object.setCirculardate(parseStringToDate(objectData.getString("circularDate")));
+				object.setCircularno(objectData.getString("circularNo"));
+				object.setMarkupstatus(objectData.getLong("markupStatus"));
 				object.setModule(objectData.getString("module"));
 				object.setDossierId(objectData.getLong("dossierId"));
 				object.setDossierNo(objectData.getString("dossierNo"));

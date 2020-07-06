@@ -329,6 +329,20 @@ public interface DossierFileModel extends BaseModel<DossierFile>, GroupedModel,
 	public void setFormData(String formData);
 
 	/**
+	 * Returns the form data dossier file of this dossier file.
+	 *
+	 * @return the form data dossier file of this dossier file
+	 */
+	public long getFormDataDossierFile();
+
+	/**
+	 * Sets the form data dossier file of this dossier file.
+	 *
+	 * @param formDataDossierFile the form data dossier file of this dossier file
+	 */
+	public void setFormDataDossierFile(long formDataDossierFile);
+
+	/**
 	 * Returns the file entry ID of this dossier file.
 	 *
 	 * @return the file entry ID of this dossier file

@@ -59,7 +59,9 @@ public class DossierFileIndexer extends BaseIndexer<DossierFile> {
 		document.addNumberSortable(DossierFileTerm.DOSSIER_PART_TYPE, object.getDossierPartType());
 		document.addNumberSortable(DossierFileTerm.SIGN_CHECK, object.getSignCheck());
 		document.addNumberSortable(DossierActionTerm.DOSSIERACTION_ID, object.getDossierActionId());
-
+		//Add by Dungnv
+		document.addNumberSortable(DossierFileTerm.FORM_DATA_DOSSIER_FILE, object.getFormDataDossierFile());
+		
 		// add text fields
 		document.addTextSortable(DossierFileTerm.REFERENCE_UID, object.getReferenceUid());
 		document.addTextSortable(DossierFileTerm.DOSSIER_TEMPLATE_NO, object.getDossierTemplateNo());

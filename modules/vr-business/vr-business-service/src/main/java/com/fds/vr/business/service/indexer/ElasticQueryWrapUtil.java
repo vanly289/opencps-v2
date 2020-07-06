@@ -1,0 +1,100 @@
+package com.fds.vr.business.service.indexer;
+
+import com.liferay.portal.kernel.io.OutputStreamWriter;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class ElasticQueryWrapUtil {
+	private static final String ELASTIC_SERVER_API_URL = "http://localhost:9200/liferay-";
+	private static Log _log = LogFactoryUtil.getLog(ElasticQueryWrapUtil.class);
+	
+	public static JSONObject POST(String body, String className, long conpanyId) {
+
+		_log.info("====START POST ES==== ");
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		try {
+
+			URL url = new URL(ELASTIC_SERVER_API_URL + conpanyId + "/LiferayDocumentType/");
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Accept", "Content-Type: application/json");
+			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setDoInput(true);
+			conn.setDoOutput(true);
+			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+			osw.write(body);
+			osw.flush();
+			osw.close();
+
+			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+			String output;
+
+			StringBuilder sb = new StringBuilder();
+
+			while ((output = br.readLine()) != null) {
+				sb.append(output);
+			}
+			
+			result = JSONFactoryUtil.createJSONObject(sb.toString());
+			_log.info("====END POST ES==== ");
+		} catch (JSONException e) {
+			_log.error("JSONException Message: "+e);
+		} catch (IOException e) {
+			_log.error("IOException Message: "+e);
+		}
+
+		return result;
+	}
+	
+	public static JSONObject DELETE(String id, long conpanyId) {
+
+		_log.info("====START DELETE ES==== ");
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		try {
+
+			URL url = new URL(ELASTIC_SERVER_API_URL + conpanyId + "/LiferayDocumentType/" + id);
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+			conn.setRequestMethod("DELETE");
+			conn.setDoInput(true);
+			conn.setDoOutput(true);
+			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+			osw.flush();
+			osw.close();
+
+			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+			String output;
+
+			StringBuilder sb = new StringBuilder();
+
+			while ((output = br.readLine()) != null) {
+				sb.append(output);
+			}
+			
+			result = JSONFactoryUtil.createJSONObject(sb.toString());
+			_log.info("====END DELETE ES==== ");
+		} catch (JSONException e) {
+			_log.error("JSONException Message: "+e);
+		} catch (IOException e) {
+			_log.error("IOException Message: "+e);
+		}
+
+		return result;
+	}
+}

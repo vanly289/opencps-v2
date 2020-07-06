@@ -3,6 +3,7 @@
  */
 package com.fds.vr.controler;
 
+import com.fds.vr.model.VRTrackchangesBeanParam;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -10,6 +11,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -39,9 +41,9 @@ public interface VRTrackchangesManagement {
 			@Context ServiceContext serviceContext, @PathParam("productionplantcode") String productionPlantCode);
 	
 	@GET
-	@Path("/trackchanges/dossier/{dossierid}")
+	@Path("/trackchanges/dossier")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findVRTrackchangesDossier(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, @PathParam("dossierid") long dossierId);
+			@Context ServiceContext serviceContext, @BeanParam VRTrackchangesBeanParam vrTrackchangesBeanParam);
 }

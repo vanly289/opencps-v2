@@ -1,5 +1,6 @@
 package org.opencps.dossiermgt.vr.utils;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
 import com.fds.vr.business.service.VRIssueLocalServiceUtil;
 import com.fds.vr.business.service.VRIssueVehiclecertificateLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleRecordLocalServiceUtil;
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -114,10 +116,22 @@ public class VRIssueContentUtils {
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(dossierId, fileTemplateNo, 1,
 					false, new DossierFileComparator(false, "createDate", Date.class));
 			if (dossierFile != null) {
-				formData = dossierFile.getFormData();
-				if (Validator.isNull(formData)) {
-					return "";
+				//Add by Dungnv
+				File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+				if (formDataFile != null) {
+					formData = FileUploadUtils.fileToString(formDataFile);
 				}
+				if(formData.isEmpty()) {
+					formData = dossierFile.getFormData();
+					if (Validator.isNull(formData)) {
+						return "";
+					}
+				}
+				//Comment by Dungnv
+				//formData = dossierFile.getFormData();
+				//if (Validator.isNull(formData)) {
+				//	return "";
+				//}
 			}
 
 			JSONObject jsonData = JSONFactoryUtil.createJSONObject(formData);

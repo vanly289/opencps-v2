@@ -16,7 +16,6 @@ package com.fds.vr.business.service.impl;
 
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRProductionPlant;
-import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
 import com.fds.vr.business.service.base.VRProductionPlantLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;

@@ -4,6 +4,7 @@ import com.fds.vr.business.action.util.ConvertJONObjectUtils;
 import com.fds.vr.business.model.VRCorporationAttendee;
 import com.fds.vr.business.model.impl.VRCorporationAttendeeImpl;
 import com.fds.vr.business.service.VRCorporationAttendeeLocalServiceUtil;
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -63,7 +65,18 @@ public class VRCorporationAttendeeUtils {
 					&& Validator.isNotNull(processAction.getCreateDossierFiles()) && processAction.getCreateDossierFiles().equalsIgnoreCase(fileTemplateNo) ) {
 				dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(dossierActionModel.getDossierId(), fileTemplateNo, 2,
 						false, new DossierFileComparator(false, "createDate", Date.class));
-				formData = dossierFile.getFormData();
+				//Add by Dungnv
+		        if(dossierFile != null) {
+					File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+					if (formDataFile != null) {
+						formData = FileUploadUtils.fileToString(formDataFile);
+					}
+					if (formData.isEmpty()) {
+						formData = dossierFile.getFormData();
+					}
+			    }
+		        //Comment by Dungnv
+				//formData = dossierFile.getFormData();
 			}
 			if (Validator.isNull(formData)) {
 				return "";

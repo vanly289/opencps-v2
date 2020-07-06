@@ -1,5 +1,8 @@
 package org.opencps.dossiermgt.listenner;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumMap;
@@ -25,6 +28,9 @@ import org.opencps.dossiermgt.service.DossierPartLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 import org.osgi.service.component.annotations.Component;
 
+import com.fds.vr.service.util.FileUploadUtils;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -36,6 +42,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -97,10 +104,24 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 						JSONObject jsMappingData = JSONFactoryUtil.createJSONObject(dlvType.getMappingData());
 
 						JSONObject jsFormData = JSONFactoryUtil.createJSONObject();
-
-						if (Validator.isNotNull(model.getFormData()))
-							jsFormData = JSONFactoryUtil.createJSONObject(model.getFormData());
-
+						
+						//Add by Dungnv
+						if(model.getFormDataDossierFile() > 0) {
+					        String formData = StringPool.BLANK;
+					    	File formDataFile = FileUploadUtils.getFile(model.getFormDataDossierFile());
+							if (formDataFile != null) {
+								formData = FileUploadUtils.fileToString(formDataFile);
+							}
+					        if (!formData.isEmpty()) {
+					        	jsFormData = JSONFactoryUtil.createJSONObject(formData);
+					        } else {
+					        	jsFormData = JSONFactoryUtil.createJSONObject(model.getFormData());
+					        }
+						}
+						//Comment by Dungnv
+						//if (Validator.isNotNull(model.getFormData()))
+						//	jsFormData = JSONFactoryUtil.createJSONObject(model.getFormData());
+						
 						formDataContent = mappingContent(jsMappingData, jsFormData, model.getDossierId());
 
 					}
@@ -232,7 +253,19 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 					false, new DossierFileComparator(false, "createDate", Date.class));
 
 			if (Validator.isNotNull(dossierFile)) {
-				formValue = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
+				//Add by Dungnv
+				String formData = StringPool.BLANK;
+				try {
+		        	File FormDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+					if (FormDataFile != null) {
+						formData = FileUploadUtils.fileToString(FormDataFile);
+					}
+		        } catch (Exception e) {
+		        	_log.error(e);
+				}
+				formValue = JSONFactoryUtil.createJSONObject(formData);
+				//Comment by Dungnv
+				//formValue = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
 			}
 
 		} catch (Exception e) {
@@ -256,7 +289,18 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 			DossierFile df = dfs.get(0);
 
 			try {
-				JSONObject jsformData = JSONFactoryUtil.createJSONObject(df.getFormData());
+				//Add by Dungnv
+				String formDataTemp = StringPool.BLANK;
+		    	File formDataFile = FileUploadUtils.getFile(df.getFormDataDossierFile());
+				if (formDataFile != null) {
+					formDataTemp = FileUploadUtils.fileToString(formDataFile);
+				}
+				if(formDataTemp.isEmpty()) {
+					formDataTemp = df.getFormData();
+				}
+				JSONObject jsformData = JSONFactoryUtil.createJSONObject(formDataTemp);
+				//Comment by Dungnv
+				//JSONObject jsformData = JSONFactoryUtil.createJSONObject(df.getFormData());
 
 				elmValue = jsformData.getString(keyJs);
 
@@ -449,8 +493,22 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 
 						JSONObject jsFormData = JSONFactoryUtil.createJSONObject();
 
-						if (Validator.isNotNull(model.getFormData()))
-							jsFormData = JSONFactoryUtil.createJSONObject(model.getFormData());
+						//Add by Dungnv
+						if(model.getFormDataDossierFile() > 0) {
+					        String formData = StringPool.BLANK;
+					    	File formDataFile = FileUploadUtils.getFile(model.getFormDataDossierFile());
+							if (formDataFile != null) {
+								formData = FileUploadUtils.fileToString(formDataFile);
+							}
+					        if (!formData.isEmpty()) {
+					        	jsFormData = JSONFactoryUtil.createJSONObject(formData);
+					        } else {
+					        	jsFormData = JSONFactoryUtil.createJSONObject(model.getFormData());
+					        }
+						}
+						//Comment by Dungnv
+						//if (Validator.isNotNull(model.getFormData()))
+						//	jsFormData = JSONFactoryUtil.createJSONObject(model.getFormData());
 
 						formDataContent = mappingContent(jsMappingData, jsFormData, model.getDossierId());
 
@@ -496,8 +554,22 @@ public class DossierFileListenner extends BaseModelListener<DossierFile> {
 
 						JSONObject jsFormData = JSONFactoryUtil.createJSONObject();
 
-						if (Validator.isNotNull(model.getFormData()))
-							jsFormData = JSONFactoryUtil.createJSONObject(model.getFormData());
+						//Add by Dungnv
+						if(model.getFormDataDossierFile() > 0) {
+					        String formData = StringPool.BLANK;
+					    	File formDataFile = FileUploadUtils.getFile(model.getFormDataDossierFile());
+							if (formDataFile != null) {
+								formData = FileUploadUtils.fileToString(formDataFile);
+							}
+					        if (!formData.isEmpty()) {
+					        	jsFormData = JSONFactoryUtil.createJSONObject(formData);
+					        } else {
+					        	jsFormData = JSONFactoryUtil.createJSONObject(model.getFormData());
+					        }
+						}
+						//Comment by Dungnv
+						//if (Validator.isNotNull(model.getFormData()))
+						//	jsFormData = JSONFactoryUtil.createJSONObject(model.getFormData());
 
 						formDataContent = mappingContent(jsMappingData, jsFormData, model.getDossierId());
 

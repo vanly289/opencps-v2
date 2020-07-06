@@ -1,5 +1,8 @@
 package org.opencps.api.controller.impl;
 
+import com.fds.vr.service.util.FileUploadUtils;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -8,6 +11,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
@@ -21,6 +25,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -2045,8 +2052,19 @@ public class DossierManagementImpl implements DossierManagement {
 				DossierFile dossierFileDN = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(
 						dossier.getDossierId(), fileTemplateNo, 1, false,
 						new DossierFileComparator(false, "createDate", Date.class));
-				//
-				String formData = dossierFileDN != null ? dossierFileDN.getFormData() : StringPool.BLANK;
+				//Add by Dungnv
+		        String formData = StringPool.BLANK;
+		        if (dossierFileDN != null) {
+			    	File formDataFile = FileUploadUtils.getFile(dossierFileDN.getFormDataDossierFile());
+					if (formDataFile != null) {
+						formData = FileUploadUtils.fileToString(formDataFile);
+					}
+		        }
+		        if(formData.isEmpty()) {
+		        	formData = dossierFileDN != null ? dossierFileDN.getFormData() : StringPool.BLANK;
+		        }
+				//Comment by Dungnv
+				//String formData = dossierFileDN != null ? dossierFileDN.getFormData() : StringPool.BLANK;
 				return Response.status(200).entity(formData).build();
 			}
 		} catch (NoSuchDossierFileException e) {

@@ -18,11 +18,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -31,26 +27,17 @@ import java.util.List;
  *
  */
 public class VRHistoryProfileActionImpl implements VRHistoryProfileAction {
-	
+
 	private static final Log _log = LogFactoryUtil.getLog(VRHistoryProfileActionImpl.class);
 
 	@Override
 	public VRHistoryProfile updateVRHistoryProfile(long id, String applicantCode, String productionPlantCode,
 			long dossierId, String dossierIdCTN, String dossierNo, String contentType, String contentFileTemplate,
-			JSONObject formData, Date syncDate, ServiceContext serviceContext) throws IOException {
-		File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), StringPool.PERIOD + "txt");
-		OutputStream outStream = new FileOutputStream(tempFile);
-		byte[] by = formData.toJSONString().getBytes();
-		for (int i = 0; i < by.length; i++) {
-			byte b = by[i];
-			outStream.write(b);
-		}
-		outStream.close();
-		InputStream inputStream = new FileInputStream(tempFile);
-
-		return VRHistoryProfileLocalServiceUtil.updateVRHistoryProfile(id, applicantCode, productionPlantCode,
-				dossierId, dossierIdCTN, dossierNo, contentType, contentFileTemplate, inputStream, tempFile.getName(),
-				tempFile.length(), null, syncDate, serviceContext);
+			long jsonFileEntryId, long pdfFileEntryId, Date syncDate, ServiceContext serviceContext)
+			throws IOException {
+		return VRHistoryProfileLocalServiceUtil.updateVRHistoryProfile(dossierId, applicantCode, productionPlantCode,
+				dossierId, dossierIdCTN, dossierNo, contentType, contentFileTemplate, jsonFileEntryId, pdfFileEntryId,
+				syncDate, serviceContext);
 	}
 
 	@Override
@@ -74,8 +61,8 @@ public class VRHistoryProfileActionImpl implements VRHistoryProfileAction {
 		JSONArray array = JSONFactoryUtil.createJSONArray();
 		for (VRHistoryProfile vrHistoryProfile : vrHistoryProfiles) {
 			try {
-				JSONObject obj = BusinessUtil.object2Json_originColumnName(vrHistoryProfile, VRHistoryProfileModelImpl.class,
-						StringPool.BLANK);
+				JSONObject obj = BusinessUtil.object2Json_originColumnName(vrHistoryProfile,
+						VRHistoryProfileModelImpl.class, StringPool.BLANK);
 				File file = FileUploadUtils.getFile(obj.getLong("contentjsonFileEntryId"));
 				if (file != null) {
 					String stringFile = FileUploadUtils.fileToString(file);

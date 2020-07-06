@@ -1,6 +1,7 @@
 
 package org.opencps.api.controller.util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +12,21 @@ import org.opencps.dossiermgt.constants.DossierActionTerm;
 import org.opencps.dossiermgt.constants.DossierFileTerm;
 import org.opencps.dossiermgt.model.DossierFile;
 
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 public class DossierFileUtils {
+	
+	private static final Log _log = LogFactoryUtil.getLog(DossierFileUtils.class);
 
     public static List<DossierFileModel> mappingToDossierFileData(
         List<DossierFile> dossierFiles) {
@@ -88,7 +95,19 @@ public class DossierFileUtils {
         model.setEForm(dossierFile.getEForm());
         model.setFormReport(StringPool.BLANK);
         model.setFormScript(dossierFile.getFormScript());
-        model.setFormData(dossierFile.getFormData());
+        //Add by Dungnv
+        String formData = StringPool.BLANK;
+    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+		if (formDataFile != null) {
+			formData = FileUploadUtils.fileToString(formDataFile);
+		}
+		if(!formData.isEmpty()) {
+			model.setFormData(formData);
+		}else {
+			model.setFormData(dossierFile.getFormData());
+		}
+        //Comment by Dungnv
+        //model.setFormData(dossierFile.getFormData());
         model.setDossierFileId(dossierFile.getDossierFileId());
         model.setDossierActionId(dossierFile.getDossierActionId());
 

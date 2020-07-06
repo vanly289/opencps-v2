@@ -401,7 +401,7 @@ public class VRApplicantProfileActionImpl implements VRApplicantProfileAction {
 				// StringPool.EQUAL)
 				.where("applicantbusinesstype", applicantBusinessType, "AND", StringPool.EQUAL)
 				// .where("applicantmetadata", applicantMetadata, "AND", StringPool.EQUAL)
-				.where("applicantstatus", applicantStatus, "AND", StringPool.EQUAL)
+				.where("applicantstatus", applicantStatus, "AND", "IN")
 				// .where("modifydate", modifyDate, "AND", StringPool.EQUAL)
 				// .where("syncdate", syncDate, "AND", StringPool.EQUAL)
 				.where(_keywordSearchCondition, null, "AND", "", true).build();

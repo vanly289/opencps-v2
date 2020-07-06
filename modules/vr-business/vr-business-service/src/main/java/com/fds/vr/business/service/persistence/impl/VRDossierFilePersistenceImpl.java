@@ -9835,6 +9835,7 @@ public class VRDossierFilePersistenceImpl extends BasePersistenceImpl<VRDossierF
 		vrDossierFileImpl.setFileTemplateNo(vrDossierFile.getFileTemplateNo());
 		vrDossierFileImpl.setDisplayName(vrDossierFile.getDisplayName());
 		vrDossierFileImpl.setFormData(vrDossierFile.getFormData());
+		vrDossierFileImpl.setFormDataDossierFile(vrDossierFile.getFormDataDossierFile());
 		vrDossierFileImpl.setFileEntryId(vrDossierFile.getFileEntryId());
 		vrDossierFileImpl.setOriginal(vrDossierFile.isOriginal());
 		vrDossierFileImpl.setEForm(vrDossierFile.isEForm());

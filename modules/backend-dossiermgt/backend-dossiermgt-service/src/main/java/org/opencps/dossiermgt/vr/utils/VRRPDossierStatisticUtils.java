@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.opencps.dossiermgt.action.keypay.util.HashFunction;
+import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.ServiceProcess;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -61,26 +63,30 @@ public class VRRPDossierStatisticUtils {
 						//binhth index dossierId CTN
 						// TODO
 						
-						MessageDigest md5 = null;
-						
-						byte[] ba = null;
-	
-						try {
-							
-							md5 = MessageDigest.getInstance("MD5");
-							
-							ba = md5.digest(sourceDossier.getReferenceUid().getBytes("UTF-8"));
-							
-						} catch (Exception e) {
-						} 
-	
-						DateFormat df = new SimpleDateFormat("yy");
-						
-						String formattedDate = df.format(Calendar.getInstance().getTime());
-						
+//						MessageDigest md5 = null;
+//						
+//						byte[] ba = null;
+//	
+//						try {
+//							
+//							md5 = MessageDigest.getInstance("MD5");
+//							
+//							ba = md5.digest(sourceDossier.getReferenceUid().getBytes("UTF-8"));
+//							
+//						} catch (Exception e) {
+//						} 
+//	
+//						DateFormat df = new SimpleDateFormat("yy");
+//						
+//						String formattedDate = df.format(Calendar.getInstance().getTime());
+//						
 						String dossierIDCTN = StringPool.BLANK;
+//						
+//						dossierIDCTN = formattedDate + HashFunction.hexShort(ba);
 						
-						dossierIDCTN = formattedDate + HashFunction.hexShort(ba);
+						//Edit by Dungnv - Sua doi cach lay dossierIdCTN
+						Document dossierDoc = DossierLocalServiceUtil.getDossierById(sourceDossier.getDossierId(), sourceDossier.getCompanyId());
+						dossierIDCTN = dossierDoc.get(DossierTerm.DOSSIER_ID+"CTN");
 						statistics.setDossierIdCTN(dossierIDCTN);
 					}
 				}

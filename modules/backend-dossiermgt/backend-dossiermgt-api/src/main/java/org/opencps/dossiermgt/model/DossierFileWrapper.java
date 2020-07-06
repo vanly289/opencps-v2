@@ -76,6 +76,7 @@ public class DossierFileWrapper implements DossierFile,
 		attributes.put("fileTemplateNo", getFileTemplateNo());
 		attributes.put("displayName", getDisplayName());
 		attributes.put("formData", getFormData());
+		attributes.put("formDataDossierFile", getFormDataDossierFile());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("original", getOriginal());
 		attributes.put("eForm", getEForm());
@@ -188,6 +189,12 @@ public class DossierFileWrapper implements DossierFile,
 
 		if (formData != null) {
 			setFormData(formData);
+		}
+
+		Long formDataDossierFile = (Long)attributes.get("formDataDossierFile");
+
+		if (formDataDossierFile != null) {
+			setFormDataDossierFile(formDataDossierFile);
 		}
 
 		Long fileEntryId = (Long)attributes.get("fileEntryId");
@@ -639,6 +646,16 @@ public class DossierFileWrapper implements DossierFile,
 	}
 
 	/**
+	* Returns the form data dossier file of this dossier file.
+	*
+	* @return the form data dossier file of this dossier file
+	*/
+	@Override
+	public long getFormDataDossierFile() {
+		return _dossierFile.getFormDataDossierFile();
+	}
+
+	/**
 	* Returns the group ID of this dossier file.
 	*
 	* @return the group ID of this dossier file
@@ -832,6 +849,16 @@ public class DossierFileWrapper implements DossierFile,
 	@Override
 	public void setFormData(java.lang.String formData) {
 		_dossierFile.setFormData(formData);
+	}
+
+	/**
+	* Sets the form data dossier file of this dossier file.
+	*
+	* @param formDataDossierFile the form data dossier file of this dossier file
+	*/
+	@Override
+	public void setFormDataDossierFile(long formDataDossierFile) {
+		_dossierFile.setFormDataDossierFile(formDataDossierFile);
 	}
 
 	/**

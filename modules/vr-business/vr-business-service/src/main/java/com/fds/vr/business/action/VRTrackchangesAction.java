@@ -16,12 +16,13 @@ import java.util.Date;
  */
 public interface VRTrackchangesAction {
 	public VRTrackchanges updateVRTrackchanges(long id, String applicantCode, String productionPlantCode,
-			long dossierId, String dossierIdCTN, String dossierNo, String contentType, JSONObject formData,
-			Date syncDate, ServiceContext serviceContext) throws IOException;
-	
+			long dossierId, String dossierIdCTN, String dossierNo, String contentType, String contentFileTemplate,
+			long fileEntryId, Date syncDate, ServiceContext serviceContext) throws IOException;
+
 	public JSONObject findByApplicantCode(String applicantCode, ServiceContext serviceContext);
-	
+
 	public JSONObject findByProductionPlantCode(String productionPlantCode, ServiceContext serviceContext);
-	
-	public JSONObject findByDossierId(long dossierId, ServiceContext serviceContext);
+
+	public JSONObject findByDossierIdOrDossierIdCTN(String dossierIdCTN, long dossierId, String contentFileTemplate,
+			ServiceContext serviceContext);
 }

@@ -353,11 +353,14 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 	 * 
 	 * } catch (Exception e) { return processException(e); } }
 	 */
+	public static void main(String[] args) {
+		System.out.println(GetterUtil.getLong("0e7fe00e-d614-4ca8-b0e8-f01649bf5081"));
+	}
 	@Override
 	public Response addDossierFileByDossierId(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, Attachment file, String id, String referenceUid,
 			String dossierTemplateNo, String dossierPartNo, String fileTemplateNo, String displayName, String fileType,
-			String isSync, String formData) {
+			String isSync, String formData, long formDataDossierFile) {
 
 		BackendAuth auth = new BackendAuthImpl();
 
@@ -410,8 +413,12 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 					
 				_log.info("__End add file at:" + new Date());
 				
-				if(Validator.isNotNull(formData)) {
-					dossierFile.setFormData(formData);
+				if(formDataDossierFile > 0) {
+					dossierFile.setFormDataDossierFile(formDataDossierFile);
+				} else {
+					if(Validator.isNotNull(formData)) {
+						dossierFile.setFormData(formData);
+					}
 				}
 				_log.info("__Start update dossier file at:" + new Date());
 
@@ -440,8 +447,12 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 				
 				_log.info("__End add file at:" + new Date());
 				
-				if(Validator.isNotNull(formData)) {
-					dossierFile.setFormData(formData);
+				if(formDataDossierFile > 0) {
+					dossierFile.setFormDataDossierFile(formDataDossierFile);
+				} else {
+					if(Validator.isNotNull(formData)) {
+						dossierFile.setFormData(formData);
+					}
 				}
 				_log.info("__Start update dossier file at:" + new Date());
 	
@@ -660,8 +671,13 @@ public class DossierFileManagementImpl implements DossierFileManagement {
 			}
 
 			DossierFile dossierFile = DossierFileLocalServiceUtil.getDossierFileByReferenceUid(id, referenceUid);
-
-			return Response.status(200).entity(dossierFile.getFormData()).build();
+			
+			//Add by Dungnv
+			DossierFileModel result = DossierFileUtils.mappingToDossierFileModel(dossierFile);
+			
+			return Response.status(200).entity(result.getFormData()).build();
+			//Comment by Dungnv
+			//return Response.status(200).entity(dossierFile.getFormData()).build();
 
 		} catch (Exception e) {
 			return processException(e);

@@ -42,6 +42,8 @@ import com.fds.vr.business.service.VRTechnicalSpec_XMYLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleEquipmentLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleSpecificationLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
+import com.fds.vr.service.util.BusinessUtil;
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
@@ -70,6 +73,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
+import org.opencps.auth.api.BackendAuth;
+import org.opencps.auth.api.BackendAuthImpl;
+import org.opencps.auth.api.exception.UnauthenticationException;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -140,12 +146,17 @@ public class DklrApplication extends Application {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public String processData(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext, String body) {
+			@Context ServiceContext serviceContext, String body) throws UnauthenticationException {
 
 		JSONObject result = JSONFactoryUtil.createJSONObject();
 		JSONObject status = JSONFactoryUtil.createJSONObject();
 		status.put("err_code", 0);
 		status.put("err_msg", "success");
+		
+		BackendAuth auth = new BackendAuthImpl();
+		if (!auth.isAuth(serviceContext)) {
+			throw new UnauthenticationException();
+		}
 		
 		JSONObject data = JSONFactoryUtil.createJSONObject();
 		try {
@@ -226,11 +237,11 @@ public class DklrApplication extends Application {
 							VRApplicantProfileAction vrApplicantProfileAction = new VRApplicantProfileActionImpl();
 							VRApplicantProfile vrApplicantProfile = vrApplicantProfileAction.adminProcessData(valueObject, valueObject.getLong("mtCore"), valueObject.getString("applicantCode"));
 							esData.put("id", String.valueOf(vrApplicantProfile.getId()));
-							JSONObject jVRApplicantProfile = VRUtil.object2Json_originValue(vrApplicantProfile, VRApplicantProfileModelImpl.class, StringPool.BLANK);
+							JSONObject jVRApplicantProfile = BusinessUtil.object2Json_originValue(vrApplicantProfile, VRApplicantProfileModelImpl.class, StringPool.BLANK);
 							responseData.put("vr_ApplicantProfile", jVRApplicantProfile);
 							if(postStatus.equalsIgnoreCase("draft")) {
 								result.put("status", status);
-								result.put("data", jVRApplicantProfile);
+								result.put("data", responseData);
 								return result.toJSONString();
 							} 
 						}
@@ -247,9 +258,10 @@ public class DklrApplication extends Application {
 										VRProductionPlantAction vrProductionPlantAction = new VRProductionPlantActionImpl();
 										VRProductionPlant vrProductionPlant = vrProductionPlantAction.adminProcessData(obj, obj.getLong("mtCore"), obj.getLong("applicantProfileId"), obj.getString("productionPlantCode"));
 										
-										JSONObject jVRProductionPlant = VRUtil.object2Json_originValue(vrProductionPlant, VRProductionPlantModelImpl.class, StringPool.BLANK);
+										JSONObject jVRProductionPlant = BusinessUtil.object2Json_originValue(vrProductionPlant, VRProductionPlantModelImpl.class, StringPool.BLANK);
+										responseData.put("vr_ProductionPlant", jVRProductionPlant);
 										result.put("status", status);
-										result.put("data", jVRProductionPlant);
+										result.put("data", responseData);
 										return result.toJSONString();
 								   }
 							   }
@@ -266,7 +278,7 @@ public class DklrApplication extends Application {
 									if(vrProductionPlants != null && !vrProductionPlants.isEmpty()) {
 										JSONArray array = JSONFactoryUtil.createJSONArray();
 										for(VRProductionPlant vrProductionPlant : vrProductionPlants) {
-											JSONObject obj = VRUtil.object2Json_originValue(vrProductionPlant, VRProductionPlantModelImpl.class, StringPool.BLANK);
+											JSONObject obj = BusinessUtil.object2Json_originValue(vrProductionPlant, VRProductionPlantModelImpl.class, StringPool.BLANK);
 											array.put(obj);
 										}
 										if(array.length() > 0) {
@@ -277,14 +289,16 @@ public class DklrApplication extends Application {
 							}
 						}
 						VRTrackchangesAction vrTrackchangesAction = new VRTrackchangesActionImpl();
+						FileEntry fileEntry = FileUploadUtils.uploadFileJSON(responseData, serviceContext);
+						
 						JSONObject jsonTrackchanges = vrTrackchangesAction.findByApplicantCode(responseData.getJSONObject("vr_ApplicantProfile").getString("applicantCode"), serviceContext);
 						if (jsonTrackchanges != null && jsonTrackchanges.length() > 0) {
-							vrTrackchangesAction.updateVRTrackchanges(responseData.getJSONObject("vr_ApplicantProfile").getLong("id"), responseData.getJSONObject("vr_ApplicantProfile").getString("applicantCode"), null, 0L, null, null, "PROFILE", responseData, null, serviceContext);
+							vrTrackchangesAction.updateVRTrackchanges(jsonTrackchanges.getLong("id"), responseData.getJSONObject("vr_ApplicantProfile").getString("applicantCode"), null, 0L, null, null, "PROFILE", null, fileEntry != null ? fileEntry.getFileEntryId() : 0, null, serviceContext);
 						} else {
-							vrTrackchangesAction.updateVRTrackchanges(0L, responseData.getJSONObject("vr_ApplicantProfile").getString("applicantCode"), null, 0L, null, null, "PROFILE", responseData, null, serviceContext);
+							vrTrackchangesAction.updateVRTrackchanges(0L, responseData.getJSONObject("vr_ApplicantProfile").getString("applicantCode"), null, 0L, null, null, "PROFILE", null, fileEntry != null ? fileEntry.getFileEntryId() : 0, null, serviceContext);
 						}
 						VRHistoryProfileAction vrHistoryProfileAction = new VRHistoryProfileActionImpl();
-						vrHistoryProfileAction.updateVRHistoryProfile(0L, responseData.getJSONObject("vr_ApplicantProfile").getString("applicantCode"), null, 0L, null, null, "PROFILE", null, responseData, null, serviceContext);
+						vrHistoryProfileAction.updateVRHistoryProfile(0L, responseData.getJSONObject("vr_ApplicantProfile").getString("applicantCode"), null, 0L, null, null, "PROFILE", null, fileEntry != null ? fileEntry.getFileEntryId() : 0, 0, null, serviceContext);
 					}
 					esData.put("data", responseData);
 					esData.put(Field.COMPANY_ID, String.valueOf(company.getCompanyId()));

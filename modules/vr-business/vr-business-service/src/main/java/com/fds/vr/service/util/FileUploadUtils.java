@@ -6,6 +6,10 @@ package com.fds.vr.service.util;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -20,8 +24,12 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,6 +42,8 @@ import org.opencps.auth.utils.DLFolderUtil;
 public class FileUploadUtils {
 
 	public static final String FOLDER_FORM_FILE = "FORM_FILE_STORE";
+	
+	public static final Log _log = LogFactoryUtil.getLog(FileUploadUtils.class);
 
 	public static FileEntry uploadFile(long userId, long groupId, long fileEntryId, InputStream inputStream,
 			String sourceFileName, String fileType, String destination, ServiceContext serviceContext)
@@ -104,8 +114,7 @@ public class FileUploadUtils {
 		try {
 			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
-			tempFile = DLFileEntryLocalServiceUtil.getFile(fileEntry.getFileEntryId(), fileEntry.getVersion(),
-					true);
+			tempFile = DLFileEntryLocalServiceUtil.getFile(fileEntry.getFileEntryId(), fileEntry.getVersion(), true);
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -125,9 +134,31 @@ public class FileUploadUtils {
 				buffer = new char[10];
 			}
 			reader.close();
-			content = stringBuilder.toString();
+			content = JSONFactoryUtil.createJSONObject(stringBuilder.toString().trim()).toJSONString();
 		} catch (Exception e) {
 		}
 		return content;
+	}
+
+	public static FileEntry uploadFileJSON(JSONObject formData, ServiceContext serviceContext) throws IOException {
+		File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), StringPool.PERIOD + "txt");
+		OutputStream outStream = new FileOutputStream(tempFile);
+		byte[] by = formData.toJSONString().getBytes();
+		for (int i = 0; i < by.length; i++) {
+			byte b = by[i];
+			outStream.write(b);
+		}
+		outStream.close();
+		InputStream inputStream = new FileInputStream(tempFile);
+
+		try {
+			FileEntry fileEntry = FileUploadUtils.uploadFormDataFile(serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), inputStream, tempFile.getName(), null, serviceContext);
+
+			return fileEntry;
+		} catch (Exception e) {
+			_log.error(e);
+			return null;
+		}
 	}
 }

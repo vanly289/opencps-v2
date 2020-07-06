@@ -131,7 +131,8 @@ public interface DossierFileManagement {
 			@ApiParam(value = "Metadata of DossierFile") @Multipart("displayName") String displayName,
 			@ApiParam(value = "Metadata of DossierFile") @Multipart("fileType") String fileType,
 			@ApiParam(value = "Metadata of DossierFile") @Multipart("isSync") String isSync,
-			@ApiParam(value = "Metadata of DossierFile") @Multipart("formData") @Nullable String formData);
+			@ApiParam(value = "Metadata of DossierFile") @Multipart("formData") @Nullable String formData,
+			@ApiParam(value = "Metadata of DossierFile") @Multipart("formDataDossierFile") long formDataDossierFile);
 
 	/*
 	 * @POST

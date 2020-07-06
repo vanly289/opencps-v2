@@ -15,6 +15,7 @@ import com.fds.vr.business.service.VRProductionPlantEmployeeLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantEquipmentLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantProdEquipmentLocalServiceUtil;
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,8 +75,20 @@ public class ResultDeliverableCOPUtils {
 		DossierFile dossierFileDN = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(
 				dossierId, "TT302011BGTVTCOPTTDN", 1, false,
 				new DossierFileComparator(false, "createDate", Date.class));
-
-		String formData = dossierFileDN != null ? dossierFileDN.getFormData(): StringPool.BLANK;
+		
+		//Add by Dungnv
+        String formData = StringPool.BLANK;
+        if(dossierFileDN != null) {
+			File formDataFile = FileUploadUtils.getFile(dossierFileDN.getFormDataDossierFile());
+			if (formDataFile != null) {
+				formData = FileUploadUtils.fileToString(formDataFile);
+			}
+			if (formData.isEmpty()) {
+				formData = dossierFileDN.getFormData();
+			}
+	    }
+        //Comment by Dungnv
+		//String formData = dossierFileDN != null ? dossierFileDN.getFormData(): StringPool.BLANK;
 
 		/** VR_PRODUCTION */
 		if (Validator.isNotNull(formData)) {
@@ -222,7 +236,19 @@ public class ResultDeliverableCOPUtils {
 		DossierFile dossierFileReportKQ = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(
 				dossier.getDossierId(), "TT302011BGTVTCOPTBKQ", 2, false,
 				new DossierFileComparator(false, "createDate", Date.class));
-		String formDataKQ = dossierFileReportKQ != null ? dossierFileReportKQ.getFormData(): StringPool.BLANK;
+		//Add by Dungnv
+        String formDataKQ = StringPool.BLANK;
+        if(dossierFileReportKQ != null) {
+			File formDataFile = FileUploadUtils.getFile(dossierFileReportKQ.getFormDataDossierFile());
+			if (formDataFile != null) {
+				formDataKQ = FileUploadUtils.fileToString(formDataFile);
+			}
+			if (formDataKQ.isEmpty()) {
+				formDataKQ = dossierFileReportKQ.getFormData();
+			}
+	    }
+        //Comment by Dungnv
+		//String formDataKQ = dossierFileReportKQ != null ? dossierFileReportKQ.getFormData(): StringPool.BLANK;
 		if (Validator.isNotNull(formDataKQ)) {
 			JSONObject jsonDataKQ = JSONFactoryUtil.createJSONObject(formDataKQ);
 			if (!falgCOP) {
@@ -246,7 +272,19 @@ public class ResultDeliverableCOPUtils {
 		DossierFile dossierFileReportCOP = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_DPT_First(
 				dossier.getDossierId(), "BCKQDGCOP", 2, false,
 				new DossierFileComparator(false, "createDate", Date.class));
-		String formDataCOP = dossierFileReportCOP != null ? dossierFileReportCOP.getFormData(): StringPool.BLANK;
+		//Add by Dungnv
+        String formDataCOP = StringPool.BLANK;
+        if(dossierFileReportCOP != null) {
+			File formDataFile = FileUploadUtils.getFile(dossierFileReportCOP.getFormDataDossierFile());
+			if (formDataFile != null) {
+				formDataCOP = FileUploadUtils.fileToString(formDataFile);
+			}
+			if (formDataCOP.isEmpty()) {
+				formDataCOP = dossierFileReportCOP.getFormData();
+			}
+	    }
+        //Comment by Dungnv
+		//String formDataCOP = dossierFileReportCOP != null ? dossierFileReportCOP.getFormData(): StringPool.BLANK;
 		if (Validator.isNotNull(formDataCOP)) {
 			JSONObject jsonDataCOP = JSONFactoryUtil.createJSONObject(formDataCOP);
 			mapReport.put("copReportExpiredDate", jsonDataCOP.getString("han_kiem_tra"));

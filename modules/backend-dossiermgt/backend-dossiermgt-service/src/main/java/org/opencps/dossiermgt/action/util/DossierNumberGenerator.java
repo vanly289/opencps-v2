@@ -1,5 +1,6 @@
 package org.opencps.dossiermgt.action.util;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ import org.opencps.dossiermgt.service.ProcessOptionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
 
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -267,7 +269,17 @@ public class DossierNumberGenerator {
 								dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 										param, false, new DossierFileComparator(false, "createDate", Date.class));
 
-								String formData = dossierFile.getFormData();
+								//Add by Dungnv
+								String formData = StringPool.BLANK;
+					    		File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+								if (formDataFile != null) {
+									formData = FileUploadUtils.fileToString(formDataFile);
+								}
+								if(formData.isEmpty()) {
+									formData = dossierFile.getFormData();
+								}
+								//Comment by Dungnv
+								//String formData = dossierFile.getFormData();
 
 								if (Validator.isNotNull(formData)) {
 									JSONObject object = JSONFactoryUtil.createJSONObject(formData);
@@ -414,7 +426,17 @@ public class DossierNumberGenerator {
 								dossierFile = DossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 										param, false, new DossierFileComparator(false, "createDate", Date.class));
 	
-								String formData = dossierFile.getFormData();
+								//Add by Dungnv
+								String formData = StringPool.BLANK;
+					    		File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+								if (formDataFile != null) {
+									formData = FileUploadUtils.fileToString(formDataFile);
+								}
+								if(formData.isEmpty()) {
+									formData = dossierFile.getFormData();
+								}
+								//Comment by Dungnv
+								//String formData = dossierFile.getFormData();
 	
 								if (Validator.isNotNull(formData)) {
 									JSONObject object = JSONFactoryUtil.createJSONObject(formData);

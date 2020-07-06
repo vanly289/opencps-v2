@@ -1,7 +1,9 @@
 package org.opencps.api.controller.impl;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -49,6 +51,7 @@ import org.opencps.dossiermgt.service.PaymentFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
 
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -595,7 +598,18 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 									properties.put("fileTemplateNo", dossierFile.getFileTemplateNo());
 									properties.put("displayName", dossierFile.getDisplayName());
 									properties.put("isSync", StringPool.FALSE);
-									properties.put("formData", dossierFile.getFormData());
+									//Add by Dungnv
+							        String formData = StringPool.BLANK;
+							    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+									if (formDataFile != null) {
+										formData = FileUploadUtils.fileToString(formDataFile);
+									}
+									if(formData.isEmpty()) {
+										formData = dossierFile.getFormData();
+									}
+							        properties.put("formData", formData);
+							        //Comment by Dungnv
+									//properties.put("formData", dossierFile.getFormData());
 		
 									FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFile.getFileEntryId());
 		

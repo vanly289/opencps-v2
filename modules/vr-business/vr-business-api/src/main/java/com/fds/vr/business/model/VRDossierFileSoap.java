@@ -49,6 +49,7 @@ public class VRDossierFileSoap implements Serializable {
 		soapModel.setFileTemplateNo(model.getFileTemplateNo());
 		soapModel.setDisplayName(model.getDisplayName());
 		soapModel.setFormData(model.getFormData());
+		soapModel.setFormDataDossierFile(model.getFormDataDossierFile());
 		soapModel.setFileEntryId(model.getFileEntryId());
 		soapModel.setOriginal(model.getOriginal());
 		soapModel.setEForm(model.getEForm());
@@ -240,6 +241,14 @@ public class VRDossierFileSoap implements Serializable {
 		_formData = formData;
 	}
 
+	public long getFormDataDossierFile() {
+		return _formDataDossierFile;
+	}
+
+	public void setFormDataDossierFile(long formDataDossierFile) {
+		_formDataDossierFile = formDataDossierFile;
+	}
+
 	public long getFileEntryId() {
 		return _fileEntryId;
 	}
@@ -360,6 +369,7 @@ public class VRDossierFileSoap implements Serializable {
 	private String _fileTemplateNo;
 	private String _displayName;
 	private String _formData;
+	private long _formDataDossierFile;
 	private long _fileEntryId;
 	private boolean _original;
 	private boolean _eForm;

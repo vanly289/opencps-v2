@@ -1,5 +1,6 @@
 package com.fds.vr.business.action.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import com.fds.vr.business.service.VRConfigTechSpecLocalServiceUtil;
 import com.fds.vr.business.service.VRCorporationAttendeeLocalServiceUtil;
 import com.fds.vr.business.service.VRDossierFileLocalServiceUtil;
 import com.fds.vr.business.service.VRLimitConfigTechSpecLocalServiceUtil;
+import com.fds.vr.service.util.FileUploadUtils;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -217,7 +219,16 @@ public class VRActionsImpl implements VRActions {
 					
 					if (dossierFile != null) {
 						// Update online form
-						formData = dossierFile.getFormData();
+						//Add by Dungnv
+				    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+						if (formDataFile != null) {
+							formData = FileUploadUtils.fileToString(formDataFile);
+						}
+						if(formData.isEmpty()) {
+							formData = dossierFile.getFormData();
+						}
+						//Comment by Dungnv
+						//formData = dossierFile.getFormData();
 						//_log.info("==========================1 " + dossierFile.getFileEntryId());
 					} else {
 						// View online form
@@ -227,8 +238,17 @@ public class VRActionsImpl implements VRActions {
 								dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 										fileTemplateNo, false, OrderByComparatorFactoryUtil
 												.create("opencps_dossierFile", "createDate", false));
-
-								formData = dossierFile.getFormData();
+								
+								//Add by Dungnv
+						    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+								if (formDataFile != null) {
+									formData = FileUploadUtils.fileToString(formDataFile);
+								}
+								if(formData.isEmpty()) {
+									formData = dossierFile.getFormData();
+								}
+								//Comment by Dungnv
+								//formData = dossierFile.getFormData();
 								
 								//_log.info("==========================3");
 
@@ -424,15 +444,32 @@ public class VRActionsImpl implements VRActions {
 						
 						if (dossierFile != null) {
 							// Update online form
-							formData = dossierFile.getFormData();
+							//Add by Dungnv
+					    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+							if (formDataFile != null) {
+								formData = FileUploadUtils.fileToString(formDataFile);
+							}
+							if(formData.isEmpty()) {
+								formData = dossierFile.getFormData();
+							}
+							//Comment by Dungnv
+							//formData = dossierFile.getFormData();
 							if (Validator.isNull(formData)) {
 								if (Validator.isNotNull(fileTemplateNo)) {
 									try {
 										dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 												fileTemplateNo, false, OrderByComparatorFactoryUtil
 														.create("opencps_dossierFile", "createDate", false));
-		
-										formData = dossierFile.getFormData();
+										//Add by Dungnv
+								    	formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+										if (formDataFile != null) {
+											formData = FileUploadUtils.fileToString(formDataFile);
+										}
+										if(formData.isEmpty()) {
+											formData = dossierFile.getFormData();
+										}
+										//Comment by Dungnv
+										//formData = dossierFile.getFormData();
 										
 										_log.info("==========================3");
 		
@@ -450,8 +487,16 @@ public class VRActionsImpl implements VRActions {
 									dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 											fileTemplateNo, false, OrderByComparatorFactoryUtil
 													.create("opencps_dossierFile", "createDate", false));
-	
-									formData = dossierFile.getFormData();
+									//Add by Dungnv
+							    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+									if (formDataFile != null) {
+										formData = FileUploadUtils.fileToString(formDataFile);
+									}
+									if(formData.isEmpty()) {
+										formData = dossierFile.getFormData();
+									}
+									//Comment by Dungnv
+									//formData = dossierFile.getFormData();
 									
 									//_log.info("==========================3");
 	
@@ -554,7 +599,19 @@ public class VRActionsImpl implements VRActions {
 		if (Validator.isNotNull(dossierFile)) {
 
 			try {
-				formData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
+				//Add by Dungnv
+		    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+		    	String strFormData = StringPool.BLANK;
+				if (formDataFile != null) {
+					strFormData = FileUploadUtils.fileToString(formDataFile);
+				}
+				if(strFormData.isEmpty()) {
+					strFormData = dossierFile.getFormData();
+				}
+				formData = JSONFactoryUtil.createJSONObject(strFormData);
+				//Comment by Dungnv
+				//formData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
+				
 //				_log.info("formData: "+formData);
 
 				// DB chua luu FormSchema

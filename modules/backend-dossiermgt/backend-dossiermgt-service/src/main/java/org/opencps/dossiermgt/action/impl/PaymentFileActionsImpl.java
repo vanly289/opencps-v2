@@ -244,7 +244,7 @@ public class PaymentFileActionsImpl implements PaymentFileActions {
 	//		DossierSyncLocalServiceUtil.updateDossierSync(groupId, serviceContext.getUserId(), paymentFile.getDossierId(),
 	//				dossier.getReferenceUid(), false, 3, paymentFile.getPrimaryKey(), paymentFile.getReferenceUid(),
 	//				StringPool.BLANK);
-			//Add by Dungnv
+			//Add by Dungnv - Khong ro logic dung khong?
 			DossierSync dossierSync = null;
 			List<DossierSync> dossierSyncs = DossierSyncLocalServiceUtil.fetchByGroupDossierId(groupId, paymentFile.getDossierId(), -1, -1);
 			if(Validator.isNotNull(dossierSyncs) && !dossierSyncs.isEmpty()) {
@@ -274,7 +274,7 @@ public class PaymentFileActionsImpl implements PaymentFileActions {
 					return paymentFile;
 				}
 			}
-			return null;
+			//return null;
 		}
 		return paymentFile;
 

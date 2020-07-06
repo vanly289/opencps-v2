@@ -237,6 +237,8 @@ public class SQLQueryBuilder {
 					queryCondition += "'%" + value + "%'";
 				}else if(searchOperator.equals("BETWEEN")) {
 					queryCondition += value;
+				} else if(searchOperator.equals("IN")) {
+					queryCondition += "(" + value + ")";
 				}
 				else {
 					if (value instanceof String) {

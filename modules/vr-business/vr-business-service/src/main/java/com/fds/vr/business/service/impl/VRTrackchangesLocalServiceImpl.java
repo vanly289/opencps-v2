@@ -16,12 +16,11 @@ package com.fds.vr.business.service.impl;
 
 import com.fds.vr.business.model.VRTrackchanges;
 import com.fds.vr.business.service.base.VRTrackchangesLocalServiceBaseImpl;
-import com.fds.vr.service.util.FileUploadUtils;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -54,12 +53,15 @@ public class VRTrackchangesLocalServiceImpl extends VRTrackchangesLocalServiceBa
 	 * com.fds.vr.business.service.VRTrackchangesLocalServiceUtil} to access the vr
 	 * trackchanges local service.
 	 */
+
+	private static final Log _log = LogFactoryUtil.getLog(VRTrackchangesLocalServiceImpl.class);
+
 	public VRTrackchanges updateVRTrackchanges(long id, String applicantCode, String productionPlantCode,
-			long dossierId, String dossierIdCTN, String dossierNo, String contentType, InputStream inputStream,
-			String sourceFileName, long fileSize, String fileType, Date syncDate, ServiceContext serviceContext) {
+			long dossierId, String dossierIdCTN, String dossierNo, String contentType, String contentFileTemplate,
+			long fileEntryId, Date syncDate, ServiceContext serviceContext) {
 
 		long userId = serviceContext.getUserId();
-		long groupId = serviceContext.getScopeGroupId();
+		// long groupId = serviceContext.getScopeGroupId();
 
 		VRTrackchanges vrTrackchanges = vrTrackchangesPersistence.fetchByPrimaryKey(id);
 
@@ -71,33 +73,24 @@ public class VRTrackchangesLocalServiceImpl extends VRTrackchangesLocalServiceBa
 		}
 		vrTrackchanges.setApplicantCode(applicantCode);
 		vrTrackchanges.setProductionPlantCode(productionPlantCode);
-		vrTrackchanges.setDossierId(dossierId);
-		vrTrackchanges.setDossierIdCTN(dossierIdCTN);
+		if (dossierId > 0) {
+			vrTrackchanges.setDossierId(dossierId);
+		}
+		if (Validator.isNotNull(dossierIdCTN)) {
+			vrTrackchanges.setDossierIdCTN(dossierIdCTN);
+		}
 		vrTrackchanges.setDossierNo(dossierNo);
 		vrTrackchanges.setContentType(contentType);
-		vrTrackchanges.setSyncDate(syncDate);
+		if (syncDate == null) {
+			vrTrackchanges.setSyncDate(now);
+		}
 		vrTrackchanges.setModifyUserId(userId);
+		vrTrackchanges.setModifyDate(now);
+		vrTrackchanges.setContentFileTemplate(contentFileTemplate);
 
-		long fileEntryId = 0;
-
-		try {
-			FileEntry fileEntry = FileUploadUtils.uploadFormDataFile(userId, groupId, inputStream, sourceFileName,
-					fileType, serviceContext);
-
-			if (fileEntry != null) {
-				fileEntryId = fileEntry.getFileEntryId();
-			}
-		} catch (Exception e) {
-			throw new SystemException(e);
-		}
-		long previousContentFileEntryId = vrTrackchanges.getPreviousContentFileEntryId();
 		long nextContentFileEntryId = vrTrackchanges.getNextContentFileEntryId();
-		if (previousContentFileEntryId == 0 && nextContentFileEntryId == 0) {
-			vrTrackchanges.setPreviousContentFileEntryId(fileEntryId);
-		} else {
-			vrTrackchanges.setPreviousContentFileEntryId(nextContentFileEntryId);
-			vrTrackchanges.setNextContentFileEntryId(fileEntryId);
-		}
+		vrTrackchanges.setPreviousContentFileEntryId(nextContentFileEntryId);
+		vrTrackchanges.setNextContentFileEntryId(fileEntryId);
 
 		vrTrackchanges = vrTrackchangesPersistence.update(vrTrackchanges);
 		return vrTrackchanges;
@@ -107,12 +100,16 @@ public class VRTrackchangesLocalServiceImpl extends VRTrackchangesLocalServiceBa
 		return vrTrackchangesPersistence.fetchByF_ApplicantCode(applicantCode);
 	}
 
+	public VRTrackchanges findByDossierIdCTN_ContentFileTemplate(String dossierIdCTN, String contentFileTemplate) {
+		return vrTrackchangesPersistence.fetchByF_dossierIdCTN_ContentFileTemplate(dossierIdCTN, contentFileTemplate);
+	}
+
 	public VRTrackchanges findByProductionPlantCode(String productionPlantCode) {
 		return vrTrackchangesPersistence.fetchByF_ProductionPlantCode(productionPlantCode);
 	}
 
-	public VRTrackchanges findByDossierId(long dossierId) {
-		return vrTrackchangesPersistence.fetchByF_DossierId(dossierId);
+	public VRTrackchanges findByDossierId_ContentFileTemplate(long dossierId, String contentFileTemplate) {
+		return vrTrackchangesPersistence.fetchByF_DossierId_ContentFileTemplate(dossierId, contentFileTemplate);
 	}
 
 	public List<VRTrackchanges> findByContentType(String contentType, int start, int end) {

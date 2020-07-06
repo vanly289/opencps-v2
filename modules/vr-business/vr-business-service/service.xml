@@ -7508,6 +7508,7 @@
 		<column name="fileTemplateNo" type="String" />
 		<column name="displayName" type="String" />
 		<column name="formData" type="String" />
+		<column name="formDataDossierFile" type="long" />
 		<column name="fileEntryId" type="long" />
 		<column name="original" type="boolean" />
 		<column name="eForm" type="boolean" />
@@ -7765,6 +7766,9 @@
         <finder return-type="Collection" name="F_DossierId">
         	<finder-column name="dossierId" />
         </finder>
+        <finder return-type="Collection" name="F_dossierIdCTN">
+        	<finder-column name="dossierIdCTN" />
+        </finder>
         <finder return-type="Collection" name="F_ContentType">
         	<finder-column name="contentType" />
         </finder>
@@ -7803,8 +7807,13 @@
         <finder return-type="VRTrackchanges" name="F_ProductionPlantCode">
         	<finder-column name="productionPlantCode" />
         </finder>
-        <finder return-type="VRTrackchanges" name="F_DossierId">
+        <finder return-type="VRTrackchanges" name="F_DossierId_ContentFileTemplate">
         	<finder-column name="dossierId" />
+        	<finder-column name="contentFileTemplate" />
+        </finder>
+        <finder return-type="VRTrackchanges" name="F_dossierIdCTN_ContentFileTemplate">
+        	<finder-column name="dossierIdCTN" />
+        	<finder-column name="contentFileTemplate" />
         </finder>
         <finder return-type="Collection" name="F_ContentType">
         	<finder-column name="contentType" />
