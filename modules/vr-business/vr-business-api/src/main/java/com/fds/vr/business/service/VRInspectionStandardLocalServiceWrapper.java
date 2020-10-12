@@ -140,6 +140,14 @@ public class VRInspectionStandardLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.json.JSONArray adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
+		long vehicleTypeCertificateId) {
+		return _vrInspectionStandardLocalService.adminProcessData(arrayData,
+			dossierId, vehicleTypeCertificateId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.json.JSONArray findData(
 		java.lang.String sql, java.util.List<java.lang.String> columnNames,
 		java.util.List<java.lang.String> dataTypes,
@@ -185,14 +193,6 @@ public class VRInspectionStandardLocalServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _vrInspectionStandardLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.fds.vr.business.model.VRInspectionStandard> adminProcessData(
-		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
-		long vehicleTypeCertificateId) {
-		return _vrInspectionStandardLocalService.adminProcessData(arrayData,
-			dossierId, vehicleTypeCertificateId);
 	}
 
 	/**

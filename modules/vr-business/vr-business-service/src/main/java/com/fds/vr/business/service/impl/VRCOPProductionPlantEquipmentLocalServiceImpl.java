@@ -18,12 +18,15 @@ import com.fds.vr.business.action.util.ActionUtil;
 import com.fds.vr.business.model.VRCOPProductionPlantEquipment;
 import com.fds.vr.business.model.VRCOPReportRepository;
 import com.fds.vr.business.model.impl.VRCOPProductionPlantEquipmentImpl;
+import com.fds.vr.business.model.impl.VRCOPProductionPlantEquipmentModelImpl;
 import com.fds.vr.business.service.base.VRCOPProductionPlantEquipmentLocalServiceBaseImpl;
 import com.fds.vr.service.util.APIDateTimeUtil;
+import com.fds.vr.service.util.BusinessUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -280,49 +283,49 @@ public class VRCOPProductionPlantEquipmentLocalServiceImpl extends VRCOPProducti
 		return vrcopProductionPlantEquipmentPersistence.update(vrcopProductionPlantEquipment);
 	}
 
-	public int adminProcessData(JSONArray arrayData, long mtCore, long vrcopReportRepositoryId, long dossierId,
+	public JSONArray adminProcessData(JSONArray arrayData, long mtCore, long vrcopReportRepositoryId, long dossierId,
 			String dossierIdCTN, String dossierNo) {
 
-		int result = 0;
+		JSONArray array = JSONFactoryUtil.createJSONArray();
 
 		VRCOPReportRepository vrcopReportRepository = vrcopReportRepositoryPersistence
 				.fetchByPrimaryKey(vrcopReportRepositoryId);
 
-		try {
-			for (int i = 0; i < arrayData.length(); i++) {
-				JSONObject objectData = arrayData.getJSONObject(i);
+		Date now = new Date();
 
-				VRCOPProductionPlantEquipment object = vrcopProductionPlantEquipmentLocalService
-						.updateVRCOPProductionPlantEquipment(objectData.getLong("vrcopProductionPlantEquipmentId"),
-								mtCore, APIDateTimeUtil.parseStringToDate(objectData.getString("syncDate")),
-								vrcopReportRepositoryId, objectData.getString("copReportNo"), i + 1,
-								objectData.getString("equipmentCode"), objectData.getString("equipmentName"),
-								objectData.getString("equipmentType"), objectData.getString("trademark"),
-								objectData.getString("trademarkName"), objectData.getString("commercialName"),
-								objectData.getString("modelCode"), objectData.getString("productionCountryCode"),
-								objectData.getString("equipmentStatus"),
-								APIDateTimeUtil.parseStringToDate(objectData.getString("expireDate")),
-								objectData.getString("notes"), objectData.getString("equipmentSerialNo"),
-								objectData.getString("productionYear"), objectData.getString("registrationYear"),
-								objectData.getLong("markupXCG"), objectData.getLong("markupXCGNK"),
-								objectData.getLong("markupSMRM"), objectData.getLong("markupXCH"),
-								objectData.getLong("markupXCN"), objectData.getLong("markupXMY"),
-								objectData.getLong("markupXDD"), objectData.getInt("testingResult"),
-								objectData.getString("description"), objectData.getString("inspectionRecordNumber"),
-								APIDateTimeUtil.parseStringToDate(objectData.getString("inspectionRecordDate")),
-								APIDateTimeUtil.parseStringToDate(objectData.getString("expiredDate")),
-								objectData.getInt("expiredStatus"), objectData.getString("stampTestingNo"), dossierId,
-								dossierIdCTN, dossierNo, vrcopReportRepository.getProductionPlantId(),
-								vrcopReportRepository.getProductionPlantCode());
-				if (object != null) {
-					result = i;
-				}
+		for (int i = 0; i < arrayData.length(); i++) {
+			JSONObject objectData = arrayData.getJSONObject(i);
+
+			VRCOPProductionPlantEquipment object = vrcopProductionPlantEquipmentLocalService
+					.updateVRCOPProductionPlantEquipment(objectData.getLong("vrcopProductionPlantEquipmentId"), mtCore,
+							now, vrcopReportRepositoryId, objectData.getString("copReportNo"), i + 1,
+							objectData.getString("equipmentCode"), objectData.getString("equipmentName"),
+							objectData.getString("equipmentType"), objectData.getString("trademark"),
+							objectData.getString("trademarkName"), objectData.getString("commercialName"),
+							objectData.getString("modelCode"), objectData.getString("productionCountryCode"),
+							objectData.getString("equipmentStatus"),
+							APIDateTimeUtil.parseStringToDate(objectData.getString("expireDate")),
+							objectData.getString("notes"), objectData.getString("equipmentSerialNo"),
+							objectData.getString("productionYear"), objectData.getString("registrationYear"),
+							objectData.getLong("markupXCG"), objectData.getLong("markupXCGNK"),
+							objectData.getLong("markupSMRM"), objectData.getLong("markupXCH"),
+							objectData.getLong("markupXCN"), objectData.getLong("markupXMY"),
+							objectData.getLong("markupXDD"), objectData.getInt("testingResult"),
+							objectData.getString("description"), objectData.getString("inspectionRecordNumber"),
+							APIDateTimeUtil.parseStringToDate(objectData.getString("inspectionRecordDate")),
+							APIDateTimeUtil.parseStringToDate(objectData.getString("expiredDate")),
+							objectData.getInt("expiredStatus"), objectData.getString("stampTestingNo"), dossierId,
+							dossierIdCTN, dossierNo, vrcopReportRepository.getProductionPlantId(),
+							vrcopReportRepository.getProductionPlantCode());
+			try {
+				JSONObject obj = BusinessUtil.object2Json_originColumnName(object,
+						VRCOPProductionPlantEquipmentModelImpl.class, StringPool.BLANK);
+				array.put(obj);
+			} catch (JSONException e) {
 			}
-		} catch (Exception e) {
-			result = -500;
 		}
 
-		return result;
+		return array;
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductionPlantEquipmentLocalServiceImpl.class);

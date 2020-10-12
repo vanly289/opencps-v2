@@ -6,6 +6,7 @@
 		var viewPanel = new kendo.View("panelTemplate", {model: modelPanel});
 		var viewMainList = new kendo.View("mainTemplate", {model: modelMain});
 		var viewMainList_2 = new kendo.View("mainTemplate_2", {model: modelMain});
+		var mainTemplate_3 = new kendo.View("mainTemplate_3", {model: modelDanhSachXeXuatXuong});
 		var statusRouteTem = {
 			status : "",
 			subStatus : ""
@@ -112,6 +113,7 @@
 
 		// Show màn hình chọn dịch vụ công
 		manageDossier.route("/taohosomoi", function(id){
+			console.log('taohosomoi')
 			$("#mainType2").html("");
 			$("#mainType1").hide();
 			$(".filterField").hide();
@@ -130,15 +132,45 @@
 			$("#noInput").hide();
 			$(".filterField").show();
 			$("#mainType2").hide();
-
 			if(firstLoadDataSource === true){
-
 				if (id == "all") {
 					dataSourceProfile.read({
 						"dossierNo" : $("#dossier-emp-nav-selectbox-by-dossierNo").val(),
 						"serviceInfo":$("#serviceInfo").val(),
 						"govAgencyCode":$("#govAgency").val(),
 						"status": "new,receiving,processing,waiting,paying,done,cancelling,cancelled,expired",
+					});
+				} else if(id == "HSDHXNHL"){
+					dataSourceProfile.read({
+						"dossierNo" : $("#dossier-emp-nav-selectbox-by-dossierNo").val(),
+						"serviceInfo" : $("#serviceInfo").val(),
+						"govAgencyCode" : $("#govAgency").val(),
+						"dossierStatus": "new",
+						"id": "HSDHXNHL"
+					});
+				} else if(id == "DNXNHL"){
+					dataSourceProfile.read({
+						"dossierNo" : $("#dossier-emp-nav-selectbox-by-dossierNo").val(),
+						"serviceInfo" : $("#serviceInfo").val(),
+						"govAgencyCode" : $("#govAgency").val(),
+						"dossierStatus": "processing",
+						"id": "DNXNHL"
+					});
+				} else if(id == "XNHL"){
+					dataSourceProfile.read({
+						"dossierNo" : $("#dossier-emp-nav-selectbox-by-dossierNo").val(),
+						"serviceInfo" : $("#serviceInfo").val(),
+						"govAgencyCode" : $("#govAgency").val(),
+						"dossierStatus": "DONE_4",
+						"id": "XNHL"
+					});
+				} else if(id == "TBDSX"){
+					dataSourceProfile.read({
+						"dossierNo" : $("#dossier-emp-nav-selectbox-by-dossierNo").val(),
+						"serviceInfo" : $("#serviceInfo").val(),
+						"govAgencyCode" : $("#govAgency").val(),
+						"dossierStatus": "---",
+						"id": "TBDSX"
 					});
 				} else if (id == "cancelling") {
 					dataSourceProfile.read({
@@ -157,7 +189,7 @@
 						"statusReg" : 3
 
 					});
-				}else if (id == "endorsement") {
+				} else if (id == "endorsement") {
 					dataSourceProfile.read({
 						"dossierNo" : $("#dossier-emp-nav-selectbox-by-dossierNo").val(),
 						"serviceInfo" : $("#serviceInfo").val(),
@@ -182,6 +214,9 @@
 
 					});
 				};
+			}
+
+			if(firstLoadDataSource === true){
 				getTotal();
 			}
 
@@ -345,6 +380,18 @@
 			$('#profileStatus li[dataPk='+id+']').addClass('active');*/
 			/*modelMain.set("visibleHeader", $('#profileStatus li[dataPk='+id+'] .dossierStatus').text());*/
 			modelMain.set("isInvestigated", false);
-		}); 
+		});
+		manageDossier.route("/danh-sach-xe-xuat-xuong", function() {
+			console.log('danh-sach-xe-xuat-xuong')
+			$("#mainType2").html("");
+			$("#mainType1").hide();
+			$(".filterField").hide();
+			$("#mainType2").show();
+			$("#mainType2").load("${ajax.danh_sach_xe_xuat_xuong}",function(result){
+			});
+			$("#profileStatus li").removeClass('active');
+			$("#profileStatus li>i").removeClass("fa fa-folder-open").addClass("fa fa-folder");
+			
+		})
 	</script>
 

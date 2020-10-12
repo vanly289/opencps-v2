@@ -507,12 +507,12 @@ public class PaymentFileManagementImpl implements PaymentFileManagement {
 			PaymentFileActions action = new PaymentFileActionsImpl();
 
 			//boolean isSync = GetterUtil.getBoolean(input.getIsSync());
-			boolean isSync = false;
+			boolean isSync = true;
 			PaymentFile paymentFile = action.updateFileApproval(groupId, dossierId, referenceUid,
 					input.getApproveDatetime(), input.getAccountUserName(), input.getGovAgencyTaxNo(),
 					input.getInvoiceTemplateNo(), input.getInvoiceIssueNo(), input.getInvoiceNo(), isSync, serviceContext);
 			
-			if (!isSync) {
+			if (isSync) {
 				paymentFile.setIsNew(false);
 				
 				PaymentFileLocalServiceUtil.updatePaymentFile(paymentFile);

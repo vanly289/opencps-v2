@@ -82,7 +82,8 @@ import com.liferay.portal.kernel.util.StringPool;
     "paymentStatus",
     "paymentFormData",
     "govAgencyCode",
-    "govAgencyName"
+    "govAgencyName",
+    "isSync"
 })
 @XmlRootElement(name = "PaymentFileInputModel")
 public class PaymentFileInputModel {
@@ -153,8 +154,18 @@ public class PaymentFileInputModel {
 	@DefaultValue(StringPool.BLANK)
 	@FormParam(value = "govAgencyName")
     protected String govAgencyName;
+	@FormParam(value = "isSync")
+    protected boolean isSync;
 
-    /**
+    public boolean isSync() {
+		return isSync;
+	}
+
+	public void setSync(boolean isSync) {
+		this.isSync = isSync;
+	}
+
+	/**
      * Gets the value of the referenceUid property.
      * 
      * @return

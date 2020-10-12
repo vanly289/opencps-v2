@@ -304,7 +304,7 @@ public class VRVehicleRecordLocalServiceImpl extends VRVehicleRecordLocalService
 			object.setSignPlace(objectData.getString("signPlace"));
 			object.setSignDate(parseStringToDate(objectData.getString("signDate")));
 			object.setModifyDate(now);
-			object.setSyncDate(parseStringToDate(objectData.getString("syncDate")));
+			object.setSyncDate(now);
 			object.setCertificaterecordno(objectData.getString("certificaterecordno"));
 			object.setPostPrintingStatus(objectData.getInt("postPrintingStatus"));
 			object.setQrCode(objectData.getString("qrCode"));

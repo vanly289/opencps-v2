@@ -184,7 +184,7 @@ public class VRIssueVehiclecertificateLocalServiceImpl
 			object.setCertificateRecordDate(parseStringToDate(objectData.getString("certificateRecordDate")));
 			object.setProductionExamReportNo(objectData.getString("productionExamReportNo"));
 			object.setModifyDate(now);
-			object.setSyncDate(parseStringToDate(objectData.getString("syncDate")));
+			object.setSyncDate(now);
 
 			object = vrIssueVehiclecertificatePersistence.update(object);
 			

@@ -133,6 +133,9 @@ public interface VRTechnicalSpec_XCHLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	public JSONArray adminProcessData(JSONArray arrayData, long dossierId,
+		long mtCore, long vehicleTypeCertificateId);
+
 	/**
 	* @throws PortalException
 	*/
@@ -159,9 +162,6 @@ public interface VRTechnicalSpec_XCHLocalService extends BaseLocalService,
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	public List<VRTechnicalSpec_XCH> adminProcessData(JSONArray arrayData,
-		long dossierId, long mtCore, long vehicleTypeCertificateId);
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.

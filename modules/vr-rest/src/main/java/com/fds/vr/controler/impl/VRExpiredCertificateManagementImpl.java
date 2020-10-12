@@ -33,22 +33,8 @@ import javax.ws.rs.core.Response;
  *
  */
 public class VRExpiredCertificateManagementImpl implements VRExpiredCertificateManagement {
-	
-	private static final Log _log = LogFactoryUtil.getLog(VRExpiredCertificateManagementImpl.class);
 
-	@Override
-	public Response findByDossierStatus(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
-			User user, ServiceContext serviceContext, String dossierStatus, int start, int end) {
-		JSONObject result = JSONFactoryUtil.createJSONObject();
-		try {
-			VRExpiredCertificateActions actions = new VRExpiredCertificateActionsImpl();
-			result = actions.findByDossierStatus(dossierStatus, start, end);
-			return Response.status(200).entity(result.toJSONString()).build();
-		} catch (Exception e) {
-			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get VRExpiredCertificate").toJSONString())
-					.build();
-		}
-	}
+	private static final Log _log = LogFactoryUtil.getLog(VRExpiredCertificateManagementImpl.class);
 
 	@Override
 	public Response updateExpireCertificate(HttpServletRequest request, HttpHeaders header, Company company,
@@ -112,13 +98,15 @@ public class VRExpiredCertificateManagementImpl implements VRExpiredCertificateM
 		try {
 			VRExpireCertificate vrExpireCertificate = VRExpireCertificateLocalServiceUtil.fetchVRExpireCertificate(id);
 			if (vrExpireCertificate != null) {
-				result = BusinessUtil.object2Json_originColumnName(vrExpireCertificate, VRExpireCertificateModelImpl.class, StringPool.BLANK);
+				result = BusinessUtil.object2Json_originColumnName(vrExpireCertificate,
+						VRExpireCertificateModelImpl.class, StringPool.BLANK);
 			}
-			
+
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
-			return Response.status(500).entity(VRRestUtil
-					.errorMessage("Can't get VRExpiredCertificate - " + e.getClass().getName()).toJSONString())
+			return Response
+					.status(500).entity(VRRestUtil
+							.errorMessage("Can't get VRExpiredCertificate - " + e.getClass().getName()).toJSONString())
 					.build();
 		}
 	}

@@ -1,5 +1,22 @@
 package org.opencps.dossiermgt.action.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,26 +32,9 @@ import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
 import org.opencps.dossiermgt.service.PaymentFileLocalServiceUtil;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-
 public class PaymentFileActionsImpl implements PaymentFileActions {
 
-	Log _log = LogFactoryUtil.getLog(ServiceInfoActionsImpl.class);
+	Log _log = LogFactoryUtil.getLog(PaymentFileActionsImpl.class);
 
 	/**
 	 * Get all PaymentFile of DossierId
@@ -231,50 +231,65 @@ public class PaymentFileActionsImpl implements PaymentFileActions {
 			String accountUserName, String govAgencyTaxNo, String invoiceTemplateNo, String invoiceIssueNo,
 			String invoiceNo, boolean isSync, ServiceContext serviceContext)
 			throws SystemException, PortalException, java.text.ParseException {
+		
+		_log.info("-----> updateFileApproval for " + groupId);
 
+		//Tao ra de rollback
+		PaymentFile backupPaymentFile = PaymentFileLocalServiceUtil.fectPaymentFile(id, referenceUid);
+		
 		PaymentFile paymentFile = PaymentFileLocalServiceUtil.updateFileApproval(groupId, id, referenceUid,
 				approveDatetime, accountUserName, govAgencyTaxNo, invoiceTemplateNo, invoiceIssueNo, invoiceNo,
 				serviceContext);
 
-		if (!isSync) {
-			// Add PaymentFileSync
-			Dossier dossier = DossierLocalServiceUtil.getDossier(paymentFile.getDossierId());
-			// TODO review serverNo on this
-			//Comment by Dungnv
-	//		DossierSyncLocalServiceUtil.updateDossierSync(groupId, serviceContext.getUserId(), paymentFile.getDossierId(),
-	//				dossier.getReferenceUid(), false, 3, paymentFile.getPrimaryKey(), paymentFile.getReferenceUid(),
-	//				StringPool.BLANK);
-			//Add by Dungnv - Khong ro logic dung khong?
-			DossierSync dossierSync = null;
-			List<DossierSync> dossierSyncs = DossierSyncLocalServiceUtil.fetchByGroupDossierId(groupId, paymentFile.getDossierId(), -1, -1);
-			if(Validator.isNotNull(dossierSyncs) && !dossierSyncs.isEmpty()) {
-				for(DossierSync sync : dossierSyncs) {
-					dossierSync = sync;
+		if (isSync) {
+			try {
+				_log.info("Dungnv: isSync = " + isSync + " - Sync Payment Status");
+				// Add PaymentFileSync
+				Dossier dossier = DossierLocalServiceUtil.getDossier(paymentFile.getDossierId());
+				// TODO review serverNo on this
+				//Comment by Dungnv
+		//		DossierSyncLocalServiceUtil.updateDossierSync(groupId, serviceContext.getUserId(), paymentFile.getDossierId(),
+		//				dossier.getReferenceUid(), false, 3, paymentFile.getPrimaryKey(), paymentFile.getReferenceUid(),
+		//				StringPool.BLANK);
+				//add by Dungnv
+				DossierSync dossierSync = null;
+				List<DossierSync> dossierSyncs = DossierSyncLocalServiceUtil.fetchByGroupDossierId(groupId, paymentFile.getDossierId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				if(Validator.isNotNull(dossierSyncs) && !dossierSyncs.isEmpty()) {
+					for(DossierSync sync : dossierSyncs) {
+						dossierSync = sync;
+					}
 				}
-			}
-			if(Validator.isNotNull(dossierSync)) {
-				JSONObject jPaymentStatus = JSONFactoryUtil.createJSONObject();
-				JSONArray array = JSONFactoryUtil.createJSONArray();
-				jPaymentStatus.put("groupId", groupId);
-				jPaymentStatus.put("userId", serviceContext.getUserId());
-				jPaymentStatus.put("dossierId", paymentFile.getDossierId());
-				jPaymentStatus.put("dossierReferenceUid", dossier.getReferenceUid());
-				jPaymentStatus.put("createDossier", false);
-				jPaymentStatus.put("method", 3);
-				jPaymentStatus.put("classPK", paymentFile.getPrimaryKey());
-				jPaymentStatus.put("fileReferenceUid", paymentFile.getReferenceUid());
-				jPaymentStatus.put("serverNo", "DKLR_CTN");
-				array.put(jPaymentStatus);
-				if(array.length() > 0) {
+				List<PaymentFile> syncPaymentFileList = PaymentFileLocalServiceUtil.getByDID_ISN(paymentFile.getDossierId(), true);
+				if (syncPaymentFileList != null && syncPaymentFileList.size() > 0) {
+					JSONArray arrayPaymentStatus = JSONFactoryUtil.createJSONArray();
+					for (PaymentFile spf : syncPaymentFileList) {
+						if (groupId != ConstantsUtils.GROUP_CTN) {
+							//Add by Dungnv
+							JSONObject jPaymentStatus = JSONFactoryUtil.createJSONObject();
+							jPaymentStatus.put("groupId", groupId);
+							jPaymentStatus.put("userId", serviceContext.getUserId());
+							jPaymentStatus.put("dossierId", paymentFile.getDossierId());
+							jPaymentStatus.put("dossierReferenceUid", dossier.getReferenceUid());
+							jPaymentStatus.put("createDossier", false);
+							jPaymentStatus.put("method", 3);
+							jPaymentStatus.put("classPK", spf.getPrimaryKey());
+							jPaymentStatus.put("fileReferenceUid", spf.getReferenceUid());
+							jPaymentStatus.put("serverNo", "DKLR_CTN");
+							arrayPaymentStatus.put(jPaymentStatus);
+						}
+					}
 					JSONObject payload = JSONFactoryUtil.createJSONObject();
-					payload.put(ConstantsUtils.PAYLOAD_SYNC_PAYMENTSTATUS, array);
+					payload.put(ConstantsUtils.PAYLOAD_SYNC_PAYMENTSTATUS, arrayPaymentStatus);
 					dossierSync.setState(2);
 					dossierSync.setPayload(payload.toJSONString());
 					DossierSyncLocalServiceUtil.updateDossierSync(dossierSync);
 					return paymentFile;
 				}
+			} catch (Exception e) {
+				_log.error(e);
+				PaymentFileLocalServiceUtil.updatePaymentFile(backupPaymentFile);
+				return null;
 			}
-			//return null;
 		}
 		return paymentFile;
 

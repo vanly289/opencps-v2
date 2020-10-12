@@ -14,17 +14,12 @@
 
 package com.fds.vr.business.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import com.fds.vr.business.action.util.ActionUtil;
-import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.model.VRCOPProductType;
 import com.fds.vr.business.model.impl.VRCOPProductTypeImpl;
+import com.fds.vr.business.model.impl.VRCOPProductTypeModelImpl;
 import com.fds.vr.business.service.base.VRCOPProductTypeLocalServiceBaseImpl;
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.fds.vr.service.util.BusinessUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -37,16 +32,24 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vrcop product type local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.fds.vr.business.service.VRCOPProductTypeLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link com.fds.vr.business.service.VRCOPProductTypeLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author khoavd
@@ -54,24 +57,25 @@ import aQute.bnd.annotation.ProviderType;
  * @see com.fds.vr.business.service.VRCOPProductTypeLocalServiceUtil
  */
 @ProviderType
-public class VRCOPProductTypeLocalServiceImpl
-	extends VRCOPProductTypeLocalServiceBaseImpl {
+public class VRCOPProductTypeLocalServiceImpl extends VRCOPProductTypeLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRCOPProductTypeLocalServiceUtil} to access the vrcop product type local service.
+	 * Never reference this class directly. Always use {@link
+	 * com.fds.vr.business.service.VRCOPProductTypeLocalServiceUtil} to access the
+	 * vrcop product type local service.
 	 */
-	public List<VRCOPProductType> findBycopReportRepositoryID_MtCore(long mtCore, long copReportRepositoryID, int start, int end) {
+	public List<VRCOPProductType> findBycopReportRepositoryID_MtCore(long mtCore, long copReportRepositoryID, int start,
+			int end) {
 		return vrcopProductTypePersistence.findBycopReportRepositoryID(mtCore, copReportRepositoryID, start, end);
 	}
-
 
 	public List<VRCOPProductType> findBycopReportNo_MtCore(long mtCore, String copReportNo, int start, int end) {
 		return vrcopProductTypePersistence.findBycopReportNo(mtCore, copReportNo, start, end);
 	}
 
 	public VRCOPProductType updateCOPProductType(Map<String, String> mapValues, int mtCore) {
-		
+
 		Date now = new Date();
 
 		long vrCOPProductTypeId = counterLocalService.increment(VRCOPProductType.class.getName());
@@ -99,7 +103,7 @@ public class VRCOPProductTypeLocalServiceImpl
 
 		return vrcopProductTypePersistence.update(object);
 	}
-	
+
 	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
 			String modelClassName, int start, int end) throws SystemException {
 
@@ -110,78 +114,78 @@ public class VRCOPProductTypeLocalServiceImpl
 
 		return vrcopProductTypeFinder.countData(sql);
 	}
-	
-	public JSONArray getByCOPReportNo(long mtCore,String COPReportNo) throws SystemException, PortalException{
-	
+
+	public JSONArray getByCOPReportNo(long mtCore, String COPReportNo) throws SystemException, PortalException {
+
 		JSONArray result = JSONFactoryUtil.createJSONArray();
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-		
-		List<VRCOPProductType> dataList = findBycopReportNo_MtCore(mtCore,COPReportNo, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		
-		for(VRCOPProductType data:dataList) {
-			
+
+		List<VRCOPProductType> dataList = findBycopReportNo_MtCore(mtCore, COPReportNo, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (VRCOPProductType data : dataList) {
+
 			jsonObject = JSONFactoryUtil.createJSONObject();
-			
+
 			jsonObject = ActionUtil.object2Json(data, VRCOPProductTypeImpl.class, StringPool.BLANK);
-			
-			if(Validator.isNotNull(jsonObject)) {
+
+			if (Validator.isNotNull(jsonObject)) {
 				result.put(jsonObject);
 			}
 		}
 		return result;
 	}
 
+	public JSONArray adminProcessData(JSONArray arrayData, long mtCore, long vrcopReportRepositoryId, long dossierId,
+			String dossierIdCTN, String dossierNo) {
 
-	public int adminProcessData(JSONArray arrayData, long mtCore, long vrcopReportRepositoryId, long dossierId, String dossierIdCTN, String dossierNo) {
+		JSONArray array = JSONFactoryUtil.createJSONArray();
 
-		int result = 0;
-		
-		try {
-			vrcopProductTypePersistence.removeBycopDossierId(dossierId);
-			
-			for (int i = 0; i < arrayData.length(); i++) {
-				JSONObject objectData = arrayData.getJSONObject(i);
-				
-				VRCOPProductType object = null;
+		vrcopProductTypePersistence.removeBycopDossierId(dossierId);
 
-				long id = counterLocalService.increment(VRCOPProductType.class.getName());
+		Date now = new Date();
 
-				object = vrcopProductTypePersistence.create(id);
+		for (int i = 0; i < arrayData.length(); i++) {
+			JSONObject objectData = arrayData.getJSONObject(i);
 
-				object.setModifyDate(new Date());
-				object.setMtCore(objectData.getLong("mtCore"));
+			VRCOPProductType object = null;
 
-				object.setCopReportRepositoryID(vrcopReportRepositoryId);
-				object.setCopReportNo(objectData.getString("copReportNo"));
-				object.setSequenceNo(objectData.getLong("sequenceNo"));
-				object.setVehicleClass(objectData.getString("vehicleClass"));
-				object.setVehicleTypeCode(objectData.getString("vehicleTypeCode"));
-				object.setVehicleTypeDescription(objectData.getString("vehicleTypeDescription"));
-				if (!"".equals(objectData.getString("syncDate"))) {
-					object.setSyncDate(new Date(objectData.getString("syncDate")));
-				}
-				object.setProductClassificationCode(objectData.getString("productClassificationCode"));
-				object.setProductClassificationDescription(objectData.getString("productClassificationDescription"));
-				object.setTrademarkName(objectData.getString("trademarkName"));
-				object.setCommercialName(objectData.getString("commercialName"));
-				object.setModelCode(objectData.getString("modelCode"));
-				object.setDesignSymbolNo(objectData.getString("designSymbolNo"));
-				object.setRemarks(objectData.getString("remarks"));
-				
-				object.setDossierId(dossierId);
-				object.setDossierIdCTN(dossierIdCTN);
-				object.setDossierNo(dossierNo);
-				
-				vrcopProductTypePersistence.update(object);
-				
-				result = i;
+			long id = counterLocalService.increment(VRCOPProductType.class.getName());
+
+			object = vrcopProductTypePersistence.create(id);
+
+			object.setModifyDate(now);
+			object.setMtCore(objectData.getLong("mtCore"));
+
+			object.setCopReportRepositoryID(vrcopReportRepositoryId);
+			object.setCopReportNo(objectData.getString("copReportNo"));
+			object.setSequenceNo(objectData.getLong("sequenceNo"));
+			object.setVehicleClass(objectData.getString("vehicleClass"));
+			object.setVehicleTypeCode(objectData.getString("vehicleTypeCode"));
+			object.setVehicleTypeDescription(objectData.getString("vehicleTypeDescription"));
+			object.setSyncDate(now);
+			object.setProductClassificationCode(objectData.getString("productClassificationCode"));
+			object.setProductClassificationDescription(objectData.getString("productClassificationDescription"));
+			object.setTrademarkName(objectData.getString("trademarkName"));
+			object.setCommercialName(objectData.getString("commercialName"));
+			object.setModelCode(objectData.getString("modelCode"));
+			object.setDesignSymbolNo(objectData.getString("designSymbolNo"));
+			object.setRemarks(objectData.getString("remarks"));
+
+			object.setDossierId(dossierId);
+			object.setDossierIdCTN(dossierIdCTN);
+			object.setDossierNo(dossierNo);
+
+			vrcopProductTypePersistence.update(object);
+			try {
+				JSONObject obj = BusinessUtil.object2Json_originColumnName(object, VRCOPProductTypeModelImpl.class,
+						StringPool.BLANK);
+				array.put(obj);
+			} catch (JSONException e) {
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			result = -500;
 		}
-		
-		return result;
+
+		return array;
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRCOPProductTypeLocalServiceImpl.class);

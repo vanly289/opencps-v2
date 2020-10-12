@@ -141,6 +141,14 @@ public class VRVehicleSpecificationLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.json.JSONArray adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
+		long vehicleTypeCertificateId) {
+		return getService()
+				   .adminProcessData(arrayData, dossierId,
+			vehicleTypeCertificateId);
+	}
+
 	public static com.liferay.portal.kernel.json.JSONArray findData(
 		java.lang.String sql, java.util.List<java.lang.String> columnNames,
 		java.util.List<java.lang.String> dataTypes,
@@ -183,14 +191,6 @@ public class VRVehicleSpecificationLocalServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.fds.vr.business.model.VRVehicleSpecification> adminProcessData(
-		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
-		long vehicleTypeCertificateId) {
-		return getService()
-				   .adminProcessData(arrayData, dossierId,
-			vehicleTypeCertificateId);
 	}
 
 	/**

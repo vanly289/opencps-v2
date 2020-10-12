@@ -14,8 +14,6 @@ import java.util.Date;
  *
  */
 public interface VRExpiredCertificateActions {
-	public JSONObject findByDossierStatus(String dossierStatus, int start, int end);
-
 	public JSONObject updateVRExpiredCertificate(long id, long mtCore, long convertAssembleId, long validDossierId,
 			String validDossierIdCTN, String validDossierNo, long vehicleTypeCertificateId, long dossierId,
 			String dossierIdCTN, String dossierNo, String dossierStatus, Date previousExpireDate,

@@ -150,7 +150,7 @@ public class VRRestApplication extends Application {
 		long dossierId = GetterUtil.getLong(header.getHeaderString("dossierId"));
 		long dossierFileId = GetterUtil.getLong(header.getHeaderString("dossierFileId"));
 		String fileTemplateNo = GetterUtil.getString(header.getHeaderString("fileTemplateNo"));
-		String flag = header.getHeaderString("flag"); //Co danh dau khi form bien ban goi vao
+		String flag = header.getHeaderString("flag"); //Co danh dau khi form bien ban goi vao tranh viec bi cu~ du lieu sau khi bo sung
 		try {
 			JSONObject object = actions.getTechSpecByVehicleClassExt(groupId, module, dossierId, dossierFileId,
 					fileTemplateNo, vehicleClass, flag);

@@ -24,16 +24,25 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.fds.vr.business.model.VRTechnicalSpec_XCG;
 import com.fds.vr.business.model.VRTechnicalSpec_XCGPart2;
 import com.fds.vr.business.model.VRTechnicalSpec_XCGPart3;
+import com.fds.vr.business.model.VRTechnicalSpec_XCGPart3Model;
 import com.fds.vr.business.model.VRTechnicalSpec_XCGPart4;
 import com.fds.vr.business.model.VRTechnicalSpec_XCGPart5;
 import com.fds.vr.business.model.VRTechnicalSpec_XCGPart6;
+import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGModelImpl;
+import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart2ModelImpl;
+import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart4ModelImpl;
+import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart5ModelImpl;
+import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart6ModelImpl;
 import com.fds.vr.business.service.base.VRTechnicalSpec_XCGLocalServiceBaseImpl;
+import com.fds.vr.service.util.BusinessUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * The implementation of the vr technical spec_xcg local service.
@@ -66,7 +75,7 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 	public List<VRTechnicalSpec_XCG> findByVehicleCertificateId(long vehiclerCertificateId, int start, int end) {
 		return vrTechnicalSpec_XCGPersistence.findByvehicleTypeCertificateId(vehiclerCertificateId, start, end);
 	}
-	
+
 	public List<VRTechnicalSpec_XCG> findByDossierId(long dossierId, int start, int end) {
 		return vrTechnicalSpec_XCGPersistence.findBy_DossierId(dossierId, start, end);
 	}
@@ -131,8 +140,8 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 
 	}
 
-	public List<VRTechnicalSpec_XCG> adminProcessData(JSONArray arrayData, long dossierId, long mtCore, long vehicleTypeCertificateId) {
-		List<VRTechnicalSpec_XCG> vrTechnicalSpec_XCGs = new ArrayList<VRTechnicalSpec_XCG>();
+	public JSONArray adminProcessData(JSONArray arrayData, long dossierId, long mtCore, long vehicleTypeCertificateId) {
+		JSONArray array = JSONFactoryUtil.createJSONArray();
 
 		try {
 			vrTechnicalSpec_XCGPersistence.removeByDossierId(dossierId, mtCore);
@@ -186,12 +195,14 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 				object.setXCG01182(objectData.getString("XCG01182"));
 				object.setXCG01183(objectData.getString("XCG01183"));
 				object.setXCG01192(objectData.getString("XCG01192"));
-				
+
 				object = vrTechnicalSpec_XCGPersistence.update(object);
-				
+				JSONObject obj_part1 = BusinessUtil.object2Json_originColumnName(object,
+						VRTechnicalSpec_XCGModelImpl.class, StringPool.BLANK);
+
 				VRTechnicalSpec_XCGPart2 objectPart2 = null;
 				objectPart2 = vrTechnicalSpec_XCGPart2Persistence.findByPrimaryKey(object.getPrimaryKey());
-				
+
 				objectPart2.setModifyDate(now);
 				objectPart2.setSyncDate(now);
 				objectPart2.setMtCore(objectData.getLong("mtCore"));
@@ -338,10 +349,12 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 				objectPart2.setXCG01308(objectData.getString("XCG01308"));
 
 				objectPart2 = vrTechnicalSpec_XCGPart2Persistence.update(objectPart2);
-				
+				JSONObject obj_part2 = BusinessUtil.object2Json_originColumnName(objectPart2,
+						VRTechnicalSpec_XCGPart2ModelImpl.class, StringPool.BLANK);
+
 				VRTechnicalSpec_XCGPart3 objectPart3 = null;
 				objectPart3 = vrTechnicalSpec_XCGPart3Persistence.findByPrimaryKey(object.getPrimaryKey());
-				
+
 				objectPart3.setModifyDate(now);
 				objectPart3.setSyncDate(now);
 				objectPart3.setMtCore(objectData.getLong("mtCore"));
@@ -533,10 +546,12 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 				objectPart3.setXCG01494(objectData.getString("XCG01494"));
 
 				objectPart3 = vrTechnicalSpec_XCGPart3Persistence.update(objectPart3);
-				
+				JSONObject obj_part3 = BusinessUtil.object2Json_originColumnName(objectPart3,
+						VRTechnicalSpec_XCGPart3Model.class, StringPool.BLANK);
+
 				VRTechnicalSpec_XCGPart4 objectPart4 = null;
 				objectPart4 = vrTechnicalSpec_XCGPart4Persistence.findByPrimaryKey(object.getPrimaryKey());
-				
+
 				objectPart4.setModifyDate(now);
 				objectPart4.setSyncDate(now);
 				objectPart4.setMtCore(objectData.getLong("mtCore"));
@@ -667,10 +682,12 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 				objectPart4.setXCG01597(objectData.getString("XCG01597"));
 
 				objectPart4 = vrTechnicalSpec_XCGPart4Persistence.update(objectPart4);
-				
+				JSONObject obj_part4 = BusinessUtil.object2Json_originColumnName(objectPart4,
+						VRTechnicalSpec_XCGPart4ModelImpl.class, StringPool.BLANK);
+
 				VRTechnicalSpec_XCGPart5 objectPart5 = null;
 				objectPart5 = vrTechnicalSpec_XCGPart5Persistence.findByPrimaryKey(object.getPrimaryKey());
-				
+
 				objectPart5.setModifyDate(now);
 				objectPart5.setSyncDate(now);
 				objectPart5.setMtCore(objectData.getLong("mtCore"));
@@ -861,10 +878,12 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 				objectPart5.setXCG01756(objectData.getString("XCG01756"));
 
 				objectPart5 = vrTechnicalSpec_XCGPart5Persistence.update(objectPart5);
-				
+				JSONObject obj_part5 = BusinessUtil.object2Json_originColumnName(objectPart5,
+						VRTechnicalSpec_XCGPart5ModelImpl.class, StringPool.BLANK);
+
 				VRTechnicalSpec_XCGPart6 objectPart6 = null;
 				objectPart6 = vrTechnicalSpec_XCGPart6Persistence.findByPrimaryKey(object.getPrimaryKey());
-				
+
 				objectPart6.setModifyDate(now);
 				objectPart6.setSyncDate(now);
 				objectPart6.setMtCore(objectData.getLong("mtCore"));
@@ -873,8 +892,8 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 				objectPart6.setDossierNo(objectData.getString("dossierNo"));
 				objectPart6.setReferenceUid(objectData.getString("referenceUid"));
 				objectPart6.setDossierIdCTN(objectData.getString("dossierIdCTN"));
-				objectPart6.setDeliverableCode(objectData.getString("deliverableCode"));				
-				
+				objectPart6.setDeliverableCode(objectData.getString("deliverableCode"));
+
 				objectPart6.setXCG01757(objectData.getString("XCG01757"));
 				objectPart6.setXCG01758(objectData.getString("XCG01758"));
 
@@ -1338,16 +1357,30 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 				 * objectPart6.setXCG01307(objectData.getString("XCG01307"));
 				 * objectPart6.setXCG01308(objectData.getString("XCG01308"));
 				 */
-				
+
 				objectPart6 = vrTechnicalSpec_XCGPart6Persistence.update(objectPart6);
+				JSONObject obj_part6 = BusinessUtil.object2Json_originColumnName(objectPart6,
+						VRTechnicalSpec_XCGPart6ModelImpl.class, StringPool.BLANK);
+
 				
-				vrTechnicalSpec_XCGs.add(object);
+				JSONObject obj = mergeJSON(obj_part1, obj_part2, obj_part3, obj_part4, obj_part5, obj_part6);
+				array.put(obj);
 			}
 		} catch (Exception e) {
 			_log.error(e);
 		}
 
-		return vrTechnicalSpec_XCGs;
+		return array;
+	}
+	
+	private JSONObject mergeJSON(JSONObject ...jsonObject) {
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		for (JSONObject obj : jsonObject) {
+			obj.keys().forEachRemaining(key -> {
+				result.put(key, obj.get(key));
+			});
+		}
+		return result;
 	}
 
 	private Log _log = LogFactoryUtil.getLog(VRTechnicalSpec_XCGLocalServiceImpl.class);

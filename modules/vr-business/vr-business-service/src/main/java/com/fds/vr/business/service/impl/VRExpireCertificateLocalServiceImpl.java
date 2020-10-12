@@ -97,7 +97,10 @@ public class VRExpireCertificateLocalServiceImpl extends VRExpireCertificateLoca
 			vrExpireCertificate = vrExpireCertificatePersistence.create(id);
 		}
 
-		vrExpireCertificate.setModifyDate(new Date());
+		Date now = new Date();
+		
+		vrExpireCertificate.setModifyDate(now);
+		vrExpireCertificate.setSyncDate(now);
 		if (mtCore > 0) {
 			vrExpireCertificate.setMtCore(mtCore);
 		}
@@ -238,9 +241,6 @@ public class VRExpireCertificateLocalServiceImpl extends VRExpireCertificateLoca
 		}
 		if (documentFileEntryId > 0) {
 			vrExpireCertificate.setDocumentFileEntryId(documentFileEntryId);
-		}
-		if (Validator.isNotNull(syncDate)) {
-			vrExpireCertificate.setSyncDate(syncDate);
 		}
 		
 		vrExpireCertificate = vrExpireCertificatePersistence.update(vrExpireCertificate);

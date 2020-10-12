@@ -159,6 +159,10 @@ public interface VRCOPProductionPlantEquipmentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	public JSONArray adminProcessData(JSONArray arrayData, long mtCore,
+		long vrcopReportRepositoryId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo);
+
 	public JSONArray findData(java.lang.String sql,
 		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
 		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
@@ -179,10 +183,6 @@ public interface VRCOPProductionPlantEquipmentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
-
-	public int adminProcessData(JSONArray arrayData, long mtCore,
-		long vrcopReportRepositoryId, long dossierId,
-		java.lang.String dossierIdCTN, java.lang.String dossierNo);
 
 	/**
 	* Returns the number of vrcop production plant equipments.

@@ -127,6 +127,14 @@ public class VRTechnicalSpec_LKXCGLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.json.JSONArray adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
+		long mtCore, long vehicleTypeCertificateId) {
+		return getService()
+				   .adminProcessData(arrayData, dossierId, mtCore,
+			vehicleTypeCertificateId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -158,14 +166,6 @@ public class VRTechnicalSpec_LKXCGLocalServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.fds.vr.business.model.VRTechnicalSpec_LKXCG> adminProcessData(
-		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
-		long mtCore, long vehicleTypeCertificateId) {
-		return getService()
-				   .adminProcessData(arrayData, dossierId, mtCore,
-			vehicleTypeCertificateId);
 	}
 
 	/**

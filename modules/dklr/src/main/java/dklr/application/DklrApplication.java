@@ -17,41 +17,14 @@ import com.fds.vr.business.action.impl.VRVehicleTypeCertificateActionImpl;
 import com.fds.vr.business.model.VRApplicantProfile;
 import com.fds.vr.business.model.VRCOPReportRepository;
 import com.fds.vr.business.model.VRES;
-import com.fds.vr.business.model.VRInspectionStandard;
 import com.fds.vr.business.model.VRIssue;
 import com.fds.vr.business.model.VRProductionPlant;
-import com.fds.vr.business.model.VRTechnicalSpec_LKXCG;
-import com.fds.vr.business.model.VRTechnicalSpec_LKXMY;
-import com.fds.vr.business.model.VRTechnicalSpec_XCG;
-import com.fds.vr.business.model.VRTechnicalSpec_XCH;
-import com.fds.vr.business.model.VRTechnicalSpec_XCN;
-import com.fds.vr.business.model.VRTechnicalSpec_XDD;
-import com.fds.vr.business.model.VRTechnicalSpec_XMY;
-import com.fds.vr.business.model.VRVehicleSpecification;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
 import com.fds.vr.business.model.impl.VRApplicantProfileModelImpl;
-import com.fds.vr.business.model.impl.VRInspectionStandardModelImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantModelImpl;
-import com.fds.vr.business.model.impl.VRTechnicalSpec_LKXCGModelImpl;
-import com.fds.vr.business.model.impl.VRVehicleSpecificationModelImpl;
-import com.fds.vr.business.model.impl.VRVehicleTypeCertificateModelImpl;
 import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
-import com.fds.vr.business.service.VRCOPProdEquipmentLocalServiceUtil;
-import com.fds.vr.business.service.VRCOPProductTypeLocalServiceUtil;
-import com.fds.vr.business.service.VRCOPProductionPlantEmployeeLocalServiceUtil;
-import com.fds.vr.business.service.VRCOPProductionPlantEquipmentLocalServiceUtil;
-import com.fds.vr.business.service.VRCOPReportAttachLocalServiceUtil;
 import com.fds.vr.business.service.VRCOPReportRepositoryLocalServiceUtil;
-import com.fds.vr.business.service.VRInspectionStandardLocalServiceUtil;
 import com.fds.vr.business.service.VRIssueLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_LKXCGLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_LKXMYLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCGLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCHLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XCNLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XDDLocalServiceUtil;
-import com.fds.vr.business.service.VRTechnicalSpec_XMYLocalServiceUtil;
-import com.fds.vr.business.service.VRVehicleSpecificationLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.fds.vr.service.util.BusinessUtil;
 import com.fds.vr.service.util.FileUploadUtils;
@@ -249,102 +222,58 @@ public class DklrApplication extends Application {
 			String postStatus = "draft";
 			postStatus = bodyRoot.getString("postStatus");
 			JSONObject bodyObject = bodyRoot.getJSONObject("body");
-			JSONArray key = bodyObject.names();
+			JSONArray keys = bodyObject.names();
 			JSONObject valueObject = JSONFactoryUtil.createJSONObject();
 			JSONObject esData = JSONFactoryUtil.createJSONObject();
 			esData.put(Field.MODIFIED_DATE + "_es", new Date().getTime());
 			switch (indice) {
 			case "vr_COPReportRepository":
-				VRCOPReportRepository vrcopReportRepository = null;
-				for (int i = 0; i < key.length(); ++i) {
-					String keys = key.getString(i);
-					if (keys.toLowerCase().equalsIgnoreCase("vr_copreportrepository")) {
-						valueObject = bodyObject.getJSONObject(keys);
-						esData.put("dossierId", String.valueOf(valueObject.getLong("dossierId")));
-						esData.put("dossierIdCTN", valueObject.getString("dossierIdCTN"));
-						esData.put("dossierNo", valueObject.getString("dossierNo"));
-						esData.put("type_es", keys.toLowerCase());
-						vrcopReportRepository = VRCOPReportRepositoryLocalServiceUtil.adminProcessData(valueObject,
-								valueObject.getLong("dossierId"));
-						esData.put("id", String.valueOf(vrcopReportRepository.getId()));
-						break;
+				JSONObject objReportRepository = null;
+				JSONArray arrayEmployee = null;
+				JSONArray arrayEqipment = null;
+				JSONArray arrayProdEqipment = null;
+				JSONArray arrayProductType = null;
+				JSONArray arrayReportAttach = null;
+				for (int i = 0; i < keys.length(); ++i) {
+					String key = keys.getString(i);
+					if (key.toLowerCase().equalsIgnoreCase("vr_copreportrepository")) {
+						objReportRepository = bodyObject.getJSONObject(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_ProductionPlantEmployee")) {
+						arrayEmployee = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_ProductionPlantEquipment")) {
+						arrayEqipment = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_ProductionPlantProdEquipment")) {
+						arrayProdEqipment = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_ProductType")) {
+						arrayProductType = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_COPReport_attach")) {
+						arrayReportAttach = bodyObject.getJSONArray(key);
 					}
 				}
-				if (vrcopReportRepository != null) {
-					for (int i = 0; i < key.length(); ++i) {
-						String keys = key.getString(i);
-						if (keys.toLowerCase().equalsIgnoreCase("vr_copproductionplantemployee")) {
-							JSONArray arrayData = bodyObject.getJSONArray(keys);
-							int lenght = VRCOPProductionPlantEmployeeLocalServiceUtil.adminProcessData(arrayData,
-									vrcopReportRepository.getMtCore(), vrcopReportRepository.getId(),
-									vrcopReportRepository.getDossierId(), vrcopReportRepository.getDossierIdCTN(),
-									vrcopReportRepository.getDossierNo());
-							if (lenght < arrayData.length() - 1) {
-								bodyObject.remove("vr_ProductionPlantEmployee");
-							}
-						} else if (keys.toLowerCase().equalsIgnoreCase("vr_copproductionplantequipment")) {
-							JSONArray arrayData = bodyObject.getJSONArray(keys);
-							int lenght = VRCOPProductionPlantEquipmentLocalServiceUtil.adminProcessData(arrayData,
-									vrcopReportRepository.getMtCore(), vrcopReportRepository.getId(),
-									vrcopReportRepository.getDossierId(), vrcopReportRepository.getDossierIdCTN(),
-									vrcopReportRepository.getDossierNo());
-							if (lenght < arrayData.length() - 1) {
-								bodyObject.remove("vr_ProductionPlantEquipment");
-							}
-						} else if (keys.toLowerCase().equalsIgnoreCase("vr_copproductionplantprodequipment")) {
-							JSONArray arrayData = bodyObject.getJSONArray(keys);
-							int lenght = VRCOPProdEquipmentLocalServiceUtil.adminProcessData(arrayData,
-									vrcopReportRepository.getMtCore(), vrcopReportRepository.getId(),
-									vrcopReportRepository.getDossierId(), vrcopReportRepository.getDossierIdCTN(),
-									vrcopReportRepository.getDossierNo());
-							if (lenght < arrayData.length() - 1) {
-								bodyObject.remove("vr_ProductionPlantProdEquipment");
-							}
-						} else if (keys.toLowerCase().equalsIgnoreCase("vr_copproducttype")) {
-							JSONArray arrayData = bodyObject.getJSONArray(keys);
-							int lenght = VRCOPProductTypeLocalServiceUtil.adminProcessData(arrayData,
-									vrcopReportRepository.getMtCore(), vrcopReportRepository.getId(),
-									vrcopReportRepository.getDossierId(), vrcopReportRepository.getDossierIdCTN(),
-									vrcopReportRepository.getDossierNo());
-							if (lenght < arrayData.length() - 1) {
-								bodyObject.remove("vr_ProductType");
-							}
-						} else if (keys.toLowerCase().equalsIgnoreCase("vr_copproductline")) {
-							// TODO chua co
-							// JSONArray value = bodyObject.getJSONArray(keys);
-						} else if (keys.toLowerCase().equalsIgnoreCase("vr_copreport_attach")) {
-							JSONArray arrayData = bodyObject.getJSONArray(keys);
-							int lenght = VRCOPReportAttachLocalServiceUtil.adminProcessData(arrayData,
-									vrcopReportRepository.getMtCore(), vrcopReportRepository.getId(),
-									vrcopReportRepository.getDossierId(), vrcopReportRepository.getDossierIdCTN(),
-									vrcopReportRepository.getDossierNo());
-							if (lenght < arrayData.length() - 1) {
-								bodyObject.remove("vr_COPReport_attach");
-							}
-						}
-					}
-				} else {
-					_log.error("Dungnv: Them that bai vrcopReportRepository");
-				}
+				JSONObject resp_COP = VRCOPReportRepositoryLocalServiceUtil.adminProcessData(objReportRepository,
+						arrayEmployee, arrayEqipment, arrayProdEqipment, arrayProductType, arrayReportAttach);
+				VRCOPReportRepository vrcopReportRepository = VRCOPReportRepositoryLocalServiceUtil
+						.findByDossierId_MTCore(objReportRepository.getLong("dossierId"),
+								objReportRepository.getLong("mtCore"));
 				if (vrcopReportRepository != null) {
 					VRCOPReportRepositoryAction vrcopReportRepositoryAction = new VRCOPReportRepositoryActionImpl();
 					vrcopReportRepositoryAction.indexing(vrcopReportRepository, company);
 					status.put("code", 200);
 					status.put("msg", "success");
 					result.put("status", status);
-					result.put("data", bodyObject);
+					result.put("data", resp_COP);
 					return Response.status(200).entity(result.toJSONString()).build();
 				}
 
 			case "vr_ApplicantProfile":
 				JSONObject respData_Applicatnt = JSONFactoryUtil.createJSONObject();
-				for (int i = 0; i < key.length(); ++i) {
-					String keys = key.getString(i);
-					if (keys.toLowerCase().equalsIgnoreCase("vr_ApplicantProfile")) {
-						valueObject = bodyObject.getJSONObject(keys);
+				for (int i = 0; i < keys.length(); ++i) {
+					String key = keys.getString(i);
+					if (key.toLowerCase().equalsIgnoreCase("vr_ApplicantProfile")) {
+						valueObject = bodyObject.getJSONObject(key);
 						esData.put("applicantCode", valueObject.getString("applicantCode"));
 						// esData.put("registrationId", valueObject.getString("registrationId"));
-						esData.put("type_es", keys.toLowerCase());
+						esData.put("type_es", key.toLowerCase());
 						VRApplicantProfileAction vrApplicantProfileAction = new VRApplicantProfileActionImpl();
 						VRApplicantProfile vrApplicantProfile = vrApplicantProfileAction.adminProcessData(valueObject,
 								valueObject.getLong("mtCore"), valueObject.getString("applicantCode"), postStatus,
@@ -364,10 +293,10 @@ public class DklrApplication extends Application {
 				}
 
 				if (postStatus.equalsIgnoreCase("draft")) {
-					for (int i = 0; i < key.length(); ++i) {
-						String keys = key.getString(i);
-						if (keys.toLowerCase().equalsIgnoreCase("vr_ProductionPlant")) {
-							JSONArray arrayData = bodyObject.getJSONArray(keys);
+					for (int i = 0; i < keys.length(); ++i) {
+						String key = keys.getString(i);
+						if (key.toLowerCase().equalsIgnoreCase("vr_ProductionPlant")) {
+							JSONArray arrayData = bodyObject.getJSONArray(key);
 							if (arrayData.length() > 0) {
 								JSONObject obj = arrayData.getJSONObject(0);
 								if (obj.length() > 0) {
@@ -387,10 +316,10 @@ public class DklrApplication extends Application {
 						}
 					}
 				} else if (postStatus.equalsIgnoreCase("send")) {
-					for (int i = 0; i < key.length(); ++i) {
-						String keys = key.getString(i);
-						if (keys.toLowerCase().equalsIgnoreCase("vr_ProductionPlant")) {
-							JSONArray arrayData = bodyObject.getJSONArray(keys);
+					for (int i = 0; i < keys.length(); ++i) {
+						String key = keys.getString(i);
+						if (key.toLowerCase().equalsIgnoreCase("vr_ProductionPlant")) {
+							JSONArray arrayData = bodyObject.getJSONArray(key);
 							if (arrayData.length() > 0) {
 								VRProductionPlantAction vrProductionPlantAction = new VRProductionPlantActionImpl();
 								List<VRProductionPlant> vrProductionPlants = vrProductionPlantAction
@@ -446,146 +375,47 @@ public class DklrApplication extends Application {
 				return Response.status(200).entity(result.toJSONString()).build();
 
 			case "vr_VehicleTypeCertificate":
-				long vehicleTypeCertificateId = 0;
-				VRVehicleTypeCertificate vrVehicleTypeCertificate = null;
 				JSONObject respData_Vehicle = JSONFactoryUtil.createJSONObject();
-				for (int i = 0; i < key.length(); ++i) {
-					String keys = key.getString(i);
-					if (keys.toLowerCase().equalsIgnoreCase("vr_VehicleTypeCertificate")) {
-						valueObject = bodyObject.getJSONObject(keys);
-						esData.put("dossierId", String.valueOf(valueObject.getLong("dossierId")));
-						esData.put("dossierIdCTN", valueObject.getString("dossierIdCTN"));
-						esData.put("dossierNo", valueObject.getString("dossierNo"));
-						esData.put("type_es", keys.toLowerCase());
-						vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.adminProcessData(
-								valueObject, valueObject.getLong("dossierId"), valueObject.getLong("mtCore"));
-						esData.put("id", String.valueOf(vrVehicleTypeCertificate.getId()));
-						vehicleTypeCertificateId = vrVehicleTypeCertificate.getId();
-						JSONObject jVRVehicleTypeCertificate = BusinessUtil.object2Json_originValue(
-								vrVehicleTypeCertificate, VRVehicleTypeCertificateModelImpl.class, StringPool.BLANK);
-						respData_Vehicle.put("vr_VehicleTypeCertificate", jVRVehicleTypeCertificate);
-						break;
+				JSONObject jVRVehicleTypeCertificate = null;
+				JSONArray arrayVRVehicleSpecification = null;
+				JSONArray arrayVRInspectionStandard = null;
+				JSONArray arrayLKXCG = null;
+				JSONArray arrayXCG = null;
+				JSONArray arrayLKXMY = null;
+				JSONArray arrayXMY = null;
+				JSONArray arrayXCH = null;
+				JSONArray arrayXCN = null;
+				JSONArray arrayXDD = null;
+				for (int i = 0; i < keys.length(); ++i) {
+					String key = keys.getString(i);
+					if (key.toLowerCase().equalsIgnoreCase("vr_VehicleTypeCertificate")) {
+						jVRVehicleTypeCertificate = bodyObject.getJSONObject(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_VehicleSpecification")) {
+						arrayVRVehicleSpecification = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_InspectionStandard")) {
+						arrayVRInspectionStandard = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_technicalspec_lkxcg")) {
+						arrayLKXCG = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_technicalspec_xcg")) {
+						arrayXCG = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_technicalspec_lkxmy")) {
+						arrayLKXMY = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_technicalspec_xmy")) {
+						arrayXMY = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_technicalspec_xchbb")) {
+						arrayXCH = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_technicalspec_xcnbb")) {
+						arrayXCN = bodyObject.getJSONArray(key);
+					} else if (key.toLowerCase().equalsIgnoreCase("vr_technicalspec_xdd")) {
+						arrayXDD = bodyObject.getJSONArray(key);
 					}
 				}
-				for (int i = 0; i < key.length(); ++i) {
-					String keys = key.getString(i);
-					if (keys.toLowerCase().equalsIgnoreCase("vr_VehicleSpecification")) {
-						JSONArray arrayData = bodyObject.getJSONArray(keys);
-						if (vehicleTypeCertificateId > 0) {
-							List<VRVehicleSpecification> vrVehicleSpecifications = VRVehicleSpecificationLocalServiceUtil
-									.adminProcessData(arrayData, valueObject.getLong("dossierId"),
-											vehicleTypeCertificateId);
-							if (vrVehicleSpecifications != null && !vrVehicleSpecifications.isEmpty()) {
-								JSONArray array = JSONFactoryUtil.createJSONArray();
-								vrVehicleSpecifications.forEach(vrVehicleSpecification -> {
-									try {
-										JSONObject obj = BusinessUtil.object2Json_originValue(vrVehicleSpecification,
-												VRVehicleSpecificationModelImpl.class, StringPool.BLANK);
-										array.put(obj);
-									} catch (Exception e) {
-									}
-								});
-								respData_Vehicle.put("vr_VehicleSpecification", array);
-							}
-						}
-					} else if (keys.toLowerCase().equalsIgnoreCase("vr_InspectionStandard")) {
-						JSONArray arrayData = bodyObject.getJSONArray(keys);
-						if (vehicleTypeCertificateId > 0) {
-							List<VRInspectionStandard> vrInspectionStandards = VRInspectionStandardLocalServiceUtil
-									.adminProcessData(arrayData, valueObject.getLong("dossierId"),
-											vehicleTypeCertificateId);
-							if (vrInspectionStandards != null && !vrInspectionStandards.isEmpty()) {
-								JSONArray array = JSONFactoryUtil.createJSONArray();
-								vrInspectionStandards.forEach(vrInspectionStandard -> {
-									try {
-										JSONObject obj = BusinessUtil.object2Json_originValue(vrInspectionStandard,
-												VRInspectionStandardModelImpl.class, StringPool.BLANK);
-										array.put(obj);
-									} catch (Exception e) {
-									}
-								});
-								respData_Vehicle.put("vr_InspectionStandard", array);
-							}
-						}
-					} else if (keys.toLowerCase().equalsIgnoreCase("vr_technicalspec_lkxcg")) {
-						JSONArray arrayData = bodyObject.getJSONArray(keys);
-						if (vehicleTypeCertificateId > 0) {
-							List<VRTechnicalSpec_LKXCG> vrTechnicalSpec_LKXCGs = VRTechnicalSpec_LKXCGLocalServiceUtil
-									.adminProcessData(arrayData, valueObject.getLong("dossierId"),
-											valueObject.getLong("mtCore"), vehicleTypeCertificateId);
-							JSONArray array = JSONFactoryUtil.createJSONArray();
-							vrTechnicalSpec_LKXCGs.forEach(vrTechnicalSpec_LKXCG -> {
-								try {
-									JSONObject obj = BusinessUtil.object2Json_originValue(vrTechnicalSpec_LKXCG,
-											VRTechnicalSpec_LKXCGModelImpl.class, StringPool.BLANK);
-									array.put(obj);
-								} catch (Exception e) {
-								}
-							});
-							respData_Vehicle.put("vr_Technicalspec_LKXCG", array);
-						}
-					} else if (keys.toLowerCase().equalsIgnoreCase("vr_technicalspec_xcg")) {
-						JSONArray arrayData = bodyObject.getJSONArray(keys);
-						if (vehicleTypeCertificateId > 0) {
-							List<VRTechnicalSpec_XCG> vrTechnicalSpec_XCGs = VRTechnicalSpec_XCGLocalServiceUtil
-									.adminProcessData(arrayData, valueObject.getLong("dossierId"),
-											valueObject.getLong("mtCore"), vehicleTypeCertificateId);
-							if (vrTechnicalSpec_XCGs.size() >= arrayData.length()) {
-								respData_Vehicle.put("vr_Technicalspec_XCG", arrayData);
-							}
-						}
-					} else if (keys.toLowerCase().equalsIgnoreCase("vr_technicalspec_lkxmy")) {
-						JSONArray arrayData = bodyObject.getJSONArray(keys);
-						if (vehicleTypeCertificateId > 0) {
-							List<VRTechnicalSpec_LKXMY> vrTechnicalSpec_LKXMYs = VRTechnicalSpec_LKXMYLocalServiceUtil
-									.adminProcessData(arrayData, valueObject.getLong("dossierId"),
-											valueObject.getLong("mtCore"), vehicleTypeCertificateId);
-							if (vrTechnicalSpec_LKXMYs.size() >= arrayData.length()) {
-								respData_Vehicle.put("vr_Technicalspec_LKXMY", arrayData);
-							}
-						}
-					} else if (keys.toLowerCase().equalsIgnoreCase("vr_technicalspec_xmy")) {
-						JSONArray arrayData = bodyObject.getJSONArray(keys);
-						if (vehicleTypeCertificateId > 0) {
-							List<VRTechnicalSpec_XMY> vrTechnicalSpec_XMYs = VRTechnicalSpec_XMYLocalServiceUtil
-									.adminProcessData(arrayData, valueObject.getLong("dossierId"),
-											valueObject.getLong("mtCore"), vehicleTypeCertificateId);
-							if (vrTechnicalSpec_XMYs.size() >= arrayData.length()) {
-								respData_Vehicle.put("vr_Technicalspec_XMY", arrayData);
-							}
-						}
-					} else if (keys.toLowerCase().equalsIgnoreCase("vr_technicalspec_xchbb")) {
-						JSONArray arrayData = bodyObject.getJSONArray(keys);
-						if (vehicleTypeCertificateId > 0) {
-							List<VRTechnicalSpec_XCH> vrTechnicalSpec_XCHs = VRTechnicalSpec_XCHLocalServiceUtil
-									.adminProcessData(arrayData, valueObject.getLong("dossierId"),
-											valueObject.getLong("mtCore"), vehicleTypeCertificateId);
-							if (vrTechnicalSpec_XCHs.size() >= arrayData.length()) {
-								respData_Vehicle.put("vr_Technicalspec_XCHBB", arrayData);
-							}
-						}
-					} else if (keys.toLowerCase().equalsIgnoreCase("vr_technicalspec_xcnbb")) {
-						JSONArray arrayData = bodyObject.getJSONArray(keys);
-						if (vehicleTypeCertificateId > 0) {
-							List<VRTechnicalSpec_XCN> vrTechnicalSpec_XCNs = VRTechnicalSpec_XCNLocalServiceUtil
-									.adminProcessData(arrayData, valueObject.getLong("dossierId"),
-											valueObject.getLong("mtCore"), vehicleTypeCertificateId);
-							if (vrTechnicalSpec_XCNs.size() >= arrayData.length()) {
-								respData_Vehicle.put("vr_Technicalspec_XCNBB", arrayData);
-							}
-						}
-					} else if (keys.toLowerCase().equalsIgnoreCase("vr_technicalspec_xdd")) {
-						JSONArray arrayData = bodyObject.getJSONArray(keys);
-						if (vehicleTypeCertificateId > 0) {
-							List<VRTechnicalSpec_XDD> vrTechnicalSpec_XDDs = VRTechnicalSpec_XDDLocalServiceUtil
-									.adminProcessData(arrayData, valueObject.getLong("dossierId"),
-											valueObject.getLong("mtCore"), vehicleTypeCertificateId);
-							if (vrTechnicalSpec_XDDs.size() >= arrayData.length()) {
-								respData_Vehicle.put("vr_Technicalspec_XDD", arrayData);
-							}
-						}
-					}
-				}
+				respData_Vehicle = VRVehicleTypeCertificateLocalServiceUtil.adminProcessData(jVRVehicleTypeCertificate,
+						arrayVRVehicleSpecification, arrayVRInspectionStandard, arrayLKXCG, arrayXCG, arrayLKXMY,
+						arrayXMY, arrayXCH, arrayXCN, arrayXDD);
+				VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+						.findByDossierId_MtCore(jVRVehicleTypeCertificate.getLong("dossierId"),
+								jVRVehicleTypeCertificate.getLong("mtCore"));
 				if (vrVehicleTypeCertificate != null) {
 					VRVehicleTypeCertificateAction vrVehicleTypeCertificateAction = new VRVehicleTypeCertificateActionImpl();
 					vrVehicleTypeCertificateAction.indexing(vrVehicleTypeCertificate, company);
@@ -599,18 +429,18 @@ public class DklrApplication extends Application {
 			case "vr_Issue":
 				JSONObject respData_Issue = JSONFactoryUtil.createJSONObject();
 				VRIssue vrIssue = null;
-				for (int i = 0; i < key.length(); ++i) {
-					String keys = key.getString(i);
-					if (keys.toLowerCase().equalsIgnoreCase("vr_Issue")) {
-						valueObject = bodyObject.getJSONObject(keys);
+				for (int i = 0; i < keys.length(); ++i) {
+					String key = keys.getString(i);
+					if (key.toLowerCase().equalsIgnoreCase("vr_Issue")) {
+						valueObject = bodyObject.getJSONObject(key);
 						esData.put("dossierId", String.valueOf(valueObject.getLong("dossierId")));
 						esData.put("dossierIdCTN", valueObject.getString("dossierIdCTN"));
 						esData.put("dossierNo", valueObject.getString("dossierNo"));
-						esData.put("type_es", keys.toLowerCase());
-						respData_Issue = VRIssueLocalServiceUtil.adminProcess(valueObject, valueObject.getLong("dossierId"),
-								valueObject.getLong("mtCore"));
-						vrIssue = VRIssueLocalServiceUtil.findByMT_DID(valueObject.getLong("mtCore"), valueObject.getLong("dossierId"));
-						esData.put("id", String.valueOf(vrIssue.getId()));
+						esData.put("type_es", key.toLowerCase());
+						respData_Issue = VRIssueLocalServiceUtil.adminProcess(valueObject,
+								valueObject.getLong("dossierId"), valueObject.getLong("mtCore"));
+						vrIssue = VRIssueLocalServiceUtil.findByMT_DID(valueObject.getLong("mtCore"),
+								valueObject.getLong("dossierId"));
 						break;
 					}
 				}
@@ -623,7 +453,7 @@ public class DklrApplication extends Application {
 					result.put("data", respData_Issue);
 				}
 				return Response.status(200).entity(result.toJSONString()).build();
-				
+
 			default:
 				break;
 			}

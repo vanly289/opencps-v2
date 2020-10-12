@@ -1,9 +1,28 @@
 package org.opencps.api.controller.impl;
 
-import java.io.BufferedReader;
+import com.fds.vr.service.util.FileUploadUtils;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -50,27 +69,6 @@ import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
 import org.opencps.dossiermgt.service.PaymentFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
-
-import com.fds.vr.service.util.FileUploadUtils;
-import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 public class DossierSyncManagementImpl implements DossierSyncManagement {
 	/*private final String baseUrl = "http://localhost:8080/o/rest/v2/";
@@ -506,12 +504,14 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 			
 			if (method == 0) {
 				String payload = sync.getPayload();
-				_log.debug("Dungnv: -----------> payload: " + payload);
+				_log.debug("Dungnv: -----------> Sync: " + payload);
 				JSONObject jPayload = JSONFactoryUtil.createJSONObject(payload);
 				// Sync paymentFile
-				if (jPayload.has(ConstantsUtils.PAYLOAD_SYNC_PAYMENTFILE)) {
-					JSONObject paymentfile = JSONFactoryUtil.createJSONObject(jPayload.getString(ConstantsUtils.PAYLOAD_SYNC_PAYMENTFILE));
+				if (jPayload.has(ConstantsUtils.PAYLOAD_SYNC_PAYMENTFILE)) {	
 					try {
+						JSONObject paymentfile = JSONFactoryUtil.createJSONObject(jPayload.getString(ConstantsUtils.PAYLOAD_SYNC_PAYMENTFILE));
+						_log.debug("Dungnv: -----------> Sync PaymentFile - payload: " + paymentfile);
+						
 						String endPointSynAction = "dossiers/" + paymentfile.getString("dossierReferenceUid") + "/payments";
 			
 						PaymentFile paymentFileClient = PaymentFileLocalServiceUtil.fectPaymentFile(paymentfile.getLong("dossierId"),
@@ -562,6 +562,8 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 					if (jPayload.has(ConstantsUtils.PAYLOAD_SYNC_FILES)) {
 						try {
 							String dossierFiles = jPayload.getString(ConstantsUtils.PAYLOAD_SYNC_FILES);
+							_log.debug("Dungnv: -----------> Sync DossierFile - payload: " + dossierFiles);
+							
 							JSONArray arrayDossierFile = JSONFactoryUtil.createJSONArray(dossierFiles);
 							for(int i = 0; i < arrayDossierFile.length(); i++) {
 								JSONObject object = arrayDossierFile.getJSONObject(i);
@@ -651,8 +653,9 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 				if(hasResult) {
 					if (jPayload.has(ConstantsUtils.PAYLOAD_SYNC_PAYMENTSTATUS)) {
 						try {
-							_log.info("SYN_METHOD_3");
 							JSONArray arrayPaymentStatus = JSONFactoryUtil.createJSONArray(jPayload.getString(ConstantsUtils.PAYLOAD_SYNC_PAYMENTSTATUS));
+							_log.debug("Dungnv: -----------> Sync PaymentStatus - payload: " + arrayPaymentStatus);
+							
 							for(int i = 0; i < arrayPaymentStatus.length(); i++) {
 								JSONObject paymentStatus = arrayPaymentStatus.getJSONObject(0);
 								
@@ -707,6 +710,7 @@ public class DossierSyncManagementImpl implements DossierSyncManagement {
 				
 				// SyncAction
 				if(hasResult) {
+					_log.debug("Dungnv: -----------> Sync Action");
 					try {
 						String endPointSynAction = "dossiers/" + refId + "/actions";
 		

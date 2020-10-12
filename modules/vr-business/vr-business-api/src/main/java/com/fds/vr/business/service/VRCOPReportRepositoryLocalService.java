@@ -80,9 +80,6 @@ public interface VRCOPReportRepositoryLocalService extends BaseLocalService,
 	public VRCOPReportRepository addVRCOPReportRepository(
 		VRCOPReportRepository vrcopReportRepository);
 
-	public VRCOPReportRepository adminProcessData(JSONObject objectData,
-		long dossierId);
-
 	/**
 	* Creates a new vrcop report repository with the primary key. Does not add the vrcop report repository to the database.
 	*
@@ -160,6 +157,12 @@ public interface VRCOPReportRepositoryLocalService extends BaseLocalService,
 		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
 		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
 		int start, int end) throws SystemException;
+
+	public JSONObject adminProcessData(JSONObject objectData,
+		JSONArray arrayVRCOPProductionPlantEmployee,
+		JSONArray arrayVRCOPProductionPlantEquipment,
+		JSONArray arrayVRCOPProdEquipment, JSONArray arrayVRCOPProductType,
+		JSONArray arrayVRCOPReportAttach);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONObject getByCOPReportNo(long mtCore, java.lang.String COPReportNo)

@@ -90,11 +90,7 @@ public class VRApplicantProfileLocalServiceImpl extends VRApplicantProfileLocalS
 
 		Date now = new Date();
 		object.setModifyDate(now);
-		if (objectData.getString("syncDate") != null && !StringPool.BLANK.equals(objectData.getString("syncDate"))) {
-			object.setSyncDate(ConvertFormatDate.parseStringToDate(objectData.getString("syncDate"),
-					ConvertFormatDate._ddMMyyy_HHmm));
-		}
-
+		object.setSyncDate(now);
 		try {
 			DictCollection dictCollection = DictCollectionLocalServiceUtil
 					.fetchByF_dictCollectionCode("ADMINISTRATIVE_REGION", 55217L);

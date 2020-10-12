@@ -64,12 +64,6 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 		return getService().addVRVehicleTypeCertificate(vrVehicleTypeCertificate);
 	}
 
-	public static com.fds.vr.business.model.VRVehicleTypeCertificate adminProcessData(
-		com.liferay.portal.kernel.json.JSONObject objectData, long dossierId,
-		long mtCore) {
-		return getService().adminProcessData(objectData, dossierId, mtCore);
-	}
-
 	public static com.fds.vr.business.model.VRVehicleTypeCertificate createVRVehicleTypeCertificate(
 		com.fds.vr.business.model.VRVehicleTypeCertificate object)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -374,6 +368,23 @@ public class VRVehicleTypeCertificateLocalServiceUtil {
 		return getService()
 				   .findData(sql, columnNames, dataTypes, modelClazz,
 			modelClassName, start, end);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData,
+		com.liferay.portal.kernel.json.JSONArray arrayVRVehicleSpecification,
+		com.liferay.portal.kernel.json.JSONArray arrayVRInspectionStandard,
+		com.liferay.portal.kernel.json.JSONArray arrayLKXCG,
+		com.liferay.portal.kernel.json.JSONArray arrayXCG,
+		com.liferay.portal.kernel.json.JSONArray arrayLKXMY,
+		com.liferay.portal.kernel.json.JSONArray arrayXMY,
+		com.liferay.portal.kernel.json.JSONArray arrayXCH,
+		com.liferay.portal.kernel.json.JSONArray arrayXCN,
+		com.liferay.portal.kernel.json.JSONArray arrayXDD) {
+		return getService()
+				   .adminProcessData(objectData, arrayVRVehicleSpecification,
+			arrayVRInspectionStandard, arrayLKXCG, arrayXCG, arrayLKXMY,
+			arrayXMY, arrayXCH, arrayXCN, arrayXDD);
 	}
 
 	/**

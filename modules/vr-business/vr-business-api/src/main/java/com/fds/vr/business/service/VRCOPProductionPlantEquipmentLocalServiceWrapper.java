@@ -169,6 +169,15 @@ public class VRCOPProductionPlantEquipmentLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.json.JSONArray adminProcessData(
+		com.liferay.portal.kernel.json.JSONArray arrayData, long mtCore,
+		long vrcopReportRepositoryId, long dossierId,
+		java.lang.String dossierIdCTN, java.lang.String dossierNo) {
+		return _vrcopProductionPlantEquipmentLocalService.adminProcessData(arrayData,
+			mtCore, vrcopReportRepositoryId, dossierId, dossierIdCTN, dossierNo);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.json.JSONArray findData(
 		java.lang.String sql, java.util.List<java.lang.String> columnNames,
 		java.util.List<java.lang.String> dataTypes,
@@ -203,15 +212,6 @@ public class VRCOPProductionPlantEquipmentLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _vrcopProductionPlantEquipmentLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public int adminProcessData(
-		com.liferay.portal.kernel.json.JSONArray arrayData, long mtCore,
-		long vrcopReportRepositoryId, long dossierId,
-		java.lang.String dossierIdCTN, java.lang.String dossierNo) {
-		return _vrcopProductionPlantEquipmentLocalService.adminProcessData(arrayData,
-			mtCore, vrcopReportRepositoryId, dossierId, dossierIdCTN, dossierNo);
 	}
 
 	/**

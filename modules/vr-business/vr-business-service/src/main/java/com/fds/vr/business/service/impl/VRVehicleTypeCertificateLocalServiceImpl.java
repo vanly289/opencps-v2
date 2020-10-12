@@ -27,16 +27,20 @@ import com.fds.vr.business.model.VRVehicleTypeCertificate;
 import com.fds.vr.business.model.impl.VRDossierImpl;
 import com.fds.vr.business.model.impl.VRProductionPlantImpl;
 import com.fds.vr.business.model.impl.VRVehicleTypeCertificateImpl;
+import com.fds.vr.business.model.impl.VRVehicleTypeCertificateModelImpl;
 import com.fds.vr.business.service.VRCOPReportRepositoryLocalServiceUtil;
 import com.fds.vr.business.service.VRDossierLocalServiceUtil;
 import com.fds.vr.business.service.VRProductionPlantLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleSpecificationLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.fds.vr.business.service.base.VRVehicleTypeCertificateLocalServiceBaseImpl;
+import com.fds.vr.service.util.BusinessUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -3937,10 +3941,13 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 		return vrVehicleTypeCertificateFinder.findExpiredVRVehicleTypeCertificates(day, expiredStatus);
 	}
 
-	public VRVehicleTypeCertificate adminProcessData(JSONObject objectData, long dossierId, long mtCore) {
+	public JSONObject adminProcessData(JSONObject objectData, JSONArray arrayVRVehicleSpecification,
+			JSONArray arrayVRInspectionStandard, JSONArray arrayLKXCG, JSONArray arrayXCG, JSONArray arrayLKXMY,
+			JSONArray arrayXMY, JSONArray arrayXCH, JSONArray arrayXCN, JSONArray arrayXDD) {
 		VRVehicleTypeCertificate object = null;
 
-		object = vrVehicleTypeCertificatePersistence.fetchByDossierId(dossierId, mtCore);
+		object = vrVehicleTypeCertificatePersistence.fetchByDossierId(objectData.getLong("dossierId"),
+				objectData.getLong("mtCore"));
 
 		if (object == null) {
 			long vrVehicleTypeCertificateId = counterLocalService.increment(VRVehicleTypeCertificate.class.getName());
@@ -3949,17 +3956,18 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 		}
 
 		Date now = new Date();
-		object.setSyncDate(parseStringToDate(objectData.getString("syncDate")));
+		object.setSyncDate(now);
 		// Add other fields
 		object.setMtCore(1);
 		object.setDossierType(objectData.getString("dossierType"));
 		object.setDossierNo(objectData.getString("dossierNo"));
 		object.setConvertassembleId(0);
 
-		VRApplicantProfile vrApplicantProfile = vrApplicantProfileLocalService.findByApplicantCode(objectData.getString("applicantIdNo"));
+		VRApplicantProfile vrApplicantProfile = vrApplicantProfileLocalService
+				.findByApplicantCode(objectData.getString("applicantIdNo"));
 		VRRegistration registration = vrRegistrationPersistence.fetchByREG_APPNO(objectData.getString("applicantIdNo"));
 
-		VRDossier dossier = vrDossierPersistence.fetchByPrimaryKey(dossierId);
+		VRDossier dossier = vrDossierPersistence.fetchByPrimaryKey(objectData.getLong("dossierId"));
 		object.setServiceCode(dossier.getServiceCode());
 		object.setServiceName(dossier.getServiceName());
 		object.setReferenceUid(dossier.getReferenceUid());
@@ -4080,7 +4088,6 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 		object.setOtherTestReportDate(parseStringToDate(objectData.getString("otherTestReportDate")));
 		object.setSampleFrameNo(objectData.getString("sampleFrameNo"));
 		object.setSampleVINNo(objectData.getString("sampleVINNo"));
-		;
 		object.setSampleEngineNo(objectData.getString("sampleEngineNo"));
 		object.setSampleVehicleType(objectData.getString("sampleVehicleType"));
 		object.setSampleVehicleTypeDescription(objectData.getString("sampleVehicleTypeDescription"));
@@ -4108,17 +4115,70 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 		object.setDeliverableFileEntryid(objectData.getLong("deliverableFileEntryId"));
 		object.setModifyDate(now);
 
+		JSONObject result = JSONFactoryUtil.createJSONObject();
 		object = vrVehicleTypeCertificatePersistence.update(object);
 
-		List<VRVehicleEquipment> vrVehicleEquipments = vrVehicleEquipmentLocalService.findByDossierId(dossierId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<VRVehicleEquipment> vrVehicleEquipments = vrVehicleEquipmentLocalService
+				.findByDossierId(objectData.getLong("dossierId"), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		for (VRVehicleEquipment vrVehicleEquipment : vrVehicleEquipments) {
 			vrVehicleEquipment.setVehicleTypeCertificateId(object.getPrimaryKey());
 
 			vrVehicleEquipmentPersistence.update(vrVehicleEquipment);
 		}
 
-		return object;
+		try {
+			JSONObject jVRVehicleTypeCertificate = BusinessUtil.object2Json_originColumnName(object,
+					VRVehicleTypeCertificateModelImpl.class, StringPool.BLANK);
+			result.put("vr_VehicleTypeCertificate", jVRVehicleTypeCertificate);
+		} catch (JSONException e) {
+		}
+		if (arrayVRVehicleSpecification != null) {
+			JSONArray array = vrVehicleSpecificationLocalService.adminProcessData(arrayVRVehicleSpecification,
+					object.getDossierId(), object.getPrimaryKey());
+			result.put("vr_VehicleSpecification", array);
+		}
+		if (arrayVRInspectionStandard != null) {
+			JSONArray array = vrInspectionStandardLocalService.adminProcessData(arrayVRInspectionStandard,
+					object.getDossierId(), object.getPrimaryKey());
+			result.put("vr_InspectionStandard", array);
+		}
+		if (arrayLKXCG != null) {
+			JSONArray array = vrTechnicalSpec_LKXCGLocalService.adminProcessData(arrayLKXCG, object.getDossierId(),
+					object.getMtCore(), object.getPrimaryKey());
+			result.put("vr_Technicalspec_LKXCG", array);
+		}
+		if (arrayXCG != null) {
+			JSONArray array = vrTechnicalSpec_XCGLocalService.adminProcessData(arrayXCG, object.getDossierId(),
+					object.getMtCore(), object.getPrimaryKey());
+			result.put("vr_Technicalspec_XCG", array);
+		}
+		if (arrayLKXMY != null) {
+			JSONArray array = vrTechnicalSpec_LKXMYLocalService.adminProcessData(arrayLKXMY, object.getDossierId(),
+					object.getMtCore(), object.getPrimaryKey());
+			result.put("vr_Technicalspec_LKXMY", array);
+		}
+		if (arrayXMY != null) {
+			JSONArray array = vrTechnicalSpec_XMYLocalService.adminProcessData(arrayXMY, object.getDossierId(),
+					object.getMtCore(), object.getPrimaryKey());
+			result.put("vr_Technicalspec_XMY", array);
+		}
+		if (arrayXCH != null) {
+			JSONArray array = vrTechnicalSpec_XCHLocalService.adminProcessData(arrayXCH, object.getDossierId(),
+					object.getMtCore(), object.getPrimaryKey());
+			result.put("vr_Technicalspec_XCH", array);
+		}
+		if (arrayXCN != null) {
+			JSONArray array = vrTechnicalSpec_XCNLocalService.adminProcessData(arrayXCN, object.getDossierId(),
+					object.getMtCore(), object.getPrimaryKey());
+			result.put("vr_Technicalspec_XCN", array);
+		}
+		if (arrayXDD != null) {
+			JSONArray array = vrTechnicalSpec_XDDLocalService.adminProcessData(arrayXDD, object.getDossierId(),
+					object.getMtCore(), object.getPrimaryKey());
+			result.put("vr_Technicalspec_XDD", array);
+		}
+
+		return result;
 	}
 
 }

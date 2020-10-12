@@ -2,6 +2,8 @@ package frontend.web.customer.dklr.portlet;
 
 import frontend.web.customer.dklr.constants.FrontendWebCustomerDklrPortletKeys;
 
+import com.fds.vr.business.model.VRApplicantProfile;
+import com.fds.vr.business.service.VRApplicantProfileLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -41,22 +43,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author hoang
  */
-@Component(
-	immediate = true,
-	property = {
-		"com.liferay.portlet.css-class-wrapper=portlet-freemarker",
+@Component(immediate = true, property = { "com.liferay.portlet.css-class-wrapper=portlet-freemarker",
 		"com.liferay.portlet.display-category=category.opencps.customer",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.instanceable=true",
-		"javax.portlet.display-name=frontend-web-customer-dklr Portlet",
-		"javax.portlet.init-param.template-path=/",
+		"com.liferay.portlet.header-portlet-css=/css/main.css", "com.liferay.portlet.instanceable=true",
+		"javax.portlet.display-name=frontend-web-customer-dklr Portlet", "javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/templates/customermain.ftl",
 		"javax.portlet.name=" + FrontendWebCustomerDklrPortletKeys.FrontendWebCustomerDklr,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
-	},
-	service = Portlet.class
-)
+		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class FrontendWebCustomerDklrPortlet extends FreeMarkerPortlet {
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
@@ -75,7 +69,7 @@ public class FrontendWebCustomerDklrPortlet extends FreeMarkerPortlet {
 		try {
 			applicantObj = JSONFactoryUtil.createJSONObject(jsonObj);
 		} catch (Exception e) {
-			
+
 		}
 
 		String dossierTemplateId = ParamUtil.getString(renderRequest, "dossierTemplateId");
@@ -94,25 +88,26 @@ public class FrontendWebCustomerDklrPortlet extends FreeMarkerPortlet {
 			// TODO: handle exception
 			_log.info(e.getMessage());
 		}
-		
+
 		try {
-			Registration registration = RegistrationLocalServiceUtil.getByRegistrationState(themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), 2).get(0);
-			registration.setAddress(registration.getAddress().trim());
-			String registrationStr = JSONFactoryUtil.looseSerialize(registration);
-			JSONObject registrationObj = JSONFactoryUtil.createJSONObject(registrationStr);
-			if(registrationObj != null){
-				renderRequest.setAttribute("registration", registrationObj);
+//			Registration registration = RegistrationLocalServiceUtil.getByRegistrationState(themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), 2).get(0);
+//			registration.setAddress(registration.getAddress().trim());
+//			String registrationStr = JSONFactoryUtil.looseSerialize(registration);
+//			JSONObject registrationObj = JSONFactoryUtil.createJSONObject(registrationStr);
+			VRApplicantProfile vrApplicantProfile = VRApplicantProfileLocalServiceUtil.findByApplicantCode(applicant.getApplicantIdNo());
+			JSONObject jApplicantProfile = JSONFactoryUtil
+					.createJSONObject(JSONFactoryUtil.looseSerialize(vrApplicantProfile));
+			if (jApplicantProfile != null) {
+				renderRequest.setAttribute("registration", jApplicantProfile);
 			}
-			
-		}
-		catch (Exception e) {
+
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			_log.info(e.getMessage());
 		}
-		
 
 		String dossierPartNo = ParamUtil.getString(renderRequest, "dossierPartNo");
-		
+
 		String lockState = ParamUtil.getString(renderRequest, "lockState");
 
 		String dossierTemplateNo = ParamUtil.getString(renderRequest, "dossierTemplateNo");
@@ -137,8 +132,7 @@ public class FrontendWebCustomerDklrPortlet extends FreeMarkerPortlet {
 		JSONObject userInfo = generalUserInfo(themeDisplay.getUserId());
 
 		JSONObject paymentObject = generatePaymentObject(dossierUUid, paymentFileUUid, trans_id, good_code);
-		
-		
+
 		// set varible
 		renderRequest.setAttribute("ajax", generateURLJsonObject(renderResponse));
 		renderRequest.setAttribute("api", generateApiJsonObject(themeDisplay));
@@ -176,25 +170,24 @@ public class FrontendWebCustomerDklrPortlet extends FreeMarkerPortlet {
 		dossierNew.put("value", "new");
 		dossierNew.put("valueSub", "");
 		dossierStatus.add(dossierNew);
-		
+
 		JSONObject dossierReceiving = JSONFactoryUtil.createJSONObject();
 		dossierReceiving.put("text", "Hồ sơ chờ tiếp nhận");
 		dossierReceiving.put("value", "receiving");
 		dossierReceiving.put("valueSub", "");
 		dossierStatus.add(dossierReceiving);
-		
+
 		JSONObject dossierWaiting = JSONFactoryUtil.createJSONObject();
 		dossierWaiting.put("text", "Hồ sơ chờ bổ sung");
 		dossierWaiting.put("value", "waiting");
 		dossierWaiting.put("valueSub", "");
 		dossierStatus.add(dossierWaiting);
-		
+
 		JSONObject dossierProcessed = JSONFactoryUtil.createJSONObject();
 		dossierProcessed.put("text", "Hồ sơ đã tiếp nhận");
 		dossierProcessed.put("value", "processing");
 		dossierProcessed.put("valueSub", "");
 		dossierStatus.add(dossierProcessed);
-
 
 		JSONObject dossierPaying = JSONFactoryUtil.createJSONObject();
 		dossierPaying.put("text", "Hồ sơ chờ thanh toán");
@@ -208,6 +201,48 @@ public class FrontendWebCustomerDklrPortlet extends FreeMarkerPortlet {
 		dossierDone.put("valueSub", "");
 		dossierStatus.add(dossierDone);
 
+		JSONObject dossierConfirmation = JSONFactoryUtil.createJSONObject();
+		dossierConfirmation.put("text", "Xác nhận kế hoạch kiểm tra");
+		dossierConfirmation.put("value", "waiting_3");
+		dossierConfirmation.put("valueSub", "waiting_3");
+		dossierStatus.add(dossierConfirmation);
+
+		JSONObject dossierDone2 = JSONFactoryUtil.createJSONObject();
+		dossierDone2.put("text", "Đề nghị cấp lại CC");
+		dossierDone2.put("value", "correcting");
+		dossierDone2.put("valueSub", "correcting");
+		dossierStatus.add(dossierDone2);
+
+		JSONObject dossierDone3 = JSONFactoryUtil.createJSONObject();
+		dossierDone3.put("text", "Hồ sơ SĐBS sau chứng nhận");
+		dossierDone3.put("value", "endorsement");
+		dossierDone3.put("valueSub", "endorsement");
+		dossierStatus.add(dossierDone3);
+
+		JSONObject dossierExpired = JSONFactoryUtil.createJSONObject();
+		dossierExpired.put("text", "Hồ sơ đến hạn XN hiệu lực");
+		dossierExpired.put("value", "HSDHXNHL");
+		dossierExpired.put("valueSub", "HSDHXNHL");
+		dossierStatus.add(dossierExpired);
+		
+		JSONObject dossierDeNghiXNHL = JSONFactoryUtil.createJSONObject();
+		dossierDeNghiXNHL.put("text", "Đề nghị XN hiệu lực");
+		dossierDeNghiXNHL.put("value", "DNXNHL");
+		dossierDeNghiXNHL.put("valueSub", "DNXNHL");
+		dossierStatus.add(dossierDeNghiXNHL);
+		
+		JSONObject dossierThongBaoKQDG = JSONFactoryUtil.createJSONObject();
+		dossierThongBaoKQDG.put("text", "Thông báo KQĐG XN hiệu lực");
+		dossierThongBaoKQDG.put("value", "XNHL");
+		dossierThongBaoKQDG.put("valueSub", "XNHL");
+		dossierStatus.add(dossierThongBaoKQDG);
+		
+		JSONObject dossierThongBaoDSX = JSONFactoryUtil.createJSONObject();
+		dossierThongBaoDSX.put("text", "Thông báo dừng sản xuất");
+		dossierThongBaoDSX.put("value", "TBDSX");
+		dossierThongBaoDSX.put("valueSub", "TBDSX");
+		dossierStatus.add(dossierThongBaoDSX);
+		
 		JSONObject dossierCancelling = JSONFactoryUtil.createJSONObject();
 		dossierCancelling.put("text", "Hồ sơ yêu cầu hủy");
 		dossierCancelling.put("value", "cancelling");
@@ -219,30 +254,6 @@ public class FrontendWebCustomerDklrPortlet extends FreeMarkerPortlet {
 		dossierCancelled.put("value", "cancelled");
 		dossierCancelled.put("valueSub", "");
 		dossierStatus.add(dossierCancelled);
-		
-		JSONObject dossierConfirmation = JSONFactoryUtil.createJSONObject();
-		dossierConfirmation.put("text", "Xác nhận kế hoạch kiểm tra");
-		dossierConfirmation.put("value", "waiting_3");
-		dossierConfirmation.put("valueSub", "waiting_3");
-		dossierStatus.add(dossierConfirmation);
-		
-		JSONObject dossierDone2 = JSONFactoryUtil.createJSONObject();
-		dossierDone2.put("text", "Đề nghị cấp lại CC");
-		dossierDone2.put("value", "correcting");
-		dossierDone2.put("valueSub", "correcting");
-		dossierStatus.add(dossierDone2);
-		
-		JSONObject dossierDone3 = JSONFactoryUtil.createJSONObject();
-		dossierDone3.put("text", "Hồ sơ SĐBS sau chứng nhận");
-		dossierDone3.put("value", "endorsement");
-		dossierDone3.put("valueSub", "endorsement");
-		dossierStatus.add(dossierDone3);
-
-		JSONObject dossierExpired = JSONFactoryUtil.createJSONObject();
-		dossierExpired.put("text", "Hồ sơ đến hạn XN hiệu lực");
-		dossierExpired.put("value", "DONE_4");
-		dossierExpired.put("valueSub", "DONE_4");
-		dossierStatus.add(dossierExpired);
 
 		JSONObject dossierAll = JSONFactoryUtil.createJSONObject();
 		dossierAll.put("text", "Tất cả hồ sơ");
@@ -413,6 +424,36 @@ public class FrontendWebCustomerDklrPortlet extends FreeMarkerPortlet {
 
 		urlObject.put("serviceconfigDKLR", customerDossierServiceconfigDKLR);
 
+		PortletURL danhSachXeXuatXuong = renderResponse.createRenderURL();
+		danhSachXeXuatXuong.setWindowState(LiferayWindowState.EXCLUSIVE);
+		danhSachXeXuatXuong.setParameter("mvcPath", "/templates/danh_sach_xe_xuat_xuong.ftl");
+
+		urlObject.put("danh_sach_xe_xuat_xuong", danhSachXeXuatXuong);
+
+		PortletURL danhSachAnChiDaCapPhat = renderResponse.createRenderURL();
+		danhSachAnChiDaCapPhat.setWindowState(LiferayWindowState.EXCLUSIVE);
+		danhSachAnChiDaCapPhat.setParameter("mvcPath", "/templates/danh_sach_an_chi_da_cap_phat.ftl");
+
+		urlObject.put("danh_sach_an_chi_da_cap_phat", danhSachAnChiDaCapPhat);
+
+		PortletURL danhSachXeChoInPhieuXuatXuong = renderResponse.createRenderURL();
+		danhSachXeChoInPhieuXuatXuong.setWindowState(LiferayWindowState.EXCLUSIVE);
+		danhSachXeChoInPhieuXuatXuong.setParameter("mvcPath", "/templates/danh_sach_xe_cho_in_phieu_xuat_xuong.ftl");
+
+		urlObject.put("danh_sach_xe_cho_in_phieu_xuat_xuong", danhSachXeChoInPhieuXuatXuong);
+
+		PortletURL chiTietXeXuatXuong = renderResponse.createRenderURL();
+		chiTietXeXuatXuong.setWindowState(LiferayWindowState.EXCLUSIVE);
+		chiTietXeXuatXuong.setParameter("mvcPath", "/templates/chi_tiet_xe_xuat_xuong.ftl");
+
+		urlObject.put("chi_tiet_xe_xuat_xuong", chiTietXeXuatXuong);
+
+		PortletURL chiTietAnChiCapPhat = renderResponse.createRenderURL();
+		chiTietAnChiCapPhat.setWindowState(LiferayWindowState.EXCLUSIVE);
+		chiTietAnChiCapPhat.setParameter("mvcPath", "/templates/chi_tiet_an_chi_cap_phat.ftl");
+
+		urlObject.put("chi_tiet_an_chi_cap_phat", chiTietAnChiCapPhat);
+
 		PortletURL customerDossierWaitPaying = renderResponse.createRenderURL();
 		customerDossierWaitPaying.setWindowState(LiferayWindowState.EXCLUSIVE);
 		customerDossierWaitPaying.setParameter("mvcPath", "/templates/customer_dossier_waitpaying.ftl");
@@ -424,8 +465,6 @@ public class FrontendWebCustomerDklrPortlet extends FreeMarkerPortlet {
 		customerNotificationPayingURL.setParameter("mvcPath", "/templates/notificationPaying.ftl");
 
 		urlObject.put("notificationPaying", customerNotificationPayingURL);
-		
-		
 
 		return urlObject;
 	}

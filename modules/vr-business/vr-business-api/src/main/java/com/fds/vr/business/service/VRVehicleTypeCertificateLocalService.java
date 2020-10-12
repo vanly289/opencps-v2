@@ -85,9 +85,6 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 	public VRVehicleTypeCertificate addVRVehicleTypeCertificate(
 		VRVehicleTypeCertificate vrVehicleTypeCertificate);
 
-	public VRVehicleTypeCertificate adminProcessData(JSONObject objectData,
-		long dossierId, long mtCore);
-
 	public VRVehicleTypeCertificate createVRVehicleTypeCertificate(
 		VRVehicleTypeCertificate object) throws SystemException;
 
@@ -247,6 +244,12 @@ public interface VRVehicleTypeCertificateLocalService extends BaseLocalService,
 		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
 		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
 		int start, int end) throws SystemException;
+
+	public JSONObject adminProcessData(JSONObject objectData,
+		JSONArray arrayVRVehicleSpecification,
+		JSONArray arrayVRInspectionStandard, JSONArray arrayLKXCG,
+		JSONArray arrayXCG, JSONArray arrayLKXMY, JSONArray arrayXMY,
+		JSONArray arrayXCH, JSONArray arrayXCN, JSONArray arrayXDD);
 
 	/**
 	* @throws PortalException

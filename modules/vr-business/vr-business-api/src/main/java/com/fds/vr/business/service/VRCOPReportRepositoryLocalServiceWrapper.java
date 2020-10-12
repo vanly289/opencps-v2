@@ -46,13 +46,6 @@ public class VRCOPReportRepositoryLocalServiceWrapper
 		return _vrcopReportRepositoryLocalService.addVRCOPReportRepository(vrcopReportRepository);
 	}
 
-	@Override
-	public com.fds.vr.business.model.VRCOPReportRepository adminProcessData(
-		com.liferay.portal.kernel.json.JSONObject objectData, long dossierId) {
-		return _vrcopReportRepositoryLocalService.adminProcessData(objectData,
-			dossierId);
-	}
-
 	/**
 	* Creates a new vrcop report repository with the primary key. Does not add the vrcop report repository to the database.
 	*
@@ -176,6 +169,20 @@ public class VRCOPReportRepositoryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _vrcopReportRepositoryLocalService.findData(sql, columnNames,
 			dataTypes, modelClazz, modelClassName, start, end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData,
+		com.liferay.portal.kernel.json.JSONArray arrayVRCOPProductionPlantEmployee,
+		com.liferay.portal.kernel.json.JSONArray arrayVRCOPProductionPlantEquipment,
+		com.liferay.portal.kernel.json.JSONArray arrayVRCOPProdEquipment,
+		com.liferay.portal.kernel.json.JSONArray arrayVRCOPProductType,
+		com.liferay.portal.kernel.json.JSONArray arrayVRCOPReportAttach) {
+		return _vrcopReportRepositoryLocalService.adminProcessData(objectData,
+			arrayVRCOPProductionPlantEmployee,
+			arrayVRCOPProductionPlantEquipment, arrayVRCOPProdEquipment,
+			arrayVRCOPProductType, arrayVRCOPReportAttach);
 	}
 
 	@Override

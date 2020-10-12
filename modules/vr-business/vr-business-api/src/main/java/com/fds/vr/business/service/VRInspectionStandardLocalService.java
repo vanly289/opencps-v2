@@ -142,6 +142,9 @@ public interface VRInspectionStandardLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	public JSONArray adminProcessData(JSONArray arrayData, long dossierId,
+		long vehicleTypeCertificateId);
+
 	public JSONArray findData(java.lang.String sql,
 		List<java.lang.String> columnNames, List<java.lang.String> dataTypes,
 		java.lang.Class<?> modelClazz, java.lang.String modelClassName,
@@ -173,9 +176,6 @@ public interface VRInspectionStandardLocalService extends BaseLocalService,
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	public List<VRInspectionStandard> adminProcessData(JSONArray arrayData,
-		long dossierId, long vehicleTypeCertificateId);
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.

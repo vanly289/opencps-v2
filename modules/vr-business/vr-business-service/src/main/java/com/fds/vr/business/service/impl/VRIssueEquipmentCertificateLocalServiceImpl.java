@@ -136,7 +136,7 @@ public class VRIssueEquipmentCertificateLocalServiceImpl extends VRIssueEquipmen
 			object.setProductionPlantName(objectData.getString("productionPlantName"));
 			object.setProductionPlantAddress(objectData.getString("productionPlantAddress"));
 			object.setModifyDate(now);
-			object.setSyncDate(parseStringToDate(objectData.getString("syncDate")));
+			object.setSyncDate(now);
 
 			object = vrIssueEquipmentCertificatePersistence.update(object);
 			if (object != null) {

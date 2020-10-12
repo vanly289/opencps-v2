@@ -326,7 +326,7 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		VRIssue object = null;
 		
 		object = vrIssuePersistence.fetchByF_MT_DID(mtCore, dossierId);
-		
+		Date now = new Date();
 		if(object == null) {
 			long issueId = counterLocalService.increment(VRIssue.class.getName());
 			object = vrIssuePersistence.create(issueId);
@@ -388,8 +388,8 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		object.setInspectorId(objectData.getLong("inspectorId"));
 		object.setIssueInspectorId(objectData.getLong("issueInspectorId"));
 		object.setVerifyInspectorId(objectData.getLong("verifyInspectorId"));
-		object.setModifyDate(new Date());
-		object.setSyncDate(parseStringToDate(objectData.getString("syncDate")));
+		object.setModifyDate(now);
+		object.setSyncDate(now);
 
 		object = vrIssuePersistence.update(object);
 		JSONArray issueVehiclecertificates = JSONFactoryUtil.createJSONArray(objectData.getString("vr_Issue_VehicleCertificate"));

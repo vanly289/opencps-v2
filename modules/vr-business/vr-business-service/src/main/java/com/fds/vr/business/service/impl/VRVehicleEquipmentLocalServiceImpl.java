@@ -99,9 +99,10 @@ public class VRVehicleEquipmentLocalServiceImpl extends VRVehicleEquipmentLocalS
 			
 			VRVehicleTypeCertificate vrVehicleTypeCertificateByDossierId = vrVehicleTypeCertificateLocalService
 					.findByDossierId_MtCore(dossierId, mtCore);
-
+			
 			int isMandatory = objectData.getInt("isMandatory");
 			object.setIsMandatory(isMandatory);
+			object.setSyncDate(now);
 			if (isMandatory == 1) {
 				long certificateRecordId = objectData.getLong("certificateRecordID");
 				VRVehicleTypeCertificate vrVehicleTypeCertificate = vrVehicleTypeCertificateLocalService
@@ -149,7 +150,6 @@ public class VRVehicleEquipmentLocalServiceImpl extends VRVehicleEquipmentLocalS
 					object.setCopReportNo(vrVehicleTypeCertificate.getCopReportNo());
 					object.setCopReportDate(vrVehicleTypeCertificate.getCopReportDate());
 					object.setCopReportExpireDate(vrVehicleTypeCertificate.getCopReportExpireDate());
-					object.setSyncDate(parseStringToDate(objectData.getString("syncDate")));
 				}
 			} else {
 				object.setVehicleTypeCertificateId(Validator.isNotNull(vrVehicleTypeCertificateByDossierId) ? vrVehicleTypeCertificateByDossierId.getPrimaryKey() : 0);
@@ -194,7 +194,6 @@ public class VRVehicleEquipmentLocalServiceImpl extends VRVehicleEquipmentLocalS
 				object.setCopReportNo(objectData.getString("copReportNo"));
 				object.setCopReportDate(parseStringToDate(objectData.getString("copReportDate")));
 				object.setCopReportExpireDate(parseStringToDate(objectData.getString("copReportExpireDate")));
-				object.setSyncDate(parseStringToDate(objectData.getString("syncDate")));
 			}
 
 			object = vrVehicleEquipmentPersistence.update(object);

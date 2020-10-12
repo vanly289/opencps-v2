@@ -53,11 +53,6 @@ public class VRCOPReportRepositoryLocalServiceUtil {
 		return getService().addVRCOPReportRepository(vrcopReportRepository);
 	}
 
-	public static com.fds.vr.business.model.VRCOPReportRepository adminProcessData(
-		com.liferay.portal.kernel.json.JSONObject objectData, long dossierId) {
-		return getService().adminProcessData(objectData, dossierId);
-	}
-
 	/**
 	* Creates a new vrcop report repository with the primary key. Does not add the vrcop report repository to the database.
 	*
@@ -165,6 +160,20 @@ public class VRCOPReportRepositoryLocalServiceUtil {
 		return getService()
 				   .findData(sql, columnNames, dataTypes, modelClazz,
 			modelClassName, start, end);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject adminProcessData(
+		com.liferay.portal.kernel.json.JSONObject objectData,
+		com.liferay.portal.kernel.json.JSONArray arrayVRCOPProductionPlantEmployee,
+		com.liferay.portal.kernel.json.JSONArray arrayVRCOPProductionPlantEquipment,
+		com.liferay.portal.kernel.json.JSONArray arrayVRCOPProdEquipment,
+		com.liferay.portal.kernel.json.JSONArray arrayVRCOPProductType,
+		com.liferay.portal.kernel.json.JSONArray arrayVRCOPReportAttach) {
+		return getService()
+				   .adminProcessData(objectData,
+			arrayVRCOPProductionPlantEmployee,
+			arrayVRCOPProductionPlantEquipment, arrayVRCOPProdEquipment,
+			arrayVRCOPProductType, arrayVRCOPReportAttach);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getByCOPReportNo(

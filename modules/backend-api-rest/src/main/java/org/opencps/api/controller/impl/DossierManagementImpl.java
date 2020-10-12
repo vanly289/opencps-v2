@@ -37,6 +37,7 @@ import org.opencps.api.controller.DossierManagement;
 import org.opencps.api.controller.exception.ErrorMsg;
 import org.opencps.api.controller.util.DossierMarkUtils;
 import org.opencps.api.controller.util.DossierUtils;
+import org.opencps.api.controller.util.VRRestUtil;
 import org.opencps.api.dossier.model.DoActionModel;
 import org.opencps.api.dossier.model.DossierDetailModel;
 import org.opencps.api.dossier.model.DossierInputModel;
@@ -87,6 +88,7 @@ import org.opencps.dossiermgt.service.ServiceInfoLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
 import org.opencps.dossiermgt.service.comparator.DossierComparator;
 import org.opencps.dossiermgt.service.comparator.DossierFileComparator;
+import org.opencps.dossiermgt.vr.utils.VRBusinessUtils;
 
 public class DossierManagementImpl implements DossierManagement {
 
@@ -2086,6 +2088,19 @@ public class DossierManagementImpl implements DossierManagement {
 		} catch (Exception e) {
 			_log.error(e);
 			return Response.status(500).entity("Can't get Dossier: " + e.getClass().getName()).build();
+		}
+	}
+
+	@Override
+	public Response findByDossierStatus(HttpServletRequest request, HttpHeaders header, Company company, Locale locale,
+			User user, ServiceContext serviceContext, String dossierStatus, int start, int end) {
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+		try {
+			result = VRBusinessUtils.findByDossierStatus(dossierStatus, start, end);
+			return Response.status(200).entity(result.toJSONString()).build();
+		} catch (Exception e) {
+			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get VRExpiredCertificate").toJSONString())
+					.build();
 		}
 	}
 

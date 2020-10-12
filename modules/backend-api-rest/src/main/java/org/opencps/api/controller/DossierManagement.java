@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -41,6 +42,14 @@ import io.swagger.annotations.ApiResponses;
 @Path("/dossiers")
 @Api(value = "/dossiers", tags = "dossiers")
 public interface DossierManagement {
+	
+	@GET
+	@Path("/expiredcertificates")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Response findByDossierStatus(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @QueryParam("dossierStatus") String dossierStatus,
+			@DefaultValue("0") @QueryParam("start") int start, @DefaultValue("10") @QueryParam("end") int end);
 	
 	@GET
 	@Path("/detail/{referenceUid}")

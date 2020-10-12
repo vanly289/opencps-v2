@@ -840,24 +840,24 @@ public class DossierActionsImpl implements DossierActions {
 						}
 					}
 //					Comment by Dungnv
-//					DossierActionUser dau = DossierActionUserLocalServiceUtil.getByDID_UID_MOD(dossierActionId, userId, 1);
-//					if (dau != null) {
-//						List<ProcessPlugin> pluginList = ProcessPluginLocalServiceUtil
-//								.getBySC_SPID_ARUN(serviceProcessId, stepCode, true);
-//	
-//						if (pluginList != null && pluginList.size() > 0) {
-//							for (ProcessPlugin plg : pluginList) {
-//								// do create file
-//								String pluginForm = plg.getPluginForm();
-//								String fileTemplateNo = StringUtil.replaceFirst(plg.getSampleData(), "#", StringPool.BLANK);
-//	
-//								if (Validator.isNotNull(pluginForm) && !pluginForm.contains("original")) {
-//									_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(),
-//											dossierActionId, serviceContext);
-//								}
-//							}
-//						}
-//					}
+					DossierActionUser dau = DossierActionUserLocalServiceUtil.getByDID_UID_MOD(dossierActionId, userId, 1);
+					if (dau != null) {
+						List<ProcessPlugin> pluginList = ProcessPluginLocalServiceUtil
+								.getBySC_SPID_ARUN(serviceProcessId, stepCode, true);
+	
+						if (pluginList != null && pluginList.size() > 0) {
+							for (ProcessPlugin plg : pluginList) {
+								// do create file
+								String pluginForm = plg.getPluginForm();
+								String fileTemplateNo = StringUtil.replaceFirst(plg.getSampleData(), "#", StringPool.BLANK);
+	
+								if (Validator.isNotNull(pluginForm) && !pluginForm.contains("original")) {
+									_doAutoRun(groupId, fileTemplateNo, dossierId, dossier.getDossierTemplateNo(),
+											dossierActionId, serviceContext);
+								}
+							}
+						}
+					}
 				}
 
 			}
