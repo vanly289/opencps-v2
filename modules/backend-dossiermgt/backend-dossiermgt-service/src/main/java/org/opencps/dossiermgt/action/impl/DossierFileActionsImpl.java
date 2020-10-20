@@ -291,4 +291,19 @@ public class DossierFileActionsImpl implements DossierFileActions {
 
 		return DossierFileLocalServiceUtil.getByFileTemplateNo(id, fileTemplateNo);
 	}
+
+	@Override
+	public DossierFile updateDossierFileBySingleServer(long groupId, long dossierId, String referenceUid,
+			String sourceFileName, long fileEntryId, ServiceContext serviceContext)
+			throws SystemException, PortalException {
+		return DossierFileLocalServiceUtil.updateDossierFileBySingleServer(groupId, dossierId, referenceUid, null, sourceFileName, fileEntryId, serviceContext);
+	}
+
+	@Override
+	public DossierFile addDossierFileBySingleServer(long groupId, long dossierId, String referenceUid,
+			String dossierTemplateNo, String dossierPartNo, String fileTemplateNo, String displayName,
+			String sourceFileName, long fileSize, long fileEntryId, String fileType, String isSync,
+			long dossierActionId, ServiceContext serviceContext) throws SystemException, PortalException {
+		return DossierFileLocalServiceUtil.addDossierFileBySingleServer(groupId, dossierId, referenceUid, dossierTemplateNo, dossierPartNo, fileTemplateNo, displayName, sourceFileName, fileSize, fileEntryId, fileType, isSync, dossierActionId, serviceContext);
+	}
 }

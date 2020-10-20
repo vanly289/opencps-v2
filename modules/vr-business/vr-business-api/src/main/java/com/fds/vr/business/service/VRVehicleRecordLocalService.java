@@ -181,7 +181,8 @@ public interface VRVehicleRecordLocalService extends BaseLocalService,
 
 	public List<VRVehicleRecord> adminProcess(JSONArray arrayData,
 		long dossierId, long issueId, long mtCore,
-		long issueVehicleCertificateId);
+		long issueVehicleCertificateId, java.lang.String issueType)
+		throws java.lang.Exception;
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.

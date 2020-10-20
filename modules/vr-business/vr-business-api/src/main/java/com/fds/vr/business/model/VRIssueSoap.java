@@ -87,13 +87,13 @@ public class VRIssueSoap implements Serializable {
 		soapModel.setLeaderName(model.getLeaderName());
 		soapModel.setApplicantMaker(model.getApplicantMaker());
 		soapModel.setApplicantChecker(model.getApplicantChecker());
-		soapModel.setCertificateRecordDate(model.getCertificateRecordDate());
-		soapModel.setIssueInspectionRecordId(model.getIssueInspectionRecordId());
 		soapModel.setInspectorId(model.getInspectorId());
 		soapModel.setIssueInspectorId(model.getIssueInspectorId());
 		soapModel.setVerifyInspectorId(model.getVerifyInspectorId());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
+		soapModel.setCertifiedAssemblyType(model.getCertifiedAssemblyType());
+		soapModel.setCertifiedAssemblyTypeDescription(model.getCertifiedAssemblyTypeDescription());
 
 		return soapModel;
 	}
@@ -579,22 +579,6 @@ public class VRIssueSoap implements Serializable {
 		_applicantChecker = applicantChecker;
 	}
 
-	public Date getCertificateRecordDate() {
-		return _certificateRecordDate;
-	}
-
-	public void setCertificateRecordDate(Date certificateRecordDate) {
-		_certificateRecordDate = certificateRecordDate;
-	}
-
-	public long getIssueInspectionRecordId() {
-		return _issueInspectionRecordId;
-	}
-
-	public void setIssueInspectionRecordId(long issueInspectionRecordId) {
-		_issueInspectionRecordId = issueInspectionRecordId;
-	}
-
 	public long getInspectorId() {
 		return _inspectorId;
 	}
@@ -633,6 +617,23 @@ public class VRIssueSoap implements Serializable {
 
 	public void setSyncDate(Date syncDate) {
 		_syncDate = syncDate;
+	}
+
+	public String getCertifiedAssemblyType() {
+		return _certifiedAssemblyType;
+	}
+
+	public void setCertifiedAssemblyType(String certifiedAssemblyType) {
+		_certifiedAssemblyType = certifiedAssemblyType;
+	}
+
+	public String getCertifiedAssemblyTypeDescription() {
+		return _certifiedAssemblyTypeDescription;
+	}
+
+	public void setCertifiedAssemblyTypeDescription(
+		String certifiedAssemblyTypeDescription) {
+		_certifiedAssemblyTypeDescription = certifiedAssemblyTypeDescription;
 	}
 
 	private long _id;
@@ -689,11 +690,11 @@ public class VRIssueSoap implements Serializable {
 	private String _leaderName;
 	private String _applicantMaker;
 	private String _applicantChecker;
-	private Date _certificateRecordDate;
-	private long _issueInspectionRecordId;
 	private long _inspectorId;
 	private long _issueInspectorId;
 	private long _verifyInspectorId;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private String _certifiedAssemblyType;
+	private String _certifiedAssemblyTypeDescription;
 }

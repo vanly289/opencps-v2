@@ -1,10 +1,7 @@
 package org.opencps.dossiermgt.scheduler;
 
 import com.fds.vr.service.util.FileUploadUtils;
-import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -33,10 +30,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -270,42 +263,12 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 		return dossier;
 	}
 
-	private File getFile(long fileEntryId) {
-		File tempFile = null;
-		try {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-
-			DLFileVersion dlFileVersion = DLFileVersionLocalServiceUtil.getLatestFileVersion(fileEntry.getFileEntryId(),
-					true);
-
-			tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()),
-					StringPool.PERIOD + fileEntry.getExtension());
-
-			InputStream io = DLFileEntryLocalServiceUtil.getFileAsStream(fileEntryId, dlFileVersion.getVersion());
-			OutputStream outStream = new FileOutputStream(tempFile);
-			byte[] buffer = new byte[8 * 1024];
-			int bytesRead;
-			while ((bytesRead = io.read(buffer)) != -1) {
-				outStream.write(buffer, 0, bytesRead);
-			}
-
-			io.close();
-			// flush OutputStream to write any buffered data to file
-			outStream.flush();
-			outStream.close();
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		return tempFile;
-	}
-
 	private void singleServerSync(long groupId, String actionCode, String actionUser, String actionNote,
 			long assignUserId, String refId, long clientDossierActionId, long dossierSyncId, long dossierId,
 			long classPK, boolean isCreateDossier, ServiceContext serviceContext) throws PortalException {
 		boolean hasResult = true;
 		DossierSync sync = DossierSyncLocalServiceUtil.getDossierSync(dossierSyncId);
+		_log.info("=========== DossierSync is starting ==========> " + sync);
 		Dossier dossier_CXL = DossierLocalServiceUtil.fetchDossier(dossierId);
 
 		int retry = sync.getRetry();
@@ -335,7 +298,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 			JSONObject jPayload = JSONFactoryUtil.createJSONObject(payload);
 			// Sync paymentFile
 			if (jPayload.has(ConstantsUtils.PAYLOAD_SYNC_PAYMENTFILE)) {
-				_log.info("----> SYNC PaymentFile START");
+				_log.info("----> SYNC PaymentFile - START - dossierId_CXL: " + dossierId);
 				try {
 					JSONObject payloadPaymentfile = JSONFactoryUtil
 							.createJSONObject(jPayload.getString(ConstantsUtils.PAYLOAD_SYNC_PAYMENTFILE));
@@ -398,9 +361,9 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 						PaymentFileLocalServiceUtil.updatePaymentFile(paymentFileServer);
 						// DossierFileLocalServiceUtil.updateDossierFile(dossierFile);
 
-						_log.info("--> Sync PaymentFile - DONE");
+						_log.info("--> Sync PaymentFile - DONE - dossierId_CXL: " + dossierId);
 					} else {
-						_log.info("--> Sync PaymentFile - FAILED");
+						_log.info("--> Sync PaymentFile - FAILED - dossierId_CXL: " + dossierId);
 						hasResult = false;
 					}
 				} catch (Exception e) {
@@ -411,7 +374,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 			if (hasResult) {
 				// SyncDossierFile
 				if (jPayload.has(ConstantsUtils.PAYLOAD_SYNC_FILES)) {
-					_log.info("----> SYNC DossierFile START");
+					_log.info("----> SYNC DossierFile - START - dossierId_CXL: " + dossierId);
 					try {
 						String payloadDossierFiles = jPayload.getString(ConstantsUtils.PAYLOAD_SYNC_FILES);
 						JSONArray arrayDossierFile = JSONFactoryUtil.createJSONArray(payloadDossierFiles);
@@ -437,20 +400,17 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 								if (formData.isEmpty()) {
 									formData = dossierFileServer.getFormData();
 								}
-								FileEntry fileEntry = DLAppLocalServiceUtil
-										.getFileEntry(dossierFileServer.getFileEntryId());
-								File file = getFile(dossierFileServer.getFileEntryId());
+
+								FileEntry fileEntry = null;
+								if (dossierFileServer.getFileEntryId() > 0) {
+									fileEntry = DLAppLocalServiceUtil.getFileEntry(dossierFileServer.getFileEntryId());
+								}
 
 								Dossier dossier_DossierFiles = DossierLocalServiceUtil.getByRef(groupId, refId);
 
 								String referenceUid = dossierFileServer.getReferenceUid();
 								if (Validator.isNull(referenceUid) || referenceUid.equals(StringPool.BLANK)) {
 									referenceUid = UUID.randomUUID().toString();
-								}
-
-								InputStream fileInputStream = null;
-								if (file != null) {
-									new FileInputStream(file);
 								}
 
 								DossierFileActions action = new DossierFileActionsImpl();
@@ -462,15 +422,10 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 											dossier_DossierFiles.getDossierId(), referenceUid);
 								}
 								if (oldDossierFileClient != null) {
-									if (fileInputStream != null) {
-										dossierFileClient = action.updateDossierFile(groupId,
-												dossier_DossierFiles.getDossierId(), referenceUid,
-												dossierFileServer.getDisplayName(), fileInputStream, serviceContext);
-									} else {
-										dossierFileClient = action.updateDossierFile(groupId,
-												dossier_DossierFiles.getDossierId(), referenceUid,
-												dossierFileServer.getDisplayName(), null, serviceContext);
-									}
+									dossierFileClient = action.updateDossierFileBySingleServer(groupId,
+											dossier_DossierFiles.getDossierId(), referenceUid,
+											dossierFileServer.getDisplayName(), dossierFileServer.getFileEntryId(),
+											serviceContext);
 
 									_log.info("__End add file at:" + new Date());
 
@@ -491,25 +446,15 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 								} else {
 									_log.info("__Start add file at:" + new Date());
 
-									if (fileInputStream != null) {
-										dossierFileClient = action.addDossierFile(groupId,
-												dossier_DossierFiles.getDossierId(), referenceUid,
-												dossierFileServer.getDossierTemplateNo(),
-												dossierFileServer.getDossierPartNo(),
-												dossierFileServer.getFileTemplateNo(),
-												dossierFileServer.getDisplayName(), dossierFileServer.getDisplayName(),
-												0, fileInputStream, fileEntry.getMimeType(), StringPool.FALSE,
-												dossier_DossierFiles.getDossierActionId(), serviceContext);
-									} else {
-										dossierFileClient = action.addDossierFile(groupId,
-												dossier_DossierFiles.getDossierId(), referenceUid,
-												dossierFileServer.getDossierTemplateNo(),
-												dossierFileServer.getDossierPartNo(),
-												dossierFileServer.getFileTemplateNo(),
-												dossierFileServer.getDisplayName(), dossierFileServer.getDisplayName(),
-												0, fileInputStream, fileEntry.getMimeType(), StringPool.FALSE,
-												dossier_DossierFiles.getDossierActionId(), serviceContext);
-									}
+									dossierFileClient = action.addDossierFileBySingleServer(groupId,
+											dossier_DossierFiles.getDossierId(), referenceUid,
+											dossierFileServer.getDossierTemplateNo(),
+											dossierFileServer.getDossierPartNo(), dossierFileServer.getFileTemplateNo(),
+											dossierFileServer.getDisplayName(), dossierFileServer.getDisplayName(), 0,
+											dossierFileServer.getFileEntryId(),
+											Validator.isNotNull(fileEntry) ? fileEntry.getMimeType() : StringPool.BLANK,
+											StringPool.FALSE, dossier_DossierFiles.getDossierActionId(),
+											serviceContext);
 
 									_log.info("__End add file at:" + new Date());
 
@@ -530,10 +475,10 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 								}
 
 								if (dossierFileClient != null) {
-									_log.info("--> Sync DossierFile - DONE");
+									_log.info("--> Sync DossierFile - DONE - dossierId_CXL: " + dossierId);
 								} else {
 									hasResult = false;
-									_log.info("--> Sync DossierFile - FAILED");
+									_log.info("--> Sync DossierFile - FAILED - dossierId_CXL: " + dossierId);
 								}
 
 							}
@@ -552,7 +497,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 			if (hasResult) {
 				if (jPayload.has(ConstantsUtils.PAYLOAD_SYNC_PAYMENTSTATUS)) {
 					try {
-						_log.info("----> SYNC PaymentStatus START");
+						_log.info("----> SYNC PaymentStatus - START - dossierId_CXL: " + dossierId);
 						JSONArray arrayPaymentStatus = JSONFactoryUtil
 								.createJSONArray(jPayload.getString(ConstantsUtils.PAYLOAD_SYNC_PAYMENTSTATUS));
 
@@ -582,15 +527,15 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 								// Reset isNew Server
 								paymentFileServer.setIsNew(false);
 								PaymentFileLocalServiceUtil.updatePaymentFile(paymentFileServer);
-								
-								//Reset isNew Client
+
+								// Reset isNew Client
 								paymentFileClient.setIsNew(false);
 								paymentFileClient = PaymentFileLocalServiceUtil.updatePaymentFile(paymentFileClient);
-								
-								_log.info("--> Sync PaymentStatus - DONE");
+
+								_log.info("--> Sync PaymentStatus - DONE - dossierId_CXL: " + dossierId);
 							} else {
 								hasResult = false;
-								_log.info("--> Sync PaymentStatus - FAILED");
+								_log.info("--> Sync PaymentStatus - FAILED - dossierId_CXL: " + dossierId);
 							}
 						}
 					} catch (Exception e) {
@@ -602,10 +547,9 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 			// SyncAction
 			if (hasResult) {
 				try {
-					_log.info("----> SYNC DossierAction START");
+					_log.info("----> SYNC DossierAction - START - dossierId_CXL: " + dossierId);
 
 					DossierActions actions = new DossierActionsImpl();
-					DossierAction dossierAction = null;
 
 					Dossier dossier_DossierActions = DossierMgtUtils.getDossier(refId, groupId);
 					if (dossier_DossierActions != null) {
@@ -619,35 +563,27 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 							_log.info("===================> proAction = " + proAction);
 							if (proAction != null) {
 								_log.info("Call in SynAction **********8 ===========");
-								dossierAction = actions.doAction(groupId, dossier_DossierActions, option, proAction,
-										actionCode, actionUser, actionNote, assignUserId, 0l, null, null,
-										serviceContext);
+								actions.doAction(groupId, dossier_DossierActions, option, proAction, actionCode,
+										actionUser, actionNote, assignUserId, 0l, null, null, serviceContext);
 							}
 						}
 					}
+					_log.info("--> Sync DossierAction - DONE - dossierId_CXL: " + dossierId);
 
-					if (dossierAction != null) {
-						_log.info("--> Sync DossierAction - DONE");
-					} else {
-						hasResult = false;
-						_log.info("--> Sync DossierAction - FAILED");
-					}
+					if (dossier_CXL != null && Validator.isNotNull(dossier_CXL.getDossierNo())) {
 
-					if (hasResult) {
-						if (dossier_CXL != null && Validator.isNotNull(dossier_CXL.getDossierNo())) {
+						Dossier dossier_DossierNo = DossierMgtUtils.getDossier(refId, groupId);
 
-							Dossier dossier_DossierNo = DossierMgtUtils.getDossier(refId, groupId);
+						if (dossier_DossierNo != null && Validator.isNull(dossier_DossierNo.getDossierNo())) {
+							dossier_DossierNo.setDossierNo(dossier_CXL.getDossierNo());
+							dossier_DossierNo = DossierLocalServiceUtil.updateDossier(dossier_DossierNo);
+						}
 
-							if (dossier_DossierNo != null && Validator.isNull(dossier_DossierNo.getDossierNo())) {
-								dossier_DossierNo.setDossierNo(dossier_CXL.getDossierNo());
-								dossier_DossierNo = DossierLocalServiceUtil.updateDossier(dossier_DossierNo);
-							}
-
-							if (dossier_DossierNo != null) {
-								// TODO ?
-							} else {
-								hasResult = false;
-							}
+						if (dossier_DossierNo != null) {
+							_log.info("=========> Update dossierNo for dossierId: " + dossier_DossierNo.getDossierId()
+									+ " = " + dossier_DossierNo.getDossierNo());
+						} else {
+							hasResult = false;
 						}
 					}
 				} catch (Exception e) {

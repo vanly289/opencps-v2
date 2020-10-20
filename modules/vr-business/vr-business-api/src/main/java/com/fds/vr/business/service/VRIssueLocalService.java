@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -153,7 +152,7 @@ public interface VRIssueLocalService extends BaseLocalService,
 		int start, int end) throws SystemException;
 
 	public JSONObject adminProcess(JSONObject objectData, long dossierId,
-		long mtCore) throws JSONException;
+		long mtCore) throws java.lang.Exception;
 
 	/**
 	* @throws PortalException

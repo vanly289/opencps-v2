@@ -19,6 +19,7 @@ import com.fds.vr.business.action.impl.VRIssueActionImpl;
 import com.fds.vr.business.action.util.ConvertFormatDate;
 import com.fds.vr.business.exception.NoSuchVRIssueException;
 import com.fds.vr.business.model.VRIssue;
+import com.fds.vr.business.model.VRMethodOfIssue;
 import com.fds.vr.business.model.impl.VRIssueModelImpl;
 import com.fds.vr.business.service.base.VRIssueLocalServiceBaseImpl;
 import com.fds.vr.service.util.BusinessUtil;
@@ -26,7 +27,6 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,10 +49,14 @@ import aQute.bnd.annotation.ProviderType;
  * The implementation of the vr issue local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.fds.vr.business.service.VRIssueLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link com.fds.vr.business.service.VRIssueLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author khoavd
@@ -63,9 +68,11 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link com.fds.vr.business.service.VRIssueLocalServiceUtil} to access the vr issue local service.
+	 * Never reference this class directly. Always use {@link
+	 * com.fds.vr.business.service.VRIssueLocalServiceUtil} to access the vr issue
+	 * local service.
 	 */
-	
+
 	public List<VRIssue> findBydossierId(long mtCore, long dossierId) throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findBydossierId(mtCore, dossierId);
@@ -73,7 +80,7 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 			_log.error(e);
 		}
 		return new ArrayList<VRIssue>();
-		
+
 	}
 
 	public VRIssue findByMT_DID(long mtCore, long dossierId) {
@@ -84,7 +91,6 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		}
 	}
 
-
 	public List<VRIssue> findBystampIssueNo(long mtCore, String stampIssueNo) throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findBystampIssueNo(mtCore, stampIssueNo);
@@ -92,60 +98,64 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 			_log.error(e);
 		}
 		return new ArrayList<VRIssue>();
-		
+
 	}
-	
-	public List<VRIssue> findByapplicantProfileId(long mtCore, long dossierId, long applicantProfileId) throws PortalException, SystemException {
+
+	public List<VRIssue> findByapplicantProfileId(long mtCore, long dossierId, long applicantProfileId)
+			throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findByapplicantProfileId(mtCore, dossierId, applicantProfileId);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRIssue>();
-		
+
 	}
-	
-	public List<VRIssue> findBycorporationId(long mtCore, String corporationId) throws PortalException, SystemException {
+
+	public List<VRIssue> findBycorporationId(long mtCore, String corporationId)
+			throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findBycorporationId(mtCore, corporationId);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRIssue>();
-		
+
 	}
-	
-	public List<VRIssue> findByissueCorporationId(long mtCore, long issueCorporationId) throws PortalException, SystemException {
+
+	public List<VRIssue> findByissueCorporationId(long mtCore, long issueCorporationId)
+			throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findByissueCorporationId(mtCore, issueCorporationId);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRIssue>();
-		
+
 	}
-	
-	public List<VRIssue> findByverifyCorporationId(long mtCore, String verifyCorporationId) throws PortalException, SystemException {
+
+	public List<VRIssue> findByverifyCorporationId(long mtCore, String verifyCorporationId)
+			throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findByverifyCorporationId(mtCore, verifyCorporationId);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRIssue>();
-		
-	}
-	
 
-	public List<VRIssue> findByproductionPlantId(long mtCore, long productionPlantId) throws PortalException, SystemException {
+	}
+
+	public List<VRIssue> findByproductionPlantId(long mtCore, long productionPlantId)
+			throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findByproductionPlantId(mtCore, productionPlantId);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRIssue>();
-		
+
 	}
-	
+
 	public List<VRIssue> findBycopreportno(long mtCore, String copreportno) throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findBycopReportNo(mtCore, copreportno);
@@ -153,20 +163,22 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 			_log.error(e);
 		}
 		return new ArrayList<VRIssue>();
-		
+
 	}
-	
-	public List<VRIssue> findByIC_IS(long issueCorporationId, int digitalIssueStatus) throws PortalException, SystemException {
+
+	public List<VRIssue> findByIC_IS(long issueCorporationId, int digitalIssueStatus)
+			throws PortalException, SystemException {
 		try {
 			return vrIssuePersistence.findByIC_IS(issueCorporationId, digitalIssueStatus);
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		return new ArrayList<VRIssue>();
-		
+
 	}
 
-	public VRIssue updateVRIssue(Map<String, String> mapValue, int mtCore, boolean flagExits) throws NoSuchVRIssueException {
+	public VRIssue updateVRIssue(Map<String, String> mapValue, int mtCore, boolean flagExits)
+			throws NoSuchVRIssueException {
 
 		VRIssue object = null;
 		if (!flagExits) {
@@ -179,11 +191,15 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		// create objVRIssue
 		object.setModifyDate(new Date());
 		object.setSyncDate(new Date());
-		
+
 		object.setMtCore(mtCore);
 		object.setDossierId(GetterUtil.getLong(mapValue.get("dossierId")));
 		object.setStampIssueNo(mapValue.get("stampIssueNo"));
-		object.setAppliedDate(ConvertFormatDate.parseStringToDate(mapValue.get("appliedDate"), ConvertFormatDate.PATTERN_DATE)); // phai lay tu dossierstatistics
+		object.setAppliedDate(
+				ConvertFormatDate.parseStringToDate(mapValue.get("appliedDate"), ConvertFormatDate.PATTERN_DATE)); // phai
+																													// lay
+																													// tu
+																													// dossierstatistics
 		object.setApprovedDate(new Date()); // phai lay tu dossierstatistics
 		object.setVehicleClass(mapValue.get("issueVehicleClass"));
 		object.setApplicantProfileId(GetterUtil.getLong(mapValue.get("applicantProfileId")));
@@ -204,7 +220,7 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		object.setProductionPlantName(mapValue.get("productionPlantName"));
 		object.setProductionPlantAddress(mapValue.get("productionPlantAddress"));
 		object.setRemarks(mapValue.get("remarks"));
-		
+
 		object.setMethodOfIssue(mapValue.get("methodOfIssue"));
 		object.setIssueType(mapValue.get("issueType"));
 		object.setTotalInDocument(GetterUtil.getLong(mapValue.get("totalInDocument")));
@@ -212,7 +228,7 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		object.setMaxMonthQuantity(GetterUtil.getInteger(mapValue.get("maxMonthQuantity")));
 		object.setAverageSTMQuantity(GetterUtil.getInteger(mapValue.get("averageSTMQuantity")));
 		object.setAccumulatedMonthQuantity(GetterUtil.getInteger(mapValue.get("accumulatedMonthQuantity")));
-		
+
 		object.setTotalInUse(GetterUtil.getInteger(mapValue.get("totalInUse")));
 		object.setTotalCancelled(GetterUtil.getInteger(mapValue.get("totalCancelled")));
 		object.setTotalLost(GetterUtil.getInteger(mapValue.get("totalLost")));
@@ -229,14 +245,14 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		object.setPostReviewRecordNo(mapValue.get("postreviewrecordno"));
 		object.setPostReviewRecordDate(ConvertFormatDate.parseStringToDate(mapValue.get("postreviewrecorddate")));
 		object.setCorporationId(mapValue.get("corporationId"));
-		//object.setInspectorId(inspectorId"));
+		// object.setInspectorId(inspectorId"));
 		object.setInspectorCode(mapValue.get("inspectorcode"));
 		object.setInspectorName(mapValue.get("inspectorname"));
 		object.setLeaderName(mapValue.get("leadername"));
 		object.setIssueCorporationId(GetterUtil.getInteger(mapValue.get("issueCorporationId"))); // Don vi cap phat
-		//object.setIssueInspectorId(issueInspectorId"));
+		// object.setIssueInspectorId(issueInspectorId"));
 		object.setVerifyCorporationId(mapValue.get("verifyCorporationId"));
-		//object.setVerifyInspectorId(verifyInspectorId"));
+		// object.setVerifyInspectorId(verifyInspectorId"));
 		object.setDigitalIssueStatus(GetterUtil.getInteger(mapValue.get("digitalissuestatus")));
 
 		return vrIssuePersistence.update(object);
@@ -244,10 +260,10 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 
 	public VRIssue updateDigitalIssueStatus(long id, int digitalIssueStatus, Company company) throws PortalException {
 		VRIssue vrIssue = vrIssuePersistence.findByPrimaryKey(id);
-		
+
 		vrIssue.setDigitalIssueStatus(digitalIssueStatus);
 		vrIssue.setModifyDate(new Date());
-		
+
 		vrIssue = vrIssuePersistence.update(vrIssue);
 		if (vrIssue != null) {
 			VRIssueAction action = new VRIssueActionImpl();
@@ -255,7 +271,7 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		}
 		return vrIssue;
 	}
-	
+
 	public JSONArray findData(String sql, List<String> columnNames, List<String> dataTypes, Class<?> modelClazz,
 			String modelClassName, int start, int end) throws SystemException {
 
@@ -266,23 +282,23 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 
 		return vrIssueFinder.countData(sql);
 	}
-	
+
 	public VRIssue createVRIssue(VRIssue vrIssue) {
 		long id = counterLocalService.increment(VRIssue.class.getName());
 		vrIssue.setPrimaryKey(id);
 		vrIssue.setModifyDate(new Date());
 		return vrIssuePersistence.update(vrIssue);
 	}
-	
+
 	public VRIssue updateVRIssue(VRIssue vrIssue) {
 		vrIssue.setModifyDate(new Date());
 		return vrIssuePersistence.update(vrIssue);
 	}
-	
+
 	private final String PATTERN_DATE = "dd-MM-yyyy HH:mm:ss";
 	private final String PATTERN_DATE_2 = "dd/MM/yyyy HH:mm:ss";
 	private final String PATTERN_DATE_3 = "dd/MM/yyyy";
-	
+
 	private Date parseStringToDate(String strDate) {
 
 		try {
@@ -306,7 +322,7 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 			return null;
 		}
 	}
-	
+
 	public VRIssue updateVRIssue(VRIssue object, Company company) throws SystemException, PortalException {
 		Date now = new Date();
 
@@ -318,22 +334,35 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		}
 		return object;
 	}
-	
-	public JSONObject adminProcess(JSONObject objectData, long dossierId, long mtCore) throws JSONException {
-		
+
+	public JSONObject adminProcess(JSONObject objectData, long dossierId, long mtCore) throws Exception {
+
 		JSONObject result = JSONFactoryUtil.createJSONObject();
-		
+
 		VRIssue object = null;
-		
+
 		object = vrIssuePersistence.fetchByF_MT_DID(mtCore, dossierId);
 		Date now = new Date();
-		if(object == null) {
+		if (object == null) {
 			long issueId = counterLocalService.increment(VRIssue.class.getName());
 			object = vrIssuePersistence.create(issueId);
 		}
-		
+
+		VRMethodOfIssue vrMethodOfIssue = vrMethodOfIssuePersistence
+				.fetchBycertifiedAssemblyType_productionPlantId_vehicleClass_applicantProfileId(objectData.getString("certifiedAssemblyType"),
+						objectData.getLong("productionPlantId"), objectData.getString("vehicleClass"), objectData.getLong("applicantProfileId"));
+		if(Validator.isNotNull(vrMethodOfIssue)) {
+			object.setAverageSTBQuantity(vrMethodOfIssue.getAverageStbQuantityIndex());
+			object.setAverageSTMQuantity(vrMethodOfIssue.getAverageStmQuantityIndex());
+			object.setMaxMonthQuantity(vrMethodOfIssue.getMaxMonthQuantityIndex());
+			object.setAccumulatedMonthQuantity(vrMethodOfIssue.getAccumulatedMonthQuantityIndex());
+			object.setFlow(vrMethodOfIssue.getFlowIndex());
+		}
+
 		object.setMtCore(mtCore);
 		object.setDossierId(dossierId);
+		object.setCertifiedAssemblyType(objectData.getString("certifiedAssemblyType"));
+		object.setCertifiedAssemblyTypeDescription(objectData.getString("certifiedAssemblyTypeDescription"));
 		object.setStampIssueNo(objectData.getString("stampIssueNo"));
 		object.setAppliedDate(parseStringToDate(objectData.getString("appliedDate")));
 		object.setApprovedDate(parseStringToDate(objectData.getString("approvedDate")));
@@ -360,16 +389,11 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		object.setVerifyCorporationId(objectData.getString("verifyCorporationId"));
 		object.setDigitalIssueStatus(objectData.getInt("digitalIssueStatus"));
 		object.setIssueType(objectData.getString("issueType"));
-		object.setAverageSTBQuantity(objectData.getInt("averageSTBQuantity"));
-		object.setMaxMonthQuantity(objectData.getInt("maxMonthQuantity"));
-		object.setAverageSTMQuantity(objectData.getInt("averageSTMQuantity"));
-		object.setAccumulatedMonthQuantity(objectData.getInt("accumulatedMonthQuantity"));
 		object.setTotalInUse(objectData.getInt("totalInUse"));
 		object.setTotalCancelled(objectData.getInt("totalCancelled"));
 		object.setTotalLost(objectData.getInt("totalLost"));
 		object.setTotalNotUsed(objectData.getInt("totalNotUsed"));
 		object.setTotalReturned(objectData.getInt("totalReturned"));
-		object.setFlow(objectData.getString("flow"));
 		object.setExaminationRequired(objectData.getString("examinationRequired"));
 		object.setExaminationPeriod(objectData.getString("examinationPeriod"));
 		object.setExaminationLastTime(parseStringToDate(objectData.getString("examinationLastTime")));
@@ -392,13 +416,16 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		object.setSyncDate(now);
 
 		object = vrIssuePersistence.update(object);
-		JSONArray issueVehiclecertificates = JSONFactoryUtil.createJSONArray(objectData.getString("vr_Issue_VehicleCertificate"));
-		JSONObject jVRIssueVehiclecertificate = vrIssueVehiclecertificateLocalService.adminProcess(issueVehiclecertificates, object.getPrimaryKey(), dossierId, mtCore);
-		
-		JSONObject jVRIssue = BusinessUtil.object2Json_originColumnName(object, VRIssueModelImpl.class, StringPool.BLANK);
+		JSONArray issueVehiclecertificates = JSONFactoryUtil
+				.createJSONArray(objectData.getString("vr_Issue_VehicleCertificate"));
+		JSONObject jVRIssueVehiclecertificate = vrIssueVehiclecertificateLocalService.adminProcess(
+				issueVehiclecertificates, object.getPrimaryKey(), dossierId, mtCore, object.getIssueType());
+
+		JSONObject jVRIssue = BusinessUtil.object2Json_originColumnName(object, VRIssueModelImpl.class,
+				StringPool.BLANK);
 		jVRIssue.put("vr_Issue_VehicleCertificate", jVRIssueVehiclecertificate);
 		result.put("vr_Issue", jVRIssue);
-		
+
 		return result;
 	}
 

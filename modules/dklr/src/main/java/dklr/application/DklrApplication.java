@@ -459,7 +459,8 @@ public class DklrApplication extends Application {
 			}
 		} catch (Exception e) {
 			_log.error(e);
-			Response.status(500).entity("Can't post data!").build();
+			status.put("code", e.getMessage());
+			status.put("msg", "error");
 		}
 		result.put("status", status);
 		result.put("data", data);

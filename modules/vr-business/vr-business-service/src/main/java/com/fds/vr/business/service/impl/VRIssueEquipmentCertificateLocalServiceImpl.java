@@ -118,12 +118,14 @@ public class VRIssueEquipmentCertificateLocalServiceImpl extends VRIssueEquipmen
 			object.setDossierId(dossierId);
 			object.setIssueId(issueId);
 			object.setIssueVehicleCertificateId(issueVehicleCertificateId);
+			object.setVehicleCertificateRecordDate(parseStringToDate(objectData.getString("vehicleCertificateRecordDate")));
 			object.setVehicleCertificateRecordNo(objectData.getString("vehicleCertificateRecordNo"));
 			object.setEquipmentName(objectData.getString("equipmentName"));
 			object.setEquipmentType(objectData.getString("equipmentType"));
 			object.setEquipmentCertificateType(objectData.getString("equipmentCertificateType"));
 			object.setEquipmentDocumentNo(objectData.getString("equipmentDocumentNo"));
 			object.setEquipmentCertificateRecordNo(objectData.getString("equipmentCertificateRecordNo"));
+			object.setEquipmentCertificateRecordDate(parseStringToDate(objectData.getString("equipmentCertificateRecordDate")));
 			object.setEquipmentExamRecordNo(objectData.getString("equipmentExamRecordNo"));
 			object.setEquipmentCertificateRecordId(objectData.getInt("EquipmentCertificateRecordId"));
 			object.setTotalQuantity(objectData.getInt("TotalQuantity"));

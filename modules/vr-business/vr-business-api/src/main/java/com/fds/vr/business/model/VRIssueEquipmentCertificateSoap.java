@@ -56,6 +56,8 @@ public class VRIssueEquipmentCertificateSoap implements Serializable {
 		soapModel.setApplicantAddress(model.getApplicantAddress());
 		soapModel.setProductionPlantName(model.getProductionPlantName());
 		soapModel.setProductionPlantAddress(model.getProductionPlantAddress());
+		soapModel.setVehicleCertificateRecordDate(model.getVehicleCertificateRecordDate());
+		soapModel.setEquipmentCertificateRecordDate(model.getEquipmentCertificateRecordDate());
 		soapModel.setModifyDate(model.getModifyDate());
 		soapModel.setSyncDate(model.getSyncDate());
 
@@ -291,6 +293,24 @@ public class VRIssueEquipmentCertificateSoap implements Serializable {
 		_productionPlantAddress = productionPlantAddress;
 	}
 
+	public Date getVehicleCertificateRecordDate() {
+		return _vehicleCertificateRecordDate;
+	}
+
+	public void setVehicleCertificateRecordDate(
+		Date vehicleCertificateRecordDate) {
+		_vehicleCertificateRecordDate = vehicleCertificateRecordDate;
+	}
+
+	public Date getEquipmentCertificateRecordDate() {
+		return _equipmentCertificateRecordDate;
+	}
+
+	public void setEquipmentCertificateRecordDate(
+		Date equipmentCertificateRecordDate) {
+		_equipmentCertificateRecordDate = equipmentCertificateRecordDate;
+	}
+
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -329,6 +349,8 @@ public class VRIssueEquipmentCertificateSoap implements Serializable {
 	private String _applicantAddress;
 	private String _productionPlantName;
 	private String _productionPlantAddress;
+	private Date _vehicleCertificateRecordDate;
+	private Date _equipmentCertificateRecordDate;
 	private Date _modifyDate;
 	private Date _syncDate;
 }

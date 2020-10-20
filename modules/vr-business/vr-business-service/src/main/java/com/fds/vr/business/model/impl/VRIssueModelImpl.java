@@ -117,13 +117,13 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 			{ "leaderName", Types.VARCHAR },
 			{ "applicantMaker", Types.VARCHAR },
 			{ "applicantChecker", Types.VARCHAR },
-			{ "certificateRecordDate", Types.TIMESTAMP },
-			{ "issueInspectionRecordId", Types.BIGINT },
 			{ "inspectorId", Types.BIGINT },
 			{ "issueInspectorId", Types.BIGINT },
 			{ "verifyInspectorId", Types.BIGINT },
 			{ "modifyDate", Types.TIMESTAMP },
-			{ "syncDate", Types.TIMESTAMP }
+			{ "syncDate", Types.TIMESTAMP },
+			{ "certifiedAssemblyType", Types.VARCHAR },
+			{ "certifiedAssemblyTypeDescription", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -182,16 +182,16 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		TABLE_COLUMNS_MAP.put("leaderName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantMaker", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("applicantChecker", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("certificateRecordDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("issueInspectionRecordId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("inspectorId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("issueInspectorId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("verifyInspectorId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("certifiedAssemblyType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("certifiedAssemblyTypeDescription", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_issue (id LONG not null primary key,mtCore LONG,dossierId LONG,stampIssueNo VARCHAR(75) null,appliedDate DATE null,approvedDate DATE null,vehicleClass VARCHAR(75) null,applicantProfileId LONG,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,applicantRepresentative VARCHAR(75) null,applicantRepresentativeTitle VARCHAR(75) null,applicantEmail VARCHAR(75) null,applicantPhone VARCHAR(75) null,applicantFax VARCHAR(75) null,applicantContactName VARCHAR(75) null,applicantContactEmail VARCHAR(75) null,applicantContactPhone VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,remarks VARCHAR(75) null,methodOfIssue VARCHAR(75) null,totalInDocument LONG,issueCorporationId LONG,verifyCorporationId VARCHAR(75) null,digitalIssueStatus INTEGER,issueType VARCHAR(75) null,averageSTBQuantity INTEGER,maxMonthQuantity INTEGER,averageSTMQuantity INTEGER,accumulatedMonthQuantity INTEGER,totalInUse INTEGER,totalCancelled INTEGER,totalLost INTEGER,totalNotUsed INTEGER,totalReturned INTEGER,flow VARCHAR(75) null,examinationRequired VARCHAR(75) null,examinationPeriod VARCHAR(75) null,examinationLastTime DATE null,copResult VARCHAR(75) null,copReportNo VARCHAR(75) null,copReportDate DATE null,postReview VARCHAR(75) null,postReviewRecordNo VARCHAR(75) null,postReviewRecordDate DATE null,corporationId VARCHAR(75) null,inspectorCode VARCHAR(75) null,inspectorName VARCHAR(75) null,leaderName VARCHAR(75) null,applicantMaker VARCHAR(75) null,applicantChecker VARCHAR(75) null,certificateRecordDate DATE null,issueInspectionRecordId LONG,inspectorId LONG,issueInspectorId LONG,verifyInspectorId LONG,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_issue (id LONG not null primary key,mtCore LONG,dossierId LONG,stampIssueNo VARCHAR(75) null,appliedDate DATE null,approvedDate DATE null,vehicleClass VARCHAR(75) null,applicantProfileId LONG,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,applicantRepresentative VARCHAR(75) null,applicantRepresentativeTitle VARCHAR(75) null,applicantEmail VARCHAR(75) null,applicantPhone VARCHAR(75) null,applicantFax VARCHAR(75) null,applicantContactName VARCHAR(75) null,applicantContactEmail VARCHAR(75) null,applicantContactPhone VARCHAR(75) null,productionPlantId LONG,productionPlantCode VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,remarks VARCHAR(75) null,methodOfIssue VARCHAR(75) null,totalInDocument LONG,issueCorporationId LONG,verifyCorporationId VARCHAR(75) null,digitalIssueStatus INTEGER,issueType VARCHAR(75) null,averageSTBQuantity INTEGER,maxMonthQuantity INTEGER,averageSTMQuantity INTEGER,accumulatedMonthQuantity INTEGER,totalInUse INTEGER,totalCancelled INTEGER,totalLost INTEGER,totalNotUsed INTEGER,totalReturned INTEGER,flow VARCHAR(75) null,examinationRequired VARCHAR(75) null,examinationPeriod VARCHAR(75) null,examinationLastTime DATE null,copResult VARCHAR(75) null,copReportNo VARCHAR(75) null,copReportDate DATE null,postReview VARCHAR(75) null,postReviewRecordNo VARCHAR(75) null,postReviewRecordDate DATE null,corporationId VARCHAR(75) null,inspectorCode VARCHAR(75) null,inspectorName VARCHAR(75) null,leaderName VARCHAR(75) null,applicantMaker VARCHAR(75) null,applicantChecker VARCHAR(75) null,inspectorId LONG,issueInspectorId LONG,verifyInspectorId LONG,modifyDate DATE null,syncDate DATE null,certifiedAssemblyType VARCHAR(75) null,certifiedAssemblyTypeDescription VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_issue";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrIssue.modifyDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_issue.modifyDate DESC";
@@ -313,13 +313,14 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		attributes.put("leaderName", getLeaderName());
 		attributes.put("applicantMaker", getApplicantMaker());
 		attributes.put("applicantChecker", getApplicantChecker());
-		attributes.put("certificateRecordDate", getCertificateRecordDate());
-		attributes.put("issueInspectionRecordId", getIssueInspectionRecordId());
 		attributes.put("inspectorId", getInspectorId());
 		attributes.put("issueInspectorId", getIssueInspectorId());
 		attributes.put("verifyInspectorId", getVerifyInspectorId());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("certifiedAssemblyType", getCertifiedAssemblyType());
+		attributes.put("certifiedAssemblyTypeDescription",
+			getCertifiedAssemblyTypeDescription());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -667,20 +668,6 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 			setApplicantChecker(applicantChecker);
 		}
 
-		Date certificateRecordDate = (Date)attributes.get(
-				"certificateRecordDate");
-
-		if (certificateRecordDate != null) {
-			setCertificateRecordDate(certificateRecordDate);
-		}
-
-		Long issueInspectionRecordId = (Long)attributes.get(
-				"issueInspectionRecordId");
-
-		if (issueInspectionRecordId != null) {
-			setIssueInspectionRecordId(issueInspectionRecordId);
-		}
-
 		Long inspectorId = (Long)attributes.get("inspectorId");
 
 		if (inspectorId != null) {
@@ -709,6 +696,20 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		String certifiedAssemblyType = (String)attributes.get(
+				"certifiedAssemblyType");
+
+		if (certifiedAssemblyType != null) {
+			setCertifiedAssemblyType(certifiedAssemblyType);
+		}
+
+		String certifiedAssemblyTypeDescription = (String)attributes.get(
+				"certifiedAssemblyTypeDescription");
+
+		if (certifiedAssemblyTypeDescription != null) {
+			setCertifiedAssemblyTypeDescription(certifiedAssemblyTypeDescription);
 		}
 	}
 
@@ -1526,26 +1527,6 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 	}
 
 	@Override
-	public Date getCertificateRecordDate() {
-		return _certificateRecordDate;
-	}
-
-	@Override
-	public void setCertificateRecordDate(Date certificateRecordDate) {
-		_certificateRecordDate = certificateRecordDate;
-	}
-
-	@Override
-	public long getIssueInspectionRecordId() {
-		return _issueInspectionRecordId;
-	}
-
-	@Override
-	public void setIssueInspectionRecordId(long issueInspectionRecordId) {
-		_issueInspectionRecordId = issueInspectionRecordId;
-	}
-
-	@Override
 	public long getInspectorId() {
 		return _inspectorId;
 	}
@@ -1595,6 +1576,37 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 	@Override
 	public void setSyncDate(Date syncDate) {
 		_syncDate = syncDate;
+	}
+
+	@Override
+	public String getCertifiedAssemblyType() {
+		if (_certifiedAssemblyType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _certifiedAssemblyType;
+		}
+	}
+
+	@Override
+	public void setCertifiedAssemblyType(String certifiedAssemblyType) {
+		_certifiedAssemblyType = certifiedAssemblyType;
+	}
+
+	@Override
+	public String getCertifiedAssemblyTypeDescription() {
+		if (_certifiedAssemblyTypeDescription == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _certifiedAssemblyTypeDescription;
+		}
+	}
+
+	@Override
+	public void setCertifiedAssemblyTypeDescription(
+		String certifiedAssemblyTypeDescription) {
+		_certifiedAssemblyTypeDescription = certifiedAssemblyTypeDescription;
 	}
 
 	public long getColumnBitmask() {
@@ -1682,13 +1694,13 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		vrIssueImpl.setLeaderName(getLeaderName());
 		vrIssueImpl.setApplicantMaker(getApplicantMaker());
 		vrIssueImpl.setApplicantChecker(getApplicantChecker());
-		vrIssueImpl.setCertificateRecordDate(getCertificateRecordDate());
-		vrIssueImpl.setIssueInspectionRecordId(getIssueInspectionRecordId());
 		vrIssueImpl.setInspectorId(getInspectorId());
 		vrIssueImpl.setIssueInspectorId(getIssueInspectorId());
 		vrIssueImpl.setVerifyInspectorId(getVerifyInspectorId());
 		vrIssueImpl.setModifyDate(getModifyDate());
 		vrIssueImpl.setSyncDate(getSyncDate());
+		vrIssueImpl.setCertifiedAssemblyType(getCertifiedAssemblyType());
+		vrIssueImpl.setCertifiedAssemblyTypeDescription(getCertifiedAssemblyTypeDescription());
 
 		vrIssueImpl.resetOriginalValues();
 
@@ -2135,17 +2147,6 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 			vrIssueCacheModel.applicantChecker = null;
 		}
 
-		Date certificateRecordDate = getCertificateRecordDate();
-
-		if (certificateRecordDate != null) {
-			vrIssueCacheModel.certificateRecordDate = certificateRecordDate.getTime();
-		}
-		else {
-			vrIssueCacheModel.certificateRecordDate = Long.MIN_VALUE;
-		}
-
-		vrIssueCacheModel.issueInspectionRecordId = getIssueInspectionRecordId();
-
 		vrIssueCacheModel.inspectorId = getInspectorId();
 
 		vrIssueCacheModel.issueInspectorId = getIssueInspectorId();
@@ -2168,6 +2169,24 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		}
 		else {
 			vrIssueCacheModel.syncDate = Long.MIN_VALUE;
+		}
+
+		vrIssueCacheModel.certifiedAssemblyType = getCertifiedAssemblyType();
+
+		String certifiedAssemblyType = vrIssueCacheModel.certifiedAssemblyType;
+
+		if ((certifiedAssemblyType != null) &&
+				(certifiedAssemblyType.length() == 0)) {
+			vrIssueCacheModel.certifiedAssemblyType = null;
+		}
+
+		vrIssueCacheModel.certifiedAssemblyTypeDescription = getCertifiedAssemblyTypeDescription();
+
+		String certifiedAssemblyTypeDescription = vrIssueCacheModel.certifiedAssemblyTypeDescription;
+
+		if ((certifiedAssemblyTypeDescription != null) &&
+				(certifiedAssemblyTypeDescription.length() == 0)) {
+			vrIssueCacheModel.certifiedAssemblyTypeDescription = null;
 		}
 
 		return vrIssueCacheModel;
@@ -2285,10 +2304,6 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		sb.append(getApplicantMaker());
 		sb.append(", applicantChecker=");
 		sb.append(getApplicantChecker());
-		sb.append(", certificateRecordDate=");
-		sb.append(getCertificateRecordDate());
-		sb.append(", issueInspectionRecordId=");
-		sb.append(getIssueInspectionRecordId());
 		sb.append(", inspectorId=");
 		sb.append(getInspectorId());
 		sb.append(", issueInspectorId=");
@@ -2299,6 +2314,10 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
 		sb.append(getSyncDate());
+		sb.append(", certifiedAssemblyType=");
+		sb.append(getCertifiedAssemblyType());
+		sb.append(", certifiedAssemblyTypeDescription=");
+		sb.append(getCertifiedAssemblyTypeDescription());
 		sb.append("}");
 
 		return sb.toString();
@@ -2529,14 +2548,6 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		sb.append(getApplicantChecker());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>certificateRecordDate</column-name><column-value><![CDATA[");
-		sb.append(getCertificateRecordDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>issueInspectionRecordId</column-name><column-value><![CDATA[");
-		sb.append(getIssueInspectionRecordId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>inspectorId</column-name><column-value><![CDATA[");
 		sb.append(getInspectorId());
 		sb.append("]]></column-value></column>");
@@ -2555,6 +2566,14 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 		sb.append(
 			"<column><column-name>syncDate</column-name><column-value><![CDATA[");
 		sb.append(getSyncDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>certifiedAssemblyType</column-name><column-value><![CDATA[");
+		sb.append(getCertifiedAssemblyType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>certifiedAssemblyTypeDescription</column-name><column-value><![CDATA[");
+		sb.append(getCertifiedAssemblyTypeDescription());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -2636,13 +2655,13 @@ public class VRIssueModelImpl extends BaseModelImpl<VRIssue>
 	private String _leaderName;
 	private String _applicantMaker;
 	private String _applicantChecker;
-	private Date _certificateRecordDate;
-	private long _issueInspectionRecordId;
 	private long _inspectorId;
 	private long _issueInspectorId;
 	private long _verifyInspectorId;
 	private Date _modifyDate;
 	private Date _syncDate;
+	private String _certifiedAssemblyType;
+	private String _certifiedAssemblyTypeDescription;
 	private long _columnBitmask;
 	private VRIssue _escapedModel;
 }

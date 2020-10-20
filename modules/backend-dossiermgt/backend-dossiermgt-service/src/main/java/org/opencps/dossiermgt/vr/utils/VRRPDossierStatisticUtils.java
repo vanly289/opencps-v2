@@ -1,10 +1,12 @@
 package org.opencps.dossiermgt.vr.utils;
 
 import com.fds.vr.business.model.VRCOPReportRepository;
+import com.fds.vr.business.model.VRIssue;
 import com.fds.vr.business.model.VRRPDossierStatistics;
 import com.fds.vr.business.model.VRVehicleTypeCertificate;
 import com.fds.vr.business.model.impl.VRRPDossierStatisticsImpl;
 import com.fds.vr.business.service.VRCOPReportRepositoryLocalServiceUtil;
+import com.fds.vr.business.service.VRIssueLocalServiceUtil;
 import com.fds.vr.business.service.VRRPDossierStatisticsLocalServiceUtil;
 import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
@@ -51,7 +53,9 @@ public class VRRPDossierStatisticUtils {
 				Dossier dossier_CTN = DossierLocalServiceUtil.getByRef(ConstantsUtils.GROUP_CTN, dossier_CXL.getReferenceUid());
 				VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil.findByDossierId_MtCore(dossier_CTN.getDossierId(), 1L);				
 				VRCOPReportRepository vrcopReportRepository = VRCOPReportRepositoryLocalServiceUtil.findByDossierId_MTCore(dossier_CTN.getDossierId(), 1L);
-				_log.info("- Dungnv - VRRPDossierStatisticUtils - dossierId_CTN: " + dossier_CTN.getDossierId());
+				VRIssue vrIssue = VRIssueLocalServiceUtil.findByMT_DID(1L, dossier_CTN.getDossierId());
+				
+				//_log.info("- Dungnv - VRRPDossierStatisticUtils - dossierId_CTN: " + dossier_CTN.getDossierId());
 				
 				VRRPDossierStatistics statistics = new VRRPDossierStatisticsImpl();				
 				// finder
@@ -3571,6 +3575,7 @@ public class VRRPDossierStatisticUtils {
 							statistics.setDossierlastreviewadjustdate(dossierlastreviewadjustdate);
 							statistics.setMen2lastreviewadjust(actionUserName);
 						}
+						break;
 					case "226": //13. Ngay bat dau soat xet hstt dieu chinh lan cuoi (do bo sung) dossierlastreviewadjustdate / men2lastreviewadjust
 						if (Validator.isNotNull(statistics) && statistics.getMen2reviewadjust().trim().length() > 0 ) {
 							Date dossierlastreviewadjustdate  = dossierActionModel.getCreateDate();							
@@ -3627,7 +3632,82 @@ public class VRRPDossierStatisticUtils {
 					}	
 					break;
 				case "TT302011BGTVTCPPXCG": //Cap phat va su dung phieu kiem tra chat luong xuat xuong Xe co gioi
+					switch (postStepCode) {
 					
+					case "130": //1. Nop ho so truc tuyen (hstt) lan dau dossiersendingdate / 
+						Date dossiersendingdate = dossierActionModel.getCreateDate();
+						statistics.setDossiersendingdate(dossiersendingdate);
+						//add by Dungnv
+						if(vrIssue != null){statistics.setDossiertype(dossier_CTN.getDossierStatus());
+						statistics.setVehicleclass(vrIssue.getVehicleClass());
+						statistics.setProductionplantaddress(vrIssue.getProductionPlantAddress());
+						statistics.setProductionplantname(vrIssue.getProductionPlantName());
+						//statistics.setCertifiedassemblytype(vrIssue.getCertifiedAssemblyType());
+						//statistics.setCertifiedassemblytypedescription(vrIssue.getCertifiedAssemblyTypeDescription());
+						}
+						break;
+					case "135": //2. Can bo tiep nhan hstt, chuyen to truong dossierreceivingdate / men2receiving
+						Date dossierreceivingdate =  dossierActionModel.getCreateDate();						
+						statistics.setDossierreceivingdate(dossierreceivingdate);
+						statistics.setMen2receiving(actionUserName);
+						//add by Dungnv
+						vrIssue.setAppliedDate(dossierreceivingdate);
+						vrIssue.setApprovedDate(dossierreceivingdate);
+						break;
+					case "131": //3. Ngay yeu cau bo sung hstt lan dau dossierfirstupdatingdate / men2firstupdating
+						Date dossierfirstupdatingdate  =  dossierActionModel.getCreateDate();						
+						if (Validator.isNotNull(statistics) && Validator.isNotNull(statistics.getDossierfirstupdatingdate())) {
+							statistics.setDossierlastupdatingdate(dossierfirstupdatingdate);
+							statistics.setMen2lastupdating(actionUserName);
+						} else {
+							statistics.setDossierfirstupdatingdate(dossierfirstupdatingdate);
+							statistics.setMen2firstupdating(actionUserName);
+							statistics.setDossierlastupdatingdate(dossierfirstupdatingdate);
+							statistics.setMen2lastupdating(actionUserName);
+						}
+						break;	
+					case "134": //5. Ngay nop BSSD hstt lan cuoi dossierendorsementdate / men2endorsement
+						Date dossierendorsementdate = dossierActionModel.getCreateDate();
+						statistics.setDossierendorsementdate(dossierendorsementdate);
+						//add by Dungnv
+					    vrVehicleTypeCertificate.setInspectorendorSementDate(dossierendorsementdate);
+						break;
+					case "136": //6. Ngay cap so hstt, duoc to truong chap thuan ho so dang ky dossiersubmittingdate / men2submitting
+						Date dossiersubmittingdate  = dossierActionModel.getCreateDate();						
+						statistics.setDossiersubmittingdate(dossiersubmittingdate);
+						statistics.setMen2submitting(actionUserName);
+						//TODO: update dossierNo for vr_issue
+						break;
+					case "204": //7. Chuyen soat xet
+						//TODO:
+						break;
+					case "138": //8. Yeu cua giam sat
+						//TODO:
+						break;
+					case "200": //9. Yeu cau KTDX
+						//TODO:
+						break;
+					case "203": //10. Phan cong giam sat
+						//TODO:
+						break;
+					case "202": //11. Phan cong kiem tra dot xuat
+						//TODO:
+						break;
+					case "141": //12. Chuyen ket qua kiem tra dot xuat
+						//TODO:
+						break;
+					case "139": //13. Chuyen ket qua giam sat HSCP
+						//TODO:
+						break;
+					case "205": //14. De nghi cap phieu
+						//TODO:
+						break;
+					case "206": //15. Duyet cap phieu
+						//TODO:
+						break;
+					default:
+						break;
+					}	
 					break;
 				case "TT302011BGTVTCPPXMTGM": //Cap phat va su dung phieu kiem tra chat luong xuat xuong Xe mo to, xe gan may
 					

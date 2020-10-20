@@ -86,6 +86,288 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(VRInputStampbookDetailsModelImpl.ENTITY_CACHE_ENABLED,
 			VRInputStampbookDetailsModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FETCH_BY_STAMPSERIALNO_PURCHASERID =
+		new FinderPath(VRInputStampbookDetailsModelImpl.ENTITY_CACHE_ENABLED,
+			VRInputStampbookDetailsModelImpl.FINDER_CACHE_ENABLED,
+			VRInputStampbookDetailsImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchBystampSerialNo_purchaserId",
+			new String[] { Long.class.getName(), String.class.getName() },
+			VRInputStampbookDetailsModelImpl.PURCHASERID_COLUMN_BITMASK |
+			VRInputStampbookDetailsModelImpl.STAMPSERIALNO_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_STAMPSERIALNO_PURCHASERID =
+		new FinderPath(VRInputStampbookDetailsModelImpl.ENTITY_CACHE_ENABLED,
+			VRInputStampbookDetailsModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countBystampSerialNo_purchaserId",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the vr input stampbook details where purchaserId = &#63; and stampSerialNo = &#63; or throws a {@link NoSuchVRInputStampbookDetailsException} if it could not be found.
+	 *
+	 * @param purchaserId the purchaser ID
+	 * @param stampSerialNo the stamp serial no
+	 * @return the matching vr input stampbook details
+	 * @throws NoSuchVRInputStampbookDetailsException if a matching vr input stampbook details could not be found
+	 */
+	@Override
+	public VRInputStampbookDetails findBystampSerialNo_purchaserId(
+		long purchaserId, String stampSerialNo)
+		throws NoSuchVRInputStampbookDetailsException {
+		VRInputStampbookDetails vrInputStampbookDetails = fetchBystampSerialNo_purchaserId(purchaserId,
+				stampSerialNo);
+
+		if (vrInputStampbookDetails == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("purchaserId=");
+			msg.append(purchaserId);
+
+			msg.append(", stampSerialNo=");
+			msg.append(stampSerialNo);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchVRInputStampbookDetailsException(msg.toString());
+		}
+
+		return vrInputStampbookDetails;
+	}
+
+	/**
+	 * Returns the vr input stampbook details where purchaserId = &#63; and stampSerialNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param purchaserId the purchaser ID
+	 * @param stampSerialNo the stamp serial no
+	 * @return the matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
+	 */
+	@Override
+	public VRInputStampbookDetails fetchBystampSerialNo_purchaserId(
+		long purchaserId, String stampSerialNo) {
+		return fetchBystampSerialNo_purchaserId(purchaserId, stampSerialNo, true);
+	}
+
+	/**
+	 * Returns the vr input stampbook details where purchaserId = &#63; and stampSerialNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param purchaserId the purchaser ID
+	 * @param stampSerialNo the stamp serial no
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
+	 */
+	@Override
+	public VRInputStampbookDetails fetchBystampSerialNo_purchaserId(
+		long purchaserId, String stampSerialNo, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { purchaserId, stampSerialNo };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_STAMPSERIALNO_PURCHASERID,
+					finderArgs, this);
+		}
+
+		if (result instanceof VRInputStampbookDetails) {
+			VRInputStampbookDetails vrInputStampbookDetails = (VRInputStampbookDetails)result;
+
+			if ((purchaserId != vrInputStampbookDetails.getPurchaserId()) ||
+					!Objects.equals(stampSerialNo,
+						vrInputStampbookDetails.getStampSerialNo())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_VRINPUTSTAMPBOOKDETAILS_WHERE);
+
+			query.append(_FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_PURCHASERID_2);
+
+			boolean bindStampSerialNo = false;
+
+			if (stampSerialNo == null) {
+				query.append(_FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_STAMPSERIALNO_1);
+			}
+			else if (stampSerialNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_STAMPSERIALNO_3);
+			}
+			else {
+				bindStampSerialNo = true;
+
+				query.append(_FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_STAMPSERIALNO_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(purchaserId);
+
+				if (bindStampSerialNo) {
+					qPos.add(stampSerialNo);
+				}
+
+				List<VRInputStampbookDetails> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_STAMPSERIALNO_PURCHASERID,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"VRInputStampbookDetailsPersistenceImpl.fetchBystampSerialNo_purchaserId(long, String, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					VRInputStampbookDetails vrInputStampbookDetails = list.get(0);
+
+					result = vrInputStampbookDetails;
+
+					cacheResult(vrInputStampbookDetails);
+
+					if ((vrInputStampbookDetails.getPurchaserId() != purchaserId) ||
+							(vrInputStampbookDetails.getStampSerialNo() == null) ||
+							!vrInputStampbookDetails.getStampSerialNo()
+														.equals(stampSerialNo)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_STAMPSERIALNO_PURCHASERID,
+							finderArgs, vrInputStampbookDetails);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_STAMPSERIALNO_PURCHASERID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (VRInputStampbookDetails)result;
+		}
+	}
+
+	/**
+	 * Removes the vr input stampbook details where purchaserId = &#63; and stampSerialNo = &#63; from the database.
+	 *
+	 * @param purchaserId the purchaser ID
+	 * @param stampSerialNo the stamp serial no
+	 * @return the vr input stampbook details that was removed
+	 */
+	@Override
+	public VRInputStampbookDetails removeBystampSerialNo_purchaserId(
+		long purchaserId, String stampSerialNo)
+		throws NoSuchVRInputStampbookDetailsException {
+		VRInputStampbookDetails vrInputStampbookDetails = findBystampSerialNo_purchaserId(purchaserId,
+				stampSerialNo);
+
+		return remove(vrInputStampbookDetails);
+	}
+
+	/**
+	 * Returns the number of vr input stampbook detailses where purchaserId = &#63; and stampSerialNo = &#63;.
+	 *
+	 * @param purchaserId the purchaser ID
+	 * @param stampSerialNo the stamp serial no
+	 * @return the number of matching vr input stampbook detailses
+	 */
+	@Override
+	public int countBystampSerialNo_purchaserId(long purchaserId,
+		String stampSerialNo) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_STAMPSERIALNO_PURCHASERID;
+
+		Object[] finderArgs = new Object[] { purchaserId, stampSerialNo };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_VRINPUTSTAMPBOOKDETAILS_WHERE);
+
+			query.append(_FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_PURCHASERID_2);
+
+			boolean bindStampSerialNo = false;
+
+			if (stampSerialNo == null) {
+				query.append(_FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_STAMPSERIALNO_1);
+			}
+			else if (stampSerialNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_STAMPSERIALNO_3);
+			}
+			else {
+				bindStampSerialNo = true;
+
+				query.append(_FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_STAMPSERIALNO_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(purchaserId);
+
+				if (bindStampSerialNo) {
+					qPos.add(stampSerialNo);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_PURCHASERID_2 =
+		"vrInputStampbookDetails.purchaserId = ? AND ";
+	private static final String _FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_STAMPSERIALNO_1 =
+		"vrInputStampbookDetails.stampSerialNo IS NULL";
+	private static final String _FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_STAMPSERIALNO_2 =
+		"vrInputStampbookDetails.stampSerialNo = ?";
+	private static final String _FINDER_COLUMN_STAMPSERIALNO_PURCHASERID_STAMPSERIALNO_3 =
+		"(vrInputStampbookDetails.stampSerialNo IS NULL OR vrInputStampbookDetails.stampSerialNo = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_INPUTSHEETID =
 		new FinderPath(VRInputStampbookDetailsModelImpl.ENTITY_CACHE_ENABLED,
 			VRInputStampbookDetailsModelImpl.FINDER_CACHE_ENABLED,
@@ -4349,6 +4631,12 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 			VRInputStampbookDetailsImpl.class,
 			vrInputStampbookDetails.getPrimaryKey(), vrInputStampbookDetails);
 
+		finderCache.putResult(FINDER_PATH_FETCH_BY_STAMPSERIALNO_PURCHASERID,
+			new Object[] {
+				vrInputStampbookDetails.getPurchaserId(),
+				vrInputStampbookDetails.getStampSerialNo()
+			}, vrInputStampbookDetails);
+
 		finderCache.putResult(FINDER_PATH_FETCH_BY_BOOKIDANDSEQUENCENO,
 			new Object[] {
 				vrInputStampbookDetails.getBookId(),
@@ -4434,6 +4722,16 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	protected void cacheUniqueFindersCache(
 		VRInputStampbookDetailsModelImpl vrInputStampbookDetailsModelImpl) {
 		Object[] args = new Object[] {
+				vrInputStampbookDetailsModelImpl.getPurchaserId(),
+				vrInputStampbookDetailsModelImpl.getStampSerialNo()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_STAMPSERIALNO_PURCHASERID,
+			args, Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_STAMPSERIALNO_PURCHASERID,
+			args, vrInputStampbookDetailsModelImpl, false);
+
+		args = new Object[] {
 				vrInputStampbookDetailsModelImpl.getBookId(),
 				vrInputStampbookDetailsModelImpl.getSequenceNo()
 			};
@@ -4447,6 +4745,31 @@ public class VRInputStampbookDetailsPersistenceImpl extends BasePersistenceImpl<
 	protected void clearUniqueFindersCache(
 		VRInputStampbookDetailsModelImpl vrInputStampbookDetailsModelImpl,
 		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					vrInputStampbookDetailsModelImpl.getPurchaserId(),
+					vrInputStampbookDetailsModelImpl.getStampSerialNo()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_STAMPSERIALNO_PURCHASERID,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_STAMPSERIALNO_PURCHASERID,
+				args);
+		}
+
+		if ((vrInputStampbookDetailsModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_STAMPSERIALNO_PURCHASERID.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					vrInputStampbookDetailsModelImpl.getOriginalPurchaserId(),
+					vrInputStampbookDetailsModelImpl.getOriginalStampSerialNo()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_STAMPSERIALNO_PURCHASERID,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_STAMPSERIALNO_PURCHASERID,
+				args);
+		}
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					vrInputStampbookDetailsModelImpl.getBookId(),

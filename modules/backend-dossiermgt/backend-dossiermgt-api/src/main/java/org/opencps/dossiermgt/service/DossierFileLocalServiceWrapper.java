@@ -375,6 +375,23 @@ public class DossierFileLocalServiceWrapper implements DossierFileLocalService,
 		return _dossierFileLocalService.addDossierFile(dossierFile);
 	}
 
+	@Override
+	public org.opencps.dossiermgt.model.DossierFile addDossierFileBySingleServer(
+		long groupId, long dossierId, java.lang.String referenceUid,
+		java.lang.String dossierTemplateNo, java.lang.String dossierPartNo,
+		java.lang.String fileTemplateNo, java.lang.String displayName,
+		java.lang.String sourceFileName, long fileSize, long fileEntryId,
+		java.lang.String fileType, java.lang.String isSync,
+		long dossierActionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dossierFileLocalService.addDossierFileBySingleServer(groupId,
+			dossierId, referenceUid, dossierTemplateNo, dossierPartNo,
+			fileTemplateNo, displayName, sourceFileName, fileSize, fileEntryId,
+			fileType, isSync, dossierActionId, serviceContext);
+	}
+
 	/**
 	* POST /dossiers/{id}/files/copyfile
 	*
@@ -604,6 +621,19 @@ public class DossierFileLocalServiceWrapper implements DossierFileLocalService,
 	public org.opencps.dossiermgt.model.DossierFile updateDossierFile(
 		org.opencps.dossiermgt.model.DossierFile dossierFile) {
 		return _dossierFileLocalService.updateDossierFile(dossierFile);
+	}
+
+	@Override
+	public org.opencps.dossiermgt.model.DossierFile updateDossierFileBySingleServer(
+		long groupId, long dossierId, java.lang.String referenceUid,
+		java.lang.String displayName, java.lang.String sourceFileName,
+		long fileEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dossierFileLocalService.updateDossierFileBySingleServer(groupId,
+			dossierId, referenceUid, displayName, sourceFileName, fileEntryId,
+			serviceContext);
 	}
 
 	@Override

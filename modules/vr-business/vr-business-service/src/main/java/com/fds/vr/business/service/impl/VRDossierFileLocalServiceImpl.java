@@ -14,10 +14,13 @@
 
 package com.fds.vr.business.service.impl;
 
+import com.fds.vr.business.exception.NoSuchVRDossierFileException;
 import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.service.base.VRDossierFileLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -41,6 +44,8 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class VRDossierFileLocalServiceImpl
 	extends VRDossierFileLocalServiceBaseImpl {
+	
+	private static final Log _log = LogFactoryUtil.getLog(VRDossierFileLocalServiceImpl.class);
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,7 +69,12 @@ public class VRDossierFileLocalServiceImpl
 	
 	public VRDossierFile getDossierFileByDID_FTNO_First(long dossierId, String fileTemplateNo, boolean removed,
 			OrderByComparator orderByComparator) {
-		return vrDossierFilePersistence.fetchByDID_FTNO_First(dossierId, fileTemplateNo, removed, orderByComparator);
+		try {
+			return vrDossierFilePersistence.findByDID_FTNO_First(dossierId, fileTemplateNo, removed, orderByComparator);
+		} catch (NoSuchVRDossierFileException e) {
+			_log.error(e);
+			return null;
+		}
 	}
 	
 	public VRDossierFile getDossierFileByDID_DPNO(long dossierId, String dossierPartNo, boolean removed) {

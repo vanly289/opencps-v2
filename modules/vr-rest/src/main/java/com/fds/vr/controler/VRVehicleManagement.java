@@ -1,5 +1,6 @@
 package com.fds.vr.controler;
 
+import com.fds.vr.model.VRVehicleEquipmentBeanParam;
 import com.fds.vr.model.VRVehicleRecordBeanParam;
 import com.fds.vr.model.VRVehicleSpecificationBeanParam;
 import com.fds.vr.model.VRVehicleTypeCertificateBeanParam;
@@ -43,6 +44,13 @@ public interface VRVehicleManagement {
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @PathParam("dossierId") long dossierId,
 			@DefaultValue("0") @QueryParam("start") int start, @DefaultValue("10") @QueryParam("end") int end);
+
+	@GET
+	@Path("/equipments")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findVRVehicleEquipments(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @BeanParam VRVehicleEquipmentBeanParam query);
 
 	@POST
 	@Path("/equipment/{dossierId}")
@@ -124,13 +132,14 @@ public interface VRVehicleManagement {
 			@Context ServiceContext serviceContext, @BeanParam VRVehicleRecordBeanParam query,
 			String advancesearchParams);
 
-	//================================= Cap phat phoi phieu - Dungnv
+	// ================================= Cap phat phoi phieu - Dungnv
 	@GET
 	@Path("/record/{vehicleRecordId}/details")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findVRVehicleRecordPrintDetails(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @PathParam("vehicleRecordId") long vehicleRecordId);
+
 	@PUT
 	@Path("/record/{vehicleRecordId}/print")
 	@Consumes({ MediaType.APPLICATION_JSON })
@@ -147,7 +156,7 @@ public interface VRVehicleManagement {
 			@Context HttpHeaders header, @Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRVehicleRecordBeanParam query,
 			@FormParam("headercodes") String headercodes, @FormParam("headerlabels") String headerlabels);
-	//==
+	// ==
 
 	@GET
 	@Path("/record/count")

@@ -22,7 +22,7 @@
 **/tmp
 themes/
 **/.web_bundle_build
-.gradle
+# .gradle
 .idea
 /bundles
 /plugins-sdk/**/classes

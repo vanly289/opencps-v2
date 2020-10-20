@@ -175,10 +175,6 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		sb.append(applicantMaker);
 		sb.append(", applicantChecker=");
 		sb.append(applicantChecker);
-		sb.append(", certificateRecordDate=");
-		sb.append(certificateRecordDate);
-		sb.append(", issueInspectionRecordId=");
-		sb.append(issueInspectionRecordId);
 		sb.append(", inspectorId=");
 		sb.append(inspectorId);
 		sb.append(", issueInspectorId=");
@@ -189,6 +185,10 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", certifiedAssemblyType=");
+		sb.append(certifiedAssemblyType);
+		sb.append(", certifiedAssemblyTypeDescription=");
+		sb.append(certifiedAssemblyTypeDescription);
 		sb.append("}");
 
 		return sb.toString();
@@ -480,14 +480,6 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 			vrIssueImpl.setApplicantChecker(applicantChecker);
 		}
 
-		if (certificateRecordDate == Long.MIN_VALUE) {
-			vrIssueImpl.setCertificateRecordDate(null);
-		}
-		else {
-			vrIssueImpl.setCertificateRecordDate(new Date(certificateRecordDate));
-		}
-
-		vrIssueImpl.setIssueInspectionRecordId(issueInspectionRecordId);
 		vrIssueImpl.setInspectorId(inspectorId);
 		vrIssueImpl.setIssueInspectorId(issueInspectorId);
 		vrIssueImpl.setVerifyInspectorId(verifyInspectorId);
@@ -504,6 +496,20 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		}
 		else {
 			vrIssueImpl.setSyncDate(new Date(syncDate));
+		}
+
+		if (certifiedAssemblyType == null) {
+			vrIssueImpl.setCertifiedAssemblyType(StringPool.BLANK);
+		}
+		else {
+			vrIssueImpl.setCertifiedAssemblyType(certifiedAssemblyType);
+		}
+
+		if (certifiedAssemblyTypeDescription == null) {
+			vrIssueImpl.setCertifiedAssemblyTypeDescription(StringPool.BLANK);
+		}
+		else {
+			vrIssueImpl.setCertifiedAssemblyTypeDescription(certifiedAssemblyTypeDescription);
 		}
 
 		vrIssueImpl.resetOriginalValues();
@@ -583,9 +589,6 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		leaderName = objectInput.readUTF();
 		applicantMaker = objectInput.readUTF();
 		applicantChecker = objectInput.readUTF();
-		certificateRecordDate = objectInput.readLong();
-
-		issueInspectionRecordId = objectInput.readLong();
 
 		inspectorId = objectInput.readLong();
 
@@ -594,6 +597,8 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		verifyInspectorId = objectInput.readLong();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+		certifiedAssemblyType = objectInput.readUTF();
+		certifiedAssemblyTypeDescription = objectInput.readUTF();
 	}
 
 	@Override
@@ -866,10 +871,6 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 			objectOutput.writeUTF(applicantChecker);
 		}
 
-		objectOutput.writeLong(certificateRecordDate);
-
-		objectOutput.writeLong(issueInspectionRecordId);
-
 		objectOutput.writeLong(inspectorId);
 
 		objectOutput.writeLong(issueInspectorId);
@@ -877,6 +878,20 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 		objectOutput.writeLong(verifyInspectorId);
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+
+		if (certifiedAssemblyType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(certifiedAssemblyType);
+		}
+
+		if (certifiedAssemblyTypeDescription == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(certifiedAssemblyTypeDescription);
+		}
 	}
 
 	public long id;
@@ -933,11 +948,11 @@ public class VRIssueCacheModel implements CacheModel<VRIssue>, Externalizable {
 	public String leaderName;
 	public String applicantMaker;
 	public String applicantChecker;
-	public long certificateRecordDate;
-	public long issueInspectionRecordId;
 	public long inspectorId;
 	public long issueInspectorId;
 	public long verifyInspectorId;
 	public long modifyDate;
 	public long syncDate;
+	public String certifiedAssemblyType;
+	public String certifiedAssemblyTypeDescription;
 }

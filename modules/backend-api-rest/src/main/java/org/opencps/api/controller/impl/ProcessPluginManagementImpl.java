@@ -363,7 +363,7 @@ public class ProcessPluginManagementImpl implements ProcessPluginManagement {
 						formData = _getFormData(groupId, formCode, dossier.getDossierId(), autoRun,
 								dossier.getDossierTemplateNo(), original, dossierActionId, serviceContext);
 						
-						_log.info("formData"+ formData);
+						_log.debug("formData"+ formData);
 						
 						formReport = _getFormScript(formCode, dossier.getDossierId());
 					}

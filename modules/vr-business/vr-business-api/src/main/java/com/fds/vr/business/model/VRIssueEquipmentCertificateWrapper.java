@@ -86,6 +86,10 @@ public class VRIssueEquipmentCertificateWrapper
 		attributes.put("applicantAddress", getApplicantAddress());
 		attributes.put("productionPlantName", getProductionPlantName());
 		attributes.put("productionPlantAddress", getProductionPlantAddress());
+		attributes.put("vehicleCertificateRecordDate",
+			getVehicleCertificateRecordDate());
+		attributes.put("equipmentCertificateRecordDate",
+			getEquipmentCertificateRecordDate());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -233,6 +237,20 @@ public class VRIssueEquipmentCertificateWrapper
 
 		if (productionPlantAddress != null) {
 			setProductionPlantAddress(productionPlantAddress);
+		}
+
+		Date vehicleCertificateRecordDate = (Date)attributes.get(
+				"vehicleCertificateRecordDate");
+
+		if (vehicleCertificateRecordDate != null) {
+			setVehicleCertificateRecordDate(vehicleCertificateRecordDate);
+		}
+
+		Date equipmentCertificateRecordDate = (Date)attributes.get(
+				"equipmentCertificateRecordDate");
+
+		if (equipmentCertificateRecordDate != null) {
+			setEquipmentCertificateRecordDate(equipmentCertificateRecordDate);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -485,6 +503,16 @@ public class VRIssueEquipmentCertificateWrapper
 	}
 
 	/**
+	* Returns the equipment certificate record date of this vr issue equipment certificate.
+	*
+	* @return the equipment certificate record date of this vr issue equipment certificate
+	*/
+	@Override
+	public Date getEquipmentCertificateRecordDate() {
+		return _vrIssueEquipmentCertificate.getEquipmentCertificateRecordDate();
+	}
+
+	/**
 	* Returns the modify date of this vr issue equipment certificate.
 	*
 	* @return the modify date of this vr issue equipment certificate
@@ -502,6 +530,16 @@ public class VRIssueEquipmentCertificateWrapper
 	@Override
 	public Date getSyncDate() {
 		return _vrIssueEquipmentCertificate.getSyncDate();
+	}
+
+	/**
+	* Returns the vehicle certificate record date of this vr issue equipment certificate.
+	*
+	* @return the vehicle certificate record date of this vr issue equipment certificate
+	*/
+	@Override
+	public Date getVehicleCertificateRecordDate() {
+		return _vrIssueEquipmentCertificate.getVehicleCertificateRecordDate();
 	}
 
 	/**
@@ -612,6 +650,17 @@ public class VRIssueEquipmentCertificateWrapper
 	@Override
 	public void setDossierId(long dossierId) {
 		_vrIssueEquipmentCertificate.setDossierId(dossierId);
+	}
+
+	/**
+	* Sets the equipment certificate record date of this vr issue equipment certificate.
+	*
+	* @param equipmentCertificateRecordDate the equipment certificate record date of this vr issue equipment certificate
+	*/
+	@Override
+	public void setEquipmentCertificateRecordDate(
+		Date equipmentCertificateRecordDate) {
+		_vrIssueEquipmentCertificate.setEquipmentCertificateRecordDate(equipmentCertificateRecordDate);
 	}
 
 	/**
@@ -842,6 +891,17 @@ public class VRIssueEquipmentCertificateWrapper
 	@Override
 	public void setTotalQuantity(int TotalQuantity) {
 		_vrIssueEquipmentCertificate.setTotalQuantity(TotalQuantity);
+	}
+
+	/**
+	* Sets the vehicle certificate record date of this vr issue equipment certificate.
+	*
+	* @param vehicleCertificateRecordDate the vehicle certificate record date of this vr issue equipment certificate
+	*/
+	@Override
+	public void setVehicleCertificateRecordDate(
+		Date vehicleCertificateRecordDate) {
+		_vrIssueEquipmentCertificate.setVehicleCertificateRecordDate(vehicleCertificateRecordDate);
 	}
 
 	/**

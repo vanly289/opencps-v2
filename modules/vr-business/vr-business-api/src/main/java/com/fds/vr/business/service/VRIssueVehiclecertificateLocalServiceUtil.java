@@ -148,9 +148,11 @@ public class VRIssueVehiclecertificateLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.json.JSONObject adminProcess(
 		com.liferay.portal.kernel.json.JSONArray arrayData, long issueId,
-		long dossierId, long mtCore)
-		throws com.liferay.portal.kernel.json.JSONException {
-		return getService().adminProcess(arrayData, issueId, dossierId, mtCore);
+		long dossierId, long mtCore, java.lang.String issueType)
+		throws java.lang.Exception {
+		return getService()
+				   .adminProcess(arrayData, issueId, dossierId, mtCore,
+			issueType);
 	}
 
 	/**

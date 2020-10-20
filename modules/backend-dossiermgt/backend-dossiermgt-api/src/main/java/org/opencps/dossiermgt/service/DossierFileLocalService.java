@@ -296,6 +296,16 @@ public interface DossierFileLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public DossierFile addDossierFile(DossierFile dossierFile);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public DossierFile addDossierFileBySingleServer(long groupId,
+		long dossierId, java.lang.String referenceUid,
+		java.lang.String dossierTemplateNo, java.lang.String dossierPartNo,
+		java.lang.String fileTemplateNo, java.lang.String displayName,
+		java.lang.String sourceFileName, long fileSize, long fileEntryId,
+		java.lang.String fileType, java.lang.String isSync,
+		long dossierActionId, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	/**
 	* POST /dossiers/{id}/files/copyfile
 	*
@@ -449,6 +459,13 @@ public interface DossierFileLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DossierFile updateDossierFile(DossierFile dossierFile);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DossierFile updateDossierFileBySingleServer(long groupId,
+		long dossierId, java.lang.String referenceUid,
+		java.lang.String displayName, java.lang.String sourceFileName,
+		long fileEntryId, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public DossierFile updateFormData(long groupId, long dossierId,

@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.fds.vr.business.model.VRHistoryProfile;
 import com.fds.vr.business.service.base.VRHistoryProfileLocalServiceBaseImpl;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -114,4 +116,11 @@ public class VRHistoryProfileLocalServiceImpl extends VRHistoryProfileLocalServi
 	public List<VRHistoryProfile> findByContentType(String contentType, int start, int end) {
 		return vrHistoryProfilePersistence.findByF_ContentType(contentType, start, end);
 	}
+	
+	public void deleteByDossierIdCTN_contentFileTemplate(String dossierIdCTN, String contentFileTemplate) {
+		_log.info("====> deleteByDossierIdCTN_contentFileTemplate");
+		vrHistoryProfilePersistence.removeByF_dossierIdCTN_contentFileTemplate(dossierIdCTN, contentFileTemplate);
+	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(VRHistoryProfileLocalServiceImpl.class);
 }

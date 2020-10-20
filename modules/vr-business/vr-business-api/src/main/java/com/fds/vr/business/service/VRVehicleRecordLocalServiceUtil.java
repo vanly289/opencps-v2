@@ -200,10 +200,11 @@ public class VRVehicleRecordLocalServiceUtil {
 
 	public static java.util.List<com.fds.vr.business.model.VRVehicleRecord> adminProcess(
 		com.liferay.portal.kernel.json.JSONArray arrayData, long dossierId,
-		long issueId, long mtCore, long issueVehicleCertificateId) {
+		long issueId, long mtCore, long issueVehicleCertificateId,
+		java.lang.String issueType) throws java.lang.Exception {
 		return getService()
 				   .adminProcess(arrayData, dossierId, issueId, mtCore,
-			issueVehicleCertificateId);
+			issueVehicleCertificateId, issueType);
 	}
 
 	/**

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -246,11 +247,11 @@ public class VRVehicleRecordLocalServiceImpl extends VRVehicleRecordLocalService
 					.findByvehicleRecordId(vrVehicleRecord.getMtCore(), vehicleRecordId);
 			int counter = 0;
 			for (VRInputStampbookDetails vrInputStampbookDetail : vrInputStampbookDetails) {
-				VRInputStampbookDetails object = vrInputStampbookDetailsLocalService.updateInputStampbookDetails(vrInputStampbookDetail.getPrimaryKey(),
-						vrVehicleRecord.getMtCore(), null, null, vrVehicleRecord.getDossierId(),
-						vrVehicleRecord.getCertificateId(), null, null, vehicleRecordId, vrVehicleRecord.getFrameNo(),
-						vrVehicleRecord.getBoxNo(), null, vrVehicleRecord.getEngineNo(), 1L, null, null, null, null,
-						null, null, null, null, null,
+				VRInputStampbookDetails object = vrInputStampbookDetailsLocalService.updateInputStampbookDetails(
+						vrInputStampbookDetail.getPrimaryKey(), vrVehicleRecord.getMtCore(), null, null,
+						vrVehicleRecord.getDossierId(), vrVehicleRecord.getCertificateId(), null, null, vehicleRecordId,
+						vrVehicleRecord.getFrameNo(), vrVehicleRecord.getBoxNo(), null, vrVehicleRecord.getEngineNo(),
+						1L, null, null, null, null, null, null, null, null, null,
 						vrInputStampbookDetail.getStampStatus() + 1 < 5L ? vrInputStampbookDetail.getStampStatus() + 1
 								: 5L,
 						null, now, null, null, null, null, null);
@@ -259,24 +260,70 @@ public class VRVehicleRecordLocalServiceImpl extends VRVehicleRecordLocalService
 				}
 			}
 			if (vrInputStampbookDetails != null && !vrInputStampbookDetails.isEmpty()) {
-				VRInputStampbook vrInputStampbook = vrInputStampbookLocalService.fetchVRInputStampbook(vrInputStampbookDetails.get(0).getBookId());
+				VRInputStampbook vrInputStampbook = vrInputStampbookLocalService
+						.fetchVRInputStampbook(vrInputStampbookDetails.get(0).getBookId());
 				long subTotalQuantities = vrInputStampbook.getSubTotalQuantities();
 				vrInputStampbook.setSubTotalQuantities(subTotalQuantities - counter);
 				vrInputStampbookLocalService.updateVRInputStampbook(vrInputStampbook);
-				
-				//Chua biet update OutputSheetDetail
+
+				// Chua biet update OutputSheetDetail
 			}
-			
+
 		}
 		return vrVehicleRecordPersistence.update(vrVehicleRecord);
 	}
 
-	public List<VRVehicleRecord> adminProcess(JSONArray arrayData, long dossierId, long issueId, long mtCore, long issueVehicleCertificateId) {
+	private boolean validateFirstAllocation(String frameNo, String engineNo, List<VRVehicleRecord> vrVehicleRecords) {
+		boolean frameNoExists = vrVehicleRecords.parallelStream()
+				.anyMatch(vrVehicleRecord -> frameNo.equals(vrVehicleRecord.getFrameNo()));
+		return frameNoExists;
+	}
+
+	private boolean validateReplacementAllocation_FrameNo(String frameNo, String engineNo) {
+		VRVehicleRecord vrVehicleRecord = vrVehicleRecordPersistence.fetchByframeNo(frameNo);
+		if (Validator.isNull(vrVehicleRecord)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean validateReplacementAllocation_SerialNo(String serialNo, long applicantProfileId) {
+		VRInputStampbookDetails vrInputStampbookDetails = vrInputStampbookDetailsPersistence
+				.fetchBystampSerialNo_purchaserId(applicantProfileId, serialNo);
+		if (Validator.isNull(vrInputStampbookDetails)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public List<VRVehicleRecord> adminProcess(JSONArray arrayData, long dossierId, long issueId, long mtCore,
+			long issueVehicleCertificateId, String issueType) throws Exception {
+
+		List<VRVehicleRecord> vrVehicleRecords = vrVehicleRecordPersistence.findBydossierId(mtCore, dossierId);
+
 		vrVehicleRecordPersistence.removeBydossierId(mtCore, dossierId);
 		List<VRVehicleRecord> result = new ArrayList<VRVehicleRecord>();
 		Date now = new Date();
 		for (int i = 0; i < arrayData.length(); i++) {
 			JSONObject objectData = arrayData.getJSONObject(i);
+
+			if (issueType.equals("1")) { // Cap lan dau
+				if (validateFirstAllocation(objectData.getString("frameNo"), objectData.getString("engineNo"),
+						vrVehicleRecords)) {
+					throw new Exception("505"); // 505 = Trung so khung
+				}
+			} else if (issueType.contains("2, 3, 4")) { // Cap thay the
+				if (validateReplacementAllocation_SerialNo(objectData.getString("serialNo"), objectData.getLong("applicantProfileId"))) {
+					throw new Exception("507"); // 507 = Phieu khong ton tai
+				}
+				if (validateReplacementAllocation_FrameNo(objectData.getString("frameNo"),
+						objectData.getString("engineNo"))) {
+					throw new Exception("506"); // 506 = Xe khong ton tai
+				}
+			}
+
 			long vehicleRecordId = counterLocalService.increment(VRVehicleRecord.class.getName());
 
 			VRVehicleRecord object = vrVehicleRecordPersistence.create(vehicleRecordId);
@@ -305,9 +352,11 @@ public class VRVehicleRecordLocalServiceImpl extends VRVehicleRecordLocalService
 			object.setSignDate(parseStringToDate(objectData.getString("signDate")));
 			object.setModifyDate(now);
 			object.setSyncDate(now);
-			object.setCertificaterecordno(objectData.getString("certificaterecordno"));
+			object.setCertificaterecordno(objectData.getString("certificateRecordNo"));
 			object.setPostPrintingStatus(objectData.getInt("postPrintingStatus"));
 			object.setQrCode(objectData.getString("qrCode"));
+			object.setCertificateRecordDate(parseStringToDate(objectData.getString("certificateRecordDate")));
+			object.setIssueInspectionRecordId(objectData.getLong("issueInspectionRecordId"));
 
 			object = vrVehicleRecordPersistence.update(object);
 			if (object != null) {

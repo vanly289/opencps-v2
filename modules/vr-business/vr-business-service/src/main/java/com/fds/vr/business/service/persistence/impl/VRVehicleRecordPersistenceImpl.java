@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -45,6 +46,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1198,6 +1200,252 @@ public class VRVehicleRecordPersistenceImpl extends BasePersistenceImpl<VRVehicl
 
 	private static final String _FINDER_COLUMN_DOSSIERID_MTCORE_2 = "vrVehicleRecord.mtCore = ? AND ";
 	private static final String _FINDER_COLUMN_DOSSIERID_DOSSIERID_2 = "vrVehicleRecord.dossierId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_FRAMENO = new FinderPath(VRVehicleRecordModelImpl.ENTITY_CACHE_ENABLED,
+			VRVehicleRecordModelImpl.FINDER_CACHE_ENABLED,
+			VRVehicleRecordImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByframeNo", new String[] { String.class.getName() },
+			VRVehicleRecordModelImpl.FRAMENO_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_FRAMENO = new FinderPath(VRVehicleRecordModelImpl.ENTITY_CACHE_ENABLED,
+			VRVehicleRecordModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByframeNo",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns the vr vehicle record where frameNo = &#63; or throws a {@link NoSuchVRVehicleRecordException} if it could not be found.
+	 *
+	 * @param frameNo the frame no
+	 * @return the matching vr vehicle record
+	 * @throws NoSuchVRVehicleRecordException if a matching vr vehicle record could not be found
+	 */
+	@Override
+	public VRVehicleRecord findByframeNo(String frameNo)
+		throws NoSuchVRVehicleRecordException {
+		VRVehicleRecord vrVehicleRecord = fetchByframeNo(frameNo);
+
+		if (vrVehicleRecord == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("frameNo=");
+			msg.append(frameNo);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchVRVehicleRecordException(msg.toString());
+		}
+
+		return vrVehicleRecord;
+	}
+
+	/**
+	 * Returns the vr vehicle record where frameNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param frameNo the frame no
+	 * @return the matching vr vehicle record, or <code>null</code> if a matching vr vehicle record could not be found
+	 */
+	@Override
+	public VRVehicleRecord fetchByframeNo(String frameNo) {
+		return fetchByframeNo(frameNo, true);
+	}
+
+	/**
+	 * Returns the vr vehicle record where frameNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param frameNo the frame no
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching vr vehicle record, or <code>null</code> if a matching vr vehicle record could not be found
+	 */
+	@Override
+	public VRVehicleRecord fetchByframeNo(String frameNo,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { frameNo };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_FRAMENO,
+					finderArgs, this);
+		}
+
+		if (result instanceof VRVehicleRecord) {
+			VRVehicleRecord vrVehicleRecord = (VRVehicleRecord)result;
+
+			if (!Objects.equals(frameNo, vrVehicleRecord.getFrameNo())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_VRVEHICLERECORD_WHERE);
+
+			boolean bindFrameNo = false;
+
+			if (frameNo == null) {
+				query.append(_FINDER_COLUMN_FRAMENO_FRAMENO_1);
+			}
+			else if (frameNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_FRAMENO_FRAMENO_3);
+			}
+			else {
+				bindFrameNo = true;
+
+				query.append(_FINDER_COLUMN_FRAMENO_FRAMENO_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindFrameNo) {
+					qPos.add(frameNo);
+				}
+
+				List<VRVehicleRecord> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_FRAMENO,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"VRVehicleRecordPersistenceImpl.fetchByframeNo(String, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					VRVehicleRecord vrVehicleRecord = list.get(0);
+
+					result = vrVehicleRecord;
+
+					cacheResult(vrVehicleRecord);
+
+					if ((vrVehicleRecord.getFrameNo() == null) ||
+							!vrVehicleRecord.getFrameNo().equals(frameNo)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_FRAMENO,
+							finderArgs, vrVehicleRecord);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_FRAMENO,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (VRVehicleRecord)result;
+		}
+	}
+
+	/**
+	 * Removes the vr vehicle record where frameNo = &#63; from the database.
+	 *
+	 * @param frameNo the frame no
+	 * @return the vr vehicle record that was removed
+	 */
+	@Override
+	public VRVehicleRecord removeByframeNo(String frameNo)
+		throws NoSuchVRVehicleRecordException {
+		VRVehicleRecord vrVehicleRecord = findByframeNo(frameNo);
+
+		return remove(vrVehicleRecord);
+	}
+
+	/**
+	 * Returns the number of vr vehicle records where frameNo = &#63;.
+	 *
+	 * @param frameNo the frame no
+	 * @return the number of matching vr vehicle records
+	 */
+	@Override
+	public int countByframeNo(String frameNo) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_FRAMENO;
+
+		Object[] finderArgs = new Object[] { frameNo };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_VRVEHICLERECORD_WHERE);
+
+			boolean bindFrameNo = false;
+
+			if (frameNo == null) {
+				query.append(_FINDER_COLUMN_FRAMENO_FRAMENO_1);
+			}
+			else if (frameNo.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_FRAMENO_FRAMENO_3);
+			}
+			else {
+				bindFrameNo = true;
+
+				query.append(_FINDER_COLUMN_FRAMENO_FRAMENO_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindFrameNo) {
+					qPos.add(frameNo);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_FRAMENO_FRAMENO_1 = "vrVehicleRecord.frameNo IS NULL";
+	private static final String _FINDER_COLUMN_FRAMENO_FRAMENO_2 = "vrVehicleRecord.frameNo = ?";
+	private static final String _FINDER_COLUMN_FRAMENO_FRAMENO_3 = "(vrVehicleRecord.frameNo IS NULL OR vrVehicleRecord.frameNo = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CERTIFICATEID =
 		new FinderPath(VRVehicleRecordModelImpl.ENTITY_CACHE_ENABLED,
 			VRVehicleRecordModelImpl.FINDER_CACHE_ENABLED,
@@ -4056,6 +4304,9 @@ public class VRVehicleRecordPersistenceImpl extends BasePersistenceImpl<VRVehicl
 			VRVehicleRecordImpl.class, vrVehicleRecord.getPrimaryKey(),
 			vrVehicleRecord);
 
+		finderCache.putResult(FINDER_PATH_FETCH_BY_FRAMENO,
+			new Object[] { vrVehicleRecord.getFrameNo() }, vrVehicleRecord);
+
 		vrVehicleRecord.resetOriginalValues();
 	}
 
@@ -4109,6 +4360,8 @@ public class VRVehicleRecordPersistenceImpl extends BasePersistenceImpl<VRVehicl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((VRVehicleRecordModelImpl)vrVehicleRecord, true);
 	}
 
 	@Override
@@ -4119,6 +4372,39 @@ public class VRVehicleRecordPersistenceImpl extends BasePersistenceImpl<VRVehicl
 		for (VRVehicleRecord vrVehicleRecord : vrVehicleRecords) {
 			entityCache.removeResult(VRVehicleRecordModelImpl.ENTITY_CACHE_ENABLED,
 				VRVehicleRecordImpl.class, vrVehicleRecord.getPrimaryKey());
+
+			clearUniqueFindersCache((VRVehicleRecordModelImpl)vrVehicleRecord,
+				true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		VRVehicleRecordModelImpl vrVehicleRecordModelImpl) {
+		Object[] args = new Object[] { vrVehicleRecordModelImpl.getFrameNo() };
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_FRAMENO, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_FRAMENO, args,
+			vrVehicleRecordModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		VRVehicleRecordModelImpl vrVehicleRecordModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] { vrVehicleRecordModelImpl.getFrameNo() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_FRAMENO, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_FRAMENO, args);
+		}
+
+		if ((vrVehicleRecordModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_FRAMENO.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					vrVehicleRecordModelImpl.getOriginalFrameNo()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_FRAMENO, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_FRAMENO, args);
 		}
 	}
 
@@ -4421,6 +4707,9 @@ public class VRVehicleRecordPersistenceImpl extends BasePersistenceImpl<VRVehicl
 			VRVehicleRecordImpl.class, vrVehicleRecord.getPrimaryKey(),
 			vrVehicleRecord, false);
 
+		clearUniqueFindersCache(vrVehicleRecordModelImpl, false);
+		cacheUniqueFindersCache(vrVehicleRecordModelImpl);
+
 		vrVehicleRecord.resetOriginalValues();
 
 		return vrVehicleRecord;
@@ -4462,6 +4751,8 @@ public class VRVehicleRecordPersistenceImpl extends BasePersistenceImpl<VRVehicl
 		vrVehicleRecordImpl.setSignDate(vrVehicleRecord.getSignDate());
 		vrVehicleRecordImpl.setModifyDate(vrVehicleRecord.getModifyDate());
 		vrVehicleRecordImpl.setSyncDate(vrVehicleRecord.getSyncDate());
+		vrVehicleRecordImpl.setCertificateRecordDate(vrVehicleRecord.getCertificateRecordDate());
+		vrVehicleRecordImpl.setIssueInspectionRecordId(vrVehicleRecord.getIssueInspectionRecordId());
 		vrVehicleRecordImpl.setCertificaterecordno(vrVehicleRecord.getCertificaterecordno());
 		vrVehicleRecordImpl.setPostPrintingStatus(vrVehicleRecord.getPostPrintingStatus());
 		vrVehicleRecordImpl.setQrCode(vrVehicleRecord.getQrCode());

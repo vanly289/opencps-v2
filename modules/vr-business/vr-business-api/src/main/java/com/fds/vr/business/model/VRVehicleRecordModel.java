@@ -439,6 +439,34 @@ public interface VRVehicleRecordModel extends BaseModel<VRVehicleRecord> {
 	public void setSyncDate(Date syncDate);
 
 	/**
+	 * Returns the certificate record date of this vr vehicle record.
+	 *
+	 * @return the certificate record date of this vr vehicle record
+	 */
+	public Date getCertificateRecordDate();
+
+	/**
+	 * Sets the certificate record date of this vr vehicle record.
+	 *
+	 * @param certificateRecordDate the certificate record date of this vr vehicle record
+	 */
+	public void setCertificateRecordDate(Date certificateRecordDate);
+
+	/**
+	 * Returns the issue inspection record ID of this vr vehicle record.
+	 *
+	 * @return the issue inspection record ID of this vr vehicle record
+	 */
+	public long getIssueInspectionRecordId();
+
+	/**
+	 * Sets the issue inspection record ID of this vr vehicle record.
+	 *
+	 * @param issueInspectionRecordId the issue inspection record ID of this vr vehicle record
+	 */
+	public void setIssueInspectionRecordId(long issueInspectionRecordId);
+
+	/**
 	 * Returns the certificaterecordno of this vr vehicle record.
 	 *
 	 * @return the certificaterecordno of this vr vehicle record

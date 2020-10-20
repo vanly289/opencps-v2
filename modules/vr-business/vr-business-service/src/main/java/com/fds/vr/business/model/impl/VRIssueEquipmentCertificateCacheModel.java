@@ -67,7 +67,7 @@ public class VRIssueEquipmentCertificateCacheModel implements CacheModel<VRIssue
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -113,6 +113,10 @@ public class VRIssueEquipmentCertificateCacheModel implements CacheModel<VRIssue
 		sb.append(productionPlantName);
 		sb.append(", productionPlantAddress=");
 		sb.append(productionPlantAddress);
+		sb.append(", vehicleCertificateRecordDate=");
+		sb.append(vehicleCertificateRecordDate);
+		sb.append(", equipmentCertificateRecordDate=");
+		sb.append(equipmentCertificateRecordDate);
 		sb.append(", modifyDate=");
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
@@ -222,6 +226,22 @@ public class VRIssueEquipmentCertificateCacheModel implements CacheModel<VRIssue
 			vrIssueEquipmentCertificateImpl.setProductionPlantAddress(productionPlantAddress);
 		}
 
+		if (vehicleCertificateRecordDate == Long.MIN_VALUE) {
+			vrIssueEquipmentCertificateImpl.setVehicleCertificateRecordDate(null);
+		}
+		else {
+			vrIssueEquipmentCertificateImpl.setVehicleCertificateRecordDate(new Date(
+					vehicleCertificateRecordDate));
+		}
+
+		if (equipmentCertificateRecordDate == Long.MIN_VALUE) {
+			vrIssueEquipmentCertificateImpl.setEquipmentCertificateRecordDate(null);
+		}
+		else {
+			vrIssueEquipmentCertificateImpl.setEquipmentCertificateRecordDate(new Date(
+					equipmentCertificateRecordDate));
+		}
+
 		if (modifyDate == Long.MIN_VALUE) {
 			vrIssueEquipmentCertificateImpl.setModifyDate(null);
 		}
@@ -274,6 +294,8 @@ public class VRIssueEquipmentCertificateCacheModel implements CacheModel<VRIssue
 		applicantAddress = objectInput.readUTF();
 		productionPlantName = objectInput.readUTF();
 		productionPlantAddress = objectInput.readUTF();
+		vehicleCertificateRecordDate = objectInput.readLong();
+		equipmentCertificateRecordDate = objectInput.readLong();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
 	}
@@ -385,6 +407,8 @@ public class VRIssueEquipmentCertificateCacheModel implements CacheModel<VRIssue
 			objectOutput.writeUTF(productionPlantAddress);
 		}
 
+		objectOutput.writeLong(vehicleCertificateRecordDate);
+		objectOutput.writeLong(equipmentCertificateRecordDate);
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
 	}
@@ -411,6 +435,8 @@ public class VRIssueEquipmentCertificateCacheModel implements CacheModel<VRIssue
 	public String applicantAddress;
 	public String productionPlantName;
 	public String productionPlantAddress;
+	public long vehicleCertificateRecordDate;
+	public long equipmentCertificateRecordDate;
 	public long modifyDate;
 	public long syncDate;
 }

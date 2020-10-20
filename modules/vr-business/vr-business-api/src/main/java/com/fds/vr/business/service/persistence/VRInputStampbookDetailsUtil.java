@@ -115,6 +115,77 @@ public class VRInputStampbookDetailsUtil {
 	}
 
 	/**
+	* Returns the vr input stampbook details where purchaserId = &#63; and stampSerialNo = &#63; or throws a {@link NoSuchVRInputStampbookDetailsException} if it could not be found.
+	*
+	* @param purchaserId the purchaser ID
+	* @param stampSerialNo the stamp serial no
+	* @return the matching vr input stampbook details
+	* @throws NoSuchVRInputStampbookDetailsException if a matching vr input stampbook details could not be found
+	*/
+	public static VRInputStampbookDetails findBystampSerialNo_purchaserId(
+		long purchaserId, java.lang.String stampSerialNo)
+		throws com.fds.vr.business.exception.NoSuchVRInputStampbookDetailsException {
+		return getPersistence()
+				   .findBystampSerialNo_purchaserId(purchaserId, stampSerialNo);
+	}
+
+	/**
+	* Returns the vr input stampbook details where purchaserId = &#63; and stampSerialNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param purchaserId the purchaser ID
+	* @param stampSerialNo the stamp serial no
+	* @return the matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
+	*/
+	public static VRInputStampbookDetails fetchBystampSerialNo_purchaserId(
+		long purchaserId, java.lang.String stampSerialNo) {
+		return getPersistence()
+				   .fetchBystampSerialNo_purchaserId(purchaserId, stampSerialNo);
+	}
+
+	/**
+	* Returns the vr input stampbook details where purchaserId = &#63; and stampSerialNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param purchaserId the purchaser ID
+	* @param stampSerialNo the stamp serial no
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vr input stampbook details, or <code>null</code> if a matching vr input stampbook details could not be found
+	*/
+	public static VRInputStampbookDetails fetchBystampSerialNo_purchaserId(
+		long purchaserId, java.lang.String stampSerialNo,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchBystampSerialNo_purchaserId(purchaserId,
+			stampSerialNo, retrieveFromCache);
+	}
+
+	/**
+	* Removes the vr input stampbook details where purchaserId = &#63; and stampSerialNo = &#63; from the database.
+	*
+	* @param purchaserId the purchaser ID
+	* @param stampSerialNo the stamp serial no
+	* @return the vr input stampbook details that was removed
+	*/
+	public static VRInputStampbookDetails removeBystampSerialNo_purchaserId(
+		long purchaserId, java.lang.String stampSerialNo)
+		throws com.fds.vr.business.exception.NoSuchVRInputStampbookDetailsException {
+		return getPersistence()
+				   .removeBystampSerialNo_purchaserId(purchaserId, stampSerialNo);
+	}
+
+	/**
+	* Returns the number of vr input stampbook detailses where purchaserId = &#63; and stampSerialNo = &#63;.
+	*
+	* @param purchaserId the purchaser ID
+	* @param stampSerialNo the stamp serial no
+	* @return the number of matching vr input stampbook detailses
+	*/
+	public static int countBystampSerialNo_purchaserId(long purchaserId,
+		java.lang.String stampSerialNo) {
+		return getPersistence()
+				   .countBystampSerialNo_purchaserId(purchaserId, stampSerialNo);
+	}
+
+	/**
 	* Returns all the vr input stampbook detailses where mtCore = &#63; and inputSheetId = &#63;.
 	*
 	* @param mtCore the mt core

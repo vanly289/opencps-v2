@@ -13,6 +13,7 @@ import com.fds.vr.business.model.impl.VRVehicleRecordImpl;
 import com.fds.vr.business.model.impl.VRVehicleRecordModelImpl;
 import com.fds.vr.business.service.VRVehicleEquipmentLocalServiceUtil;
 import com.fds.vr.controler.VRVehicleManagement;
+import com.fds.vr.model.VRVehicleEquipmentBeanParam;
 import com.fds.vr.model.VRVehicleRecordBeanParam;
 import com.fds.vr.model.VRVehicleSpecificationBeanParam;
 import com.fds.vr.model.VRVehicleTypeCertificateBeanParam;
@@ -319,6 +320,7 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 				}
 			}
 			result.put("data", array);
+			result.put("total", vrVehicleEquipments.size());
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
 			_log.error(e);
@@ -353,6 +355,13 @@ public class VRVehicleManagementImpl implements VRVehicleManagement {
 			return Response.status(500)
 					.entity(VRRestUtil.errorMessage("Can't create VRVehicleEquipment").toJSONString()).build();
 		}
+	}
+
+	@Override
+	public Response findVRVehicleEquipments(HttpServletRequest request, HttpHeaders header, Company company,
+			Locale locale, User user, ServiceContext serviceContext, VRVehicleEquipmentBeanParam query) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

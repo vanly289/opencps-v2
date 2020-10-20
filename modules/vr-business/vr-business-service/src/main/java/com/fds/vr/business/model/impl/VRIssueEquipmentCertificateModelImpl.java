@@ -85,6 +85,8 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 			{ "applicantAddress", Types.VARCHAR },
 			{ "productionPlantName", Types.VARCHAR },
 			{ "productionPlantAddress", Types.VARCHAR },
+			{ "vehicleCertificateRecordDate", Types.TIMESTAMP },
+			{ "equipmentCertificateRecordDate", Types.TIMESTAMP },
 			{ "modifyDate", Types.TIMESTAMP },
 			{ "syncDate", Types.TIMESTAMP }
 		};
@@ -113,11 +115,13 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 		TABLE_COLUMNS_MAP.put("applicantAddress", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productionPlantAddress", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("vehicleCertificateRecordDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("equipmentCertificateRecordDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("syncDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table vr_issue_equipmentcertificate (id LONG not null primary key,mtCore LONG,dossierId LONG,issueId LONG,issueVehicleCertificateId LONG,vehicleCertificateRecordNo VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,equipmentCertificateType VARCHAR(75) null,equipmentDocumentNo VARCHAR(75) null,equipmentCertificateRecordNo VARCHAR(75) null,equipmentExamRecordNo VARCHAR(75) null,EquipmentCertificateRecordId INTEGER,TotalQuantity INTEGER,TotalProductUsed INTEGER,TotalInUse INTEGER,TotalNotUsed INTEGER,applicantNo VARCHAR(75) null,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,modifyDate DATE null,syncDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table vr_issue_equipmentcertificate (id LONG not null primary key,mtCore LONG,dossierId LONG,issueId LONG,issueVehicleCertificateId LONG,vehicleCertificateRecordNo VARCHAR(75) null,equipmentName VARCHAR(75) null,equipmentType VARCHAR(75) null,equipmentCertificateType VARCHAR(75) null,equipmentDocumentNo VARCHAR(75) null,equipmentCertificateRecordNo VARCHAR(75) null,equipmentExamRecordNo VARCHAR(75) null,EquipmentCertificateRecordId INTEGER,TotalQuantity INTEGER,TotalProductUsed INTEGER,TotalInUse INTEGER,TotalNotUsed INTEGER,applicantNo VARCHAR(75) null,applicantName VARCHAR(75) null,applicantAddress VARCHAR(75) null,productionPlantName VARCHAR(75) null,productionPlantAddress VARCHAR(75) null,vehicleCertificateRecordDate DATE null,equipmentCertificateRecordDate DATE null,modifyDate DATE null,syncDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table vr_issue_equipmentcertificate";
 	public static final String ORDER_BY_JPQL = " ORDER BY vrIssueEquipmentCertificate.syncDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY vr_issue_equipmentcertificate.syncDate DESC";
@@ -206,6 +210,10 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 		attributes.put("applicantAddress", getApplicantAddress());
 		attributes.put("productionPlantName", getProductionPlantName());
 		attributes.put("productionPlantAddress", getProductionPlantAddress());
+		attributes.put("vehicleCertificateRecordDate",
+			getVehicleCertificateRecordDate());
+		attributes.put("equipmentCertificateRecordDate",
+			getEquipmentCertificateRecordDate());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
 
@@ -356,6 +364,20 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 
 		if (productionPlantAddress != null) {
 			setProductionPlantAddress(productionPlantAddress);
+		}
+
+		Date vehicleCertificateRecordDate = (Date)attributes.get(
+				"vehicleCertificateRecordDate");
+
+		if (vehicleCertificateRecordDate != null) {
+			setVehicleCertificateRecordDate(vehicleCertificateRecordDate);
+		}
+
+		Date equipmentCertificateRecordDate = (Date)attributes.get(
+				"equipmentCertificateRecordDate");
+
+		if (equipmentCertificateRecordDate != null) {
+			setEquipmentCertificateRecordDate(equipmentCertificateRecordDate);
 		}
 
 		Date modifyDate = (Date)attributes.get("modifyDate");
@@ -722,6 +744,28 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 	}
 
 	@Override
+	public Date getVehicleCertificateRecordDate() {
+		return _vehicleCertificateRecordDate;
+	}
+
+	@Override
+	public void setVehicleCertificateRecordDate(
+		Date vehicleCertificateRecordDate) {
+		_vehicleCertificateRecordDate = vehicleCertificateRecordDate;
+	}
+
+	@Override
+	public Date getEquipmentCertificateRecordDate() {
+		return _equipmentCertificateRecordDate;
+	}
+
+	@Override
+	public void setEquipmentCertificateRecordDate(
+		Date equipmentCertificateRecordDate) {
+		_equipmentCertificateRecordDate = equipmentCertificateRecordDate;
+	}
+
+	@Override
 	public Date getModifyDate() {
 		return _modifyDate;
 	}
@@ -796,6 +840,8 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 		vrIssueEquipmentCertificateImpl.setApplicantAddress(getApplicantAddress());
 		vrIssueEquipmentCertificateImpl.setProductionPlantName(getProductionPlantName());
 		vrIssueEquipmentCertificateImpl.setProductionPlantAddress(getProductionPlantAddress());
+		vrIssueEquipmentCertificateImpl.setVehicleCertificateRecordDate(getVehicleCertificateRecordDate());
+		vrIssueEquipmentCertificateImpl.setEquipmentCertificateRecordDate(getEquipmentCertificateRecordDate());
 		vrIssueEquipmentCertificateImpl.setModifyDate(getModifyDate());
 		vrIssueEquipmentCertificateImpl.setSyncDate(getSyncDate());
 
@@ -1014,6 +1060,24 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 			vrIssueEquipmentCertificateCacheModel.productionPlantAddress = null;
 		}
 
+		Date vehicleCertificateRecordDate = getVehicleCertificateRecordDate();
+
+		if (vehicleCertificateRecordDate != null) {
+			vrIssueEquipmentCertificateCacheModel.vehicleCertificateRecordDate = vehicleCertificateRecordDate.getTime();
+		}
+		else {
+			vrIssueEquipmentCertificateCacheModel.vehicleCertificateRecordDate = Long.MIN_VALUE;
+		}
+
+		Date equipmentCertificateRecordDate = getEquipmentCertificateRecordDate();
+
+		if (equipmentCertificateRecordDate != null) {
+			vrIssueEquipmentCertificateCacheModel.equipmentCertificateRecordDate = equipmentCertificateRecordDate.getTime();
+		}
+		else {
+			vrIssueEquipmentCertificateCacheModel.equipmentCertificateRecordDate = Long.MIN_VALUE;
+		}
+
 		Date modifyDate = getModifyDate();
 
 		if (modifyDate != null) {
@@ -1037,7 +1101,7 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -1083,6 +1147,10 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 		sb.append(getProductionPlantName());
 		sb.append(", productionPlantAddress=");
 		sb.append(getProductionPlantAddress());
+		sb.append(", vehicleCertificateRecordDate=");
+		sb.append(getVehicleCertificateRecordDate());
+		sb.append(", equipmentCertificateRecordDate=");
+		sb.append(getEquipmentCertificateRecordDate());
 		sb.append(", modifyDate=");
 		sb.append(getModifyDate());
 		sb.append(", syncDate=");
@@ -1094,7 +1162,7 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(76);
+		StringBundler sb = new StringBundler(82);
 
 		sb.append("<model><model-name>");
 		sb.append("com.fds.vr.business.model.VRIssueEquipmentCertificate");
@@ -1189,6 +1257,14 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 		sb.append(getProductionPlantAddress());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>vehicleCertificateRecordDate</column-name><column-value><![CDATA[");
+		sb.append(getVehicleCertificateRecordDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>equipmentCertificateRecordDate</column-name><column-value><![CDATA[");
+		sb.append(getEquipmentCertificateRecordDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>modifyDate</column-name><column-value><![CDATA[");
 		sb.append(getModifyDate());
 		sb.append("]]></column-value></column>");
@@ -1238,6 +1314,8 @@ public class VRIssueEquipmentCertificateModelImpl extends BaseModelImpl<VRIssueE
 	private String _applicantAddress;
 	private String _productionPlantName;
 	private String _productionPlantAddress;
+	private Date _vehicleCertificateRecordDate;
+	private Date _equipmentCertificateRecordDate;
 	private Date _modifyDate;
 	private Date _syncDate;
 	private long _columnBitmask;

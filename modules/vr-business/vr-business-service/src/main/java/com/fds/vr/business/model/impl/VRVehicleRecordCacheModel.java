@@ -66,7 +66,7 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -120,6 +120,10 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 		sb.append(modifyDate);
 		sb.append(", syncDate=");
 		sb.append(syncDate);
+		sb.append(", certificateRecordDate=");
+		sb.append(certificateRecordDate);
+		sb.append(", issueInspectionRecordId=");
+		sb.append(issueInspectionRecordId);
 		sb.append(", certificaterecordno=");
 		sb.append(certificaterecordno);
 		sb.append(", postPrintingStatus=");
@@ -260,6 +264,16 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 			vrVehicleRecordImpl.setSyncDate(new Date(syncDate));
 		}
 
+		if (certificateRecordDate == Long.MIN_VALUE) {
+			vrVehicleRecordImpl.setCertificateRecordDate(null);
+		}
+		else {
+			vrVehicleRecordImpl.setCertificateRecordDate(new Date(
+					certificateRecordDate));
+		}
+
+		vrVehicleRecordImpl.setIssueInspectionRecordId(issueInspectionRecordId);
+
 		if (certificaterecordno == null) {
 			vrVehicleRecordImpl.setCertificaterecordno(StringPool.BLANK);
 		}
@@ -318,6 +332,9 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 		signDate = objectInput.readLong();
 		modifyDate = objectInput.readLong();
 		syncDate = objectInput.readLong();
+		certificateRecordDate = objectInput.readLong();
+
+		issueInspectionRecordId = objectInput.readLong();
 		certificaterecordno = objectInput.readUTF();
 
 		postPrintingStatus = objectInput.readInt();
@@ -436,6 +453,9 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 		objectOutput.writeLong(signDate);
 		objectOutput.writeLong(modifyDate);
 		objectOutput.writeLong(syncDate);
+		objectOutput.writeLong(certificateRecordDate);
+
+		objectOutput.writeLong(issueInspectionRecordId);
 
 		if (certificaterecordno == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -480,6 +500,8 @@ public class VRVehicleRecordCacheModel implements CacheModel<VRVehicleRecord>,
 	public long signDate;
 	public long modifyDate;
 	public long syncDate;
+	public long certificateRecordDate;
+	public long issueInspectionRecordId;
 	public String certificaterecordno;
 	public int postPrintingStatus;
 	public String qrCode;

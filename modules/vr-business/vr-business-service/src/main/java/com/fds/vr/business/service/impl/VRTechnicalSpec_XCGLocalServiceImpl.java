@@ -14,35 +14,33 @@
 
 package com.fds.vr.business.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.fds.vr.business.model.VRTechnicalSpec_XCG;
 import com.fds.vr.business.model.VRTechnicalSpec_XCGPart2;
 import com.fds.vr.business.model.VRTechnicalSpec_XCGPart3;
-import com.fds.vr.business.model.VRTechnicalSpec_XCGPart3Model;
 import com.fds.vr.business.model.VRTechnicalSpec_XCGPart4;
 import com.fds.vr.business.model.VRTechnicalSpec_XCGPart5;
 import com.fds.vr.business.model.VRTechnicalSpec_XCGPart6;
 import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGModelImpl;
 import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart2ModelImpl;
+import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart3ModelImpl;
 import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart4ModelImpl;
 import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart5ModelImpl;
 import com.fds.vr.business.model.impl.VRTechnicalSpec_XCGPart6ModelImpl;
 import com.fds.vr.business.service.base.VRTechnicalSpec_XCGLocalServiceBaseImpl;
 import com.fds.vr.service.util.BusinessUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The implementation of the vr technical spec_xcg local service.
@@ -547,7 +545,7 @@ public class VRTechnicalSpec_XCGLocalServiceImpl extends VRTechnicalSpec_XCGLoca
 
 				objectPart3 = vrTechnicalSpec_XCGPart3Persistence.update(objectPart3);
 				JSONObject obj_part3 = BusinessUtil.object2Json_originColumnName(objectPart3,
-						VRTechnicalSpec_XCGPart3Model.class, StringPool.BLANK);
+						VRTechnicalSpec_XCGPart3ModelImpl.class, StringPool.BLANK);
 
 				VRTechnicalSpec_XCGPart4 objectPart4 = null;
 				objectPart4 = vrTechnicalSpec_XCGPart4Persistence.findByPrimaryKey(object.getPrimaryKey());

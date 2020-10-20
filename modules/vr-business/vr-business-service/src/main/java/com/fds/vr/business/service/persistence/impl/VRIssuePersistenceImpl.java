@@ -6005,13 +6005,13 @@ public class VRIssuePersistenceImpl extends BasePersistenceImpl<VRIssue>
 		vrIssueImpl.setLeaderName(vrIssue.getLeaderName());
 		vrIssueImpl.setApplicantMaker(vrIssue.getApplicantMaker());
 		vrIssueImpl.setApplicantChecker(vrIssue.getApplicantChecker());
-		vrIssueImpl.setCertificateRecordDate(vrIssue.getCertificateRecordDate());
-		vrIssueImpl.setIssueInspectionRecordId(vrIssue.getIssueInspectionRecordId());
 		vrIssueImpl.setInspectorId(vrIssue.getInspectorId());
 		vrIssueImpl.setIssueInspectorId(vrIssue.getIssueInspectorId());
 		vrIssueImpl.setVerifyInspectorId(vrIssue.getVerifyInspectorId());
 		vrIssueImpl.setModifyDate(vrIssue.getModifyDate());
 		vrIssueImpl.setSyncDate(vrIssue.getSyncDate());
+		vrIssueImpl.setCertifiedAssemblyType(vrIssue.getCertifiedAssemblyType());
+		vrIssueImpl.setCertifiedAssemblyTypeDescription(vrIssue.getCertifiedAssemblyTypeDescription());
 
 		return vrIssueImpl;
 	}

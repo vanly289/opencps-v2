@@ -176,7 +176,7 @@ public class VRIssueLocalServiceWrapper implements VRIssueLocalService,
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject adminProcess(
 		com.liferay.portal.kernel.json.JSONObject objectData, long dossierId,
-		long mtCore) throws com.liferay.portal.kernel.json.JSONException {
+		long mtCore) throws java.lang.Exception {
 		return _vrIssueLocalService.adminProcess(objectData, dossierId, mtCore);
 	}
 

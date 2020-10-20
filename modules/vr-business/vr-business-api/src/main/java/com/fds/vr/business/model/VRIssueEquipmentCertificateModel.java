@@ -385,6 +385,36 @@ public interface VRIssueEquipmentCertificateModel extends BaseModel<VRIssueEquip
 	public void setProductionPlantAddress(String productionPlantAddress);
 
 	/**
+	 * Returns the vehicle certificate record date of this vr issue equipment certificate.
+	 *
+	 * @return the vehicle certificate record date of this vr issue equipment certificate
+	 */
+	public Date getVehicleCertificateRecordDate();
+
+	/**
+	 * Sets the vehicle certificate record date of this vr issue equipment certificate.
+	 *
+	 * @param vehicleCertificateRecordDate the vehicle certificate record date of this vr issue equipment certificate
+	 */
+	public void setVehicleCertificateRecordDate(
+		Date vehicleCertificateRecordDate);
+
+	/**
+	 * Returns the equipment certificate record date of this vr issue equipment certificate.
+	 *
+	 * @return the equipment certificate record date of this vr issue equipment certificate
+	 */
+	public Date getEquipmentCertificateRecordDate();
+
+	/**
+	 * Sets the equipment certificate record date of this vr issue equipment certificate.
+	 *
+	 * @param equipmentCertificateRecordDate the equipment certificate record date of this vr issue equipment certificate
+	 */
+	public void setEquipmentCertificateRecordDate(
+		Date equipmentCertificateRecordDate);
+
+	/**
 	 * Returns the modify date of this vr issue equipment certificate.
 	 *
 	 * @return the modify date of this vr issue equipment certificate

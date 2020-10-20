@@ -224,6 +224,113 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 
 		return dossierFilePersistence.update(object);
 	}
+	
+	//Dungnv: Sync theo co che 1 server
+	@Indexable(type = IndexableType.REINDEX)
+	public DossierFile addDossierFileBySingleServer(long groupId, long dossierId, String referenceUid, String dossierTemplateNo,
+			String dossierPartNo, String fileTemplateNo, String displayName, String sourceFileName, long fileSize,
+			long fileEntryId, String fileType, String isSync, long dossierActionId, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+
+		long userId = serviceContext.getUserId();
+		
+		_log.info("****Start add file at:" + new Date());
+
+		validateAddDossierFile(groupId, dossierId, referenceUid, dossierTemplateNo, dossierPartNo, fileTemplateNo);
+		
+		_log.info("****End validator file at:" + new Date());
+
+		DossierPart dossierPart = dossierPartPersistence.findByTP_NO_PART(groupId, dossierTemplateNo, dossierPartNo);
+
+		_log.info("****FileEntryId ==== : " + fileEntryId);
+		
+		_log.info("****End uploadFile file at:" + new Date());
+
+		Date now = new Date();
+
+		User userAction = null;
+
+		if (userId != 0) {
+			userAction = userLocalService.getUser(userId);
+		}
+
+		long dossierFileId = counterLocalService.increment(DossierFile.class.getName());
+
+		DossierFile object = dossierFilePersistence.create(dossierFileId);
+
+		// Add audit fields
+		object.setCompanyId(serviceContext.getCompanyId());
+		object.setGroupId(groupId);
+		object.setCreateDate(now);
+		object.setModifiedDate(now);
+		object.setUserId(Validator.isNotNull(userAction) ? userAction.getUserId() : 0l);
+		object.setUserName(Validator.isNotNull(userAction) ? userAction.getFullName() : StringPool.BLANK);
+
+		// Add other fields
+
+		object.setDossierId(dossierId);
+		if (Validator.isNull(referenceUid)) {
+			referenceUid = PortalUUIDUtil.generate();
+		}
+
+		object.setReferenceUid(referenceUid);
+		object.setDossierTemplateNo(dossierTemplateNo);
+		object.setFileEntryId(fileEntryId);
+		object.setDossierPartNo(dossierPartNo);
+		object.setFileTemplateNo(fileTemplateNo);
+		object.setDossierPartType(dossierPart.getPartType());
+
+		if (Validator.isNull(displayName)) {
+			displayName = sourceFileName;
+		}
+
+		if (Validator.isNotNull(dossierPart.getFormScript())) {
+			object.setEForm(true);
+			object.setFormScript(dossierPart.getFormScript());
+		}
+
+		if (Validator.isNotNull(dossierPart.getFormReport())) {
+			object.setFormReport(dossierPart.getFormReport());
+		}
+		_log.info("****Start autofill file at:" + new Date());
+
+		if (Validator.isNotNull(dossierPart.getSampleData())) {
+			String formData = AutoFillFormData.sampleDataBinding(dossierPart.getSampleData(), dossierId, serviceContext);
+			//Comment by Dungnv
+			//object.setFormData(formData);
+			if(!formData.isEmpty()) {
+				long fileEntryIdFormData = 0;
+				try {
+					FileEntry fileEntry = com.fds.vr.service.util.FileUploadUtils.uploadFileJSON(JSONFactoryUtil.createJSONObject(formData), serviceContext);
+
+					fileEntryIdFormData = fileEntry.getFileEntryId();
+				} catch (Exception e) {
+					_log.error(e);
+				}
+				object.setFormDataDossierFile(fileEntryIdFormData);
+			}
+		}
+		_log.info("****End autofill file at:" + new Date());
+
+		object.setDisplayName(displayName);
+		object.setOriginal(true);
+		
+		if (Boolean.parseBoolean(isSync)) {
+			object.setIsNew(true);
+		}
+		
+		String deliverableCode = PwdGenerator.getPassword(10);
+		
+		if (Validator.isNotNull(dossierPart.getDeliverableType())) {
+			object.setDeliverableCode(deliverableCode);
+		}
+
+		dossierActionId = dossierPart.getPartType() > 1 ? dossierActionId : 0;
+		object.setDossierActionId(dossierActionId);
+
+		return dossierFilePersistence.update(object);
+	}
+	//========
 
 	public static Map<String, Object> toMap(JSONObject object) throws JSONException {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -417,6 +524,45 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 
 		return dossierFilePersistence.update(dossierFile);
 	}
+	
+	//Dungnv: Sync theo co che 1 server
+	@Indexable(type = IndexableType.REINDEX)
+	public DossierFile updateDossierFileBySingleServer(long groupId, long dossierId, String referenceUid, String displayName,
+			String sourceFileName, long fileEntryId, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+
+		long userId = serviceContext.getUserId();
+
+		DossierFile dossierFile = dossierFileLocalService.getDossierFileByReferenceUid(dossierId, referenceUid);
+
+		Date now = new Date();
+
+		User userAction = userLocalService.getUser(userId);
+
+		// Add audit fields
+		dossierFile.setModifiedDate(now);
+		dossierFile.setUserId(userAction.getUserId());
+		dossierFile.setUserName(userAction.getFullName());
+
+		// Add other fields
+
+		dossierFile.setDossierId(dossierId);
+		if (Validator.isNull(referenceUid)) {
+			referenceUid = PortalUUIDUtil.generate();
+		}
+
+		dossierFile.setFileEntryId(fileEntryId);
+		if (Validator.isNull(displayName)) {
+			displayName = sourceFileName;
+		}
+
+		dossierFile.setDisplayName(displayName);
+		dossierFile.setOriginal(true);
+		dossierFile.setIsNew(true);
+
+		return dossierFilePersistence.update(dossierFile);
+	}
+	//==
 
 	@Indexable(type = IndexableType.REINDEX)
 	public DossierFile updateFormData(long groupId, long dossierId, long dossierActionId, String referenceUid, String formData,
@@ -463,7 +609,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 				//_log.info("SEND TO UPLOAD FILE ENTRY END: "+(System.currentTimeMillis() - now));
 				
 			} catch (Exception e) {
-				_log.error(e);
+				_log.debug(e);
 			}
 	
 			long userActionId = serviceContext.getUserId();
@@ -599,7 +745,7 @@ public class DossierFileLocalServiceImpl extends DossierFileLocalServiceBaseImpl
 					serviceContextFile);
 
 		} catch (Exception e) {
-			_log.error(e);
+			_log.debug(e);
 		}
 
 		_log.info("SEND TO CREATED FILE MODEL END: "+(System.currentTimeMillis() - now));

@@ -482,6 +482,61 @@ public class VRVehicleRecordUtil {
 	}
 
 	/**
+	* Returns the vr vehicle record where frameNo = &#63; or throws a {@link NoSuchVRVehicleRecordException} if it could not be found.
+	*
+	* @param frameNo the frame no
+	* @return the matching vr vehicle record
+	* @throws NoSuchVRVehicleRecordException if a matching vr vehicle record could not be found
+	*/
+	public static VRVehicleRecord findByframeNo(java.lang.String frameNo)
+		throws com.fds.vr.business.exception.NoSuchVRVehicleRecordException {
+		return getPersistence().findByframeNo(frameNo);
+	}
+
+	/**
+	* Returns the vr vehicle record where frameNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param frameNo the frame no
+	* @return the matching vr vehicle record, or <code>null</code> if a matching vr vehicle record could not be found
+	*/
+	public static VRVehicleRecord fetchByframeNo(java.lang.String frameNo) {
+		return getPersistence().fetchByframeNo(frameNo);
+	}
+
+	/**
+	* Returns the vr vehicle record where frameNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param frameNo the frame no
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vr vehicle record, or <code>null</code> if a matching vr vehicle record could not be found
+	*/
+	public static VRVehicleRecord fetchByframeNo(java.lang.String frameNo,
+		boolean retrieveFromCache) {
+		return getPersistence().fetchByframeNo(frameNo, retrieveFromCache);
+	}
+
+	/**
+	* Removes the vr vehicle record where frameNo = &#63; from the database.
+	*
+	* @param frameNo the frame no
+	* @return the vr vehicle record that was removed
+	*/
+	public static VRVehicleRecord removeByframeNo(java.lang.String frameNo)
+		throws com.fds.vr.business.exception.NoSuchVRVehicleRecordException {
+		return getPersistence().removeByframeNo(frameNo);
+	}
+
+	/**
+	* Returns the number of vr vehicle records where frameNo = &#63;.
+	*
+	* @param frameNo the frame no
+	* @return the number of matching vr vehicle records
+	*/
+	public static int countByframeNo(java.lang.String frameNo) {
+		return getPersistence().countByframeNo(frameNo);
+	}
+
+	/**
 	* Returns all the vr vehicle records where mtCore = &#63; and certificateId = &#63;.
 	*
 	* @param mtCore the mt core

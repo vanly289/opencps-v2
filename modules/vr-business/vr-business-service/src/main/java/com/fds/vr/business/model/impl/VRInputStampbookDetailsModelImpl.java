@@ -160,9 +160,11 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	public static final long DOSSIERID_COLUMN_BITMASK = 16L;
 	public static final long INPUTSHEETID_COLUMN_BITMASK = 32L;
 	public static final long MTCORE_COLUMN_BITMASK = 64L;
-	public static final long SEQUENCENO_COLUMN_BITMASK = 128L;
-	public static final long VEHICLERECORDID_COLUMN_BITMASK = 256L;
-	public static final long MODIFYDATE_COLUMN_BITMASK = 512L;
+	public static final long PURCHASERID_COLUMN_BITMASK = 128L;
+	public static final long SEQUENCENO_COLUMN_BITMASK = 256L;
+	public static final long STAMPSERIALNO_COLUMN_BITMASK = 512L;
+	public static final long VEHICLERECORDID_COLUMN_BITMASK = 1024L;
+	public static final long MODIFYDATE_COLUMN_BITMASK = 2048L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.fds.vr.service.util.ServiceProps.get(
 				"lock.expiration.time.com.fds.vr.business.model.VRInputStampbookDetails"));
 
@@ -496,7 +498,17 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 
 	@Override
 	public void setStampSerialNo(String stampSerialNo) {
+		_columnBitmask |= STAMPSERIALNO_COLUMN_BITMASK;
+
+		if (_originalStampSerialNo == null) {
+			_originalStampSerialNo = _stampSerialNo;
+		}
+
 		_stampSerialNo = stampSerialNo;
+	}
+
+	public String getOriginalStampSerialNo() {
+		return GetterUtil.getString(_originalStampSerialNo);
 	}
 
 	@Override
@@ -798,7 +810,19 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 
 	@Override
 	public void setPurchaserId(long purchaserId) {
+		_columnBitmask |= PURCHASERID_COLUMN_BITMASK;
+
+		if (!_setOriginalPurchaserId) {
+			_setOriginalPurchaserId = true;
+
+			_originalPurchaserId = _purchaserId;
+		}
+
 		_purchaserId = purchaserId;
+	}
+
+	public long getOriginalPurchaserId() {
+		return _originalPurchaserId;
 	}
 
 	@Override
@@ -1077,6 +1101,8 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 
 		vrInputStampbookDetailsModelImpl._setOriginalMtCore = false;
 
+		vrInputStampbookDetailsModelImpl._originalStampSerialNo = vrInputStampbookDetailsModelImpl._stampSerialNo;
+
 		vrInputStampbookDetailsModelImpl._originalSequenceNo = vrInputStampbookDetailsModelImpl._sequenceNo;
 
 		vrInputStampbookDetailsModelImpl._setOriginalSequenceNo = false;
@@ -1102,6 +1128,10 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 		vrInputStampbookDetailsModelImpl._originalBookId = vrInputStampbookDetailsModelImpl._bookId;
 
 		vrInputStampbookDetailsModelImpl._setOriginalBookId = false;
+
+		vrInputStampbookDetailsModelImpl._originalPurchaserId = vrInputStampbookDetailsModelImpl._purchaserId;
+
+		vrInputStampbookDetailsModelImpl._setOriginalPurchaserId = false;
 
 		vrInputStampbookDetailsModelImpl._originalCorporationId = vrInputStampbookDetailsModelImpl._corporationId;
 
@@ -1538,6 +1568,7 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	private long _originalMtCore;
 	private boolean _setOriginalMtCore;
 	private String _stampSerialNo;
+	private String _originalStampSerialNo;
 	private long _sequenceNo;
 	private long _originalSequenceNo;
 	private boolean _setOriginalSequenceNo;
@@ -1569,6 +1600,8 @@ public class VRInputStampbookDetailsModelImpl extends BaseModelImpl<VRInputStamp
 	private long _originalBookId;
 	private boolean _setOriginalBookId;
 	private long _purchaserId;
+	private long _originalPurchaserId;
+	private boolean _setOriginalPurchaserId;
 	private long _corporationId;
 	private long _originalCorporationId;
 	private boolean _setOriginalCorporationId;

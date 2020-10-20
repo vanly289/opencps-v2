@@ -112,13 +112,14 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 		attributes.put("leaderName", getLeaderName());
 		attributes.put("applicantMaker", getApplicantMaker());
 		attributes.put("applicantChecker", getApplicantChecker());
-		attributes.put("certificateRecordDate", getCertificateRecordDate());
-		attributes.put("issueInspectionRecordId", getIssueInspectionRecordId());
 		attributes.put("inspectorId", getInspectorId());
 		attributes.put("issueInspectorId", getIssueInspectorId());
 		attributes.put("verifyInspectorId", getVerifyInspectorId());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("certifiedAssemblyType", getCertifiedAssemblyType());
+		attributes.put("certifiedAssemblyTypeDescription",
+			getCertifiedAssemblyTypeDescription());
 
 		return attributes;
 	}
@@ -463,20 +464,6 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 			setApplicantChecker(applicantChecker);
 		}
 
-		Date certificateRecordDate = (Date)attributes.get(
-				"certificateRecordDate");
-
-		if (certificateRecordDate != null) {
-			setCertificateRecordDate(certificateRecordDate);
-		}
-
-		Long issueInspectionRecordId = (Long)attributes.get(
-				"issueInspectionRecordId");
-
-		if (issueInspectionRecordId != null) {
-			setIssueInspectionRecordId(issueInspectionRecordId);
-		}
-
 		Long inspectorId = (Long)attributes.get("inspectorId");
 
 		if (inspectorId != null) {
@@ -505,6 +492,20 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		String certifiedAssemblyType = (String)attributes.get(
+				"certifiedAssemblyType");
+
+		if (certifiedAssemblyType != null) {
+			setCertifiedAssemblyType(certifiedAssemblyType);
+		}
+
+		String certifiedAssemblyTypeDescription = (String)attributes.get(
+				"certifiedAssemblyTypeDescription");
+
+		if (certifiedAssemblyTypeDescription != null) {
+			setCertifiedAssemblyTypeDescription(certifiedAssemblyTypeDescription);
 		}
 	}
 
@@ -784,6 +785,26 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	}
 
 	/**
+	* Returns the certified assembly type of this vr issue.
+	*
+	* @return the certified assembly type of this vr issue
+	*/
+	@Override
+	public java.lang.String getCertifiedAssemblyType() {
+		return _vrIssue.getCertifiedAssemblyType();
+	}
+
+	/**
+	* Returns the certified assembly type description of this vr issue.
+	*
+	* @return the certified assembly type description of this vr issue
+	*/
+	@Override
+	public java.lang.String getCertifiedAssemblyTypeDescription() {
+		return _vrIssue.getCertifiedAssemblyTypeDescription();
+	}
+
+	/**
 	* Returns the cop report no of this vr issue.
 	*
 	* @return the cop report no of this vr issue
@@ -1014,16 +1035,6 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	}
 
 	/**
-	* Returns the certificate record date of this vr issue.
-	*
-	* @return the certificate record date of this vr issue
-	*/
-	@Override
-	public Date getCertificateRecordDate() {
-		return _vrIssue.getCertificateRecordDate();
-	}
-
-	/**
 	* Returns the cop report date of this vr issue.
 	*
 	* @return the cop report date of this vr issue
@@ -1121,16 +1132,6 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public long getIssueCorporationId() {
 		return _vrIssue.getIssueCorporationId();
-	}
-
-	/**
-	* Returns the issue inspection record ID of this vr issue.
-	*
-	* @return the issue inspection record ID of this vr issue
-	*/
-	@Override
-	public long getIssueInspectionRecordId() {
-		return _vrIssue.getIssueInspectionRecordId();
 	}
 
 	/**
@@ -1386,13 +1387,24 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	}
 
 	/**
-	* Sets the certificate record date of this vr issue.
+	* Sets the certified assembly type of this vr issue.
 	*
-	* @param certificateRecordDate the certificate record date of this vr issue
+	* @param certifiedAssemblyType the certified assembly type of this vr issue
 	*/
 	@Override
-	public void setCertificateRecordDate(Date certificateRecordDate) {
-		_vrIssue.setCertificateRecordDate(certificateRecordDate);
+	public void setCertifiedAssemblyType(java.lang.String certifiedAssemblyType) {
+		_vrIssue.setCertifiedAssemblyType(certifiedAssemblyType);
+	}
+
+	/**
+	* Sets the certified assembly type description of this vr issue.
+	*
+	* @param certifiedAssemblyTypeDescription the certified assembly type description of this vr issue
+	*/
+	@Override
+	public void setCertifiedAssemblyTypeDescription(
+		java.lang.String certifiedAssemblyTypeDescription) {
+		_vrIssue.setCertifiedAssemblyTypeDescription(certifiedAssemblyTypeDescription);
 	}
 
 	/**
@@ -1559,16 +1571,6 @@ public class VRIssueWrapper implements VRIssue, ModelWrapper<VRIssue> {
 	@Override
 	public void setIssueCorporationId(long issueCorporationId) {
 		_vrIssue.setIssueCorporationId(issueCorporationId);
-	}
-
-	/**
-	* Sets the issue inspection record ID of this vr issue.
-	*
-	* @param issueInspectionRecordId the issue inspection record ID of this vr issue
-	*/
-	@Override
-	public void setIssueInspectionRecordId(long issueInspectionRecordId) {
-		_vrIssue.setIssueInspectionRecordId(issueInspectionRecordId);
 	}
 
 	/**

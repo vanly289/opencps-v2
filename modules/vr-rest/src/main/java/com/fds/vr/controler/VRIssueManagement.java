@@ -13,6 +13,7 @@ import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -33,7 +34,7 @@ public interface VRIssueManagement {
 	public Response countVRIssue(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRIssueBeanParam query);
-	
+
 	@GET
 	@Path("/{issueId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -55,4 +56,12 @@ public interface VRIssueManagement {
 			@Context HttpHeaders header, @Context Company company, @Context Locale locale, @Context User user,
 			@Context ServiceContext serviceContext, @BeanParam VRIssueBeanParam query,
 			@FormParam("headercodes") String headercodes, @FormParam("headerlabels") String headerlabels);
+
+	@POST
+	@Path("/inspectionrecord/{dossierId}")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response updateIssueInspectionrecord(@Context HttpServletRequest request, @Context HttpHeaders header,
+			@Context Company company, @Context Locale locale, @Context User user,
+			@Context ServiceContext serviceContext, @PathParam("dossierId") long dossierId, String data);
 }

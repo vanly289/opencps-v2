@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
@@ -145,7 +144,8 @@ public interface VRIssueVehiclecertificateLocalService extends BaseLocalService,
 		int start, int end) throws SystemException;
 
 	public JSONObject adminProcess(JSONArray arrayData, long issueId,
-		long dossierId, long mtCore) throws JSONException;
+		long dossierId, long mtCore, java.lang.String issueType)
+		throws java.lang.Exception;
 
 	/**
 	* @throws PortalException

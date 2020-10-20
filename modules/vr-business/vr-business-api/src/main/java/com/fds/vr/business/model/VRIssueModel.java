@@ -852,34 +852,6 @@ public interface VRIssueModel extends BaseModel<VRIssue> {
 	public void setApplicantChecker(String applicantChecker);
 
 	/**
-	 * Returns the certificate record date of this vr issue.
-	 *
-	 * @return the certificate record date of this vr issue
-	 */
-	public Date getCertificateRecordDate();
-
-	/**
-	 * Sets the certificate record date of this vr issue.
-	 *
-	 * @param certificateRecordDate the certificate record date of this vr issue
-	 */
-	public void setCertificateRecordDate(Date certificateRecordDate);
-
-	/**
-	 * Returns the issue inspection record ID of this vr issue.
-	 *
-	 * @return the issue inspection record ID of this vr issue
-	 */
-	public long getIssueInspectionRecordId();
-
-	/**
-	 * Sets the issue inspection record ID of this vr issue.
-	 *
-	 * @param issueInspectionRecordId the issue inspection record ID of this vr issue
-	 */
-	public void setIssueInspectionRecordId(long issueInspectionRecordId);
-
-	/**
 	 * Returns the inspector ID of this vr issue.
 	 *
 	 * @return the inspector ID of this vr issue
@@ -948,6 +920,37 @@ public interface VRIssueModel extends BaseModel<VRIssue> {
 	 * @param syncDate the sync date of this vr issue
 	 */
 	public void setSyncDate(Date syncDate);
+
+	/**
+	 * Returns the certified assembly type of this vr issue.
+	 *
+	 * @return the certified assembly type of this vr issue
+	 */
+	@AutoEscape
+	public String getCertifiedAssemblyType();
+
+	/**
+	 * Sets the certified assembly type of this vr issue.
+	 *
+	 * @param certifiedAssemblyType the certified assembly type of this vr issue
+	 */
+	public void setCertifiedAssemblyType(String certifiedAssemblyType);
+
+	/**
+	 * Returns the certified assembly type description of this vr issue.
+	 *
+	 * @return the certified assembly type description of this vr issue
+	 */
+	@AutoEscape
+	public String getCertifiedAssemblyTypeDescription();
+
+	/**
+	 * Sets the certified assembly type description of this vr issue.
+	 *
+	 * @param certifiedAssemblyTypeDescription the certified assembly type description of this vr issue
+	 */
+	public void setCertifiedAssemblyTypeDescription(
+		String certifiedAssemblyTypeDescription);
 
 	@Override
 	public boolean isNew();

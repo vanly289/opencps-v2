@@ -13,6 +13,7 @@ import com.fds.vr.controler.impl.VRCOPManagementImpl;
 import com.fds.vr.controler.impl.VRExpiredCertificateManagementImpl;
 import com.fds.vr.controler.impl.VRHistoryProfileManagementImpl;
 import com.fds.vr.controler.impl.VRIssueManagementImpl;
+import com.fds.vr.controler.impl.VRMethodOfIssueImpl;
 import com.fds.vr.controler.impl.VRMigrateManagementImpl;
 import com.fds.vr.controler.impl.VROutputSheetDetailManagementImpl;
 import com.fds.vr.controler.impl.VRProductionManagementImpl;
@@ -85,7 +86,7 @@ public class VRRestApplication extends Application {
 
 	public Set<Object> getSingletons() {
 		Set<Object> singletons = new HashSet<Object>();
-		//Set<Object> singletons = Collections.<Object>singleton(this);
+		// Set<Object> singletons = Collections.<Object>singleton(this);
 		singletons.add(new VRApplicantManagementImpl());
 		singletons.add(new VRProductionManagementImpl());
 		singletons.add(new VRCOPManagementImpl());
@@ -98,13 +99,14 @@ public class VRRestApplication extends Application {
 		singletons.add(new VRReportManagementImpl());
 		singletons.add(new VRMigrateManagementImpl());
 		singletons.add(new VRExpiredCertificateManagementImpl());
+		singletons.add(new VRMethodOfIssueImpl());
 		singletons.add(this);
-		
+
 		singletons.add(_serviceContextProvider);
 		singletons.add(_companyContextProvider);
 		singletons.add(_localeContextProvider);
 		singletons.add(_userContextProvider);
-		
+
 		return singletons;
 	}
 
@@ -123,7 +125,7 @@ public class VRRestApplication extends Application {
 		String module = header.getHeaderString("module");
 		long dossierId = GetterUtil.getLong(header.getHeaderString("dossierId"));
 		long dossierFileId = GetterUtil.getLong(header.getHeaderString("dossierFileId"));
-		String flag = header.getHeaderString("flag"); //Co danh dau khi form bien ban goi vao
+		String flag = header.getHeaderString("flag"); // Co danh dau khi form bien ban goi vao
 
 		try {
 			JSONObject object = actions.getTechSpecByVehicleClass(groupId, module, dossierId, dossierFileId,
@@ -150,7 +152,8 @@ public class VRRestApplication extends Application {
 		long dossierId = GetterUtil.getLong(header.getHeaderString("dossierId"));
 		long dossierFileId = GetterUtil.getLong(header.getHeaderString("dossierFileId"));
 		String fileTemplateNo = GetterUtil.getString(header.getHeaderString("fileTemplateNo"));
-		String flag = header.getHeaderString("flag"); //Co danh dau khi form bien ban goi vao tranh viec bi cu~ du lieu sau khi bo sung
+		String flag = header.getHeaderString("flag"); // Co danh dau khi form bien ban goi vao tranh viec bi cu~ du lieu
+														// sau khi bo sung
 		try {
 			JSONObject object = actions.getTechSpecByVehicleClassExt(groupId, module, dossierId, dossierFileId,
 					fileTemplateNo, vehicleClass, flag);
@@ -158,7 +161,7 @@ public class VRRestApplication extends Application {
 			return Response.status(object.getInt("status")).entity(object.getString("content")).build();
 
 		} catch (Exception e) {
-
+			_log.error(e);
 			return Response.status(500).entity("error").build();
 		}
 
@@ -176,7 +179,7 @@ public class VRRestApplication extends Application {
 		long dossierId = GetterUtil.getLong(header.getHeaderString("dossierId"));
 		long dossierFileId = GetterUtil.getLong(header.getHeaderString("dossierFileId"));
 		String fileTemplateNo = GetterUtil.getString(header.getHeaderString("fileTemplateNo"));
-		String flag = header.getHeaderString("flag"); //Co danh dau khi form bien ban goi vao
+		String flag = header.getHeaderString("flag"); // Co danh dau khi form bien ban goi vao
 
 		try {
 			JSONObject object = actions.getTechSpecByVehicleType(groupId, module, dossierId, dossierFileId,
@@ -226,7 +229,7 @@ public class VRRestApplication extends Application {
 		String module = header.getHeaderString("module");
 		long dossierId = GetterUtil.getLong(header.getHeaderString("dossierId"));
 		long dossierFileId = GetterUtil.getLong(header.getHeaderString("dossierFileId"));
-		String flag = header.getHeaderString("flag"); //Co danh dau khi form bien ban goi vao
+		String flag = header.getHeaderString("flag"); // Co danh dau khi form bien ban goi vao
 
 		try {
 			JSONObject object = actions.getTechSpecByVehicleClassType(groupId, module, dossierId, dossierFileId,
@@ -588,6 +591,111 @@ public class VRRestApplication extends Application {
 
 				certNumber = String.format("%05d", _counterNumber) + StringPool.FORWARD_SLASH + pattern
 						+ StringPool.FORWARD_SLASH + shortCurYear;
+
+			} else {
+				throw new Exception("Don't have counter config");
+			}
+
+			return Response.status(200).entity(certNumber).build();
+
+		} catch (Exception e) {
+
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+	}
+
+	@GET
+	@Path("/certnumbers/additional/dossier/{dossierid}/generate")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
+	public Response generatorCertNumbersForAdditional(@Context HttpHeaders header,
+			@PathParam("dossierid") long dossierid) {
+
+		String certNumber;
+
+		try {
+
+			long _counterNumber = 0;
+
+			Calendar cal = Calendar.getInstance();
+
+			cal.setTime(new Date());
+
+			// int curYear = cal.get(Calendar.YEAR);
+
+			DateFormat df = new SimpleDateFormat("yyyy");
+
+			String curYear = df.format(cal.getTime());
+
+			String certConfigId = PRE_FIX_CERT + "ADDITIONAL" + StringPool.AT + curYear;
+
+			_log.info("___certConfigId" + certConfigId);
+
+			String certConfigCurrId = PRE_FIX_CERT_CURR + "ADDITIONAL" + StringPool.AT + curYear;
+
+			_log.info("___certConfigCurrId" + certConfigCurrId);
+
+			Counter counterConfig = CounterLocalServiceUtil.fetchCounter(certConfigId);
+
+			String elmCertId = PRE_FIX_CERT_ELM + "ADDITIONAL" + StringPool.AT + curYear + StringPool.AT + dossierid;
+			
+			if (Validator.isNull(counterConfig)) {
+				counterConfig = CounterLocalServiceUtil.createCounter(certConfigId);
+			}
+
+			if (Validator.isNotNull(counterConfig)) {
+				// create counter config
+
+				Counter currCounter = CounterLocalServiceUtil.fetchCounter(certConfigCurrId);
+
+				if (Validator.isNull(currCounter)) {
+					_log.info("COUTER_CURR_CONFIG_IS_NULL");
+
+					currCounter = CounterLocalServiceUtil.createCounter(certConfigCurrId);
+
+					currCounter.setCurrentId(counterConfig.getCurrentId());
+
+					_counterNumber = counterConfig.getCurrentId();
+
+					CounterLocalServiceUtil.updateCounter(currCounter);
+
+					// Create elmCounter
+					Counter elmCounter = CounterLocalServiceUtil.createCounter(elmCertId);
+
+					elmCounter.setCurrentId(_counterNumber);
+
+					CounterLocalServiceUtil.updateCounter(elmCounter);
+
+				} else {
+					_log.info("COUTER_CURR_CONFIG_IS_NOT_NULL");
+
+					// check counter for element
+					Counter elmCounter = CounterLocalServiceUtil.fetchCounter(elmCertId);
+
+					if (Validator.isNotNull(elmCounter)) {
+						_log.info("ELM_COUTER_CONFIG_IS_NOT_NULL");
+
+						_counterNumber = elmCounter.getCurrentId();
+					} else {
+						// create elm Counter
+						_log.info("ELM_COUTER_CONFIG_IS_NULL");
+						elmCounter = CounterLocalServiceUtil.createCounter(elmCertId);
+
+						// increment CurrentCounter
+
+						currCounter.setCurrentId(currCounter.getCurrentId() + 1);
+						CounterLocalServiceUtil.updateCounter(currCounter);
+
+						_counterNumber = currCounter.getCurrentId();
+
+						elmCounter.setCurrentId(_counterNumber);
+
+						CounterLocalServiceUtil.updateCounter(elmCounter);
+					}
+
+				}
+
+				certNumber = curYear + StringPool.FORWARD_SLASH + String.format("%05d", _counterNumber);
 
 			} else {
 				throw new Exception("Don't have counter config");

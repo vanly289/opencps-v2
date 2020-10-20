@@ -157,20 +157,28 @@ public class VRBusinessUtils {
 			String dossierTemplateNo, long dossierId, long companyId, long pdfFileEntryId,
 			ServiceContext serviceContext) {
 		try {
-			if ("KQ1, KQ2, KQ4, TP1, KQ5, KQ6".contains(partNo)) {
+			if ("KQ1, KQ2, KQ4, TP1, KQ5, KQ6, KQ7".contains(partNo)) {
 				VRTrackchangesAction trackchangesAction = new VRTrackchangesActionImpl();
 				VRHistoryProfileAction profileAction = new VRHistoryProfileActionImpl();
 
 				Document dossierDoc = DossierLocalServiceUtil.getDossierById(dossierId, companyId);
-				String dossierIdCTN = dossierDoc.get(DossierTerm.DOSSIER_ID + "CTN");
-				// _log.info("--- Dungnv: VRTrackchanges - VRHistoryProfile -------->
-				// dossierIdCTN: " + dossierIdCTN);
-				VRTrackchanges vrTrackchanges = VRTrackchangesLocalServiceUtil
-						.findByDossierIdCTN_ContentFileTemplate(dossierIdCTN, partNo);
-				if (vrTrackchanges == null) {
+				String dossierIdCTN = StringPool.BLANK;
+				String applicantIdNo = StringPool.BLANK;
+				if (dossierDoc != null) {
+					dossierIdCTN = dossierDoc.get(DossierTerm.DOSSIER_ID + "CTN");
+					applicantIdNo = dossierDoc.get(DossierTerm.APPLICANT_ID_NO);
+				}
+				_log.info("--- Dungnv: VRTrackchanges - VRHistoryProfile --------> dossierIdCTN: " + dossierIdCTN
+						+ " - dossierId: " + dossierId + " - companyId: " + companyId);
+				VRTrackchanges vrTrackchanges = null;
+				if (!dossierIdCTN.equals(StringPool.BLANK)) {
+					vrTrackchanges = VRTrackchangesLocalServiceUtil.findByDossierIdCTN_ContentFileTemplate(dossierIdCTN,
+							partNo);
+				} else {
 					vrTrackchanges = VRTrackchangesLocalServiceUtil.findByDossierId_ContentFileTemplate(dossierId,
 							partNo);
 				}
+
 				long groupId = serviceContext.getScopeGroupId();
 				if (vrTrackchanges != null) {
 					if (groupId == ConstantsUtils.GROUP_CTN) {
@@ -196,14 +204,16 @@ public class VRBusinessUtils {
 //								+ formDataFileEntryId + " vrHistoryProfiles.get(i).getDossierId(): "
 //								+ vrHistoryProfiles.get(i).getDossierId() + " dossierId: " + dossierId);
 						hasUpdate = false;
-						;
 						break;
 					}
 				}
 				if (hasUpdate) {
-					profileAction.updateVRHistoryProfile(0L, dossierDoc.get(DossierTerm.APPLICANT_ID_NO), null,
-							dossierId, dossierIdCTN, null, dossierTemplateNo, partNo, formDataFileEntryId,
-							pdfFileEntryId, null, serviceContext);
+					if ("KQ2, KQ6, KQ7".contains(partNo) && !dossierTemplateNo.equals("TT302011BGTVTKTSPMXCG")
+							&& !dossierTemplateNo.equals("TT302011BGTVTKTSPMXBBCN")) {
+						VRHistoryProfileLocalServiceUtil.deleteByDossierIdCTN_contentFileTemplate(dossierIdCTN, partNo);
+					}
+					profileAction.updateVRHistoryProfile(0L, applicantIdNo, null, dossierId, dossierIdCTN, null,
+							dossierTemplateNo, partNo, formDataFileEntryId, pdfFileEntryId, null, serviceContext);
 				}
 				if (groupId == ConstantsUtils.GROUP_CTN) {
 					dossierId = 0;
@@ -217,17 +227,16 @@ public class VRBusinessUtils {
 					if (nextContentFileEntryId != 0 && formDataFileEntryId != 0
 							&& nextContentFileEntryId != formDataFileEntryId
 							&& previousContentFileEntryId != formDataFileEntryId) {
-						trackchangesAction.updateVRTrackchanges(vrTrackchanges.getPrimaryKey(),
-								dossierDoc.get(DossierTerm.APPLICANT_ID_NO), null, dossierId, dossierIdCTN, null,
-								dossierTemplateNo, partNo, formDataFileEntryId, null, serviceContext);
+						trackchangesAction.updateVRTrackchanges(vrTrackchanges.getPrimaryKey(), applicantIdNo, null,
+								dossierId, dossierIdCTN, null, dossierTemplateNo, partNo, formDataFileEntryId, null,
+								serviceContext);
 					} /*
 						 * else { _log.info("-- Dungnv -------- nextContentFileEntryId: " +
 						 * nextContentFileEntryId + " - formDataFileEntryId: " + formDataFileEntryId); }
 						 */
 				} else {
-					trackchangesAction.updateVRTrackchanges(0L, dossierDoc.get(DossierTerm.APPLICANT_ID_NO), null,
-							dossierId, dossierIdCTN, null, dossierTemplateNo, partNo, formDataFileEntryId, null,
-							serviceContext);
+					trackchangesAction.updateVRTrackchanges(0L, applicantIdNo, null, dossierId, dossierIdCTN, null,
+							dossierTemplateNo, partNo, formDataFileEntryId, null, serviceContext);
 				}
 			}
 		} catch (Exception e) {

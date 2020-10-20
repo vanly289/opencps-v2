@@ -14,21 +14,17 @@
 
 package org.opencps.dossiermgt.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.opencps.dossiermgt.action.util.ConstantsUtils;
-import org.opencps.dossiermgt.model.DossierSync;
-import org.opencps.dossiermgt.service.base.DossierSyncLocalServiceBaseImpl;
-
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Date;
+import java.util.List;
+
+import org.opencps.dossiermgt.model.DossierSync;
+import org.opencps.dossiermgt.service.base.DossierSyncLocalServiceBaseImpl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -112,7 +108,7 @@ public class DossierSyncLocalServiceImpl extends DossierSyncLocalServiceBaseImpl
 				break;
 			}
 		}
-		_log.info("Dungnv: --------------> dossierSync: " + dossierSync + " - payload: " + payload);
+		//_log.info("Dungnv: --------------> dossierSync: " + dossierSync + " - payload: " + payload);
 		Date now = new Date();
 		if (Validator.isNull(dossierSync)) {
 			long dossierSyncId = counterLocalService.increment(DossierSync.class.getName());

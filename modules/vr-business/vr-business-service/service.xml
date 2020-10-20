@@ -1963,6 +1963,10 @@
             <order-column name="modifyDate" order-by="desc"></order-column>
         </order>
         
+        <finder return-type="VRInputStampbookDetails" name="stampSerialNo_purchaserId">
+       		<finder-column name="purchaserId"/>
+			<finder-column name="stampSerialNo"/>	
+		</finder>    
         <finder return-type="Collection" name="InputSheetId">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="inputSheetId"></finder-column>
@@ -2252,6 +2256,9 @@
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
 		
+		<column name="certificateRecordDate" type="Date"/>
+		<column name="issueInspectionRecordId" type="long"/>
+		
 		<!-- add new  -->
 		<column name="certificaterecordno" type="String"/>
 		<column name="postPrintingStatus" type="int"/>
@@ -2270,7 +2277,9 @@
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="dossierId"></finder-column>
 		</finder>
-		
+		<finder return-type="VRVehicleRecord" name="frameNo">
+			<finder-column name="frameNo"/>			
+		</finder>
         <finder return-type="Collection" name="certificateId">
 			<finder-column name="mtCore"></finder-column>			
 			<finder-column name="certificateId"></finder-column>
@@ -2356,14 +2365,14 @@
 		<column type="String" name="applicantMaker"/>
 		<column type="String" name="applicantChecker"/>
 		
-		<column name="certificateRecordDate" type="Date"/>
-		<column name="issueInspectionRecordId" type="long"/>
-		
 		<column name="inspectorId" type="long" db-name="inspectorId"/>
 		<column name="issueInspectorId" type="long" db-name="issueInspectorId"/>
 		<column name="verifyInspectorId" type="long" db-name="verifyInspectorId"/>
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
 		<column name="syncDate" type="Date" db-name="syncDate"/>
+		
+		<column name="certifiedAssemblyType" type="String"/>
+		<column name="certifiedAssemblyTypeDescription" type="String"/>
 				
 		<!-- Filter -->
         <order by="desc">
@@ -2410,6 +2419,65 @@
 		 <finder return-type="VRIssue" name="F_MT_DID">
 			<finder-column name="mtCore" />
 			<finder-column name="dossierId" />
+		</finder>
+	</entity>
+	
+	<entity name="VRMethodOfIssue" local-service="true" table="vr_methodofissue"
+		remote-service="false">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true" db-name="id"/>
+		
+		<!-- Audit fields -->
+		<column name="mtCore" type="long"/>
+		<column name="vehicleClass" type="String"/>
+		<column name="certifiedAssemblyType" type="String"/>
+		<column name="certifiedAssemblyTypeDescription" type="String"/>
+		<column name="applicantProfileId" type="long"/>
+		<column name="applicantName" type="String"/>
+		<column name="applicantAddress" type="String"/>
+		<column name="productionPlantId" type="long"/>
+		<column name="productionPlantCode" type="String"/>
+		<column name="productionPlantName" type="String"/>
+		<column name="productionPlantAddress" type="String"/>
+		<column name="methodOfIssue" type="String"/>
+		<column name="methodApproved" type="int"/>
+		<column name="methodInMonth" type="int"/>
+		<column name="methodInYear" type="int"/>
+		<column name="periodDuration" type="int"/>
+		<column name="frequencyIndex" type="int"/>
+		<column name="remarks" type="String"/>
+		<column name="averageStbQuantityIndex" type="int"/>
+		<column name="maxMonthQuantityIndex" type="int"/>
+		<column name="averageStmQuantityIndex" type="int"/>
+		<column name="accumulatedMonthQuantityIndex" type="int"/>
+		<column name="latestOtherIndex1" type="int"/>
+		<column name="latestOtherIndex2" type="int"/>
+		<column name="latestOtherIndex3" type="int"/>
+		<column name="latestCOPReportDate" type="Date"/>
+		<column name="latestInspectionRecordDate" type="Date"/>
+		<column name="latestNumberOfInspectionInYear" type="int"/>
+		<column name="latestNumberOfInspectionInMonth" type="int"/>
+		<column name="latestNumberOfStampInMonth" type="int"/>
+		<column name="periodStartFrom" type="Date"/>
+		<column name="totalInspection" type="int"/>
+		<column name="flowIndex" type="String"/>
+		<column name="modifyDate" type="Date"/>
+		<column name="syncDate" type="Date"/>
+		
+		<order by="desc">
+            <order-column name="modifyDate" order-by="desc"></order-column>
+        </order>
+        <finder return-type="VRMethodOfIssue" name="certifiedAssemblyType_productionPlantCode_vehicleClass_applicantProfileId">
+			<finder-column name="certifiedAssemblyType"/>
+			<finder-column name="productionPlantCode"/>
+			<finder-column name="vehicleClass"/>
+			<finder-column name="applicantProfileId"/>
+		</finder>
+		<finder return-type="VRMethodOfIssue" name="certifiedAssemblyType_productionPlantId_vehicleClass_applicantProfileId">
+			<finder-column name="certifiedAssemblyType"/>
+			<finder-column name="productionPlantId"/>
+			<finder-column name="vehicleClass"/>
+			<finder-column name="applicantProfileId"/>
 		</finder>
 	</entity>
 	
@@ -2723,6 +2791,9 @@
 		<column name="applicantAddress" type="String" db-name="applicantAddress"/>
 		<column name="productionPlantName" type="String" db-name="productionPlantName"/>
 		<column name="productionPlantAddress" type="String" db-name="productionPlantAddress"/>
+		
+		<column name="vehicleCertificateRecordDate" type="Date" db-name="vehicleCertificateRecordDate" />
+		<column name="equipmentCertificateRecordDate" type="Date" db-name="equipmentCertificateRecordDate" />
 
 		<!-- Audit fields -->
 		<column name="modifyDate" type="Date" db-name="modifyDate"/>
@@ -7946,7 +8017,7 @@
 			<finder-column name="removed"/>
 		</finder>
 		<!-- References -->
-		<finder name="DID_FTNO" return-type="Collection">
+		<finder name="DID_FTNO" return-type="Collection" db-index="false">
 			<finder-column name="dossierId"></finder-column>
 			<finder-column name="fileTemplateNo"></finder-column>
 			<finder-column name="removed"></finder-column>
@@ -8145,6 +8216,10 @@
         </finder>
         <finder return-type="Collection" name="F_dossierIdCTN">
         	<finder-column name="dossierIdCTN" />
+        </finder>
+        <finder return-type="Collection" name="F_dossierIdCTN_contentFileTemplate">
+        	<finder-column name="dossierIdCTN" />
+        	<finder-column name="contentFileTemplate" />
         </finder>
         <finder return-type="Collection" name="F_ContentType">
         	<finder-column name="contentType" />

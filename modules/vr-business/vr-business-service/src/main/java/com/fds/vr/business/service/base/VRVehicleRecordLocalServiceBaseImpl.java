@@ -71,6 +71,7 @@ import com.fds.vr.business.service.persistence.VRIssuePersistence;
 import com.fds.vr.business.service.persistence.VRIssueVehiclecertificateFinder;
 import com.fds.vr.business.service.persistence.VRIssueVehiclecertificatePersistence;
 import com.fds.vr.business.service.persistence.VRLimitConfigTechSpecPersistence;
+import com.fds.vr.business.service.persistence.VRMethodOfIssuePersistence;
 import com.fds.vr.business.service.persistence.VRMigrateMappingsPersistence;
 import com.fds.vr.business.service.persistence.VRMigrateReviewPersistence;
 import com.fds.vr.business.service.persistence.VRMigrateTaskPersistence;
@@ -2031,6 +2032,44 @@ public abstract class VRVehicleRecordLocalServiceBaseImpl
 	public void setVRLimitConfigTechSpecPersistence(
 		VRLimitConfigTechSpecPersistence vrLimitConfigTechSpecPersistence) {
 		this.vrLimitConfigTechSpecPersistence = vrLimitConfigTechSpecPersistence;
+	}
+
+	/**
+	 * Returns the vr method of issue local service.
+	 *
+	 * @return the vr method of issue local service
+	 */
+	public com.fds.vr.business.service.VRMethodOfIssueLocalService getVRMethodOfIssueLocalService() {
+		return vrMethodOfIssueLocalService;
+	}
+
+	/**
+	 * Sets the vr method of issue local service.
+	 *
+	 * @param vrMethodOfIssueLocalService the vr method of issue local service
+	 */
+	public void setVRMethodOfIssueLocalService(
+		com.fds.vr.business.service.VRMethodOfIssueLocalService vrMethodOfIssueLocalService) {
+		this.vrMethodOfIssueLocalService = vrMethodOfIssueLocalService;
+	}
+
+	/**
+	 * Returns the vr method of issue persistence.
+	 *
+	 * @return the vr method of issue persistence
+	 */
+	public VRMethodOfIssuePersistence getVRMethodOfIssuePersistence() {
+		return vrMethodOfIssuePersistence;
+	}
+
+	/**
+	 * Sets the vr method of issue persistence.
+	 *
+	 * @param vrMethodOfIssuePersistence the vr method of issue persistence
+	 */
+	public void setVRMethodOfIssuePersistence(
+		VRMethodOfIssuePersistence vrMethodOfIssuePersistence) {
+		this.vrMethodOfIssuePersistence = vrMethodOfIssuePersistence;
 	}
 
 	/**
@@ -4247,6 +4286,10 @@ public abstract class VRVehicleRecordLocalServiceBaseImpl
 	protected com.fds.vr.business.service.VRLimitConfigTechSpecLocalService vrLimitConfigTechSpecLocalService;
 	@BeanReference(type = VRLimitConfigTechSpecPersistence.class)
 	protected VRLimitConfigTechSpecPersistence vrLimitConfigTechSpecPersistence;
+	@BeanReference(type = com.fds.vr.business.service.VRMethodOfIssueLocalService.class)
+	protected com.fds.vr.business.service.VRMethodOfIssueLocalService vrMethodOfIssueLocalService;
+	@BeanReference(type = VRMethodOfIssuePersistence.class)
+	protected VRMethodOfIssuePersistence vrMethodOfIssuePersistence;
 	@BeanReference(type = com.fds.vr.business.service.VRMigrateMappingsLocalService.class)
 	protected com.fds.vr.business.service.VRMigrateMappingsLocalService vrMigrateMappingsLocalService;
 	@BeanReference(type = VRMigrateMappingsPersistence.class)

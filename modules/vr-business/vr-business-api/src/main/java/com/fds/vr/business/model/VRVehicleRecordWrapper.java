@@ -85,6 +85,8 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 		attributes.put("signDate", getSignDate());
 		attributes.put("modifyDate", getModifyDate());
 		attributes.put("syncDate", getSyncDate());
+		attributes.put("certificateRecordDate", getCertificateRecordDate());
+		attributes.put("issueInspectionRecordId", getIssueInspectionRecordId());
 		attributes.put("certificaterecordno", getCertificaterecordno());
 		attributes.put("postPrintingStatus", getPostPrintingStatus());
 		attributes.put("qrCode", getQrCode());
@@ -249,6 +251,20 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 
 		if (syncDate != null) {
 			setSyncDate(syncDate);
+		}
+
+		Date certificateRecordDate = (Date)attributes.get(
+				"certificateRecordDate");
+
+		if (certificateRecordDate != null) {
+			setCertificateRecordDate(certificateRecordDate);
+		}
+
+		Long issueInspectionRecordId = (Long)attributes.get(
+				"issueInspectionRecordId");
+
+		if (issueInspectionRecordId != null) {
+			setIssueInspectionRecordId(issueInspectionRecordId);
 		}
 
 		String certificaterecordno = (String)attributes.get(
@@ -488,6 +504,16 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 	}
 
 	/**
+	* Returns the certificate record date of this vr vehicle record.
+	*
+	* @return the certificate record date of this vr vehicle record
+	*/
+	@Override
+	public Date getCertificateRecordDate() {
+		return _vrVehicleRecord.getCertificateRecordDate();
+	}
+
+	/**
 	* Returns the modify date of this vr vehicle record.
 	*
 	* @return the modify date of this vr vehicle record
@@ -585,6 +611,16 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 	@Override
 	public long getIssueId() {
 		return _vrVehicleRecord.getIssueId();
+	}
+
+	/**
+	* Returns the issue inspection record ID of this vr vehicle record.
+	*
+	* @return the issue inspection record ID of this vr vehicle record
+	*/
+	@Override
+	public long getIssueInspectionRecordId() {
+		return _vrVehicleRecord.getIssueInspectionRecordId();
 	}
 
 	/**
@@ -708,6 +744,16 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 	}
 
 	/**
+	* Sets the certificate record date of this vr vehicle record.
+	*
+	* @param certificateRecordDate the certificate record date of this vr vehicle record
+	*/
+	@Override
+	public void setCertificateRecordDate(Date certificateRecordDate) {
+		_vrVehicleRecord.setCertificateRecordDate(certificateRecordDate);
+	}
+
+	/**
 	* Sets the certificaterecordno of this vr vehicle record.
 	*
 	* @param certificaterecordno the certificaterecordno of this vr vehicle record
@@ -791,6 +837,16 @@ public class VRVehicleRecordWrapper implements VRVehicleRecord,
 	@Override
 	public void setIssueId(long issueId) {
 		_vrVehicleRecord.setIssueId(issueId);
+	}
+
+	/**
+	* Sets the issue inspection record ID of this vr vehicle record.
+	*
+	* @param issueInspectionRecordId the issue inspection record ID of this vr vehicle record
+	*/
+	@Override
+	public void setIssueInspectionRecordId(long issueInspectionRecordId) {
+		_vrVehicleRecord.setIssueInspectionRecordId(issueInspectionRecordId);
 	}
 
 	/**

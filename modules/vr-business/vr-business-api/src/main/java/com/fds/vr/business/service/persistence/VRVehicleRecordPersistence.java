@@ -336,6 +336,51 @@ public interface VRVehicleRecordPersistence extends BasePersistence<VRVehicleRec
 	public int countBydossierId(long mtCore, long dossierId);
 
 	/**
+	* Returns the vr vehicle record where frameNo = &#63; or throws a {@link NoSuchVRVehicleRecordException} if it could not be found.
+	*
+	* @param frameNo the frame no
+	* @return the matching vr vehicle record
+	* @throws NoSuchVRVehicleRecordException if a matching vr vehicle record could not be found
+	*/
+	public VRVehicleRecord findByframeNo(java.lang.String frameNo)
+		throws NoSuchVRVehicleRecordException;
+
+	/**
+	* Returns the vr vehicle record where frameNo = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param frameNo the frame no
+	* @return the matching vr vehicle record, or <code>null</code> if a matching vr vehicle record could not be found
+	*/
+	public VRVehicleRecord fetchByframeNo(java.lang.String frameNo);
+
+	/**
+	* Returns the vr vehicle record where frameNo = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param frameNo the frame no
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching vr vehicle record, or <code>null</code> if a matching vr vehicle record could not be found
+	*/
+	public VRVehicleRecord fetchByframeNo(java.lang.String frameNo,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the vr vehicle record where frameNo = &#63; from the database.
+	*
+	* @param frameNo the frame no
+	* @return the vr vehicle record that was removed
+	*/
+	public VRVehicleRecord removeByframeNo(java.lang.String frameNo)
+		throws NoSuchVRVehicleRecordException;
+
+	/**
+	* Returns the number of vr vehicle records where frameNo = &#63;.
+	*
+	* @param frameNo the frame no
+	* @return the number of matching vr vehicle records
+	*/
+	public int countByframeNo(java.lang.String frameNo);
+
+	/**
 	* Returns all the vr vehicle records where mtCore = &#63; and certificateId = &#63;.
 	*
 	* @param mtCore the mt core

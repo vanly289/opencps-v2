@@ -21,6 +21,7 @@ import com.fds.vr.business.model.VRConfigTechSpec;
 import com.fds.vr.business.model.VRCorporationAttendee;
 import com.fds.vr.business.model.VRDossierFile;
 import com.fds.vr.business.model.VRLimitConfigTechSpec;
+import com.fds.vr.business.model.impl.VRDossierFileModelImpl;
 import com.fds.vr.business.service.VRConfigTechSpecLocalServiceUtil;
 import com.fds.vr.business.service.VRCorporationAttendeeLocalServiceUtil;
 import com.fds.vr.business.service.VRDossierFileLocalServiceUtil;
@@ -63,8 +64,9 @@ public class VRActionsImpl implements VRActions {
 			for (DictItemGroup dg : danhSachNhomThongSoKTChiTiet) {
 
 				DictItem dictItem = DictItemLocalServiceUtil.getDictItem(dg.getDictItemId());
-				if (dg.getDictItemId() > 0 && dictItem != null && dictItem.getItemCode().length() > 0 ) {
-					_log.info("vehicleClass====" + vehicleClass + "===========dictItem.getItemCode()====" + dictItem.getItemCode() + "============module===="+ module );
+				if (dg.getDictItemId() > 0 && dictItem != null && dictItem.getItemCode().length() > 0) {
+					_log.info("vehicleClass====" + vehicleClass + "===========dictItem.getItemCode()===="
+							+ dictItem.getItemCode() + "============module====" + module);
 					List<VRConfigTechSpec> configTechSpecs = VRConfigTechSpecLocalServiceUtil.getByVCSC(vehicleClass,
 							dictItem.getItemCode().trim(), module);
 					JSONObject jsonTechSpec = JSONFactoryUtil.createJSONObject();
@@ -78,7 +80,7 @@ public class VRActionsImpl implements VRActions {
 					jsonTechSpec.put("datasource", StringPool.BLANK);
 					jsonTechSpec.put("value", StringPool.BLANK);
 
-					if (configTechSpecs != null && configTechSpecs.size() > 0 ) {
+					if (configTechSpecs != null && configTechSpecs.size() > 0) {
 						JSONArray items = JSONFactoryUtil.createJSONArray();
 
 						for (VRConfigTechSpec vrConfig : configTechSpecs) {
@@ -95,16 +97,17 @@ public class VRActionsImpl implements VRActions {
 							techspec.put("Reference", false);
 
 							techspec.put("value", StringPool.BLANK);
-							
+
 							techspec.put("sequenceNo", vrConfig.getSequenceNo());
 
 							techspec.put("standard", vrConfig.getSpecificationStandard());
 							techspec.put("basicunit", vrConfig.getSpecificationBasicUnit());
 							techspec.put("placeholder", vrConfig.getSpecificationEntryPlaceholder());
 							if (Validator.isNotNull(vrConfig.getSpecificationDataCollectionId())) {
-								techspec.put("specificationDataCollectionID", vrConfig.getSpecificationDataCollectionId());
-								techspec.put("datasource",
-										getDataSource(vrConfig.getSpecificationDataCollectionId(), groupId, vehicleClass));
+								techspec.put("specificationDataCollectionID",
+										vrConfig.getSpecificationDataCollectionId());
+								techspec.put("datasource", getDataSource(vrConfig.getSpecificationDataCollectionId(),
+										groupId, vehicleClass));
 							}
 
 							items.put(techspec);
@@ -114,8 +117,8 @@ public class VRActionsImpl implements VRActions {
 
 						techSpecArr.put(jsonTechSpec);
 					}
-					
-				}				
+
+				}
 			}
 
 			if (dossierFileId != 0) {
@@ -127,7 +130,7 @@ public class VRActionsImpl implements VRActions {
 			returnObj.put("content", techSpecArr);
 
 		} catch (Exception e) {
-			_log.error(e);			
+			_log.error(e);
 		}
 
 		return returnObj;
@@ -156,7 +159,7 @@ public class VRActionsImpl implements VRActions {
 			if (Validator.isNull(module)) {
 				module = "1";
 			}
-			
+
 			VRDossierFile dossierFile = null;
 
 			String formData = StringPool.BLANK;
@@ -166,101 +169,102 @@ public class VRActionsImpl implements VRActions {
 				dossierFile = VRDossierFileLocalServiceUtil.fetchVRDossierFile(dossierFileId);
 
 			}
-			
-			//_log.info("========================== dossierFileId = " + dossierFileId);
-			
-			//Add by Dungnv
-			if(flag != null && flag.equals("bb")) {
+
+			// Add by Dungnv
+			if (flag != null && flag.equals("bb")) {
 				if (dossierFile == null) {
 					if (Validator.isNotNull(fileTemplateNo)) {
 						try {
 							dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 									fileTemplateNo, false, OrderByComparatorFactoryUtil
-											.create("opencps_dossierFile", "createDate", false));
+											.create(VRDossierFileModelImpl.TABLE_NAME, "createDate", false));
 							
-					    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+							File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
 							if (formDataFile != null) {
 								formData = FileUploadUtils.fileToString(formDataFile);
 							}
-							if(formData.isEmpty()) {
+							if (formData.isEmpty()) {
 								formData = dossierFile.getFormData();
 							}
 						} catch (Exception e) {
-							
+							_log.error(e);
 						}
 					}
 				}
 				if (dossierFile != null) {
 					VRDossierFile dossierFile_KQ = dossierFile;
-					VRDossierFile dossierFile_TP = VRDossierFileLocalServiceUtil.getDossierFileByDID_DPNO(dossierId, "TP1", false);
+					VRDossierFile dossierFile_TP = VRDossierFileLocalServiceUtil.getDossierFileByDID_DPNO(dossierId,
+							"TP1", false);
 					String formData_KQ = StringPool.BLANK;
 					String formData_TP = StringPool.BLANK;
 					File formDataFile_KQ = FileUploadUtils.getFile(dossierFile_KQ.getFormDataDossierFile());
 					if (formDataFile_KQ != null) {
 						formData_KQ = FileUploadUtils.fileToString(formDataFile_KQ);
 					}
-					if(formData_KQ.isEmpty()) {
+					if (formData_KQ.isEmpty()) {
 						formData_KQ = dossierFile_KQ.getFormData();
 					}
-					
+
 					File formDataFile_TP = FileUploadUtils.getFile(dossierFile_TP.getFormDataDossierFile());
 					if (formDataFile_TP != null) {
 						formData_TP = FileUploadUtils.fileToString(formDataFile_TP);
 					}
-					if(formData_TP.isEmpty()) {
+					if (formData_TP.isEmpty()) {
 						formData_TP = dossierFile_TP.getFormData();
 					}
-					
+
 					JSONObject jFormData_KQ = JSONFactoryUtil.createJSONObject(formData_KQ);
 					JSONObject jFormData_TP = JSONFactoryUtil.createJSONObject(formData_TP);
-					_log.info("- Dungnv: jFormData_KQ_Id: " + dossierFile_KQ.getFormDataDossierFile());
-					_log.info("- Dungnv: jFormData_TP_Id: " + dossierFile_TP.getFormDataDossierFile());
+					// _log.info("- Dungnv: jFormData_KQ_Id: " +
+					// dossierFile_KQ.getFormDataDossierFile());
+					// _log.info("- Dungnv: jFormData_TP_Id: " +
+					// dossierFile_TP.getFormDataDossierFile());
 					jFormData_TP.keys().forEachRemaining(key -> {
-						if(!key.contains("trackChange")) {
+						if (!key.contains("trackChange")) {
 							jFormData_KQ.remove(key);
 							jFormData_KQ.put(key, jFormData_TP.getString(key));
 						}
 					});
-					formData = jFormData_KQ.toJSONString();	
+					formData = jFormData_KQ.toJSONString();
 				}
 			} else {
 				if (dossierFile != null) {
 					// Update online form
-					//Add by Dungnv
-			    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+					// Add by Dungnv
+					File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
 					if (formDataFile != null) {
 						formData = FileUploadUtils.fileToString(formDataFile);
 					}
-					if(formData.isEmpty()) {
+					if (formData.isEmpty()) {
 						formData = dossierFile.getFormData();
 					}
-					//Comment by Dungnv
-					//formData = dossierFile.getFormData();
-					//_log.info("==========================1 " + dossierFile.getFileEntryId());
+					// Comment by Dungnv
+					// formData = dossierFile.getFormData();
+					// _log.info("==========================1 " + dossierFile.getFileEntryId());
 				} else {
 					// View online form
-					//_log.info("==========================2");
+					// _log.info("==========================2");
 					if (Validator.isNotNull(fileTemplateNo)) {
 						try {
 							dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
 									fileTemplateNo, false, OrderByComparatorFactoryUtil
-											.create("opencps_dossierFile", "createDate", false));
-							
-							//Add by Dungnv
-					    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+											.create(VRDossierFileModelImpl.TABLE_NAME, "createDate", false));
+
+							// Add by Dungnv
+							File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
 							if (formDataFile != null) {
 								formData = FileUploadUtils.fileToString(formDataFile);
 							}
-							if(formData.isEmpty()) {
+							if (formData.isEmpty()) {
 								formData = dossierFile.getFormData();
 							}
-							//Comment by Dungnv
-							//formData = dossierFile.getFormData();
-							
-							//_log.info("==========================3");
+							// Comment by Dungnv
+							// formData = dossierFile.getFormData();
+
+							// _log.info("==========================3");
 
 						} catch (Exception e) {
-							
+							_log.error(e);
 						}
 					}
 				}
@@ -272,7 +276,7 @@ public class VRActionsImpl implements VRActions {
 				try {
 					formDataObject = JSONFactoryUtil.createJSONObject(formData);
 				} catch (Exception e) {
-					//_log.error("Can not create json object from formData", e);
+					_log.error("Can not create json object from formData", e);
 				}
 			}
 
@@ -313,7 +317,7 @@ public class VRActionsImpl implements VRActions {
 					techspec.put("required", vrConfig.getSpecificationMandatory());
 
 					techspec.put("Reference", false);
-					
+
 					techspec.put("sequenceNo", vrConfig.getSequenceNo());
 
 					techspec.put("standard", vrConfig.getSpecificationStandard());
@@ -383,7 +387,7 @@ public class VRActionsImpl implements VRActions {
 			returnObj.put("content", techSpecArr);
 
 		} catch (Exception e) {
-			//_log.error(e);
+			_log.error(e);
 			// returnObj.put("status", HttpsURLConnection.HTTP_OK);
 			// returnObj.put("content", techSpecArr);
 		}
@@ -391,7 +395,7 @@ public class VRActionsImpl implements VRActions {
 		return returnObj;
 	}
 
-	//LamTV: Add process module ext vehicle Type
+	// LamTV: Add process module ext vehicle Type
 	private static final String TEXT = "_text";
 	private static final String SELECT = "select";
 	private static final String SELECT_1 = "select1";
@@ -399,6 +403,7 @@ public class VRActionsImpl implements VRActions {
 	private static final String SELECT_3 = "select3";
 	private static final String BB = "bb_";
 	private static final String KL = "kl_";
+
 	@Override
 	public JSONObject getTechSpecByVehicleType(long groupId, String module, long dossierId, long dossierFileId,
 			String fileTemplateNo, String vehicleClass, String vehicleType, String flag) {
@@ -431,13 +436,13 @@ public class VRActionsImpl implements VRActions {
 //						dictItem.getItemCode(), module);
 //				List<VRConfigTechSpec> configTechSpecsList = VRConfigTechSpecLocalServiceUtil.getByVCCTSCMD(vehicleClass,
 //						vehicleClass, dictItem.getItemCode(), module);
-				
+
 				List<VRConfigTechSpec> configTechSpecsTypeList = VRConfigTechSpecLocalServiceUtil
 						.getByVCCTSCMD(vehicleClass, vehicleType, dictItem.getItemCode(), module);
 
 				List<VRConfigTechSpec> configTechSpecsAll = new ArrayList<VRConfigTechSpec>();
-				
-				//Check list null or empty
+
+				// Check list null or empty
 //				if (configTechSpecsList != null && configTechSpecsList.size() > 0) {
 //					configTechSpecsAll.addAll(configTechSpecsList);
 //				}
@@ -460,7 +465,7 @@ public class VRActionsImpl implements VRActions {
 
 				if (configTechSpecsAll.size() > 0) {
 					for (VRConfigTechSpec vrConfig : configTechSpecsAll) {
-	
+
 						JSONObject techspec = JSONFactoryUtil.createJSONObject();
 
 						// Get value record techSpec
@@ -474,9 +479,10 @@ public class VRActionsImpl implements VRActions {
 						String dataCollection = vrConfig.getSpecificationDataCollectionId();
 						JSONArray datasource = null;
 						if (Validator.isNotNull(dataCollection)) {
-							datasource = getDataSource(vrConfig.getSpecificationDataCollectionId(), groupId, vehicleClass);
+							datasource = getDataSource(vrConfig.getSpecificationDataCollectionId(), groupId,
+									vehicleClass);
 						}
-	
+
 						techspec.put("key", tmpKey);
 						techspec.put("type", tmpType);
 						techspec.put("title", title);
@@ -485,7 +491,7 @@ public class VRActionsImpl implements VRActions {
 						techspec.put("standard", standard);
 						techspec.put("basicunit", basicunit);
 						techspec.put("placeholder", placeholder);
-						techspec.put("datasource",datasource);
+						techspec.put("datasource", datasource);
 						techspec.put("sequenceNo", vrConfig.getSequenceNo());
 						techspec.put("specificationDataCollectionID", vrConfig.getSpecificationDataCollectionId());
 
@@ -494,82 +500,83 @@ public class VRActionsImpl implements VRActions {
 						String value_text = StringPool.BLANK;
 						String result = StringPool.BLANK;
 						String resultTD = StringPool.BLANK;
-	
+
 						VRDossierFile dossierFile = null;
 						String formData = StringPool.BLANK;
 
 						if (dossierFileId > 0) {
 							dossierFile = VRDossierFileLocalServiceUtil.fetchVRDossierFile(dossierFileId);
 						}
-						
-						_log.info("========================== dossierFileId = " + dossierFileId+ " |fileTemplateNo: "+fileTemplateNo);
-						
+
+						_log.info("========================== dossierFileId = " + dossierFileId + " |fileTemplateNo: "
+								+ fileTemplateNo);
+
 						if (dossierFile != null) {
 							// Update online form
-							//Add by Dungnv
-					    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+							// Add by Dungnv
+							File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
 							if (formDataFile != null) {
 								formData = FileUploadUtils.fileToString(formDataFile);
 							}
-							if(formData.isEmpty()) {
+							if (formData.isEmpty()) {
 								formData = dossierFile.getFormData();
 							}
-							//Comment by Dungnv
-							//formData = dossierFile.getFormData();
+							// Comment by Dungnv
+							// formData = dossierFile.getFormData();
 							if (Validator.isNull(formData)) {
 								if (Validator.isNotNull(fileTemplateNo)) {
 									try {
-										dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
-												fileTemplateNo, false, OrderByComparatorFactoryUtil
-														.create("opencps_dossierFile", "createDate", false));
-										//Add by Dungnv
-								    	formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+										dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(
+												dossierId, fileTemplateNo, false, OrderByComparatorFactoryUtil.create(
+														VRDossierFileModelImpl.TABLE_NAME, "createDate", false));
+										// Add by Dungnv
+										formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
 										if (formDataFile != null) {
 											formData = FileUploadUtils.fileToString(formDataFile);
 										}
-										if(formData.isEmpty()) {
+										if (formData.isEmpty()) {
 											formData = dossierFile.getFormData();
 										}
-										//Comment by Dungnv
-										//formData = dossierFile.getFormData();
-										
+										// Comment by Dungnv
+										// formData = dossierFile.getFormData();
+
 										_log.info("==========================3");
-		
+
 									} catch (Exception e) {
 										_log.info("FORM DATA IS NULL");
 									}
 								}
 							}
-							//_log.info("==========================1 " + dossierFile.getFileEntryId());
+							// _log.info("==========================1 " + dossierFile.getFileEntryId());
 						} else {
 							// View online form
-							//_log.info("==========================2");
+							// _log.info("==========================2");
 							if (Validator.isNotNull(fileTemplateNo)) {
 								try {
-									dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(dossierId,
-											fileTemplateNo, false, OrderByComparatorFactoryUtil
-													.create("opencps_dossierFile", "createDate", false));
-									//Add by Dungnv
-							    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+									dossierFile = VRDossierFileLocalServiceUtil.getDossierFileByDID_FTNO_First(
+											dossierId, fileTemplateNo, false, OrderByComparatorFactoryUtil
+													.create(VRDossierFileModelImpl.TABLE_NAME, "createDate", false));
+									// Add by Dungnv
+									File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
 									if (formDataFile != null) {
 										formData = FileUploadUtils.fileToString(formDataFile);
 									}
-									if(formData.isEmpty()) {
+									if (formData.isEmpty()) {
 										formData = dossierFile.getFormData();
 									}
-									//Comment by Dungnv
-									//formData = dossierFile.getFormData();
-									
-									//_log.info("==========================3");
-	
+									// Comment by Dungnv
+									// formData = dossierFile.getFormData();
+
+									// _log.info("==========================3");
+
 								} catch (Exception e) {
-									
+
 								}
 							}
 						}
-	
+
 						JSONObject formDataObject = null;
-	
+
 						if (Validator.isNotNull(formData)) {
 							try {
 								formDataObject = JSONFactoryUtil.createJSONObject(formData);
@@ -577,49 +584,49 @@ public class VRActionsImpl implements VRActions {
 								_log.error("Can not create json object from formData", e);
 							}
 						}
-	
+
 						if (formDataObject != null) {
-	
+
 							if (formDataObject.has(tmpKey)) {
 								value = formDataObject.getString(tmpKey);
-	
+
 							}
 
 							boolean flagValue = false;
 							if (formDataObject.has(tmpKey + TEXT)) {
-								if (tmpType.equalsIgnoreCase(SELECT) || tmpType.equalsIgnoreCase(SELECT_1) || tmpType.equalsIgnoreCase(SELECT_2)
-										|| tmpType.equalsIgnoreCase(SELECT_3)) {
+								if (tmpType.equalsIgnoreCase(SELECT) || tmpType.equalsIgnoreCase(SELECT_1)
+										|| tmpType.equalsIgnoreCase(SELECT_2) || tmpType.equalsIgnoreCase(SELECT_3)) {
 									flagValue = true;
 								}
 							}
 							if (flagValue) {
 								value_text = formDataObject.getString(tmpKey + TEXT);
 							}
-	
+
 							if (dossierFileId > 0) {
 								// Update online form
 								if (formDataObject.has(BB + tmpKey)) {
 									resultTD = formDataObject.getString(BB + tmpKey);
-	
+
 								}
-	
+
 								if (formDataObject.has(KL + tmpKey)) {
 									result = formDataObject.getString(KL + tmpKey);
 								}
-	
+
 							} else {
 								// View online form
 								result = StringPool.BLANK;
 								resultTD = value;
 							}
-	
+
 						}
-	
+
 						techspec.put("value_text", value_text);
 						techspec.put("resultTD", resultTD);
 						techspec.put("result", result);
 						techspec.put("value", value);
-	
+
 						items.put(techspec);
 					}
 				}
@@ -638,7 +645,7 @@ public class VRActionsImpl implements VRActions {
 			returnObj.put("content", techSpecArr);
 
 		} catch (Exception e) {
-			//_log.error(e);
+			// _log.error(e);
 			// returnObj.put("status", HttpsURLConnection.HTTP_OK);
 			// returnObj.put("content", techSpecArr);
 		}
@@ -655,59 +662,60 @@ public class VRActionsImpl implements VRActions {
 		JSONObject formData = null;
 
 		// JSONArray formSchema = null;
-		
+
 //		_log.info("==childKeyObj==getFormData==" + formSchema);
 
 		if (Validator.isNotNull(dossierFile)) {
 
 			try {
-				//Add by Dungnv
+				// Add by Dungnv
 				if (flag != null && flag.equals("bb")) {
-					_log.info("- Dungnv: flag != null && flag.equals(\"bb\")");
+					// _log.info("- Dungnv: flag != null && flag.equals(\"bb\")");
 					VRDossierFile dossierFile_KQ = dossierFile;
-					VRDossierFile dossierFile_TP = VRDossierFileLocalServiceUtil.getDossierFileByDID_DPNO(dossierFile.getDossierId(), "TP1", false);
+					VRDossierFile dossierFile_TP = VRDossierFileLocalServiceUtil
+							.getDossierFileByDID_DPNO(dossierFile.getDossierId(), "TP1", false);
 					String formData_KQ = StringPool.BLANK;
 					String formData_TP = StringPool.BLANK;
 					File formDataFile_KQ = FileUploadUtils.getFile(dossierFile_KQ.getFormDataDossierFile());
 					if (formDataFile_KQ != null) {
 						formData_KQ = FileUploadUtils.fileToString(formDataFile_KQ);
 					}
-					if(formData_KQ.isEmpty()) {
+					if (formData_KQ.isEmpty()) {
 						formData_KQ = dossierFile_KQ.getFormData();
 					}
-					
+
 					File formDataFile_TP = FileUploadUtils.getFile(dossierFile_TP.getFormDataDossierFile());
 					if (formDataFile_TP != null) {
 						formData_TP = FileUploadUtils.fileToString(formDataFile_TP);
 					}
-					if(formData_TP.isEmpty()) {
+					if (formData_TP.isEmpty()) {
 						formData_TP = dossierFile_TP.getFormData();
 					}
-					
+
 					JSONObject jFormData_KQ = JSONFactoryUtil.createJSONObject(formData_KQ);
 					JSONObject jFormData_TP = JSONFactoryUtil.createJSONObject(formData_TP);
 					jFormData_TP.keys().forEachRemaining(key -> {
-						if(!key.contains("trackChange")) {
+						if (!key.contains("trackChange")) {
 							jFormData_KQ.remove(key);
 							jFormData_KQ.put(key, jFormData_TP.getString(key));
 						}
 					});
-					formData = JSONFactoryUtil.createJSONObject(jFormData_KQ.toJSONString());	
+					formData = JSONFactoryUtil.createJSONObject(jFormData_KQ.toJSONString());
 				} else {
-			    	File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
-			    	String strFormData = StringPool.BLANK;
+					File formDataFile = FileUploadUtils.getFile(dossierFile.getFormDataDossierFile());
+					String strFormData = StringPool.BLANK;
 					if (formDataFile != null) {
 						strFormData = FileUploadUtils.fileToString(formDataFile);
 					}
-					if(strFormData.isEmpty()) {
+					if (strFormData.isEmpty()) {
 						strFormData = dossierFile.getFormData();
 					}
 					formData = JSONFactoryUtil.createJSONObject(strFormData);
 				}
 
-				//Comment by Dungnv
-				//formData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
-				
+				// Comment by Dungnv
+				// formData = JSONFactoryUtil.createJSONObject(dossierFile.getFormData());
+
 //				_log.info("formData: "+formData);
 
 				// DB chua luu FormSchema
@@ -743,7 +751,7 @@ public class VRActionsImpl implements VRActions {
 						String childKeyValue = formData.getString(childKeyObj);
 
 						child.put("value", childKeyValue);
-						
+
 //						_log.info("==childKeyObj==" + dossierFileId + "_" + childKeyObj + "_" + childKeyValue);
 
 						altJSONArray.put(child);
@@ -897,7 +905,7 @@ public class VRActionsImpl implements VRActions {
 					techspec.put("standard", vrConfig.getSpecificationStandard());
 
 					techspec.put("basicunit", vrConfig.getSpecificationBasicUnit());
-					
+
 					techspec.put("sequenceNo", vrConfig.getSequenceNo());
 
 					techspec.put("placeholder", vrConfig.getSpecificationEntryPlaceholder());
@@ -1006,9 +1014,11 @@ public class VRActionsImpl implements VRActions {
 	}
 
 	@Override
-	public List<VRCorporationAttendee> getVRCorporationByUserId(int mtCore, long userId, String fromDateConvert, String toDateConvert) {
+	public List<VRCorporationAttendee> getVRCorporationByUserId(int mtCore, long userId, String fromDateConvert,
+			String toDateConvert) {
 
-		return VRCorporationAttendeeLocalServiceUtil.getVRCorporationByUserId(mtCore, userId, fromDateConvert, toDateConvert);
+		return VRCorporationAttendeeLocalServiceUtil.getVRCorporationByUserId(mtCore, userId, fromDateConvert,
+				toDateConvert);
 	}
 
 	Log _log = LogFactoryUtil.getLog(VRActionsImpl.class);

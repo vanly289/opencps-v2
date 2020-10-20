@@ -3917,6 +3917,8 @@ public class VRIssueEquipmentCertificatePersistenceImpl
 		vrIssueEquipmentCertificateImpl.setApplicantAddress(vrIssueEquipmentCertificate.getApplicantAddress());
 		vrIssueEquipmentCertificateImpl.setProductionPlantName(vrIssueEquipmentCertificate.getProductionPlantName());
 		vrIssueEquipmentCertificateImpl.setProductionPlantAddress(vrIssueEquipmentCertificate.getProductionPlantAddress());
+		vrIssueEquipmentCertificateImpl.setVehicleCertificateRecordDate(vrIssueEquipmentCertificate.getVehicleCertificateRecordDate());
+		vrIssueEquipmentCertificateImpl.setEquipmentCertificateRecordDate(vrIssueEquipmentCertificate.getEquipmentCertificateRecordDate());
 		vrIssueEquipmentCertificateImpl.setModifyDate(vrIssueEquipmentCertificate.getModifyDate());
 		vrIssueEquipmentCertificateImpl.setSyncDate(vrIssueEquipmentCertificate.getSyncDate());
 

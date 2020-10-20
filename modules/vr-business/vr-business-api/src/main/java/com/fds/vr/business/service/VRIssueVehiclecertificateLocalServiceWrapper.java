@@ -150,10 +150,10 @@ public class VRIssueVehiclecertificateLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject adminProcess(
 		com.liferay.portal.kernel.json.JSONArray arrayData, long issueId,
-		long dossierId, long mtCore)
-		throws com.liferay.portal.kernel.json.JSONException {
+		long dossierId, long mtCore, java.lang.String issueType)
+		throws java.lang.Exception {
 		return _vrIssueVehiclecertificateLocalService.adminProcess(arrayData,
-			issueId, dossierId, mtCore);
+			issueId, dossierId, mtCore, issueType);
 	}
 
 	/**
