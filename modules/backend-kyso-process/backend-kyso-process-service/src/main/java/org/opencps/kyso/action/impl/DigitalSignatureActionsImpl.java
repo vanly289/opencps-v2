@@ -140,6 +140,8 @@ public class DigitalSignatureActionsImpl implements DigitalSignatureActions{
 						- signatureImageHeight / 3;
 
 				float ury = lly + signatureImageHeight / 3;
+				
+				_log.info("signatureImageWidth: " + signatureImageWidth + ", signatureImageHeight: " + signatureImageHeight + ", llx: " + llx + ", urx: " + urx + ", lly: " + lly + ", ury: " + ury);
 
 				//if (TYPE_KYSO.contains(typeSignature) && STEPCODE_KYSO.contains(postStepCode)) {
 //				if (STEPCODE_KYSO.contains(postStepCode)) {

@@ -41,6 +41,8 @@ import org.opencps.dossiermgt.service.ProcessStepLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceConfigLocalServiceUtil;
 import org.opencps.dossiermgt.vr.utils.ResultDeliverableCOPUtils;
 
+import com.fds.vr.business.model.VRVehicleTypeCertificate;
+import com.fds.vr.business.service.VRVehicleTypeCertificateLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -58,14 +60,15 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-public class SignatureManagementImpl implements SignatureManagement{
+public class SignatureManagementImpl implements SignatureManagement {
 
 	Log _log = LogFactoryUtil.getLog(SignatureManagementImpl.class.getName());
-	//private static final String TYPE_DONGDAU = "1137, 1160, 1162";
+	// private static final String TYPE_DONGDAU = "1137, 1160, 1162";
 
 	@Override
 	public Response updateDossierFileBySignature(HttpServletRequest request, HttpHeaders header, Company company,
-			Locale locale, User user, ServiceContext serviceContext, Long id, DigitalSignatureInputModel input) throws PortalException {
+			Locale locale, User user, ServiceContext serviceContext, Long id, DigitalSignatureInputModel input)
+			throws PortalException {
 		BackendAuth auth = new BackendAuthImpl();
 
 		long groupId = GetterUtil.getLong(header.getHeaderString("groupId"));
@@ -84,23 +87,23 @@ public class SignatureManagementImpl implements SignatureManagement{
 
 			JSONObject signatureCompleted = callSignatureSync(groupId, user, id, sign, signFieldName, fileName,
 					serviceContext);
-	
+
 			if (signatureCompleted.getInt(RESTFulConfiguration.STATUS) == HttpURLConnection.HTTP_OK) {
-				_log.info("fileEntryId: "+fileEntryId);
+				_log.info("fileEntryId: " + fileEntryId);
 				String message = signatureCompleted.getString(RESTFulConfiguration.MESSAGE);
 				JSONObject jsonData = JSONFactoryUtil.createJSONObject(message);
 				String signedFilePath = jsonData.getString("signedFile");
 				File fileSigned = new File(signedFilePath);
 
 				DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(fileEntryId);
-	//			_log.info("dlFileEntry: "+dlFileEntry.getFileName());
-				DLAppLocalServiceUtil.updateFileEntry(user.getUserId(), dlFileEntry.getFileEntryId(), dlFileEntry.getTitle(),
-						dlFileEntry.getMimeType(), dlFileEntry.getTitle(), dlFileEntry.getDescription(),
-						StringPool.BLANK, true, fileSigned, serviceContext);
-				
+				// _log.info("dlFileEntry: "+dlFileEntry.getFileName());
+				DLAppLocalServiceUtil.updateFileEntry(user.getUserId(), dlFileEntry.getFileEntryId(),
+						dlFileEntry.getTitle(), dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
+						dlFileEntry.getDescription(), StringPool.BLANK, true, fileSigned, serviceContext);
+
 				serviceContext.setUserId(user.getUserId());
-			
-				//Next action
+
+				// Next action
 				Dossier dossier = DossierLocalServiceUtil.fetchDossier(dossierId);
 				if (dossier != null) {
 //					_log.info("dossierId: "+dossier.getDossierId());
@@ -122,7 +125,6 @@ public class SignatureManagementImpl implements SignatureManagement{
 								input.getActionNote(), GetterUtil.getLong(input.getAssignUserId()), user.getUserId(),
 								StringPool.BLANK, StringPool.BLANK, serviceContext);
 					}
-					
 
 					// Update deliverable with deliverableType
 					DossierFile dossierFile = DossierFileLocalServiceUtil.getByFileEntryId(fileEntryId);
@@ -136,12 +138,21 @@ public class SignatureManagementImpl implements SignatureManagement{
 									deliverable.setDeliverableState("2");
 									DeliverableLocalServiceUtil.updateDeliverable(deliverable);
 								}
-								//Process update VR_COP
+								// Process update VR_COP
 								if (dossier.getServiceCode().equalsIgnoreCase("TT302011BGTVTCOP")) {
 									ResultDeliverableCOPUtils.updateVRCOPBusiness(dossier, deliverable, 1);
 								}
 							}
 						}
+					}
+
+					Dossier dossier_CTN = DossierLocalServiceUtil.getByRef(55217L, dossier.getReferenceUid());
+					VRVehicleTypeCertificate vrVehicleTypeCertificate = VRVehicleTypeCertificateLocalServiceUtil
+							.findByDossierId_MtCore(dossier_CTN.getDossierId(), 1L);
+					if (Validator.isNotNull(vrVehicleTypeCertificate)) {
+						vrVehicleTypeCertificate.setDeliverableFileEntryid(fileEntryId);
+						
+						VRVehicleTypeCertificateLocalServiceUtil.updateVRVehicleTypeCertificate(vrVehicleTypeCertificate, company);
 					}
 
 					// Process success
@@ -156,29 +167,29 @@ public class SignatureManagementImpl implements SignatureManagement{
 
 	}
 
-	private JSONObject callSignatureSync(long groupId, User user, long id, String sign, String signFieldName, String fileName,
-			ServiceContext serviceContext) throws PortalException {
+	private JSONObject callSignatureSync(long groupId, User user, long id, String sign, String signFieldName,
+			String fileName, ServiceContext serviceContext) throws PortalException {
 
 		InvokeREST rest = new InvokeREST();
 
 		HashMap<String, String> properties = new HashMap<String, String>();
 
-			// Call initDossier to SERVER
+		// Call initDossier to SERVER
 
-			String httpMethod = HttpMethods.POST;
+		String httpMethod = HttpMethods.POST;
 
-			String endPoint = "signature/completeSignature";
+		String endPoint = "signature/completeSignature";
 
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("sign", sign);
-			params.put("signFieldName", signFieldName);
-			params.put("fileName", fileName);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("sign", sign);
+		params.put("signFieldName", signFieldName);
+		params.put("fileName", fileName);
 
-			JSONObject resPostDossier = rest.callPostAPI(groupId, httpMethod, "application/json",
-					RESTFulConfiguration.SERVER_PATH_BASE, endPoint, RESTFulConfiguration.SERVER_USER,
-					RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
+		JSONObject resPostDossier = rest.callPostAPI(groupId, httpMethod, "application/json",
+				RESTFulConfiguration.SERVER_PATH_BASE, endPoint, RESTFulConfiguration.SERVER_USER,
+				RESTFulConfiguration.SERVER_PASS, properties, params, serviceContext);
 
-			return resPostDossier;
+		return resPostDossier;
 
 	}
 
@@ -207,27 +218,28 @@ public class SignatureManagementImpl implements SignatureManagement{
 			for (String strId : idSplit) {
 				String[] idArr = strId.split(StringPool.COMMA);
 				DossierPart dossierPart = DossierPartLocalServiceUtil.fetchDossierPart(Long.valueOf(idArr[1]));
-				_log.info("Dossier Part: "+dossierPart.getDossierPartId());
+				_log.info("Dossier Part: " + dossierPart.getDossierPartId());
 				DossierFile dossierFile = null;
 				if (dossierPart != null && dossierPart.getESign()) {
 					dossierFile = DossierFileLocalServiceUtil.fetchDossierFile(Long.valueOf(idArr[0]));
-					_log.info("Dossier File: "+dossierFile.getDossierFileId());
+					_log.info("Dossier File: " + dossierFile.getDossierFileId());
 					if (dossierFile != null && dossierFile.getFileEntryId() > 0) {
 						long fileEntryId = dossierFile.getFileEntryId();
-						_log.info("fileEntryId: "+fileEntryId);
+						_log.info("fileEntryId: " + fileEntryId);
 
 						try {
-							//Dungnv - Them chuc nang ky so HSM
+							// Dungnv - Them chuc nang ky so HSM
 							hashComputed = callHashComputedSync(groupId, user, fileEntryId, input.getActionCode(),
 									input.getPostStepCode(), input.isUseHSM(), serviceContext);
-							_log.info("hashComputed: "+hashComputed);
+							_log.info("hashComputed: " + hashComputed);
 						} catch (Exception e) {
-							_log.info("hashComputed: "+hashComputed);
+							_log.info("hashComputed: " + hashComputed);
 							_log.info(e);
 						}
-						
-						results = JSONFactoryUtil.createJSONObject(hashComputed.getString(RESTFulConfiguration.MESSAGE));
-						_log.info("getHashComputedBySignature results: "+results);
+
+						results = JSONFactoryUtil
+								.createJSONObject(hashComputed.getString(RESTFulConfiguration.MESSAGE));
+						_log.info("getHashComputedBySignature results: " + results);
 					} else {
 						results = JSONFactoryUtil.createJSONObject();
 						results.put("msg", "fileEntryId");
@@ -267,7 +279,7 @@ public class SignatureManagementImpl implements SignatureManagement{
 		}
 	}
 
-	//Dungnv - Them chuc nang ky so HSM
+	// Dungnv - Them chuc nang ky so HSM
 	private JSONObject callHashComputedSync(long groupId, User user, long fileEntryId, String actionCode,
 			String postStepCode, boolean useHSM, ServiceContext serviceContext) throws PortalException {
 
@@ -277,12 +289,12 @@ public class SignatureManagementImpl implements SignatureManagement{
 
 		// Call initDossier to SERVER
 		String httpMethod = HttpMethods.POST;
-
+		_log.info("=======> userHSM: " + useHSM);
 		String endPoint = "signature/requestsToken";
-//		if (useHSM) {
-//			endPoint = "signature/requestsTokenHSM";
-//		}
-		
+		if (useHSM) {
+			endPoint = "signature/requestsTokenHSM";
+		}
+
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("fileEntryId", fileEntryId);
 		params.put("emailUser", user.getEmailAddress());
@@ -321,11 +333,11 @@ public class SignatureManagementImpl implements SignatureManagement{
 
 	protected ProcessAction getProcessAction(long groupId, long dossierId, String refId, String actionCode,
 			long serviceProcessId) throws PortalException {
-		
+
 		_log.info("GET PROCESS ACTION____");
-		
+
 		ProcessAction action = null;
-		
+
 		try {
 			List<ProcessAction> actions = ProcessActionLocalServiceUtil.getByActionCode(groupId, actionCode,
 					serviceProcessId);

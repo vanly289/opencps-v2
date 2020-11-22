@@ -49,10 +49,12 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -126,6 +128,34 @@ public class DklrApplication extends Application {
 	};
 
 	@POST
+	@Path("/es")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public String putMapping(@Context HttpServletRequest request, @Context HttpHeaders header, @Context Company company,
+			@Context Locale locale, @Context User user, @Context ServiceContext serviceContext, String body) {
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		try {
+
+			JSONObject bodyRoot = JSONFactoryUtil.createJSONObject(body);
+			String method = bodyRoot.getString("method");
+			String bodyQuery = bodyRoot.has("body")
+					? JSONFactoryUtil.createJSONObject(bodyRoot.getString("body")).toJSONString()
+					: null;
+			String urlQuery = bodyRoot.getString("url");
+
+			result = ElasticQueryWrapUtil.queryES(urlQuery, method, bodyQuery);
+
+		} catch (Exception e) {
+
+			_log.error(e);
+		}
+
+		return result.toJSONString();
+	};
+
+	@POST
 	@Path("/indexing/applicant")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -156,10 +186,11 @@ public class DklrApplication extends Application {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response indexingVehicleType(@Context HttpServletRequest request, @Context HttpHeaders header,
 			@Context Company company, @Context Locale locale, @Context User user,
-			@Context ServiceContext serviceContext) {
+			@Context ServiceContext serviceContext, @DefaultValue("-1") @QueryParam("start") int start,
+			@DefaultValue("-1") @QueryParam("end") int end) {
 		try {
 			List<VRVehicleTypeCertificate> vrVehicleTypeCertificates = VRVehicleTypeCertificateLocalServiceUtil
-					.getVRVehicleTypeCertificates(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					.getVRVehicleTypeCertificates(start, end);
 			if (vrVehicleTypeCertificates != null && !vrVehicleTypeCertificates.isEmpty()) {
 				vrVehicleTypeCertificates.parallelStream().forEach(vrVehicleTypeCertificate -> {
 					VRVehicleTypeCertificateAction action = new VRVehicleTypeCertificateActionImpl();
@@ -196,6 +227,8 @@ public class DklrApplication extends Application {
 		}
 	}
 
+	// Nen convert JSON o Java, khong nen convert JSON o alpaca de khong bi bat dong
+	// bo code voi Alpaca
 	@POST
 	@Path("/post")
 	@Consumes({ MediaType.APPLICATION_JSON })

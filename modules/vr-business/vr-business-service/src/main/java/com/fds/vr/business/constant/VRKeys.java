@@ -12,7 +12,7 @@ public class VRKeys {
 	public static final String DA_DUYET = "2";
 	public static final String YEU_CAU_BO_SUNG = "3";
 	
-	public static final String LIST_BB = "KQ1, KQ5, KQ6";
+	public static final String LIST_BB = "KQ1, KQ5, KQ6, KQ4, KQ2";
 	
 	
 	public static final String BAO_CAO_HS_TDTK_CHUA_HOAN_THIEN = "N01";

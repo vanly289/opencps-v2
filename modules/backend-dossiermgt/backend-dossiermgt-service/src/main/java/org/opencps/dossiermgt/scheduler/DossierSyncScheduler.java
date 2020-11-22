@@ -58,7 +58,6 @@ import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
 import org.opencps.dossiermgt.model.DossierFile;
 import org.opencps.dossiermgt.model.DossierSync;
-import org.opencps.dossiermgt.model.DossierTemplate;
 import org.opencps.dossiermgt.model.PaymentFile;
 import org.opencps.dossiermgt.model.ProcessAction;
 import org.opencps.dossiermgt.model.ProcessOption;
@@ -68,7 +67,6 @@ import org.opencps.dossiermgt.service.DossierActionLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierLocalServiceUtil;
 import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
-import org.opencps.dossiermgt.service.DossierTemplateLocalServiceUtil;
 import org.opencps.dossiermgt.service.PaymentFileLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceInfoLocalServiceUtil;
 import org.opencps.dossiermgt.service.ServiceProcessLocalServiceUtil;
@@ -165,10 +163,10 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 
 	}
 
-	public static final String GOVERNMENT_AGENCY = "GOVERNMENT_AGENCY";
-	public static final String ADMINISTRATIVE_REGION = "ADMINISTRATIVE_REGION";
-	public static final int LENGHT_DOSSIER_PASSWORD = 15;
-	public static final String DEFAULT_PATTERN_PASSWORD = "0123456789khoa";
+	private static final String GOVERNMENT_AGENCY = "GOVERNMENT_AGENCY";
+	private static final String ADMINISTRATIVE_REGION = "ADMINISTRATIVE_REGION";
+	private static final int LENGHT_DOSSIER_PASSWORD = 15;
+	private static final String DEFAULT_PATTERN_PASSWORD = "0123456789khoa";
 
 	protected String getDictItemName(long groupId, String collectionCode, String itemCode) {
 
@@ -193,17 +191,6 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 			return service.getServiceName();
 		} catch (Exception e) {
 			throw new NotFoundException("NotFoundExceptionWithServiceCode");
-		}
-
-	}
-
-	protected String getDossierTemplateName(String dossierTemplateCode, long groupId) throws PortalException {
-		try {
-			DossierTemplate template = DossierTemplateLocalServiceUtil.getByTemplateNo(groupId, dossierTemplateCode);
-
-			return template.getTemplateName();
-		} catch (Exception e) {
-			throw new NotFoundException("NotFoundExceptionWithTemplateCode");
 		}
 
 	}
@@ -263,6 +250,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 		return dossier;
 	}
 
+	//Sau nay ai maintain he thong nay nho dua ham nay vao trong dossierSyncLocalServiceImpl de cac table duoc commit cung luc
 	private void singleServerSync(long groupId, String actionCode, String actionUser, String actionNote,
 			long assignUserId, String refId, long clientDossierActionId, long dossierSyncId, long dossierId,
 			long classPK, boolean isCreateDossier, ServiceContext serviceContext) throws PortalException {
@@ -616,7 +604,7 @@ public class DossierSyncScheduler extends BaseSchedulerEntryMessageListener {
 	@Modified
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(TriggerFactoryUtil.createTrigger(getEventListenerClass(), getEventListenerClass(),
-				20, TimeUnit.SECOND));
+				40, TimeUnit.SECOND));
 		_schedulerEngineHelper.register(this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 

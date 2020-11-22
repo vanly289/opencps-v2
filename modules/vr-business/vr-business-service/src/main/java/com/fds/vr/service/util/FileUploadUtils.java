@@ -42,7 +42,7 @@ import org.opencps.auth.utils.DLFolderUtil;
 public class FileUploadUtils {
 
 	public static final String FOLDER_FORM_FILE = "FORM_FILE_STORE";
-	
+
 	public static final Log _log = LogFactoryUtil.getLog(FileUploadUtils.class);
 
 	public static FileEntry uploadFile(long userId, long groupId, long fileEntryId, InputStream inputStream,
@@ -52,11 +52,8 @@ public class FileUploadUtils {
 		FileEntry fileEntry = null;
 
 		if (inputStream != null && Validator.isNotNull(sourceFileName)) {
-//			_log.info("sourceFileName: "+sourceFileName);
-//			_log.info("fileType: "+fileType);
 			if (Validator.isNull(fileType)) {
 				fileType = MimeTypesUtil.getContentType(sourceFileName);
-//				_log.info("MimeTypesUtil.fileType: "+fileType);
 			}
 
 			String title = getFileName(sourceFileName);
@@ -84,13 +81,8 @@ public class FileUploadUtils {
 			PermissionChecker checker = PermissionCheckerFactoryUtil.create(user);
 			PermissionThreadLocal.setPermissionChecker(checker);
 
-			if (fileEntryId > 0) {
-				fileEntry = DLAppLocalServiceUtil.updateFileEntry(userId, fileEntryId, sourceFileName, fileType, title,
-						title, title, true, FileUtil.getBytes(inputStream), serviceContext);
-			} else {
-				fileEntry = DLAppLocalServiceUtil.addFileEntry(userId, groupId, dlFolder.getFolderId(), title, fileType,
-						title, title, StringPool.BLANK, FileUtil.getBytes(inputStream), serviceContext);
-			}
+			fileEntry = DLAppLocalServiceUtil.addFileEntry(userId, groupId, dlFolder.getFolderId(), title, fileType,
+					title, title, StringPool.BLANK, FileUtil.getBytes(inputStream), serviceContext);
 
 		}
 
@@ -117,7 +109,7 @@ public class FileUploadUtils {
 			tempFile = DLFileEntryLocalServiceUtil.getFile(fileEntry.getFileEntryId(), fileEntry.getVersion(), true);
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			_log.error(e);
 		}
 
 		return tempFile;
@@ -141,7 +133,7 @@ public class FileUploadUtils {
 	}
 
 	public static FileEntry uploadFileJSON(JSONObject formData, ServiceContext serviceContext) throws IOException {
-		File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), StringPool.PERIOD + "txt");
+		File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), StringPool.PERIOD + "tmp");
 		OutputStream outStream = new FileOutputStream(tempFile);
 		byte[] by = formData.toJSONString().getBytes();
 		for (int i = 0; i < by.length; i++) {
@@ -152,8 +144,8 @@ public class FileUploadUtils {
 		InputStream inputStream = new FileInputStream(tempFile);
 
 		try {
-			FileEntry fileEntry = FileUploadUtils.uploadFormDataFile(serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), inputStream, tempFile.getName(), null, serviceContext);
+			FileEntry fileEntry = uploadFormDataFile(serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+					inputStream, tempFile.getName(), null, serviceContext);
 
 			return fileEntry;
 		} catch (Exception e) {

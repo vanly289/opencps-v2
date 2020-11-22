@@ -2099,6 +2099,7 @@ public class DossierManagementImpl implements DossierManagement {
 			result = VRBusinessUtils.findByDossierStatus(dossierStatus, start, end);
 			return Response.status(200).entity(result.toJSONString()).build();
 		} catch (Exception e) {
+			_log.error(e);
 			return Response.status(500).entity(VRRestUtil.errorMessage("Can't get VRExpiredCertificate").toJSONString())
 					.build();
 		}

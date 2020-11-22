@@ -85,7 +85,7 @@ public class VRCOPReportRepositoryLocalServiceImpl extends VRCOPReportRepository
 		Date now = new Date();
 
 		vrcopReportRepository.setModifyDate(now);
-		vrcopReportRepository = vrcopReportRepositoryPersistence.update(vrcopReportRepository);
+		vrcopReportRepository = vrcopReportRepositoryPersistence.updateImpl(vrcopReportRepository);
 		if (vrcopReportRepository != null) {
 			VRCOPReportRepositoryAction action = new VRCOPReportRepositoryActionImpl();
 			action.indexing(vrcopReportRepository, company);

@@ -54,7 +54,7 @@ public class BackendKysoApiRestApplication extends Application {
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getByTokensHSM(@Context HttpHeaders header, @BeanParam DigitalSignatureInputModel input) {
 
-		_log.info("START: =========");
+		_log.info("START HSM: =========");
 		try {
 			DigitalSignatureHSMActions action = new DigitalSignatureHSMActionsImpl();
 			

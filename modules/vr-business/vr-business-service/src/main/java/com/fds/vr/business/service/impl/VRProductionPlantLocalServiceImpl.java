@@ -244,9 +244,7 @@ public class VRProductionPlantLocalServiceImpl extends VRProductionPlantLocalSer
 
 			Date now = new Date();
 			object.setModifyDate(now);
-			if (objectData.getString("syncDate") != null && !StringPool.BLANK.equals(objectData.getString("syncDate"))) {
-				object.setSyncDate(ConvertFormatDate.parseStringToDate(objectData.getString("syncDate"), ConvertFormatDate._ddMMyyy_HHmm));
-			}
+			object.setSyncDate(now);
 
 			object.setApplicantCode(objectData.getString("applicantCode"));
 			object.setMtCore(objectData.getLong("mtCore"));

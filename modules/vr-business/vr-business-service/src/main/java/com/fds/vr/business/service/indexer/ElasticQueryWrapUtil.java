@@ -14,7 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ElasticQueryWrapUtil {
-	private static final String ELASTIC_SERVER_API_URL = "http://localhost:9200/liferay-";
+	private static final String ELASTIC_SERVER_API_URL = "http://localhost:9201/liferay-";
 	private static Log _log = LogFactoryUtil.getLog(ElasticQueryWrapUtil.class);
 	
 	public static JSONObject POST(String body, String className, long conpanyId) {

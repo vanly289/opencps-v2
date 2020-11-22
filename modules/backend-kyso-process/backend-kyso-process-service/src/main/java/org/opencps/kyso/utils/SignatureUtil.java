@@ -23,12 +23,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.image.BufferedImage;
 import java.security.SignatureException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
@@ -49,43 +47,31 @@ import kysovanban.signature.SignerInfo;
  */
 
 public class SignatureUtil {
-	
+
 	public static vgca.hsmsigner.ServerSigner getServerSignerHSM(String fullPath, Certificate cert, byte[] imageBytes) {
 		vgca.hsmsigner.ServerSigner signer = new vgca.hsmsigner.ServerSigner(fullPath, null, cert);
 		signer.setSignServerUrl("http://cms.ca.gov.vn/Pkcs1Signer.asmx");
 		signer.setSignatureGraphic(imageBytes);
 		signer.setSignatureAppearance(PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION);
 		signer.setTsaUrl("http://tsa.ca.gov.vn");
-		
+
 		return signer;
 	}
-	
-	public static vgca.hsmsigner.ServerSigner getServerSignerHSM(String fullPath, Certificate cert, InputStream imageIs) 
-			throws IOException {
-		byte[] bytes = FileUtil.getBytes(imageIs);
-		
-		return getServerSignerHSM(fullPath, cert, bytes);
-	}
-	
-	public static Rectangle createRectangle(ExtractTextLocations textLocation) throws IOException {
-		int signatureImageWidth = 200;
 
-		int signatureImageHeight = 200;
+	public static Rectangle createRectangle(ExtractTextLocationsHSM textLocation, BufferedImage bufferedImage) {
 
+		int signatureImageWidth = (bufferedImage != null && bufferedImage.getWidth() > 0) ? bufferedImage.getWidth()
+				: 80;
+		int signatureImageHeight = (bufferedImage != null && bufferedImage.getHeight() > 0) ? bufferedImage.getHeight()
+				: 80;
 		float llx = textLocation.getAnchorX();
-
 		float urx = llx + signatureImageWidth / 3;
 
 		float lly = textLocation.getPageURY() - textLocation.getAnchorY() - signatureImageHeight / 3;
 
 		float ury = lly + signatureImageHeight / 3;
 
-		float destLLx = llx + 20;
-		float destLLy = lly - 125;
-		float destURx = urx + 154;
-		float destURy = ury - 80;
-		
-		return new Rectangle(destLLx, destLLy, destURx, destURy);
+		return new Rectangle(llx + 10, lly - 15, urx + 90, ury);
 	}
 
 	/**
@@ -97,9 +83,8 @@ public class SignatureUtil {
 	 * @param imagePath
 	 * @return
 	 */
-	public static PdfSigner getPdfSigner(String filePath, String certPath,
-			String tempFilePath, String signedFilePath, boolean isVisible,
-			String imagePath) {
+	public static PdfSigner getPdfSigner(String filePath, String certPath, String tempFilePath, String signedFilePath,
+			boolean isVisible, String imagePath) {
 
 		X509Certificate cert = null;
 		PdfSigner pdfSigner = null;
@@ -110,8 +95,7 @@ public class SignatureUtil {
 		}
 
 		if (cert != null) {
-			pdfSigner = new PdfSigner(filePath, cert, tempFilePath,
-					signedFilePath, isVisible);
+			pdfSigner = new PdfSigner(filePath, cert, tempFilePath, signedFilePath, isVisible);
 
 			if (Validator.isNotNull(imagePath)) {
 				pdfSigner.setSignatureGraphic(imagePath);
@@ -122,9 +106,8 @@ public class SignatureUtil {
 		return pdfSigner;
 	}
 
-	public static PdfPkcs7Signer getPdfPkcs7Signer(String filePath,
-			String certPath, String tempFilePath, String signedFilePath,
-			boolean isVisible, String imagePath) {
+	public static PdfPkcs7Signer getPdfPkcs7Signer(String filePath, String certPath, String tempFilePath,
+			String signedFilePath, boolean isVisible, String imagePath) {
 
 		X509Certificate cert = null;
 		PdfPkcs7Signer pdfSigner = null;
@@ -135,8 +118,7 @@ public class SignatureUtil {
 		}
 
 		if (cert != null) {
-			pdfSigner = new PdfPkcs7Signer(filePath, cert, tempFilePath,
-					signedFilePath, isVisible);
+			pdfSigner = new PdfPkcs7Signer(filePath, cert, tempFilePath, signedFilePath, isVisible);
 
 			if (Validator.isNotNull(imagePath)) {
 				pdfSigner.setSignatureGraphic(imagePath);
@@ -159,10 +141,8 @@ public class SignatureUtil {
 		Signer signer = new Signer();
 		StringBuffer buffer = new StringBuffer();
 		if (signer.verify(pdfcontent)) {
-			ArrayList<SignerInfo> signerInfos = signer
-					.getSignatureInfos(pdfcontent);
-			for (Iterator<SignerInfo> iterator = signerInfos.iterator(); iterator
-					.hasNext();) {
+			ArrayList<SignerInfo> signerInfos = signer.getSignatureInfos(pdfcontent);
+			for (Iterator<SignerInfo> iterator = signerInfos.iterator(); iterator.hasNext();) {
 				SignerInfo info = iterator.next();
 
 				buffer.append(info.toJSON());
@@ -184,10 +164,8 @@ public class SignatureUtil {
 		Signer signer = new Signer();
 		StringBuffer buffer = new StringBuffer();
 		if (signer.verify(doccontent)) {
-			ArrayList<SignerInfo> signerInfos = signer
-					.getSignatureInfos(doccontent);
-			for (Iterator<SignerInfo> iterator = signerInfos.iterator(); iterator
-					.hasNext();) {
+			ArrayList<SignerInfo> signerInfos = signer.getSignatureInfos(doccontent);
+			for (Iterator<SignerInfo> iterator = signerInfos.iterator(); iterator.hasNext();) {
 				SignerInfo info = iterator.next();
 
 				buffer.append(info.toJSON());
@@ -203,8 +181,7 @@ public class SignatureUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static int getSignCheck(String path, String extension)
-			throws Exception {
+	public static int getSignCheck(String path, String extension) throws Exception {
 		int signCheck = 0;
 		List<SignerInfo> signerInfos = new ArrayList<SignerInfo>();
 
@@ -229,8 +206,7 @@ public class SignatureUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String getSignInfo(String path, String extension)
-			throws Exception {
+	public static String getSignInfo(String path, String extension) throws Exception {
 		String signInfoStr = StringPool.BLANK;
 //		List<SignerInfo> signerInfos = new ArrayList<SignerInfo>();
 //		
@@ -259,8 +235,7 @@ public class SignatureUtil {
 		StringBuilder stringBuilder = new StringBuilder();
 		try {
 
-			JSONArray jsonArray = JSONFactoryUtil
-					.createJSONArray();
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 			String signInfoStr = StringPool.BLANK;
 
@@ -286,16 +261,14 @@ public class SignatureUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	private static List<SignerInfo> getSignerInfoAcrossExtension(String path,
-			String extension) {
+	private static List<SignerInfo> getSignerInfoAcrossExtension(String path, String extension) {
 		PdfContent pdfcontent = null;
 		DocContent doccontent = null;
 		Signer signer = new Signer();
 		List<SignerInfo> signerInfos = new ArrayList<SignerInfo>();
-		
+
 		try {
-			if (extension.equalsIgnoreCase("doc")
-					|| extension.equalsIgnoreCase("docx")) {
+			if (extension.equalsIgnoreCase("doc") || extension.equalsIgnoreCase("docx")) {
 				doccontent = new DocContent(path);
 				if (signer.verify(doccontent)) {
 					signerInfos = signer.getSignatureInfos(doccontent);
@@ -312,7 +285,7 @@ public class SignatureUtil {
 		} catch (Exception e) {
 			_log.error(e);
 		}
-		
+
 		return signerInfos;
 	}
 
@@ -341,13 +314,12 @@ public class SignatureUtil {
 	 * @return
 	 * @throws SignatureException
 	 */
-	public static byte[] computerHash(PdfSigner pdfSigner, float llx,
-			float lly, float urx, float ury) throws SignatureException {
+	public static byte[] computerHash(PdfSigner pdfSigner, float llx, float lly, float urx, float ury)
+			throws SignatureException {
 
 		return pdfSigner.computeHash(llx, lly, urx, ury);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SignatureUtil.class
-			.getName());
+	private static Log _log = LogFactoryUtil.getLog(SignatureUtil.class.getName());
 
 }

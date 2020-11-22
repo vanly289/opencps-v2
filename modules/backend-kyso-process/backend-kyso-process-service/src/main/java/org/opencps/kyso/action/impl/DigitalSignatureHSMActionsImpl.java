@@ -15,13 +15,15 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.security.cert.Certificate;
 
+import org.apache.commons.io.FileUtils;
 import org.opencps.kyso.action.DigitalSignatureHSMActions;
 import org.opencps.kyso.utils.CertUtil;
-import org.opencps.kyso.utils.ExtractTextLocations;
+import org.opencps.kyso.utils.ExtractTextLocationsHSM;
+import org.opencps.kyso.utils.ImageUtil;
 import org.opencps.kyso.utils.SignatureUtil;
 
 import backend.kyso.process.service.util.ConfigProps;
@@ -36,7 +38,7 @@ public class DigitalSignatureHSMActionsImpl implements DigitalSignatureHSMAction
 	@Override
 	public JSONObject createHashSignature(String emailUser, long fileEntryId, String typeSignature,
 			String postStepCode) {
-		String realPath = PropsUtil.get(ConfigProps.CER_HOME) + "/";
+		String realPath = PropsUtil.get(ConfigProps.CER_HOME) + "/hsmcer/";
 		_log.info("realPath_Kyso: " + realPath);
 
 		String fieldName = StringPool.BLANK;
@@ -67,17 +69,19 @@ public class DigitalSignatureHSMActionsImpl implements DigitalSignatureHSMAction
 			_log.info("====***postStepCode+===: " + postStepCode);
 
 			signImagePath = new File(realPath + emailUser + ".png").getAbsolutePath();
-			_log.info("signImagePath_Kyso: " + realPath);
-			FileInputStream fileChuKy = new FileInputStream(signImagePath);
+			_log.info("signImagePath_Kyso: " + signImagePath);
+			BufferedImage bufferedImage = ImageUtil.getImageByPath(signImagePath);
+			
+			byte[] chuKyBytes = FileUtils.readFileToByteArray(new File(signImagePath));
 
 			Certificate cert = CertUtil.getCertificateByPath(new File(realPath + emailUser + ".cer").getAbsolutePath());
 
-			ExtractTextLocations textLocation = new ExtractTextLocations(fullPath);
+			ExtractTextLocationsHSM textLocation = new ExtractTextLocationsHSM(fullPath);
 
-			Rectangle rec = SignatureUtil.createRectangle(textLocation);
+			Rectangle rec = SignatureUtil.createRectangle(textLocation, bufferedImage);
 
-			vgca.hsmsigner.ServerSigner signer = SignatureUtil.getServerSignerHSM(fullPath, cert, fileChuKy);
-
+			vgca.hsmsigner.ServerSigner signer = SignatureUtil.getServerSignerHSM(fullPath, cert, chuKyBytes);
+			
 			signer.Sign(rec, textLocation.getPageSize());
 
 			fieldName = signer.getSignatureName();

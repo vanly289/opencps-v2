@@ -1961,10 +1961,10 @@ public class DossierActionsImpl implements DossierActions {
 				dossierActionUser.initDossierActionUsers(dossierAction.getDossierActionId(), userId, groupId,
 						assignUserId, curStep.getStepCode());
 			}
-			// _log.info("UPDATE DOSSIER STATUS************");
-			// _log.info(curStep.getDossierStatus());
-			// _log.info(curStep.getDossierSubStatus());
-			// _log.info("*********************************");
+			 _log.info("UPDATE DOSSIER STATUS FOR DOSSIER_ID: " + dossier.getDossierId() + "************");
+			 _log.info(curStep.getDossierStatus());
+			 _log.info(curStep.getDossierSubStatus());
+			 _log.info("*********************************");
 			// Set dossierStatus by CUR_STEP
 			// LamTV: Update lockState when Sync
 
@@ -2376,14 +2376,18 @@ public class DossierActionsImpl implements DossierActions {
 			VRBusinessUtils.processVRBussiness(groupId, dossier, dossierAction, 1, payload.toString());
 
 			// Add by Dungnv - Add trackchanges and history
-			context.setScopeGroupId(groupId);
-			List<DossierFile> dossierFiles = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
-			for (DossierFile dossierFile : dossierFiles) {
-				VRBusinessUtils.updateVRTrackchangesAndVRHistoryProfileForDossier(dossierFile.getFormDataDossierFile(),
-						dossierFile.getDossierPartNo(), dossierFile.getDossierTemplateNo(), dossierId,
-						dossier.getCompanyId(), dossierFile.getFileEntryId(), context);
+			if(groupId == ConstantsUtils.GROUP_CXL) {
+				context.setScopeGroupId(groupId);
+				List<DossierFile> dossierFiles = DossierFileLocalServiceUtil.getAllDossierFile(dossierId);
+				for (DossierFile dossierFile : dossierFiles) {
+					VRBusinessUtils.updateVRTrackchangesAndVRHistoryProfileForDossier(dossierFile.getFormDataDossierFile(),
+							dossierFile.getDossierPartNo(), dossierFile.getDossierTemplateNo(), dossierId,
+							dossier.getCompanyId(), dossierFile.getFileEntryId(), context);
+				}
 			}
 		}
+		
+		_log.info("DossierStatus " + dossier.getDossierId() + ": " + dossier.getDossierStatus());
 
 		_log.info("END DO ACTION ==========");
 		return dossierAction;

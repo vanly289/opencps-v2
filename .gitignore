@@ -40,3 +40,4 @@ gradle-local.properties
 
 **/**/.settings
 gradle.properties
+/.gradle/

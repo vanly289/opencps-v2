@@ -264,7 +264,7 @@ public class VRIssueLocalServiceImpl extends VRIssueLocalServiceBaseImpl {
 		vrIssue.setDigitalIssueStatus(digitalIssueStatus);
 		vrIssue.setModifyDate(new Date());
 
-		vrIssue = vrIssuePersistence.update(vrIssue);
+		vrIssue = vrIssuePersistence.updateImpl(vrIssue);
 		if (vrIssue != null) {
 			VRIssueAction action = new VRIssueActionImpl();
 			action.indexing(vrIssue, company);

@@ -21,10 +21,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.List;
 
-import org.opencps.dossiermgt.action.util.ConstantsUtils;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
@@ -158,85 +159,65 @@ public class VRBusinessUtils {
 			ServiceContext serviceContext) {
 		try {
 			if ("KQ1, KQ2, KQ4, TP1, KQ5, KQ6, KQ7".contains(partNo)) {
+
+				Date now = new Date();
+
 				VRTrackchangesAction trackchangesAction = new VRTrackchangesActionImpl();
 				VRHistoryProfileAction profileAction = new VRHistoryProfileActionImpl();
 
 				Document dossierDoc = DossierLocalServiceUtil.getDossierById(dossierId, companyId);
-				String dossierIdCTN = StringPool.BLANK;
-				String applicantIdNo = StringPool.BLANK;
-				if (dossierDoc != null) {
-					dossierIdCTN = dossierDoc.get(DossierTerm.DOSSIER_ID + "CTN");
-					applicantIdNo = dossierDoc.get(DossierTerm.APPLICANT_ID_NO);
-				}
+				String dossierIdCTN = dossierDoc.get(DossierTerm.DOSSIER_ID + "CTN");
+				String applicantIdNo = dossierDoc.get(DossierTerm.APPLICANT_ID_NO);
+				String dossierNo = dossierDoc.get(DossierTerm.DOSSIER_NO);
+
 				_log.info("--- Dungnv: VRTrackchanges - VRHistoryProfile --------> dossierIdCTN: " + dossierIdCTN
 						+ " - dossierId: " + dossierId + " - companyId: " + companyId);
-				VRTrackchanges vrTrackchanges = null;
-				if (!dossierIdCTN.equals(StringPool.BLANK)) {
-					vrTrackchanges = VRTrackchangesLocalServiceUtil.findByDossierIdCTN_ContentFileTemplate(dossierIdCTN,
-							partNo);
-				} else {
-					vrTrackchanges = VRTrackchangesLocalServiceUtil.findByDossierId_ContentFileTemplate(dossierId,
-							partNo);
-				}
-
-				long groupId = serviceContext.getScopeGroupId();
-				if (vrTrackchanges != null) {
-					if (groupId == ConstantsUtils.GROUP_CTN) {
-						vrTrackchanges.setDossierIdCTN(dossierIdCTN);
-						VRTrackchangesLocalServiceUtil.updateVRTrackchanges(vrTrackchanges);
-					} else if (groupId == ConstantsUtils.GROUP_CXL) {
-						vrTrackchanges.setDossierId(dossierId);
-						VRTrackchangesLocalServiceUtil.updateVRTrackchanges(vrTrackchanges);
-					}
-				}
 
 				List<VRHistoryProfile> vrHistoryProfiles = VRHistoryProfileLocalServiceUtil
 						.findByDossierIdCTN(dossierIdCTN, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 				boolean hasUpdate = true;
 				for (int i = vrHistoryProfiles.size() - 1; i >= 0; i--) {
+					// Neu ton tai roi thi khong them nua
 					if (vrHistoryProfiles.get(i).getContentjsonFileEntryId() != 0 && formDataFileEntryId != 0
 							&& vrHistoryProfiles.get(i).getDossierId() != 0
 							&& vrHistoryProfiles.get(i).getContentjsonFileEntryId() == formDataFileEntryId
 							&& vrHistoryProfiles.get(i).getDossierId() == dossierId
 							&& vrHistoryProfiles.get(i).getContentFileTemplate().equals(partNo)) {
-//						_log.info("-- Dungnv -------- ContentjsonFileEntryId: "
-//								+ vrHistoryProfiles.get(i).getContentjsonFileEntryId() + " - formDataFileEntryId: "
-//								+ formDataFileEntryId + " vrHistoryProfiles.get(i).getDossierId(): "
-//								+ vrHistoryProfiles.get(i).getDossierId() + " dossierId: " + dossierId);
 						hasUpdate = false;
 						break;
 					}
 				}
 				if (hasUpdate) {
-					if ("KQ2, KQ6, KQ7".contains(partNo) && !dossierTemplateNo.equals("TT302011BGTVTKTSPMXCG")
-							&& !dossierTemplateNo.equals("TT302011BGTVTKTSPMXBBCN")) {
+					// Ky so va dong dau chi luu cung 1 ban ghi lich su
+					if ((partNo.equals("KQ6") && !dossierTemplateNo.equals("TT302011BGTVTKTSPMXCG")
+							&& !dossierTemplateNo.equals("TT302011BGTVTKTSPMXBBCN"))
+							|| ("KQ2, KQ7, KQ14".contains(partNo))) {
 						VRHistoryProfileLocalServiceUtil.deleteByDossierIdCTN_contentFileTemplate(dossierIdCTN, partNo);
 					}
-					profileAction.updateVRHistoryProfile(0L, applicantIdNo, null, dossierId, dossierIdCTN, null,
-							dossierTemplateNo, partNo, formDataFileEntryId, pdfFileEntryId, null, serviceContext);
-				}
-				if (groupId == ConstantsUtils.GROUP_CTN) {
-					dossierId = 0;
-				} else if (groupId == ConstantsUtils.GROUP_CXL) {
-					dossierIdCTN = null;
+					profileAction.updateVRHistoryProfile(0L, applicantIdNo, null, dossierId, dossierIdCTN, dossierNo,
+							dossierTemplateNo, partNo, formDataFileEntryId, pdfFileEntryId, now, serviceContext);
 				}
 
+				VRTrackchanges vrTrackchanges = VRTrackchangesLocalServiceUtil
+						.findByDossierIdCTN_ContentFileTemplate(dossierIdCTN, partNo);
+				if (Validator.isNull(vrTrackchanges)) {
+					vrTrackchanges = VRTrackchangesLocalServiceUtil.findByDossierId_ContentFileTemplate(dossierId,
+							partNo);
+				}
 				if (vrTrackchanges != null) {
 					long nextContentFileEntryId = vrTrackchanges.getNextContentFileEntryId();
 					long previousContentFileEntryId = vrTrackchanges.getPreviousContentFileEntryId();
+					// formDataFileEntryId lan truoc khong duoc giong lan sau
 					if (nextContentFileEntryId != 0 && formDataFileEntryId != 0
 							&& nextContentFileEntryId != formDataFileEntryId
 							&& previousContentFileEntryId != formDataFileEntryId) {
 						trackchangesAction.updateVRTrackchanges(vrTrackchanges.getPrimaryKey(), applicantIdNo, null,
-								dossierId, dossierIdCTN, null, dossierTemplateNo, partNo, formDataFileEntryId, null,
+								dossierId, dossierIdCTN, dossierNo, dossierTemplateNo, partNo, formDataFileEntryId, now,
 								serviceContext);
-					} /*
-						 * else { _log.info("-- Dungnv -------- nextContentFileEntryId: " +
-						 * nextContentFileEntryId + " - formDataFileEntryId: " + formDataFileEntryId); }
-						 */
+					}
 				} else {
-					trackchangesAction.updateVRTrackchanges(0L, applicantIdNo, null, dossierId, dossierIdCTN, null,
-							dossierTemplateNo, partNo, formDataFileEntryId, null, serviceContext);
+					trackchangesAction.updateVRTrackchanges(0L, applicantIdNo, null, dossierId, dossierIdCTN, dossierNo,
+							dossierTemplateNo, partNo, formDataFileEntryId, now, serviceContext);
 				}
 			}
 		} catch (Exception e) {
@@ -250,17 +231,21 @@ public class VRBusinessUtils {
 		JSONArray array = JSONFactoryUtil.createJSONArray();
 		for (VRExpireCertificate vrExpireCertificate : vrExpireCertificates) {
 			Dossier vrDossier_CTN = DossierLocalServiceUtil.fetchDossier(vrExpireCertificate.getDossierId());
-			Dossier vrDossier_CXL = DossierLocalServiceUtil.getByRef(55301L, vrDossier_CTN.getReferenceUid());
-			Document dossierDoc = DossierLocalServiceUtil.getDossierById(vrDossier_CXL.getDossierId(),
-					vrDossier_CXL.getCompanyId());
-			if (vrDossier_CXL != null) {
-				JSONObject obj = BusinessUtil.object2Json_originColumnName(vrDossier_CXL, DossierModelImpl.class,
-						StringPool.BLANK);
-				obj.put("expireCertificateId", vrExpireCertificate.getPrimaryKey());
-				obj.put("certNo", dossierDoc.get("so_chung_chi"));
-				obj.put("certDate", dossierDoc.get("ngay_ky_cc"));
-				obj.put("dossierIdCTN", dossierDoc.get("dossierIdCTN"));
-				array.put(obj);
+			if (Validator.isNotNull(vrDossier_CTN)) {
+				Dossier vrDossier_CXL = DossierLocalServiceUtil.getByRef(55301L, vrDossier_CTN.getReferenceUid());
+				if (Validator.isNotNull(vrDossier_CXL)) {
+					Document dossierDoc = DossierLocalServiceUtil.getDossierById(vrDossier_CXL.getDossierId(),
+							vrDossier_CXL.getCompanyId());
+					JSONObject obj = BusinessUtil.object2Json_originColumnName(vrDossier_CXL, DossierModelImpl.class,
+							StringPool.BLANK);
+					obj.put("expireCertificateId", vrExpireCertificate.getPrimaryKey());
+					if (Validator.isNotNull(dossierDoc)) {
+						obj.put("certNo", dossierDoc.get("so_chung_chi"));
+						obj.put("certDate", dossierDoc.get("ngay_ky_cc"));
+						obj.put("dossierIdCTN", dossierDoc.get("dossierIdCTN"));
+					}
+					array.put(obj);
+				}
 			}
 		}
 		JSONObject result = JSONFactoryUtil.createJSONObject();
