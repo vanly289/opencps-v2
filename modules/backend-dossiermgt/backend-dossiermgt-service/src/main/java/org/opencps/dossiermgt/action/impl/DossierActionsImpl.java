@@ -1971,6 +1971,8 @@ public class DossierActionsImpl implements DossierActions {
 			DossierMgtUtils.updateStatus(dossier, curStep.getDossierStatus(),
 					jsonDataStatusText.getString(curStep.getDossierStatus()), curStep.getDossierSubStatus(),
 					jsonDataStatusText.getString(curStep.getDossierSubStatus()), curStep.getLockState(), context);
+			
+			_log.info("==> dossier: " + dossier);
 			// .info("status: "+dossier.getDossierStatus());
 			// _log.info(jsStatus.toJSONString());
 			// _log.info(jsSubStatus.toJSONString());
@@ -2346,6 +2348,7 @@ public class DossierActionsImpl implements DossierActions {
 		}
 		// Reindex dossier
 		Dossier dossierUpdate = DossierLocalServiceUtil.updateDossier(dossier);
+		_log.info("==> dossierUpdate: " + dossierUpdate);
 		// _log.info("dossier: "+dossier);
 
 		// do plugin auto
@@ -2387,8 +2390,6 @@ public class DossierActionsImpl implements DossierActions {
 			}
 		}
 		
-		_log.info("DossierStatus " + dossier.getDossierId() + ": " + dossier.getDossierStatus());
-
 		_log.info("END DO ACTION ==========");
 		return dossierAction;
 	}

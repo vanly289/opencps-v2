@@ -954,6 +954,7 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	public Dossier updateDossierBriefNote(long dossierId, String dossierBriefNote) throws PortalException {
 		Dossier dossier = dossierPersistence.findByPrimaryKey(dossierId);
+		_log.info("=== updateDossierBriefNote ==> Dossier: " + dossier);
 		Date now = new Date();
 		dossier.setModifiedDate(now);
 		dossier.setBriefNote(dossierBriefNote);

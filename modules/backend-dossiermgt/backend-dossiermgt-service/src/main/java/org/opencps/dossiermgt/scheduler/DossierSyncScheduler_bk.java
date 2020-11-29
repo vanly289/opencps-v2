@@ -1,19 +1,5 @@
 package org.opencps.dossiermgt.scheduler;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import org.opencps.auth.utils.APIDateTimeUtils;
-import org.opencps.communication.model.ServerConfig;
-import org.opencps.communication.service.ServerConfigLocalServiceUtil;
-import org.opencps.dossiermgt.model.DossierSync;
-import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,6 +18,20 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import org.opencps.auth.utils.APIDateTimeUtils;
+import org.opencps.communication.model.ServerConfig;
+import org.opencps.communication.service.ServerConfigLocalServiceUtil;
+import org.opencps.dossiermgt.model.DossierSync;
+import org.opencps.dossiermgt.service.DossierSyncLocalServiceUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 //@Component(immediate = true, service = DossierSyncScheduler.class)
 public class DossierSyncScheduler_bk extends BaseSchedulerEntryMessageListener {
@@ -239,6 +239,6 @@ public class DossierSyncScheduler_bk extends BaseSchedulerEntryMessageListener {
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-	private Log _log = LogFactoryUtil.getLog(DossierSyncScheduler.class);
+	private Log _log = LogFactoryUtil.getLog(DossierSyncScheduler_bk.class);
 
 }
