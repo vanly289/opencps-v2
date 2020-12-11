@@ -1544,10 +1544,12 @@ public class VRRPDossierStatisticUtils {
 					case "133": // 2. Can bo tiep nhan hstt, chuyen to truong dossierreceivingdate /
 								// men2receiving
 						Date dossierreceivingdate = dossierActionModel.getCreateDate();
-						statistics.setDossierreceivingdate(dossierreceivingdate);
+						if(Validator.isNotNull(dossierreceivingdate)){
+							statistics.setDossierreceivingdate(dossierreceivingdate);
+							vrVehicleTypeCertificate.setInspectorendorSementDate(dossierreceivingdate);
+						}
 						statistics.setMen2receiving(actionUserName);
 						// add by Dungnv
-						vrVehicleTypeCertificate.setInspectorendorSementDate(dossierreceivingdate);
 						vrVehicleTypeCertificate.setInspectorReceiveDate(statistics.getDossierreceivingdate());
 						vrVehicleTypeCertificate.setInspectorSignName(actionUserName);
 						vrVehicleTypeCertificate.setInspectorSignTitle(userTitle);
@@ -1804,6 +1806,7 @@ public class VRRPDossierStatisticUtils {
 
 						break;
 					case "135": // 21. xac nhan thanh toan
+						_log.info("xac nhan thanh toan: "+ statistics);
 						Date dossierPaymentDate = dossierActionModel.getCreateDate();
 						statistics.setDossierPaymentDate(dossierPaymentDate);
 						statistics.setMen2PaymentApproval(actionUserName);

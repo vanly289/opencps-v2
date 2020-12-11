@@ -96,7 +96,7 @@ public class VRIssueInspectionRecordLocalServiceImpl extends VRIssueInspectionRe
 		return vrIssueInspectionRecordPersistence.findBycertificateId(vehicleTypeCertificateId, start, end);
 	}
 
-	public List<VRIssueInspectionRecord> updateVRIssueInspectionRecord(JSONArray arrayData, long dossierId) {
+	public List<VRIssueInspectionRecord> updateVRIssueInspectionRecord(JSONObject objectData, long dossierId) {
 
 		VRDossier dossier = vrDossierLocalService.fetchVRDossier(dossierId);
 		VRDossier dossier_CTN = vrDossierLocalService.getByRef(55217L, dossier.getReferenceUid());
@@ -106,8 +106,8 @@ public class VRIssueInspectionRecordLocalServiceImpl extends VRIssueInspectionRe
 
 		List<VRIssueInspectionRecord> vrIssueInspectionRecords = new ArrayList<VRIssueInspectionRecord>();
 
-		for (int i = 0; i < arrayData.length(); i++) {
-			JSONObject objectData = arrayData.getJSONObject(i);
+//		for (int i = 0; i < jsonData.length(); i++) {
+//			JSONObject objectData = jsonData.getJSONObject(i);
 			long vrIssueInspectionRecordId = counterLocalService.increment(VRIssueInspectionRecord.class.getName());
 			VRIssueInspectionRecord object = vrIssueInspectionRecordPersistence.create(vrIssueInspectionRecordId);
 
@@ -139,7 +139,7 @@ public class VRIssueInspectionRecordLocalServiceImpl extends VRIssueInspectionRe
 			if (object != null) {
 				vrIssueInspectionRecords.add(object);
 			}
-		}
+//		}
 		return vrIssueInspectionRecords;
 	}
 }

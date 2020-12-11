@@ -132,9 +132,10 @@ public class VRIssueManagementImpl implements VRIssueManagement {
 	public Response updateIssueInspectionrecord(HttpServletRequest request, HttpHeaders header, Company company,
 			Locale locale, User user, ServiceContext serviceContext, long dossierId, String data) {
 		try {
-			JSONArray arrayData = JSONFactoryUtil.createJSONArray(data);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
+			_log.info("=====>JSONObject"+jsonObject);
 			List<VRIssueInspectionRecord> vrIssueInspectionRecords = VRIssueInspectionRecordLocalServiceUtil
-					.updateVRIssueInspectionRecord(arrayData, dossierId);
+					.updateVRIssueInspectionRecord(jsonObject, dossierId);
 			JSONArray array = JSONFactoryUtil.createJSONArray();
 			for (VRIssueInspectionRecord vrIssueInspectionRecord : vrIssueInspectionRecords) {
 				try {

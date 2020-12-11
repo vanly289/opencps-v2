@@ -8,6 +8,7 @@ import org.opencps.dossiermgt.action.DossierActions;
 import org.opencps.dossiermgt.action.impl.DossierActionsImpl;
 import org.opencps.dossiermgt.action.util.DossierMgtUtils;
 import org.opencps.dossiermgt.constants.DossierActionTerm;
+import org.opencps.dossiermgt.constants.DossierStatusConstants;
 import org.opencps.dossiermgt.constants.DossierTerm;
 import org.opencps.dossiermgt.model.Dossier;
 import org.opencps.dossiermgt.model.DossierAction;
@@ -89,14 +90,15 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 	
 			//Sort[] sorts = new Sort[] { SortFactoryUtil.create("_sortable", Sort.STRING_TYPE, false) };
-	
+			_log.info("======== allDossierTimer" +allDossierTimer.size());
 			for (Dossier dossier : allDossierTimer) {
 				params.put(Field.GROUP_ID, String.valueOf(dossier.getGroupId()));
 				params.put(DossierTerm.DOSSIER_ID, String.valueOf(dossier.getDossierId()));
 				params.put(DossierTerm.REFERENCE_UID, String.valueOf(dossier.getReferenceUid()));
 				params.put(DossierActionTerm.AUTO, "timmer");
 	
-				if (Validator.isNotNull(dossier.getDossierStatus())) {
+				if (Validator.isNotNull(dossier.getDossierStatus()) && (dossier.getCancellingDate()!= null ||
+						dossier.getCorrecttingDate()!= null || dossier.getEndorsementDate()!= null || DossierStatusConstants.PAYING.equals(dossier.getDossierStatus()))) {
 	
 					long dossierActionId = dossier.getDossierActionId();
 	
@@ -112,6 +114,9 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 	
 					lstProcessAction = ProcessActionLocalServiceUtil.getProcessActionByG_SPID_PRESC(dossier.getGroupId(),
 							serviceProcessId, stepCode);
+					_log.info("===========> lstProcessAction :" +lstProcessAction);
+					_log.info("===========> dossier.getGroupId() :" +dossier.getGroupId()
+							+"====== serviceProcessId "+serviceProcessId +"============ stepCode:"+stepCode);
 					//TODO : test case auto event
 					DossierRequestUD dRegUD = DossierRequestUDLocalServiceUtil
 							.getDossierRequestByDossierId(dossier.getDossierId());
@@ -182,11 +187,13 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 										.checkPreCondition(StringUtil.split(perConditionStr, StringPool.COMMA), dossier);
 	
 								// do action
-	
+
 								String userActionName = _getUserActionName(perConditionStr, dossier.getDossierId(),
 										systemUser.getFullName());
 	
 								// String subUsers = StringPool.BLANK;
+								_log.info("=====perConditionStr: "+perConditionStr);
+								_log.info("=====checkPreCondition: "+checkPreCondition);
 								if (checkPreCondition && perConditionStr.contains("payok")) {
 									
 									_log.info("$$$$$dossierId_"+dossier.getDossierId() + "autoEvent_" + processAction.getAutoEvent());
