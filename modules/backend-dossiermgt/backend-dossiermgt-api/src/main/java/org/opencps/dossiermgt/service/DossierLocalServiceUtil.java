@@ -161,6 +161,11 @@ public class DossierLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<org.opencps.dossiermgt.model.Dossier> findDossierByRequestStatus(
+		java.lang.String statusReg, int start, int end) {
+		return getService().findDossierByRequestStatus(statusReg, start, end);
+	}
+
 	public static java.util.List<org.opencps.dossiermgt.model.Dossier> getBySubmitting(
 		boolean submitting) {
 		return getService().getBySubmitting(submitting);

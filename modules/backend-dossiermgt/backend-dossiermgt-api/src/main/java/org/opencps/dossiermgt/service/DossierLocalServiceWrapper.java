@@ -167,6 +167,13 @@ public class DossierLocalServiceWrapper implements DossierLocalService,
 	}
 
 	@Override
+	public java.util.List<org.opencps.dossiermgt.model.Dossier> findDossierByRequestStatus(
+		java.lang.String statusReg, int start, int end) {
+		return _dossierLocalService.findDossierByRequestStatus(statusReg,
+			start, end);
+	}
+
+	@Override
 	public java.util.List<org.opencps.dossiermgt.model.Dossier> getBySubmitting(
 		boolean submitting) {
 		return _dossierLocalService.getBySubmitting(submitting);

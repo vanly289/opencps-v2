@@ -2237,6 +2237,10 @@ public class DossierLocalServiceImpl extends DossierLocalServiceBaseImpl {
 //	      } 
 //			
 //	      searcher.close(); 
-//	   } 
+//	   }
+
+	public List<Dossier> findDossierByRequestStatus(String statusReg, int start , int end) {
+		return dossierFinder.findDossierByRequestStatus(statusReg, start , end);
+	}
 
 }

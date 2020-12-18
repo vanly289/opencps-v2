@@ -1961,7 +1961,7 @@ public class VRVehicleTypeCertificateActionImpl implements VRVehicleTypeCertific
 		} catch (Exception e) {
 			_log.error(e);
 		}
-
+		_log.info("=====>vrVehicleTypeCertificate "+ vrVehicleTypeCertificate);
 		if (jVRVehicletypeCertificate != null) {
 			object.put("vr_VehicleTypeCertificate", jVRVehicletypeCertificate);
 			Long mtCore = vrVehicleTypeCertificate.getMtCore();
@@ -2117,6 +2117,7 @@ public class VRVehicleTypeCertificateActionImpl implements VRVehicleTypeCertific
 							String.valueOf(vrVehicleTypeCertificate.getDossierId()), company.getCompanyId(),
 							"vr_vehicletypecertificate");
 				}
+				_log.info("==========esData "+ esData);
 				if (deletex == 0) {
 					ElasticQueryWrapUtil.POST(esData.toJSONString(), CLASS_NAME, company.getCompanyId());
 				}

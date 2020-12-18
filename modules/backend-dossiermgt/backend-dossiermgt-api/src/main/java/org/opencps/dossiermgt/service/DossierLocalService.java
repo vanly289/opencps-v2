@@ -162,6 +162,9 @@ public interface DossierLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<Dossier> findDossierByRequestStatus(
+		java.lang.String statusReg, int start, int end);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Dossier> getBySubmitting(boolean submitting);
 

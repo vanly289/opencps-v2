@@ -111,6 +111,7 @@ public class ElasticQueryWrapUtil {
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
+			_log.info("======> body: "+ body);
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Accept", "Content-Type: application/json");
 			conn.setRequestProperty("Content-Type", "application/json");

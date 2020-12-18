@@ -320,7 +320,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 			 * object.setManufacturerEmail(mapValues.get(""));
 			 * object.setManufacturerPhone(mapValues.get(""));
 			 * object.setManufacturerFax(mapValues.get(""));
-			 * 
+			 *
 			 * object.setCopReportNo(mapValues.get("")); object.setCopReportDate(null);
 			 * object.setCopReportExpireDate(null);
 			 */
@@ -635,11 +635,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 			/*
 			 * object.setCopReportNo(mapValues.get("")); object.setCopReportDate(null);
 			 * object.setCopReportExpireDate(null);
-			 * 
+			 *
 			 * object.setDesignerCode(""); object.setDesignerName("");
 			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
 			 * object.setDesignerRepresentativeTitle("");
-			 * 
+			 *
 			 * object.setDesignerEmail(""); object.setDesignerPhone("");
 			 * object.setDesignerFax(""); object.setVerificationCertificateNo("");
 			 * object.setVerificationCertificateDate(null); object.setDesignModelCode("");
@@ -883,11 +883,11 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 			/*
 			 * object.setCopReportNo(mapValues.get("")); object.setCopReportDate(null);
 			 * object.setCopReportExpireDate(null);
-			 * 
+			 *
 			 * object.setDesignerCode(""); object.setDesignerName("");
 			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
 			 * object.setDesignerRepresentativeTitle("");
-			 * 
+			 *
 			 * object.setDesignerEmail(""); object.setDesignerPhone("");
 			 * object.setDesignerFax(""); object.setVerificationCertificateNo("");
 			 * object.setVerificationCertificateDate(null); object.setDesignModelCode("");
@@ -1249,16 +1249,16 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 			 * object.setDesignerCode(""); object.setDesignerName("");
 			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
 			 * object.setDesignerRepresentativeTitle("");
-			 * 
+			 *
 			 * object.setDesignerEmail(""); object.setDesignerPhone("");
 			 * object.setDesignerFax("");
 			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
 			 * object.setDesignModelDescription(mapValues.get(
 			 * "bien_ban@loai_hinh_thiet_ke_text"));
-			 * 
+			 *
 			 * //object.setVerificationCertificateNo //object.setVerificationCertificateDate
 			 * //object.setTypeApprovalCertificateNo //object.setTypeApprovalCertificateDate
-			 * 
+			 *
 			 */
 			try {
 				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban"));
@@ -1615,16 +1615,16 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 			 * object.setDesignerCode(""); object.setDesignerName("");
 			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
 			 * object.setDesignerRepresentativeTitle("");
-			 * 
+			 *
 			 * object.setDesignerEmail(""); object.setDesignerPhone("");
 			 * object.setDesignerFax("");
 			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
 			 * object.setDesignModelDescription(mapValues.get(
 			 * "bien_ban@loai_hinh_thiet_ke_text"));
-			 * 
+			 *
 			 * //object.setVerificationCertificateNo //object.setVerificationCertificateDate
 			 * //object.setTypeApprovalCertificateNo //object.setTypeApprovalCertificateDate
-			 * 
+			 *
 			 */
 			try {
 				object.setVerificationRefNo(mapValues.get("chung_chi@so_bien_ban"));
@@ -1973,7 +1973,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 			 * object.setDesignerCode(""); object.setDesignerName("");
 			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
 			 * object.setDesignerRepresentativeTitle("");
-			 * 
+			 *
 			 * object.setDesignerEmail(""); object.setDesignerPhone("");
 			 * object.setDesignerFax("");
 			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
@@ -2311,7 +2311,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 			 * object.setDesignerCode(""); object.setDesignerName("");
 			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
 			 * object.setDesignerRepresentativeTitle("");
-			 * 
+			 *
 			 * object.setDesignerEmail(""); object.setDesignerPhone("");
 			 * object.setDesignerFax("");
 			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
@@ -2649,7 +2649,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 			 * object.setDesignerCode(""); object.setDesignerName("");
 			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
 			 * object.setDesignerRepresentativeTitle("");
-			 * 
+			 *
 			 * object.setDesignerEmail(""); object.setDesignerPhone("");
 			 * object.setDesignerFax("");
 			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
@@ -2987,7 +2987,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 			 * object.setDesignerCode(""); object.setDesignerName("");
 			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
 			 * object.setDesignerRepresentativeTitle("");
-			 * 
+			 *
 			 * object.setDesignerEmail(""); object.setDesignerPhone("");
 			 * object.setDesignerFax("");
 			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
@@ -3325,7 +3325,7 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 			 * object.setDesignerCode(""); object.setDesignerName("");
 			 * object.setDesignerAddress(""); object.setDesignerRepresentative("");
 			 * object.setDesignerRepresentativeTitle("");
-			 * 
+			 *
 			 * object.setDesignerEmail(""); object.setDesignerPhone("");
 			 * object.setDesignerFax("");
 			 * object.setDesignModelCode(mapValues.get("bien_ban@loai_hinh_thiet_ke"));
@@ -3923,19 +3923,25 @@ public class VRVehicleTypeCertificateLocalServiceImpl extends VRVehicleTypeCerti
 		return vrVehicleTypeCertificatePersistence.update(object);
 	}
 
-	public VRVehicleTypeCertificate updateVRVehicleTypeCertificate(VRVehicleTypeCertificate object, Company company) {
+    public VRVehicleTypeCertificate updateVRVehicleTypeCertificate(VRVehicleTypeCertificate object, Company company) {
+        try {
+            Date now = new Date();
+            _log.info("--------------Object: " + object);
+            object.setModifyDate(now);
+            _log.info("NOW: " + now);
 
-		Date now = new Date();
+            object = vrVehicleTypeCertificatePersistence.updateImpl(object);
+            if (object != null) {
+                VRVehicleTypeCertificateAction action = new VRVehicleTypeCertificateActionImpl();
+                action.indexing(object, company);
+            }
 
-		object.setModifyDate(now);
+        } catch (Exception e) {
+            _log.info("--------------error updateVRVehicleTypeCertificate : ");
+        }
 
-		object = vrVehicleTypeCertificatePersistence.updateImpl(object);
-		if (object != null) {
-			VRVehicleTypeCertificateAction action = new VRVehicleTypeCertificateActionImpl();
-			action.indexing(object, company);
-		}
-		return object;
-	}
+        return object;
+    }
 
 	public List<VRVehicleTypeCertificate> findExpiredCertificates(int day, String expiredStatus) {
 		return vrVehicleTypeCertificateFinder.findExpiredVRVehicleTypeCertificates(day, expiredStatus);

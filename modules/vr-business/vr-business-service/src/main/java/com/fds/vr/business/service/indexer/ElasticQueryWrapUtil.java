@@ -33,6 +33,8 @@ public class ElasticQueryWrapUtil {
 			conn.setRequestProperty("Content-Type", "application/json");
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
+			_log.info("=====>conn " + conn);
+			_log.info("=====>body " + body);
 			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 			osw.write(body);
 			osw.flush();
@@ -161,6 +163,7 @@ public class ElasticQueryWrapUtil {
 						conn.setRequestMethod("DELETE");
 						conn.setDoInput(true);
 						conn.setDoOutput(true);
+						_log.info("=====>DELETE conn "+ conn);
 						OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 						osw.flush();
 						osw.close();

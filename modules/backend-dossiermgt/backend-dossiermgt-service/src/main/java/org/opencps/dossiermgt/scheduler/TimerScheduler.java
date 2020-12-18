@@ -76,7 +76,7 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 			Company company = CompanyLocalServiceUtil.getCompanyByMx(PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 	
 			// This is TEMPORARY code for auto = timer, it need to optimize later
-			allDossierTimer = DossierLocalServiceUtil.getDossiers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			allDossierTimer = DossierLocalServiceUtil.findDossierByRequestStatus("3",QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	
 			DossierActions dossierActions = new DossierActionsImpl();
 	
@@ -114,7 +114,6 @@ public class TimerScheduler extends BaseSchedulerEntryMessageListener {
 	
 					lstProcessAction = ProcessActionLocalServiceUtil.getProcessActionByG_SPID_PRESC(dossier.getGroupId(),
 							serviceProcessId, stepCode);
-					_log.info("===========> lstProcessAction :" +lstProcessAction);
 					_log.info("===========> dossier.getGroupId() :" +dossier.getGroupId()
 							+"====== serviceProcessId "+serviceProcessId +"============ stepCode:"+stepCode);
 					//TODO : test case auto event
